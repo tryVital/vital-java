@@ -38,9 +38,9 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'com.vital'
+            groupId = 'io.tryvital'
             artifactId = 'vital-java'
-            version = '0.0.4'
+            version = '0.0.5'
             from components.java
         }
     }
