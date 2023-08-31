@@ -6,7 +6,6 @@ import com.vital.api.resources.athomephlebotomy.AthomePhlebotomyClient;
 import com.vital.api.resources.body.BodyClient;
 import com.vital.api.resources.devices.DevicesClient;
 import com.vital.api.resources.labtests.LabTestsClient;
-import com.vital.api.resources.labtests.LabtestsClient;
 import com.vital.api.resources.link.LinkClient;
 import com.vital.api.resources.meals.MealsClient;
 import com.vital.api.resources.order.OrderClient;
@@ -60,8 +59,6 @@ public class VitalApiClient {
 
     protected final Supplier<PhysicianClient> physicianClient;
 
-    protected final Supplier<LabtestsClient> labtestsClient;
-
     protected final Supplier<LabTestsClient> labTestsClient;
 
     protected final Supplier<OrderClient> orderClient;
@@ -88,7 +85,6 @@ public class VitalApiClient {
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.physicianClient = Suppliers.memoize(() -> new PhysicianClient(clientOptions));
-        this.labtestsClient = Suppliers.memoize(() -> new LabtestsClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
         this.athomePhlebotomyClient = Suppliers.memoize(() -> new AthomePhlebotomyClient(clientOptions));
@@ -157,10 +153,6 @@ public class VitalApiClient {
 
     public PhysicianClient physician() {
         return this.physicianClient.get();
-    }
-
-    public LabtestsClient labtests() {
-        return this.labtestsClient.get();
     }
 
     public LabTestsClient labTests() {

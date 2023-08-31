@@ -9,11 +9,11 @@ import com.vital.api.core.ObjectMappers;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LabtestsSearchDiagnosisRequest.Builder.class)
-public final class LabtestsSearchDiagnosisRequest {
+@JsonDeserialize(builder = LabTestsSearchDiagnosisRequest.Builder.class)
+public final class LabTestsSearchDiagnosisRequest {
     private final String diagnosisQuery;
 
-    private LabtestsSearchDiagnosisRequest(String diagnosisQuery) {
+    private LabTestsSearchDiagnosisRequest(String diagnosisQuery) {
         this.diagnosisQuery = diagnosisQuery;
     }
 
@@ -25,10 +25,10 @@ public final class LabtestsSearchDiagnosisRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LabtestsSearchDiagnosisRequest && equalTo((LabtestsSearchDiagnosisRequest) other);
+        return other instanceof LabTestsSearchDiagnosisRequest && equalTo((LabTestsSearchDiagnosisRequest) other);
     }
 
-    private boolean equalTo(LabtestsSearchDiagnosisRequest other) {
+    private boolean equalTo(LabTestsSearchDiagnosisRequest other) {
         return diagnosisQuery.equals(other.diagnosisQuery);
     }
 
@@ -49,11 +49,11 @@ public final class LabtestsSearchDiagnosisRequest {
     public interface DiagnosisQueryStage {
         _FinalStage diagnosisQuery(String diagnosisQuery);
 
-        Builder from(LabtestsSearchDiagnosisRequest other);
+        Builder from(LabTestsSearchDiagnosisRequest other);
     }
 
     public interface _FinalStage {
-        LabtestsSearchDiagnosisRequest build();
+        LabTestsSearchDiagnosisRequest build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -63,7 +63,7 @@ public final class LabtestsSearchDiagnosisRequest {
         private Builder() {}
 
         @Override
-        public Builder from(LabtestsSearchDiagnosisRequest other) {
+        public Builder from(LabTestsSearchDiagnosisRequest other) {
             diagnosisQuery(other.getDiagnosisQuery());
             return this;
         }
@@ -76,8 +76,8 @@ public final class LabtestsSearchDiagnosisRequest {
         }
 
         @Override
-        public LabtestsSearchDiagnosisRequest build() {
-            return new LabtestsSearchDiagnosisRequest(diagnosisQuery);
+        public LabTestsSearchDiagnosisRequest build() {
+            return new LabTestsSearchDiagnosisRequest(diagnosisQuery);
         }
     }
 }

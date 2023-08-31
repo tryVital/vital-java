@@ -9,11 +9,11 @@ import com.vital.api.core.ObjectMappers;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = LabtestsGetAreaInfoRequest.Builder.class)
-public final class LabtestsGetAreaInfoRequest {
+@JsonDeserialize(builder = LabTestsGetAreaInfoRequest.Builder.class)
+public final class LabTestsGetAreaInfoRequest {
     private final String zipCode;
 
-    private LabtestsGetAreaInfoRequest(String zipCode) {
+    private LabTestsGetAreaInfoRequest(String zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -28,10 +28,10 @@ public final class LabtestsGetAreaInfoRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof LabtestsGetAreaInfoRequest && equalTo((LabtestsGetAreaInfoRequest) other);
+        return other instanceof LabTestsGetAreaInfoRequest && equalTo((LabTestsGetAreaInfoRequest) other);
     }
 
-    private boolean equalTo(LabtestsGetAreaInfoRequest other) {
+    private boolean equalTo(LabTestsGetAreaInfoRequest other) {
         return zipCode.equals(other.zipCode);
     }
 
@@ -52,11 +52,11 @@ public final class LabtestsGetAreaInfoRequest {
     public interface ZipCodeStage {
         _FinalStage zipCode(String zipCode);
 
-        Builder from(LabtestsGetAreaInfoRequest other);
+        Builder from(LabTestsGetAreaInfoRequest other);
     }
 
     public interface _FinalStage {
-        LabtestsGetAreaInfoRequest build();
+        LabTestsGetAreaInfoRequest build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -66,7 +66,7 @@ public final class LabtestsGetAreaInfoRequest {
         private Builder() {}
 
         @Override
-        public Builder from(LabtestsGetAreaInfoRequest other) {
+        public Builder from(LabTestsGetAreaInfoRequest other) {
             zipCode(other.getZipCode());
             return this;
         }
@@ -83,8 +83,8 @@ public final class LabtestsGetAreaInfoRequest {
         }
 
         @Override
-        public LabtestsGetAreaInfoRequest build() {
-            return new LabtestsGetAreaInfoRequest(zipCode);
+        public LabTestsGetAreaInfoRequest build() {
+            return new LabTestsGetAreaInfoRequest(zipCode);
         }
     }
 }
