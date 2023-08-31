@@ -8,6 +8,11 @@ public final class VitalApiClientBuilder {
 
     private Environment environment;
 
+    public VitalApiClientBuilder apiKey(String apiKey) {
+        this.clientOptionsBuilder.addHeader("x-vital-api-key", apiKey);
+        return this;
+    }
+
     public VitalApiClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
