@@ -38,9 +38,9 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'io.tryvital'
-            artifactId = 'vital-java'
-            version = '0.1.4'
+            groupId = 'io.github.fern-api'
+            artifactId = 'vital'
+            version = '0.1.5'
             from components.java
         }
     }
