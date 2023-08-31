@@ -14,7 +14,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = MetricsResult.Builder.class)
 public final class MetricsResult {
-    private final MetricsResultTeamId teamId;
+    private final String teamId;
 
     private final Optional<Integer> numberOfConnectedSources;
 
@@ -27,7 +27,7 @@ public final class MetricsResult {
     private final Optional<Integer> numberOfOrderedTests;
 
     private MetricsResult(
-            MetricsResultTeamId teamId,
+            String teamId,
             Optional<Integer> numberOfConnectedSources,
             Optional<Integer> numberOfUsers,
             Optional<Integer> numberOfErroredConnectedSources,
@@ -42,7 +42,7 @@ public final class MetricsResult {
     }
 
     @JsonProperty("team_id")
-    public MetricsResultTeamId getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
@@ -107,7 +107,7 @@ public final class MetricsResult {
     }
 
     public interface TeamIdStage {
-        _FinalStage teamId(MetricsResultTeamId teamId);
+        _FinalStage teamId(String teamId);
 
         Builder from(MetricsResult other);
     }
@@ -139,7 +139,7 @@ public final class MetricsResult {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TeamIdStage, _FinalStage {
-        private MetricsResultTeamId teamId;
+        private String teamId;
 
         private Optional<Integer> numberOfOrderedTests = Optional.empty();
 
@@ -166,7 +166,7 @@ public final class MetricsResult {
 
         @Override
         @JsonSetter("team_id")
-        public _FinalStage teamId(MetricsResultTeamId teamId) {
+        public _FinalStage teamId(String teamId) {
             this.teamId = teamId;
             return this;
         }
