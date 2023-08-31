@@ -3,17 +3,89 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/vital)](https://central.sonatype.dev/artifact/io.github.fern-api/vital/) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
+The Vital Java library provides access to the Vital API from applications written in Java.
+
 ## Documentation
 
-API documentation is available at <https://docs.tryvital.io/home/welcome>.
+API reference documentation is available [here](https://docs.tryvital.io/home/welcome).
+
+## Installation
+
+Add this dependency to your project's build file:
+
+### Gradle
+
+Add the dependency in your `build.gradle`:
+
+```groovy
+dependencies {
+    implementation 'io.github.fern-api:vital:0.x.x'
+}
+```
+
+### Maven
+
+Add the dependency in your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>io.github.fern-api</groupId>
+    <artifactId>vital</artifactId>
+    <version>0.x.x</version>
+</dependency>
+```
 
 ## Usage
 
-Check out the [sample app](.sample-app/app.java) which consumes this SDK!
+```java
+import com.vital.api.VitalApiClient;
+
+VitalApiClient vital = VitalApiClient.builder()
+  .apiKey("YOUR_API_KEY")
+  .build()
+
+var labTest = vital.labTests().get('order-id')
+
+print(labTest)
+```
+
+## Handling Errors
+
+All exceptions thrown by the SDK will sublcass [ApiError](./src/main/java/com/vital/api/core/ApiError.java).
 
 ```java
-// start with env variables
-TODO
+import com.vital.api.core.ApiError;
+
+try {
+    vital.labTests().get('order-id')
+} catch (ApiError e) {
+    e.getStatusCode();
+    e.getBody();
+}
+```
+
+## Environments
+
+When you sign up to Vital you get access to two environments, Sandbox and Production.
+
+| Environment URLs |                            |
+| ---------------- | -------------------------- |
+| `production`     | api.tryvital.io            |
+| `production-eu`  | api.eu.tryvital.io         |
+| `sandbox`        | api.sandbox.tryvital.io    |
+| `sandbox-eu`     | api.sandbox.eu.tryvital.io |
+
+By default, the SDK uses the `production` environment. See the snippet below
+for an example on how ot change the environment.
+
+```python
+import com.vital.api.VitalApiClient;
+import com.vital.api.core.Environment;
+
+VitalApiClient vital = VitalApiClient.builder()
+  .apiKey("YOUR_API_KEY")
+  .environment(Environment.SANDBOX)
+  .build()
 ```
 
 ## Beta status
