@@ -6,10 +6,15 @@ import com.vital.api.core.Environment;
 public final class VitalApiClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
-    private Environment environment;
+    private Environment environment = Environment.PRODUCTION;
 
     public VitalApiClientBuilder apiKey(String apiKey) {
         this.clientOptionsBuilder.addHeader("x-vital-api-key", apiKey);
+        return this;
+    }
+
+    public VitalApiClientBuilder environment(Environment environment) {
+        this.environment = environment;
         return this;
     }
 
