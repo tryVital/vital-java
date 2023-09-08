@@ -40,7 +40,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.github.fern-api'
             artifactId = 'vital'
-            version = '0.1.8'
+            version = '0.1.9'
             from components.java
         }
     }
