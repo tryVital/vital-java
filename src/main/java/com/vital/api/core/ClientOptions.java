@@ -23,7 +23,12 @@ public final class ClientOptions {
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
         this.headers.putAll(Map.of(
-                "X-Fern-SDK-Name", "com.vital.fern:api-sdk", "X-Fern-SDK-Version", "0.1.9", "X-Fern-Language", "JAVA"));
+                "X-Fern-SDK-Name",
+                "com.vital.fern:api-sdk",
+                "X-Fern-SDK-Version",
+                "0.1.10",
+                "X-Fern-Language",
+                "JAVA"));
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         ;
