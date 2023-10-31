@@ -6,28 +6,28 @@ package com.vital.api;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.Environment;
 
-public final class VitalApiClientBuilder {
+public final class VitalBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
     private Environment environment = Environment.PRODUCTION;
 
-    public VitalApiClientBuilder apiKey(String apiKey) {
+    public VitalBuilder apiKey(String apiKey) {
         this.clientOptionsBuilder.addHeader("x-vital-api-key", apiKey);
         return this;
     }
 
-    public VitalApiClientBuilder environment(Environment environment) {
+    public VitalBuilder environment(Environment environment) {
         this.environment = environment;
         return this;
     }
 
-    public VitalApiClientBuilder url(String url) {
+    public VitalBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
     }
 
-    public VitalApiClient build() {
+    public Vital build() {
         clientOptionsBuilder.environment(this.environment);
-        return new VitalApiClient(clientOptionsBuilder.build());
+        return new Vital(clientOptionsBuilder.build());
     }
 }

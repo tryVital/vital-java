@@ -23,7 +23,7 @@ import com.vital.api.resources.vitals.VitalsClient;
 import com.vital.api.resources.workouts.WorkoutsClient;
 import java.util.function.Supplier;
 
-public class VitalApiClient {
+public class Vital {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<LinkClient> linkClient;
@@ -58,7 +58,7 @@ public class VitalApiClient {
 
     protected final Supplier<InsuranceClient> insuranceClient;
 
-    public VitalApiClient(ClientOptions clientOptions) {
+    public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
@@ -142,7 +142,7 @@ public class VitalApiClient {
         return this.insuranceClient.get();
     }
 
-    public static VitalApiClientBuilder builder() {
-        return new VitalApiClientBuilder();
+    public static VitalBuilder builder() {
+        return new VitalBuilder();
     }
 }
