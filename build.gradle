@@ -44,9 +44,9 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'io.github.fern-api'
-            artifactId = 'vital'
-            version = '0.2.87'
+            groupId = 'io.vital'
+            artifactId = 'vital-java'
+            version = '1.0.0'
             from components.java
         }
     }
