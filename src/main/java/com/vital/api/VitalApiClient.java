@@ -4,12 +4,142 @@
 package com.vital.api;
 
 import com.vital.api.core.ClientOptions;
+import com.vital.api.core.Suppliers;
+import com.vital.api.resources.activity.ActivityClient;
+import com.vital.api.resources.body.BodyClient;
+import com.vital.api.resources.devices.DevicesClient;
+import com.vital.api.resources.insurance.InsuranceClient;
+import com.vital.api.resources.labtests.LabTestsClient;
+import com.vital.api.resources.link.LinkClient;
+import com.vital.api.resources.meal.MealClient;
+import com.vital.api.resources.profile.ProfileClient;
+import com.vital.api.resources.providers.ProvidersClient;
+import com.vital.api.resources.sleep.SleepClient;
+import com.vital.api.resources.team.TeamClient;
+import com.vital.api.resources.testkit.TestkitClient;
+import com.vital.api.resources.timeseries.TimeseriesClient;
+import com.vital.api.resources.user.UserClient;
+import com.vital.api.resources.vitals.VitalsClient;
+import com.vital.api.resources.workouts.WorkoutsClient;
+import java.util.function.Supplier;
 
 public class VitalApiClient {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<LinkClient> linkClient;
+
+    protected final Supplier<ProfileClient> profileClient;
+
+    protected final Supplier<DevicesClient> devicesClient;
+
+    protected final Supplier<ActivityClient> activityClient;
+
+    protected final Supplier<WorkoutsClient> workoutsClient;
+
+    protected final Supplier<SleepClient> sleepClient;
+
+    protected final Supplier<BodyClient> bodyClient;
+
+    protected final Supplier<MealClient> mealClient;
+
+    protected final Supplier<TimeseriesClient> timeseriesClient;
+
+    protected final Supplier<VitalsClient> vitalsClient;
+
+    protected final Supplier<UserClient> userClient;
+
+    protected final Supplier<TeamClient> teamClient;
+
+    protected final Supplier<ProvidersClient> providersClient;
+
+    protected final Supplier<LabTestsClient> labTestsClient;
+
+    protected final Supplier<TestkitClient> testkitClient;
+
+    protected final Supplier<InsuranceClient> insuranceClient;
+
     public VitalApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
+        this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
+        this.devicesClient = Suppliers.memoize(() -> new DevicesClient(clientOptions));
+        this.activityClient = Suppliers.memoize(() -> new ActivityClient(clientOptions));
+        this.workoutsClient = Suppliers.memoize(() -> new WorkoutsClient(clientOptions));
+        this.sleepClient = Suppliers.memoize(() -> new SleepClient(clientOptions));
+        this.bodyClient = Suppliers.memoize(() -> new BodyClient(clientOptions));
+        this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
+        this.timeseriesClient = Suppliers.memoize(() -> new TimeseriesClient(clientOptions));
+        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
+        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
+        this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
+        this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
+        this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
+        this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
+        this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
+    }
+
+    public LinkClient link() {
+        return this.linkClient.get();
+    }
+
+    public ProfileClient profile() {
+        return this.profileClient.get();
+    }
+
+    public DevicesClient devices() {
+        return this.devicesClient.get();
+    }
+
+    public ActivityClient activity() {
+        return this.activityClient.get();
+    }
+
+    public WorkoutsClient workouts() {
+        return this.workoutsClient.get();
+    }
+
+    public SleepClient sleep() {
+        return this.sleepClient.get();
+    }
+
+    public BodyClient body() {
+        return this.bodyClient.get();
+    }
+
+    public MealClient meal() {
+        return this.mealClient.get();
+    }
+
+    public TimeseriesClient timeseries() {
+        return this.timeseriesClient.get();
+    }
+
+    public VitalsClient vitals() {
+        return this.vitalsClient.get();
+    }
+
+    public UserClient user() {
+        return this.userClient.get();
+    }
+
+    public TeamClient team() {
+        return this.teamClient.get();
+    }
+
+    public ProvidersClient providers() {
+        return this.providersClient.get();
+    }
+
+    public LabTestsClient labTests() {
+        return this.labTestsClient.get();
+    }
+
+    public TestkitClient testkit() {
+        return this.testkitClient.get();
+    }
+
+    public InsuranceClient insurance() {
+        return this.insuranceClient.get();
     }
 
     public static VitalApiClientBuilder builder() {
