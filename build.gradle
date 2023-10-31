@@ -20,6 +20,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 spotless {
     java {
         palantirJavaFormat()
@@ -33,14 +37,16 @@ java {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
 }
-
 publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'io.github.fern-api'
             artifactId = 'vital'
-            version = '0.1.10'
+            version = '0.2.86'
             from components.java
         }
     }
