@@ -1,6 +1,6 @@
 # Vital Java Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/vital)](https://central.sonatype.com/artifact/io.github.fern-api/vital/) 
+[![Maven Central](https://img.shields.io/maven-central/v/io.vital/vital-java)](https://central.sonatype.com/artifact/io.vital/vital-java/) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 The Vital Java library provides access to the Vital API from applications written in Java.
@@ -19,7 +19,7 @@ Add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'io.github.fern-api:vital:0.x.x'
+    implementation 'io.vital:vital-java:0.x.x'
 }
 ```
 
@@ -29,8 +29,8 @@ Add the dependency in your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>io.github.fern-api</groupId>
-    <artifactId>vital</artifactId>
+    <groupId>io.vital</groupId>
+    <artifactId>vital-java</artifactId>
     <version>0.x.x</version>
 </dependency>
 ```
@@ -38,9 +38,9 @@ Add the dependency in your `pom.xml`:
 ## Usage
 
 ```java
-import com.vital.api.VitalApiClient;
+import com.vital.api.Vital;
 
-VitalApiClient vital = VitalApiClient.builder()
+Vital vital = Vital.builder()
   .apiKey("YOUR_API_KEY")
   .build()
 
@@ -79,10 +79,10 @@ By default, the SDK uses the `production` environment. See the snippet below
 for an example on how ot change the environment.
 
 ```python
-import com.vital.api.VitalApiClient;
+import com.vital.api.Vital;
 import com.vital.api.core.Environment;
 
-VitalApiClient vital = VitalApiClient.builder()
+Vital vital = Vital.builder()
   .apiKey("YOUR_API_KEY")
   .environment(Environment.SANDBOX)
   .build()
