@@ -10,6 +10,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
 import com.vital.api.resources.sleep.requests.SleepGetRequest;
 import com.vital.api.resources.sleep.requests.SleepGetStreamRequest;
+import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.RawSleep;
 import java.io.IOException;
@@ -151,5 +152,42 @@ public class SleepClient {
      */
     public RawSleep getRaw(String userId, SleepGetRawRequest request) {
         return getRaw(userId, request, null);
+    }
+
+    /**
+     * Get Sleep stream for a user_id
+     */
+    public ClientFacingSleepStream getStreamBySleepId(String sleepId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries/sleep")
+                .addPathSegment(sleepId)
+                .addPathSegments("stream")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingSleepStream.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get Sleep stream for a user_id
+     */
+    public ClientFacingSleepStream getStreamBySleepId(String sleepId) {
+        return getStreamBySleepId(sleepId, null);
     }
 }

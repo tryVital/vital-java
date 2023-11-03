@@ -18,14 +18,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest.Builder.class)
-public final class GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest {
+@JsonDeserialize(builder = TeamGetSourcePrioritiesRequest.Builder.class)
+public final class TeamGetSourcePrioritiesRequest {
     private final Optional<String> dataType;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest(
-            Optional<String> dataType, Map<String, Object> additionalProperties) {
+    private TeamGetSourcePrioritiesRequest(Optional<String> dataType, Map<String, Object> additionalProperties) {
         this.dataType = dataType;
         this.additionalProperties = additionalProperties;
     }
@@ -38,8 +37,7 @@ public final class GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest
-                && equalTo((GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest) other);
+        return other instanceof TeamGetSourcePrioritiesRequest && equalTo((TeamGetSourcePrioritiesRequest) other);
     }
 
     @JsonAnyGetter
@@ -47,7 +45,7 @@ public final class GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest other) {
+    private boolean equalTo(TeamGetSourcePrioritiesRequest other) {
         return dataType.equals(other.dataType);
     }
 
@@ -74,7 +72,7 @@ public final class GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest {
 
         private Builder() {}
 
-        public Builder from(GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest other) {
+        public Builder from(TeamGetSourcePrioritiesRequest other) {
             dataType(other.getDataType());
             return this;
         }
@@ -90,8 +88,8 @@ public final class GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest {
             return this;
         }
 
-        public GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest build() {
-            return new GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest(dataType, additionalProperties);
+        public TeamGetSourcePrioritiesRequest build() {
+            return new TeamGetSourcePrioritiesRequest(dataType, additionalProperties);
         }
     }
 }

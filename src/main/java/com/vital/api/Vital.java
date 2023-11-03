@@ -17,7 +17,6 @@ import com.vital.api.resources.providers.ProvidersClient;
 import com.vital.api.resources.sleep.SleepClient;
 import com.vital.api.resources.team.TeamClient;
 import com.vital.api.resources.testkit.TestkitClient;
-import com.vital.api.resources.timeseries.TimeseriesClient;
 import com.vital.api.resources.user.UserClient;
 import com.vital.api.resources.vitals.VitalsClient;
 import com.vital.api.resources.workouts.WorkoutsClient;
@@ -41,8 +40,6 @@ public class Vital {
     protected final Supplier<BodyClient> bodyClient;
 
     protected final Supplier<MealClient> mealClient;
-
-    protected final Supplier<TimeseriesClient> timeseriesClient;
 
     protected final Supplier<VitalsClient> vitalsClient;
 
@@ -68,7 +65,6 @@ public class Vital {
         this.sleepClient = Suppliers.memoize(() -> new SleepClient(clientOptions));
         this.bodyClient = Suppliers.memoize(() -> new BodyClient(clientOptions));
         this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
-        this.timeseriesClient = Suppliers.memoize(() -> new TimeseriesClient(clientOptions));
         this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
@@ -108,10 +104,6 @@ public class Vital {
 
     public MealClient meal() {
         return this.mealClient.get();
-    }
-
-    public TimeseriesClient timeseries() {
-        return this.timeseriesClient.get();
     }
 
     public VitalsClient vitals() {

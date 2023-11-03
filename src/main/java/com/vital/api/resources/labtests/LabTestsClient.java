@@ -14,6 +14,7 @@ import com.vital.api.resources.labtests.requests.AppointmentRescheduleRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
@@ -171,10 +172,53 @@ public class LabTestsClient {
         return getMarkers(request, null);
     }
 
+    public GetMarkersResponse getMarkersForLabTest(String labTestId) {
+        return getMarkersForLabTest(
+                labTestId, LabTestsGetMarkersForLabTestRequest.builder().build());
+    }
+
+    public GetMarkersResponse getMarkersForLabTest(
+            String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/lab_tests")
+                .addPathSegment(labTestId)
+                .addPathSegments("markers");
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
+        if (request.getSize().isPresent()) {
+            httpUrl.addQueryParameter("size", request.getSize().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GetMarkersResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GetMarkersResponse getMarkersForLabTest(String labTestId, LabTestsGetMarkersForLabTestRequest request) {
+        return getMarkersForLabTest(labTestId, request, null);
+    }
+
     /**
      * GET a specific marker for the given lab and provider_id
      */
-    public ClientFacingMarker getMarkersByProviderId(String providerId, int labId, RequestOptions requestOptions) {
+    public ClientFacingMarker getMarkersByLabAndProviderId(
+            String providerId, int labId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests")
@@ -205,8 +249,8 @@ public class LabTestsClient {
     /**
      * GET a specific marker for the given lab and provider_id
      */
-    public ClientFacingMarker getMarkersByProviderId(String providerId, int labId) {
-        return getMarkersByProviderId(providerId, labId, null);
+    public ClientFacingMarker getMarkersByLabAndProviderId(String providerId, int labId) {
+        return getMarkersByLabAndProviderId(providerId, labId, null);
     }
 
     /**
@@ -243,6 +287,42 @@ public class LabTestsClient {
      */
     public List<ClientFacingLab> getLabs() {
         return getLabs(null);
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public ClientFacingLabTest getById(String labTestId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/lab_tests")
+                .addPathSegment(labTestId)
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingLabTest.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public ClientFacingLabTest getById(String labTestId) {
+        return getById(labTestId, null);
     }
 
     /**

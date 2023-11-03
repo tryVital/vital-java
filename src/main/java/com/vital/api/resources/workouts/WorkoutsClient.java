@@ -9,6 +9,7 @@ import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
 import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
+import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.RawWorkout;
 import java.io.IOException;
@@ -107,5 +108,36 @@ public class WorkoutsClient {
      */
     public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request) {
         return getRaw(userId, request, null);
+    }
+
+    public ClientFacingStream getByWorkoutId(String workoutId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries/workouts")
+                .addPathSegment(workoutId)
+                .addPathSegments("stream")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingStream.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingStream getByWorkoutId(String workoutId) {
+        return getByWorkoutId(workoutId, null);
     }
 }

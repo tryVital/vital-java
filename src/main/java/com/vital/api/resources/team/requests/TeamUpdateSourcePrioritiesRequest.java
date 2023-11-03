@@ -16,14 +16,13 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest.Builder.class)
-public final class UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest {
+@JsonDeserialize(builder = TeamUpdateSourcePrioritiesRequest.Builder.class)
+public final class TeamUpdateSourcePrioritiesRequest {
     private final String teamId;
 
     private final Map<String, Object> additionalProperties;
 
-    private UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest(
-            String teamId, Map<String, Object> additionalProperties) {
+    private TeamUpdateSourcePrioritiesRequest(String teamId, Map<String, Object> additionalProperties) {
         this.teamId = teamId;
         this.additionalProperties = additionalProperties;
     }
@@ -36,8 +35,7 @@ public final class UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest
-                && equalTo((UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest) other);
+        return other instanceof TeamUpdateSourcePrioritiesRequest && equalTo((TeamUpdateSourcePrioritiesRequest) other);
     }
 
     @JsonAnyGetter
@@ -45,7 +43,7 @@ public final class UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest other) {
+    private boolean equalTo(TeamUpdateSourcePrioritiesRequest other) {
         return teamId.equals(other.teamId);
     }
 
@@ -66,11 +64,11 @@ public final class UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest {
     public interface TeamIdStage {
         _FinalStage teamId(String teamId);
 
-        Builder from(UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest other);
+        Builder from(TeamUpdateSourcePrioritiesRequest other);
     }
 
     public interface _FinalStage {
-        UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest build();
+        TeamUpdateSourcePrioritiesRequest build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -83,7 +81,7 @@ public final class UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest {
         private Builder() {}
 
         @Override
-        public Builder from(UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest other) {
+        public Builder from(TeamUpdateSourcePrioritiesRequest other) {
             teamId(other.getTeamId());
             return this;
         }
@@ -96,8 +94,8 @@ public final class UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest {
         }
 
         @Override
-        public UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest build() {
-            return new UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest(teamId, additionalProperties);
+        public TeamUpdateSourcePrioritiesRequest build() {
+            return new TeamUpdateSourcePrioritiesRequest(teamId, additionalProperties);
         }
     }
 }

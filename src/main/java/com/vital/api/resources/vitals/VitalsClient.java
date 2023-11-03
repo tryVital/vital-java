@@ -18,6 +18,7 @@ import com.vital.api.resources.vitals.requests.VitalsCholesterolLdlRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolTotalRequest;
 import com.vital.api.resources.vitals.requests.VitalsDistanceRequest;
+import com.vital.api.resources.vitals.requests.VitalsElectrocardiogramVoltageRequest;
 import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedRequest;
 import com.vital.api.resources.vitals.requests.VitalsGlucoseRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartrateRequest;
@@ -37,6 +38,7 @@ import com.vital.api.types.ClientFacingCaloriesActiveTimeseries;
 import com.vital.api.types.ClientFacingCaloriesBasalTimeseries;
 import com.vital.api.types.ClientFacingCholesterolTimeseries;
 import com.vital.api.types.ClientFacingDistanceTimeseries;
+import com.vital.api.types.ClientFacingElectrocardiogramVoltageTimeseries;
 import com.vital.api.types.ClientFacingFloorsClimbedTimeseries;
 import com.vital.api.types.ClientFacingGlucoseTimeseries;
 import com.vital.api.types.ClientFacingHeartRateTimeseries;
@@ -1007,6 +1009,53 @@ public class VitalsClient {
      */
     public List<ClientFacingBloodOxygenTimeseries> bloodOxygen(String userId, VitalsBloodOxygenRequest request) {
         return bloodOxygen(userId, request, null);
+    }
+
+    /**
+     * Get timeseries data for user
+     */
+    public List<ClientFacingElectrocardiogramVoltageTimeseries> electrocardiogramVoltage(
+            String userId, VitalsElectrocardiogramVoltageRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("electrocardiogram_voltage");
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(),
+                        new TypeReference<List<ClientFacingElectrocardiogramVoltageTimeseries>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get timeseries data for user
+     */
+    public List<ClientFacingElectrocardiogramVoltageTimeseries> electrocardiogramVoltage(
+            String userId, VitalsElectrocardiogramVoltageRequest request) {
+        return electrocardiogramVoltage(userId, request, null);
     }
 
     /**

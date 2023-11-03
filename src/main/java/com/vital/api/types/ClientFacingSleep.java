@@ -286,7 +286,7 @@ public final class ClientFacingSleep {
     }
 
     /**
-     * @return Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health::perc
+     * @return Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc
      */
     @JsonProperty("hr_dip")
     public Optional<Double> getHrDip() {
@@ -794,7 +794,7 @@ public final class ClientFacingSleep {
         }
 
         /**
-         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health::perc</p>
+         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

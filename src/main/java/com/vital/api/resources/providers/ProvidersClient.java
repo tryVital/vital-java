@@ -26,7 +26,7 @@ public class ProvidersClient {
     /**
      * Get Provider list
      */
-    public List<ClientFacingProviderDetailed> getListOfProviders(RequestOptions requestOptions) {
+    public List<ClientFacingProviderDetailed> getAll(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/providers")
@@ -55,7 +55,7 @@ public class ProvidersClient {
     /**
      * Get Provider list
      */
-    public List<ClientFacingProviderDetailed> getListOfProviders() {
-        return getListOfProviders(null);
+    public List<ClientFacingProviderDetailed> getAll() {
+        return getAll(null);
     }
 }

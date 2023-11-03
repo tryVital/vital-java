@@ -47,6 +47,10 @@ public final class BiomarkerResult {
 
     private final Optional<String> interpretation;
 
+    private final Optional<String> loinc;
+
+    private final Optional<String> loincSlug;
+
     private final Map<String, Object> additionalProperties;
 
     private BiomarkerResult(
@@ -63,6 +67,8 @@ public final class BiomarkerResult {
             Optional<Boolean> isAboveMaxRange,
             Optional<Boolean> isBelowMinRange,
             Optional<String> interpretation,
+            Optional<String> loinc,
+            Optional<String> loincSlug,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
@@ -77,6 +83,8 @@ public final class BiomarkerResult {
         this.isAboveMaxRange = isAboveMaxRange;
         this.isBelowMinRange = isBelowMinRange;
         this.interpretation = interpretation;
+        this.loinc = loinc;
+        this.loincSlug = loincSlug;
         this.additionalProperties = additionalProperties;
     }
 
@@ -145,6 +153,16 @@ public final class BiomarkerResult {
         return interpretation;
     }
 
+    @JsonProperty("loinc")
+    public Optional<String> getLoinc() {
+        return loinc;
+    }
+
+    @JsonProperty("loinc_slug")
+    public Optional<String> getLoincSlug() {
+        return loincSlug;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -169,7 +187,9 @@ public final class BiomarkerResult {
                 && maxRangeValue.equals(other.maxRangeValue)
                 && isAboveMaxRange.equals(other.isAboveMaxRange)
                 && isBelowMinRange.equals(other.isBelowMinRange)
-                && interpretation.equals(other.interpretation);
+                && interpretation.equals(other.interpretation)
+                && loinc.equals(other.loinc)
+                && loincSlug.equals(other.loincSlug);
     }
 
     @Override
@@ -187,7 +207,9 @@ public final class BiomarkerResult {
                 this.maxRangeValue,
                 this.isAboveMaxRange,
                 this.isBelowMinRange,
-                this.interpretation);
+                this.interpretation,
+                this.loinc,
+                this.loincSlug);
     }
 
     @Override
@@ -255,6 +277,14 @@ public final class BiomarkerResult {
         _FinalStage interpretation(Optional<String> interpretation);
 
         _FinalStage interpretation(String interpretation);
+
+        _FinalStage loinc(Optional<String> loinc);
+
+        _FinalStage loinc(String loinc);
+
+        _FinalStage loincSlug(Optional<String> loincSlug);
+
+        _FinalStage loincSlug(String loincSlug);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -266,6 +296,10 @@ public final class BiomarkerResult {
         private String result;
 
         private ResultType type;
+
+        private Optional<String> loincSlug = Optional.empty();
+
+        private Optional<String> loinc = Optional.empty();
 
         private Optional<String> interpretation = Optional.empty();
 
@@ -305,6 +339,8 @@ public final class BiomarkerResult {
             isAboveMaxRange(other.getIsAboveMaxRange());
             isBelowMinRange(other.getIsBelowMinRange());
             interpretation(other.getInterpretation());
+            loinc(other.getLoinc());
+            loincSlug(other.getLoincSlug());
             return this;
         }
 
@@ -333,6 +369,32 @@ public final class BiomarkerResult {
         @JsonSetter("type")
         public _FinalStage type(ResultType type) {
             this.type = type;
+            return this;
+        }
+
+        @Override
+        public _FinalStage loincSlug(String loincSlug) {
+            this.loincSlug = Optional.of(loincSlug);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "loinc_slug", nulls = Nulls.SKIP)
+        public _FinalStage loincSlug(Optional<String> loincSlug) {
+            this.loincSlug = loincSlug;
+            return this;
+        }
+
+        @Override
+        public _FinalStage loinc(String loinc) {
+            this.loinc = Optional.of(loinc);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "loinc", nulls = Nulls.SKIP)
+        public _FinalStage loinc(Optional<String> loinc) {
+            this.loinc = loinc;
             return this;
         }
 
@@ -469,6 +531,8 @@ public final class BiomarkerResult {
                     isAboveMaxRange,
                     isBelowMinRange,
                     interpretation,
+                    loinc,
+                    loincSlug,
                     additionalProperties);
         }
     }

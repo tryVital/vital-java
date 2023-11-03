@@ -18,14 +18,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest.Builder.class)
-public final class SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest {
+@JsonDeserialize(builder = TeamGetUserByIdRequest.Builder.class)
+public final class TeamGetUserByIdRequest {
     private final Optional<String> queryId;
 
     private final Map<String, Object> additionalProperties;
 
-    private SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest(
-            Optional<String> queryId, Map<String, Object> additionalProperties) {
+    private TeamGetUserByIdRequest(Optional<String> queryId, Map<String, Object> additionalProperties) {
         this.queryId = queryId;
         this.additionalProperties = additionalProperties;
     }
@@ -38,8 +37,7 @@ public final class SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetReques
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest
-                && equalTo((SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest) other);
+        return other instanceof TeamGetUserByIdRequest && equalTo((TeamGetUserByIdRequest) other);
     }
 
     @JsonAnyGetter
@@ -47,7 +45,7 @@ public final class SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetReques
         return this.additionalProperties;
     }
 
-    private boolean equalTo(SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest other) {
+    private boolean equalTo(TeamGetUserByIdRequest other) {
         return queryId.equals(other.queryId);
     }
 
@@ -74,7 +72,7 @@ public final class SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetReques
 
         private Builder() {}
 
-        public Builder from(SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest other) {
+        public Builder from(TeamGetUserByIdRequest other) {
             queryId(other.getQueryId());
             return this;
         }
@@ -90,8 +88,8 @@ public final class SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetReques
             return this;
         }
 
-        public SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest build() {
-            return new SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest(queryId, additionalProperties);
+        public TeamGetUserByIdRequest build() {
+            return new TeamGetUserByIdRequest(queryId, additionalProperties);
         }
     }
 }

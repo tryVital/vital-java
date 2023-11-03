@@ -550,7 +550,7 @@ public class LinkClient {
     /**
      * GET List of all available providers given the generated link token.
      */
-    public List<SourceLink> getProviders(RequestOptions requestOptions) {
+    public List<SourceLink> getAllProviders(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/providers")
@@ -579,8 +579,8 @@ public class LinkClient {
     /**
      * GET List of all available providers given the generated link token.
      */
-    public List<SourceLink> getProviders() {
-        return getProviders(null);
+    public List<SourceLink> getAllProviders() {
+        return getAllProviders(null);
     }
 
     /**

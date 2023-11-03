@@ -21,7 +21,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetMarkersResponse.Builder.class)
 public final class GetMarkersResponse {
-    private final List<ClientFacingMarker> markers;
+    private final List<ClientFacingMarkerComplete> markers;
 
     private final int total;
 
@@ -32,7 +32,11 @@ public final class GetMarkersResponse {
     private final Map<String, Object> additionalProperties;
 
     private GetMarkersResponse(
-            List<ClientFacingMarker> markers, int total, int page, int size, Map<String, Object> additionalProperties) {
+            List<ClientFacingMarkerComplete> markers,
+            int total,
+            int page,
+            int size,
+            Map<String, Object> additionalProperties) {
         this.markers = markers;
         this.total = total;
         this.page = page;
@@ -41,7 +45,7 @@ public final class GetMarkersResponse {
     }
 
     @JsonProperty("markers")
-    public List<ClientFacingMarker> getMarkers() {
+    public List<ClientFacingMarkerComplete> getMarkers() {
         return markers;
     }
 
@@ -106,11 +110,11 @@ public final class GetMarkersResponse {
     public interface _FinalStage {
         GetMarkersResponse build();
 
-        _FinalStage markers(List<ClientFacingMarker> markers);
+        _FinalStage markers(List<ClientFacingMarkerComplete> markers);
 
-        _FinalStage addMarkers(ClientFacingMarker markers);
+        _FinalStage addMarkers(ClientFacingMarkerComplete markers);
 
-        _FinalStage addAllMarkers(List<ClientFacingMarker> markers);
+        _FinalStage addAllMarkers(List<ClientFacingMarkerComplete> markers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -121,7 +125,7 @@ public final class GetMarkersResponse {
 
         private int size;
 
-        private List<ClientFacingMarker> markers = new ArrayList<>();
+        private List<ClientFacingMarkerComplete> markers = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -159,20 +163,20 @@ public final class GetMarkersResponse {
         }
 
         @Override
-        public _FinalStage addAllMarkers(List<ClientFacingMarker> markers) {
+        public _FinalStage addAllMarkers(List<ClientFacingMarkerComplete> markers) {
             this.markers.addAll(markers);
             return this;
         }
 
         @Override
-        public _FinalStage addMarkers(ClientFacingMarker markers) {
+        public _FinalStage addMarkers(ClientFacingMarkerComplete markers) {
             this.markers.add(markers);
             return this;
         }
 
         @Override
         @JsonSetter(value = "markers", nulls = Nulls.SKIP)
-        public _FinalStage markers(List<ClientFacingMarker> markers) {
+        public _FinalStage markers(List<ClientFacingMarkerComplete> markers) {
             this.markers.clear();
             this.markers.addAll(markers);
             return this;

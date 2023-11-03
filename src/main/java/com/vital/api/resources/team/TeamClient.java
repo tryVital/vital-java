@@ -8,9 +8,9 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.team.requests.GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest;
-import com.vital.api.resources.team.requests.SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest;
-import com.vital.api.resources.team.requests.UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest;
+import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
+import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
+import com.vital.api.resources.team.requests.TeamUpdateSourcePrioritiesRequest;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getTeamConfig(RequestOptions requestOptions) {
+    public Map<String, Object> getLinkConfig(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/link/config")
@@ -60,14 +60,14 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getTeamConfig() {
-        return getTeamConfig(null);
+    public Map<String, Object> getLinkConfig() {
+        return getLinkConfig(null);
     }
 
     /**
      * Get team.
      */
-    public ClientFacingTeam getTeam(String teamId, RequestOptions requestOptions) {
+    public ClientFacingTeam get(String teamId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team")
@@ -96,24 +96,21 @@ public class TeamClient {
     /**
      * Get team.
      */
-    public ClientFacingTeam getTeam(String teamId) {
-        return getTeam(teamId, null);
+    public ClientFacingTeam get(String teamId) {
+        return get(teamId, null);
     }
 
     /**
      * Search team users by user_id
      */
-    public List<ClientFacingUser> searchTeamUsersByUuidOrClientUserId() {
-        return searchTeamUsersByUuidOrClientUserId(
-                SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest.builder()
-                        .build());
+    public List<ClientFacingUser> getUserById() {
+        return getUserById(TeamGetUserByIdRequest.builder().build());
     }
 
     /**
      * Search team users by user_id
      */
-    public List<ClientFacingUser> searchTeamUsersByUuidOrClientUserId(
-            SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest request, RequestOptions requestOptions) {
+    public List<ClientFacingUser> getUserById(TeamGetUserByIdRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/users/search");
@@ -144,12 +141,11 @@ public class TeamClient {
     /**
      * Search team users by user_id
      */
-    public List<ClientFacingUser> searchTeamUsersByUuidOrClientUserId(
-            SearchTeamUsersByUuidOrClientUserIdV2TeamUsersSearchGetRequest request) {
-        return searchTeamUsersByUuidOrClientUserId(request, null);
+    public List<ClientFacingUser> getUserById(TeamGetUserByIdRequest request) {
+        return getUserById(request, null);
     }
 
-    public Map<String, Object> getSvixWebhookUrl(RequestOptions requestOptions) {
+    public Map<String, Object> getSvixUrl(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/svix/url")
@@ -175,23 +171,22 @@ public class TeamClient {
         }
     }
 
-    public Map<String, Object> getSvixWebhookUrl() {
-        return getSvixWebhookUrl(null);
+    public Map<String, Object> getSvixUrl() {
+        return getSvixUrl(null);
     }
 
     /**
      * GET source priorities.
      */
     public List<Map<String, Object>> getSourcePriorities() {
-        return getSourcePriorities(
-                GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest.builder().build());
+        return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build());
     }
 
     /**
      * GET source priorities.
      */
     public List<Map<String, Object>> getSourcePriorities(
-            GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest request, RequestOptions requestOptions) {
+            TeamGetSourcePrioritiesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/source/priorities");
@@ -222,7 +217,7 @@ public class TeamClient {
     /**
      * GET source priorities.
      */
-    public List<Map<String, Object>> getSourcePriorities(GetSourcePrioritiesV2TeamSourcePrioritiesGetRequest request) {
+    public List<Map<String, Object>> getSourcePriorities(TeamGetSourcePrioritiesRequest request) {
         return getSourcePriorities(request, null);
     }
 
@@ -230,7 +225,7 @@ public class TeamClient {
      * Patch source priorities.
      */
     public List<Map<String, Object>> updateSourcePriorities(
-            UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest request, RequestOptions requestOptions) {
+            TeamUpdateSourcePrioritiesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/source/priorities");
@@ -259,8 +254,7 @@ public class TeamClient {
     /**
      * Patch source priorities.
      */
-    public List<Map<String, Object>> updateSourcePriorities(
-            UpdateSourcePrioritiesV2TeamSourcePrioritiesPatchRequest request) {
+    public List<Map<String, Object>> updateSourcePriorities(TeamUpdateSourcePrioritiesRequest request) {
         return updateSourcePriorities(request, null);
     }
 }
