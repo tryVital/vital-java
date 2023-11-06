@@ -1,6 +1,6 @@
 # Vital Java Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.vital/vital-java)](https://central.sonatype.com/artifact/io.vital/vital-java/) 
+[![Maven Central](https://img.shields.io/maven-central/v/io.tryvital/vital-java)](https://central.sonatype.com/artifact/io.vital/vital-java/) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 The Vital Java library provides access to the Vital API from applications written in Java.
@@ -19,7 +19,7 @@ Add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'io.vital:vital-java:0.x.x'
+    implementation 'io.tryvital:vital-java:0.x.x'
 }
 ```
 
@@ -29,7 +29,7 @@ Add the dependency in your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>io.vital</groupId>
+    <groupId>io.tryvital</groupId>
     <artifactId>vital-java</artifactId>
     <version>0.x.x</version>
 </dependency>
