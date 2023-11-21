@@ -53,6 +53,8 @@ public final class ClientFacingTeam {
 
     private final Optional<String> logoUrl;
 
+    private final DelegatedFlowType delegatedFlow;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingTeam(
@@ -72,6 +74,7 @@ public final class ClientFacingTeam {
             boolean labTestsPatientSmsCommunicationEnabled,
             boolean labTestsPatientEmailCommunicationEnabled,
             Optional<String> logoUrl,
+            DelegatedFlowType delegatedFlow,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -89,6 +92,7 @@ public final class ClientFacingTeam {
         this.labTestsPatientSmsCommunicationEnabled = labTestsPatientSmsCommunicationEnabled;
         this.labTestsPatientEmailCommunicationEnabled = labTestsPatientEmailCommunicationEnabled;
         this.logoUrl = logoUrl;
+        this.delegatedFlow = delegatedFlow;
         this.additionalProperties = additionalProperties;
     }
 
@@ -172,6 +176,11 @@ public final class ClientFacingTeam {
         return logoUrl;
     }
 
+    @JsonProperty("delegated_flow")
+    public DelegatedFlowType getDelegatedFlow() {
+        return delegatedFlow;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -199,7 +208,8 @@ public final class ClientFacingTeam {
                 && labTestsPatientCommunicationEnabled == other.labTestsPatientCommunicationEnabled
                 && labTestsPatientSmsCommunicationEnabled == other.labTestsPatientSmsCommunicationEnabled
                 && labTestsPatientEmailCommunicationEnabled == other.labTestsPatientEmailCommunicationEnabled
-                && logoUrl.equals(other.logoUrl);
+                && logoUrl.equals(other.logoUrl)
+                && delegatedFlow.equals(other.delegatedFlow);
     }
 
     @Override
@@ -220,7 +230,8 @@ public final class ClientFacingTeam {
                 this.labTestsPatientCommunicationEnabled,
                 this.labTestsPatientSmsCommunicationEnabled,
                 this.labTestsPatientEmailCommunicationEnabled,
-                this.logoUrl);
+                this.logoUrl,
+                this.delegatedFlow);
     }
 
     @Override
@@ -257,7 +268,11 @@ public final class ClientFacingTeam {
     }
 
     public interface LabTestsPatientEmailCommunicationEnabledStage {
-        _FinalStage labTestsPatientEmailCommunicationEnabled(boolean labTestsPatientEmailCommunicationEnabled);
+        DelegatedFlowStage labTestsPatientEmailCommunicationEnabled(boolean labTestsPatientEmailCommunicationEnabled);
+    }
+
+    public interface DelegatedFlowStage {
+        _FinalStage delegatedFlow(DelegatedFlowType delegatedFlow);
     }
 
     public interface _FinalStage {
@@ -312,6 +327,7 @@ public final class ClientFacingTeam {
                     LabTestsPatientCommunicationEnabledStage,
                     LabTestsPatientSmsCommunicationEnabledStage,
                     LabTestsPatientEmailCommunicationEnabledStage,
+                    DelegatedFlowStage,
                     _FinalStage {
         private String id;
 
@@ -324,6 +340,8 @@ public final class ClientFacingTeam {
         private boolean labTestsPatientSmsCommunicationEnabled;
 
         private boolean labTestsPatientEmailCommunicationEnabled;
+
+        private DelegatedFlowType delegatedFlow;
 
         private Optional<String> logoUrl = Optional.empty();
 
@@ -368,6 +386,7 @@ public final class ClientFacingTeam {
             labTestsPatientSmsCommunicationEnabled(other.getLabTestsPatientSmsCommunicationEnabled());
             labTestsPatientEmailCommunicationEnabled(other.getLabTestsPatientEmailCommunicationEnabled());
             logoUrl(other.getLogoUrl());
+            delegatedFlow(other.getDelegatedFlow());
             return this;
         }
 
@@ -410,8 +429,16 @@ public final class ClientFacingTeam {
 
         @Override
         @JsonSetter("lab_tests_patient_email_communication_enabled")
-        public _FinalStage labTestsPatientEmailCommunicationEnabled(boolean labTestsPatientEmailCommunicationEnabled) {
+        public DelegatedFlowStage labTestsPatientEmailCommunicationEnabled(
+                boolean labTestsPatientEmailCommunicationEnabled) {
             this.labTestsPatientEmailCommunicationEnabled = labTestsPatientEmailCommunicationEnabled;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("delegated_flow")
+        public _FinalStage delegatedFlow(DelegatedFlowType delegatedFlow) {
+            this.delegatedFlow = delegatedFlow;
             return this;
         }
 
@@ -564,6 +591,7 @@ public final class ClientFacingTeam {
                     labTestsPatientSmsCommunicationEnabled,
                     labTestsPatientEmailCommunicationEnabled,
                     logoUrl,
+                    delegatedFlow,
                     additionalProperties);
         }
     }

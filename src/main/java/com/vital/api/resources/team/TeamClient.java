@@ -11,6 +11,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.resources.team.requests.TeamUpdateSourcePrioritiesRequest;
+import com.vital.api.types.ClientFacingPhysician;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
 import java.io.IOException;
@@ -256,5 +257,37 @@ public class TeamClient {
      */
     public List<Map<String, Object>> updateSourcePriorities(TeamUpdateSourcePrioritiesRequest request) {
         return updateSourcePriorities(request, null);
+    }
+
+    public List<ClientFacingPhysician> getPhysicians(String teamId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/team")
+                .addPathSegment(teamId)
+                .addPathSegments("physicians")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), new TypeReference<List<ClientFacingPhysician>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ClientFacingPhysician> getPhysicians(String teamId) {
+        return getPhysicians(teamId, null);
     }
 }

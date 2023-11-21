@@ -17,6 +17,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
 import com.vital.api.types.AreaInfo;
 import com.vital.api.types.ClientFacingAppointment;
@@ -465,7 +466,7 @@ public class LabTestsClient {
     /**
      * Cancel a previously booked at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment cancelPhlabotomyAppointment(
+    public ClientFacingAppointment cancelPhlebotomyAppointment(
             String orderId, AppointmentCancelRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -503,8 +504,8 @@ public class LabTestsClient {
     /**
      * Cancel a previously booked at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment cancelPhlabotomyAppointment(String orderId, AppointmentCancelRequest request) {
-        return cancelPhlabotomyAppointment(orderId, request, null);
+    public ClientFacingAppointment cancelPhlebotomyAppointment(String orderId, AppointmentCancelRequest request) {
+        return cancelPhlebotomyAppointment(orderId, request, null);
     }
 
     /**
@@ -888,6 +889,58 @@ public class LabTestsClient {
      */
     public PostOrderResponse cancelOrder(String orderId) {
         return cancelOrder(orderId, null);
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(String orderId) {
+        return simulateOrderProcess(
+                orderId, LabTestsSimulateOrderProcessRequest.builder().build());
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(
+            String orderId, LabTestsSimulateOrderProcessRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("test");
+        if (request.getFinalStatus().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "final_status", request.getFinalStatus().get().toString());
+        }
+        if (request.getDelay().isPresent()) {
+            httpUrl.addQueryParameter("delay", request.getDelay().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(String orderId, LabTestsSimulateOrderProcessRequest request) {
+        return simulateOrderProcess(orderId, request, null);
     }
 
     /**

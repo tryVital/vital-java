@@ -35,6 +35,8 @@ public final class ClientFacingLabTest {
 
     private final boolean isActive;
 
+    private final LabTestStatus status;
+
     private final Optional<Boolean> fasting;
 
     private final Optional<ClientFacingLab> lab;
@@ -53,6 +55,7 @@ public final class ClientFacingLabTest {
             LabTestCollectionMethod method,
             double price,
             boolean isActive,
+            LabTestStatus status,
             Optional<Boolean> fasting,
             Optional<ClientFacingLab> lab,
             Optional<List<ClientFacingMarker>> markers,
@@ -65,6 +68,7 @@ public final class ClientFacingLabTest {
         this.method = method;
         this.price = price;
         this.isActive = isActive;
+        this.status = status;
         this.fasting = fasting;
         this.lab = lab;
         this.markers = markers;
@@ -102,9 +106,17 @@ public final class ClientFacingLabTest {
         return price;
     }
 
+    /**
+     * @return Deprecated. Use status instead.
+     */
     @JsonProperty("is_active")
     public boolean getIsActive() {
         return isActive;
+    }
+
+    @JsonProperty("status")
+    public LabTestStatus getStatus() {
+        return status;
     }
 
     /**
@@ -152,6 +164,7 @@ public final class ClientFacingLabTest {
                 && method.equals(other.method)
                 && price == other.price
                 && isActive == other.isActive
+                && status.equals(other.status)
                 && fasting.equals(other.fasting)
                 && lab.equals(other.lab)
                 && markers.equals(other.markers)
@@ -168,6 +181,7 @@ public final class ClientFacingLabTest {
                 this.method,
                 this.price,
                 this.isActive,
+                this.status,
                 this.fasting,
                 this.lab,
                 this.markers,
@@ -210,7 +224,11 @@ public final class ClientFacingLabTest {
     }
 
     public interface IsActiveStage {
-        _FinalStage isActive(boolean isActive);
+        StatusStage isActive(boolean isActive);
+    }
+
+    public interface StatusStage {
+        _FinalStage status(LabTestStatus status);
     }
 
     public interface _FinalStage {
@@ -242,6 +260,7 @@ public final class ClientFacingLabTest {
                     MethodStage,
                     PriceStage,
                     IsActiveStage,
+                    StatusStage,
                     _FinalStage {
         private String id;
 
@@ -256,6 +275,8 @@ public final class ClientFacingLabTest {
         private double price;
 
         private boolean isActive;
+
+        private LabTestStatus status;
 
         private Optional<Boolean> isDelegated = Optional.empty();
 
@@ -279,6 +300,7 @@ public final class ClientFacingLabTest {
             method(other.getMethod());
             price(other.getPrice());
             isActive(other.getIsActive());
+            status(other.getStatus());
             fasting(other.getFasting());
             lab(other.getLab());
             markers(other.getMarkers());
@@ -328,10 +350,21 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * <p>Deprecated. Use status instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("is_active")
-        public _FinalStage isActive(boolean isActive) {
+        public StatusStage isActive(boolean isActive) {
             this.isActive = isActive;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("status")
+        public _FinalStage status(LabTestStatus status) {
+            this.status = status;
             return this;
         }
 
@@ -405,6 +438,7 @@ public final class ClientFacingLabTest {
                     method,
                     price,
                     isActive,
+                    status,
                     fasting,
                     lab,
                     markers,

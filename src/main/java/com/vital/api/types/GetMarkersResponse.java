@@ -17,30 +17,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetMarkersResponse.Builder.class)
 public final class GetMarkersResponse {
     private final List<ClientFacingMarkerComplete> markers;
 
-    private final int total;
+    private final Optional<Integer> total;
 
-    private final int page;
+    private final Optional<Integer> page;
 
-    private final int size;
+    private final Optional<Integer> size;
+
+    private final Optional<Integer> pages;
 
     private final Map<String, Object> additionalProperties;
 
     private GetMarkersResponse(
             List<ClientFacingMarkerComplete> markers,
-            int total,
-            int page,
-            int size,
+            Optional<Integer> total,
+            Optional<Integer> page,
+            Optional<Integer> size,
+            Optional<Integer> pages,
             Map<String, Object> additionalProperties) {
         this.markers = markers;
         this.total = total;
         this.page = page;
         this.size = size;
+        this.pages = pages;
         this.additionalProperties = additionalProperties;
     }
 
@@ -50,18 +55,23 @@ public final class GetMarkersResponse {
     }
 
     @JsonProperty("total")
-    public int getTotal() {
+    public Optional<Integer> getTotal() {
         return total;
     }
 
     @JsonProperty("page")
-    public int getPage() {
+    public Optional<Integer> getPage() {
         return page;
     }
 
     @JsonProperty("size")
-    public int getSize() {
+    public Optional<Integer> getSize() {
         return size;
+    }
+
+    @JsonProperty("pages")
+    public Optional<Integer> getPages() {
+        return pages;
     }
 
     @Override
@@ -76,12 +86,16 @@ public final class GetMarkersResponse {
     }
 
     private boolean equalTo(GetMarkersResponse other) {
-        return markers.equals(other.markers) && total == other.total && page == other.page && size == other.size;
+        return markers.equals(other.markers)
+                && total.equals(other.total)
+                && page.equals(other.page)
+                && size.equals(other.size)
+                && pages.equals(other.pages);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.markers, this.total, this.page, this.size);
+        return Objects.hash(this.markers, this.total, this.page, this.size, this.pages);
     }
 
     @Override
@@ -89,102 +103,99 @@ public final class GetMarkersResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static TotalStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface TotalStage {
-        PageStage total(int total);
-
-        Builder from(GetMarkersResponse other);
-    }
-
-    public interface PageStage {
-        SizeStage page(int page);
-    }
-
-    public interface SizeStage {
-        _FinalStage size(int size);
-    }
-
-    public interface _FinalStage {
-        GetMarkersResponse build();
-
-        _FinalStage markers(List<ClientFacingMarkerComplete> markers);
-
-        _FinalStage addMarkers(ClientFacingMarkerComplete markers);
-
-        _FinalStage addAllMarkers(List<ClientFacingMarkerComplete> markers);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TotalStage, PageStage, SizeStage, _FinalStage {
-        private int total;
-
-        private int page;
-
-        private int size;
-
+    public static final class Builder {
         private List<ClientFacingMarkerComplete> markers = new ArrayList<>();
+
+        private Optional<Integer> total = Optional.empty();
+
+        private Optional<Integer> page = Optional.empty();
+
+        private Optional<Integer> size = Optional.empty();
+
+        private Optional<Integer> pages = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
         public Builder from(GetMarkersResponse other) {
             markers(other.getMarkers());
             total(other.getTotal());
             page(other.getPage());
             size(other.getSize());
+            pages(other.getPages());
             return this;
         }
 
-        @Override
-        @JsonSetter("total")
-        public PageStage total(int total) {
-            this.total = total;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("page")
-        public SizeStage page(int page) {
-            this.page = page;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("size")
-        public _FinalStage size(int size) {
-            this.size = size;
-            return this;
-        }
-
-        @Override
-        public _FinalStage addAllMarkers(List<ClientFacingMarkerComplete> markers) {
-            this.markers.addAll(markers);
-            return this;
-        }
-
-        @Override
-        public _FinalStage addMarkers(ClientFacingMarkerComplete markers) {
-            this.markers.add(markers);
-            return this;
-        }
-
-        @Override
         @JsonSetter(value = "markers", nulls = Nulls.SKIP)
-        public _FinalStage markers(List<ClientFacingMarkerComplete> markers) {
+        public Builder markers(List<ClientFacingMarkerComplete> markers) {
             this.markers.clear();
             this.markers.addAll(markers);
             return this;
         }
 
-        @Override
+        public Builder addMarkers(ClientFacingMarkerComplete markers) {
+            this.markers.add(markers);
+            return this;
+        }
+
+        public Builder addAllMarkers(List<ClientFacingMarkerComplete> markers) {
+            this.markers.addAll(markers);
+            return this;
+        }
+
+        @JsonSetter(value = "total", nulls = Nulls.SKIP)
+        public Builder total(Optional<Integer> total) {
+            this.total = total;
+            return this;
+        }
+
+        public Builder total(Integer total) {
+            this.total = Optional.of(total);
+            return this;
+        }
+
+        @JsonSetter(value = "page", nulls = Nulls.SKIP)
+        public Builder page(Optional<Integer> page) {
+            this.page = page;
+            return this;
+        }
+
+        public Builder page(Integer page) {
+            this.page = Optional.of(page);
+            return this;
+        }
+
+        @JsonSetter(value = "size", nulls = Nulls.SKIP)
+        public Builder size(Optional<Integer> size) {
+            this.size = size;
+            return this;
+        }
+
+        public Builder size(Integer size) {
+            this.size = Optional.of(size);
+            return this;
+        }
+
+        @JsonSetter(value = "pages", nulls = Nulls.SKIP)
+        public Builder pages(Optional<Integer> pages) {
+            this.pages = pages;
+            return this;
+        }
+
+        public Builder pages(Integer pages) {
+            this.pages = Optional.of(pages);
+            return this;
+        }
+
         public GetMarkersResponse build() {
-            return new GetMarkersResponse(markers, total, page, size, additionalProperties);
+            return new GetMarkersResponse(markers, total, page, size, pages, additionalProperties);
         }
     }
 }

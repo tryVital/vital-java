@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = PhysicianClientFacing.Builder.class)
-public final class PhysicianClientFacing {
+@JsonDeserialize(builder = ClientFacingPhysician.Builder.class)
+public final class ClientFacingPhysician {
     private final String firstName;
 
     private final String lastName;
@@ -26,7 +26,7 @@ public final class PhysicianClientFacing {
 
     private final Map<String, Object> additionalProperties;
 
-    private PhysicianClientFacing(
+    private ClientFacingPhysician(
             String firstName, String lastName, String npi, Map<String, Object> additionalProperties) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,7 +52,7 @@ public final class PhysicianClientFacing {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof PhysicianClientFacing && equalTo((PhysicianClientFacing) other);
+        return other instanceof ClientFacingPhysician && equalTo((ClientFacingPhysician) other);
     }
 
     @JsonAnyGetter
@@ -60,7 +60,7 @@ public final class PhysicianClientFacing {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(PhysicianClientFacing other) {
+    private boolean equalTo(ClientFacingPhysician other) {
         return firstName.equals(other.firstName) && lastName.equals(other.lastName) && npi.equals(other.npi);
     }
 
@@ -81,7 +81,7 @@ public final class PhysicianClientFacing {
     public interface FirstNameStage {
         LastNameStage firstName(String firstName);
 
-        Builder from(PhysicianClientFacing other);
+        Builder from(ClientFacingPhysician other);
     }
 
     public interface LastNameStage {
@@ -93,7 +93,7 @@ public final class PhysicianClientFacing {
     }
 
     public interface _FinalStage {
-        PhysicianClientFacing build();
+        ClientFacingPhysician build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -110,7 +110,7 @@ public final class PhysicianClientFacing {
         private Builder() {}
 
         @Override
-        public Builder from(PhysicianClientFacing other) {
+        public Builder from(ClientFacingPhysician other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
             npi(other.getNpi());
@@ -139,8 +139,8 @@ public final class PhysicianClientFacing {
         }
 
         @Override
-        public PhysicianClientFacing build() {
-            return new PhysicianClientFacing(firstName, lastName, npi, additionalProperties);
+        public ClientFacingPhysician build() {
+            return new ClientFacingPhysician(firstName, lastName, npi, additionalProperties);
         }
     }
 }

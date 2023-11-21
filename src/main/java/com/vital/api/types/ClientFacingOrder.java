@@ -49,7 +49,7 @@ public final class ClientFacingOrder {
 
     private final Optional<OrderTopLevelStatus> status;
 
-    private final Optional<PhysicianClientFacing> physician;
+    private final Optional<ClientFacingPhysician> physician;
 
     private final Optional<String> healthInsuranceId;
 
@@ -75,7 +75,7 @@ public final class ClientFacingOrder {
             OffsetDateTime updatedAt,
             List<ClientFacingOrderEvent> events,
             Optional<OrderTopLevelStatus> status,
-            Optional<PhysicianClientFacing> physician,
+            Optional<ClientFacingPhysician> physician,
             Optional<String> healthInsuranceId,
             Optional<String> requisitionFormUrl,
             Optional<Boolean> priority,
@@ -198,7 +198,7 @@ public final class ClientFacingOrder {
     }
 
     @JsonProperty("physician")
-    public Optional<PhysicianClientFacing> getPhysician() {
+    public Optional<ClientFacingPhysician> getPhysician() {
         return physician;
     }
 
@@ -357,9 +357,9 @@ public final class ClientFacingOrder {
 
         _FinalStage status(OrderTopLevelStatus status);
 
-        _FinalStage physician(Optional<PhysicianClientFacing> physician);
+        _FinalStage physician(Optional<ClientFacingPhysician> physician);
 
-        _FinalStage physician(PhysicianClientFacing physician);
+        _FinalStage physician(ClientFacingPhysician physician);
 
         _FinalStage healthInsuranceId(Optional<String> healthInsuranceId);
 
@@ -410,7 +410,7 @@ public final class ClientFacingOrder {
 
         private Optional<String> healthInsuranceId = Optional.empty();
 
-        private Optional<PhysicianClientFacing> physician = Optional.empty();
+        private Optional<ClientFacingPhysician> physician = Optional.empty();
 
         private Optional<OrderTopLevelStatus> status = Optional.empty();
 
@@ -594,14 +594,14 @@ public final class ClientFacingOrder {
         }
 
         @Override
-        public _FinalStage physician(PhysicianClientFacing physician) {
+        public _FinalStage physician(ClientFacingPhysician physician) {
             this.physician = Optional.of(physician);
             return this;
         }
 
         @Override
         @JsonSetter(value = "physician", nulls = Nulls.SKIP)
-        public _FinalStage physician(Optional<PhysicianClientFacing> physician) {
+        public _FinalStage physician(Optional<ClientFacingPhysician> physician) {
             this.physician = physician;
             return this;
         }

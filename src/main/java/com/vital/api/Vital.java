@@ -9,6 +9,7 @@ import com.vital.api.resources.activity.ActivityClient;
 import com.vital.api.resources.body.BodyClient;
 import com.vital.api.resources.devices.DevicesClient;
 import com.vital.api.resources.insurance.InsuranceClient;
+import com.vital.api.resources.introspect.IntrospectClient;
 import com.vital.api.resources.labtests.LabTestsClient;
 import com.vital.api.resources.link.LinkClient;
 import com.vital.api.resources.meal.MealClient;
@@ -49,6 +50,8 @@ public class Vital {
 
     protected final Supplier<ProvidersClient> providersClient;
 
+    protected final Supplier<IntrospectClient> introspectClient;
+
     protected final Supplier<LabTestsClient> labTestsClient;
 
     protected final Supplier<TestkitClient> testkitClient;
@@ -69,6 +72,7 @@ public class Vital {
         this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
+        this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
@@ -120,6 +124,10 @@ public class Vital {
 
     public ProvidersClient providers() {
         return this.providersClient.get();
+    }
+
+    public IntrospectClient introspect() {
+        return this.introspectClient.get();
     }
 
     public LabTestsClient labTests() {

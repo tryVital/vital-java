@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public final class WorkoutV2InDb {
     private final OffsetDateTime timestamp;
 
-    private final Optional<String> data;
+    private final Map<String, Object> data;
 
     private final String providerId;
 
@@ -45,7 +46,7 @@ public final class WorkoutV2InDb {
 
     private WorkoutV2InDb(
             OffsetDateTime timestamp,
-            Optional<String> data,
+            Map<String, Object> data,
             String providerId,
             String userId,
             int sourceId,
@@ -74,7 +75,7 @@ public final class WorkoutV2InDb {
     }
 
     @JsonProperty("data")
-    public Optional<String> getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
@@ -203,9 +204,11 @@ public final class WorkoutV2InDb {
     public interface _FinalStage {
         WorkoutV2InDb build();
 
-        _FinalStage data(Optional<String> data);
+        _FinalStage data(Map<String, Object> data);
 
-        _FinalStage data(String data);
+        _FinalStage putAllData(Map<String, Object> data);
+
+        _FinalStage data(String key, Object value);
 
         _FinalStage priorityId(Optional<Integer> priorityId);
 
@@ -241,7 +244,7 @@ public final class WorkoutV2InDb {
 
         private Optional<Integer> priorityId = Optional.empty();
 
-        private Optional<String> data = Optional.empty();
+        private Map<String, Object> data = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -333,15 +336,22 @@ public final class WorkoutV2InDb {
         }
 
         @Override
-        public _FinalStage data(String data) {
-            this.data = Optional.of(data);
+        public _FinalStage data(String key, Object value) {
+            this.data.put(key, value);
+            return this;
+        }
+
+        @Override
+        public _FinalStage putAllData(Map<String, Object> data) {
+            this.data.putAll(data);
             return this;
         }
 
         @Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public _FinalStage data(Optional<String> data) {
-            this.data = data;
+        public _FinalStage data(Map<String, Object> data) {
+            this.data.clear();
+            this.data.putAll(data);
             return this;
         }
 

@@ -17,22 +17,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetOrdersResponse.Builder.class)
 public final class GetOrdersResponse {
     private final List<ClientFacingOrder> orders;
 
-    private final int total;
+    private final Optional<Integer> total;
 
-    private final int page;
+    private final Optional<Integer> page;
 
-    private final int size;
+    private final Optional<Integer> size;
 
     private final Map<String, Object> additionalProperties;
 
     private GetOrdersResponse(
-            List<ClientFacingOrder> orders, int total, int page, int size, Map<String, Object> additionalProperties) {
+            List<ClientFacingOrder> orders,
+            Optional<Integer> total,
+            Optional<Integer> page,
+            Optional<Integer> size,
+            Map<String, Object> additionalProperties) {
         this.orders = orders;
         this.total = total;
         this.page = page;
@@ -46,17 +51,17 @@ public final class GetOrdersResponse {
     }
 
     @JsonProperty("total")
-    public int getTotal() {
+    public Optional<Integer> getTotal() {
         return total;
     }
 
     @JsonProperty("page")
-    public int getPage() {
+    public Optional<Integer> getPage() {
         return page;
     }
 
     @JsonProperty("size")
-    public int getSize() {
+    public Optional<Integer> getSize() {
         return size;
     }
 
@@ -72,7 +77,10 @@ public final class GetOrdersResponse {
     }
 
     private boolean equalTo(GetOrdersResponse other) {
-        return orders.equals(other.orders) && total == other.total && page == other.page && size == other.size;
+        return orders.equals(other.orders)
+                && total.equals(other.total)
+                && page.equals(other.page)
+                && size.equals(other.size);
     }
 
     @Override
@@ -85,50 +93,25 @@ public final class GetOrdersResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static TotalStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface TotalStage {
-        PageStage total(int total);
-
-        Builder from(GetOrdersResponse other);
-    }
-
-    public interface PageStage {
-        SizeStage page(int page);
-    }
-
-    public interface SizeStage {
-        _FinalStage size(int size);
-    }
-
-    public interface _FinalStage {
-        GetOrdersResponse build();
-
-        _FinalStage orders(List<ClientFacingOrder> orders);
-
-        _FinalStage addOrders(ClientFacingOrder orders);
-
-        _FinalStage addAllOrders(List<ClientFacingOrder> orders);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TotalStage, PageStage, SizeStage, _FinalStage {
-        private int total;
-
-        private int page;
-
-        private int size;
-
+    public static final class Builder {
         private List<ClientFacingOrder> orders = new ArrayList<>();
+
+        private Optional<Integer> total = Optional.empty();
+
+        private Optional<Integer> page = Optional.empty();
+
+        private Optional<Integer> size = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
         public Builder from(GetOrdersResponse other) {
             orders(other.getOrders());
             total(other.getTotal());
@@ -137,48 +120,56 @@ public final class GetOrdersResponse {
             return this;
         }
 
-        @Override
-        @JsonSetter("total")
-        public PageStage total(int total) {
-            this.total = total;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("page")
-        public SizeStage page(int page) {
-            this.page = page;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("size")
-        public _FinalStage size(int size) {
-            this.size = size;
-            return this;
-        }
-
-        @Override
-        public _FinalStage addAllOrders(List<ClientFacingOrder> orders) {
-            this.orders.addAll(orders);
-            return this;
-        }
-
-        @Override
-        public _FinalStage addOrders(ClientFacingOrder orders) {
-            this.orders.add(orders);
-            return this;
-        }
-
-        @Override
         @JsonSetter(value = "orders", nulls = Nulls.SKIP)
-        public _FinalStage orders(List<ClientFacingOrder> orders) {
+        public Builder orders(List<ClientFacingOrder> orders) {
             this.orders.clear();
             this.orders.addAll(orders);
             return this;
         }
 
-        @Override
+        public Builder addOrders(ClientFacingOrder orders) {
+            this.orders.add(orders);
+            return this;
+        }
+
+        public Builder addAllOrders(List<ClientFacingOrder> orders) {
+            this.orders.addAll(orders);
+            return this;
+        }
+
+        @JsonSetter(value = "total", nulls = Nulls.SKIP)
+        public Builder total(Optional<Integer> total) {
+            this.total = total;
+            return this;
+        }
+
+        public Builder total(Integer total) {
+            this.total = Optional.of(total);
+            return this;
+        }
+
+        @JsonSetter(value = "page", nulls = Nulls.SKIP)
+        public Builder page(Optional<Integer> page) {
+            this.page = page;
+            return this;
+        }
+
+        public Builder page(Integer page) {
+            this.page = Optional.of(page);
+            return this;
+        }
+
+        @JsonSetter(value = "size", nulls = Nulls.SKIP)
+        public Builder size(Optional<Integer> size) {
+            this.size = size;
+            return this;
+        }
+
+        public Builder size(Integer size) {
+            this.size = Optional.of(size);
+            return this;
+        }
+
         public GetOrdersResponse build() {
             return new GetOrdersResponse(orders, total, page, size, additionalProperties);
         }
