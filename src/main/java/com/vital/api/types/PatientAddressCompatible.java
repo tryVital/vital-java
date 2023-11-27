@@ -22,9 +22,9 @@ import java.util.Optional;
 public final class PatientAddressCompatible {
     private final Optional<String> receiverName;
 
-    private final String street;
+    private final String firstLine;
 
-    private final Optional<String> streetNumber;
+    private final Optional<String> secondLine;
 
     private final String city;
 
@@ -40,8 +40,8 @@ public final class PatientAddressCompatible {
 
     private PatientAddressCompatible(
             Optional<String> receiverName,
-            String street,
-            Optional<String> streetNumber,
+            String firstLine,
+            Optional<String> secondLine,
             String city,
             String state,
             String zip,
@@ -49,8 +49,8 @@ public final class PatientAddressCompatible {
             Optional<String> phoneNumber,
             Map<String, Object> additionalProperties) {
         this.receiverName = receiverName;
-        this.street = street;
-        this.streetNumber = streetNumber;
+        this.firstLine = firstLine;
+        this.secondLine = secondLine;
         this.city = city;
         this.state = state;
         this.zip = zip;
@@ -64,14 +64,14 @@ public final class PatientAddressCompatible {
         return receiverName;
     }
 
-    @JsonProperty("street")
-    public String getStreet() {
-        return street;
+    @JsonProperty("first_line")
+    public String getFirstLine() {
+        return firstLine;
     }
 
-    @JsonProperty("street_number")
-    public Optional<String> getStreetNumber() {
-        return streetNumber;
+    @JsonProperty("second_line")
+    public Optional<String> getSecondLine() {
+        return secondLine;
     }
 
     @JsonProperty("city")
@@ -112,8 +112,8 @@ public final class PatientAddressCompatible {
 
     private boolean equalTo(PatientAddressCompatible other) {
         return receiverName.equals(other.receiverName)
-                && street.equals(other.street)
-                && streetNumber.equals(other.streetNumber)
+                && firstLine.equals(other.firstLine)
+                && secondLine.equals(other.secondLine)
                 && city.equals(other.city)
                 && state.equals(other.state)
                 && zip.equals(other.zip)
@@ -125,8 +125,8 @@ public final class PatientAddressCompatible {
     public int hashCode() {
         return Objects.hash(
                 this.receiverName,
-                this.street,
-                this.streetNumber,
+                this.firstLine,
+                this.secondLine,
                 this.city,
                 this.state,
                 this.zip,
@@ -139,12 +139,12 @@ public final class PatientAddressCompatible {
         return ObjectMappers.stringify(this);
     }
 
-    public static StreetStage builder() {
+    public static FirstLineStage builder() {
         return new Builder();
     }
 
-    public interface StreetStage {
-        CityStage street(String street);
+    public interface FirstLineStage {
+        CityStage firstLine(String firstLine);
 
         Builder from(PatientAddressCompatible other);
     }
@@ -172,9 +172,9 @@ public final class PatientAddressCompatible {
 
         _FinalStage receiverName(String receiverName);
 
-        _FinalStage streetNumber(Optional<String> streetNumber);
+        _FinalStage secondLine(Optional<String> secondLine);
 
-        _FinalStage streetNumber(String streetNumber);
+        _FinalStage secondLine(String secondLine);
 
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
@@ -183,8 +183,8 @@ public final class PatientAddressCompatible {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements StreetStage, CityStage, StateStage, ZipStage, CountryStage, _FinalStage {
-        private String street;
+            implements FirstLineStage, CityStage, StateStage, ZipStage, CountryStage, _FinalStage {
+        private String firstLine;
 
         private String city;
 
@@ -196,7 +196,7 @@ public final class PatientAddressCompatible {
 
         private Optional<String> phoneNumber = Optional.empty();
 
-        private Optional<String> streetNumber = Optional.empty();
+        private Optional<String> secondLine = Optional.empty();
 
         private Optional<String> receiverName = Optional.empty();
 
@@ -208,8 +208,8 @@ public final class PatientAddressCompatible {
         @Override
         public Builder from(PatientAddressCompatible other) {
             receiverName(other.getReceiverName());
-            street(other.getStreet());
-            streetNumber(other.getStreetNumber());
+            firstLine(other.getFirstLine());
+            secondLine(other.getSecondLine());
             city(other.getCity());
             state(other.getState());
             zip(other.getZip());
@@ -219,9 +219,9 @@ public final class PatientAddressCompatible {
         }
 
         @Override
-        @JsonSetter("street")
-        public CityStage street(String street) {
-            this.street = street;
+        @JsonSetter("first_line")
+        public CityStage firstLine(String firstLine) {
+            this.firstLine = firstLine;
             return this;
         }
 
@@ -267,15 +267,15 @@ public final class PatientAddressCompatible {
         }
 
         @Override
-        public _FinalStage streetNumber(String streetNumber) {
-            this.streetNumber = Optional.of(streetNumber);
+        public _FinalStage secondLine(String secondLine) {
+            this.secondLine = Optional.of(secondLine);
             return this;
         }
 
         @Override
-        @JsonSetter(value = "street_number", nulls = Nulls.SKIP)
-        public _FinalStage streetNumber(Optional<String> streetNumber) {
-            this.streetNumber = streetNumber;
+        @JsonSetter(value = "second_line", nulls = Nulls.SKIP)
+        public _FinalStage secondLine(Optional<String> secondLine) {
+            this.secondLine = secondLine;
             return this;
         }
 
@@ -295,7 +295,7 @@ public final class PatientAddressCompatible {
         @Override
         public PatientAddressCompatible build() {
             return new PatientAddressCompatible(
-                    receiverName, street, streetNumber, city, state, zip, country, phoneNumber, additionalProperties);
+                    receiverName, firstLine, secondLine, city, state, zip, country, phoneNumber, additionalProperties);
         }
     }
 }

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,12 +25,26 @@ public final class TeamConfig {
 
     private final Optional<Boolean> textsEnabled;
 
+    private final Optional<Boolean> pushHistoricalData;
+
+    private final Optional<EventDestinationPreferences> edsPreferences;
+
+    private final Optional<List<String>> eventTypePrefixes;
+
     private final Map<String, Object> additionalProperties;
 
     private TeamConfig(
-            LibreConfig libreview, Optional<Boolean> textsEnabled, Map<String, Object> additionalProperties) {
+            LibreConfig libreview,
+            Optional<Boolean> textsEnabled,
+            Optional<Boolean> pushHistoricalData,
+            Optional<EventDestinationPreferences> edsPreferences,
+            Optional<List<String>> eventTypePrefixes,
+            Map<String, Object> additionalProperties) {
         this.libreview = libreview;
         this.textsEnabled = textsEnabled;
+        this.pushHistoricalData = pushHistoricalData;
+        this.edsPreferences = edsPreferences;
+        this.eventTypePrefixes = eventTypePrefixes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -41,6 +56,21 @@ public final class TeamConfig {
     @JsonProperty("texts_enabled")
     public Optional<Boolean> getTextsEnabled() {
         return textsEnabled;
+    }
+
+    @JsonProperty("push_historical_data")
+    public Optional<Boolean> getPushHistoricalData() {
+        return pushHistoricalData;
+    }
+
+    @JsonProperty("eds_preferences")
+    public Optional<EventDestinationPreferences> getEdsPreferences() {
+        return edsPreferences;
+    }
+
+    @JsonProperty("event_type_prefixes")
+    public Optional<List<String>> getEventTypePrefixes() {
+        return eventTypePrefixes;
     }
 
     @Override
@@ -55,12 +85,21 @@ public final class TeamConfig {
     }
 
     private boolean equalTo(TeamConfig other) {
-        return libreview.equals(other.libreview) && textsEnabled.equals(other.textsEnabled);
+        return libreview.equals(other.libreview)
+                && textsEnabled.equals(other.textsEnabled)
+                && pushHistoricalData.equals(other.pushHistoricalData)
+                && edsPreferences.equals(other.edsPreferences)
+                && eventTypePrefixes.equals(other.eventTypePrefixes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.libreview, this.textsEnabled);
+        return Objects.hash(
+                this.libreview,
+                this.textsEnabled,
+                this.pushHistoricalData,
+                this.edsPreferences,
+                this.eventTypePrefixes);
     }
 
     @Override
@@ -84,11 +123,29 @@ public final class TeamConfig {
         _FinalStage textsEnabled(Optional<Boolean> textsEnabled);
 
         _FinalStage textsEnabled(Boolean textsEnabled);
+
+        _FinalStage pushHistoricalData(Optional<Boolean> pushHistoricalData);
+
+        _FinalStage pushHistoricalData(Boolean pushHistoricalData);
+
+        _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences);
+
+        _FinalStage edsPreferences(EventDestinationPreferences edsPreferences);
+
+        _FinalStage eventTypePrefixes(Optional<List<String>> eventTypePrefixes);
+
+        _FinalStage eventTypePrefixes(List<String> eventTypePrefixes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements LibreviewStage, _FinalStage {
         private LibreConfig libreview;
+
+        private Optional<List<String>> eventTypePrefixes = Optional.empty();
+
+        private Optional<EventDestinationPreferences> edsPreferences = Optional.empty();
+
+        private Optional<Boolean> pushHistoricalData = Optional.empty();
 
         private Optional<Boolean> textsEnabled = Optional.empty();
 
@@ -101,6 +158,9 @@ public final class TeamConfig {
         public Builder from(TeamConfig other) {
             libreview(other.getLibreview());
             textsEnabled(other.getTextsEnabled());
+            pushHistoricalData(other.getPushHistoricalData());
+            edsPreferences(other.getEdsPreferences());
+            eventTypePrefixes(other.getEventTypePrefixes());
             return this;
         }
 
@@ -108,6 +168,45 @@ public final class TeamConfig {
         @JsonSetter("libreview")
         public _FinalStage libreview(LibreConfig libreview) {
             this.libreview = libreview;
+            return this;
+        }
+
+        @Override
+        public _FinalStage eventTypePrefixes(List<String> eventTypePrefixes) {
+            this.eventTypePrefixes = Optional.of(eventTypePrefixes);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "event_type_prefixes", nulls = Nulls.SKIP)
+        public _FinalStage eventTypePrefixes(Optional<List<String>> eventTypePrefixes) {
+            this.eventTypePrefixes = eventTypePrefixes;
+            return this;
+        }
+
+        @Override
+        public _FinalStage edsPreferences(EventDestinationPreferences edsPreferences) {
+            this.edsPreferences = Optional.of(edsPreferences);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "eds_preferences", nulls = Nulls.SKIP)
+        public _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences) {
+            this.edsPreferences = edsPreferences;
+            return this;
+        }
+
+        @Override
+        public _FinalStage pushHistoricalData(Boolean pushHistoricalData) {
+            this.pushHistoricalData = Optional.of(pushHistoricalData);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "push_historical_data", nulls = Nulls.SKIP)
+        public _FinalStage pushHistoricalData(Optional<Boolean> pushHistoricalData) {
+            this.pushHistoricalData = pushHistoricalData;
             return this;
         }
 
@@ -126,7 +225,13 @@ public final class TeamConfig {
 
         @Override
         public TeamConfig build() {
-            return new TeamConfig(libreview, textsEnabled, additionalProperties);
+            return new TeamConfig(
+                    libreview,
+                    textsEnabled,
+                    pushHistoricalData,
+                    edsPreferences,
+                    eventTypePrefixes,
+                    additionalProperties);
         }
     }
 }
