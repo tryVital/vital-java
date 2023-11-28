@@ -14,9 +14,11 @@ import com.vital.api.resources.link.requests.EmailAuthLink;
 import com.vital.api.resources.link.requests.EmailProviderAuthLink;
 import com.vital.api.resources.link.requests.IndividualProviderData;
 import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
-import com.vital.api.resources.link.requests.LinkConnectOauthProviderRequest;
+import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
+import com.vital.api.resources.link.requests.LinkGetAllProvidersRequest;
 import com.vital.api.resources.link.requests.LinkTokenBase;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.resources.link.requests.LinkTokenStateRequest;
 import com.vital.api.resources.link.requests.ManualConnectionData;
 import com.vital.api.resources.link.requests.PasswordAuthLink;
 import com.vital.api.types.ConnectionStatus;
@@ -176,62 +178,6 @@ public class LinkClient {
 
     /**
      * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: OAUTH
-     * Connect oauth providers
-     */
-    public Map<String, Object> connectOauthProvider(String provider) {
-        return connectOauthProvider(
-                provider, LinkConnectOauthProviderRequest.builder().build());
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: OAUTH
-     * Connect oauth providers
-     */
-    public Map<String, Object> connectOauthProvider(
-            String provider, LinkConnectOauthProviderRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/connect")
-                .addPathSegment(provider)
-                .build();
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalSdkNoRedirect().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-sdk-no-redirect", request.getVitalSdkNoRedirect().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(), new TypeReference<Map<String, Object>>() {});
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: OAUTH
-     * Connect oauth providers
-     */
-    public Map<String, Object> connectOauthProvider(String provider, LinkConnectOauthProviderRequest request) {
-        return connectOauthProvider(provider, request, null);
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
      * Start link token process
      */
     public Map<String, Object> startConnect(BeginLinkTokenRequest request, RequestOptions requestOptions) {
@@ -279,17 +225,19 @@ public class LinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
-    public Map<String, Object> tokenState(RequestOptions requestOptions) {
+    public Map<String, Object> tokenState(LinkTokenStateRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/state")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -309,8 +257,8 @@ public class LinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
-    public Map<String, Object> tokenState() {
-        return tokenState(null);
+    public Map<String, Object> tokenState(LinkTokenStateRequest request) {
+        return tokenState(request, null);
     }
 
     /**
@@ -323,19 +271,28 @@ public class LinkClient {
                 .newBuilder()
                 .addPathSegments("v2/link/auth/email")
                 .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("email", request.getEmail());
+        properties.put("provider", request.getProvider());
+        properties.put("auth_type", request.getAuthType());
+        if (request.getRegion().isPresent()) {
+            properties.put("region", request.getRegion());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -391,6 +348,8 @@ public class LinkClient {
                     "x-vital-link-client-region",
                     request.getVitalLinkClientRegion().get());
         }
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -418,18 +377,21 @@ public class LinkClient {
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
-    public Source generateOauthLink(OAuthProviders oauthProvider, RequestOptions requestOptions) {
+    public Source generateOauthLink(
+            OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/oauth")
                 .addPathSegment(oauthProvider.toString())
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -447,8 +409,8 @@ public class LinkClient {
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
-    public Source generateOauthLink(OAuthProviders oauthProvider) {
-        return generateOauthLink(oauthProvider, null);
+    public Source generateOauthLink(OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request) {
+        return generateOauthLink(oauthProvider, request, null);
     }
 
     /**
@@ -481,6 +443,8 @@ public class LinkClient {
                     "x-vital-link-client-region",
                     request.getVitalLinkClientRegion().get());
         }
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -513,19 +477,29 @@ public class LinkClient {
                 .addPathSegments("v2/link/provider/email")
                 .addPathSegment(provider)
                 .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("email", request.getEmail());
+        if (request.getEmailProviderAuthLinkProvider().isPresent()) {
+            properties.put("provider", request.getEmailProviderAuthLinkProvider());
+        }
+        if (request.getRegion().isPresent()) {
+            properties.put("region", request.getRegion());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -550,17 +524,19 @@ public class LinkClient {
     /**
      * GET List of all available providers given the generated link token.
      */
-    public List<SourceLink> getAllProviders(RequestOptions requestOptions) {
+    public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/providers")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -579,8 +555,8 @@ public class LinkClient {
     /**
      * GET List of all available providers given the generated link token.
      */
-    public List<SourceLink> getAllProviders() {
-        return getAllProviders(null);
+    public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request) {
+        return getAllProviders(request, null);
     }
 
     /**

@@ -22,6 +22,8 @@ import java.util.Optional;
 public final class IndividualProviderData {
     private final Optional<String> vitalLinkClientRegion;
 
+    private final Object vitalLinkToken;
+
     private final String username;
 
     private final String password;
@@ -30,10 +32,12 @@ public final class IndividualProviderData {
 
     private IndividualProviderData(
             Optional<String> vitalLinkClientRegion,
+            Object vitalLinkToken,
             String username,
             String password,
             Map<String, Object> additionalProperties) {
         this.vitalLinkClientRegion = vitalLinkClientRegion;
+        this.vitalLinkToken = vitalLinkToken;
         this.username = username;
         this.password = password;
         this.additionalProperties = additionalProperties;
@@ -42,6 +46,11 @@ public final class IndividualProviderData {
     @JsonProperty("x-vital-link-client-region")
     public Optional<String> getVitalLinkClientRegion() {
         return vitalLinkClientRegion;
+    }
+
+    @JsonProperty("x-vital-link-token")
+    public Object getVitalLinkToken() {
+        return vitalLinkToken;
     }
 
     /**
@@ -73,13 +82,14 @@ public final class IndividualProviderData {
 
     private boolean equalTo(IndividualProviderData other) {
         return vitalLinkClientRegion.equals(other.vitalLinkClientRegion)
+                && vitalLinkToken.equals(other.vitalLinkToken)
                 && username.equals(other.username)
                 && password.equals(other.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.vitalLinkClientRegion, this.username, this.password);
+        return Objects.hash(this.vitalLinkClientRegion, this.vitalLinkToken, this.username, this.password);
     }
 
     @Override
@@ -87,14 +97,18 @@ public final class IndividualProviderData {
         return ObjectMappers.stringify(this);
     }
 
-    public static UsernameStage builder() {
+    public static VitalLinkTokenStage builder() {
         return new Builder();
+    }
+
+    public interface VitalLinkTokenStage {
+        UsernameStage vitalLinkToken(Object vitalLinkToken);
+
+        Builder from(IndividualProviderData other);
     }
 
     public interface UsernameStage {
         PasswordStage username(String username);
-
-        Builder from(IndividualProviderData other);
     }
 
     public interface PasswordStage {
@@ -110,7 +124,9 @@ public final class IndividualProviderData {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UsernameStage, PasswordStage, _FinalStage {
+    public static final class Builder implements VitalLinkTokenStage, UsernameStage, PasswordStage, _FinalStage {
+        private Object vitalLinkToken;
+
         private String username;
 
         private String password;
@@ -125,8 +141,16 @@ public final class IndividualProviderData {
         @Override
         public Builder from(IndividualProviderData other) {
             vitalLinkClientRegion(other.getVitalLinkClientRegion());
+            vitalLinkToken(other.getVitalLinkToken());
             username(other.getUsername());
             password(other.getPassword());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("x-vital-link-token")
+        public UsernameStage vitalLinkToken(Object vitalLinkToken) {
+            this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
@@ -167,7 +191,8 @@ public final class IndividualProviderData {
 
         @Override
         public IndividualProviderData build() {
-            return new IndividualProviderData(vitalLinkClientRegion, username, password, additionalProperties);
+            return new IndividualProviderData(
+                    vitalLinkClientRegion, vitalLinkToken, username, password, additionalProperties);
         }
     }
 }

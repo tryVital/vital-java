@@ -8,6 +8,7 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.resources.team.requests.TeamUpdateSourcePrioritiesRequest;
@@ -32,17 +33,19 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getLinkConfig(RequestOptions requestOptions) {
+    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/link/config")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        _requestBuilder.addHeader(
+                "x-vital-link-token", request.getVitalLinkToken().toString());
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -61,8 +64,8 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getLinkConfig() {
-        return getLinkConfig(null);
+    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request) {
+        return getLinkConfig(request, null);
     }
 
     /**

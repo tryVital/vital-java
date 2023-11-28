@@ -24,6 +24,8 @@ import java.util.Optional;
 public final class PasswordAuthLink {
     private final Optional<String> vitalLinkClientRegion;
 
+    private final Object vitalLinkToken;
+
     private final String username;
 
     private final String password;
@@ -36,12 +38,14 @@ public final class PasswordAuthLink {
 
     private PasswordAuthLink(
             Optional<String> vitalLinkClientRegion,
+            Object vitalLinkToken,
             String username,
             String password,
             Providers provider,
             AuthType authType,
             Map<String, Object> additionalProperties) {
         this.vitalLinkClientRegion = vitalLinkClientRegion;
+        this.vitalLinkToken = vitalLinkToken;
         this.username = username;
         this.password = password;
         this.provider = provider;
@@ -52,6 +56,11 @@ public final class PasswordAuthLink {
     @JsonProperty("x-vital-link-client-region")
     public Optional<String> getVitalLinkClientRegion() {
         return vitalLinkClientRegion;
+    }
+
+    @JsonProperty("x-vital-link-token")
+    public Object getVitalLinkToken() {
+        return vitalLinkToken;
     }
 
     @JsonProperty("username")
@@ -87,6 +96,7 @@ public final class PasswordAuthLink {
 
     private boolean equalTo(PasswordAuthLink other) {
         return vitalLinkClientRegion.equals(other.vitalLinkClientRegion)
+                && vitalLinkToken.equals(other.vitalLinkToken)
                 && username.equals(other.username)
                 && password.equals(other.password)
                 && provider.equals(other.provider)
@@ -95,7 +105,13 @@ public final class PasswordAuthLink {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.vitalLinkClientRegion, this.username, this.password, this.provider, this.authType);
+        return Objects.hash(
+                this.vitalLinkClientRegion,
+                this.vitalLinkToken,
+                this.username,
+                this.password,
+                this.provider,
+                this.authType);
     }
 
     @Override
@@ -103,14 +119,18 @@ public final class PasswordAuthLink {
         return ObjectMappers.stringify(this);
     }
 
-    public static UsernameStage builder() {
+    public static VitalLinkTokenStage builder() {
         return new Builder();
+    }
+
+    public interface VitalLinkTokenStage {
+        UsernameStage vitalLinkToken(Object vitalLinkToken);
+
+        Builder from(PasswordAuthLink other);
     }
 
     public interface UsernameStage {
         PasswordStage username(String username);
-
-        Builder from(PasswordAuthLink other);
     }
 
     public interface PasswordStage {
@@ -135,7 +155,9 @@ public final class PasswordAuthLink {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements UsernameStage, PasswordStage, ProviderStage, AuthTypeStage, _FinalStage {
+            implements VitalLinkTokenStage, UsernameStage, PasswordStage, ProviderStage, AuthTypeStage, _FinalStage {
+        private Object vitalLinkToken;
+
         private String username;
 
         private String password;
@@ -154,10 +176,18 @@ public final class PasswordAuthLink {
         @Override
         public Builder from(PasswordAuthLink other) {
             vitalLinkClientRegion(other.getVitalLinkClientRegion());
+            vitalLinkToken(other.getVitalLinkToken());
             username(other.getUsername());
             password(other.getPassword());
             provider(other.getProvider());
             authType(other.getAuthType());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("x-vital-link-token")
+        public UsernameStage vitalLinkToken(Object vitalLinkToken) {
+            this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
@@ -205,7 +235,13 @@ public final class PasswordAuthLink {
         @Override
         public PasswordAuthLink build() {
             return new PasswordAuthLink(
-                    vitalLinkClientRegion, username, password, provider, authType, additionalProperties);
+                    vitalLinkClientRegion,
+                    vitalLinkToken,
+                    username,
+                    password,
+                    provider,
+                    authType,
+                    additionalProperties);
         }
     }
 }
