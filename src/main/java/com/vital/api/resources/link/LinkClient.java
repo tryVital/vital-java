@@ -225,6 +225,14 @@ public class LinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
+    public Map<String, Object> tokenState() {
+        return tokenState(LinkTokenStateRequest.builder().build());
+    }
+
+    /**
+     * REQUEST_SOURCE: VITAL-LINK
+     * Check link token state - can be hit continuously used as heartbeat
+     */
     public Map<String, Object> tokenState(LinkTokenStateRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -235,8 +243,10 @@ public class LinkClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -290,8 +300,10 @@ public class LinkClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -348,8 +360,10 @@ public class LinkClient {
                     "x-vital-link-client-region",
                     request.getVitalLinkClientRegion().get());
         }
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -377,6 +391,14 @@ public class LinkClient {
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
+    public Source generateOauthLink(OAuthProviders oauthProvider) {
+        return generateOauthLink(
+                oauthProvider, LinkGenerateOauthLinkRequest.builder().build());
+    }
+
+    /**
+     * This endpoint generates an OAuth link for oauth provider
+     */
     public Source generateOauthLink(
             OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -389,8 +411,10 @@ public class LinkClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -443,8 +467,10 @@ public class LinkClient {
                     "x-vital-link-client-region",
                     request.getVitalLinkClientRegion().get());
         }
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -497,8 +523,10 @@ public class LinkClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
@@ -524,6 +552,13 @@ public class LinkClient {
     /**
      * GET List of all available providers given the generated link token.
      */
+    public List<SourceLink> getAllProviders() {
+        return getAllProviders(LinkGetAllProvidersRequest.builder().build());
+    }
+
+    /**
+     * GET List of all available providers given the generated link token.
+     */
     public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -534,8 +569,10 @@ public class LinkClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =

@@ -33,6 +33,13 @@ public class TeamClient {
     /**
      * Post teams.
      */
+    public Map<String, Object> getLinkConfig() {
+        return getLinkConfig(TeamGetLinkConfigRequest.builder().build());
+    }
+
+    /**
+     * Post teams.
+     */
     public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -43,8 +50,10 @@ public class TeamClient {
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        _requestBuilder.addHeader(
-                "x-vital-link-token", request.getVitalLinkToken().toString());
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =

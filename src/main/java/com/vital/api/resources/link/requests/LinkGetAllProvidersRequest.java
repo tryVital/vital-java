@@ -9,26 +9,28 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LinkGetAllProvidersRequest.Builder.class)
 public final class LinkGetAllProvidersRequest {
-    private final Object vitalLinkToken;
+    private final Optional<String> vitalLinkToken;
 
     private final Map<String, Object> additionalProperties;
 
-    private LinkGetAllProvidersRequest(Object vitalLinkToken, Map<String, Object> additionalProperties) {
+    private LinkGetAllProvidersRequest(Optional<String> vitalLinkToken, Map<String, Object> additionalProperties) {
         this.vitalLinkToken = vitalLinkToken;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("x-vital-link-token")
-    public Object getVitalLinkToken() {
+    public Optional<String> getVitalLinkToken() {
         return vitalLinkToken;
     }
 
@@ -57,43 +59,35 @@ public final class LinkGetAllProvidersRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static VitalLinkTokenStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface VitalLinkTokenStage {
-        _FinalStage vitalLinkToken(Object vitalLinkToken);
-
-        Builder from(LinkGetAllProvidersRequest other);
-    }
-
-    public interface _FinalStage {
-        LinkGetAllProvidersRequest build();
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements VitalLinkTokenStage, _FinalStage {
-        private Object vitalLinkToken;
+    public static final class Builder {
+        private Optional<String> vitalLinkToken = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
         public Builder from(LinkGetAllProvidersRequest other) {
             vitalLinkToken(other.getVitalLinkToken());
             return this;
         }
 
-        @Override
-        @JsonSetter("x-vital-link-token")
-        public _FinalStage vitalLinkToken(Object vitalLinkToken) {
+        @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
+        public Builder vitalLinkToken(Optional<String> vitalLinkToken) {
             this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
-        @Override
+        public Builder vitalLinkToken(String vitalLinkToken) {
+            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            return this;
+        }
+
         public LinkGetAllProvidersRequest build() {
             return new LinkGetAllProvidersRequest(vitalLinkToken, additionalProperties);
         }

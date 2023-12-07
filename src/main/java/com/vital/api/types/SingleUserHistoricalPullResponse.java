@@ -18,17 +18,17 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SingleUserResourceResponse.Builder.class)
-public final class SingleUserResourceResponse {
+@JsonDeserialize(builder = SingleUserHistoricalPullResponse.Builder.class)
+public final class SingleUserHistoricalPullResponse {
     private final String userId;
 
-    private final Map<String, Map<String, SingleResourceStatistics>> provider;
+    private final Map<String, SingleProviderHistoricalPullResponse> provider;
 
     private final Map<String, Object> additionalProperties;
 
-    private SingleUserResourceResponse(
+    private SingleUserHistoricalPullResponse(
             String userId,
-            Map<String, Map<String, SingleResourceStatistics>> provider,
+            Map<String, SingleProviderHistoricalPullResponse> provider,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.provider = provider;
@@ -41,14 +41,14 @@ public final class SingleUserResourceResponse {
     }
 
     @JsonProperty("provider")
-    public Map<String, Map<String, SingleResourceStatistics>> getProvider() {
+    public Map<String, SingleProviderHistoricalPullResponse> getProvider() {
         return provider;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SingleUserResourceResponse && equalTo((SingleUserResourceResponse) other);
+        return other instanceof SingleUserHistoricalPullResponse && equalTo((SingleUserHistoricalPullResponse) other);
     }
 
     @JsonAnyGetter
@@ -56,7 +56,7 @@ public final class SingleUserResourceResponse {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(SingleUserResourceResponse other) {
+    private boolean equalTo(SingleUserHistoricalPullResponse other) {
         return userId.equals(other.userId) && provider.equals(other.provider);
     }
 
@@ -77,24 +77,24 @@ public final class SingleUserResourceResponse {
     public interface UserIdStage {
         _FinalStage userId(String userId);
 
-        Builder from(SingleUserResourceResponse other);
+        Builder from(SingleUserHistoricalPullResponse other);
     }
 
     public interface _FinalStage {
-        SingleUserResourceResponse build();
+        SingleUserHistoricalPullResponse build();
 
-        _FinalStage provider(Map<String, Map<String, SingleResourceStatistics>> provider);
+        _FinalStage provider(Map<String, SingleProviderHistoricalPullResponse> provider);
 
-        _FinalStage putAllProvider(Map<String, Map<String, SingleResourceStatistics>> provider);
+        _FinalStage putAllProvider(Map<String, SingleProviderHistoricalPullResponse> provider);
 
-        _FinalStage provider(String key, Map<String, SingleResourceStatistics> value);
+        _FinalStage provider(String key, SingleProviderHistoricalPullResponse value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements UserIdStage, _FinalStage {
         private String userId;
 
-        private Map<String, Map<String, SingleResourceStatistics>> provider = new LinkedHashMap<>();
+        private Map<String, SingleProviderHistoricalPullResponse> provider = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -102,7 +102,7 @@ public final class SingleUserResourceResponse {
         private Builder() {}
 
         @Override
-        public Builder from(SingleUserResourceResponse other) {
+        public Builder from(SingleUserHistoricalPullResponse other) {
             userId(other.getUserId());
             provider(other.getProvider());
             return this;
@@ -116,28 +116,28 @@ public final class SingleUserResourceResponse {
         }
 
         @Override
-        public _FinalStage provider(String key, Map<String, SingleResourceStatistics> value) {
+        public _FinalStage provider(String key, SingleProviderHistoricalPullResponse value) {
             this.provider.put(key, value);
             return this;
         }
 
         @Override
-        public _FinalStage putAllProvider(Map<String, Map<String, SingleResourceStatistics>> provider) {
+        public _FinalStage putAllProvider(Map<String, SingleProviderHistoricalPullResponse> provider) {
             this.provider.putAll(provider);
             return this;
         }
 
         @Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
-        public _FinalStage provider(Map<String, Map<String, SingleResourceStatistics>> provider) {
+        public _FinalStage provider(Map<String, SingleProviderHistoricalPullResponse> provider) {
             this.provider.clear();
             this.provider.putAll(provider);
             return this;
         }
 
         @Override
-        public SingleUserResourceResponse build() {
-            return new SingleUserResourceResponse(userId, provider, additionalProperties);
+        public SingleUserHistoricalPullResponse build() {
+            return new SingleUserHistoricalPullResponse(userId, provider, additionalProperties);
         }
     }
 }

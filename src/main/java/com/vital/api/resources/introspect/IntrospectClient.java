@@ -7,7 +7,9 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserHistoricalPullsRequest;
 import com.vital.api.resources.introspect.requests.IntrospectGetUserResourcesRequest;
+import com.vital.api.types.UserHistoricalPullsResponse;
 import com.vital.api.types.UserResourcesResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -65,5 +67,51 @@ public class IntrospectClient {
 
     public UserResourcesResponse getUserResources(IntrospectGetUserResourcesRequest request) {
         return getUserResources(request, null);
+    }
+
+    public UserHistoricalPullsResponse getUserHistoricalPulls() {
+        return getUserHistoricalPulls(
+                IntrospectGetUserHistoricalPullsRequest.builder().build());
+    }
+
+    public UserHistoricalPullsResponse getUserHistoricalPulls(
+            IntrospectGetUserHistoricalPullsRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/introspect/historical_pull");
+        if (request.getUserId().isPresent()) {
+            httpUrl.addQueryParameter("user_id", request.getUserId().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get().toString());
+        }
+        if (request.getUserLimit().isPresent()) {
+            httpUrl.addQueryParameter("user_limit", request.getUserLimit().get().toString());
+        }
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserHistoricalPullsResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UserHistoricalPullsResponse getUserHistoricalPulls(IntrospectGetUserHistoricalPullsRequest request) {
+        return getUserHistoricalPulls(request, null);
     }
 }

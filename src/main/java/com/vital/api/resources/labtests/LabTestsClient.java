@@ -33,6 +33,7 @@ import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.UsAddress;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -629,7 +630,7 @@ public class LabTestsClient {
     /**
      * This endpoint returns the lab results for the order.
      */
-    public Object getResultPdf(String orderId, RequestOptions requestOptions) {
+    public InputStream getResultPdf(String orderId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -646,7 +647,7 @@ public class LabTestsClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class);
+                return response.body().byteStream();
             }
             throw new ApiError(
                     response.code(),
@@ -659,7 +660,7 @@ public class LabTestsClient {
     /**
      * This endpoint returns the lab results for the order.
      */
-    public Object getResultPdf(String orderId) {
+    public InputStream getResultPdf(String orderId) {
         return getResultPdf(orderId, null);
     }
 

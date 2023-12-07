@@ -23,7 +23,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EmailAuthLink.Builder.class)
 public final class EmailAuthLink {
-    private final Object vitalLinkToken;
+    private final Optional<String> vitalLinkToken;
 
     private final String email;
 
@@ -36,7 +36,7 @@ public final class EmailAuthLink {
     private final Map<String, Object> additionalProperties;
 
     private EmailAuthLink(
-            Object vitalLinkToken,
+            Optional<String> vitalLinkToken,
             String email,
             Providers provider,
             AuthType authType,
@@ -51,7 +51,7 @@ public final class EmailAuthLink {
     }
 
     @JsonProperty("x-vital-link-token")
-    public Object getVitalLinkToken() {
+    public Optional<String> getVitalLinkToken() {
         return vitalLinkToken;
     }
 
@@ -104,18 +104,14 @@ public final class EmailAuthLink {
         return ObjectMappers.stringify(this);
     }
 
-    public static VitalLinkTokenStage builder() {
+    public static EmailStage builder() {
         return new Builder();
-    }
-
-    public interface VitalLinkTokenStage {
-        EmailStage vitalLinkToken(Object vitalLinkToken);
-
-        Builder from(EmailAuthLink other);
     }
 
     public interface EmailStage {
         ProviderStage email(String email);
+
+        Builder from(EmailAuthLink other);
     }
 
     public interface ProviderStage {
@@ -129,16 +125,17 @@ public final class EmailAuthLink {
     public interface _FinalStage {
         EmailAuthLink build();
 
+        _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
+
+        _FinalStage vitalLinkToken(String vitalLinkToken);
+
         _FinalStage region(Optional<Region> region);
 
         _FinalStage region(Region region);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements VitalLinkTokenStage, EmailStage, ProviderStage, AuthTypeStage, _FinalStage {
-        private Object vitalLinkToken;
-
+    public static final class Builder implements EmailStage, ProviderStage, AuthTypeStage, _FinalStage {
         private String email;
 
         private Providers provider;
@@ -146,6 +143,8 @@ public final class EmailAuthLink {
         private AuthType authType;
 
         private Optional<Region> region = Optional.empty();
+
+        private Optional<String> vitalLinkToken = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -159,13 +158,6 @@ public final class EmailAuthLink {
             provider(other.getProvider());
             authType(other.getAuthType());
             region(other.getRegion());
-            return this;
-        }
-
-        @Override
-        @JsonSetter("x-vital-link-token")
-        public EmailStage vitalLinkToken(Object vitalLinkToken) {
-            this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
@@ -200,6 +192,19 @@ public final class EmailAuthLink {
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
         public _FinalStage region(Optional<Region> region) {
             this.region = region;
+            return this;
+        }
+
+        @Override
+        public _FinalStage vitalLinkToken(String vitalLinkToken) {
+            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
+        public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
+            this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 

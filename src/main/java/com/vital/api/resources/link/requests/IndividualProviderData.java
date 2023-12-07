@@ -22,7 +22,7 @@ import java.util.Optional;
 public final class IndividualProviderData {
     private final Optional<String> vitalLinkClientRegion;
 
-    private final Object vitalLinkToken;
+    private final Optional<String> vitalLinkToken;
 
     private final String username;
 
@@ -32,7 +32,7 @@ public final class IndividualProviderData {
 
     private IndividualProviderData(
             Optional<String> vitalLinkClientRegion,
-            Object vitalLinkToken,
+            Optional<String> vitalLinkToken,
             String username,
             String password,
             Map<String, Object> additionalProperties) {
@@ -49,7 +49,7 @@ public final class IndividualProviderData {
     }
 
     @JsonProperty("x-vital-link-token")
-    public Object getVitalLinkToken() {
+    public Optional<String> getVitalLinkToken() {
         return vitalLinkToken;
     }
 
@@ -97,18 +97,14 @@ public final class IndividualProviderData {
         return ObjectMappers.stringify(this);
     }
 
-    public static VitalLinkTokenStage builder() {
+    public static UsernameStage builder() {
         return new Builder();
-    }
-
-    public interface VitalLinkTokenStage {
-        UsernameStage vitalLinkToken(Object vitalLinkToken);
-
-        Builder from(IndividualProviderData other);
     }
 
     public interface UsernameStage {
         PasswordStage username(String username);
+
+        Builder from(IndividualProviderData other);
     }
 
     public interface PasswordStage {
@@ -121,15 +117,19 @@ public final class IndividualProviderData {
         _FinalStage vitalLinkClientRegion(Optional<String> vitalLinkClientRegion);
 
         _FinalStage vitalLinkClientRegion(String vitalLinkClientRegion);
+
+        _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
+
+        _FinalStage vitalLinkToken(String vitalLinkToken);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements VitalLinkTokenStage, UsernameStage, PasswordStage, _FinalStage {
-        private Object vitalLinkToken;
-
+    public static final class Builder implements UsernameStage, PasswordStage, _FinalStage {
         private String username;
 
         private String password;
+
+        private Optional<String> vitalLinkToken = Optional.empty();
 
         private Optional<String> vitalLinkClientRegion = Optional.empty();
 
@@ -144,13 +144,6 @@ public final class IndividualProviderData {
             vitalLinkToken(other.getVitalLinkToken());
             username(other.getUsername());
             password(other.getPassword());
-            return this;
-        }
-
-        @Override
-        @JsonSetter("x-vital-link-token")
-        public UsernameStage vitalLinkToken(Object vitalLinkToken) {
-            this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
@@ -173,6 +166,19 @@ public final class IndividualProviderData {
         @JsonSetter("password")
         public _FinalStage password(String password) {
             this.password = password;
+            return this;
+        }
+
+        @Override
+        public _FinalStage vitalLinkToken(String vitalLinkToken) {
+            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
+        public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
+            this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
