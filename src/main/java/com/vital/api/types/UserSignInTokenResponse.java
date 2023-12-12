@@ -20,12 +20,11 @@ import java.util.Objects;
 public final class UserSignInTokenResponse {
     private final String userId;
 
-    private final UserSignInTokenResponseSignInToken signInToken;
+    private final String signInToken;
 
     private final Map<String, Object> additionalProperties;
 
-    private UserSignInTokenResponse(
-            String userId, UserSignInTokenResponseSignInToken signInToken, Map<String, Object> additionalProperties) {
+    private UserSignInTokenResponse(String userId, String signInToken, Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.signInToken = signInToken;
         this.additionalProperties = additionalProperties;
@@ -37,7 +36,7 @@ public final class UserSignInTokenResponse {
     }
 
     @JsonProperty("sign_in_token")
-    public UserSignInTokenResponseSignInToken getSignInToken() {
+    public String getSignInToken() {
         return signInToken;
     }
 
@@ -77,7 +76,7 @@ public final class UserSignInTokenResponse {
     }
 
     public interface SignInTokenStage {
-        _FinalStage signInToken(UserSignInTokenResponseSignInToken signInToken);
+        _FinalStage signInToken(String signInToken);
     }
 
     public interface _FinalStage {
@@ -88,7 +87,7 @@ public final class UserSignInTokenResponse {
     public static final class Builder implements UserIdStage, SignInTokenStage, _FinalStage {
         private String userId;
 
-        private UserSignInTokenResponseSignInToken signInToken;
+        private String signInToken;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -111,7 +110,7 @@ public final class UserSignInTokenResponse {
 
         @Override
         @JsonSetter("sign_in_token")
-        public _FinalStage signInToken(UserSignInTokenResponseSignInToken signInToken) {
+        public _FinalStage signInToken(String signInToken) {
             this.signInToken = signInToken;
             return this;
         }

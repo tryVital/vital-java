@@ -22,6 +22,9 @@ public enum OrderStatus {
 
     RECEIVED_AT_HOME_PHLEBOTOMY_REQUISITION_CREATED("received.at_home_phlebotomy.requisition_created"),
 
+    COLLECTING_SAMPLE_AT_HOME_PHLEBOTOMY_APPOINTMENT_PENDING(
+            "collecting_sample.at_home_phlebotomy.appointment_pending"),
+
     COLLECTING_SAMPLE_AT_HOME_PHLEBOTOMY_APPOINTMENT_SCHEDULED(
             "collecting_sample.at_home_phlebotomy.appointment_scheduled"),
 

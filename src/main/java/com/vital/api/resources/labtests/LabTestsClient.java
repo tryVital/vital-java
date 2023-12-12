@@ -18,6 +18,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestReq
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
+import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
 import com.vital.api.types.AreaInfo;
 import com.vital.api.types.ClientFacingAppointment;
@@ -416,6 +417,51 @@ public class LabTestsClient {
      */
     public ClientFacingAppointment bookPhlebotomyAppointment(String orderId, AppointmentBookingRequest request) {
         return bookPhlebotomyAppointment(orderId, request, null);
+    }
+
+    /**
+     * Request an at-home phlebotomy appointment.
+     */
+    public ClientFacingAppointment requestPhlebotomyAppointment(
+            String orderId, RequestAppointmentRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("phlebotomy/appointment/request")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingAppointment.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Request an at-home phlebotomy appointment.
+     */
+    public ClientFacingAppointment requestPhlebotomyAppointment(String orderId, RequestAppointmentRequest request) {
+        return requestPhlebotomyAppointment(orderId, request, null);
     }
 
     /**

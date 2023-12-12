@@ -6,6 +6,8 @@ package com.vital.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum AppointmentEventStatus {
+    PENDING("pending"),
+
     SCHEDULED("scheduled"),
 
     COMPLETED("completed"),

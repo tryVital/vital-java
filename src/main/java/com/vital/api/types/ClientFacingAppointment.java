@@ -33,11 +33,11 @@ public final class ClientFacingAppointment {
 
     private final LngLat location;
 
-    private final OffsetDateTime startAt;
+    private final Optional<OffsetDateTime> startAt;
 
-    private final OffsetDateTime endAt;
+    private final Optional<OffsetDateTime> endAt;
 
-    private final String ianaTimezone;
+    private final Optional<String> ianaTimezone;
 
     private final String type;
 
@@ -63,9 +63,9 @@ public final class ClientFacingAppointment {
             String orderId,
             UsAddress address,
             LngLat location,
-            OffsetDateTime startAt,
-            OffsetDateTime endAt,
-            String ianaTimezone,
+            Optional<OffsetDateTime> startAt,
+            Optional<OffsetDateTime> endAt,
+            Optional<String> ianaTimezone,
             String type,
             AppointmentProvider provider,
             AppointmentStatus status,
@@ -123,7 +123,7 @@ public final class ClientFacingAppointment {
      * @return Time is in UTC
      */
     @JsonProperty("start_at")
-    public OffsetDateTime getStartAt() {
+    public Optional<OffsetDateTime> getStartAt() {
         return startAt;
     }
 
@@ -131,12 +131,12 @@ public final class ClientFacingAppointment {
      * @return Time is in UTC
      */
     @JsonProperty("end_at")
-    public OffsetDateTime getEndAt() {
+    public Optional<OffsetDateTime> getEndAt() {
         return endAt;
     }
 
     @JsonProperty("iana_timezone")
-    public String getIanaTimezone() {
+    public Optional<String> getIanaTimezone() {
         return ianaTimezone;
     }
 
@@ -259,19 +259,7 @@ public final class ClientFacingAppointment {
     }
 
     public interface LocationStage {
-        StartAtStage location(LngLat location);
-    }
-
-    public interface StartAtStage {
-        EndAtStage startAt(OffsetDateTime startAt);
-    }
-
-    public interface EndAtStage {
-        IanaTimezoneStage endAt(OffsetDateTime endAt);
-    }
-
-    public interface IanaTimezoneStage {
-        TypeStage ianaTimezone(String ianaTimezone);
+        TypeStage location(LngLat location);
     }
 
     public interface TypeStage {
@@ -301,6 +289,18 @@ public final class ClientFacingAppointment {
     public interface _FinalStage {
         ClientFacingAppointment build();
 
+        _FinalStage startAt(Optional<OffsetDateTime> startAt);
+
+        _FinalStage startAt(OffsetDateTime startAt);
+
+        _FinalStage endAt(Optional<OffsetDateTime> endAt);
+
+        _FinalStage endAt(OffsetDateTime endAt);
+
+        _FinalStage ianaTimezone(Optional<String> ianaTimezone);
+
+        _FinalStage ianaTimezone(String ianaTimezone);
+
         _FinalStage eventData(Optional<Map<String, Object>> eventData);
 
         _FinalStage eventData(Map<String, Object> eventData);
@@ -319,9 +319,6 @@ public final class ClientFacingAppointment {
                     OrderIdStage,
                     AddressStage,
                     LocationStage,
-                    StartAtStage,
-                    EndAtStage,
-                    IanaTimezoneStage,
                     TypeStage,
                     ProviderStage,
                     StatusStage,
@@ -339,12 +336,6 @@ public final class ClientFacingAppointment {
 
         private LngLat location;
 
-        private OffsetDateTime startAt;
-
-        private OffsetDateTime endAt;
-
-        private String ianaTimezone;
-
         private String type;
 
         private AppointmentProvider provider;
@@ -360,6 +351,12 @@ public final class ClientFacingAppointment {
         private List<ClientFacingAppointmentEvent> events = new ArrayList<>();
 
         private Optional<Map<String, Object>> eventData = Optional.empty();
+
+        private Optional<String> ianaTimezone = Optional.empty();
+
+        private Optional<OffsetDateTime> endAt = Optional.empty();
+
+        private Optional<OffsetDateTime> startAt = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -417,37 +414,8 @@ public final class ClientFacingAppointment {
 
         @Override
         @JsonSetter("location")
-        public StartAtStage location(LngLat location) {
+        public TypeStage location(LngLat location) {
             this.location = location;
-            return this;
-        }
-
-        /**
-         * <p>Time is in UTC</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("start_at")
-        public EndAtStage startAt(OffsetDateTime startAt) {
-            this.startAt = startAt;
-            return this;
-        }
-
-        /**
-         * <p>Time is in UTC</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("end_at")
-        public IanaTimezoneStage endAt(OffsetDateTime endAt) {
-            this.endAt = endAt;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("iana_timezone")
-        public TypeStage ianaTimezone(String ianaTimezone) {
-            this.ianaTimezone = ianaTimezone;
             return this;
         }
 
@@ -523,6 +491,53 @@ public final class ClientFacingAppointment {
         @JsonSetter(value = "event_data", nulls = Nulls.SKIP)
         public _FinalStage eventData(Optional<Map<String, Object>> eventData) {
             this.eventData = eventData;
+            return this;
+        }
+
+        @Override
+        public _FinalStage ianaTimezone(String ianaTimezone) {
+            this.ianaTimezone = Optional.of(ianaTimezone);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "iana_timezone", nulls = Nulls.SKIP)
+        public _FinalStage ianaTimezone(Optional<String> ianaTimezone) {
+            this.ianaTimezone = ianaTimezone;
+            return this;
+        }
+
+        /**
+         * <p>Time is in UTC</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage endAt(OffsetDateTime endAt) {
+            this.endAt = Optional.of(endAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
+        public _FinalStage endAt(Optional<OffsetDateTime> endAt) {
+            this.endAt = endAt;
+            return this;
+        }
+
+        /**
+         * <p>Time is in UTC</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage startAt(OffsetDateTime startAt) {
+            this.startAt = Optional.of(startAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "start_at", nulls = Nulls.SKIP)
+        public _FinalStage startAt(Optional<OffsetDateTime> startAt) {
+            this.startAt = startAt;
             return this;
         }
 

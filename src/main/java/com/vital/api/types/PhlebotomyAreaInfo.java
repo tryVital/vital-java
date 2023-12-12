@@ -9,9 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,16 +23,25 @@ import java.util.Objects;
 public final class PhlebotomyAreaInfo {
     private final boolean isServed;
 
+    private final List<PhlebotomyProviderInfo> providers;
+
     private final Map<String, Object> additionalProperties;
 
-    private PhlebotomyAreaInfo(boolean isServed, Map<String, Object> additionalProperties) {
+    private PhlebotomyAreaInfo(
+            boolean isServed, List<PhlebotomyProviderInfo> providers, Map<String, Object> additionalProperties) {
         this.isServed = isServed;
+        this.providers = providers;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("is_served")
     public boolean getIsServed() {
         return isServed;
+    }
+
+    @JsonProperty("providers")
+    public List<PhlebotomyProviderInfo> getProviders() {
+        return providers;
     }
 
     @Override
@@ -44,12 +56,12 @@ public final class PhlebotomyAreaInfo {
     }
 
     private boolean equalTo(PhlebotomyAreaInfo other) {
-        return isServed == other.isServed;
+        return isServed == other.isServed && providers.equals(other.providers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.isServed);
+        return Objects.hash(this.isServed, this.providers);
     }
 
     @Override
@@ -69,11 +81,19 @@ public final class PhlebotomyAreaInfo {
 
     public interface _FinalStage {
         PhlebotomyAreaInfo build();
+
+        _FinalStage providers(List<PhlebotomyProviderInfo> providers);
+
+        _FinalStage addProviders(PhlebotomyProviderInfo providers);
+
+        _FinalStage addAllProviders(List<PhlebotomyProviderInfo> providers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IsServedStage, _FinalStage {
         private boolean isServed;
+
+        private List<PhlebotomyProviderInfo> providers = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -83,6 +103,7 @@ public final class PhlebotomyAreaInfo {
         @Override
         public Builder from(PhlebotomyAreaInfo other) {
             isServed(other.getIsServed());
+            providers(other.getProviders());
             return this;
         }
 
@@ -94,8 +115,28 @@ public final class PhlebotomyAreaInfo {
         }
 
         @Override
+        public _FinalStage addAllProviders(List<PhlebotomyProviderInfo> providers) {
+            this.providers.addAll(providers);
+            return this;
+        }
+
+        @Override
+        public _FinalStage addProviders(PhlebotomyProviderInfo providers) {
+            this.providers.add(providers);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "providers", nulls = Nulls.SKIP)
+        public _FinalStage providers(List<PhlebotomyProviderInfo> providers) {
+            this.providers.clear();
+            this.providers.addAll(providers);
+            return this;
+        }
+
+        @Override
         public PhlebotomyAreaInfo build() {
-            return new PhlebotomyAreaInfo(isServed, additionalProperties);
+            return new PhlebotomyAreaInfo(isServed, providers, additionalProperties);
         }
     }
 }

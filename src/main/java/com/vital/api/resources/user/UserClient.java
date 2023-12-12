@@ -11,6 +11,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
+import com.vital.api.resources.user.requests.UserRefreshRequest;
 import com.vital.api.types.ClientFacingProviderWithStatus;
 import com.vital.api.types.ClientFacingUser;
 import com.vital.api.types.ClientFacingUserKey;
@@ -408,18 +409,28 @@ public class UserClient {
     /**
      * Trigger a manual refresh for a specific user
      */
-    public UserRefreshSuccessResponse refresh(String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+    public UserRefreshSuccessResponse refresh(String userId) {
+        return refresh(userId, UserRefreshRequest.builder().build());
+    }
+
+    /**
+     * Trigger a manual refresh for a specific user
+     */
+    public UserRefreshSuccessResponse refresh(
+            String userId, UserRefreshRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user/refresh")
-                .addPathSegment(userId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .addPathSegment(userId);
+        if (request.getTimeout().isPresent()) {
+            httpUrl.addQueryParameter("timeout", request.getTimeout().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -437,7 +448,7 @@ public class UserClient {
     /**
      * Trigger a manual refresh for a specific user
      */
-    public UserRefreshSuccessResponse refresh(String userId) {
-        return refresh(userId, null);
+    public UserRefreshSuccessResponse refresh(String userId, UserRefreshRequest request) {
+        return refresh(userId, request, null);
     }
 }

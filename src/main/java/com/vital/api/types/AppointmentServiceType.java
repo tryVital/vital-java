@@ -5,16 +5,14 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum AppointmentProvider {
-    GETLABS("getlabs"),
+public enum AppointmentServiceType {
+    APPOINTMENT_READY("appointment-ready"),
 
-    AXLEHEALTH("axlehealth"),
-
-    PHLEBFINDERS("phlebfinders");
+    APPOINTMENT_REQUEST("appointment-request");
 
     private final String value;
 
-    AppointmentProvider(String value) {
+    AppointmentServiceType(String value) {
         this.value = value;
     }
 

@@ -27,6 +27,8 @@ public final class UserRefreshSuccessResponse {
 
     private final List<String> refreshedSources;
 
+    private final List<String> inProgressSources;
+
     private final List<String> failedSources;
 
     private final Map<String, Object> additionalProperties;
@@ -35,11 +37,13 @@ public final class UserRefreshSuccessResponse {
             String success,
             String userId,
             List<String> refreshedSources,
+            List<String> inProgressSources,
             List<String> failedSources,
             Map<String, Object> additionalProperties) {
         this.success = success;
         this.userId = userId;
         this.refreshedSources = refreshedSources;
+        this.inProgressSources = inProgressSources;
         this.failedSources = failedSources;
         this.additionalProperties = additionalProperties;
     }
@@ -65,6 +69,11 @@ public final class UserRefreshSuccessResponse {
         return refreshedSources;
     }
 
+    @JsonProperty("in_progress_sources")
+    public List<String> getInProgressSources() {
+        return inProgressSources;
+    }
+
     @JsonProperty("failed_sources")
     public List<String> getFailedSources() {
         return failedSources;
@@ -85,12 +94,14 @@ public final class UserRefreshSuccessResponse {
         return success.equals(other.success)
                 && userId.equals(other.userId)
                 && refreshedSources.equals(other.refreshedSources)
+                && inProgressSources.equals(other.inProgressSources)
                 && failedSources.equals(other.failedSources);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.success, this.userId, this.refreshedSources, this.failedSources);
+        return Objects.hash(
+                this.success, this.userId, this.refreshedSources, this.inProgressSources, this.failedSources);
     }
 
     @Override
@@ -121,6 +132,12 @@ public final class UserRefreshSuccessResponse {
 
         _FinalStage addAllRefreshedSources(List<String> refreshedSources);
 
+        _FinalStage inProgressSources(List<String> inProgressSources);
+
+        _FinalStage addInProgressSources(String inProgressSources);
+
+        _FinalStage addAllInProgressSources(List<String> inProgressSources);
+
         _FinalStage failedSources(List<String> failedSources);
 
         _FinalStage addFailedSources(String failedSources);
@@ -136,6 +153,8 @@ public final class UserRefreshSuccessResponse {
 
         private List<String> failedSources = new ArrayList<>();
 
+        private List<String> inProgressSources = new ArrayList<>();
+
         private List<String> refreshedSources = new ArrayList<>();
 
         @JsonAnySetter
@@ -148,6 +167,7 @@ public final class UserRefreshSuccessResponse {
             success(other.getSuccess());
             userId(other.getUserId());
             refreshedSources(other.getRefreshedSources());
+            inProgressSources(other.getInProgressSources());
             failedSources(other.getFailedSources());
             return this;
         }
@@ -195,6 +215,26 @@ public final class UserRefreshSuccessResponse {
         }
 
         @Override
+        public _FinalStage addAllInProgressSources(List<String> inProgressSources) {
+            this.inProgressSources.addAll(inProgressSources);
+            return this;
+        }
+
+        @Override
+        public _FinalStage addInProgressSources(String inProgressSources) {
+            this.inProgressSources.add(inProgressSources);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "in_progress_sources", nulls = Nulls.SKIP)
+        public _FinalStage inProgressSources(List<String> inProgressSources) {
+            this.inProgressSources.clear();
+            this.inProgressSources.addAll(inProgressSources);
+            return this;
+        }
+
+        @Override
         public _FinalStage addAllRefreshedSources(List<String> refreshedSources) {
             this.refreshedSources.addAll(refreshedSources);
             return this;
@@ -217,7 +257,7 @@ public final class UserRefreshSuccessResponse {
         @Override
         public UserRefreshSuccessResponse build() {
             return new UserRefreshSuccessResponse(
-                    success, userId, refreshedSources, failedSources, additionalProperties);
+                    success, userId, refreshedSources, inProgressSources, failedSources, additionalProperties);
         }
     }
 }
