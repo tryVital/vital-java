@@ -120,7 +120,7 @@ public final class ClientFacingLabTest {
     }
 
     /**
-     * @return Defines whether a lab test requires fasting. Only available for Labcorp.
+     * @return Defines whether a lab test requires fasting.
      */
     @JsonProperty("fasting")
     public Optional<Boolean> getFasting() {
@@ -412,7 +412,7 @@ public final class ClientFacingLabTest {
         }
 
         /**
-         * <p>Defines whether a lab test requires fasting. Only available for Labcorp.</p>
+         * <p>Defines whether a lab test requires fasting.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

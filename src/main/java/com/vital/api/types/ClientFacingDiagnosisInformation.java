@@ -32,7 +32,7 @@ public final class ClientFacingDiagnosisInformation {
     }
 
     /**
-     * @return Diagnosis code for insurance information required by Labcorp.
+     * @return Diagnosis code for insurance information.
      */
     @JsonProperty("diagnosis_code")
     public String getDiagnosisCode() {
@@ -40,7 +40,7 @@ public final class ClientFacingDiagnosisInformation {
     }
 
     /**
-     * @return Diagnosis description insurance information required by Labcorp.
+     * @return Diagnosis description insurance information.
      */
     @JsonProperty("description")
     public String getDescription() {
@@ -109,7 +109,7 @@ public final class ClientFacingDiagnosisInformation {
         }
 
         /**
-         * <p>Diagnosis code for insurance information required by Labcorp.</p>
+         * <p>Diagnosis code for insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -120,7 +120,7 @@ public final class ClientFacingDiagnosisInformation {
         }
 
         /**
-         * <p>Diagnosis description insurance information required by Labcorp.</p>
+         * <p>Diagnosis description insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

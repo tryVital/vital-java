@@ -86,7 +86,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     /**
-     * @return Defines whether order is priority or not. Only available for Labcorp. For Labcorp, this corresponds to a STAT order.
+     * @return Defines whether order is priority or not. For some labs, this refers to a STAT order.
      */
     @JsonProperty("priority")
     public Optional<Boolean> getPriority() {
@@ -269,7 +269,7 @@ public final class CreateOrderRequestCompatible {
         }
 
         /**
-         * <p>Defines whether order is priority or not. Only available for Labcorp. For Labcorp, this corresponds to a STAT order.</p>
+         * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

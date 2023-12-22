@@ -35,7 +35,7 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     /**
-     * @return Payor code returned for the insurance information required by Labcorp.
+     * @return Payor code returned for the insurance information.
      */
     @JsonProperty("code")
     public String getCode() {
@@ -43,7 +43,7 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     /**
-     * @return Insurance name returned for the insurance information required by Labcorp.
+     * @return Insurance name returned for the insurance information.
      */
     @JsonProperty("name")
     public String getName() {
@@ -51,7 +51,7 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     /**
-     * @return Insurance business address returned for the insurance information required by Labcorp.
+     * @return Insurance business address returned for the insurance information.
      */
     @JsonProperty("org_address")
     public Address getOrgAddress() {
@@ -127,7 +127,7 @@ public final class ClientFacingPayorSearchResponse {
         }
 
         /**
-         * <p>Payor code returned for the insurance information required by Labcorp.</p>
+         * <p>Payor code returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -138,7 +138,7 @@ public final class ClientFacingPayorSearchResponse {
         }
 
         /**
-         * <p>Insurance name returned for the insurance information required by Labcorp.</p>
+         * <p>Insurance name returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
@@ -149,7 +149,7 @@ public final class ClientFacingPayorSearchResponse {
         }
 
         /**
-         * <p>Insurance business address returned for the insurance information required by Labcorp.</p>
+         * <p>Insurance business address returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
