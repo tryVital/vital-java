@@ -27,6 +27,8 @@ public final class TeamConfig {
 
     private final Optional<Boolean> pushHistoricalData;
 
+    private final Optional<Boolean> providerRawData;
+
     private final Optional<EventDestinationPreferences> edsPreferences;
 
     private final Optional<List<String>> eventTypePrefixes;
@@ -37,12 +39,14 @@ public final class TeamConfig {
             LibreConfig libreview,
             Optional<Boolean> textsEnabled,
             Optional<Boolean> pushHistoricalData,
+            Optional<Boolean> providerRawData,
             Optional<EventDestinationPreferences> edsPreferences,
             Optional<List<String>> eventTypePrefixes,
             Map<String, Object> additionalProperties) {
         this.libreview = libreview;
         this.textsEnabled = textsEnabled;
         this.pushHistoricalData = pushHistoricalData;
+        this.providerRawData = providerRawData;
         this.edsPreferences = edsPreferences;
         this.eventTypePrefixes = eventTypePrefixes;
         this.additionalProperties = additionalProperties;
@@ -61,6 +65,11 @@ public final class TeamConfig {
     @JsonProperty("push_historical_data")
     public Optional<Boolean> getPushHistoricalData() {
         return pushHistoricalData;
+    }
+
+    @JsonProperty("provider_raw_data")
+    public Optional<Boolean> getProviderRawData() {
+        return providerRawData;
     }
 
     @JsonProperty("eds_preferences")
@@ -88,6 +97,7 @@ public final class TeamConfig {
         return libreview.equals(other.libreview)
                 && textsEnabled.equals(other.textsEnabled)
                 && pushHistoricalData.equals(other.pushHistoricalData)
+                && providerRawData.equals(other.providerRawData)
                 && edsPreferences.equals(other.edsPreferences)
                 && eventTypePrefixes.equals(other.eventTypePrefixes);
     }
@@ -98,6 +108,7 @@ public final class TeamConfig {
                 this.libreview,
                 this.textsEnabled,
                 this.pushHistoricalData,
+                this.providerRawData,
                 this.edsPreferences,
                 this.eventTypePrefixes);
     }
@@ -128,6 +139,10 @@ public final class TeamConfig {
 
         _FinalStage pushHistoricalData(Boolean pushHistoricalData);
 
+        _FinalStage providerRawData(Optional<Boolean> providerRawData);
+
+        _FinalStage providerRawData(Boolean providerRawData);
+
         _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences);
 
         _FinalStage edsPreferences(EventDestinationPreferences edsPreferences);
@@ -145,6 +160,8 @@ public final class TeamConfig {
 
         private Optional<EventDestinationPreferences> edsPreferences = Optional.empty();
 
+        private Optional<Boolean> providerRawData = Optional.empty();
+
         private Optional<Boolean> pushHistoricalData = Optional.empty();
 
         private Optional<Boolean> textsEnabled = Optional.empty();
@@ -159,6 +176,7 @@ public final class TeamConfig {
             libreview(other.getLibreview());
             textsEnabled(other.getTextsEnabled());
             pushHistoricalData(other.getPushHistoricalData());
+            providerRawData(other.getProviderRawData());
             edsPreferences(other.getEdsPreferences());
             eventTypePrefixes(other.getEventTypePrefixes());
             return this;
@@ -198,6 +216,19 @@ public final class TeamConfig {
         }
 
         @Override
+        public _FinalStage providerRawData(Boolean providerRawData) {
+            this.providerRawData = Optional.of(providerRawData);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "provider_raw_data", nulls = Nulls.SKIP)
+        public _FinalStage providerRawData(Optional<Boolean> providerRawData) {
+            this.providerRawData = providerRawData;
+            return this;
+        }
+
+        @Override
         public _FinalStage pushHistoricalData(Boolean pushHistoricalData) {
             this.pushHistoricalData = Optional.of(pushHistoricalData);
             return this;
@@ -229,6 +260,7 @@ public final class TeamConfig {
                     libreview,
                     textsEnabled,
                     pushHistoricalData,
+                    providerRawData,
                     edsPreferences,
                     eventTypePrefixes,
                     additionalProperties);

@@ -28,7 +28,9 @@ public enum OAuthProviders {
 
     CRONOMETER("cronometer"),
 
-    OMRON("omron");
+    OMRON("omron"),
+
+    WHOOP_V_2("whoop_v2");
 
     private final String value;
 

@@ -23,6 +23,8 @@ import java.util.Optional;
 public final class ClientFacingTeam {
     private final String id;
 
+    private final Optional<String> orgId;
+
     private final String name;
 
     private final Optional<String> svixAppId;
@@ -59,6 +61,7 @@ public final class ClientFacingTeam {
 
     private ClientFacingTeam(
             String id,
+            Optional<String> orgId,
             String name,
             Optional<String> svixAppId,
             Optional<String> clientId,
@@ -77,6 +80,7 @@ public final class ClientFacingTeam {
             DelegatedFlowType delegatedFlow,
             Map<String, Object> additionalProperties) {
         this.id = id;
+        this.orgId = orgId;
         this.name = name;
         this.svixAppId = svixAppId;
         this.clientId = clientId;
@@ -99,6 +103,11 @@ public final class ClientFacingTeam {
     @JsonProperty("id")
     public String getId() {
         return id;
+    }
+
+    @JsonProperty("org_id")
+    public Optional<String> getOrgId() {
+        return orgId;
     }
 
     @JsonProperty("name")
@@ -194,6 +203,7 @@ public final class ClientFacingTeam {
 
     private boolean equalTo(ClientFacingTeam other) {
         return id.equals(other.id)
+                && orgId.equals(other.orgId)
                 && name.equals(other.name)
                 && svixAppId.equals(other.svixAppId)
                 && clientId.equals(other.clientId)
@@ -216,6 +226,7 @@ public final class ClientFacingTeam {
     public int hashCode() {
         return Objects.hash(
                 this.id,
+                this.orgId,
                 this.name,
                 this.svixAppId,
                 this.clientId,
@@ -277,6 +288,10 @@ public final class ClientFacingTeam {
 
     public interface _FinalStage {
         ClientFacingTeam build();
+
+        _FinalStage orgId(Optional<String> orgId);
+
+        _FinalStage orgId(String orgId);
 
         _FinalStage svixAppId(Optional<String> svixAppId);
 
@@ -363,6 +378,8 @@ public final class ClientFacingTeam {
 
         private Optional<String> svixAppId = Optional.empty();
 
+        private Optional<String> orgId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -371,6 +388,7 @@ public final class ClientFacingTeam {
         @Override
         public Builder from(ClientFacingTeam other) {
             id(other.getId());
+            orgId(other.getOrgId());
             name(other.getName());
             svixAppId(other.getSvixAppId());
             clientId(other.getClientId());
@@ -573,9 +591,23 @@ public final class ClientFacingTeam {
         }
 
         @Override
+        public _FinalStage orgId(String orgId) {
+            this.orgId = Optional.of(orgId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "org_id", nulls = Nulls.SKIP)
+        public _FinalStage orgId(Optional<String> orgId) {
+            this.orgId = orgId;
+            return this;
+        }
+
+        @Override
         public ClientFacingTeam build() {
             return new ClientFacingTeam(
                     id,
+                    orgId,
                     name,
                     svixAppId,
                     clientId,
