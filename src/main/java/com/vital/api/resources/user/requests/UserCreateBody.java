@@ -24,12 +24,18 @@ public final class UserCreateBody {
 
     private final Optional<String> fallbackTimeZone;
 
+    private final Optional<String> fallbackBirthDate;
+
     private final Map<String, Object> additionalProperties;
 
     private UserCreateBody(
-            String clientUserId, Optional<String> fallbackTimeZone, Map<String, Object> additionalProperties) {
+            String clientUserId,
+            Optional<String> fallbackTimeZone,
+            Optional<String> fallbackBirthDate,
+            Map<String, Object> additionalProperties) {
         this.clientUserId = clientUserId;
         this.fallbackTimeZone = fallbackTimeZone;
+        this.fallbackBirthDate = fallbackBirthDate;
         this.additionalProperties = additionalProperties;
     }
 
@@ -50,6 +56,14 @@ public final class UserCreateBody {
         return fallbackTimeZone;
     }
 
+    /**
+     * @return Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.
+     */
+    @JsonProperty("fallback_birth_date")
+    public Optional<String> getFallbackBirthDate() {
+        return fallbackBirthDate;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -62,12 +76,14 @@ public final class UserCreateBody {
     }
 
     private boolean equalTo(UserCreateBody other) {
-        return clientUserId.equals(other.clientUserId) && fallbackTimeZone.equals(other.fallbackTimeZone);
+        return clientUserId.equals(other.clientUserId)
+                && fallbackTimeZone.equals(other.fallbackTimeZone)
+                && fallbackBirthDate.equals(other.fallbackBirthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.clientUserId, this.fallbackTimeZone);
+        return Objects.hash(this.clientUserId, this.fallbackTimeZone, this.fallbackBirthDate);
     }
 
     @Override
@@ -91,11 +107,17 @@ public final class UserCreateBody {
         _FinalStage fallbackTimeZone(Optional<String> fallbackTimeZone);
 
         _FinalStage fallbackTimeZone(String fallbackTimeZone);
+
+        _FinalStage fallbackBirthDate(Optional<String> fallbackBirthDate);
+
+        _FinalStage fallbackBirthDate(String fallbackBirthDate);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ClientUserIdStage, _FinalStage {
         private String clientUserId;
+
+        private Optional<String> fallbackBirthDate = Optional.empty();
 
         private Optional<String> fallbackTimeZone = Optional.empty();
 
@@ -108,6 +130,7 @@ public final class UserCreateBody {
         public Builder from(UserCreateBody other) {
             clientUserId(other.getClientUserId());
             fallbackTimeZone(other.getFallbackTimeZone());
+            fallbackBirthDate(other.getFallbackBirthDate());
             return this;
         }
 
@@ -119,6 +142,23 @@ public final class UserCreateBody {
         @JsonSetter("client_user_id")
         public _FinalStage clientUserId(String clientUserId) {
             this.clientUserId = clientUserId;
+            return this;
+        }
+
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage fallbackBirthDate(String fallbackBirthDate) {
+            this.fallbackBirthDate = Optional.of(fallbackBirthDate);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
+        public _FinalStage fallbackBirthDate(Optional<String> fallbackBirthDate) {
+            this.fallbackBirthDate = fallbackBirthDate;
             return this;
         }
 
@@ -142,7 +182,7 @@ public final class UserCreateBody {
 
         @Override
         public UserCreateBody build() {
-            return new UserCreateBody(clientUserId, fallbackTimeZone, additionalProperties);
+            return new UserCreateBody(clientUserId, fallbackTimeZone, fallbackBirthDate, additionalProperties);
         }
     }
 }

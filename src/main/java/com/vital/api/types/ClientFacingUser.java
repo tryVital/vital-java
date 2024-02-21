@@ -35,6 +35,8 @@ public final class ClientFacingUser {
 
     private final Optional<FallbackTimeZone> fallbackTimeZone;
 
+    private final Optional<FallbackBirthDate> fallbackBirthDate;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingUser(
@@ -44,6 +46,7 @@ public final class ClientFacingUser {
             OffsetDateTime createdOn,
             List<ConnectedSourceClientFacing> connectedSources,
             Optional<FallbackTimeZone> fallbackTimeZone,
+            Optional<FallbackBirthDate> fallbackBirthDate,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.teamId = teamId;
@@ -51,6 +54,7 @@ public final class ClientFacingUser {
         this.createdOn = createdOn;
         this.connectedSources = connectedSources;
         this.fallbackTimeZone = fallbackTimeZone;
+        this.fallbackBirthDate = fallbackBirthDate;
         this.additionalProperties = additionalProperties;
     }
 
@@ -103,6 +107,14 @@ public final class ClientFacingUser {
         return fallbackTimeZone;
     }
 
+    /**
+     * @return Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.
+     */
+    @JsonProperty("fallback_birth_date")
+    public Optional<FallbackBirthDate> getFallbackBirthDate() {
+        return fallbackBirthDate;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -120,7 +132,8 @@ public final class ClientFacingUser {
                 && clientUserId.equals(other.clientUserId)
                 && createdOn.equals(other.createdOn)
                 && connectedSources.equals(other.connectedSources)
-                && fallbackTimeZone.equals(other.fallbackTimeZone);
+                && fallbackTimeZone.equals(other.fallbackTimeZone)
+                && fallbackBirthDate.equals(other.fallbackBirthDate);
     }
 
     @Override
@@ -131,7 +144,8 @@ public final class ClientFacingUser {
                 this.clientUserId,
                 this.createdOn,
                 this.connectedSources,
-                this.fallbackTimeZone);
+                this.fallbackTimeZone,
+                this.fallbackBirthDate);
     }
 
     @Override
@@ -173,6 +187,10 @@ public final class ClientFacingUser {
         _FinalStage fallbackTimeZone(Optional<FallbackTimeZone> fallbackTimeZone);
 
         _FinalStage fallbackTimeZone(FallbackTimeZone fallbackTimeZone);
+
+        _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate);
+
+        _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -185,6 +203,8 @@ public final class ClientFacingUser {
         private String clientUserId;
 
         private OffsetDateTime createdOn;
+
+        private Optional<FallbackBirthDate> fallbackBirthDate = Optional.empty();
 
         private Optional<FallbackTimeZone> fallbackTimeZone = Optional.empty();
 
@@ -203,6 +223,7 @@ public final class ClientFacingUser {
             createdOn(other.getCreatedOn());
             connectedSources(other.getConnectedSources());
             fallbackTimeZone(other.getFallbackTimeZone());
+            fallbackBirthDate(other.getFallbackBirthDate());
             return this;
         }
 
@@ -247,6 +268,23 @@ public final class ClientFacingUser {
         @JsonSetter("created_on")
         public _FinalStage createdOn(OffsetDateTime createdOn) {
             this.createdOn = createdOn;
+            return this;
+        }
+
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate) {
+            this.fallbackBirthDate = Optional.of(fallbackBirthDate);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
+        public _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate) {
+            this.fallbackBirthDate = fallbackBirthDate;
             return this;
         }
 
@@ -299,7 +337,14 @@ public final class ClientFacingUser {
         @Override
         public ClientFacingUser build() {
             return new ClientFacingUser(
-                    userId, teamId, clientUserId, createdOn, connectedSources, fallbackTimeZone, additionalProperties);
+                    userId,
+                    teamId,
+                    clientUserId,
+                    createdOn,
+                    connectedSources,
+                    fallbackTimeZone,
+                    fallbackBirthDate,
+                    additionalProperties);
         }
     }
 }

@@ -59,6 +59,8 @@ public final class ClientFacingOrder {
 
     private final Optional<ShippingAddress> shippingDetails;
 
+    private final Optional<String> activateBy;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -80,6 +82,7 @@ public final class ClientFacingOrder {
             Optional<String> requisitionFormUrl,
             Optional<Boolean> priority,
             Optional<ShippingAddress> shippingDetails,
+            Optional<String> activateBy,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -99,6 +102,7 @@ public final class ClientFacingOrder {
         this.requisitionFormUrl = requisitionFormUrl;
         this.priority = priority;
         this.shippingDetails = shippingDetails;
+        this.activateBy = activateBy;
         this.additionalProperties = additionalProperties;
     }
 
@@ -234,6 +238,14 @@ public final class ClientFacingOrder {
         return shippingDetails;
     }
 
+    /**
+     * @return Defines when an Order should be activated, making it a Delayed Order.
+     */
+    @JsonProperty("activate_by")
+    public Optional<String> getActivateBy() {
+        return activateBy;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -263,7 +275,8 @@ public final class ClientFacingOrder {
                 && healthInsuranceId.equals(other.healthInsuranceId)
                 && requisitionFormUrl.equals(other.requisitionFormUrl)
                 && priority.equals(other.priority)
-                && shippingDetails.equals(other.shippingDetails);
+                && shippingDetails.equals(other.shippingDetails)
+                && activateBy.equals(other.activateBy);
     }
 
     @Override
@@ -286,7 +299,8 @@ public final class ClientFacingOrder {
                 this.healthInsuranceId,
                 this.requisitionFormUrl,
                 this.priority,
-                this.shippingDetails);
+                this.shippingDetails,
+                this.activateBy);
     }
 
     @Override
@@ -376,6 +390,10 @@ public final class ClientFacingOrder {
         _FinalStage shippingDetails(Optional<ShippingAddress> shippingDetails);
 
         _FinalStage shippingDetails(ShippingAddress shippingDetails);
+
+        _FinalStage activateBy(Optional<String> activateBy);
+
+        _FinalStage activateBy(String activateBy);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -401,6 +419,8 @@ public final class ClientFacingOrder {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
+
+        private Optional<String> activateBy = Optional.empty();
 
         private Optional<ShippingAddress> shippingDetails = Optional.empty();
 
@@ -449,6 +469,7 @@ public final class ClientFacingOrder {
             requisitionFormUrl(other.getRequisitionFormUrl());
             priority(other.getPriority());
             shippingDetails(other.getShippingDetails());
+            activateBy(other.getActivateBy());
             return this;
         }
 
@@ -522,6 +543,23 @@ public final class ClientFacingOrder {
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        /**
+         * <p>Defines when an Order should be activated, making it a Delayed Order.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage activateBy(String activateBy) {
+            this.activateBy = Optional.of(activateBy);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "activate_by", nulls = Nulls.SKIP)
+        public _FinalStage activateBy(Optional<String> activateBy) {
+            this.activateBy = activateBy;
             return this;
         }
 
@@ -728,6 +766,7 @@ public final class ClientFacingOrder {
                     requisitionFormUrl,
                     priority,
                     shippingDetails,
+                    activateBy,
                     additionalProperties);
         }
     }

@@ -38,6 +38,8 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<List<Consent>> consents;
 
+    private final Optional<String> activateBy;
+
     private final PatientDetails patientDetails;
 
     private final PatientAddressCompatible patientAddress;
@@ -51,6 +53,7 @@ public final class CreateOrderRequestCompatible {
             Optional<HealthInsuranceCreateRequest> healthInsurance,
             Optional<Boolean> priority,
             Optional<List<Consent>> consents,
+            Optional<String> activateBy,
             PatientDetails patientDetails,
             PatientAddressCompatible patientAddress,
             Map<String, Object> additionalProperties) {
@@ -60,6 +63,7 @@ public final class CreateOrderRequestCompatible {
         this.healthInsurance = healthInsurance;
         this.priority = priority;
         this.consents = consents;
+        this.activateBy = activateBy;
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.additionalProperties = additionalProperties;
@@ -98,6 +102,14 @@ public final class CreateOrderRequestCompatible {
         return consents;
     }
 
+    /**
+     * @return Defines when an Order should be activated, making it a Delayed Order.
+     */
+    @JsonProperty("activate_by")
+    public Optional<String> getActivateBy() {
+        return activateBy;
+    }
+
     @JsonProperty("patient_details")
     public PatientDetails getPatientDetails() {
         return patientDetails;
@@ -126,6 +138,7 @@ public final class CreateOrderRequestCompatible {
                 && healthInsurance.equals(other.healthInsurance)
                 && priority.equals(other.priority)
                 && consents.equals(other.consents)
+                && activateBy.equals(other.activateBy)
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress);
     }
@@ -139,6 +152,7 @@ public final class CreateOrderRequestCompatible {
                 this.healthInsurance,
                 this.priority,
                 this.consents,
+                this.activateBy,
                 this.patientDetails,
                 this.patientAddress);
     }
@@ -188,6 +202,10 @@ public final class CreateOrderRequestCompatible {
         _FinalStage consents(Optional<List<Consent>> consents);
 
         _FinalStage consents(List<Consent> consents);
+
+        _FinalStage activateBy(Optional<String> activateBy);
+
+        _FinalStage activateBy(String activateBy);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -200,6 +218,8 @@ public final class CreateOrderRequestCompatible {
         private PatientDetails patientDetails;
 
         private PatientAddressCompatible patientAddress;
+
+        private Optional<String> activateBy = Optional.empty();
 
         private Optional<List<Consent>> consents = Optional.empty();
 
@@ -222,6 +242,7 @@ public final class CreateOrderRequestCompatible {
             healthInsurance(other.getHealthInsurance());
             priority(other.getPriority());
             consents(other.getConsents());
+            activateBy(other.getActivateBy());
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             return this;
@@ -252,6 +273,23 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = patientAddress;
+            return this;
+        }
+
+        /**
+         * <p>Defines when an Order should be activated, making it a Delayed Order.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage activateBy(String activateBy) {
+            this.activateBy = Optional.of(activateBy);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "activate_by", nulls = Nulls.SKIP)
+        public _FinalStage activateBy(Optional<String> activateBy) {
+            this.activateBy = activateBy;
             return this;
         }
 
@@ -320,6 +358,7 @@ public final class CreateOrderRequestCompatible {
                     healthInsurance,
                     priority,
                     consents,
+                    activateBy,
                     patientDetails,
                     patientAddress,
                     additionalProperties);

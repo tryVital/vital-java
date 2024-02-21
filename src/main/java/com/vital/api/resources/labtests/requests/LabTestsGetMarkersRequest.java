@@ -52,7 +52,7 @@ public final class LabTestsGetMarkersRequest {
     }
 
     /**
-     * @return The name of an individual biomarker or a panel. Used as a fuzzy filter when searching markers.
+     * @return The name or test code of an individual biomarker or a panel.
      */
     @JsonProperty("name")
     public Optional<String> getName() {

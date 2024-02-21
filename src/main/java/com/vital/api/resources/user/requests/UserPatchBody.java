@@ -22,10 +22,16 @@ import java.util.Optional;
 public final class UserPatchBody {
     private final Optional<String> fallbackTimeZone;
 
+    private final Optional<String> fallbackBirthDate;
+
     private final Map<String, Object> additionalProperties;
 
-    private UserPatchBody(Optional<String> fallbackTimeZone, Map<String, Object> additionalProperties) {
+    private UserPatchBody(
+            Optional<String> fallbackTimeZone,
+            Optional<String> fallbackBirthDate,
+            Map<String, Object> additionalProperties) {
         this.fallbackTimeZone = fallbackTimeZone;
+        this.fallbackBirthDate = fallbackBirthDate;
         this.additionalProperties = additionalProperties;
     }
 
@@ -36,6 +42,14 @@ public final class UserPatchBody {
     @JsonProperty("fallback_time_zone")
     public Optional<String> getFallbackTimeZone() {
         return fallbackTimeZone;
+    }
+
+    /**
+     * @return Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.
+     */
+    @JsonProperty("fallback_birth_date")
+    public Optional<String> getFallbackBirthDate() {
+        return fallbackBirthDate;
     }
 
     @Override
@@ -50,12 +64,12 @@ public final class UserPatchBody {
     }
 
     private boolean equalTo(UserPatchBody other) {
-        return fallbackTimeZone.equals(other.fallbackTimeZone);
+        return fallbackTimeZone.equals(other.fallbackTimeZone) && fallbackBirthDate.equals(other.fallbackBirthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.fallbackTimeZone);
+        return Objects.hash(this.fallbackTimeZone, this.fallbackBirthDate);
     }
 
     @Override
@@ -71,6 +85,8 @@ public final class UserPatchBody {
     public static final class Builder {
         private Optional<String> fallbackTimeZone = Optional.empty();
 
+        private Optional<String> fallbackBirthDate = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -78,6 +94,7 @@ public final class UserPatchBody {
 
         public Builder from(UserPatchBody other) {
             fallbackTimeZone(other.getFallbackTimeZone());
+            fallbackBirthDate(other.getFallbackBirthDate());
             return this;
         }
 
@@ -92,8 +109,19 @@ public final class UserPatchBody {
             return this;
         }
 
+        @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
+        public Builder fallbackBirthDate(Optional<String> fallbackBirthDate) {
+            this.fallbackBirthDate = fallbackBirthDate;
+            return this;
+        }
+
+        public Builder fallbackBirthDate(String fallbackBirthDate) {
+            this.fallbackBirthDate = Optional.of(fallbackBirthDate);
+            return this;
+        }
+
         public UserPatchBody build() {
-            return new UserPatchBody(fallbackTimeZone, additionalProperties);
+            return new UserPatchBody(fallbackTimeZone, fallbackBirthDate, additionalProperties);
         }
     }
 }

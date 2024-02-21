@@ -18,8 +18,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = VitalsTriglyceridesRequest.Builder.class)
-public final class VitalsTriglyceridesRequest {
+@JsonDeserialize(builder = VitalsBodyFatGroupedRequest.Builder.class)
+public final class VitalsBodyFatGroupedRequest {
+    private final Optional<String> cursor;
+
     private final Optional<String> provider;
 
     private final String startDate;
@@ -28,15 +30,25 @@ public final class VitalsTriglyceridesRequest {
 
     private final Map<String, Object> additionalProperties;
 
-    private VitalsTriglyceridesRequest(
+    private VitalsBodyFatGroupedRequest(
+            Optional<String> cursor,
             Optional<String> provider,
             String startDate,
             Optional<String> endDate,
             Map<String, Object> additionalProperties) {
+        this.cursor = cursor;
         this.provider = provider;
         this.startDate = startDate;
         this.endDate = endDate;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return The cursor for fetching the next page, or <code>null</code> to fetch the first page.
+     */
+    @JsonProperty("cursor")
+    public Optional<String> getCursor() {
+        return cursor;
     }
 
     /**
@@ -66,7 +78,7 @@ public final class VitalsTriglyceridesRequest {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof VitalsTriglyceridesRequest && equalTo((VitalsTriglyceridesRequest) other);
+        return other instanceof VitalsBodyFatGroupedRequest && equalTo((VitalsBodyFatGroupedRequest) other);
     }
 
     @JsonAnyGetter
@@ -74,13 +86,16 @@ public final class VitalsTriglyceridesRequest {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(VitalsTriglyceridesRequest other) {
-        return provider.equals(other.provider) && startDate.equals(other.startDate) && endDate.equals(other.endDate);
+    private boolean equalTo(VitalsBodyFatGroupedRequest other) {
+        return cursor.equals(other.cursor)
+                && provider.equals(other.provider)
+                && startDate.equals(other.startDate)
+                && endDate.equals(other.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.provider, this.startDate, this.endDate);
+        return Objects.hash(this.cursor, this.provider, this.startDate, this.endDate);
     }
 
     @Override
@@ -95,11 +110,15 @@ public final class VitalsTriglyceridesRequest {
     public interface StartDateStage {
         _FinalStage startDate(String startDate);
 
-        Builder from(VitalsTriglyceridesRequest other);
+        Builder from(VitalsBodyFatGroupedRequest other);
     }
 
     public interface _FinalStage {
-        VitalsTriglyceridesRequest build();
+        VitalsBodyFatGroupedRequest build();
+
+        _FinalStage cursor(Optional<String> cursor);
+
+        _FinalStage cursor(String cursor);
 
         _FinalStage provider(Optional<String> provider);
 
@@ -118,13 +137,16 @@ public final class VitalsTriglyceridesRequest {
 
         private Optional<String> provider = Optional.empty();
 
+        private Optional<String> cursor = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
         @Override
-        public Builder from(VitalsTriglyceridesRequest other) {
+        public Builder from(VitalsBodyFatGroupedRequest other) {
+            cursor(other.getCursor());
             provider(other.getProvider());
             startDate(other.getStartDate());
             endDate(other.getEndDate());
@@ -176,9 +198,26 @@ public final class VitalsTriglyceridesRequest {
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
-        public VitalsTriglyceridesRequest build() {
-            return new VitalsTriglyceridesRequest(provider, startDate, endDate, additionalProperties);
+        public _FinalStage cursor(String cursor) {
+            this.cursor = Optional.of(cursor);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "cursor", nulls = Nulls.SKIP)
+        public _FinalStage cursor(Optional<String> cursor) {
+            this.cursor = cursor;
+            return this;
+        }
+
+        @Override
+        public VitalsBodyFatGroupedRequest build() {
+            return new VitalsBodyFatGroupedRequest(cursor, provider, startDate, endDate, additionalProperties);
         }
     }
 }

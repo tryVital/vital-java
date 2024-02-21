@@ -16,9 +16,9 @@ public enum TimeseriesResource {
 
     BLOOD_PRESSURE("blood_pressure"),
 
-    BODY_FAT("body/fat"),
+    BODY_FAT("body_fat"),
 
-    BODY_WEIGHT("body/weight"),
+    BODY_WEIGHT("body_weight"),
 
     CHOLESTEROL("cholesterol"),
 
@@ -39,8 +39,6 @@ public enum TimeseriesResource {
     HEARTRATE("heartrate"),
 
     HRV("hrv"),
-
-    HEARTRATE_VARIABILITY("heartrate_variability"),
 
     HYPNOGRAM("hypnogram"),
 

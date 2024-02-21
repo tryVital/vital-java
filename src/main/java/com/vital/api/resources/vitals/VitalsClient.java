@@ -8,31 +8,60 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.resources.vitals.requests.VitalsBloodOxygenGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBloodOxygenRequest;
+import com.vital.api.resources.vitals.requests.VitalsBloodPressureGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBloodPressureRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyFatGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyFatRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyWeightGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyWeightRequest;
+import com.vital.api.resources.vitals.requests.VitalsCaffeineGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCaffeineRequest;
+import com.vital.api.resources.vitals.requests.VitalsCaloriesActiveGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCaloriesActiveRequest;
+import com.vital.api.resources.vitals.requests.VitalsCaloriesBasalGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCaloriesBasalRequest;
+import com.vital.api.resources.vitals.requests.VitalsCholesterolGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolHdlRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolLdlRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolTotalRequest;
+import com.vital.api.resources.vitals.requests.VitalsCholesterolTriglyceridesRequest;
+import com.vital.api.resources.vitals.requests.VitalsDistanceGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsDistanceRequest;
+import com.vital.api.resources.vitals.requests.VitalsElectrocardiogramVoltageGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsElectrocardiogramVoltageRequest;
+import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedRequest;
+import com.vital.api.resources.vitals.requests.VitalsGlucoseGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsGlucoseRequest;
+import com.vital.api.resources.vitals.requests.VitalsHeartrateGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartrateRequest;
+import com.vital.api.resources.vitals.requests.VitalsHrvGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHrvRequest;
+import com.vital.api.resources.vitals.requests.VitalsHypnogramGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHypnogramRequest;
+import com.vital.api.resources.vitals.requests.VitalsIgeGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsIgeRequest;
+import com.vital.api.resources.vitals.requests.VitalsIggGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsIggRequest;
+import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesRequest;
+import com.vital.api.resources.vitals.requests.VitalsRespiratoryRateGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsRespiratoryRateRequest;
+import com.vital.api.resources.vitals.requests.VitalsStepsGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsStepsRequest;
-import com.vital.api.resources.vitals.requests.VitalsTriglyceridesRequest;
+import com.vital.api.resources.vitals.requests.VitalsStressLevelGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsStressLevelRequest;
+import com.vital.api.resources.vitals.requests.VitalsVo2MaxGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsVo2MaxRequest;
+import com.vital.api.resources.vitals.requests.VitalsWaterGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsWaterRequest;
 import com.vital.api.types.ClientFacingBloodOxygenTimeseries;
 import com.vital.api.types.ClientFacingBloodPressureTimeseries;
+import com.vital.api.types.ClientFacingBodyFatTimeseries;
+import com.vital.api.types.ClientFacingBodyWeightTimeseries;
 import com.vital.api.types.ClientFacingCaffeineTimeseries;
 import com.vital.api.types.ClientFacingCaloriesActiveTimeseries;
 import com.vital.api.types.ClientFacingCaloriesBasalTimeseries;
@@ -49,7 +78,32 @@ import com.vital.api.types.ClientFacingIggTimeseries;
 import com.vital.api.types.ClientFacingMindfulnessMinutesTimeseries;
 import com.vital.api.types.ClientFacingRespiratoryRateTimeseries;
 import com.vital.api.types.ClientFacingStepsTimeseries;
+import com.vital.api.types.ClientFacingStressLevelTimeseries;
+import com.vital.api.types.ClientFacingVo2MaxTimeseries;
 import com.vital.api.types.ClientFacingWaterTimeseries;
+import com.vital.api.types.GroupedBloodOxygenResponse;
+import com.vital.api.types.GroupedBloodPressureResponse;
+import com.vital.api.types.GroupedBodyFatResponse;
+import com.vital.api.types.GroupedBodyWeightResponse;
+import com.vital.api.types.GroupedCaffeineResponse;
+import com.vital.api.types.GroupedCaloriesActiveResponse;
+import com.vital.api.types.GroupedCaloriesBasalResponse;
+import com.vital.api.types.GroupedCholesterolResponse;
+import com.vital.api.types.GroupedDistanceResponse;
+import com.vital.api.types.GroupedElectrocardiogramVoltageResponse;
+import com.vital.api.types.GroupedFloorsClimbedResponse;
+import com.vital.api.types.GroupedGlucoseResponse;
+import com.vital.api.types.GroupedHeartRateResponse;
+import com.vital.api.types.GroupedHrvResponse;
+import com.vital.api.types.GroupedHypnogramResponse;
+import com.vital.api.types.GroupedIgeResponse;
+import com.vital.api.types.GroupedIggResponse;
+import com.vital.api.types.GroupedMindfulnessMinutesResponse;
+import com.vital.api.types.GroupedRespiratoryRateResponse;
+import com.vital.api.types.GroupedStepsResponse;
+import com.vital.api.types.GroupedStressLevelResponse;
+import com.vital.api.types.GroupedVo2MaxResponse;
+import com.vital.api.types.GroupedWaterResponse;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.Headers;
@@ -64,9 +118,1038 @@ public class VitalsClient {
         this.clientOptions = clientOptions;
     }
 
-    /**
-     * Get timeseries data for user
-     */
+    public GroupedVo2MaxResponse vo2MaxGrouped(
+            String userId, VitalsVo2MaxGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("vo2_max/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedVo2MaxResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedVo2MaxResponse vo2MaxGrouped(String userId, VitalsVo2MaxGroupedRequest request) {
+        return vo2MaxGrouped(userId, request, null);
+    }
+
+    public GroupedStressLevelResponse stressLevelGrouped(
+            String userId, VitalsStressLevelGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("stress_level/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedStressLevelResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedStressLevelResponse stressLevelGrouped(String userId, VitalsStressLevelGroupedRequest request) {
+        return stressLevelGrouped(userId, request, null);
+    }
+
+    public GroupedMindfulnessMinutesResponse mindfulnessMinutesGrouped(
+            String userId, VitalsMindfulnessMinutesGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("mindfulness_minutes/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedMindfulnessMinutesResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedMindfulnessMinutesResponse mindfulnessMinutesGrouped(
+            String userId, VitalsMindfulnessMinutesGroupedRequest request) {
+        return mindfulnessMinutesGrouped(userId, request, null);
+    }
+
+    public GroupedCaffeineResponse caffeineGrouped(
+            String userId, VitalsCaffeineGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("caffeine/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedCaffeineResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedCaffeineResponse caffeineGrouped(String userId, VitalsCaffeineGroupedRequest request) {
+        return caffeineGrouped(userId, request, null);
+    }
+
+    public GroupedWaterResponse waterGrouped(
+            String userId, VitalsWaterGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("water/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedWaterResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedWaterResponse waterGrouped(String userId, VitalsWaterGroupedRequest request) {
+        return waterGrouped(userId, request, null);
+    }
+
+    public GroupedStepsResponse stepsGrouped(
+            String userId, VitalsStepsGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("steps/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedStepsResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedStepsResponse stepsGrouped(String userId, VitalsStepsGroupedRequest request) {
+        return stepsGrouped(userId, request, null);
+    }
+
+    public GroupedFloorsClimbedResponse floorsClimbedGrouped(
+            String userId, VitalsFloorsClimbedGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("floors_climbed/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedFloorsClimbedResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedFloorsClimbedResponse floorsClimbedGrouped(String userId, VitalsFloorsClimbedGroupedRequest request) {
+        return floorsClimbedGrouped(userId, request, null);
+    }
+
+    public GroupedDistanceResponse distanceGrouped(
+            String userId, VitalsDistanceGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("distance/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedDistanceResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedDistanceResponse distanceGrouped(String userId, VitalsDistanceGroupedRequest request) {
+        return distanceGrouped(userId, request, null);
+    }
+
+    public GroupedCaloriesBasalResponse caloriesBasalGrouped(
+            String userId, VitalsCaloriesBasalGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("calories_basal/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedCaloriesBasalResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedCaloriesBasalResponse caloriesBasalGrouped(String userId, VitalsCaloriesBasalGroupedRequest request) {
+        return caloriesBasalGrouped(userId, request, null);
+    }
+
+    public GroupedCaloriesActiveResponse caloriesActiveGrouped(
+            String userId, VitalsCaloriesActiveGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("calories_active/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedCaloriesActiveResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedCaloriesActiveResponse caloriesActiveGrouped(
+            String userId, VitalsCaloriesActiveGroupedRequest request) {
+        return caloriesActiveGrouped(userId, request, null);
+    }
+
+    public GroupedRespiratoryRateResponse respiratoryRateGrouped(
+            String userId, VitalsRespiratoryRateGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("respiratory_rate/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedRespiratoryRateResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedRespiratoryRateResponse respiratoryRateGrouped(
+            String userId, VitalsRespiratoryRateGroupedRequest request) {
+        return respiratoryRateGrouped(userId, request, null);
+    }
+
+    public GroupedIgeResponse igeGrouped(
+            String userId, VitalsIgeGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("ige/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedIgeResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedIgeResponse igeGrouped(String userId, VitalsIgeGroupedRequest request) {
+        return igeGrouped(userId, request, null);
+    }
+
+    public GroupedIggResponse iggGrouped(
+            String userId, VitalsIggGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("igg/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedIggResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedIggResponse iggGrouped(String userId, VitalsIggGroupedRequest request) {
+        return iggGrouped(userId, request, null);
+    }
+
+    public GroupedHypnogramResponse hypnogramGrouped(
+            String userId, VitalsHypnogramGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("hypnogram/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedHypnogramResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedHypnogramResponse hypnogramGrouped(String userId, VitalsHypnogramGroupedRequest request) {
+        return hypnogramGrouped(userId, request, null);
+    }
+
+    public GroupedHrvResponse hrvGrouped(
+            String userId, VitalsHrvGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("hrv/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedHrvResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedHrvResponse hrvGrouped(String userId, VitalsHrvGroupedRequest request) {
+        return hrvGrouped(userId, request, null);
+    }
+
+    public GroupedHeartRateResponse heartrateGrouped(
+            String userId, VitalsHeartrateGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("heartrate/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedHeartRateResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedHeartRateResponse heartrateGrouped(String userId, VitalsHeartrateGroupedRequest request) {
+        return heartrateGrouped(userId, request, null);
+    }
+
+    public GroupedGlucoseResponse glucoseGrouped(
+            String userId, VitalsGlucoseGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("glucose/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedGlucoseResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedGlucoseResponse glucoseGrouped(String userId, VitalsGlucoseGroupedRequest request) {
+        return glucoseGrouped(userId, request, null);
+    }
+
+    public GroupedCholesterolResponse cholesterolGrouped(
+            String userId, VitalsCholesterolGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("cholesterol/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedCholesterolResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedCholesterolResponse cholesterolGrouped(String userId, VitalsCholesterolGroupedRequest request) {
+        return cholesterolGrouped(userId, request, null);
+    }
+
+    public GroupedBodyWeightResponse bodyWeightGrouped(
+            String userId, VitalsBodyWeightGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("body_weight/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedBodyWeightResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedBodyWeightResponse bodyWeightGrouped(String userId, VitalsBodyWeightGroupedRequest request) {
+        return bodyWeightGrouped(userId, request, null);
+    }
+
+    public GroupedBodyFatResponse bodyFatGrouped(
+            String userId, VitalsBodyFatGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("body_fat/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedBodyFatResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedBodyFatResponse bodyFatGrouped(String userId, VitalsBodyFatGroupedRequest request) {
+        return bodyFatGrouped(userId, request, null);
+    }
+
+    public GroupedBloodOxygenResponse bloodOxygenGrouped(
+            String userId, VitalsBloodOxygenGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("blood_oxygen/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GroupedBloodOxygenResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedBloodOxygenResponse bloodOxygenGrouped(String userId, VitalsBloodOxygenGroupedRequest request) {
+        return bloodOxygenGrouped(userId, request, null);
+    }
+
+    public GroupedElectrocardiogramVoltageResponse electrocardiogramVoltageGrouped(
+            String userId, VitalsElectrocardiogramVoltageGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("electrocardiogram_voltage/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedElectrocardiogramVoltageResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedElectrocardiogramVoltageResponse electrocardiogramVoltageGrouped(
+            String userId, VitalsElectrocardiogramVoltageGroupedRequest request) {
+        return electrocardiogramVoltageGrouped(userId, request, null);
+    }
+
+    public GroupedBloodPressureResponse bloodPressureGrouped(
+            String userId, VitalsBloodPressureGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("blood_pressure/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), GroupedBloodPressureResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GroupedBloodPressureResponse bloodPressureGrouped(String userId, VitalsBloodPressureGroupedRequest request) {
+        return bloodPressureGrouped(userId, request, null);
+    }
+
+    public List<ClientFacingVo2MaxTimeseries> vo2Max(
+            String userId, VitalsVo2MaxRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("vo2_max");
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), new TypeReference<List<ClientFacingVo2MaxTimeseries>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ClientFacingVo2MaxTimeseries> vo2Max(String userId, VitalsVo2MaxRequest request) {
+        return vo2Max(userId, request, null);
+    }
+
+    public List<ClientFacingStressLevelTimeseries> stressLevel(
+            String userId, VitalsStressLevelRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("stress_level");
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), new TypeReference<List<ClientFacingStressLevelTimeseries>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ClientFacingStressLevelTimeseries> stressLevel(String userId, VitalsStressLevelRequest request) {
+        return stressLevel(userId, request, null);
+    }
+
     public List<ClientFacingMindfulnessMinutesTimeseries> mindfulnessMinutes(
             String userId, VitalsMindfulnessMinutesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -103,17 +1186,11 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingMindfulnessMinutesTimeseries> mindfulnessMinutes(
             String userId, VitalsMindfulnessMinutesRequest request) {
         return mindfulnessMinutes(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCaffeineTimeseries> caffeine(
             String userId, VitalsCaffeineRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -149,16 +1226,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCaffeineTimeseries> caffeine(String userId, VitalsCaffeineRequest request) {
         return caffeine(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingWaterTimeseries> water(
             String userId, VitalsWaterRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -194,16 +1265,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingWaterTimeseries> water(String userId, VitalsWaterRequest request) {
         return water(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingStepsTimeseries> steps(
             String userId, VitalsStepsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -239,16 +1304,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingStepsTimeseries> steps(String userId, VitalsStepsRequest request) {
         return steps(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingFloorsClimbedTimeseries> floorsClimbed(
             String userId, VitalsFloorsClimbedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -284,16 +1343,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingFloorsClimbedTimeseries> floorsClimbed(String userId, VitalsFloorsClimbedRequest request) {
         return floorsClimbed(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingDistanceTimeseries> distance(
             String userId, VitalsDistanceRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -329,16 +1382,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingDistanceTimeseries> distance(String userId, VitalsDistanceRequest request) {
         return distance(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCaloriesBasalTimeseries> caloriesBasal(
             String userId, VitalsCaloriesBasalRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -374,16 +1421,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCaloriesBasalTimeseries> caloriesBasal(String userId, VitalsCaloriesBasalRequest request) {
         return caloriesBasal(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCaloriesActiveTimeseries> caloriesActive(
             String userId, VitalsCaloriesActiveRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -419,17 +1460,11 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCaloriesActiveTimeseries> caloriesActive(
             String userId, VitalsCaloriesActiveRequest request) {
         return caloriesActive(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingRespiratoryRateTimeseries> respiratoryRate(
             String userId, VitalsRespiratoryRateRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -465,17 +1500,11 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingRespiratoryRateTimeseries> respiratoryRate(
             String userId, VitalsRespiratoryRateRequest request) {
         return respiratoryRate(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingIgeTimeseries> ige(String userId, VitalsIgeRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -510,16 +1539,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingIgeTimeseries> ige(String userId, VitalsIgeRequest request) {
         return ige(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingIggTimeseries> igg(String userId, VitalsIggRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -554,16 +1577,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingIggTimeseries> igg(String userId, VitalsIggRequest request) {
         return igg(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingHypnogramTimeseries> hypnogram(
             String userId, VitalsHypnogramRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -599,16 +1616,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingHypnogramTimeseries> hypnogram(String userId, VitalsHypnogramRequest request) {
         return hypnogram(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingHrvTimeseries> hrv(String userId, VitalsHrvRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -643,16 +1654,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingHrvTimeseries> hrv(String userId, VitalsHrvRequest request) {
         return hrv(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingHeartRateTimeseries> heartrate(
             String userId, VitalsHeartrateRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -688,16 +1693,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingHeartRateTimeseries> heartrate(String userId, VitalsHeartrateRequest request) {
         return heartrate(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingGlucoseTimeseries> glucose(
             String userId, VitalsGlucoseRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -733,18 +1732,12 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingGlucoseTimeseries> glucose(String userId, VitalsGlucoseRequest request) {
         return glucose(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
-    public List<ClientFacingCholesterolTimeseries> triglycerides(
-            String userId, VitalsTriglyceridesRequest request, RequestOptions requestOptions) {
+    public List<ClientFacingCholesterolTimeseries> cholesterolTriglycerides(
+            String userId, VitalsCholesterolTriglyceridesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -778,16 +1771,11 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
-    public List<ClientFacingCholesterolTimeseries> triglycerides(String userId, VitalsTriglyceridesRequest request) {
-        return triglycerides(userId, request, null);
+    public List<ClientFacingCholesterolTimeseries> cholesterolTriglycerides(
+            String userId, VitalsCholesterolTriglyceridesRequest request) {
+        return cholesterolTriglycerides(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCholesterolTimeseries> cholesterolTotal(
             String userId, VitalsCholesterolTotalRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -823,62 +1811,11 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCholesterolTimeseries> cholesterolTotal(
             String userId, VitalsCholesterolTotalRequest request) {
         return cholesterolTotal(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
-    public List<ClientFacingCholesterolTimeseries> cholesterolHdl(
-            String userId, VitalsCholesterolHdlRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol/hdl");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Get timeseries data for user
-     */
-    public List<ClientFacingCholesterolTimeseries> cholesterolHdl(String userId, VitalsCholesterolHdlRequest request) {
-        return cholesterolHdl(userId, request, null);
-    }
-
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCholesterolTimeseries> cholesterolLdl(
             String userId, VitalsCholesterolLdlRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -914,16 +1851,49 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCholesterolTimeseries> cholesterolLdl(String userId, VitalsCholesterolLdlRequest request) {
         return cholesterolLdl(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
+    public List<ClientFacingCholesterolTimeseries> cholesterolHdl(
+            String userId, VitalsCholesterolHdlRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("cholesterol/hdl");
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ClientFacingCholesterolTimeseries> cholesterolHdl(String userId, VitalsCholesterolHdlRequest request) {
+        return cholesterolHdl(userId, request, null);
+    }
+
     public List<ClientFacingCholesterolTimeseries> cholesterol(
             String userId, VitalsCholesterolRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -959,16 +1929,88 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingCholesterolTimeseries> cholesterol(String userId, VitalsCholesterolRequest request) {
         return cholesterol(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
+    public List<ClientFacingBodyWeightTimeseries> bodyWeight(
+            String userId, VitalsBodyWeightRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("body_weight");
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), new TypeReference<List<ClientFacingBodyWeightTimeseries>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ClientFacingBodyWeightTimeseries> bodyWeight(String userId, VitalsBodyWeightRequest request) {
+        return bodyWeight(userId, request, null);
+    }
+
+    public List<ClientFacingBodyFatTimeseries> bodyFat(
+            String userId, VitalsBodyFatRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("body_fat");
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), new TypeReference<List<ClientFacingBodyFatTimeseries>>() {});
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<ClientFacingBodyFatTimeseries> bodyFat(String userId, VitalsBodyFatRequest request) {
+        return bodyFat(userId, request, null);
+    }
+
     public List<ClientFacingBloodOxygenTimeseries> bloodOxygen(
             String userId, VitalsBloodOxygenRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -1004,16 +2046,10 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingBloodOxygenTimeseries> bloodOxygen(String userId, VitalsBloodOxygenRequest request) {
         return bloodOxygen(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingElectrocardiogramVoltageTimeseries> electrocardiogramVoltage(
             String userId, VitalsElectrocardiogramVoltageRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -1050,17 +2086,11 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingElectrocardiogramVoltageTimeseries> electrocardiogramVoltage(
             String userId, VitalsElectrocardiogramVoltageRequest request) {
         return electrocardiogramVoltage(userId, request, null);
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingBloodPressureTimeseries> bloodPressure(
             String userId, VitalsBloodPressureRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -1096,9 +2126,6 @@ public class VitalsClient {
         }
     }
 
-    /**
-     * Get timeseries data for user
-     */
     public List<ClientFacingBloodPressureTimeseries> bloodPressure(String userId, VitalsBloodPressureRequest request) {
         return bloodPressure(userId, request, null);
     }
