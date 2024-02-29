@@ -103,7 +103,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     /**
-     * @return Defines when an Order should be activated, making it a Delayed Order.
+     * @return Schedule an Order to be processed in a future date.
      */
     @JsonProperty("activate_by")
     public Optional<String> getActivateBy() {
@@ -277,7 +277,7 @@ public final class CreateOrderRequestCompatible {
         }
 
         /**
-         * <p>Defines when an Order should be activated, making it a Delayed Order.</p>
+         * <p>Schedule an Order to be processed in a future date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

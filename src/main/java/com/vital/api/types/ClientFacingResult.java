@@ -30,6 +30,8 @@ public final class ClientFacingResult {
 
     private final Optional<String> providerId;
 
+    private final boolean required;
+
     private final Optional<ClientFacingLoinc> loinc;
 
     private final Map<String, Object> additionalProperties;
@@ -40,6 +42,7 @@ public final class ClientFacingResult {
             String slug,
             Optional<Integer> labId,
             Optional<String> providerId,
+            boolean required,
             Optional<ClientFacingLoinc> loinc,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -47,6 +50,7 @@ public final class ClientFacingResult {
         this.slug = slug;
         this.labId = labId;
         this.providerId = providerId;
+        this.required = required;
         this.loinc = loinc;
         this.additionalProperties = additionalProperties;
     }
@@ -76,6 +80,11 @@ public final class ClientFacingResult {
         return providerId;
     }
 
+    @JsonProperty("required")
+    public boolean getRequired() {
+        return required;
+    }
+
     @JsonProperty("loinc")
     public Optional<ClientFacingLoinc> getLoinc() {
         return loinc;
@@ -98,12 +107,13 @@ public final class ClientFacingResult {
                 && slug.equals(other.slug)
                 && labId.equals(other.labId)
                 && providerId.equals(other.providerId)
+                && required == other.required
                 && loinc.equals(other.loinc);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.slug, this.labId, this.providerId, this.loinc);
+        return Objects.hash(this.id, this.name, this.slug, this.labId, this.providerId, this.required, this.loinc);
     }
 
     @Override
@@ -126,7 +136,11 @@ public final class ClientFacingResult {
     }
 
     public interface SlugStage {
-        _FinalStage slug(String slug);
+        RequiredStage slug(String slug);
+    }
+
+    public interface RequiredStage {
+        _FinalStage required(boolean required);
     }
 
     public interface _FinalStage {
@@ -146,12 +160,14 @@ public final class ClientFacingResult {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, SlugStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, SlugStage, RequiredStage, _FinalStage {
         private int id;
 
         private String name;
 
         private String slug;
+
+        private boolean required;
 
         private Optional<ClientFacingLoinc> loinc = Optional.empty();
 
@@ -171,6 +187,7 @@ public final class ClientFacingResult {
             slug(other.getSlug());
             labId(other.getLabId());
             providerId(other.getProviderId());
+            required(other.getRequired());
             loinc(other.getLoinc());
             return this;
         }
@@ -191,8 +208,15 @@ public final class ClientFacingResult {
 
         @Override
         @JsonSetter("slug")
-        public _FinalStage slug(String slug) {
+        public RequiredStage slug(String slug) {
             this.slug = slug;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("required")
+        public _FinalStage required(boolean required) {
+            this.required = required;
             return this;
         }
 
@@ -237,7 +261,7 @@ public final class ClientFacingResult {
 
         @Override
         public ClientFacingResult build() {
-            return new ClientFacingResult(id, name, slug, labId, providerId, loinc, additionalProperties);
+            return new ClientFacingResult(id, name, slug, labId, providerId, required, loinc, additionalProperties);
         }
     }
 }

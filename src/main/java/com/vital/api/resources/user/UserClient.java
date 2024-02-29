@@ -12,6 +12,7 @@ import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
 import com.vital.api.resources.user.requests.UserRefreshRequest;
+import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
 import com.vital.api.types.ClientFacingProviderWithStatus;
 import com.vital.api.types.ClientFacingUser;
 import com.vital.api.types.ClientFacingUserKey;
@@ -404,6 +405,45 @@ public class UserClient {
 
     public UserSuccessResponse deregisterProvider(String userId, Providers provider) {
         return deregisterProvider(userId, provider, null);
+    }
+
+    public UserSuccessResponse undoDelete() {
+        return undoDelete(UserUndoDeleteRequest.builder().build());
+    }
+
+    public UserSuccessResponse undoDelete(UserUndoDeleteRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/user/undo_delete");
+        if (request.getUserId().isPresent()) {
+            httpUrl.addQueryParameter("user_id", request.getUserId().get());
+        }
+        if (request.getClientUserId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "client_user_id", request.getClientUserId().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserSuccessResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UserSuccessResponse undoDelete(UserUndoDeleteRequest request) {
+        return undoDelete(request, null);
     }
 
     /**
