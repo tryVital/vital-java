@@ -789,7 +789,7 @@ public class LabTestsClient {
     /**
      * GET requisition pdf for an order
      */
-    public Object getOrderRequistionPdf(String orderId, RequestOptions requestOptions) {
+    public InputStream getOrderRequistionPdf(String orderId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -806,7 +806,7 @@ public class LabTestsClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class);
+                return response.body().byteStream();
             }
             throw new ApiError(
                     response.code(),
@@ -819,7 +819,7 @@ public class LabTestsClient {
     /**
      * GET requisition pdf for an order
      */
-    public Object getOrderRequistionPdf(String orderId) {
+    public InputStream getOrderRequistionPdf(String orderId) {
         return getOrderRequistionPdf(orderId, null);
     }
 
