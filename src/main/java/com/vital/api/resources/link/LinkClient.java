@@ -272,9 +272,7 @@ public class LinkClient {
     }
 
     /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: EMAIL-AUTH
-     * This function is hit by vital-link to authenticate a email provider.
+     * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
      */
     public ConnectionStatus emailAuth(EmailAuthLink request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -320,18 +318,14 @@ public class LinkClient {
     }
 
     /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: EMAIL-AUTH
-     * This function is hit by vital-link to authenticate a email provider.
+     * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
      */
     public ConnectionStatus emailAuth(EmailAuthLink request) {
         return emailAuth(request, null);
     }
 
     /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: PASSWORD-AUTH
-     * This function is hit by vital-link to authenticate a password provider.
+     * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
      */
     public ConnectionStatus passwordAuth(PasswordAuthLink request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -380,9 +374,7 @@ public class LinkClient {
     }
 
     /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * PROVIDER_TYPE: PASSWORD-AUTH
-     * This function is hit by vital-link to authenticate a password provider.
+     * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
      */
     public ConnectionStatus passwordAuth(PasswordAuthLink request) {
         return passwordAuth(request, null);

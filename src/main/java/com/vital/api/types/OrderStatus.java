@@ -39,6 +39,8 @@ public enum OrderStatus {
 
     CANCELLED_AT_HOME_PHLEBOTOMY_CANCELLED("cancelled.at_home_phlebotomy.cancelled"),
 
+    FAILED_AT_HOME_PHLEBOTOMY_SAMPLE_ERROR("failed.at_home_phlebotomy.sample_error"),
+
     RECEIVED_TESTKIT_ORDERED("received.testkit.ordered"),
 
     RECEIVED_TESTKIT_AWAITING_REGISTRATION("received.testkit.awaiting_registration"),

@@ -37,6 +37,10 @@ public final class ClientFacingUser {
 
     private final Optional<FallbackBirthDate> fallbackBirthDate;
 
+    private final Optional<String> ingestionStart;
+
+    private final Optional<String> ingestionEnd;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingUser(
@@ -47,6 +51,8 @@ public final class ClientFacingUser {
             List<ConnectedSourceClientFacing> connectedSources,
             Optional<FallbackTimeZone> fallbackTimeZone,
             Optional<FallbackBirthDate> fallbackBirthDate,
+            Optional<String> ingestionStart,
+            Optional<String> ingestionEnd,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.teamId = teamId;
@@ -55,6 +61,8 @@ public final class ClientFacingUser {
         this.connectedSources = connectedSources;
         this.fallbackTimeZone = fallbackTimeZone;
         this.fallbackBirthDate = fallbackBirthDate;
+        this.ingestionStart = ingestionStart;
+        this.ingestionEnd = ingestionEnd;
         this.additionalProperties = additionalProperties;
     }
 
@@ -115,6 +123,22 @@ public final class ClientFacingUser {
         return fallbackBirthDate;
     }
 
+    /**
+     * @return Starting bound for user data ingestion. Data older than this date will not be ingested.
+     */
+    @JsonProperty("ingestion_start")
+    public Optional<String> getIngestionStart() {
+        return ingestionStart;
+    }
+
+    /**
+     * @return Ending bound for user data ingestion. Data newer than this date will not be ingested and the connection deregistered.
+     */
+    @JsonProperty("ingestion_end")
+    public Optional<String> getIngestionEnd() {
+        return ingestionEnd;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -133,7 +157,9 @@ public final class ClientFacingUser {
                 && createdOn.equals(other.createdOn)
                 && connectedSources.equals(other.connectedSources)
                 && fallbackTimeZone.equals(other.fallbackTimeZone)
-                && fallbackBirthDate.equals(other.fallbackBirthDate);
+                && fallbackBirthDate.equals(other.fallbackBirthDate)
+                && ingestionStart.equals(other.ingestionStart)
+                && ingestionEnd.equals(other.ingestionEnd);
     }
 
     @Override
@@ -145,7 +171,9 @@ public final class ClientFacingUser {
                 this.createdOn,
                 this.connectedSources,
                 this.fallbackTimeZone,
-                this.fallbackBirthDate);
+                this.fallbackBirthDate,
+                this.ingestionStart,
+                this.ingestionEnd);
     }
 
     @Override
@@ -191,6 +219,14 @@ public final class ClientFacingUser {
         _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate);
 
         _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate);
+
+        _FinalStage ingestionStart(Optional<String> ingestionStart);
+
+        _FinalStage ingestionStart(String ingestionStart);
+
+        _FinalStage ingestionEnd(Optional<String> ingestionEnd);
+
+        _FinalStage ingestionEnd(String ingestionEnd);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -203,6 +239,10 @@ public final class ClientFacingUser {
         private String clientUserId;
 
         private OffsetDateTime createdOn;
+
+        private Optional<String> ingestionEnd = Optional.empty();
+
+        private Optional<String> ingestionStart = Optional.empty();
 
         private Optional<FallbackBirthDate> fallbackBirthDate = Optional.empty();
 
@@ -224,6 +264,8 @@ public final class ClientFacingUser {
             connectedSources(other.getConnectedSources());
             fallbackTimeZone(other.getFallbackTimeZone());
             fallbackBirthDate(other.getFallbackBirthDate());
+            ingestionStart(other.getIngestionStart());
+            ingestionEnd(other.getIngestionEnd());
             return this;
         }
 
@@ -268,6 +310,40 @@ public final class ClientFacingUser {
         @JsonSetter("created_on")
         public _FinalStage createdOn(OffsetDateTime createdOn) {
             this.createdOn = createdOn;
+            return this;
+        }
+
+        /**
+         * <p>Ending bound for user data ingestion. Data newer than this date will not be ingested and the connection deregistered.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage ingestionEnd(String ingestionEnd) {
+            this.ingestionEnd = Optional.of(ingestionEnd);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
+        public _FinalStage ingestionEnd(Optional<String> ingestionEnd) {
+            this.ingestionEnd = ingestionEnd;
+            return this;
+        }
+
+        /**
+         * <p>Starting bound for user data ingestion. Data older than this date will not be ingested.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage ingestionStart(String ingestionStart) {
+            this.ingestionStart = Optional.of(ingestionStart);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "ingestion_start", nulls = Nulls.SKIP)
+        public _FinalStage ingestionStart(Optional<String> ingestionStart) {
+            this.ingestionStart = ingestionStart;
             return this;
         }
 
@@ -344,6 +420,8 @@ public final class ClientFacingUser {
                     connectedSources,
                     fallbackTimeZone,
                     fallbackBirthDate,
+                    ingestionStart,
+                    ingestionEnd,
                     additionalProperties);
         }
     }

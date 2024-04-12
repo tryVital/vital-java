@@ -16,22 +16,32 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LibreConfig.Builder.class)
 public final class LibreConfig {
     private final Map<String, Object> practiceId;
 
+    private final Optional<Boolean> stripTz;
+
     private final Map<String, Object> additionalProperties;
 
-    private LibreConfig(Map<String, Object> practiceId, Map<String, Object> additionalProperties) {
+    private LibreConfig(
+            Map<String, Object> practiceId, Optional<Boolean> stripTz, Map<String, Object> additionalProperties) {
         this.practiceId = practiceId;
+        this.stripTz = stripTz;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("practice_id")
     public Map<String, Object> getPracticeId() {
         return practiceId;
+    }
+
+    @JsonProperty("strip_tz")
+    public Optional<Boolean> getStripTz() {
+        return stripTz;
     }
 
     @Override
@@ -46,12 +56,12 @@ public final class LibreConfig {
     }
 
     private boolean equalTo(LibreConfig other) {
-        return practiceId.equals(other.practiceId);
+        return practiceId.equals(other.practiceId) && stripTz.equals(other.stripTz);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.practiceId);
+        return Objects.hash(this.practiceId, this.stripTz);
     }
 
     @Override
@@ -67,6 +77,8 @@ public final class LibreConfig {
     public static final class Builder {
         private Map<String, Object> practiceId = new LinkedHashMap<>();
 
+        private Optional<Boolean> stripTz = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -74,6 +86,7 @@ public final class LibreConfig {
 
         public Builder from(LibreConfig other) {
             practiceId(other.getPracticeId());
+            stripTz(other.getStripTz());
             return this;
         }
 
@@ -94,8 +107,19 @@ public final class LibreConfig {
             return this;
         }
 
+        @JsonSetter(value = "strip_tz", nulls = Nulls.SKIP)
+        public Builder stripTz(Optional<Boolean> stripTz) {
+            this.stripTz = stripTz;
+            return this;
+        }
+
+        public Builder stripTz(Boolean stripTz) {
+            this.stripTz = Optional.of(stripTz);
+            return this;
+        }
+
         public LibreConfig build() {
-            return new LibreConfig(practiceId, additionalProperties);
+            return new LibreConfig(practiceId, stripTz, additionalProperties);
         }
     }
 }

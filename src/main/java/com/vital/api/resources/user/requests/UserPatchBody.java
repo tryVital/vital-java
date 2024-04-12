@@ -24,14 +24,22 @@ public final class UserPatchBody {
 
     private final Optional<String> fallbackBirthDate;
 
+    private final Optional<String> ingestionStart;
+
+    private final Optional<String> ingestionEnd;
+
     private final Map<String, Object> additionalProperties;
 
     private UserPatchBody(
             Optional<String> fallbackTimeZone,
             Optional<String> fallbackBirthDate,
+            Optional<String> ingestionStart,
+            Optional<String> ingestionEnd,
             Map<String, Object> additionalProperties) {
         this.fallbackTimeZone = fallbackTimeZone;
         this.fallbackBirthDate = fallbackBirthDate;
+        this.ingestionStart = ingestionStart;
+        this.ingestionEnd = ingestionEnd;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,6 +60,22 @@ public final class UserPatchBody {
         return fallbackBirthDate;
     }
 
+    /**
+     * @return Starting bound for user data ingestion. Data older than this date will not be ingested.
+     */
+    @JsonProperty("ingestion_start")
+    public Optional<String> getIngestionStart() {
+        return ingestionStart;
+    }
+
+    /**
+     * @return Ending bound for user data ingestion. Data newer than this date will not be ingested and the connection deregistered.
+     */
+    @JsonProperty("ingestion_end")
+    public Optional<String> getIngestionEnd() {
+        return ingestionEnd;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -64,12 +88,15 @@ public final class UserPatchBody {
     }
 
     private boolean equalTo(UserPatchBody other) {
-        return fallbackTimeZone.equals(other.fallbackTimeZone) && fallbackBirthDate.equals(other.fallbackBirthDate);
+        return fallbackTimeZone.equals(other.fallbackTimeZone)
+                && fallbackBirthDate.equals(other.fallbackBirthDate)
+                && ingestionStart.equals(other.ingestionStart)
+                && ingestionEnd.equals(other.ingestionEnd);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.fallbackTimeZone, this.fallbackBirthDate);
+        return Objects.hash(this.fallbackTimeZone, this.fallbackBirthDate, this.ingestionStart, this.ingestionEnd);
     }
 
     @Override
@@ -87,6 +114,10 @@ public final class UserPatchBody {
 
         private Optional<String> fallbackBirthDate = Optional.empty();
 
+        private Optional<String> ingestionStart = Optional.empty();
+
+        private Optional<String> ingestionEnd = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -95,6 +126,8 @@ public final class UserPatchBody {
         public Builder from(UserPatchBody other) {
             fallbackTimeZone(other.getFallbackTimeZone());
             fallbackBirthDate(other.getFallbackBirthDate());
+            ingestionStart(other.getIngestionStart());
+            ingestionEnd(other.getIngestionEnd());
             return this;
         }
 
@@ -120,8 +153,31 @@ public final class UserPatchBody {
             return this;
         }
 
+        @JsonSetter(value = "ingestion_start", nulls = Nulls.SKIP)
+        public Builder ingestionStart(Optional<String> ingestionStart) {
+            this.ingestionStart = ingestionStart;
+            return this;
+        }
+
+        public Builder ingestionStart(String ingestionStart) {
+            this.ingestionStart = Optional.of(ingestionStart);
+            return this;
+        }
+
+        @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
+        public Builder ingestionEnd(Optional<String> ingestionEnd) {
+            this.ingestionEnd = ingestionEnd;
+            return this;
+        }
+
+        public Builder ingestionEnd(String ingestionEnd) {
+            this.ingestionEnd = Optional.of(ingestionEnd);
+            return this;
+        }
+
         public UserPatchBody build() {
-            return new UserPatchBody(fallbackTimeZone, fallbackBirthDate, additionalProperties);
+            return new UserPatchBody(
+                    fallbackTimeZone, fallbackBirthDate, ingestionStart, ingestionEnd, additionalProperties);
         }
     }
 }

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Consent;
+import com.vital.api.types.HealthInsuranceCreateRequest;
 import com.vital.api.types.PatientAddressCompatible;
 import com.vital.api.types.PatientDetails;
 import com.vital.api.types.PhysicianCreateRequestBase;
@@ -35,6 +36,8 @@ public final class RegisterTestkitRequest {
 
     private final Optional<PhysicianCreateRequestBase> physician;
 
+    private final Optional<HealthInsuranceCreateRequest> healthInsurance;
+
     private final Optional<List<Consent>> consents;
 
     private final Map<String, Object> additionalProperties;
@@ -45,6 +48,7 @@ public final class RegisterTestkitRequest {
             PatientDetails patientDetails,
             PatientAddressCompatible patientAddress,
             Optional<PhysicianCreateRequestBase> physician,
+            Optional<HealthInsuranceCreateRequest> healthInsurance,
             Optional<List<Consent>> consents,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -52,6 +56,7 @@ public final class RegisterTestkitRequest {
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.physician = physician;
+        this.healthInsurance = healthInsurance;
         this.consents = consents;
         this.additionalProperties = additionalProperties;
     }
@@ -81,6 +86,11 @@ public final class RegisterTestkitRequest {
         return physician;
     }
 
+    @JsonProperty("health_insurance")
+    public Optional<HealthInsuranceCreateRequest> getHealthInsurance() {
+        return healthInsurance;
+    }
+
     @JsonProperty("consents")
     public Optional<List<Consent>> getConsents() {
         return consents;
@@ -103,13 +113,20 @@ public final class RegisterTestkitRequest {
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress)
                 && physician.equals(other.physician)
+                && healthInsurance.equals(other.healthInsurance)
                 && consents.equals(other.consents);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.userId, this.sampleId, this.patientDetails, this.patientAddress, this.physician, this.consents);
+                this.userId,
+                this.sampleId,
+                this.patientDetails,
+                this.patientAddress,
+                this.physician,
+                this.healthInsurance,
+                this.consents);
     }
 
     @Override
@@ -146,6 +163,10 @@ public final class RegisterTestkitRequest {
 
         _FinalStage physician(PhysicianCreateRequestBase physician);
 
+        _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance);
+
+        _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance);
+
         _FinalStage consents(Optional<List<Consent>> consents);
 
         _FinalStage consents(List<Consent> consents);
@@ -164,6 +185,8 @@ public final class RegisterTestkitRequest {
 
         private Optional<List<Consent>> consents = Optional.empty();
 
+        private Optional<HealthInsuranceCreateRequest> healthInsurance = Optional.empty();
+
         private Optional<PhysicianCreateRequestBase> physician = Optional.empty();
 
         @JsonAnySetter
@@ -178,6 +201,7 @@ public final class RegisterTestkitRequest {
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             physician(other.getPhysician());
+            healthInsurance(other.getHealthInsurance());
             consents(other.getConsents());
             return this;
         }
@@ -224,6 +248,19 @@ public final class RegisterTestkitRequest {
         }
 
         @Override
+        public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
+            this.healthInsurance = Optional.of(healthInsurance);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "health_insurance", nulls = Nulls.SKIP)
+        public _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance) {
+            this.healthInsurance = healthInsurance;
+            return this;
+        }
+
+        @Override
         public _FinalStage physician(PhysicianCreateRequestBase physician) {
             this.physician = Optional.of(physician);
             return this;
@@ -239,7 +276,14 @@ public final class RegisterTestkitRequest {
         @Override
         public RegisterTestkitRequest build() {
             return new RegisterTestkitRequest(
-                    userId, sampleId, patientDetails, patientAddress, physician, consents, additionalProperties);
+                    userId,
+                    sampleId,
+                    patientDetails,
+                    patientAddress,
+                    physician,
+                    healthInsurance,
+                    consents,
+                    additionalProperties);
         }
     }
 }

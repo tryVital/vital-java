@@ -22,7 +22,9 @@ public enum Region {
 
     FR("fr"),
 
-    CA("ca");
+    CA("ca"),
+
+    IN("in");
 
     private final String value;
 
