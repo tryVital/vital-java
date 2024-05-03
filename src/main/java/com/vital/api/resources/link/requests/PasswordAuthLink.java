@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AuthType;
@@ -17,15 +16,10 @@ import com.vital.api.types.Providers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PasswordAuthLink.Builder.class)
 public final class PasswordAuthLink {
-    private final Optional<String> vitalLinkClientRegion;
-
-    private final Optional<String> vitalLinkToken;
-
     private final String username;
 
     private final String password;
@@ -37,30 +31,16 @@ public final class PasswordAuthLink {
     private final Map<String, Object> additionalProperties;
 
     private PasswordAuthLink(
-            Optional<String> vitalLinkClientRegion,
-            Optional<String> vitalLinkToken,
             String username,
             String password,
             Providers provider,
             AuthType authType,
             Map<String, Object> additionalProperties) {
-        this.vitalLinkClientRegion = vitalLinkClientRegion;
-        this.vitalLinkToken = vitalLinkToken;
         this.username = username;
         this.password = password;
         this.provider = provider;
         this.authType = authType;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("x-vital-link-client-region")
-    public Optional<String> getVitalLinkClientRegion() {
-        return vitalLinkClientRegion;
-    }
-
-    @JsonProperty("x-vital-link-token")
-    public Optional<String> getVitalLinkToken() {
-        return vitalLinkToken;
     }
 
     @JsonProperty("username")
@@ -95,9 +75,7 @@ public final class PasswordAuthLink {
     }
 
     private boolean equalTo(PasswordAuthLink other) {
-        return vitalLinkClientRegion.equals(other.vitalLinkClientRegion)
-                && vitalLinkToken.equals(other.vitalLinkToken)
-                && username.equals(other.username)
+        return username.equals(other.username)
                 && password.equals(other.password)
                 && provider.equals(other.provider)
                 && authType.equals(other.authType);
@@ -105,13 +83,7 @@ public final class PasswordAuthLink {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.vitalLinkClientRegion,
-                this.vitalLinkToken,
-                this.username,
-                this.password,
-                this.provider,
-                this.authType);
+        return Objects.hash(this.username, this.password, this.provider, this.authType);
     }
 
     @Override
@@ -143,14 +115,6 @@ public final class PasswordAuthLink {
 
     public interface _FinalStage {
         PasswordAuthLink build();
-
-        _FinalStage vitalLinkClientRegion(Optional<String> vitalLinkClientRegion);
-
-        _FinalStage vitalLinkClientRegion(String vitalLinkClientRegion);
-
-        _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
-
-        _FinalStage vitalLinkToken(String vitalLinkToken);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -164,10 +128,6 @@ public final class PasswordAuthLink {
 
         private AuthType authType;
 
-        private Optional<String> vitalLinkToken = Optional.empty();
-
-        private Optional<String> vitalLinkClientRegion = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -175,8 +135,6 @@ public final class PasswordAuthLink {
 
         @Override
         public Builder from(PasswordAuthLink other) {
-            vitalLinkClientRegion(other.getVitalLinkClientRegion());
-            vitalLinkToken(other.getVitalLinkToken());
             username(other.getUsername());
             password(other.getPassword());
             provider(other.getProvider());
@@ -213,41 +171,8 @@ public final class PasswordAuthLink {
         }
 
         @Override
-        public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
-        public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
-            this.vitalLinkToken = vitalLinkToken;
-            return this;
-        }
-
-        @Override
-        public _FinalStage vitalLinkClientRegion(String vitalLinkClientRegion) {
-            this.vitalLinkClientRegion = Optional.of(vitalLinkClientRegion);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "x-vital-link-client-region", nulls = Nulls.SKIP)
-        public _FinalStage vitalLinkClientRegion(Optional<String> vitalLinkClientRegion) {
-            this.vitalLinkClientRegion = vitalLinkClientRegion;
-            return this;
-        }
-
-        @Override
         public PasswordAuthLink build() {
-            return new PasswordAuthLink(
-                    vitalLinkClientRegion,
-                    vitalLinkToken,
-                    username,
-                    password,
-                    provider,
-                    authType,
-                    additionalProperties);
+            return new PasswordAuthLink(username, password, provider, authType, additionalProperties);
         }
     }
 }

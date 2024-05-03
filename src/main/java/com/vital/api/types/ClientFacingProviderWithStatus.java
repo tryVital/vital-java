@@ -9,9 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,14 +28,22 @@ public final class ClientFacingProviderWithStatus {
 
     private final String status;
 
+    private final Map<String, ResourceAvailability> resourceAvailability;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingProviderWithStatus(
-            String name, String slug, String logo, String status, Map<String, Object> additionalProperties) {
+            String name,
+            String slug,
+            String logo,
+            String status,
+            Map<String, ResourceAvailability> resourceAvailability,
+            Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
         this.logo = logo;
         this.status = status;
+        this.resourceAvailability = resourceAvailability;
         this.additionalProperties = additionalProperties;
     }
 
@@ -69,6 +79,11 @@ public final class ClientFacingProviderWithStatus {
         return status;
     }
 
+    @JsonProperty("resource_availability")
+    public Map<String, ResourceAvailability> getResourceAvailability() {
+        return resourceAvailability;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -84,12 +99,13 @@ public final class ClientFacingProviderWithStatus {
         return name.equals(other.name)
                 && slug.equals(other.slug)
                 && logo.equals(other.logo)
-                && status.equals(other.status);
+                && status.equals(other.status)
+                && resourceAvailability.equals(other.resourceAvailability);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name, this.slug, this.logo, this.status);
+        return Objects.hash(this.name, this.slug, this.logo, this.status, this.resourceAvailability);
     }
 
     @Override
@@ -121,6 +137,12 @@ public final class ClientFacingProviderWithStatus {
 
     public interface _FinalStage {
         ClientFacingProviderWithStatus build();
+
+        _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
+
+        _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
+
+        _FinalStage resourceAvailability(String key, ResourceAvailability value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -133,6 +155,8 @@ public final class ClientFacingProviderWithStatus {
 
         private String status;
 
+        private Map<String, ResourceAvailability> resourceAvailability = new LinkedHashMap<>();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -144,6 +168,7 @@ public final class ClientFacingProviderWithStatus {
             slug(other.getSlug());
             logo(other.getLogo());
             status(other.getStatus());
+            resourceAvailability(other.getResourceAvailability());
             return this;
         }
 
@@ -192,8 +217,29 @@ public final class ClientFacingProviderWithStatus {
         }
 
         @Override
+        public _FinalStage resourceAvailability(String key, ResourceAvailability value) {
+            this.resourceAvailability.put(key, value);
+            return this;
+        }
+
+        @Override
+        public _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
+            this.resourceAvailability.putAll(resourceAvailability);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "resource_availability", nulls = Nulls.SKIP)
+        public _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
+            this.resourceAvailability.clear();
+            this.resourceAvailability.putAll(resourceAvailability);
+            return this;
+        }
+
+        @Override
         public ClientFacingProviderWithStatus build() {
-            return new ClientFacingProviderWithStatus(name, slug, logo, status, additionalProperties);
+            return new ClientFacingProviderWithStatus(
+                    name, slug, logo, status, resourceAvailability, additionalProperties);
         }
     }
 }

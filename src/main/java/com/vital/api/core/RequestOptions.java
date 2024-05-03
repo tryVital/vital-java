@@ -9,14 +9,20 @@ import java.util.Map;
 public final class RequestOptions {
     private final String apiKey;
 
-    private RequestOptions(String apiKey) {
+    private final String vitalLinkToken;
+
+    private RequestOptions(String apiKey, String vitalLinkToken) {
         this.apiKey = apiKey;
+        this.vitalLinkToken = vitalLinkToken;
     }
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
         if (this.apiKey != null) {
             headers.put("x-vital-api-key", this.apiKey);
+        }
+        if (this.vitalLinkToken != null) {
+            headers.put("x-vital-link-token", this.vitalLinkToken);
         }
         return headers;
     }
@@ -28,13 +34,20 @@ public final class RequestOptions {
     public static final class Builder {
         private String apiKey = null;
 
+        private String vitalLinkToken = null;
+
         public Builder apiKey(String apiKey) {
             this.apiKey = apiKey;
             return this;
         }
 
+        public Builder vitalLinkToken(String vitalLinkToken) {
+            this.vitalLinkToken = vitalLinkToken;
+            return this;
+        }
+
         public RequestOptions build() {
-            return new RequestOptions(apiKey);
+            return new RequestOptions(apiKey, vitalLinkToken);
         }
     }
 }

@@ -16,6 +16,11 @@ public final class VitalBuilder {
         return this;
     }
 
+    public VitalBuilder vitalLinkToken(String vitalLinkToken) {
+        this.clientOptionsBuilder.addHeader("x-vital-link-token", vitalLinkToken);
+        return this;
+    }
+
     public VitalBuilder environment(Environment environment) {
         this.environment = environment;
         return this;

@@ -24,11 +24,26 @@ public final class ConnectionStatus {
 
     private final Optional<String> redirectUrl;
 
+    private final ConnectionStatusState state;
+
+    private final Optional<String> errorType;
+
+    private final Optional<String> error;
+
     private final Map<String, Object> additionalProperties;
 
-    private ConnectionStatus(boolean success, Optional<String> redirectUrl, Map<String, Object> additionalProperties) {
+    private ConnectionStatus(
+            boolean success,
+            Optional<String> redirectUrl,
+            ConnectionStatusState state,
+            Optional<String> errorType,
+            Optional<String> error,
+            Map<String, Object> additionalProperties) {
         this.success = success;
         this.redirectUrl = redirectUrl;
+        this.state = state;
+        this.errorType = errorType;
+        this.error = error;
         this.additionalProperties = additionalProperties;
     }
 
@@ -40,6 +55,21 @@ public final class ConnectionStatus {
     @JsonProperty("redirect_url")
     public Optional<String> getRedirectUrl() {
         return redirectUrl;
+    }
+
+    @JsonProperty("state")
+    public ConnectionStatusState getState() {
+        return state;
+    }
+
+    @JsonProperty("error_type")
+    public Optional<String> getErrorType() {
+        return errorType;
+    }
+
+    @JsonProperty("error")
+    public Optional<String> getError() {
+        return error;
     }
 
     @Override
@@ -54,12 +84,16 @@ public final class ConnectionStatus {
     }
 
     private boolean equalTo(ConnectionStatus other) {
-        return success == other.success && redirectUrl.equals(other.redirectUrl);
+        return success == other.success
+                && redirectUrl.equals(other.redirectUrl)
+                && state.equals(other.state)
+                && errorType.equals(other.errorType)
+                && error.equals(other.error);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.success, this.redirectUrl);
+        return Objects.hash(this.success, this.redirectUrl, this.state, this.errorType, this.error);
     }
 
     @Override
@@ -72,9 +106,13 @@ public final class ConnectionStatus {
     }
 
     public interface SuccessStage {
-        _FinalStage success(boolean success);
+        StateStage success(boolean success);
 
         Builder from(ConnectionStatus other);
+    }
+
+    public interface StateStage {
+        _FinalStage state(ConnectionStatusState state);
     }
 
     public interface _FinalStage {
@@ -83,11 +121,25 @@ public final class ConnectionStatus {
         _FinalStage redirectUrl(Optional<String> redirectUrl);
 
         _FinalStage redirectUrl(String redirectUrl);
+
+        _FinalStage errorType(Optional<String> errorType);
+
+        _FinalStage errorType(String errorType);
+
+        _FinalStage error(Optional<String> error);
+
+        _FinalStage error(String error);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SuccessStage, _FinalStage {
+    public static final class Builder implements SuccessStage, StateStage, _FinalStage {
         private boolean success;
+
+        private ConnectionStatusState state;
+
+        private Optional<String> error = Optional.empty();
+
+        private Optional<String> errorType = Optional.empty();
 
         private Optional<String> redirectUrl = Optional.empty();
 
@@ -100,13 +152,49 @@ public final class ConnectionStatus {
         public Builder from(ConnectionStatus other) {
             success(other.getSuccess());
             redirectUrl(other.getRedirectUrl());
+            state(other.getState());
+            errorType(other.getErrorType());
+            error(other.getError());
             return this;
         }
 
         @Override
         @JsonSetter("success")
-        public _FinalStage success(boolean success) {
+        public StateStage success(boolean success) {
             this.success = success;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("state")
+        public _FinalStage state(ConnectionStatusState state) {
+            this.state = state;
+            return this;
+        }
+
+        @Override
+        public _FinalStage error(String error) {
+            this.error = Optional.of(error);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "error", nulls = Nulls.SKIP)
+        public _FinalStage error(Optional<String> error) {
+            this.error = error;
+            return this;
+        }
+
+        @Override
+        public _FinalStage errorType(String errorType) {
+            this.errorType = Optional.of(errorType);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
+        public _FinalStage errorType(Optional<String> errorType) {
+            this.errorType = errorType;
             return this;
         }
 
@@ -125,7 +213,7 @@ public final class ConnectionStatus {
 
         @Override
         public ConnectionStatus build() {
-            return new ConnectionStatus(success, redirectUrl, additionalProperties);
+            return new ConnectionStatus(success, redirectUrl, state, errorType, error, additionalProperties);
         }
     }
 }

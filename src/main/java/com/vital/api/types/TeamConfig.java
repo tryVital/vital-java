@@ -29,6 +29,8 @@ public final class TeamConfig {
 
     private final Optional<Boolean> providerRawData;
 
+    private final Optional<Boolean> rejectDuplicateConnection;
+
     private final Optional<EventDestinationPreferences> edsPreferences;
 
     private final Optional<List<String>> eventTypePrefixes;
@@ -40,6 +42,7 @@ public final class TeamConfig {
             Optional<Boolean> textsEnabled,
             Optional<Boolean> pushHistoricalData,
             Optional<Boolean> providerRawData,
+            Optional<Boolean> rejectDuplicateConnection,
             Optional<EventDestinationPreferences> edsPreferences,
             Optional<List<String>> eventTypePrefixes,
             Map<String, Object> additionalProperties) {
@@ -47,6 +50,7 @@ public final class TeamConfig {
         this.textsEnabled = textsEnabled;
         this.pushHistoricalData = pushHistoricalData;
         this.providerRawData = providerRawData;
+        this.rejectDuplicateConnection = rejectDuplicateConnection;
         this.edsPreferences = edsPreferences;
         this.eventTypePrefixes = eventTypePrefixes;
         this.additionalProperties = additionalProperties;
@@ -70,6 +74,11 @@ public final class TeamConfig {
     @JsonProperty("provider_raw_data")
     public Optional<Boolean> getProviderRawData() {
         return providerRawData;
+    }
+
+    @JsonProperty("reject_duplicate_connection")
+    public Optional<Boolean> getRejectDuplicateConnection() {
+        return rejectDuplicateConnection;
     }
 
     @JsonProperty("eds_preferences")
@@ -98,6 +107,7 @@ public final class TeamConfig {
                 && textsEnabled.equals(other.textsEnabled)
                 && pushHistoricalData.equals(other.pushHistoricalData)
                 && providerRawData.equals(other.providerRawData)
+                && rejectDuplicateConnection.equals(other.rejectDuplicateConnection)
                 && edsPreferences.equals(other.edsPreferences)
                 && eventTypePrefixes.equals(other.eventTypePrefixes);
     }
@@ -109,6 +119,7 @@ public final class TeamConfig {
                 this.textsEnabled,
                 this.pushHistoricalData,
                 this.providerRawData,
+                this.rejectDuplicateConnection,
                 this.edsPreferences,
                 this.eventTypePrefixes);
     }
@@ -143,6 +154,10 @@ public final class TeamConfig {
 
         _FinalStage providerRawData(Boolean providerRawData);
 
+        _FinalStage rejectDuplicateConnection(Optional<Boolean> rejectDuplicateConnection);
+
+        _FinalStage rejectDuplicateConnection(Boolean rejectDuplicateConnection);
+
         _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences);
 
         _FinalStage edsPreferences(EventDestinationPreferences edsPreferences);
@@ -159,6 +174,8 @@ public final class TeamConfig {
         private Optional<List<String>> eventTypePrefixes = Optional.empty();
 
         private Optional<EventDestinationPreferences> edsPreferences = Optional.empty();
+
+        private Optional<Boolean> rejectDuplicateConnection = Optional.empty();
 
         private Optional<Boolean> providerRawData = Optional.empty();
 
@@ -177,6 +194,7 @@ public final class TeamConfig {
             textsEnabled(other.getTextsEnabled());
             pushHistoricalData(other.getPushHistoricalData());
             providerRawData(other.getProviderRawData());
+            rejectDuplicateConnection(other.getRejectDuplicateConnection());
             edsPreferences(other.getEdsPreferences());
             eventTypePrefixes(other.getEventTypePrefixes());
             return this;
@@ -212,6 +230,19 @@ public final class TeamConfig {
         @JsonSetter(value = "eds_preferences", nulls = Nulls.SKIP)
         public _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences) {
             this.edsPreferences = edsPreferences;
+            return this;
+        }
+
+        @Override
+        public _FinalStage rejectDuplicateConnection(Boolean rejectDuplicateConnection) {
+            this.rejectDuplicateConnection = Optional.of(rejectDuplicateConnection);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "reject_duplicate_connection", nulls = Nulls.SKIP)
+        public _FinalStage rejectDuplicateConnection(Optional<Boolean> rejectDuplicateConnection) {
+            this.rejectDuplicateConnection = rejectDuplicateConnection;
             return this;
         }
 
@@ -261,6 +292,7 @@ public final class TeamConfig {
                     textsEnabled,
                     pushHistoricalData,
                     providerRawData,
+                    rejectDuplicateConnection,
                     edsPreferences,
                     eventTypePrefixes,
                     additionalProperties);

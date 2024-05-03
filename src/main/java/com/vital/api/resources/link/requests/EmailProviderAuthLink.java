@@ -22,8 +22,6 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EmailProviderAuthLink.Builder.class)
 public final class EmailProviderAuthLink {
-    private final Optional<String> vitalLinkToken;
-
     private final String email;
 
     private final Optional<Providers> emailProviderAuthLinkProvider;
@@ -33,21 +31,14 @@ public final class EmailProviderAuthLink {
     private final Map<String, Object> additionalProperties;
 
     private EmailProviderAuthLink(
-            Optional<String> vitalLinkToken,
             String email,
             Optional<Providers> emailProviderAuthLinkProvider,
             Optional<Region> region,
             Map<String, Object> additionalProperties) {
-        this.vitalLinkToken = vitalLinkToken;
         this.email = email;
         this.emailProviderAuthLinkProvider = emailProviderAuthLinkProvider;
         this.region = region;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("x-vital-link-token")
-    public Optional<String> getVitalLinkToken() {
-        return vitalLinkToken;
     }
 
     @JsonProperty("email")
@@ -77,15 +68,14 @@ public final class EmailProviderAuthLink {
     }
 
     private boolean equalTo(EmailProviderAuthLink other) {
-        return vitalLinkToken.equals(other.vitalLinkToken)
-                && email.equals(other.email)
+        return email.equals(other.email)
                 && emailProviderAuthLinkProvider.equals(other.emailProviderAuthLinkProvider)
                 && region.equals(other.region);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.vitalLinkToken, this.email, this.emailProviderAuthLinkProvider, this.region);
+        return Objects.hash(this.email, this.emailProviderAuthLinkProvider, this.region);
     }
 
     @Override
@@ -106,10 +96,6 @@ public final class EmailProviderAuthLink {
     public interface _FinalStage {
         EmailProviderAuthLink build();
 
-        _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
-
-        _FinalStage vitalLinkToken(String vitalLinkToken);
-
         _FinalStage emailProviderAuthLinkProvider(Optional<Providers> emailProviderAuthLinkProvider);
 
         _FinalStage emailProviderAuthLinkProvider(Providers emailProviderAuthLinkProvider);
@@ -127,8 +113,6 @@ public final class EmailProviderAuthLink {
 
         private Optional<Providers> emailProviderAuthLinkProvider = Optional.empty();
 
-        private Optional<String> vitalLinkToken = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -136,7 +120,6 @@ public final class EmailProviderAuthLink {
 
         @Override
         public Builder from(EmailProviderAuthLink other) {
-            vitalLinkToken(other.getVitalLinkToken());
             email(other.getEmail());
             emailProviderAuthLinkProvider(other.getEmailProviderAuthLinkProvider());
             region(other.getRegion());
@@ -177,22 +160,8 @@ public final class EmailProviderAuthLink {
         }
 
         @Override
-        public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
-        public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
-            this.vitalLinkToken = vitalLinkToken;
-            return this;
-        }
-
-        @Override
         public EmailProviderAuthLink build() {
-            return new EmailProviderAuthLink(
-                    vitalLinkToken, email, emailProviderAuthLinkProvider, region, additionalProperties);
+            return new EmailProviderAuthLink(email, emailProviderAuthLinkProvider, region, additionalProperties);
         }
     }
 }

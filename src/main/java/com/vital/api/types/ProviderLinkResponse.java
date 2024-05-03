@@ -26,16 +26,28 @@ public final class ProviderLinkResponse {
 
     private final Optional<String> providerId;
 
+    private final ProviderLinkResponseState state;
+
+    private final Optional<String> errorType;
+
+    private final Optional<String> error;
+
     private final Map<String, Object> additionalProperties;
 
     private ProviderLinkResponse(
             PasswordProviders provider,
             boolean connected,
             Optional<String> providerId,
+            ProviderLinkResponseState state,
+            Optional<String> errorType,
+            Optional<String> error,
             Map<String, Object> additionalProperties) {
         this.provider = provider;
         this.connected = connected;
         this.providerId = providerId;
+        this.state = state;
+        this.errorType = errorType;
+        this.error = error;
         this.additionalProperties = additionalProperties;
     }
 
@@ -54,6 +66,21 @@ public final class ProviderLinkResponse {
         return providerId;
     }
 
+    @JsonProperty("state")
+    public ProviderLinkResponseState getState() {
+        return state;
+    }
+
+    @JsonProperty("error_type")
+    public Optional<String> getErrorType() {
+        return errorType;
+    }
+
+    @JsonProperty("error")
+    public Optional<String> getError() {
+        return error;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -66,12 +93,17 @@ public final class ProviderLinkResponse {
     }
 
     private boolean equalTo(ProviderLinkResponse other) {
-        return provider.equals(other.provider) && connected == other.connected && providerId.equals(other.providerId);
+        return provider.equals(other.provider)
+                && connected == other.connected
+                && providerId.equals(other.providerId)
+                && state.equals(other.state)
+                && errorType.equals(other.errorType)
+                && error.equals(other.error);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.provider, this.connected, this.providerId);
+        return Objects.hash(this.provider, this.connected, this.providerId, this.state, this.errorType, this.error);
     }
 
     @Override
@@ -90,7 +122,11 @@ public final class ProviderLinkResponse {
     }
 
     public interface ConnectedStage {
-        _FinalStage connected(boolean connected);
+        StateStage connected(boolean connected);
+    }
+
+    public interface StateStage {
+        _FinalStage state(ProviderLinkResponseState state);
     }
 
     public interface _FinalStage {
@@ -99,13 +135,27 @@ public final class ProviderLinkResponse {
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
+
+        _FinalStage errorType(Optional<String> errorType);
+
+        _FinalStage errorType(String errorType);
+
+        _FinalStage error(Optional<String> error);
+
+        _FinalStage error(String error);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ProviderStage, ConnectedStage, _FinalStage {
+    public static final class Builder implements ProviderStage, ConnectedStage, StateStage, _FinalStage {
         private PasswordProviders provider;
 
         private boolean connected;
+
+        private ProviderLinkResponseState state;
+
+        private Optional<String> error = Optional.empty();
+
+        private Optional<String> errorType = Optional.empty();
 
         private Optional<String> providerId = Optional.empty();
 
@@ -119,6 +169,9 @@ public final class ProviderLinkResponse {
             provider(other.getProvider());
             connected(other.getConnected());
             providerId(other.getProviderId());
+            state(other.getState());
+            errorType(other.getErrorType());
+            error(other.getError());
             return this;
         }
 
@@ -131,8 +184,41 @@ public final class ProviderLinkResponse {
 
         @Override
         @JsonSetter("connected")
-        public _FinalStage connected(boolean connected) {
+        public StateStage connected(boolean connected) {
             this.connected = connected;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("state")
+        public _FinalStage state(ProviderLinkResponseState state) {
+            this.state = state;
+            return this;
+        }
+
+        @Override
+        public _FinalStage error(String error) {
+            this.error = Optional.of(error);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "error", nulls = Nulls.SKIP)
+        public _FinalStage error(Optional<String> error) {
+            this.error = error;
+            return this;
+        }
+
+        @Override
+        public _FinalStage errorType(String errorType) {
+            this.errorType = Optional.of(errorType);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
+        public _FinalStage errorType(Optional<String> errorType) {
+            this.errorType = errorType;
             return this;
         }
 
@@ -151,7 +237,8 @@ public final class ProviderLinkResponse {
 
         @Override
         public ProviderLinkResponse build() {
-            return new ProviderLinkResponse(provider, connected, providerId, additionalProperties);
+            return new ProviderLinkResponse(
+                    provider, connected, providerId, state, errorType, error, additionalProperties);
         }
     }
 }

@@ -8,7 +8,6 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.resources.team.requests.TeamUpdateSourcePrioritiesRequest;
@@ -33,28 +32,17 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getLinkConfig() {
-        return getLinkConfig(TeamGetLinkConfigRequest.builder().build());
-    }
-
-    /**
-     * Post teams.
-     */
-    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
+    public Map<String, Object> getLinkConfig(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/link/config")
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -73,8 +61,8 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request) {
-        return getLinkConfig(request, null);
+    public Map<String, Object> getLinkConfig() {
+        return getLinkConfig(null);
     }
 
     /**
