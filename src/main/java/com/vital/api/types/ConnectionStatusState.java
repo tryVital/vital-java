@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ConnectionStatusState {
     SUCCESS("success"),
 
-    ERROR("error");
+    ERROR("error"),
+
+    PENDING_PROVIDER_MFA("pending_provider_mfa");
 
     private final String value;
 

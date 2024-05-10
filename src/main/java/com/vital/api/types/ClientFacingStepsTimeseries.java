@@ -80,6 +80,9 @@ public final class ClientFacingStepsTimeseries {
         return type;
     }
 
+    /**
+     * @return Measured in counts
+     */
     @JsonProperty("unit")
     public String getUnit() {
         return "count";

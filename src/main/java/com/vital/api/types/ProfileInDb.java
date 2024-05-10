@@ -21,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProfileInDb.Builder.class)
 public final class ProfileInDb {
-    private final Optional<String> data;
+    private final Optional<Object> data;
 
     private final String userId;
 
@@ -38,7 +38,7 @@ public final class ProfileInDb {
     private final Map<String, Object> additionalProperties;
 
     private ProfileInDb(
-            Optional<String> data,
+            Optional<Object> data,
             String userId,
             int sourceId,
             Optional<Integer> priorityId,
@@ -57,7 +57,7 @@ public final class ProfileInDb {
     }
 
     @JsonProperty("data")
-    public Optional<String> getData() {
+    public Optional<Object> getData() {
         return data;
     }
 
@@ -148,9 +148,9 @@ public final class ProfileInDb {
     public interface _FinalStage {
         ProfileInDb build();
 
-        _FinalStage data(Optional<String> data);
+        _FinalStage data(Optional<Object> data);
 
-        _FinalStage data(String data);
+        _FinalStage data(Object data);
 
         _FinalStage priorityId(Optional<Integer> priorityId);
 
@@ -175,7 +175,7 @@ public final class ProfileInDb {
 
         private Optional<Integer> priorityId = Optional.empty();
 
-        private Optional<String> data = Optional.empty();
+        private Optional<Object> data = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -249,14 +249,14 @@ public final class ProfileInDb {
         }
 
         @Override
-        public _FinalStage data(String data) {
+        public _FinalStage data(Object data) {
             this.data = Optional.of(data);
             return this;
         }
 
         @Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public _FinalStage data(Optional<String> data) {
+        public _FinalStage data(Optional<Object> data) {
             this.data = data;
             return this;
         }

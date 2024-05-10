@@ -20,41 +20,35 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ConnectionStatus.Builder.class)
 public final class ConnectionStatus {
-    private final boolean success;
-
-    private final Optional<String> redirectUrl;
-
     private final ConnectionStatusState state;
 
     private final Optional<String> errorType;
 
     private final Optional<String> error;
 
+    private final Optional<ProviderMfaRequest> providerMfa;
+
+    private final boolean success;
+
+    private final Optional<String> redirectUrl;
+
     private final Map<String, Object> additionalProperties;
 
     private ConnectionStatus(
-            boolean success,
-            Optional<String> redirectUrl,
             ConnectionStatusState state,
             Optional<String> errorType,
             Optional<String> error,
+            Optional<ProviderMfaRequest> providerMfa,
+            boolean success,
+            Optional<String> redirectUrl,
             Map<String, Object> additionalProperties) {
-        this.success = success;
-        this.redirectUrl = redirectUrl;
         this.state = state;
         this.errorType = errorType;
         this.error = error;
+        this.providerMfa = providerMfa;
+        this.success = success;
+        this.redirectUrl = redirectUrl;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("success")
-    public boolean getSuccess() {
-        return success;
-    }
-
-    @JsonProperty("redirect_url")
-    public Optional<String> getRedirectUrl() {
-        return redirectUrl;
     }
 
     @JsonProperty("state")
@@ -72,6 +66,21 @@ public final class ConnectionStatus {
         return error;
     }
 
+    @JsonProperty("provider_mfa")
+    public Optional<ProviderMfaRequest> getProviderMfa() {
+        return providerMfa;
+    }
+
+    @JsonProperty("success")
+    public boolean getSuccess() {
+        return success;
+    }
+
+    @JsonProperty("redirect_url")
+    public Optional<String> getRedirectUrl() {
+        return redirectUrl;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -84,16 +93,17 @@ public final class ConnectionStatus {
     }
 
     private boolean equalTo(ConnectionStatus other) {
-        return success == other.success
-                && redirectUrl.equals(other.redirectUrl)
-                && state.equals(other.state)
+        return state.equals(other.state)
                 && errorType.equals(other.errorType)
-                && error.equals(other.error);
+                && error.equals(other.error)
+                && providerMfa.equals(other.providerMfa)
+                && success == other.success
+                && redirectUrl.equals(other.redirectUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.success, this.redirectUrl, this.state, this.errorType, this.error);
+        return Objects.hash(this.state, this.errorType, this.error, this.providerMfa, this.success, this.redirectUrl);
     }
 
     @Override
@@ -101,26 +111,22 @@ public final class ConnectionStatus {
         return ObjectMappers.stringify(this);
     }
 
-    public static SuccessStage builder() {
+    public static StateStage builder() {
         return new Builder();
     }
 
-    public interface SuccessStage {
-        StateStage success(boolean success);
+    public interface StateStage {
+        SuccessStage state(ConnectionStatusState state);
 
         Builder from(ConnectionStatus other);
     }
 
-    public interface StateStage {
-        _FinalStage state(ConnectionStatusState state);
+    public interface SuccessStage {
+        _FinalStage success(boolean success);
     }
 
     public interface _FinalStage {
         ConnectionStatus build();
-
-        _FinalStage redirectUrl(Optional<String> redirectUrl);
-
-        _FinalStage redirectUrl(String redirectUrl);
 
         _FinalStage errorType(Optional<String> errorType);
 
@@ -129,19 +135,29 @@ public final class ConnectionStatus {
         _FinalStage error(Optional<String> error);
 
         _FinalStage error(String error);
+
+        _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa);
+
+        _FinalStage providerMfa(ProviderMfaRequest providerMfa);
+
+        _FinalStage redirectUrl(Optional<String> redirectUrl);
+
+        _FinalStage redirectUrl(String redirectUrl);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SuccessStage, StateStage, _FinalStage {
+    public static final class Builder implements StateStage, SuccessStage, _FinalStage {
+        private ConnectionStatusState state;
+
         private boolean success;
 
-        private ConnectionStatusState state;
+        private Optional<String> redirectUrl = Optional.empty();
+
+        private Optional<ProviderMfaRequest> providerMfa = Optional.empty();
 
         private Optional<String> error = Optional.empty();
 
         private Optional<String> errorType = Optional.empty();
-
-        private Optional<String> redirectUrl = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -150,25 +166,52 @@ public final class ConnectionStatus {
 
         @Override
         public Builder from(ConnectionStatus other) {
-            success(other.getSuccess());
-            redirectUrl(other.getRedirectUrl());
             state(other.getState());
             errorType(other.getErrorType());
             error(other.getError());
-            return this;
-        }
-
-        @Override
-        @JsonSetter("success")
-        public StateStage success(boolean success) {
-            this.success = success;
+            providerMfa(other.getProviderMfa());
+            success(other.getSuccess());
+            redirectUrl(other.getRedirectUrl());
             return this;
         }
 
         @Override
         @JsonSetter("state")
-        public _FinalStage state(ConnectionStatusState state) {
+        public SuccessStage state(ConnectionStatusState state) {
             this.state = state;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("success")
+        public _FinalStage success(boolean success) {
+            this.success = success;
+            return this;
+        }
+
+        @Override
+        public _FinalStage redirectUrl(String redirectUrl) {
+            this.redirectUrl = Optional.of(redirectUrl);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
+        public _FinalStage redirectUrl(Optional<String> redirectUrl) {
+            this.redirectUrl = redirectUrl;
+            return this;
+        }
+
+        @Override
+        public _FinalStage providerMfa(ProviderMfaRequest providerMfa) {
+            this.providerMfa = Optional.of(providerMfa);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "provider_mfa", nulls = Nulls.SKIP)
+        public _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa) {
+            this.providerMfa = providerMfa;
             return this;
         }
 
@@ -199,21 +242,9 @@ public final class ConnectionStatus {
         }
 
         @Override
-        public _FinalStage redirectUrl(String redirectUrl) {
-            this.redirectUrl = Optional.of(redirectUrl);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
-        public _FinalStage redirectUrl(Optional<String> redirectUrl) {
-            this.redirectUrl = redirectUrl;
-            return this;
-        }
-
-        @Override
         public ConnectionStatus build() {
-            return new ConnectionStatus(success, redirectUrl, state, errorType, error, additionalProperties);
+            return new ConnectionStatus(
+                    state, errorType, error, providerMfa, success, redirectUrl, additionalProperties);
         }
     }
 }

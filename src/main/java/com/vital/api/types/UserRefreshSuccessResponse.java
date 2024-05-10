@@ -21,7 +21,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = UserRefreshSuccessResponse.Builder.class)
 public final class UserRefreshSuccessResponse {
-    private final String success;
+    private final boolean success;
 
     private final String userId;
 
@@ -34,7 +34,7 @@ public final class UserRefreshSuccessResponse {
     private final Map<String, Object> additionalProperties;
 
     private UserRefreshSuccessResponse(
-            String success,
+            boolean success,
             String userId,
             List<String> refreshedSources,
             List<String> inProgressSources,
@@ -52,7 +52,7 @@ public final class UserRefreshSuccessResponse {
      * @return Whether operation was successful or not
      */
     @JsonProperty("success")
-    public String getSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
@@ -91,7 +91,7 @@ public final class UserRefreshSuccessResponse {
     }
 
     private boolean equalTo(UserRefreshSuccessResponse other) {
-        return success.equals(other.success)
+        return success == other.success
                 && userId.equals(other.userId)
                 && refreshedSources.equals(other.refreshedSources)
                 && inProgressSources.equals(other.inProgressSources)
@@ -114,7 +114,7 @@ public final class UserRefreshSuccessResponse {
     }
 
     public interface SuccessStage {
-        UserIdStage success(String success);
+        UserIdStage success(boolean success);
 
         Builder from(UserRefreshSuccessResponse other);
     }
@@ -147,7 +147,7 @@ public final class UserRefreshSuccessResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SuccessStage, UserIdStage, _FinalStage {
-        private String success;
+        private boolean success;
 
         private String userId;
 
@@ -178,7 +178,7 @@ public final class UserRefreshSuccessResponse {
          */
         @Override
         @JsonSetter("success")
-        public UserIdStage success(String success) {
+        public UserIdStage success(boolean success) {
             this.success = success;
             return this;
         }

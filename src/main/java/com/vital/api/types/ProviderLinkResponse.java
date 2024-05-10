@@ -20,50 +20,39 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProviderLinkResponse.Builder.class)
 public final class ProviderLinkResponse {
-    private final PasswordProviders provider;
-
-    private final boolean connected;
-
-    private final Optional<String> providerId;
-
     private final ProviderLinkResponseState state;
 
     private final Optional<String> errorType;
 
     private final Optional<String> error;
 
+    private final Optional<ProviderMfaRequest> providerMfa;
+
+    private final PasswordProviders provider;
+
+    private final boolean connected;
+
+    private final Optional<String> providerId;
+
     private final Map<String, Object> additionalProperties;
 
     private ProviderLinkResponse(
-            PasswordProviders provider,
-            boolean connected,
-            Optional<String> providerId,
             ProviderLinkResponseState state,
             Optional<String> errorType,
             Optional<String> error,
+            Optional<ProviderMfaRequest> providerMfa,
+            PasswordProviders provider,
+            boolean connected,
+            Optional<String> providerId,
             Map<String, Object> additionalProperties) {
-        this.provider = provider;
-        this.connected = connected;
-        this.providerId = providerId;
         this.state = state;
         this.errorType = errorType;
         this.error = error;
+        this.providerMfa = providerMfa;
+        this.provider = provider;
+        this.connected = connected;
+        this.providerId = providerId;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("provider")
-    public PasswordProviders getProvider() {
-        return provider;
-    }
-
-    @JsonProperty("connected")
-    public boolean getConnected() {
-        return connected;
-    }
-
-    @JsonProperty("provider_id")
-    public Optional<String> getProviderId() {
-        return providerId;
     }
 
     @JsonProperty("state")
@@ -81,6 +70,26 @@ public final class ProviderLinkResponse {
         return error;
     }
 
+    @JsonProperty("provider_mfa")
+    public Optional<ProviderMfaRequest> getProviderMfa() {
+        return providerMfa;
+    }
+
+    @JsonProperty("provider")
+    public PasswordProviders getProvider() {
+        return provider;
+    }
+
+    @JsonProperty("connected")
+    public boolean getConnected() {
+        return connected;
+    }
+
+    @JsonProperty("provider_id")
+    public Optional<String> getProviderId() {
+        return providerId;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -93,17 +102,25 @@ public final class ProviderLinkResponse {
     }
 
     private boolean equalTo(ProviderLinkResponse other) {
-        return provider.equals(other.provider)
-                && connected == other.connected
-                && providerId.equals(other.providerId)
-                && state.equals(other.state)
+        return state.equals(other.state)
                 && errorType.equals(other.errorType)
-                && error.equals(other.error);
+                && error.equals(other.error)
+                && providerMfa.equals(other.providerMfa)
+                && provider.equals(other.provider)
+                && connected == other.connected
+                && providerId.equals(other.providerId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.provider, this.connected, this.providerId, this.state, this.errorType, this.error);
+        return Objects.hash(
+                this.state,
+                this.errorType,
+                this.error,
+                this.providerMfa,
+                this.provider,
+                this.connected,
+                this.providerId);
     }
 
     @Override
@@ -111,30 +128,26 @@ public final class ProviderLinkResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static ProviderStage builder() {
+    public static StateStage builder() {
         return new Builder();
     }
 
-    public interface ProviderStage {
-        ConnectedStage provider(PasswordProviders provider);
+    public interface StateStage {
+        ProviderStage state(ProviderLinkResponseState state);
 
         Builder from(ProviderLinkResponse other);
     }
 
-    public interface ConnectedStage {
-        StateStage connected(boolean connected);
+    public interface ProviderStage {
+        ConnectedStage provider(PasswordProviders provider);
     }
 
-    public interface StateStage {
-        _FinalStage state(ProviderLinkResponseState state);
+    public interface ConnectedStage {
+        _FinalStage connected(boolean connected);
     }
 
     public interface _FinalStage {
         ProviderLinkResponse build();
-
-        _FinalStage providerId(Optional<String> providerId);
-
-        _FinalStage providerId(String providerId);
 
         _FinalStage errorType(Optional<String> errorType);
 
@@ -143,21 +156,31 @@ public final class ProviderLinkResponse {
         _FinalStage error(Optional<String> error);
 
         _FinalStage error(String error);
+
+        _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa);
+
+        _FinalStage providerMfa(ProviderMfaRequest providerMfa);
+
+        _FinalStage providerId(Optional<String> providerId);
+
+        _FinalStage providerId(String providerId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ProviderStage, ConnectedStage, StateStage, _FinalStage {
+    public static final class Builder implements StateStage, ProviderStage, ConnectedStage, _FinalStage {
+        private ProviderLinkResponseState state;
+
         private PasswordProviders provider;
 
         private boolean connected;
 
-        private ProviderLinkResponseState state;
+        private Optional<String> providerId = Optional.empty();
+
+        private Optional<ProviderMfaRequest> providerMfa = Optional.empty();
 
         private Optional<String> error = Optional.empty();
 
         private Optional<String> errorType = Optional.empty();
-
-        private Optional<String> providerId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -166,12 +189,20 @@ public final class ProviderLinkResponse {
 
         @Override
         public Builder from(ProviderLinkResponse other) {
-            provider(other.getProvider());
-            connected(other.getConnected());
-            providerId(other.getProviderId());
             state(other.getState());
             errorType(other.getErrorType());
             error(other.getError());
+            providerMfa(other.getProviderMfa());
+            provider(other.getProvider());
+            connected(other.getConnected());
+            providerId(other.getProviderId());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("state")
+        public ProviderStage state(ProviderLinkResponseState state) {
+            this.state = state;
             return this;
         }
 
@@ -184,15 +215,34 @@ public final class ProviderLinkResponse {
 
         @Override
         @JsonSetter("connected")
-        public StateStage connected(boolean connected) {
+        public _FinalStage connected(boolean connected) {
             this.connected = connected;
             return this;
         }
 
         @Override
-        @JsonSetter("state")
-        public _FinalStage state(ProviderLinkResponseState state) {
-            this.state = state;
+        public _FinalStage providerId(String providerId) {
+            this.providerId = Optional.of(providerId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
+        public _FinalStage providerId(Optional<String> providerId) {
+            this.providerId = providerId;
+            return this;
+        }
+
+        @Override
+        public _FinalStage providerMfa(ProviderMfaRequest providerMfa) {
+            this.providerMfa = Optional.of(providerMfa);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "provider_mfa", nulls = Nulls.SKIP)
+        public _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa) {
+            this.providerMfa = providerMfa;
             return this;
         }
 
@@ -223,22 +273,9 @@ public final class ProviderLinkResponse {
         }
 
         @Override
-        public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
-        public _FinalStage providerId(Optional<String> providerId) {
-            this.providerId = providerId;
-            return this;
-        }
-
-        @Override
         public ProviderLinkResponse build() {
             return new ProviderLinkResponse(
-                    provider, connected, providerId, state, errorType, error, additionalProperties);
+                    state, errorType, error, providerMfa, provider, connected, providerId, additionalProperties);
         }
     }
 }

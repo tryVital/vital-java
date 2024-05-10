@@ -80,6 +80,9 @@ public final class ClientFacingCaloriesActiveTimeseries {
         return type;
     }
 
+    /**
+     * @return Measured in kilocalories (kcal)
+     */
     @JsonProperty("unit")
     public String getUnit() {
         return "kcal";

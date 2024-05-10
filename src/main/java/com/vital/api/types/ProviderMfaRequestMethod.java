@@ -5,16 +5,14 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ProviderLinkResponseState {
-    SUCCESS("success"),
+public enum ProviderMfaRequestMethod {
+    SMS("sms"),
 
-    ERROR("error"),
-
-    PENDING_PROVIDER_MFA("pending_provider_mfa");
+    EMAIL("email");
 
     private final String value;
 
-    ProviderLinkResponseState(String value) {
+    ProviderMfaRequestMethod(String value) {
         this.value = value;
     }
 

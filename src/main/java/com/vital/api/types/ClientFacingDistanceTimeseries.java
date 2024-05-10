@@ -80,6 +80,9 @@ public final class ClientFacingDistanceTimeseries {
         return type;
     }
 
+    /**
+     * @return Measured in meters (m)
+     */
     @JsonProperty("unit")
     public String getUnit() {
         return "m";

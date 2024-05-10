@@ -26,6 +26,8 @@ public enum Providers {
 
     FREESTYLE_LIBRE("freestyle_libre"),
 
+    ABBOTT_LIBREVIEW("abbott_libreview"),
+
     FREESTYLE_LIBRE_BLE("freestyle_libre_ble"),
 
     EIGHT_SLEEP("eight_sleep"),
