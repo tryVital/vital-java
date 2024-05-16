@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.AoEAnswer;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
 import com.vital.api.types.PatientAddressCompatible;
@@ -40,6 +41,8 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<String> activateBy;
 
+    private final Optional<List<AoEAnswer>> aoeAnswers;
+
     private final PatientDetails patientDetails;
 
     private final PatientAddressCompatible patientAddress;
@@ -54,6 +57,7 @@ public final class CreateOrderRequestCompatible {
             Optional<Boolean> priority,
             Optional<List<Consent>> consents,
             Optional<String> activateBy,
+            Optional<List<AoEAnswer>> aoeAnswers,
             PatientDetails patientDetails,
             PatientAddressCompatible patientAddress,
             Map<String, Object> additionalProperties) {
@@ -64,6 +68,7 @@ public final class CreateOrderRequestCompatible {
         this.priority = priority;
         this.consents = consents;
         this.activateBy = activateBy;
+        this.aoeAnswers = aoeAnswers;
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.additionalProperties = additionalProperties;
@@ -110,6 +115,11 @@ public final class CreateOrderRequestCompatible {
         return activateBy;
     }
 
+    @JsonProperty("aoe_answers")
+    public Optional<List<AoEAnswer>> getAoeAnswers() {
+        return aoeAnswers;
+    }
+
     @JsonProperty("patient_details")
     public PatientDetails getPatientDetails() {
         return patientDetails;
@@ -139,6 +149,7 @@ public final class CreateOrderRequestCompatible {
                 && priority.equals(other.priority)
                 && consents.equals(other.consents)
                 && activateBy.equals(other.activateBy)
+                && aoeAnswers.equals(other.aoeAnswers)
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress);
     }
@@ -153,6 +164,7 @@ public final class CreateOrderRequestCompatible {
                 this.priority,
                 this.consents,
                 this.activateBy,
+                this.aoeAnswers,
                 this.patientDetails,
                 this.patientAddress);
     }
@@ -206,6 +218,10 @@ public final class CreateOrderRequestCompatible {
         _FinalStage activateBy(Optional<String> activateBy);
 
         _FinalStage activateBy(String activateBy);
+
+        _FinalStage aoeAnswers(Optional<List<AoEAnswer>> aoeAnswers);
+
+        _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -218,6 +234,8 @@ public final class CreateOrderRequestCompatible {
         private PatientDetails patientDetails;
 
         private PatientAddressCompatible patientAddress;
+
+        private Optional<List<AoEAnswer>> aoeAnswers = Optional.empty();
 
         private Optional<String> activateBy = Optional.empty();
 
@@ -243,6 +261,7 @@ public final class CreateOrderRequestCompatible {
             priority(other.getPriority());
             consents(other.getConsents());
             activateBy(other.getActivateBy());
+            aoeAnswers(other.getAoeAnswers());
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             return this;
@@ -273,6 +292,19 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = patientAddress;
+            return this;
+        }
+
+        @Override
+        public _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers) {
+            this.aoeAnswers = Optional.of(aoeAnswers);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "aoe_answers", nulls = Nulls.SKIP)
+        public _FinalStage aoeAnswers(Optional<List<AoEAnswer>> aoeAnswers) {
+            this.aoeAnswers = aoeAnswers;
             return this;
         }
 
@@ -359,6 +391,7 @@ public final class CreateOrderRequestCompatible {
                     priority,
                     consents,
                     activateBy,
+                    aoeAnswers,
                     patientDetails,
                     patientAddress,
                     additionalProperties);

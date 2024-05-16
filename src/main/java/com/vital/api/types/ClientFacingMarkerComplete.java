@@ -40,6 +40,8 @@ public final class ClientFacingMarkerComplete {
 
     private final Optional<String> price;
 
+    private final Optional<AoE> aoe;
+
     private final List<ClientFacingResult> expectedResults;
 
     private final Map<String, Object> additionalProperties;
@@ -54,6 +56,7 @@ public final class ClientFacingMarkerComplete {
             Optional<MarkerType> type,
             Optional<String> unit,
             Optional<String> price,
+            Optional<AoE> aoe,
             List<ClientFacingResult> expectedResults,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -65,6 +68,7 @@ public final class ClientFacingMarkerComplete {
         this.type = type;
         this.unit = unit;
         this.price = price;
+        this.aoe = aoe;
         this.expectedResults = expectedResults;
         this.additionalProperties = additionalProperties;
     }
@@ -114,6 +118,11 @@ public final class ClientFacingMarkerComplete {
         return price;
     }
 
+    @JsonProperty("aoe")
+    public Optional<AoE> getAoe() {
+        return aoe;
+    }
+
     @JsonProperty("expected_results")
     public List<ClientFacingResult> getExpectedResults() {
         return expectedResults;
@@ -140,6 +149,7 @@ public final class ClientFacingMarkerComplete {
                 && type.equals(other.type)
                 && unit.equals(other.unit)
                 && price.equals(other.price)
+                && aoe.equals(other.aoe)
                 && expectedResults.equals(other.expectedResults);
     }
 
@@ -155,6 +165,7 @@ public final class ClientFacingMarkerComplete {
                 this.type,
                 this.unit,
                 this.price,
+                this.aoe,
                 this.expectedResults);
     }
 
@@ -208,6 +219,10 @@ public final class ClientFacingMarkerComplete {
 
         _FinalStage price(String price);
 
+        _FinalStage aoe(Optional<AoE> aoe);
+
+        _FinalStage aoe(AoE aoe);
+
         _FinalStage expectedResults(List<ClientFacingResult> expectedResults);
 
         _FinalStage addExpectedResults(ClientFacingResult expectedResults);
@@ -224,6 +239,8 @@ public final class ClientFacingMarkerComplete {
         private String slug;
 
         private List<ClientFacingResult> expectedResults = new ArrayList<>();
+
+        private Optional<AoE> aoe = Optional.empty();
 
         private Optional<String> price = Optional.empty();
 
@@ -253,6 +270,7 @@ public final class ClientFacingMarkerComplete {
             type(other.getType());
             unit(other.getUnit());
             price(other.getPrice());
+            aoe(other.getAoe());
             expectedResults(other.getExpectedResults());
             return this;
         }
@@ -295,6 +313,19 @@ public final class ClientFacingMarkerComplete {
         public _FinalStage expectedResults(List<ClientFacingResult> expectedResults) {
             this.expectedResults.clear();
             this.expectedResults.addAll(expectedResults);
+            return this;
+        }
+
+        @Override
+        public _FinalStage aoe(AoE aoe) {
+            this.aoe = Optional.of(aoe);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "aoe", nulls = Nulls.SKIP)
+        public _FinalStage aoe(Optional<AoE> aoe) {
+            this.aoe = aoe;
             return this;
         }
 
@@ -388,6 +419,7 @@ public final class ClientFacingMarkerComplete {
                     type,
                     unit,
                     price,
+                    aoe,
                     expectedResults,
                     additionalProperties);
         }

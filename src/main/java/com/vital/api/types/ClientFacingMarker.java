@@ -38,6 +38,8 @@ public final class ClientFacingMarker {
 
     private final Optional<String> price;
 
+    private final Optional<AoE> aoe;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingMarker(
@@ -50,6 +52,7 @@ public final class ClientFacingMarker {
             Optional<MarkerType> type,
             Optional<String> unit,
             Optional<String> price,
+            Optional<AoE> aoe,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -60,6 +63,7 @@ public final class ClientFacingMarker {
         this.type = type;
         this.unit = unit;
         this.price = price;
+        this.aoe = aoe;
         this.additionalProperties = additionalProperties;
     }
 
@@ -108,6 +112,11 @@ public final class ClientFacingMarker {
         return price;
     }
 
+    @JsonProperty("aoe")
+    public Optional<AoE> getAoe() {
+        return aoe;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -128,7 +137,8 @@ public final class ClientFacingMarker {
                 && providerId.equals(other.providerId)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
-                && price.equals(other.price);
+                && price.equals(other.price)
+                && aoe.equals(other.aoe);
     }
 
     @Override
@@ -142,7 +152,8 @@ public final class ClientFacingMarker {
                 this.providerId,
                 this.type,
                 this.unit,
-                this.price);
+                this.price,
+                this.aoe);
     }
 
     @Override
@@ -194,6 +205,10 @@ public final class ClientFacingMarker {
         _FinalStage price(Optional<String> price);
 
         _FinalStage price(String price);
+
+        _FinalStage aoe(Optional<AoE> aoe);
+
+        _FinalStage aoe(AoE aoe);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -203,6 +218,8 @@ public final class ClientFacingMarker {
         private String name;
 
         private String slug;
+
+        private Optional<AoE> aoe = Optional.empty();
 
         private Optional<String> price = Optional.empty();
 
@@ -232,6 +249,7 @@ public final class ClientFacingMarker {
             type(other.getType());
             unit(other.getUnit());
             price(other.getPrice());
+            aoe(other.getAoe());
             return this;
         }
 
@@ -253,6 +271,19 @@ public final class ClientFacingMarker {
         @JsonSetter("slug")
         public _FinalStage slug(String slug) {
             this.slug = slug;
+            return this;
+        }
+
+        @Override
+        public _FinalStage aoe(AoE aoe) {
+            this.aoe = Optional.of(aoe);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "aoe", nulls = Nulls.SKIP)
+        public _FinalStage aoe(Optional<AoE> aoe) {
+            this.aoe = aoe;
             return this;
         }
 
@@ -337,7 +368,7 @@ public final class ClientFacingMarker {
         @Override
         public ClientFacingMarker build() {
             return new ClientFacingMarker(
-                    id, name, slug, description, labId, providerId, type, unit, price, additionalProperties);
+                    id, name, slug, description, labId, providerId, type, unit, price, aoe, additionalProperties);
         }
     }
 }
