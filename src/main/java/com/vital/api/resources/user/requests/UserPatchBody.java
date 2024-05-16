@@ -69,7 +69,7 @@ public final class UserPatchBody {
     }
 
     /**
-     * @return Ending bound for user data ingestion. Data newer than this date will not be ingested and the connection deregistered.
+     * @return Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.
      */
     @JsonProperty("ingestion_end")
     public Optional<String> getIngestionEnd() {

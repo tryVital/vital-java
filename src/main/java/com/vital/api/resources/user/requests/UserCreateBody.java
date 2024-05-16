@@ -81,7 +81,7 @@ public final class UserCreateBody {
     }
 
     /**
-     * @return Ending bound for user data ingestion. Data newer than this date will not be ingested and the connection deregistered.
+     * @return Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.
      */
     @JsonProperty("ingestion_end")
     public Optional<String> getIngestionEnd() {
@@ -191,7 +191,7 @@ public final class UserCreateBody {
         }
 
         /**
-         * <p>Ending bound for user data ingestion. Data newer than this date will not be ingested and the connection deregistered.</p>
+         * <p>Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

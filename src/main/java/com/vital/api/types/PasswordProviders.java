@@ -24,7 +24,9 @@ public enum PasswordProviders {
 
     MY_FITNESS_PAL("my_fitness_pal"),
 
-    KARDIA("kardia");
+    KARDIA("kardia"),
+
+    ABBOTT_LIBREVIEW("abbott_libreview");
 
     private final String value;
 

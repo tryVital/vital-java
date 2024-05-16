@@ -9,6 +9,7 @@ import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.link.requests.BeginLinkTokenRequest;
+import com.vital.api.resources.link.requests.CompletePasswordProviderMfaBody;
 import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
 import com.vital.api.resources.link.requests.EmailAuthLink;
 import com.vital.api.resources.link.requests.EmailProviderAuthLink;
@@ -437,6 +438,9 @@ public class LinkClient {
         Map<String, Object> properties = new HashMap<>();
         properties.put("username", request.getUsername());
         properties.put("password", request.getPassword());
+        if (request.getRegion().isPresent()) {
+            properties.put("region", request.getRegion());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -449,11 +453,6 @@ public class LinkClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkClientRegion().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-client-region",
-                    request.getVitalLinkClientRegion().get());
-        }
         if (request.getVitalLinkToken().isPresent()) {
             _requestBuilder.addHeader(
                     "x-vital-link-token", request.getVitalLinkToken().get());
@@ -478,6 +477,58 @@ public class LinkClient {
      */
     public ProviderLinkResponse connectPasswordProvider(PasswordProviders provider, IndividualProviderData request) {
         return connectPasswordProvider(provider, request, null);
+    }
+
+    /**
+     * This connects auth providers that are password based.
+     */
+    public ProviderLinkResponse completePasswordProviderMfa(
+            PasswordProviders provider, CompletePasswordProviderMfaBody request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/link/provider/password")
+                .addPathSegment(provider.toString())
+                .addPathSegments("complete_mfa")
+                .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("mfa_code", request.getMfaCode());
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        if (request.getVitalLinkToken().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-vital-link-token", request.getVitalLinkToken().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ProviderLinkResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * This connects auth providers that are password based.
+     */
+    public ProviderLinkResponse completePasswordProviderMfa(
+            PasswordProviders provider, CompletePasswordProviderMfaBody request) {
+        return completePasswordProviderMfa(provider, request, null);
     }
 
     /**

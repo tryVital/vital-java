@@ -22,6 +22,8 @@ import java.util.Optional;
 public final class ProviderLinkResponse {
     private final ProviderLinkResponseState state;
 
+    private final Optional<String> redirectUrl;
+
     private final Optional<String> errorType;
 
     private final Optional<String> error;
@@ -32,20 +34,22 @@ public final class ProviderLinkResponse {
 
     private final boolean connected;
 
-    private final Optional<String> providerId;
+    private final String providerId;
 
     private final Map<String, Object> additionalProperties;
 
     private ProviderLinkResponse(
             ProviderLinkResponseState state,
+            Optional<String> redirectUrl,
             Optional<String> errorType,
             Optional<String> error,
             Optional<ProviderMfaRequest> providerMfa,
             PasswordProviders provider,
             boolean connected,
-            Optional<String> providerId,
+            String providerId,
             Map<String, Object> additionalProperties) {
         this.state = state;
+        this.redirectUrl = redirectUrl;
         this.errorType = errorType;
         this.error = error;
         this.providerMfa = providerMfa;
@@ -58,6 +62,11 @@ public final class ProviderLinkResponse {
     @JsonProperty("state")
     public ProviderLinkResponseState getState() {
         return state;
+    }
+
+    @JsonProperty("redirect_url")
+    public Optional<String> getRedirectUrl() {
+        return redirectUrl;
     }
 
     @JsonProperty("error_type")
@@ -86,7 +95,7 @@ public final class ProviderLinkResponse {
     }
 
     @JsonProperty("provider_id")
-    public Optional<String> getProviderId() {
+    public String getProviderId() {
         return providerId;
     }
 
@@ -103,6 +112,7 @@ public final class ProviderLinkResponse {
 
     private boolean equalTo(ProviderLinkResponse other) {
         return state.equals(other.state)
+                && redirectUrl.equals(other.redirectUrl)
                 && errorType.equals(other.errorType)
                 && error.equals(other.error)
                 && providerMfa.equals(other.providerMfa)
@@ -115,6 +125,7 @@ public final class ProviderLinkResponse {
     public int hashCode() {
         return Objects.hash(
                 this.state,
+                this.redirectUrl,
                 this.errorType,
                 this.error,
                 this.providerMfa,
@@ -143,11 +154,19 @@ public final class ProviderLinkResponse {
     }
 
     public interface ConnectedStage {
-        _FinalStage connected(boolean connected);
+        ProviderIdStage connected(boolean connected);
+    }
+
+    public interface ProviderIdStage {
+        _FinalStage providerId(String providerId);
     }
 
     public interface _FinalStage {
         ProviderLinkResponse build();
+
+        _FinalStage redirectUrl(Optional<String> redirectUrl);
+
+        _FinalStage redirectUrl(String redirectUrl);
 
         _FinalStage errorType(Optional<String> errorType);
 
@@ -160,27 +179,26 @@ public final class ProviderLinkResponse {
         _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa);
 
         _FinalStage providerMfa(ProviderMfaRequest providerMfa);
-
-        _FinalStage providerId(Optional<String> providerId);
-
-        _FinalStage providerId(String providerId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StateStage, ProviderStage, ConnectedStage, _FinalStage {
+    public static final class Builder
+            implements StateStage, ProviderStage, ConnectedStage, ProviderIdStage, _FinalStage {
         private ProviderLinkResponseState state;
 
         private PasswordProviders provider;
 
         private boolean connected;
 
-        private Optional<String> providerId = Optional.empty();
+        private String providerId;
 
         private Optional<ProviderMfaRequest> providerMfa = Optional.empty();
 
         private Optional<String> error = Optional.empty();
 
         private Optional<String> errorType = Optional.empty();
+
+        private Optional<String> redirectUrl = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -190,6 +208,7 @@ public final class ProviderLinkResponse {
         @Override
         public Builder from(ProviderLinkResponse other) {
             state(other.getState());
+            redirectUrl(other.getRedirectUrl());
             errorType(other.getErrorType());
             error(other.getError());
             providerMfa(other.getProviderMfa());
@@ -215,20 +234,14 @@ public final class ProviderLinkResponse {
 
         @Override
         @JsonSetter("connected")
-        public _FinalStage connected(boolean connected) {
+        public ProviderIdStage connected(boolean connected) {
             this.connected = connected;
             return this;
         }
 
         @Override
+        @JsonSetter("provider_id")
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
-        public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }
@@ -273,9 +286,30 @@ public final class ProviderLinkResponse {
         }
 
         @Override
+        public _FinalStage redirectUrl(String redirectUrl) {
+            this.redirectUrl = Optional.of(redirectUrl);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
+        public _FinalStage redirectUrl(Optional<String> redirectUrl) {
+            this.redirectUrl = redirectUrl;
+            return this;
+        }
+
+        @Override
         public ProviderLinkResponse build() {
             return new ProviderLinkResponse(
-                    state, errorType, error, providerMfa, provider, connected, providerId, additionalProperties);
+                    state,
+                    redirectUrl,
+                    errorType,
+                    error,
+                    providerMfa,
+                    provider,
+                    connected,
+                    providerId,
+                    additionalProperties);
         }
     }
 }
