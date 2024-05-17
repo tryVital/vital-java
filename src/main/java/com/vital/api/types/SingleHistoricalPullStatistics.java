@@ -27,6 +27,8 @@ public final class SingleHistoricalPullStatistics {
 
     private final Optional<OffsetDateTime> rangeEnd;
 
+    private final HistoricalPullTimeline timeline;
+
     private final Optional<Integer> daysWithData;
 
     private final String release;
@@ -39,6 +41,7 @@ public final class SingleHistoricalPullStatistics {
             HistoricalPullStatus status,
             Optional<OffsetDateTime> rangeStart,
             Optional<OffsetDateTime> rangeEnd,
+            HistoricalPullTimeline timeline,
             Optional<Integer> daysWithData,
             String release,
             Optional<String> traceId,
@@ -46,6 +49,7 @@ public final class SingleHistoricalPullStatistics {
         this.status = status;
         this.rangeStart = rangeStart;
         this.rangeEnd = rangeEnd;
+        this.timeline = timeline;
         this.daysWithData = daysWithData;
         this.release = release;
         this.traceId = traceId;
@@ -65,6 +69,11 @@ public final class SingleHistoricalPullStatistics {
     @JsonProperty("range_end")
     public Optional<OffsetDateTime> getRangeEnd() {
         return rangeEnd;
+    }
+
+    @JsonProperty("timeline")
+    public HistoricalPullTimeline getTimeline() {
+        return timeline;
     }
 
     @JsonProperty("days_with_data")
@@ -97,6 +106,7 @@ public final class SingleHistoricalPullStatistics {
         return status.equals(other.status)
                 && rangeStart.equals(other.rangeStart)
                 && rangeEnd.equals(other.rangeEnd)
+                && timeline.equals(other.timeline)
                 && daysWithData.equals(other.daysWithData)
                 && release.equals(other.release)
                 && traceId.equals(other.traceId);
@@ -104,7 +114,14 @@ public final class SingleHistoricalPullStatistics {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.status, this.rangeStart, this.rangeEnd, this.daysWithData, this.release, this.traceId);
+        return Objects.hash(
+                this.status,
+                this.rangeStart,
+                this.rangeEnd,
+                this.timeline,
+                this.daysWithData,
+                this.release,
+                this.traceId);
     }
 
     @Override
@@ -117,9 +134,13 @@ public final class SingleHistoricalPullStatistics {
     }
 
     public interface StatusStage {
-        ReleaseStage status(HistoricalPullStatus status);
+        TimelineStage status(HistoricalPullStatus status);
 
         Builder from(SingleHistoricalPullStatistics other);
+    }
+
+    public interface TimelineStage {
+        ReleaseStage timeline(HistoricalPullTimeline timeline);
     }
 
     public interface ReleaseStage {
@@ -147,8 +168,10 @@ public final class SingleHistoricalPullStatistics {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StatusStage, ReleaseStage, _FinalStage {
+    public static final class Builder implements StatusStage, TimelineStage, ReleaseStage, _FinalStage {
         private HistoricalPullStatus status;
+
+        private HistoricalPullTimeline timeline;
 
         private String release;
 
@@ -170,6 +193,7 @@ public final class SingleHistoricalPullStatistics {
             status(other.getStatus());
             rangeStart(other.getRangeStart());
             rangeEnd(other.getRangeEnd());
+            timeline(other.getTimeline());
             daysWithData(other.getDaysWithData());
             release(other.getRelease());
             traceId(other.getTraceId());
@@ -178,8 +202,15 @@ public final class SingleHistoricalPullStatistics {
 
         @Override
         @JsonSetter("status")
-        public ReleaseStage status(HistoricalPullStatus status) {
+        public TimelineStage status(HistoricalPullStatus status) {
             this.status = status;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("timeline")
+        public ReleaseStage timeline(HistoricalPullTimeline timeline) {
+            this.timeline = timeline;
             return this;
         }
 
@@ -245,7 +276,7 @@ public final class SingleHistoricalPullStatistics {
         @Override
         public SingleHistoricalPullStatistics build() {
             return new SingleHistoricalPullStatistics(
-                    status, rangeStart, rangeEnd, daysWithData, release, traceId, additionalProperties);
+                    status, rangeStart, rangeEnd, timeline, daysWithData, release, traceId, additionalProperties);
         }
     }
 }

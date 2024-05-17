@@ -14,6 +14,7 @@ import com.vital.api.resources.labtests.requests.AppointmentRescheduleRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
@@ -784,6 +785,58 @@ public class LabTestsClient {
      */
     public LabResultsRaw getResultRaw(String orderId) {
         return getResultRaw(orderId, null);
+    }
+
+    /**
+     * This endpoint returns the lab results for the order.
+     */
+    public InputStream getLabelsPdf(String orderId) {
+        return getLabelsPdf(orderId, LabTestsGetLabelsPdfRequest.builder().build());
+    }
+
+    /**
+     * This endpoint returns the lab results for the order.
+     */
+    public InputStream getLabelsPdf(
+            String orderId, LabTestsGetLabelsPdfRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("labels/pdf");
+        if (request.getNumberOfLabels().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "number_of_labels", request.getNumberOfLabels().get().toString());
+        }
+        if (request.getCollectionDate().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "collection_date", request.getCollectionDate().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return response.body().byteStream();
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * This endpoint returns the lab results for the order.
+     */
+    public InputStream getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
+        return getLabelsPdf(orderId, request, null);
     }
 
     /**
