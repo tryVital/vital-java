@@ -8,6 +8,7 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.resources.providers.requests.ProvidersGetAllRequest;
 import com.vital.api.types.ClientFacingProviderDetailed;
 import java.io.IOException;
 import java.util.List;
@@ -26,17 +27,26 @@ public class ProvidersClient {
     /**
      * Get Provider list
      */
-    public List<ClientFacingProviderDetailed> getAll(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+    public List<ClientFacingProviderDetailed> getAll() {
+        return getAll(ProvidersGetAllRequest.builder().build());
+    }
+
+    /**
+     * Get Provider list
+     */
+    public List<ClientFacingProviderDetailed> getAll(ProvidersGetAllRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/providers")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .addPathSegments("v2/providers");
+        if (request.getSourceType().isPresent()) {
+            httpUrl.addQueryParameter("source_type", request.getSourceType().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -55,7 +65,7 @@ public class ProvidersClient {
     /**
      * Get Provider list
      */
-    public List<ClientFacingProviderDetailed> getAll() {
-        return getAll(null);
+    public List<ClientFacingProviderDetailed> getAll(ProvidersGetAllRequest request) {
+        return getAll(request, null);
     }
 }

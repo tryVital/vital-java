@@ -23,14 +23,12 @@ import java.util.Optional;
 public final class LabTestsGetLabelsPdfRequest {
     private final Optional<Integer> numberOfLabels;
 
-    private final Optional<OffsetDateTime> collectionDate;
+    private final OffsetDateTime collectionDate;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetLabelsPdfRequest(
-            Optional<Integer> numberOfLabels,
-            Optional<OffsetDateTime> collectionDate,
-            Map<String, Object> additionalProperties) {
+            Optional<Integer> numberOfLabels, OffsetDateTime collectionDate, Map<String, Object> additionalProperties) {
         this.numberOfLabels = numberOfLabels;
         this.collectionDate = collectionDate;
         this.additionalProperties = additionalProperties;
@@ -48,7 +46,7 @@ public final class LabTestsGetLabelsPdfRequest {
      * @return Collection date
      */
     @JsonProperty("collection_date")
-    public Optional<OffsetDateTime> getCollectionDate() {
+    public OffsetDateTime getCollectionDate() {
         return collectionDate;
     }
 
@@ -77,49 +75,71 @@ public final class LabTestsGetLabelsPdfRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static CollectionDateStage builder() {
         return new Builder();
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<Integer> numberOfLabels = Optional.empty();
+    public interface CollectionDateStage {
+        _FinalStage collectionDate(OffsetDateTime collectionDate);
 
-        private Optional<OffsetDateTime> collectionDate = Optional.empty();
+        Builder from(LabTestsGetLabelsPdfRequest other);
+    }
+
+    public interface _FinalStage {
+        LabTestsGetLabelsPdfRequest build();
+
+        _FinalStage numberOfLabels(Optional<Integer> numberOfLabels);
+
+        _FinalStage numberOfLabels(Integer numberOfLabels);
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder implements CollectionDateStage, _FinalStage {
+        private OffsetDateTime collectionDate;
+
+        private Optional<Integer> numberOfLabels = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @Override
         public Builder from(LabTestsGetLabelsPdfRequest other) {
             numberOfLabels(other.getNumberOfLabels());
             collectionDate(other.getCollectionDate());
             return this;
         }
 
-        @JsonSetter(value = "number_of_labels", nulls = Nulls.SKIP)
-        public Builder numberOfLabels(Optional<Integer> numberOfLabels) {
-            this.numberOfLabels = numberOfLabels;
-            return this;
-        }
-
-        public Builder numberOfLabels(Integer numberOfLabels) {
-            this.numberOfLabels = Optional.of(numberOfLabels);
-            return this;
-        }
-
-        @JsonSetter(value = "collection_date", nulls = Nulls.SKIP)
-        public Builder collectionDate(Optional<OffsetDateTime> collectionDate) {
+        /**
+         * <p>Collection date</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        @JsonSetter("collection_date")
+        public _FinalStage collectionDate(OffsetDateTime collectionDate) {
             this.collectionDate = collectionDate;
             return this;
         }
 
-        public Builder collectionDate(OffsetDateTime collectionDate) {
-            this.collectionDate = Optional.of(collectionDate);
+        /**
+         * <p>Number of labels to generate</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage numberOfLabels(Integer numberOfLabels) {
+            this.numberOfLabels = Optional.of(numberOfLabels);
             return this;
         }
 
+        @Override
+        @JsonSetter(value = "number_of_labels", nulls = Nulls.SKIP)
+        public _FinalStage numberOfLabels(Optional<Integer> numberOfLabels) {
+            this.numberOfLabels = numberOfLabels;
+            return this;
+        }
+
+        @Override
         public LabTestsGetLabelsPdfRequest build() {
             return new LabTestsGetLabelsPdfRequest(numberOfLabels, collectionDate, additionalProperties);
         }

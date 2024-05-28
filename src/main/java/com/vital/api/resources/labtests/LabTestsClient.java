@@ -19,6 +19,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestReq
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
+import com.vital.api.resources.labtests.requests.PostOrderFhir;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
 import com.vital.api.types.AreaInfo;
@@ -30,6 +31,7 @@ import com.vital.api.types.ClientFacingMarker;
 import com.vital.api.types.ClientFacingOrder;
 import com.vital.api.types.GetMarkersResponse;
 import com.vital.api.types.GetOrdersResponse;
+import com.vital.api.types.LabResultsFhir;
 import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.PostOrderResponse;
@@ -788,14 +790,44 @@ public class LabTestsClient {
     }
 
     /**
-     * This endpoint returns the lab results for the order.
+     * Return both metadata and raw json test data
      */
-    public InputStream getLabelsPdf(String orderId) {
-        return getLabelsPdf(orderId, LabTestsGetLabelsPdfRequest.builder().build());
+    public LabResultsFhir getResultRawFhir(String orderId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("result/fhir")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LabResultsFhir.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * This endpoint returns the lab results for the order.
+     * Return both metadata and raw json test data
+     */
+    public LabResultsFhir getResultRawFhir(String orderId) {
+        return getResultRawFhir(orderId, null);
+    }
+
+    /**
+     * This endpoint returns the printed labels for the order.
      */
     public InputStream getLabelsPdf(
             String orderId, LabTestsGetLabelsPdfRequest request, RequestOptions requestOptions) {
@@ -808,10 +840,7 @@ public class LabTestsClient {
             httpUrl.addQueryParameter(
                     "number_of_labels", request.getNumberOfLabels().get().toString());
         }
-        if (request.getCollectionDate().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "collection_date", request.getCollectionDate().get().toString());
-        }
+        httpUrl.addQueryParameter("collection_date", request.getCollectionDate().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -833,7 +862,7 @@ public class LabTestsClient {
     }
 
     /**
-     * This endpoint returns the lab results for the order.
+     * This endpoint returns the printed labels for the order.
      */
     public InputStream getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
         return getLabelsPdf(orderId, request, null);
@@ -910,6 +939,48 @@ public class LabTestsClient {
      */
     public ClientFacingOrder getOrder(String orderId) {
         return getOrder(orderId, null);
+    }
+
+    /**
+     * POST create new order
+     */
+    public PostOrderResponse createOrderFhir(PostOrderFhir request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order/fhir")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PostOrderResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * POST create new order
+     */
+    public PostOrderResponse createOrderFhir(PostOrderFhir request) {
+        return createOrderFhir(request, null);
     }
 
     /**
