@@ -15,7 +15,7 @@ import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AoEAnswer;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
-import com.vital.api.types.PatientAddressCompatible;
+import com.vital.api.types.PatientAddressCompatibleInput;
 import com.vital.api.types.PatientDetails;
 import com.vital.api.types.PhysicianCreateRequest;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public final class CreateOrderRequestCompatible {
 
     private final PatientDetails patientDetails;
 
-    private final PatientAddressCompatible patientAddress;
+    private final PatientAddressCompatibleInput patientAddress;
 
     private final Map<String, Object> additionalProperties;
 
@@ -59,7 +59,7 @@ public final class CreateOrderRequestCompatible {
             Optional<String> activateBy,
             Optional<List<AoEAnswer>> aoeAnswers,
             PatientDetails patientDetails,
-            PatientAddressCompatible patientAddress,
+            PatientAddressCompatibleInput patientAddress,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.labTestId = labTestId;
@@ -107,9 +107,6 @@ public final class CreateOrderRequestCompatible {
         return consents;
     }
 
-    /**
-     * @return Schedule an Order to be processed in a future date.
-     */
     @JsonProperty("activate_by")
     public Optional<String> getActivateBy() {
         return activateBy;
@@ -126,7 +123,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     @JsonProperty("patient_address")
-    public PatientAddressCompatible getPatientAddress() {
+    public PatientAddressCompatibleInput getPatientAddress() {
         return patientAddress;
     }
 
@@ -193,7 +190,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     public interface PatientAddressStage {
-        _FinalStage patientAddress(PatientAddressCompatible patientAddress);
+        _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress);
     }
 
     public interface _FinalStage {
@@ -233,7 +230,7 @@ public final class CreateOrderRequestCompatible {
 
         private PatientDetails patientDetails;
 
-        private PatientAddressCompatible patientAddress;
+        private PatientAddressCompatibleInput patientAddress;
 
         private Optional<List<AoEAnswer>> aoeAnswers = Optional.empty();
 
@@ -290,7 +287,7 @@ public final class CreateOrderRequestCompatible {
 
         @Override
         @JsonSetter("patient_address")
-        public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
+        public _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }
@@ -308,10 +305,6 @@ public final class CreateOrderRequestCompatible {
             return this;
         }
 
-        /**
-         * <p>Schedule an Order to be processed in a future date.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage activateBy(String activateBy) {
             this.activateBy = Optional.of(activateBy);

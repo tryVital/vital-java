@@ -21,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProfileInDb.Builder.class)
 public final class ProfileInDb {
-    private final Optional<Object> data;
+    private final Object data;
 
     private final String userId;
 
@@ -38,7 +38,7 @@ public final class ProfileInDb {
     private final Map<String, Object> additionalProperties;
 
     private ProfileInDb(
-            Optional<Object> data,
+            Object data,
             String userId,
             int sourceId,
             Optional<Integer> priorityId,
@@ -57,7 +57,7 @@ public final class ProfileInDb {
     }
 
     @JsonProperty("data")
-    public Optional<Object> getData() {
+    public Object getData() {
         return data;
     }
 
@@ -123,14 +123,18 @@ public final class ProfileInDb {
         return ObjectMappers.stringify(this);
     }
 
-    public static UserIdStage builder() {
+    public static DataStage builder() {
         return new Builder();
+    }
+
+    public interface DataStage {
+        UserIdStage data(Object data);
+
+        Builder from(ProfileInDb other);
     }
 
     public interface UserIdStage {
         SourceIdStage userId(String userId);
-
-        Builder from(ProfileInDb other);
     }
 
     public interface SourceIdStage {
@@ -148,10 +152,6 @@ public final class ProfileInDb {
     public interface _FinalStage {
         ProfileInDb build();
 
-        _FinalStage data(Optional<Object> data);
-
-        _FinalStage data(Object data);
-
         _FinalStage priorityId(Optional<Integer> priorityId);
 
         _FinalStage priorityId(Integer priorityId);
@@ -162,7 +162,10 @@ public final class ProfileInDb {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UserIdStage, SourceIdStage, IdStage, SourceStage, _FinalStage {
+    public static final class Builder
+            implements DataStage, UserIdStage, SourceIdStage, IdStage, SourceStage, _FinalStage {
+        private Object data;
+
         private String userId;
 
         private int sourceId;
@@ -174,8 +177,6 @@ public final class ProfileInDb {
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
 
         private Optional<Integer> priorityId = Optional.empty();
-
-        private Optional<Object> data = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,6 +192,13 @@ public final class ProfileInDb {
             id(other.getId());
             source(other.getSource());
             updatedAt(other.getUpdatedAt());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("data")
+        public UserIdStage data(Object data) {
+            this.data = data;
             return this;
         }
 
@@ -245,19 +253,6 @@ public final class ProfileInDb {
         @JsonSetter(value = "priority_id", nulls = Nulls.SKIP)
         public _FinalStage priorityId(Optional<Integer> priorityId) {
             this.priorityId = priorityId;
-            return this;
-        }
-
-        @Override
-        public _FinalStage data(Object data) {
-            this.data = Optional.of(data);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public _FinalStage data(Optional<Object> data) {
-            this.data = data;
             return this;
         }
 

@@ -55,17 +55,11 @@ public final class Macros {
         this.additionalProperties = additionalProperties;
     }
 
-    /**
-     * @return Amount of carbohydrates in grams (g)
-     */
     @JsonProperty("carbs")
     public Optional<Double> getCarbs() {
         return carbs;
     }
 
-    /**
-     * @return Amount of protein in grams (g)
-     */
     @JsonProperty("protein")
     public Optional<Double> getProtein() {
         return protein;
@@ -79,33 +73,21 @@ public final class Macros {
         return fats;
     }
 
-    /**
-     * @return Amount of alcohol in grams (g)
-     */
     @JsonProperty("alcohol")
     public Optional<Double> getAlcohol() {
         return alcohol;
     }
 
-    /**
-     * @return Amount of water in grams (g)
-     */
     @JsonProperty("water")
     public Optional<Double> getWater() {
         return water;
     }
 
-    /**
-     * @return Amount of dietary fiber in grams (g)
-     */
     @JsonProperty("fibre")
     public Optional<Double> getFibre() {
         return fibre;
     }
 
-    /**
-     * @return Amount of sugar in grams (g)
-     */
     @JsonProperty("sugar")
     public Optional<Double> getSugar() {
         return sugar;

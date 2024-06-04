@@ -6,21 +6,23 @@ package com.vital.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
-import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonDeserialize(using = PostOrderPatientBirthDate.Deserializer.class)
-public final class PostOrderPatientBirthDate {
+@JsonDeserialize(using = ClientFacingStreamLat.Deserializer.class)
+public final class ClientFacingStreamLat {
     private final Object value;
 
     private final int type;
 
-    private PostOrderPatientBirthDate(Object value, int type) {
+    private ClientFacingStreamLat(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -32,9 +34,9 @@ public final class PostOrderPatientBirthDate {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((List<Optional<Double>>) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((OffsetDateTime) this.value);
+            return visitor.visit((List<Double>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -42,10 +44,10 @@ public final class PostOrderPatientBirthDate {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof PostOrderPatientBirthDate && equalTo((PostOrderPatientBirthDate) other);
+        return other instanceof ClientFacingStreamLat && equalTo((ClientFacingStreamLat) other);
     }
 
-    private boolean equalTo(PostOrderPatientBirthDate other) {
+    private boolean equalTo(ClientFacingStreamLat other) {
         return value.equals(other.value);
     }
 
@@ -59,34 +61,35 @@ public final class PostOrderPatientBirthDate {
         return this.value.toString();
     }
 
-    public static PostOrderPatientBirthDate of(String value) {
-        return new PostOrderPatientBirthDate(value, 0);
+    public static ClientFacingStreamLat of(List<Optional<Double>> value) {
+        return new ClientFacingStreamLat(value, 0);
     }
 
-    public static PostOrderPatientBirthDate of(OffsetDateTime value) {
-        return new PostOrderPatientBirthDate(value, 1);
+    public static ClientFacingStreamLat of(List<Double> value) {
+        return new ClientFacingStreamLat(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(String value);
+        T visit(List<Optional<Double>> value);
 
-        T visit(OffsetDateTime value);
+        T visit(List<Double> value);
     }
 
-    static final class Deserializer extends StdDeserializer<PostOrderPatientBirthDate> {
+    static final class Deserializer extends StdDeserializer<ClientFacingStreamLat> {
         Deserializer() {
-            super(PostOrderPatientBirthDate.class);
+            super(ClientFacingStreamLat.class);
         }
 
         @Override
-        public PostOrderPatientBirthDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public ClientFacingStreamLat deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Double>>>() {}));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, OffsetDateTime.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Double>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

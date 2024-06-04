@@ -18,8 +18,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = PatientAddressCompatible.Builder.class)
-public final class PatientAddressCompatible {
+@JsonDeserialize(builder = PatientAddressCompatibleOutput.Builder.class)
+public final class PatientAddressCompatibleOutput {
     private final Optional<String> receiverName;
 
     private final String firstLine;
@@ -38,7 +38,7 @@ public final class PatientAddressCompatible {
 
     private final Map<String, Object> additionalProperties;
 
-    private PatientAddressCompatible(
+    private PatientAddressCompatibleOutput(
             Optional<String> receiverName,
             String firstLine,
             Optional<String> secondLine,
@@ -102,7 +102,7 @@ public final class PatientAddressCompatible {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof PatientAddressCompatible && equalTo((PatientAddressCompatible) other);
+        return other instanceof PatientAddressCompatibleOutput && equalTo((PatientAddressCompatibleOutput) other);
     }
 
     @JsonAnyGetter
@@ -110,7 +110,7 @@ public final class PatientAddressCompatible {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(PatientAddressCompatible other) {
+    private boolean equalTo(PatientAddressCompatibleOutput other) {
         return receiverName.equals(other.receiverName)
                 && firstLine.equals(other.firstLine)
                 && secondLine.equals(other.secondLine)
@@ -146,7 +146,7 @@ public final class PatientAddressCompatible {
     public interface FirstLineStage {
         CityStage firstLine(String firstLine);
 
-        Builder from(PatientAddressCompatible other);
+        Builder from(PatientAddressCompatibleOutput other);
     }
 
     public interface CityStage {
@@ -166,7 +166,7 @@ public final class PatientAddressCompatible {
     }
 
     public interface _FinalStage {
-        PatientAddressCompatible build();
+        PatientAddressCompatibleOutput build();
 
         _FinalStage receiverName(Optional<String> receiverName);
 
@@ -206,7 +206,7 @@ public final class PatientAddressCompatible {
         private Builder() {}
 
         @Override
-        public Builder from(PatientAddressCompatible other) {
+        public Builder from(PatientAddressCompatibleOutput other) {
             receiverName(other.getReceiverName());
             firstLine(other.getFirstLine());
             secondLine(other.getSecondLine());
@@ -293,8 +293,8 @@ public final class PatientAddressCompatible {
         }
 
         @Override
-        public PatientAddressCompatible build() {
-            return new PatientAddressCompatible(
+        public PatientAddressCompatibleOutput build() {
+            return new PatientAddressCompatibleOutput(
                     receiverName, firstLine, secondLine, city, state, zip, country, phoneNumber, additionalProperties);
         }
     }

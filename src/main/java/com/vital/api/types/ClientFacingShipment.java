@@ -67,57 +67,36 @@ public final class ClientFacingShipment {
         return id;
     }
 
-    /**
-     * @return Tracking number for delivery to customer
-     */
     @JsonProperty("outbound_tracking_number")
     public Optional<String> getOutboundTrackingNumber() {
         return outboundTrackingNumber;
     }
 
-    /**
-     * @return Tracking url for delivery to customer
-     */
     @JsonProperty("outbound_tracking_url")
     public Optional<String> getOutboundTrackingUrl() {
         return outboundTrackingUrl;
     }
 
-    /**
-     * @return Tracking number for delivery to lab
-     */
     @JsonProperty("inbound_tracking_number")
     public Optional<String> getInboundTrackingNumber() {
         return inboundTrackingNumber;
     }
 
-    /**
-     * @return Tracking url for delivery to lab
-     */
     @JsonProperty("inbound_tracking_url")
     public Optional<String> getInboundTrackingUrl() {
         return inboundTrackingUrl;
     }
 
-    /**
-     * @return Courier used for delivery to customer
-     */
     @JsonProperty("outbound_courier")
     public Optional<String> getOutboundCourier() {
         return outboundCourier;
     }
 
-    /**
-     * @return Courier used for delivery to lab
-     */
     @JsonProperty("inbound_courier")
     public Optional<String> getInboundCourier() {
         return inboundCourier;
     }
 
-    /**
-     * @return Notes associated to the Vital shipment
-     */
     @JsonProperty("notes")
     public Optional<String> getNotes() {
         return notes;
@@ -252,10 +231,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Notes associated to the Vital shipment</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.of(notes);
@@ -269,10 +244,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Courier used for delivery to lab</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage inboundCourier(String inboundCourier) {
             this.inboundCourier = Optional.of(inboundCourier);
@@ -286,10 +257,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Courier used for delivery to customer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage outboundCourier(String outboundCourier) {
             this.outboundCourier = Optional.of(outboundCourier);
@@ -303,10 +270,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Tracking url for delivery to lab</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage inboundTrackingUrl(String inboundTrackingUrl) {
             this.inboundTrackingUrl = Optional.of(inboundTrackingUrl);
@@ -320,10 +283,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Tracking number for delivery to lab</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage inboundTrackingNumber(String inboundTrackingNumber) {
             this.inboundTrackingNumber = Optional.of(inboundTrackingNumber);
@@ -337,10 +296,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Tracking url for delivery to customer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage outboundTrackingUrl(String outboundTrackingUrl) {
             this.outboundTrackingUrl = Optional.of(outboundTrackingUrl);
@@ -354,10 +309,6 @@ public final class ClientFacingShipment {
             return this;
         }
 
-        /**
-         * <p>Tracking number for delivery to customer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage outboundTrackingNumber(String outboundTrackingNumber) {
             this.outboundTrackingNumber = Optional.of(outboundTrackingNumber);

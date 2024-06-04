@@ -20,18 +20,18 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Micros.Builder.class)
 public final class Micros {
-    private final Optional<Map<String, Double>> minerals;
+    private final Optional<Map<String, Optional<Double>>> minerals;
 
-    private final Optional<Map<String, Double>> traceElements;
+    private final Optional<Map<String, Optional<Double>>> traceElements;
 
-    private final Optional<Map<String, Double>> vitamins;
+    private final Optional<Map<String, Optional<Double>>> vitamins;
 
     private final Map<String, Object> additionalProperties;
 
     private Micros(
-            Optional<Map<String, Double>> minerals,
-            Optional<Map<String, Double>> traceElements,
-            Optional<Map<String, Double>> vitamins,
+            Optional<Map<String, Optional<Double>>> minerals,
+            Optional<Map<String, Optional<Double>>> traceElements,
+            Optional<Map<String, Optional<Double>>> vitamins,
             Map<String, Object> additionalProperties) {
         this.minerals = minerals;
         this.traceElements = traceElements;
@@ -39,27 +39,18 @@ public final class Micros {
         this.additionalProperties = additionalProperties;
     }
 
-    /**
-     * @return Amount of each mineral in grams (g)
-     */
     @JsonProperty("minerals")
-    public Optional<Map<String, Double>> getMinerals() {
+    public Optional<Map<String, Optional<Double>>> getMinerals() {
         return minerals;
     }
 
-    /**
-     * @return Amount of each trace element in grams (g)
-     */
     @JsonProperty("trace_elements")
-    public Optional<Map<String, Double>> getTraceElements() {
+    public Optional<Map<String, Optional<Double>>> getTraceElements() {
         return traceElements;
     }
 
-    /**
-     * @return Amount of each vitamin in grams (g)
-     */
     @JsonProperty("vitamins")
-    public Optional<Map<String, Double>> getVitamins() {
+    public Optional<Map<String, Optional<Double>>> getVitamins() {
         return vitamins;
     }
 
@@ -96,11 +87,11 @@ public final class Micros {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<Map<String, Double>> minerals = Optional.empty();
+        private Optional<Map<String, Optional<Double>>> minerals = Optional.empty();
 
-        private Optional<Map<String, Double>> traceElements = Optional.empty();
+        private Optional<Map<String, Optional<Double>>> traceElements = Optional.empty();
 
-        private Optional<Map<String, Double>> vitamins = Optional.empty();
+        private Optional<Map<String, Optional<Double>>> vitamins = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -115,34 +106,34 @@ public final class Micros {
         }
 
         @JsonSetter(value = "minerals", nulls = Nulls.SKIP)
-        public Builder minerals(Optional<Map<String, Double>> minerals) {
+        public Builder minerals(Optional<Map<String, Optional<Double>>> minerals) {
             this.minerals = minerals;
             return this;
         }
 
-        public Builder minerals(Map<String, Double> minerals) {
+        public Builder minerals(Map<String, Optional<Double>> minerals) {
             this.minerals = Optional.of(minerals);
             return this;
         }
 
         @JsonSetter(value = "trace_elements", nulls = Nulls.SKIP)
-        public Builder traceElements(Optional<Map<String, Double>> traceElements) {
+        public Builder traceElements(Optional<Map<String, Optional<Double>>> traceElements) {
             this.traceElements = traceElements;
             return this;
         }
 
-        public Builder traceElements(Map<String, Double> traceElements) {
+        public Builder traceElements(Map<String, Optional<Double>> traceElements) {
             this.traceElements = Optional.of(traceElements);
             return this;
         }
 
         @JsonSetter(value = "vitamins", nulls = Nulls.SKIP)
-        public Builder vitamins(Optional<Map<String, Double>> vitamins) {
+        public Builder vitamins(Optional<Map<String, Optional<Double>>> vitamins) {
             this.vitamins = vitamins;
             return this;
         }
 
-        public Builder vitamins(Map<String, Double> vitamins) {
+        public Builder vitamins(Map<String, Optional<Double>> vitamins) {
             this.vitamins = Optional.of(vitamins);
             return this;
         }

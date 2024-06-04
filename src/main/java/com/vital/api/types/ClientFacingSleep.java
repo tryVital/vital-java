@@ -173,9 +173,6 @@ public final class ClientFacingSleep {
         return bedtimeStop;
     }
 
-    /**
-     * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
-     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
@@ -229,81 +226,51 @@ public final class ClientFacingSleep {
         return deep;
     }
 
-    /**
-     * @return A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar
-     */
     @JsonProperty("score")
     public Optional<Integer> getScore() {
         return score;
     }
 
-    /**
-     * @return The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute
-     */
     @JsonProperty("hr_lowest")
     public Optional<Integer> getHrLowest() {
         return hrLowest;
     }
 
-    /**
-     * @return The average heart rate registered during the sleep period::beats per minute
-     */
     @JsonProperty("hr_average")
     public Optional<Integer> getHrAverage() {
         return hrAverage;
     }
 
-    /**
-     * @return Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc
-     */
     @JsonProperty("efficiency")
     public Optional<Double> getEfficiency() {
         return efficiency;
     }
 
-    /**
-     * @return Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds
-     */
     @JsonProperty("latency")
     public Optional<Integer> getLatency() {
         return latency;
     }
 
-    /**
-     * @return Skin temperature deviation from the long-term temperature average::celcius
-     */
     @JsonProperty("temperature_delta")
     public Optional<Double> getTemperatureDelta() {
         return temperatureDelta;
     }
 
-    /**
-     * @return The skin temperature::celcius
-     */
     @JsonProperty("skin_temperature")
     public Optional<Double> getSkinTemperature() {
         return skinTemperature;
     }
 
-    /**
-     * @return Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc
-     */
     @JsonProperty("hr_dip")
     public Optional<Double> getHrDip() {
         return hrDip;
     }
 
-    /**
-     * @return The average heart rate variability registered during the sleep period::rmssd
-     */
     @JsonProperty("average_hrv")
     public Optional<Double> getAverageHrv() {
         return averageHrv;
     }
 
-    /**
-     * @return Average respiratory rate::breaths per minute
-     */
     @JsonProperty("respiratory_rate")
     public Optional<Double> getRespiratoryRate() {
         return respiratoryRate;
@@ -759,10 +726,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>Average respiratory rate::breaths per minute</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage respiratoryRate(Double respiratoryRate) {
             this.respiratoryRate = Optional.of(respiratoryRate);
@@ -776,10 +739,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>The average heart rate variability registered during the sleep period::rmssd</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage averageHrv(Double averageHrv) {
             this.averageHrv = Optional.of(averageHrv);
@@ -793,10 +752,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage hrDip(Double hrDip) {
             this.hrDip = Optional.of(hrDip);
@@ -810,10 +765,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>The skin temperature::celcius</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage skinTemperature(Double skinTemperature) {
             this.skinTemperature = Optional.of(skinTemperature);
@@ -827,10 +778,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>Skin temperature deviation from the long-term temperature average::celcius</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage temperatureDelta(Double temperatureDelta) {
             this.temperatureDelta = Optional.of(temperatureDelta);
@@ -844,10 +791,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage latency(Integer latency) {
             this.latency = Optional.of(latency);
@@ -861,10 +804,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage efficiency(Double efficiency) {
             this.efficiency = Optional.of(efficiency);
@@ -878,10 +817,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>The average heart rate registered during the sleep period::beats per minute</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage hrAverage(Integer hrAverage) {
             this.hrAverage = Optional.of(hrAverage);
@@ -895,10 +830,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage hrLowest(Integer hrLowest) {
             this.hrLowest = Optional.of(hrLowest);
@@ -912,10 +843,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage score(Integer score) {
             this.score = Optional.of(score);
@@ -929,10 +856,6 @@ public final class ClientFacingSleep {
             return this;
         }
 
-        /**
-         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);

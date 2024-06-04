@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,11 +24,11 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
 
     private final Optional<Integer> timezoneOffset;
 
-    private final String type;
+    private final Optional<String> type;
 
     private final String unit;
 
-    private final OffsetDateTime timestamp;
+    private final String timestamp;
 
     private final double value;
 
@@ -38,9 +37,9 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
     private ClientFacingElectrocardiogramVoltageTimeseries(
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
-            String type,
+            Optional<String> type,
             String unit,
-            OffsetDateTime timestamp,
+            String timestamp,
             double value,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -52,17 +51,11 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         this.additionalProperties = additionalProperties;
     }
 
-    /**
-     * @return Deprecated
-     */
     @JsonProperty("id")
     public Optional<Integer> getId() {
         return id;
     }
 
-    /**
-     * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
-     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
@@ -72,7 +65,7 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
      * @return The lead of the measurement.
      */
     @JsonProperty("type")
-    public String getType() {
+    public Optional<String> getType() {
         return type;
     }
 
@@ -88,7 +81,7 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
      * @return The timestamp of the measurement.
      */
     @JsonProperty("timestamp")
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -131,22 +124,18 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         return ObjectMappers.stringify(this);
     }
 
-    public static TypeStage builder() {
+    public static UnitStage builder() {
         return new Builder();
-    }
-
-    public interface TypeStage {
-        UnitStage type(String type);
-
-        Builder from(ClientFacingElectrocardiogramVoltageTimeseries other);
     }
 
     public interface UnitStage {
         TimestampStage unit(String unit);
+
+        Builder from(ClientFacingElectrocardiogramVoltageTimeseries other);
     }
 
     public interface TimestampStage {
-        ValueStage timestamp(OffsetDateTime timestamp);
+        ValueStage timestamp(String timestamp);
     }
 
     public interface ValueStage {
@@ -163,17 +152,21 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
+
+        _FinalStage type(Optional<String> type);
+
+        _FinalStage type(String type);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TypeStage, UnitStage, TimestampStage, ValueStage, _FinalStage {
-        private String type;
-
+    public static final class Builder implements UnitStage, TimestampStage, ValueStage, _FinalStage {
         private String unit;
 
-        private OffsetDateTime timestamp;
+        private String timestamp;
 
         private double value;
+
+        private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -196,17 +189,6 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         }
 
         /**
-         * <p>The lead of the measurement.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("type")
-        public UnitStage type(String type) {
-            this.type = type;
-            return this;
-        }
-
-        /**
          * <p>Measured in mV.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -223,7 +205,7 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
          */
         @Override
         @JsonSetter("timestamp")
-        public ValueStage timestamp(OffsetDateTime timestamp) {
+        public ValueStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -240,9 +222,22 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         }
 
         /**
-         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         * <p>The lead of the measurement.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
+        @Override
+        public _FinalStage type(String type) {
+            this.type = Optional.of(type);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "type", nulls = Nulls.SKIP)
+        public _FinalStage type(Optional<String> type) {
+            this.type = type;
+            return this;
+        }
+
         @Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
@@ -256,10 +251,6 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
             return this;
         }
 
-        /**
-         * <p>Deprecated</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage id(Integer id) {
             this.id = Optional.of(id);

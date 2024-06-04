@@ -76,9 +76,6 @@ public final class UsAddress {
         return zipCode;
     }
 
-    /**
-     * @return Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.
-     */
     @JsonProperty("unit")
     public Optional<String> getUnit() {
         return unit;
@@ -206,10 +203,6 @@ public final class UsAddress {
             return this;
         }
 
-        /**
-         * <p>Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.of(unit);

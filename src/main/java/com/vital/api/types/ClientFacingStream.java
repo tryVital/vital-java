@@ -21,39 +21,39 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingStream.Builder.class)
 public final class ClientFacingStream {
-    private final Optional<List<Double>> cadence;
+    private final Optional<ClientFacingStreamCadence> cadence;
 
     private final Optional<List<Integer>> time;
 
-    private final Optional<List<Double>> altitude;
+    private final Optional<ClientFacingStreamAltitude> altitude;
 
-    private final Optional<List<Double>> velocitySmooth;
+    private final Optional<ClientFacingStreamVelocitySmooth> velocitySmooth;
 
-    private final Optional<List<Integer>> heartrate;
+    private final Optional<ClientFacingStreamHeartrate> heartrate;
 
-    private final Optional<List<Double>> lat;
+    private final Optional<ClientFacingStreamLat> lat;
 
-    private final Optional<List<Double>> lng;
+    private final Optional<ClientFacingStreamLng> lng;
 
-    private final Optional<List<Double>> distance;
+    private final Optional<ClientFacingStreamDistance> distance;
 
-    private final Optional<List<Double>> power;
+    private final Optional<ClientFacingStreamPower> power;
 
-    private final Optional<List<Double>> resistance;
+    private final Optional<ClientFacingStreamResistance> resistance;
 
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingStream(
-            Optional<List<Double>> cadence,
+            Optional<ClientFacingStreamCadence> cadence,
             Optional<List<Integer>> time,
-            Optional<List<Double>> altitude,
-            Optional<List<Double>> velocitySmooth,
-            Optional<List<Integer>> heartrate,
-            Optional<List<Double>> lat,
-            Optional<List<Double>> lng,
-            Optional<List<Double>> distance,
-            Optional<List<Double>> power,
-            Optional<List<Double>> resistance,
+            Optional<ClientFacingStreamAltitude> altitude,
+            Optional<ClientFacingStreamVelocitySmooth> velocitySmooth,
+            Optional<ClientFacingStreamHeartrate> heartrate,
+            Optional<ClientFacingStreamLat> lat,
+            Optional<ClientFacingStreamLng> lng,
+            Optional<ClientFacingStreamDistance> distance,
+            Optional<ClientFacingStreamPower> power,
+            Optional<ClientFacingStreamResistance> resistance,
             Map<String, Object> additionalProperties) {
         this.cadence = cadence;
         this.time = time;
@@ -68,56 +68,80 @@ public final class ClientFacingStream {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return RPM for cycling, Steps per minute for running
+     */
     @JsonProperty("cadence")
-    public Optional<List<Double>> getCadence() {
+    public Optional<ClientFacingStreamCadence> getCadence() {
         return cadence;
     }
 
-    /**
-     * @return Corresponding time stamp in unix time for datapoint
-     */
     @JsonProperty("time")
     public Optional<List<Integer>> getTime() {
         return time;
     }
 
+    /**
+     * @return Data points for altitude
+     */
     @JsonProperty("altitude")
-    public Optional<List<Double>> getAltitude() {
+    public Optional<ClientFacingStreamAltitude> getAltitude() {
         return altitude;
     }
 
+    /**
+     * @return Velocity in m/s
+     */
     @JsonProperty("velocity_smooth")
-    public Optional<List<Double>> getVelocitySmooth() {
+    public Optional<ClientFacingStreamVelocitySmooth> getVelocitySmooth() {
         return velocitySmooth;
     }
 
+    /**
+     * @return Heart rate in bpm
+     */
     @JsonProperty("heartrate")
-    public Optional<List<Integer>> getHeartrate() {
+    public Optional<ClientFacingStreamHeartrate> getHeartrate() {
         return heartrate;
     }
 
+    /**
+     * @return Latitude for data point
+     */
     @JsonProperty("lat")
-    public Optional<List<Double>> getLat() {
+    public Optional<ClientFacingStreamLat> getLat() {
         return lat;
     }
 
+    /**
+     * @return Longitude for data point
+     */
     @JsonProperty("lng")
-    public Optional<List<Double>> getLng() {
+    public Optional<ClientFacingStreamLng> getLng() {
         return lng;
     }
 
+    /**
+     * @return Cumulated distance for exercise
+     */
     @JsonProperty("distance")
-    public Optional<List<Double>> getDistance() {
+    public Optional<ClientFacingStreamDistance> getDistance() {
         return distance;
     }
 
+    /**
+     * @return Power in watts
+     */
     @JsonProperty("power")
-    public Optional<List<Double>> getPower() {
+    public Optional<ClientFacingStreamPower> getPower() {
         return power;
     }
 
+    /**
+     * @return Resistance on bike
+     */
     @JsonProperty("resistance")
-    public Optional<List<Double>> getResistance() {
+    public Optional<ClientFacingStreamResistance> getResistance() {
         return resistance;
     }
 
@@ -171,25 +195,25 @@ public final class ClientFacingStream {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<List<Double>> cadence = Optional.empty();
+        private Optional<ClientFacingStreamCadence> cadence = Optional.empty();
 
         private Optional<List<Integer>> time = Optional.empty();
 
-        private Optional<List<Double>> altitude = Optional.empty();
+        private Optional<ClientFacingStreamAltitude> altitude = Optional.empty();
 
-        private Optional<List<Double>> velocitySmooth = Optional.empty();
+        private Optional<ClientFacingStreamVelocitySmooth> velocitySmooth = Optional.empty();
 
-        private Optional<List<Integer>> heartrate = Optional.empty();
+        private Optional<ClientFacingStreamHeartrate> heartrate = Optional.empty();
 
-        private Optional<List<Double>> lat = Optional.empty();
+        private Optional<ClientFacingStreamLat> lat = Optional.empty();
 
-        private Optional<List<Double>> lng = Optional.empty();
+        private Optional<ClientFacingStreamLng> lng = Optional.empty();
 
-        private Optional<List<Double>> distance = Optional.empty();
+        private Optional<ClientFacingStreamDistance> distance = Optional.empty();
 
-        private Optional<List<Double>> power = Optional.empty();
+        private Optional<ClientFacingStreamPower> power = Optional.empty();
 
-        private Optional<List<Double>> resistance = Optional.empty();
+        private Optional<ClientFacingStreamResistance> resistance = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -211,12 +235,12 @@ public final class ClientFacingStream {
         }
 
         @JsonSetter(value = "cadence", nulls = Nulls.SKIP)
-        public Builder cadence(Optional<List<Double>> cadence) {
+        public Builder cadence(Optional<ClientFacingStreamCadence> cadence) {
             this.cadence = cadence;
             return this;
         }
 
-        public Builder cadence(List<Double> cadence) {
+        public Builder cadence(ClientFacingStreamCadence cadence) {
             this.cadence = Optional.of(cadence);
             return this;
         }
@@ -233,89 +257,89 @@ public final class ClientFacingStream {
         }
 
         @JsonSetter(value = "altitude", nulls = Nulls.SKIP)
-        public Builder altitude(Optional<List<Double>> altitude) {
+        public Builder altitude(Optional<ClientFacingStreamAltitude> altitude) {
             this.altitude = altitude;
             return this;
         }
 
-        public Builder altitude(List<Double> altitude) {
+        public Builder altitude(ClientFacingStreamAltitude altitude) {
             this.altitude = Optional.of(altitude);
             return this;
         }
 
         @JsonSetter(value = "velocity_smooth", nulls = Nulls.SKIP)
-        public Builder velocitySmooth(Optional<List<Double>> velocitySmooth) {
+        public Builder velocitySmooth(Optional<ClientFacingStreamVelocitySmooth> velocitySmooth) {
             this.velocitySmooth = velocitySmooth;
             return this;
         }
 
-        public Builder velocitySmooth(List<Double> velocitySmooth) {
+        public Builder velocitySmooth(ClientFacingStreamVelocitySmooth velocitySmooth) {
             this.velocitySmooth = Optional.of(velocitySmooth);
             return this;
         }
 
         @JsonSetter(value = "heartrate", nulls = Nulls.SKIP)
-        public Builder heartrate(Optional<List<Integer>> heartrate) {
+        public Builder heartrate(Optional<ClientFacingStreamHeartrate> heartrate) {
             this.heartrate = heartrate;
             return this;
         }
 
-        public Builder heartrate(List<Integer> heartrate) {
+        public Builder heartrate(ClientFacingStreamHeartrate heartrate) {
             this.heartrate = Optional.of(heartrate);
             return this;
         }
 
         @JsonSetter(value = "lat", nulls = Nulls.SKIP)
-        public Builder lat(Optional<List<Double>> lat) {
+        public Builder lat(Optional<ClientFacingStreamLat> lat) {
             this.lat = lat;
             return this;
         }
 
-        public Builder lat(List<Double> lat) {
+        public Builder lat(ClientFacingStreamLat lat) {
             this.lat = Optional.of(lat);
             return this;
         }
 
         @JsonSetter(value = "lng", nulls = Nulls.SKIP)
-        public Builder lng(Optional<List<Double>> lng) {
+        public Builder lng(Optional<ClientFacingStreamLng> lng) {
             this.lng = lng;
             return this;
         }
 
-        public Builder lng(List<Double> lng) {
+        public Builder lng(ClientFacingStreamLng lng) {
             this.lng = Optional.of(lng);
             return this;
         }
 
         @JsonSetter(value = "distance", nulls = Nulls.SKIP)
-        public Builder distance(Optional<List<Double>> distance) {
+        public Builder distance(Optional<ClientFacingStreamDistance> distance) {
             this.distance = distance;
             return this;
         }
 
-        public Builder distance(List<Double> distance) {
+        public Builder distance(ClientFacingStreamDistance distance) {
             this.distance = Optional.of(distance);
             return this;
         }
 
         @JsonSetter(value = "power", nulls = Nulls.SKIP)
-        public Builder power(Optional<List<Double>> power) {
+        public Builder power(Optional<ClientFacingStreamPower> power) {
             this.power = power;
             return this;
         }
 
-        public Builder power(List<Double> power) {
+        public Builder power(ClientFacingStreamPower power) {
             this.power = Optional.of(power);
             return this;
         }
 
         @JsonSetter(value = "resistance", nulls = Nulls.SKIP)
-        public Builder resistance(Optional<List<Double>> resistance) {
+        public Builder resistance(Optional<ClientFacingStreamResistance> resistance) {
             this.resistance = resistance;
             return this;
         }
 
-        public Builder resistance(List<Double> resistance) {
+        public Builder resistance(ClientFacingStreamResistance resistance) {
             this.resistance = Optional.of(resistance);
             return this;
         }

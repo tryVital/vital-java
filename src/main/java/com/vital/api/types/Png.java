@@ -32,6 +32,11 @@ public final class Png {
         return content;
     }
 
+    @JsonProperty("content_type")
+    public String getContentType() {
+        return "image/png";
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;

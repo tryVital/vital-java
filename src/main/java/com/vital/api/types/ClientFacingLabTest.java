@@ -76,31 +76,49 @@ public final class ClientFacingLabTest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("id")
     public String getId() {
         return id;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("slug")
     public String getSlug() {
         return slug;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("sample_type")
     public LabTestSampleType getSampleType() {
         return sampleType;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("method")
     public LabTestCollectionMethod getMethod() {
         return method;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("price")
     public double getPrice() {
         return price;
@@ -114,6 +132,9 @@ public final class ClientFacingLabTest {
         return isActive;
     }
 
+    /**
+     * @return
+     */
     @JsonProperty("status")
     public LabTestStatus getStatus() {
         return status;
@@ -308,6 +329,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("id")
         public SlugStage id(String id) {
@@ -315,6 +339,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("slug")
         public NameStage slug(String slug) {
@@ -322,6 +349,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("name")
         public SampleTypeStage name(String name) {
@@ -329,6 +359,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("sample_type")
         public MethodStage sampleType(LabTestSampleType sampleType) {
@@ -336,6 +369,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("method")
         public PriceStage method(LabTestCollectionMethod method) {
@@ -343,6 +379,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("price")
         public IsActiveStage price(double price) {
@@ -361,6 +400,9 @@ public final class ClientFacingLabTest {
             return this;
         }
 
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("status")
         public _FinalStage status(LabTestStatus status) {

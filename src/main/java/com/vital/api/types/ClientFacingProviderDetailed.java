@@ -76,9 +76,6 @@ public final class ClientFacingProviderDetailed {
         return description;
     }
 
-    /**
-     * @return URL for source logo
-     */
     @JsonProperty("logo")
     public Optional<String> getLogo() {
         return logo;
@@ -247,10 +244,6 @@ public final class ClientFacingProviderDetailed {
             return this;
         }
 
-        /**
-         * <p>URL for source logo</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage logo(String logo) {
             this.logo = Optional.of(logo);

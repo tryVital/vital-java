@@ -85,17 +85,11 @@ public final class ClientFacingBody {
         return calendarDate;
     }
 
-    /**
-     * @return Weight in kg::kg
-     */
     @JsonProperty("weight")
     public Optional<Double> getWeight() {
         return weight;
     }
 
-    /**
-     * @return Body fat percentage::perc
-     */
     @JsonProperty("fat")
     public Optional<Double> getFat() {
         return fat;
@@ -256,10 +250,6 @@ public final class ClientFacingBody {
             return this;
         }
 
-        /**
-         * <p>Body fat percentage::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage fat(Double fat) {
             this.fat = Optional.of(fat);
@@ -273,10 +263,6 @@ public final class ClientFacingBody {
             return this;
         }
 
-        /**
-         * <p>Weight in kg::kg</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage weight(Double weight) {
             this.weight = Optional.of(weight);

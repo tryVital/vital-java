@@ -119,17 +119,11 @@ public final class ClientFacingAppointment {
         return location;
     }
 
-    /**
-     * @return Time is in UTC
-     */
     @JsonProperty("start_at")
     public Optional<OffsetDateTime> getStartAt() {
         return startAt;
     }
 
-    /**
-     * @return Time is in UTC
-     */
     @JsonProperty("end_at")
     public Optional<OffsetDateTime> getEndAt() {
         return endAt;
@@ -507,10 +501,6 @@ public final class ClientFacingAppointment {
             return this;
         }
 
-        /**
-         * <p>Time is in UTC</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage endAt(OffsetDateTime endAt) {
             this.endAt = Optional.of(endAt);
@@ -524,10 +514,6 @@ public final class ClientFacingAppointment {
             return this;
         }
 
-        /**
-         * <p>Time is in UTC</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage startAt(OffsetDateTime startAt) {
             this.startAt = Optional.of(startAt);

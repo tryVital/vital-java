@@ -6,21 +6,23 @@ package com.vital.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
-import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonDeserialize(using = PatientBirthDate.Deserializer.class)
-public final class PatientBirthDate {
+@JsonDeserialize(using = ClientFacingStreamCadence.Deserializer.class)
+public final class ClientFacingStreamCadence {
     private final Object value;
 
     private final int type;
 
-    private PatientBirthDate(Object value, int type) {
+    private ClientFacingStreamCadence(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -32,9 +34,9 @@ public final class PatientBirthDate {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((OffsetDateTime) this.value);
+            return visitor.visit((List<Optional<Double>>) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((List<Double>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -42,10 +44,10 @@ public final class PatientBirthDate {
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof PatientBirthDate && equalTo((PatientBirthDate) other);
+        return other instanceof ClientFacingStreamCadence && equalTo((ClientFacingStreamCadence) other);
     }
 
-    private boolean equalTo(PatientBirthDate other) {
+    private boolean equalTo(ClientFacingStreamCadence other) {
         return value.equals(other.value);
     }
 
@@ -59,34 +61,35 @@ public final class PatientBirthDate {
         return this.value.toString();
     }
 
-    public static PatientBirthDate of(OffsetDateTime value) {
-        return new PatientBirthDate(value, 0);
+    public static ClientFacingStreamCadence of(List<Optional<Double>> value) {
+        return new ClientFacingStreamCadence(value, 0);
     }
 
-    public static PatientBirthDate of(String value) {
-        return new PatientBirthDate(value, 1);
+    public static ClientFacingStreamCadence of(List<Double> value) {
+        return new ClientFacingStreamCadence(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(OffsetDateTime value);
+        T visit(List<Optional<Double>> value);
 
-        T visit(String value);
+        T visit(List<Double> value);
     }
 
-    static final class Deserializer extends StdDeserializer<PatientBirthDate> {
+    static final class Deserializer extends StdDeserializer<ClientFacingStreamCadence> {
         Deserializer() {
-            super(PatientBirthDate.class);
+            super(ClientFacingStreamCadence.class);
         }
 
         @Override
-        public PatientBirthDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public ClientFacingStreamCadence deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, OffsetDateTime.class));
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Double>>>() {}));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Double>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

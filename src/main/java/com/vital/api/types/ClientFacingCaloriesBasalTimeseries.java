@@ -48,25 +48,16 @@ public final class ClientFacingCaloriesBasalTimeseries {
         this.additionalProperties = additionalProperties;
     }
 
-    /**
-     * @return Deprecated
-     */
     @JsonProperty("id")
     public Optional<Integer> getId() {
         return id;
     }
 
-    /**
-     * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
-     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
-    /**
-     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
-     */
     @JsonProperty("type")
     public Optional<String> getType() {
         return type;
@@ -205,10 +196,6 @@ public final class ClientFacingCaloriesBasalTimeseries {
             return this;
         }
 
-        /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
@@ -222,10 +209,6 @@ public final class ClientFacingCaloriesBasalTimeseries {
             return this;
         }
 
-        /**
-         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
@@ -239,10 +222,6 @@ public final class ClientFacingCaloriesBasalTimeseries {
             return this;
         }
 
-        /**
-         * <p>Deprecated</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage id(Integer id) {
             this.id = Optional.of(id);

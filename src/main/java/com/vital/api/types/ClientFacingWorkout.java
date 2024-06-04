@@ -68,6 +68,8 @@ public final class ClientFacingWorkout {
 
     private final Optional<Double> weightedAverageWatts;
 
+    private final Optional<Integer> steps;
+
     private final Optional<Map<String, Object>> map;
 
     private final String providerId;
@@ -100,6 +102,7 @@ public final class ClientFacingWorkout {
             Optional<Double> deviceWatts,
             Optional<Double> maxWatts,
             Optional<Double> weightedAverageWatts,
+            Optional<Integer> steps,
             Optional<Map<String, Object>> map,
             String providerId,
             ClientFacingSource source,
@@ -127,6 +130,7 @@ public final class ClientFacingWorkout {
         this.deviceWatts = deviceWatts;
         this.maxWatts = maxWatts;
         this.weightedAverageWatts = weightedAverageWatts;
+        this.steps = steps;
         this.map = map;
         this.providerId = providerId;
         this.source = source;
@@ -146,41 +150,26 @@ public final class ClientFacingWorkout {
         return id;
     }
 
-    /**
-     * @return Title given for the workout
-     */
     @JsonProperty("title")
     public Optional<String> getTitle() {
         return title;
     }
 
-    /**
-     * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
-     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
-    /**
-     * @return Average heart rate during workout::bpm
-     */
     @JsonProperty("average_hr")
     public Optional<Integer> getAverageHr() {
         return averageHr;
     }
 
-    /**
-     * @return Max heart rate during workout::bpm
-     */
     @JsonProperty("max_hr")
     public Optional<Integer> getMaxHr() {
         return maxHr;
     }
 
-    /**
-     * @return Distance travelled during workout::meters
-     */
     @JsonProperty("distance")
     public Optional<Double> getDistance() {
         return distance;
@@ -210,9 +199,6 @@ public final class ClientFacingWorkout {
         return timeEnd;
     }
 
-    /**
-     * @return Calories burned during the workout::kCal
-     */
     @JsonProperty("calories")
     public Optional<Double> getCalories() {
         return calories;
@@ -226,97 +212,66 @@ public final class ClientFacingWorkout {
         return sport;
     }
 
-    /**
-     * @return Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers::seconds
-     */
     @JsonProperty("hr_zones")
     public Optional<List<Integer>> getHrZones() {
         return hrZones;
     }
 
-    /**
-     * @return Time spent active during the workout::seconds
-     */
     @JsonProperty("moving_time")
     public Optional<Integer> getMovingTime() {
         return movingTime;
     }
 
-    /**
-     * @return Elevation gain during the workout::meters
-     */
     @JsonProperty("total_elevation_gain")
     public Optional<Double> getTotalElevationGain() {
         return totalElevationGain;
     }
 
-    /**
-     * @return Highest point of elevation::meters
-     */
     @JsonProperty("elev_high")
     public Optional<Double> getElevHigh() {
         return elevHigh;
     }
 
-    /**
-     * @return Lowest point of elevation::meters
-     */
     @JsonProperty("elev_low")
     public Optional<Double> getElevLow() {
         return elevLow;
     }
 
-    /**
-     * @return Average speed during workout in m/s::meters/sec
-     */
     @JsonProperty("average_speed")
     public Optional<Double> getAverageSpeed() {
         return averageSpeed;
     }
 
-    /**
-     * @return Max speed during workout in m/s::meters/sec
-     */
     @JsonProperty("max_speed")
     public Optional<Double> getMaxSpeed() {
         return maxSpeed;
     }
 
-    /**
-     * @return Average watts burned during exercise::watts
-     */
     @JsonProperty("average_watts")
     public Optional<Double> getAverageWatts() {
         return averageWatts;
     }
 
-    /**
-     * @return Watts burned during exercise::watts
-     */
     @JsonProperty("device_watts")
     public Optional<Double> getDeviceWatts() {
         return deviceWatts;
     }
 
-    /**
-     * @return Max watts burned during exercise::watts
-     */
     @JsonProperty("max_watts")
     public Optional<Double> getMaxWatts() {
         return maxWatts;
     }
 
-    /**
-     * @return Weighted average watts burned during exercise::watts
-     */
     @JsonProperty("weighted_average_watts")
     public Optional<Double> getWeightedAverageWatts() {
         return weightedAverageWatts;
     }
 
-    /**
-     * @return Map of workouts encoded as polyline
-     */
+    @JsonProperty("steps")
+    public Optional<Integer> getSteps() {
+        return steps;
+    }
+
     @JsonProperty("map")
     public Optional<Map<String, Object>> getMap() {
         return map;
@@ -373,6 +328,7 @@ public final class ClientFacingWorkout {
                 && deviceWatts.equals(other.deviceWatts)
                 && maxWatts.equals(other.maxWatts)
                 && weightedAverageWatts.equals(other.weightedAverageWatts)
+                && steps.equals(other.steps)
                 && map.equals(other.map)
                 && providerId.equals(other.providerId)
                 && source.equals(other.source);
@@ -404,6 +360,7 @@ public final class ClientFacingWorkout {
                 this.deviceWatts,
                 this.maxWatts,
                 this.weightedAverageWatts,
+                this.steps,
                 this.map,
                 this.providerId,
                 this.source);
@@ -523,6 +480,10 @@ public final class ClientFacingWorkout {
 
         _FinalStage weightedAverageWatts(Double weightedAverageWatts);
 
+        _FinalStage steps(Optional<Integer> steps);
+
+        _FinalStage steps(Integer steps);
+
         _FinalStage map(Optional<Map<String, Object>> map);
 
         _FinalStage map(Map<String, Object> map);
@@ -553,6 +514,8 @@ public final class ClientFacingWorkout {
         private ClientFacingSource source;
 
         private Optional<Map<String, Object>> map = Optional.empty();
+
+        private Optional<Integer> steps = Optional.empty();
 
         private Optional<Double> weightedAverageWatts = Optional.empty();
 
@@ -620,6 +583,7 @@ public final class ClientFacingWorkout {
             deviceWatts(other.getDeviceWatts());
             maxWatts(other.getMaxWatts());
             weightedAverageWatts(other.getWeightedAverageWatts());
+            steps(other.getSteps());
             map(other.getMap());
             providerId(other.getProviderId());
             source(other.getSource());
@@ -699,10 +663,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Map of workouts encoded as polyline</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage map(Map<String, Object> map) {
             this.map = Optional.of(map);
@@ -716,10 +676,19 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Weighted average watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
+        @Override
+        public _FinalStage steps(Integer steps) {
+            this.steps = Optional.of(steps);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "steps", nulls = Nulls.SKIP)
+        public _FinalStage steps(Optional<Integer> steps) {
+            this.steps = steps;
+            return this;
+        }
+
         @Override
         public _FinalStage weightedAverageWatts(Double weightedAverageWatts) {
             this.weightedAverageWatts = Optional.of(weightedAverageWatts);
@@ -733,10 +702,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Max watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage maxWatts(Double maxWatts) {
             this.maxWatts = Optional.of(maxWatts);
@@ -750,10 +715,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage deviceWatts(Double deviceWatts) {
             this.deviceWatts = Optional.of(deviceWatts);
@@ -767,10 +728,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Average watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage averageWatts(Double averageWatts) {
             this.averageWatts = Optional.of(averageWatts);
@@ -784,10 +741,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Max speed during workout in m/s::meters/sec</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage maxSpeed(Double maxSpeed) {
             this.maxSpeed = Optional.of(maxSpeed);
@@ -801,10 +754,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Average speed during workout in m/s::meters/sec</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage averageSpeed(Double averageSpeed) {
             this.averageSpeed = Optional.of(averageSpeed);
@@ -818,10 +767,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Lowest point of elevation::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage elevLow(Double elevLow) {
             this.elevLow = Optional.of(elevLow);
@@ -835,10 +780,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Highest point of elevation::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage elevHigh(Double elevHigh) {
             this.elevHigh = Optional.of(elevHigh);
@@ -852,10 +793,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Elevation gain during the workout::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage totalElevationGain(Double totalElevationGain) {
             this.totalElevationGain = Optional.of(totalElevationGain);
@@ -869,10 +806,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Time spent active during the workout::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage movingTime(Integer movingTime) {
             this.movingTime = Optional.of(movingTime);
@@ -886,10 +819,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage hrZones(List<Integer> hrZones) {
             this.hrZones = Optional.of(hrZones);
@@ -920,10 +849,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Calories burned during the workout::kCal</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage calories(Double calories) {
             this.calories = Optional.of(calories);
@@ -937,10 +862,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Distance travelled during workout::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage distance(Double distance) {
             this.distance = Optional.of(distance);
@@ -954,10 +875,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Max heart rate during workout::bpm</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage maxHr(Integer maxHr) {
             this.maxHr = Optional.of(maxHr);
@@ -971,10 +888,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Average heart rate during workout::bpm</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage averageHr(Integer averageHr) {
             this.averageHr = Optional.of(averageHr);
@@ -988,10 +901,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
@@ -1005,10 +914,6 @@ public final class ClientFacingWorkout {
             return this;
         }
 
-        /**
-         * <p>Title given for the workout</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage title(String title) {
             this.title = Optional.of(title);
@@ -1048,6 +953,7 @@ public final class ClientFacingWorkout {
                     deviceWatts,
                     maxWatts,
                     weightedAverageWatts,
+                    steps,
                     map,
                     providerId,
                     source,

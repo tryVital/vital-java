@@ -125,65 +125,41 @@ public final class ClientFacingActivity {
         return calendarDate;
     }
 
-    /**
-     * @return Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories
-     */
     @JsonProperty("calories_total")
     public Optional<Double> getCaloriesTotal() {
         return caloriesTotal;
     }
 
-    /**
-     * @return Energy consumption caused by the physical activity of the day in kilocalories::kilocalories
-     */
     @JsonProperty("calories_active")
     public Optional<Double> getCaloriesActive() {
         return caloriesActive;
     }
 
-    /**
-     * @return Total number of steps registered during the day::steps
-     */
     @JsonProperty("steps")
     public Optional<Integer> getSteps() {
         return steps;
     }
 
-    /**
-     * @return Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
-     */
     @JsonProperty("daily_movement")
     public Optional<Double> getDailyMovement() {
         return dailyMovement;
     }
 
-    /**
-     * @return Distance traveled during activities throughout the day::meters
-     */
     @JsonProperty("distance")
     public Optional<Double> getDistance() {
         return distance;
     }
 
-    /**
-     * @return Number of minutes during the day with low intensity activity (e.g. household work)::minutes
-     */
     @JsonProperty("low")
     public Optional<Double> getLow() {
         return low;
     }
 
-    /**
-     * @return Number of minutes during the day with medium intensity activity (e.g. walking)::minutes
-     */
     @JsonProperty("medium")
     public Optional<Double> getMedium() {
         return medium;
     }
 
-    /**
-     * @return Number of minutes during the day with high intensity activity (e.g. running)::minutes
-     */
     @JsonProperty("high")
     public Optional<Double> getHigh() {
         return high;
@@ -197,33 +173,21 @@ public final class ClientFacingActivity {
         return source;
     }
 
-    /**
-     * @return Number of floors climbed by the user::count
-     */
     @JsonProperty("floors_climbed")
     public Optional<Integer> getFloorsClimbed() {
         return floorsClimbed;
     }
 
-    /**
-     * @return [DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.
-     */
     @JsonProperty("time_zone")
     public Optional<String> getTimeZone() {
         return timeZone;
     }
 
-    /**
-     * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
-     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
-    /**
-     * @return Heart rate daily summary.
-     */
     @JsonProperty("heart_rate")
     public Optional<ClientFacingHeartRate> getHeartRate() {
         return heartRate;
@@ -480,10 +444,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Heart rate daily summary.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage heartRate(ClientFacingHeartRate heartRate) {
             this.heartRate = Optional.of(heartRate);
@@ -497,10 +457,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
@@ -514,10 +470,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>[DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage timeZone(String timeZone) {
             this.timeZone = Optional.of(timeZone);
@@ -531,10 +483,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Number of floors climbed by the user::count</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage floorsClimbed(Integer floorsClimbed) {
             this.floorsClimbed = Optional.of(floorsClimbed);
@@ -548,10 +496,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Number of minutes during the day with high intensity activity (e.g. running)::minutes</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage high(Double high) {
             this.high = Optional.of(high);
@@ -565,10 +509,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Number of minutes during the day with medium intensity activity (e.g. walking)::minutes</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage medium(Double medium) {
             this.medium = Optional.of(medium);
@@ -582,10 +522,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Number of minutes during the day with low intensity activity (e.g. household work)::minutes</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage low(Double low) {
             this.low = Optional.of(low);
@@ -599,10 +535,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Distance traveled during activities throughout the day::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage distance(Double distance) {
             this.distance = Optional.of(distance);
@@ -616,10 +548,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage dailyMovement(Double dailyMovement) {
             this.dailyMovement = Optional.of(dailyMovement);
@@ -633,10 +561,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Total number of steps registered during the day::steps</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage steps(Integer steps) {
             this.steps = Optional.of(steps);
@@ -650,10 +574,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Energy consumption caused by the physical activity of the day in kilocalories::kilocalories</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage caloriesActive(Double caloriesActive) {
             this.caloriesActive = Optional.of(caloriesActive);
@@ -667,10 +587,6 @@ public final class ClientFacingActivity {
             return this;
         }
 
-        /**
-         * <p>Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage caloriesTotal(Double caloriesTotal) {
             this.caloriesTotal = Optional.of(caloriesTotal);

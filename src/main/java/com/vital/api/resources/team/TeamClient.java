@@ -11,7 +11,6 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
-import com.vital.api.resources.team.requests.TeamUpdateSourcePrioritiesRequest;
 import com.vital.api.types.ClientFacingPhysician;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
@@ -237,18 +236,17 @@ public class TeamClient {
     /**
      * Patch source priorities.
      */
-    public List<Map<String, Object>> updateSourcePriorities(
-            TeamUpdateSourcePrioritiesRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+    public List<Map<String, Object>> updateSourcePriorities(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/team/source/priorities");
-        httpUrl.addQueryParameter("team_id", request.getTeamId());
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
+                .addPathSegments("v2/team/source/priorities")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
                 .method("PATCH", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -267,8 +265,8 @@ public class TeamClient {
     /**
      * Patch source priorities.
      */
-    public List<Map<String, Object>> updateSourcePriorities(TeamUpdateSourcePrioritiesRequest request) {
-        return updateSourcePriorities(request, null);
+    public List<Map<String, Object>> updateSourcePriorities() {
+        return updateSourcePriorities(null);
     }
 
     public List<ClientFacingPhysician> getPhysicians(String teamId, RequestOptions requestOptions) {

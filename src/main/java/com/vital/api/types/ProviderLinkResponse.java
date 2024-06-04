@@ -34,7 +34,7 @@ public final class ProviderLinkResponse {
 
     private final boolean connected;
 
-    private final String providerId;
+    private final Optional<String> providerId;
 
     private final Map<String, Object> additionalProperties;
 
@@ -46,7 +46,7 @@ public final class ProviderLinkResponse {
             Optional<ProviderMfaRequest> providerMfa,
             PasswordProviders provider,
             boolean connected,
-            String providerId,
+            Optional<String> providerId,
             Map<String, Object> additionalProperties) {
         this.state = state;
         this.redirectUrl = redirectUrl;
@@ -95,7 +95,7 @@ public final class ProviderLinkResponse {
     }
 
     @JsonProperty("provider_id")
-    public String getProviderId() {
+    public Optional<String> getProviderId() {
         return providerId;
     }
 
@@ -154,11 +154,7 @@ public final class ProviderLinkResponse {
     }
 
     public interface ConnectedStage {
-        ProviderIdStage connected(boolean connected);
-    }
-
-    public interface ProviderIdStage {
-        _FinalStage providerId(String providerId);
+        _FinalStage connected(boolean connected);
     }
 
     public interface _FinalStage {
@@ -179,18 +175,21 @@ public final class ProviderLinkResponse {
         _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa);
 
         _FinalStage providerMfa(ProviderMfaRequest providerMfa);
+
+        _FinalStage providerId(Optional<String> providerId);
+
+        _FinalStage providerId(String providerId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements StateStage, ProviderStage, ConnectedStage, ProviderIdStage, _FinalStage {
+    public static final class Builder implements StateStage, ProviderStage, ConnectedStage, _FinalStage {
         private ProviderLinkResponseState state;
 
         private PasswordProviders provider;
 
         private boolean connected;
 
-        private String providerId;
+        private Optional<String> providerId = Optional.empty();
 
         private Optional<ProviderMfaRequest> providerMfa = Optional.empty();
 
@@ -234,14 +233,20 @@ public final class ProviderLinkResponse {
 
         @Override
         @JsonSetter("connected")
-        public ProviderIdStage connected(boolean connected) {
+        public _FinalStage connected(boolean connected) {
             this.connected = connected;
             return this;
         }
 
         @Override
-        @JsonSetter("provider_id")
         public _FinalStage providerId(String providerId) {
+            this.providerId = Optional.of(providerId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
+        public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }

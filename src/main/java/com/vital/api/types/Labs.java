@@ -5,18 +5,24 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Priority {
-    ROUTINE("routine"),
+public enum Labs {
+    AYUMETRIX("ayumetrix"),
 
-    URGENT("urgent"),
+    SPIRIPLEX("spiriplex"),
 
-    ASAP("asap"),
+    USSL("ussl"),
 
-    STAT("stat");
+    QUEST("quest"),
+
+    LABCORP("labcorp"),
+
+    BIOREFERENCE("bioreference"),
+
+    MANUAL("manual");
 
     private final String value;
 
-    Priority(String value) {
+    Labs(String value) {
         this.value = value;
     }
 

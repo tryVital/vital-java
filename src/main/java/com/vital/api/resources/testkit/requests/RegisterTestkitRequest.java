@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
-import com.vital.api.types.PatientAddressCompatible;
+import com.vital.api.types.PatientAddressCompatibleInput;
 import com.vital.api.types.PatientDetails;
 import com.vital.api.types.PhysicianCreateRequestBase;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public final class RegisterTestkitRequest {
 
     private final PatientDetails patientDetails;
 
-    private final PatientAddressCompatible patientAddress;
+    private final PatientAddressCompatibleInput patientAddress;
 
     private final Optional<PhysicianCreateRequestBase> physician;
 
@@ -46,7 +46,7 @@ public final class RegisterTestkitRequest {
             String userId,
             String sampleId,
             PatientDetails patientDetails,
-            PatientAddressCompatible patientAddress,
+            PatientAddressCompatibleInput patientAddress,
             Optional<PhysicianCreateRequestBase> physician,
             Optional<HealthInsuranceCreateRequest> healthInsurance,
             Optional<List<Consent>> consents,
@@ -77,7 +77,7 @@ public final class RegisterTestkitRequest {
     }
 
     @JsonProperty("patient_address")
-    public PatientAddressCompatible getPatientAddress() {
+    public PatientAddressCompatibleInput getPatientAddress() {
         return patientAddress;
     }
 
@@ -153,7 +153,7 @@ public final class RegisterTestkitRequest {
     }
 
     public interface PatientAddressStage {
-        _FinalStage patientAddress(PatientAddressCompatible patientAddress);
+        _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress);
     }
 
     public interface _FinalStage {
@@ -181,7 +181,7 @@ public final class RegisterTestkitRequest {
 
         private PatientDetails patientDetails;
 
-        private PatientAddressCompatible patientAddress;
+        private PatientAddressCompatibleInput patientAddress;
 
         private Optional<List<Consent>> consents = Optional.empty();
 
@@ -229,7 +229,7 @@ public final class RegisterTestkitRequest {
 
         @Override
         @JsonSetter("patient_address")
-        public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
+        public _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }

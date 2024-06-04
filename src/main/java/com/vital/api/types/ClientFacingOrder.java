@@ -31,7 +31,7 @@ public final class ClientFacingOrder {
 
     private final Optional<ClientFacingPatientDetailsCompatible> patientDetails;
 
-    private final Optional<PatientAddressCompatible> patientAddress;
+    private final Optional<PatientAddressCompatibleOutput> patientAddress;
 
     private final ClientFacingLabTest labTest;
 
@@ -68,7 +68,7 @@ public final class ClientFacingOrder {
             String id,
             String teamId,
             Optional<ClientFacingPatientDetailsCompatible> patientDetails,
-            Optional<PatientAddressCompatible> patientAddress,
+            Optional<PatientAddressCompatibleOutput> patientAddress,
             ClientFacingLabTest labTest,
             ClientFacingOrderDetails details,
             Optional<String> sampleId,
@@ -130,19 +130,13 @@ public final class ClientFacingOrder {
         return teamId;
     }
 
-    /**
-     * @return Patient Details
-     */
     @JsonProperty("patient_details")
     public Optional<ClientFacingPatientDetailsCompatible> getPatientDetails() {
         return patientDetails;
     }
 
-    /**
-     * @return Patient Address
-     */
     @JsonProperty("patient_address")
-    public Optional<PatientAddressCompatible> getPatientAddress() {
+    public Optional<PatientAddressCompatibleOutput> getPatientAddress() {
         return patientAddress;
     }
 
@@ -159,17 +153,11 @@ public final class ClientFacingOrder {
         return details;
     }
 
-    /**
-     * @return Sample ID
-     */
     @JsonProperty("sample_id")
     public Optional<String> getSampleId() {
         return sampleId;
     }
 
-    /**
-     * @return Notes associated with the order
-     */
     @JsonProperty("notes")
     public Optional<String> getNotes() {
         return notes;
@@ -206,17 +194,11 @@ public final class ClientFacingOrder {
         return physician;
     }
 
-    /**
-     * @return Vital ID of the health insurance.
-     */
     @JsonProperty("health_insurance_id")
     public Optional<String> getHealthInsuranceId() {
         return healthInsuranceId;
     }
 
-    /**
-     * @return DEPRECATED. Requistion form url.
-     */
     @JsonProperty("requisition_form_url")
     public Optional<String> getRequisitionFormUrl() {
         return requisitionFormUrl;
@@ -230,17 +212,11 @@ public final class ClientFacingOrder {
         return priority;
     }
 
-    /**
-     * @return Shipping Details. For unregistered testkit orders.
-     */
     @JsonProperty("shipping_details")
     public Optional<ShippingAddress> getShippingDetails() {
         return shippingDetails;
     }
 
-    /**
-     * @return Schedule an Order to be processed in a future date.
-     */
     @JsonProperty("activate_by")
     public Optional<String> getActivateBy() {
         return activateBy;
@@ -349,9 +325,9 @@ public final class ClientFacingOrder {
 
         _FinalStage patientDetails(ClientFacingPatientDetailsCompatible patientDetails);
 
-        _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress);
+        _FinalStage patientAddress(Optional<PatientAddressCompatibleOutput> patientAddress);
 
-        _FinalStage patientAddress(PatientAddressCompatible patientAddress);
+        _FinalStage patientAddress(PatientAddressCompatibleOutput patientAddress);
 
         _FinalStage sampleId(Optional<String> sampleId);
 
@@ -440,7 +416,7 @@ public final class ClientFacingOrder {
 
         private Optional<String> sampleId = Optional.empty();
 
-        private Optional<PatientAddressCompatible> patientAddress = Optional.empty();
+        private Optional<PatientAddressCompatibleOutput> patientAddress = Optional.empty();
 
         private Optional<ClientFacingPatientDetailsCompatible> patientDetails = Optional.empty();
 
@@ -546,10 +522,6 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>Schedule an Order to be processed in a future date.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage activateBy(String activateBy) {
             this.activateBy = Optional.of(activateBy);
@@ -563,10 +535,6 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>Shipping Details. For unregistered testkit orders.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage shippingDetails(ShippingAddress shippingDetails) {
             this.shippingDetails = Optional.of(shippingDetails);
@@ -597,10 +565,6 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>DEPRECATED. Requistion form url.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage requisitionFormUrl(String requisitionFormUrl) {
             this.requisitionFormUrl = Optional.of(requisitionFormUrl);
@@ -614,10 +578,6 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>Vital ID of the health insurance.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage healthInsuranceId(String healthInsuranceId) {
             this.healthInsuranceId = Optional.of(healthInsuranceId);
@@ -677,10 +637,6 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>Notes associated with the order</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.of(notes);
@@ -694,10 +650,6 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>Sample ID</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage sampleId(String sampleId) {
             this.sampleId = Optional.of(sampleId);
@@ -711,27 +663,19 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        /**
-         * <p>Patient Address</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
-        public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
+        public _FinalStage patientAddress(PatientAddressCompatibleOutput patientAddress) {
             this.patientAddress = Optional.of(patientAddress);
             return this;
         }
 
         @Override
         @JsonSetter(value = "patient_address", nulls = Nulls.SKIP)
-        public _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress) {
+        public _FinalStage patientAddress(Optional<PatientAddressCompatibleOutput> patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }
 
-        /**
-         * <p>Patient Details</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage patientDetails(ClientFacingPatientDetailsCompatible patientDetails) {
             this.patientDetails = Optional.of(patientDetails);

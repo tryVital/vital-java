@@ -67,9 +67,6 @@ public final class ClientFacingSource {
         return type;
     }
 
-    /**
-     * @return The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
-     */
     @JsonProperty("app_id")
     public Optional<String> getAppId() {
         return appId;
@@ -237,10 +234,6 @@ public final class ClientFacingSource {
             return this;
         }
 
-        /**
-         * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage appId(String appId) {
             this.appId = Optional.of(appId);

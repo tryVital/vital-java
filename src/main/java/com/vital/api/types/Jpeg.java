@@ -32,6 +32,11 @@ public final class Jpeg {
         return content;
     }
 
+    @JsonProperty("content_type")
+    public String getContentType() {
+        return "image/jpeg";
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;

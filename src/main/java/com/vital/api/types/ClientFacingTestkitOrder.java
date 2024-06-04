@@ -52,9 +52,6 @@ public final class ClientFacingTestkitOrder {
         return id;
     }
 
-    /**
-     * @return Shipment object
-     */
     @JsonProperty("shipment")
     public Optional<ClientFacingShipment> getShipment() {
         return shipment;
@@ -173,10 +170,6 @@ public final class ClientFacingTestkitOrder {
             return this;
         }
 
-        /**
-         * <p>Shipment object</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @Override
         public _FinalStage shipment(ClientFacingShipment shipment) {
             this.shipment = Optional.of(shipment);

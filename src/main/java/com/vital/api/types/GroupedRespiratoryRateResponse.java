@@ -45,9 +45,6 @@ public final class GroupedRespiratoryRateResponse {
         return groups;
     }
 
-    /**
-     * @return The cursor for fetching the next page, or <code>null</code> if there is no more data.
-     */
     @JsonProperty("next")
     public Optional<String> getNext() {
         return next;

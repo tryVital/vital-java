@@ -51,49 +51,31 @@ public final class Fats {
         this.additionalProperties = additionalProperties;
     }
 
-    /**
-     * @return Amount of saturated fats in grams (g)
-     */
     @JsonProperty("saturated")
     public Optional<Double> getSaturated() {
         return saturated;
     }
 
-    /**
-     * @return Amount of monounsaturated fats in grams (g)
-     */
     @JsonProperty("monounsaturated")
     public Optional<Double> getMonounsaturated() {
         return monounsaturated;
     }
 
-    /**
-     * @return Amount of polyunsaturated fats in grams (g)
-     */
     @JsonProperty("polyunsaturated")
     public Optional<Double> getPolyunsaturated() {
         return polyunsaturated;
     }
 
-    /**
-     * @return Amount of Omega-3 fatty acids in grams (g)
-     */
     @JsonProperty("omega3")
     public Optional<Double> getOmega3() {
         return omega3;
     }
 
-    /**
-     * @return Amount of Omega-6 fatty acids in grams (g)
-     */
     @JsonProperty("omega6")
     public Optional<Double> getOmega6() {
         return omega6;
     }
 
-    /**
-     * @return Total amount of fats in grams (g)
-     */
     @JsonProperty("total")
     public Optional<Double> getTotal() {
         return total;
