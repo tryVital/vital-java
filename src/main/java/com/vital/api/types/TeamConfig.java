@@ -31,6 +31,8 @@ public final class TeamConfig {
 
     private final Optional<Boolean> rejectDuplicateConnection;
 
+    private final Optional<Boolean> sdkPerDeviceActivityTimeseries;
+
     private final Optional<EventDestinationPreferences> edsPreferences;
 
     private final Optional<List<String>> eventTypePrefixes;
@@ -43,6 +45,7 @@ public final class TeamConfig {
             Optional<Boolean> pushHistoricalData,
             Optional<Boolean> providerRawData,
             Optional<Boolean> rejectDuplicateConnection,
+            Optional<Boolean> sdkPerDeviceActivityTimeseries,
             Optional<EventDestinationPreferences> edsPreferences,
             Optional<List<String>> eventTypePrefixes,
             Map<String, Object> additionalProperties) {
@@ -51,6 +54,7 @@ public final class TeamConfig {
         this.pushHistoricalData = pushHistoricalData;
         this.providerRawData = providerRawData;
         this.rejectDuplicateConnection = rejectDuplicateConnection;
+        this.sdkPerDeviceActivityTimeseries = sdkPerDeviceActivityTimeseries;
         this.edsPreferences = edsPreferences;
         this.eventTypePrefixes = eventTypePrefixes;
         this.additionalProperties = additionalProperties;
@@ -81,6 +85,11 @@ public final class TeamConfig {
         return rejectDuplicateConnection;
     }
 
+    @JsonProperty("sdk_per_device_activity_timeseries")
+    public Optional<Boolean> getSdkPerDeviceActivityTimeseries() {
+        return sdkPerDeviceActivityTimeseries;
+    }
+
     @JsonProperty("eds_preferences")
     public Optional<EventDestinationPreferences> getEdsPreferences() {
         return edsPreferences;
@@ -108,6 +117,7 @@ public final class TeamConfig {
                 && pushHistoricalData.equals(other.pushHistoricalData)
                 && providerRawData.equals(other.providerRawData)
                 && rejectDuplicateConnection.equals(other.rejectDuplicateConnection)
+                && sdkPerDeviceActivityTimeseries.equals(other.sdkPerDeviceActivityTimeseries)
                 && edsPreferences.equals(other.edsPreferences)
                 && eventTypePrefixes.equals(other.eventTypePrefixes);
     }
@@ -120,6 +130,7 @@ public final class TeamConfig {
                 this.pushHistoricalData,
                 this.providerRawData,
                 this.rejectDuplicateConnection,
+                this.sdkPerDeviceActivityTimeseries,
                 this.edsPreferences,
                 this.eventTypePrefixes);
     }
@@ -158,6 +169,10 @@ public final class TeamConfig {
 
         _FinalStage rejectDuplicateConnection(Boolean rejectDuplicateConnection);
 
+        _FinalStage sdkPerDeviceActivityTimeseries(Optional<Boolean> sdkPerDeviceActivityTimeseries);
+
+        _FinalStage sdkPerDeviceActivityTimeseries(Boolean sdkPerDeviceActivityTimeseries);
+
         _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences);
 
         _FinalStage edsPreferences(EventDestinationPreferences edsPreferences);
@@ -174,6 +189,8 @@ public final class TeamConfig {
         private Optional<List<String>> eventTypePrefixes = Optional.empty();
 
         private Optional<EventDestinationPreferences> edsPreferences = Optional.empty();
+
+        private Optional<Boolean> sdkPerDeviceActivityTimeseries = Optional.empty();
 
         private Optional<Boolean> rejectDuplicateConnection = Optional.empty();
 
@@ -195,6 +212,7 @@ public final class TeamConfig {
             pushHistoricalData(other.getPushHistoricalData());
             providerRawData(other.getProviderRawData());
             rejectDuplicateConnection(other.getRejectDuplicateConnection());
+            sdkPerDeviceActivityTimeseries(other.getSdkPerDeviceActivityTimeseries());
             edsPreferences(other.getEdsPreferences());
             eventTypePrefixes(other.getEventTypePrefixes());
             return this;
@@ -230,6 +248,19 @@ public final class TeamConfig {
         @JsonSetter(value = "eds_preferences", nulls = Nulls.SKIP)
         public _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences) {
             this.edsPreferences = edsPreferences;
+            return this;
+        }
+
+        @Override
+        public _FinalStage sdkPerDeviceActivityTimeseries(Boolean sdkPerDeviceActivityTimeseries) {
+            this.sdkPerDeviceActivityTimeseries = Optional.of(sdkPerDeviceActivityTimeseries);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "sdk_per_device_activity_timeseries", nulls = Nulls.SKIP)
+        public _FinalStage sdkPerDeviceActivityTimeseries(Optional<Boolean> sdkPerDeviceActivityTimeseries) {
+            this.sdkPerDeviceActivityTimeseries = sdkPerDeviceActivityTimeseries;
             return this;
         }
 
@@ -293,6 +324,7 @@ public final class TeamConfig {
                     pushHistoricalData,
                     providerRawData,
                     rejectDuplicateConnection,
+                    sdkPerDeviceActivityTimeseries,
                     edsPreferences,
                     eventTypePrefixes,
                     additionalProperties);

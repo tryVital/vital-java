@@ -61,6 +61,8 @@ public final class ClientFacingOrder {
 
     private final Optional<String> activateBy;
 
+    private final Optional<String> passthrough;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -83,6 +85,7 @@ public final class ClientFacingOrder {
             Optional<Boolean> priority,
             Optional<ShippingAddress> shippingDetails,
             Optional<String> activateBy,
+            Optional<String> passthrough,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -103,6 +106,7 @@ public final class ClientFacingOrder {
         this.priority = priority;
         this.shippingDetails = shippingDetails;
         this.activateBy = activateBy;
+        this.passthrough = passthrough;
         this.additionalProperties = additionalProperties;
     }
 
@@ -222,6 +226,11 @@ public final class ClientFacingOrder {
         return activateBy;
     }
 
+    @JsonProperty("passthrough")
+    public Optional<String> getPassthrough() {
+        return passthrough;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -252,7 +261,8 @@ public final class ClientFacingOrder {
                 && requisitionFormUrl.equals(other.requisitionFormUrl)
                 && priority.equals(other.priority)
                 && shippingDetails.equals(other.shippingDetails)
-                && activateBy.equals(other.activateBy);
+                && activateBy.equals(other.activateBy)
+                && passthrough.equals(other.passthrough);
     }
 
     @Override
@@ -276,7 +286,8 @@ public final class ClientFacingOrder {
                 this.requisitionFormUrl,
                 this.priority,
                 this.shippingDetails,
-                this.activateBy);
+                this.activateBy,
+                this.passthrough);
     }
 
     @Override
@@ -370,6 +381,10 @@ public final class ClientFacingOrder {
         _FinalStage activateBy(Optional<String> activateBy);
 
         _FinalStage activateBy(String activateBy);
+
+        _FinalStage passthrough(Optional<String> passthrough);
+
+        _FinalStage passthrough(String passthrough);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -395,6 +410,8 @@ public final class ClientFacingOrder {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
+
+        private Optional<String> passthrough = Optional.empty();
 
         private Optional<String> activateBy = Optional.empty();
 
@@ -446,6 +463,7 @@ public final class ClientFacingOrder {
             priority(other.getPriority());
             shippingDetails(other.getShippingDetails());
             activateBy(other.getActivateBy());
+            passthrough(other.getPassthrough());
             return this;
         }
 
@@ -519,6 +537,19 @@ public final class ClientFacingOrder {
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @Override
+        public _FinalStage passthrough(String passthrough) {
+            this.passthrough = Optional.of(passthrough);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "passthrough", nulls = Nulls.SKIP)
+        public _FinalStage passthrough(Optional<String> passthrough) {
+            this.passthrough = passthrough;
             return this;
         }
 
@@ -711,6 +742,7 @@ public final class ClientFacingOrder {
                     priority,
                     shippingDetails,
                     activateBy,
+                    passthrough,
                     additionalProperties);
         }
     }

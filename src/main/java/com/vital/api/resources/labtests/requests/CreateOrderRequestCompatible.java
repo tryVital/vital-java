@@ -43,6 +43,8 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<List<AoEAnswer>> aoeAnswers;
 
+    private final Optional<String> passthrough;
+
     private final PatientDetails patientDetails;
 
     private final PatientAddressCompatibleInput patientAddress;
@@ -58,6 +60,7 @@ public final class CreateOrderRequestCompatible {
             Optional<List<Consent>> consents,
             Optional<String> activateBy,
             Optional<List<AoEAnswer>> aoeAnswers,
+            Optional<String> passthrough,
             PatientDetails patientDetails,
             PatientAddressCompatibleInput patientAddress,
             Map<String, Object> additionalProperties) {
@@ -69,6 +72,7 @@ public final class CreateOrderRequestCompatible {
         this.consents = consents;
         this.activateBy = activateBy;
         this.aoeAnswers = aoeAnswers;
+        this.passthrough = passthrough;
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.additionalProperties = additionalProperties;
@@ -117,6 +121,11 @@ public final class CreateOrderRequestCompatible {
         return aoeAnswers;
     }
 
+    @JsonProperty("passthrough")
+    public Optional<String> getPassthrough() {
+        return passthrough;
+    }
+
     @JsonProperty("patient_details")
     public PatientDetails getPatientDetails() {
         return patientDetails;
@@ -147,6 +156,7 @@ public final class CreateOrderRequestCompatible {
                 && consents.equals(other.consents)
                 && activateBy.equals(other.activateBy)
                 && aoeAnswers.equals(other.aoeAnswers)
+                && passthrough.equals(other.passthrough)
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress);
     }
@@ -162,6 +172,7 @@ public final class CreateOrderRequestCompatible {
                 this.consents,
                 this.activateBy,
                 this.aoeAnswers,
+                this.passthrough,
                 this.patientDetails,
                 this.patientAddress);
     }
@@ -219,6 +230,10 @@ public final class CreateOrderRequestCompatible {
         _FinalStage aoeAnswers(Optional<List<AoEAnswer>> aoeAnswers);
 
         _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers);
+
+        _FinalStage passthrough(Optional<String> passthrough);
+
+        _FinalStage passthrough(String passthrough);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -231,6 +246,8 @@ public final class CreateOrderRequestCompatible {
         private PatientDetails patientDetails;
 
         private PatientAddressCompatibleInput patientAddress;
+
+        private Optional<String> passthrough = Optional.empty();
 
         private Optional<List<AoEAnswer>> aoeAnswers = Optional.empty();
 
@@ -259,6 +276,7 @@ public final class CreateOrderRequestCompatible {
             consents(other.getConsents());
             activateBy(other.getActivateBy());
             aoeAnswers(other.getAoeAnswers());
+            passthrough(other.getPassthrough());
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             return this;
@@ -289,6 +307,19 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress) {
             this.patientAddress = patientAddress;
+            return this;
+        }
+
+        @Override
+        public _FinalStage passthrough(String passthrough) {
+            this.passthrough = Optional.of(passthrough);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "passthrough", nulls = Nulls.SKIP)
+        public _FinalStage passthrough(Optional<String> passthrough) {
+            this.passthrough = passthrough;
             return this;
         }
 
@@ -385,6 +416,7 @@ public final class CreateOrderRequestCompatible {
                     consents,
                     activateBy,
                     aoeAnswers,
+                    passthrough,
                     patientDetails,
                     patientAddress,
                     additionalProperties);

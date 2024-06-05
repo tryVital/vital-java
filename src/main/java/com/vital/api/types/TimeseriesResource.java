@@ -20,6 +20,10 @@ public enum TimeseriesResource {
 
     BODY_WEIGHT("body_weight"),
 
+    BODY_TEMPERATURE("body_temperature"),
+
+    BODY_TEMPERATURE_DELTA("body_temperature_delta"),
+
     CHOLESTEROL("cholesterol"),
 
     CHOLESTEROL_LDL("cholesterol/ldl"),

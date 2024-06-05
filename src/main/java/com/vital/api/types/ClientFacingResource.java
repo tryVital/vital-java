@@ -50,6 +50,10 @@ public enum ClientFacingResource {
 
     FAT("fat"),
 
+    BODY_TEMPERATURE("body_temperature"),
+
+    BODY_TEMPERATURE_DELTA("body_temperature_delta"),
+
     MEAL("meal"),
 
     WATER("water"),

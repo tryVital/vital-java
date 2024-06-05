@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.ShippingAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateRegistrableTestkitOrderRequest.Builder.class)
@@ -25,16 +27,20 @@ public final class CreateRegistrableTestkitOrderRequest {
 
     private final ShippingAddress shippingDetails;
 
+    private final Optional<String> passthrough;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateRegistrableTestkitOrderRequest(
             String userId,
             String labTestId,
             ShippingAddress shippingDetails,
+            Optional<String> passthrough,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.labTestId = labTestId;
         this.shippingDetails = shippingDetails;
+        this.passthrough = passthrough;
         this.additionalProperties = additionalProperties;
     }
 
@@ -53,6 +59,11 @@ public final class CreateRegistrableTestkitOrderRequest {
         return shippingDetails;
     }
 
+    @JsonProperty("passthrough")
+    public Optional<String> getPassthrough() {
+        return passthrough;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -68,12 +79,13 @@ public final class CreateRegistrableTestkitOrderRequest {
     private boolean equalTo(CreateRegistrableTestkitOrderRequest other) {
         return userId.equals(other.userId)
                 && labTestId.equals(other.labTestId)
-                && shippingDetails.equals(other.shippingDetails);
+                && shippingDetails.equals(other.shippingDetails)
+                && passthrough.equals(other.passthrough);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.labTestId, this.shippingDetails);
+        return Objects.hash(this.userId, this.labTestId, this.shippingDetails, this.passthrough);
     }
 
     @Override
@@ -101,6 +113,10 @@ public final class CreateRegistrableTestkitOrderRequest {
 
     public interface _FinalStage {
         CreateRegistrableTestkitOrderRequest build();
+
+        _FinalStage passthrough(Optional<String> passthrough);
+
+        _FinalStage passthrough(String passthrough);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -110,6 +126,8 @@ public final class CreateRegistrableTestkitOrderRequest {
         private String labTestId;
 
         private ShippingAddress shippingDetails;
+
+        private Optional<String> passthrough = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -121,6 +139,7 @@ public final class CreateRegistrableTestkitOrderRequest {
             userId(other.getUserId());
             labTestId(other.getLabTestId());
             shippingDetails(other.getShippingDetails());
+            passthrough(other.getPassthrough());
             return this;
         }
 
@@ -146,8 +165,22 @@ public final class CreateRegistrableTestkitOrderRequest {
         }
 
         @Override
+        public _FinalStage passthrough(String passthrough) {
+            this.passthrough = Optional.of(passthrough);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "passthrough", nulls = Nulls.SKIP)
+        public _FinalStage passthrough(Optional<String> passthrough) {
+            this.passthrough = passthrough;
+            return this;
+        }
+
+        @Override
         public CreateRegistrableTestkitOrderRequest build() {
-            return new CreateRegistrableTestkitOrderRequest(userId, labTestId, shippingDetails, additionalProperties);
+            return new CreateRegistrableTestkitOrderRequest(
+                    userId, labTestId, shippingDetails, passthrough, additionalProperties);
         }
     }
 }
