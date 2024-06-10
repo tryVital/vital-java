@@ -14,6 +14,8 @@ import com.vital.api.resources.vitals.requests.VitalsBloodPressureGroupedRequest
 import com.vital.api.resources.vitals.requests.VitalsBloodPressureRequest;
 import com.vital.api.resources.vitals.requests.VitalsBodyFatGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBodyFatRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyTemperatureDeltaGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyTemperatureGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBodyWeightGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBodyWeightRequest;
 import com.vital.api.resources.vitals.requests.VitalsCaffeineGroupedRequest;
@@ -70,6 +72,8 @@ import com.vital.api.types.ClientFacingDistanceTimeseries;
 import com.vital.api.types.ClientFacingElectrocardiogramVoltageTimeseries;
 import com.vital.api.types.ClientFacingFloorsClimbedTimeseries;
 import com.vital.api.types.ClientFacingGlucoseTimeseries;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample;
 import com.vital.api.types.ClientFacingHeartRateTimeseries;
 import com.vital.api.types.ClientFacingHrvTimeseries;
 import com.vital.api.types.ClientFacingHypnogramTimeseries;
@@ -862,6 +866,94 @@ public class VitalsClient {
 
     public GroupedCholesterolResponse cholesterolGrouped(String userId, VitalsCholesterolGroupedRequest request) {
         return cholesterolGrouped(userId, request, null);
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample bodyTemperatureDeltaGrouped(
+            String userId, VitalsBodyTemperatureDeltaGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("body_temperature_delta/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(),
+                        ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample bodyTemperatureDeltaGrouped(
+            String userId, VitalsBodyTemperatureDeltaGroupedRequest request) {
+        return bodyTemperatureDeltaGrouped(userId, request, null);
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample bodyTemperatureGrouped(
+            String userId, VitalsBodyTemperatureGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("body_temperature/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(),
+                        ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample bodyTemperatureGrouped(
+            String userId, VitalsBodyTemperatureGroupedRequest request) {
+        return bodyTemperatureGrouped(userId, request, null);
     }
 
     public GroupedBodyWeightResponse bodyWeightGrouped(

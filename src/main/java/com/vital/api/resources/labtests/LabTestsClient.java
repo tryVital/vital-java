@@ -636,6 +636,7 @@ public class LabTestsClient {
      * <p>Information returned:</p>
      * <ul>
      * <li>Whether a given zip code is served by our Phlebotomy network.</li>
+     * <li>List of Lab locations in the area.</li>
      * </ul>
      */
     public AreaInfo getAreaInfo(LabTestsGetAreaInfoRequest request, RequestOptions requestOptions) {
@@ -668,6 +669,7 @@ public class LabTestsClient {
      * <p>Information returned:</p>
      * <ul>
      * <li>Whether a given zip code is served by our Phlebotomy network.</li>
+     * <li>List of Lab locations in the area.</li>
      * </ul>
      */
     public AreaInfo getAreaInfo(LabTestsGetAreaInfoRequest request) {

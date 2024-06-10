@@ -22,11 +22,15 @@ public final class AreaInfo {
 
     private final PhlebotomyAreaInfo phlebotomy;
 
+    private final PscAreaInfo psc;
+
     private final Map<String, Object> additionalProperties;
 
-    private AreaInfo(String zipCode, PhlebotomyAreaInfo phlebotomy, Map<String, Object> additionalProperties) {
+    private AreaInfo(
+            String zipCode, PhlebotomyAreaInfo phlebotomy, PscAreaInfo psc, Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.phlebotomy = phlebotomy;
+        this.psc = psc;
         this.additionalProperties = additionalProperties;
     }
 
@@ -38,6 +42,11 @@ public final class AreaInfo {
     @JsonProperty("phlebotomy")
     public PhlebotomyAreaInfo getPhlebotomy() {
         return phlebotomy;
+    }
+
+    @JsonProperty("psc")
+    public PscAreaInfo getPsc() {
+        return psc;
     }
 
     @Override
@@ -52,12 +61,12 @@ public final class AreaInfo {
     }
 
     private boolean equalTo(AreaInfo other) {
-        return zipCode.equals(other.zipCode) && phlebotomy.equals(other.phlebotomy);
+        return zipCode.equals(other.zipCode) && phlebotomy.equals(other.phlebotomy) && psc.equals(other.psc);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.phlebotomy);
+        return Objects.hash(this.zipCode, this.phlebotomy, this.psc);
     }
 
     @Override
@@ -76,7 +85,11 @@ public final class AreaInfo {
     }
 
     public interface PhlebotomyStage {
-        _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy);
+        PscStage phlebotomy(PhlebotomyAreaInfo phlebotomy);
+    }
+
+    public interface PscStage {
+        _FinalStage psc(PscAreaInfo psc);
     }
 
     public interface _FinalStage {
@@ -84,10 +97,12 @@ public final class AreaInfo {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ZipCodeStage, PhlebotomyStage, _FinalStage {
+    public static final class Builder implements ZipCodeStage, PhlebotomyStage, PscStage, _FinalStage {
         private String zipCode;
 
         private PhlebotomyAreaInfo phlebotomy;
+
+        private PscAreaInfo psc;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -98,6 +113,7 @@ public final class AreaInfo {
         public Builder from(AreaInfo other) {
             zipCode(other.getZipCode());
             phlebotomy(other.getPhlebotomy());
+            psc(other.getPsc());
             return this;
         }
 
@@ -110,14 +126,21 @@ public final class AreaInfo {
 
         @Override
         @JsonSetter("phlebotomy")
-        public _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy) {
+        public PscStage phlebotomy(PhlebotomyAreaInfo phlebotomy) {
             this.phlebotomy = phlebotomy;
             return this;
         }
 
         @Override
+        @JsonSetter("psc")
+        public _FinalStage psc(PscAreaInfo psc) {
+            this.psc = psc;
+            return this;
+        }
+
+        @Override
         public AreaInfo build() {
-            return new AreaInfo(zipCode, phlebotomy, additionalProperties);
+            return new AreaInfo(zipCode, phlebotomy, psc, additionalProperties);
         }
     }
 }
