@@ -18,6 +18,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
@@ -33,6 +34,7 @@ import com.vital.api.types.GetOrdersResponse;
 import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.PostOrderResponse;
+import com.vital.api.types.PscInfo;
 import com.vital.api.types.UsAddress;
 import java.io.IOException;
 import java.io.InputStream;
@@ -676,6 +678,67 @@ public class LabTestsClient {
         return getAreaInfo(request, null);
     }
 
+    public PscInfo getPscInfo(LabTestsGetPscInfoRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order/psc/info");
+        httpUrl.addQueryParameter("zip_code", request.getZipCode());
+        httpUrl.addQueryParameter("lab_id", Integer.toString(request.getLabId()));
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PscInfo.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public PscInfo getPscInfo(LabTestsGetPscInfoRequest request) {
+        return getPscInfo(request, null);
+    }
+
+    public PscInfo getOrderPscInfo(String orderId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("psc/info")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PscInfo.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public PscInfo getOrderPscInfo(String orderId) {
+        return getOrderPscInfo(orderId, null);
+    }
+
     /**
      * This endpoint returns the lab results for the order.
      */
@@ -1060,6 +1123,11 @@ public class LabTestsClient {
         }
         if (request.getPatientName().isPresent()) {
             httpUrl.addQueryParameter("patient_name", request.getPatientName().get());
+        }
+        if (request.getShippingRecipientName().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "shipping_recipient_name",
+                    request.getShippingRecipientName().get());
         }
         if (request.getOrderIds().isPresent()) {
             httpUrl.addQueryParameter("order_ids", request.getOrderIds().get());

@@ -14,25 +14,23 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PscAreaInfo.Builder.class)
 public final class PscAreaInfo {
-    private final Map<String, List<ClientFacingLabLocation>> locations;
+    private final Map<String, PscAreaInfoDetails> locations;
 
     private final Map<String, Object> additionalProperties;
 
-    private PscAreaInfo(
-            Map<String, List<ClientFacingLabLocation>> locations, Map<String, Object> additionalProperties) {
+    private PscAreaInfo(Map<String, PscAreaInfoDetails> locations, Map<String, Object> additionalProperties) {
         this.locations = locations;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("locations")
-    public Map<String, List<ClientFacingLabLocation>> getLocations() {
+    public Map<String, PscAreaInfoDetails> getLocations() {
         return locations;
     }
 
@@ -67,7 +65,7 @@ public final class PscAreaInfo {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<ClientFacingLabLocation>> locations = new LinkedHashMap<>();
+        private Map<String, PscAreaInfoDetails> locations = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -80,18 +78,18 @@ public final class PscAreaInfo {
         }
 
         @JsonSetter(value = "locations", nulls = Nulls.SKIP)
-        public Builder locations(Map<String, List<ClientFacingLabLocation>> locations) {
+        public Builder locations(Map<String, PscAreaInfoDetails> locations) {
             this.locations.clear();
             this.locations.putAll(locations);
             return this;
         }
 
-        public Builder putAllLocations(Map<String, List<ClientFacingLabLocation>> locations) {
+        public Builder putAllLocations(Map<String, PscAreaInfoDetails> locations) {
             this.locations.putAll(locations);
             return this;
         }
 
-        public Builder locations(String key, List<ClientFacingLabLocation> value) {
+        public Builder locations(String key, PscAreaInfoDetails value) {
             this.locations.put(key, value);
             return this;
         }

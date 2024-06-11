@@ -29,6 +29,8 @@ public final class LabTestsGetOrdersRequest {
 
     private final Optional<String> patientName;
 
+    private final Optional<String> shippingRecipientName;
+
     private final Optional<String> orderIds;
 
     private final Optional<Integer> page;
@@ -42,6 +44,7 @@ public final class LabTestsGetOrdersRequest {
             Optional<OffsetDateTime> endDate,
             Optional<String> userId,
             Optional<String> patientName,
+            Optional<String> shippingRecipientName,
             Optional<String> orderIds,
             Optional<Integer> page,
             Optional<Integer> size,
@@ -50,6 +53,7 @@ public final class LabTestsGetOrdersRequest {
         this.endDate = endDate;
         this.userId = userId;
         this.patientName = patientName;
+        this.shippingRecipientName = shippingRecipientName;
         this.orderIds = orderIds;
         this.page = page;
         this.size = size;
@@ -89,6 +93,14 @@ public final class LabTestsGetOrdersRequest {
     }
 
     /**
+     * @return Filter by shipping recipient name.
+     */
+    @JsonProperty("shipping_recipient_name")
+    public Optional<String> getShippingRecipientName() {
+        return shippingRecipientName;
+    }
+
+    /**
      * @return Filter by order ids.
      */
     @JsonProperty("order_ids")
@@ -122,6 +134,7 @@ public final class LabTestsGetOrdersRequest {
                 && endDate.equals(other.endDate)
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
+                && shippingRecipientName.equals(other.shippingRecipientName)
                 && orderIds.equals(other.orderIds)
                 && page.equals(other.page)
                 && size.equals(other.size);
@@ -130,7 +143,14 @@ public final class LabTestsGetOrdersRequest {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.startDate, this.endDate, this.userId, this.patientName, this.orderIds, this.page, this.size);
+                this.startDate,
+                this.endDate,
+                this.userId,
+                this.patientName,
+                this.shippingRecipientName,
+                this.orderIds,
+                this.page,
+                this.size);
     }
 
     @Override
@@ -152,6 +172,8 @@ public final class LabTestsGetOrdersRequest {
 
         private Optional<String> patientName = Optional.empty();
 
+        private Optional<String> shippingRecipientName = Optional.empty();
+
         private Optional<String> orderIds = Optional.empty();
 
         private Optional<Integer> page = Optional.empty();
@@ -168,6 +190,7 @@ public final class LabTestsGetOrdersRequest {
             endDate(other.getEndDate());
             userId(other.getUserId());
             patientName(other.getPatientName());
+            shippingRecipientName(other.getShippingRecipientName());
             orderIds(other.getOrderIds());
             page(other.getPage());
             size(other.getSize());
@@ -218,6 +241,17 @@ public final class LabTestsGetOrdersRequest {
             return this;
         }
 
+        @JsonSetter(value = "shipping_recipient_name", nulls = Nulls.SKIP)
+        public Builder shippingRecipientName(Optional<String> shippingRecipientName) {
+            this.shippingRecipientName = shippingRecipientName;
+            return this;
+        }
+
+        public Builder shippingRecipientName(String shippingRecipientName) {
+            this.shippingRecipientName = Optional.of(shippingRecipientName);
+            return this;
+        }
+
         @JsonSetter(value = "order_ids", nulls = Nulls.SKIP)
         public Builder orderIds(Optional<String> orderIds) {
             this.orderIds = orderIds;
@@ -253,7 +287,15 @@ public final class LabTestsGetOrdersRequest {
 
         public LabTestsGetOrdersRequest build() {
             return new LabTestsGetOrdersRequest(
-                    startDate, endDate, userId, patientName, orderIds, page, size, additionalProperties);
+                    startDate,
+                    endDate,
+                    userId,
+                    patientName,
+                    shippingRecipientName,
+                    orderIds,
+                    page,
+                    size,
+                    additionalProperties);
         }
     }
 }
