@@ -17,6 +17,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
@@ -646,6 +647,9 @@ public class LabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/order/area/info");
         httpUrl.addQueryParameter("zip_code", request.getZipCode());
+        if (request.getRadius().isPresent()) {
+            httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -684,6 +688,9 @@ public class LabTestsClient {
                 .addPathSegments("v3/order/psc/info");
         httpUrl.addQueryParameter("zip_code", request.getZipCode());
         httpUrl.addQueryParameter("lab_id", Integer.toString(request.getLabId()));
+        if (request.getRadius().isPresent()) {
+            httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -708,19 +715,26 @@ public class LabTestsClient {
         return getPscInfo(request, null);
     }
 
-    public PscInfo getOrderPscInfo(String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+    public PscInfo getOrderPscInfo(String orderId) {
+        return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build());
+    }
+
+    public PscInfo getOrderPscInfo(
+            String orderId, LabTestsGetOrderPscInfoRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
-                .addPathSegments("psc/info")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .addPathSegments("psc/info");
+        if (request.getRadius().isPresent()) {
+            httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         try {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
@@ -735,8 +749,8 @@ public class LabTestsClient {
         }
     }
 
-    public PscInfo getOrderPscInfo(String orderId) {
-        return getOrderPscInfo(orderId, null);
+    public PscInfo getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
+        return getOrderPscInfo(orderId, request, null);
     }
 
     /**
