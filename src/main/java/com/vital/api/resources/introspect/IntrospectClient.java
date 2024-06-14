@@ -45,6 +45,9 @@ public class IntrospectClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -90,6 +93,9 @@ public class IntrospectClient {
         }
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

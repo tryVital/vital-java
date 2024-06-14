@@ -22,6 +22,8 @@ import java.util.Optional;
 public final class VitalsStepsGroupedRequest {
     private final Optional<String> cursor;
 
+    private final Optional<String> nextCursor;
+
     private final Optional<String> provider;
 
     private final String startDate;
@@ -32,11 +34,13 @@ public final class VitalsStepsGroupedRequest {
 
     private VitalsStepsGroupedRequest(
             Optional<String> cursor,
+            Optional<String> nextCursor,
             Optional<String> provider,
             String startDate,
             Optional<String> endDate,
             Map<String, Object> additionalProperties) {
         this.cursor = cursor;
+        this.nextCursor = nextCursor;
         this.provider = provider;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -49,6 +53,14 @@ public final class VitalsStepsGroupedRequest {
     @JsonProperty("cursor")
     public Optional<String> getCursor() {
         return cursor;
+    }
+
+    /**
+     * @return The cursor for fetching the next page, or <code>null</code> to fetch the first page.
+     */
+    @JsonProperty("next_cursor")
+    public Optional<String> getNextCursor() {
+        return nextCursor;
     }
 
     /**
@@ -88,6 +100,7 @@ public final class VitalsStepsGroupedRequest {
 
     private boolean equalTo(VitalsStepsGroupedRequest other) {
         return cursor.equals(other.cursor)
+                && nextCursor.equals(other.nextCursor)
                 && provider.equals(other.provider)
                 && startDate.equals(other.startDate)
                 && endDate.equals(other.endDate);
@@ -95,7 +108,7 @@ public final class VitalsStepsGroupedRequest {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.cursor, this.provider, this.startDate, this.endDate);
+        return Objects.hash(this.cursor, this.nextCursor, this.provider, this.startDate, this.endDate);
     }
 
     @Override
@@ -120,6 +133,10 @@ public final class VitalsStepsGroupedRequest {
 
         _FinalStage cursor(String cursor);
 
+        _FinalStage nextCursor(Optional<String> nextCursor);
+
+        _FinalStage nextCursor(String nextCursor);
+
         _FinalStage provider(Optional<String> provider);
 
         _FinalStage provider(String provider);
@@ -137,6 +154,8 @@ public final class VitalsStepsGroupedRequest {
 
         private Optional<String> provider = Optional.empty();
 
+        private Optional<String> nextCursor = Optional.empty();
+
         private Optional<String> cursor = Optional.empty();
 
         @JsonAnySetter
@@ -147,6 +166,7 @@ public final class VitalsStepsGroupedRequest {
         @Override
         public Builder from(VitalsStepsGroupedRequest other) {
             cursor(other.getCursor());
+            nextCursor(other.getNextCursor());
             provider(other.getProvider());
             startDate(other.getStartDate());
             endDate(other.getEndDate());
@@ -203,6 +223,23 @@ public final class VitalsStepsGroupedRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
+        public _FinalStage nextCursor(String nextCursor) {
+            this.nextCursor = Optional.of(nextCursor);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
+        public _FinalStage nextCursor(Optional<String> nextCursor) {
+            this.nextCursor = nextCursor;
+            return this;
+        }
+
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
         public _FinalStage cursor(String cursor) {
             this.cursor = Optional.of(cursor);
             return this;
@@ -217,7 +254,8 @@ public final class VitalsStepsGroupedRequest {
 
         @Override
         public VitalsStepsGroupedRequest build() {
-            return new VitalsStepsGroupedRequest(cursor, provider, startDate, endDate, additionalProperties);
+            return new VitalsStepsGroupedRequest(
+                    cursor, nextCursor, provider, startDate, endDate, additionalProperties);
         }
     }
 }

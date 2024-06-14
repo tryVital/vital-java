@@ -10,7 +10,9 @@ public enum EventDestinationPreferencesEnabledItem {
 
     RABBITMQ("rabbitmq"),
 
-    SVIX("svix");
+    SVIX("svix"),
+
+    AZURE_AMQP("azure_amqp");
 
     private final String value;
 

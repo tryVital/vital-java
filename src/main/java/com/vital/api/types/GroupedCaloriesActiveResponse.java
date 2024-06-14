@@ -26,14 +26,18 @@ public final class GroupedCaloriesActiveResponse {
 
     private final Optional<String> next;
 
+    private final Optional<String> nextCursor;
+
     private final Map<String, Object> additionalProperties;
 
     private GroupedCaloriesActiveResponse(
             Map<String, List<GroupedCaloriesActive>> groups,
             Optional<String> next,
+            Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
         this.groups = groups;
         this.next = next;
+        this.nextCursor = nextCursor;
         this.additionalProperties = additionalProperties;
     }
 
@@ -50,6 +54,11 @@ public final class GroupedCaloriesActiveResponse {
         return next;
     }
 
+    @JsonProperty("next_cursor")
+    public Optional<String> getNextCursor() {
+        return nextCursor;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -62,12 +71,12 @@ public final class GroupedCaloriesActiveResponse {
     }
 
     private boolean equalTo(GroupedCaloriesActiveResponse other) {
-        return groups.equals(other.groups) && next.equals(other.next);
+        return groups.equals(other.groups) && next.equals(other.next) && nextCursor.equals(other.nextCursor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.groups, this.next);
+        return Objects.hash(this.groups, this.next, this.nextCursor);
     }
 
     @Override
@@ -85,6 +94,8 @@ public final class GroupedCaloriesActiveResponse {
 
         private Optional<String> next = Optional.empty();
 
+        private Optional<String> nextCursor = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -93,6 +104,7 @@ public final class GroupedCaloriesActiveResponse {
         public Builder from(GroupedCaloriesActiveResponse other) {
             groups(other.getGroups());
             next(other.getNext());
+            nextCursor(other.getNextCursor());
             return this;
         }
 
@@ -124,8 +136,19 @@ public final class GroupedCaloriesActiveResponse {
             return this;
         }
 
+        @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
+        public Builder nextCursor(Optional<String> nextCursor) {
+            this.nextCursor = nextCursor;
+            return this;
+        }
+
+        public Builder nextCursor(String nextCursor) {
+            this.nextCursor = Optional.of(nextCursor);
+            return this;
+        }
+
         public GroupedCaloriesActiveResponse build() {
-            return new GroupedCaloriesActiveResponse(groups, next, additionalProperties);
+            return new GroupedCaloriesActiveResponse(groups, next, nextCursor, additionalProperties);
         }
     }
 }

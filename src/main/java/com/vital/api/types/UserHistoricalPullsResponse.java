@@ -26,14 +26,18 @@ public final class UserHistoricalPullsResponse {
 
     private final Optional<String> next;
 
+    private final Optional<String> nextCursor;
+
     private final Map<String, Object> additionalProperties;
 
     private UserHistoricalPullsResponse(
             List<SingleUserHistoricalPullResponse> data,
             Optional<String> next,
+            Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
         this.data = data;
         this.next = next;
+        this.nextCursor = nextCursor;
         this.additionalProperties = additionalProperties;
     }
 
@@ -45,6 +49,11 @@ public final class UserHistoricalPullsResponse {
     @JsonProperty("next")
     public Optional<String> getNext() {
         return next;
+    }
+
+    @JsonProperty("next_cursor")
+    public Optional<String> getNextCursor() {
+        return nextCursor;
     }
 
     @Override
@@ -59,12 +68,12 @@ public final class UserHistoricalPullsResponse {
     }
 
     private boolean equalTo(UserHistoricalPullsResponse other) {
-        return data.equals(other.data) && next.equals(other.next);
+        return data.equals(other.data) && next.equals(other.next) && nextCursor.equals(other.nextCursor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.data, this.next);
+        return Objects.hash(this.data, this.next, this.nextCursor);
     }
 
     @Override
@@ -82,6 +91,8 @@ public final class UserHistoricalPullsResponse {
 
         private Optional<String> next = Optional.empty();
 
+        private Optional<String> nextCursor = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -90,6 +101,7 @@ public final class UserHistoricalPullsResponse {
         public Builder from(UserHistoricalPullsResponse other) {
             data(other.getData());
             next(other.getNext());
+            nextCursor(other.getNextCursor());
             return this;
         }
 
@@ -121,8 +133,19 @@ public final class UserHistoricalPullsResponse {
             return this;
         }
 
+        @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
+        public Builder nextCursor(Optional<String> nextCursor) {
+            this.nextCursor = nextCursor;
+            return this;
+        }
+
+        public Builder nextCursor(String nextCursor) {
+            this.nextCursor = Optional.of(nextCursor);
+            return this;
+        }
+
         public UserHistoricalPullsResponse build() {
-            return new UserHistoricalPullsResponse(data, next, additionalProperties);
+            return new UserHistoricalPullsResponse(data, next, nextCursor, additionalProperties);
         }
     }
 }

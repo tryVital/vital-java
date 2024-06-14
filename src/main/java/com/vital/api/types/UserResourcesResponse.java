@@ -26,12 +26,18 @@ public final class UserResourcesResponse {
 
     private final Optional<String> next;
 
+    private final Optional<String> nextCursor;
+
     private final Map<String, Object> additionalProperties;
 
     private UserResourcesResponse(
-            List<SingleUserResourceResponse> data, Optional<String> next, Map<String, Object> additionalProperties) {
+            List<SingleUserResourceResponse> data,
+            Optional<String> next,
+            Optional<String> nextCursor,
+            Map<String, Object> additionalProperties) {
         this.data = data;
         this.next = next;
+        this.nextCursor = nextCursor;
         this.additionalProperties = additionalProperties;
     }
 
@@ -43,6 +49,11 @@ public final class UserResourcesResponse {
     @JsonProperty("next")
     public Optional<String> getNext() {
         return next;
+    }
+
+    @JsonProperty("next_cursor")
+    public Optional<String> getNextCursor() {
+        return nextCursor;
     }
 
     @Override
@@ -57,12 +68,12 @@ public final class UserResourcesResponse {
     }
 
     private boolean equalTo(UserResourcesResponse other) {
-        return data.equals(other.data) && next.equals(other.next);
+        return data.equals(other.data) && next.equals(other.next) && nextCursor.equals(other.nextCursor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.data, this.next);
+        return Objects.hash(this.data, this.next, this.nextCursor);
     }
 
     @Override
@@ -80,6 +91,8 @@ public final class UserResourcesResponse {
 
         private Optional<String> next = Optional.empty();
 
+        private Optional<String> nextCursor = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -88,6 +101,7 @@ public final class UserResourcesResponse {
         public Builder from(UserResourcesResponse other) {
             data(other.getData());
             next(other.getNext());
+            nextCursor(other.getNextCursor());
             return this;
         }
 
@@ -119,8 +133,19 @@ public final class UserResourcesResponse {
             return this;
         }
 
+        @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
+        public Builder nextCursor(Optional<String> nextCursor) {
+            this.nextCursor = nextCursor;
+            return this;
+        }
+
+        public Builder nextCursor(String nextCursor) {
+            this.nextCursor = Optional.of(nextCursor);
+            return this;
+        }
+
         public UserResourcesResponse build() {
-            return new UserResourcesResponse(data, next, additionalProperties);
+            return new UserResourcesResponse(data, next, nextCursor, additionalProperties);
         }
     }
 }

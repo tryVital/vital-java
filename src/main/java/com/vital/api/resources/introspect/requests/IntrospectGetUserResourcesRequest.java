@@ -29,6 +29,8 @@ public final class IntrospectGetUserResourcesRequest {
 
     private final Optional<String> cursor;
 
+    private final Optional<String> nextCursor;
+
     private final Map<String, Object> additionalProperties;
 
     private IntrospectGetUserResourcesRequest(
@@ -36,11 +38,13 @@ public final class IntrospectGetUserResourcesRequest {
             Optional<Providers> provider,
             Optional<Integer> userLimit,
             Optional<String> cursor,
+            Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.provider = provider;
         this.userLimit = userLimit;
         this.cursor = cursor;
+        this.nextCursor = nextCursor;
         this.additionalProperties = additionalProperties;
     }
 
@@ -64,6 +68,14 @@ public final class IntrospectGetUserResourcesRequest {
         return cursor;
     }
 
+    /**
+     * @return The cursor for fetching the next page, or <code>null</code> to fetch the first page.
+     */
+    @JsonProperty("next_cursor")
+    public Optional<String> getNextCursor() {
+        return nextCursor;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -79,12 +91,13 @@ public final class IntrospectGetUserResourcesRequest {
         return userId.equals(other.userId)
                 && provider.equals(other.provider)
                 && userLimit.equals(other.userLimit)
-                && cursor.equals(other.cursor);
+                && cursor.equals(other.cursor)
+                && nextCursor.equals(other.nextCursor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.provider, this.userLimit, this.cursor);
+        return Objects.hash(this.userId, this.provider, this.userLimit, this.cursor, this.nextCursor);
     }
 
     @Override
@@ -106,6 +119,8 @@ public final class IntrospectGetUserResourcesRequest {
 
         private Optional<String> cursor = Optional.empty();
 
+        private Optional<String> nextCursor = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -116,6 +131,7 @@ public final class IntrospectGetUserResourcesRequest {
             provider(other.getProvider());
             userLimit(other.getUserLimit());
             cursor(other.getCursor());
+            nextCursor(other.getNextCursor());
             return this;
         }
 
@@ -163,8 +179,20 @@ public final class IntrospectGetUserResourcesRequest {
             return this;
         }
 
+        @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
+        public Builder nextCursor(Optional<String> nextCursor) {
+            this.nextCursor = nextCursor;
+            return this;
+        }
+
+        public Builder nextCursor(String nextCursor) {
+            this.nextCursor = Optional.of(nextCursor);
+            return this;
+        }
+
         public IntrospectGetUserResourcesRequest build() {
-            return new IntrospectGetUserResourcesRequest(userId, provider, userLimit, cursor, additionalProperties);
+            return new IntrospectGetUserResourcesRequest(
+                    userId, provider, userLimit, cursor, nextCursor, additionalProperties);
         }
     }
 }

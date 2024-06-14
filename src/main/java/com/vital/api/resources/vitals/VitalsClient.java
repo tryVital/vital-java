@@ -132,6 +132,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -173,6 +176,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -213,6 +219,9 @@ public class VitalsClient {
                 .addPathSegments("mindfulness_minutes/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -257,6 +266,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -297,6 +309,9 @@ public class VitalsClient {
                 .addPathSegments("water/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -339,6 +354,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -379,6 +397,9 @@ public class VitalsClient {
                 .addPathSegments("floors_climbed/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -422,6 +443,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -462,6 +486,9 @@ public class VitalsClient {
                 .addPathSegments("calories_basal/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -504,6 +531,9 @@ public class VitalsClient {
                 .addPathSegments("calories_active/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -548,6 +578,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -591,6 +624,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -631,6 +667,9 @@ public class VitalsClient {
                 .addPathSegments("igg/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -673,6 +712,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -713,6 +755,9 @@ public class VitalsClient {
                 .addPathSegments("hrv/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -755,6 +800,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -795,6 +843,9 @@ public class VitalsClient {
                 .addPathSegments("glucose/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -837,6 +888,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -877,6 +931,9 @@ public class VitalsClient {
                 .addPathSegments("body_temperature_delta/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -922,6 +979,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -966,6 +1026,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -1006,6 +1069,9 @@ public class VitalsClient {
                 .addPathSegments("body_fat/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -1048,6 +1114,9 @@ public class VitalsClient {
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
         }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }
@@ -1088,6 +1157,9 @@ public class VitalsClient {
                 .addPathSegments("electrocardiogram_voltage/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
@@ -1131,6 +1203,9 @@ public class VitalsClient {
                 .addPathSegments("blood_pressure/grouped");
         if (request.getCursor().isPresent()) {
             httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
