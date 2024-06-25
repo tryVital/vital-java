@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.AllowedRadius;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,20 +21,20 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LabTestsGetOrderPscInfoRequest.Builder.class)
 public final class LabTestsGetOrderPscInfoRequest {
-    private final Optional<Integer> radius;
+    private final Optional<AllowedRadius> radius;
 
     private final Map<String, Object> additionalProperties;
 
-    private LabTestsGetOrderPscInfoRequest(Optional<Integer> radius, Map<String, Object> additionalProperties) {
+    private LabTestsGetOrderPscInfoRequest(Optional<AllowedRadius> radius, Map<String, Object> additionalProperties) {
         this.radius = radius;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return Radius in which to search. (meters)
+     * @return Radius in which to search in miles
      */
     @JsonProperty("radius")
-    public Optional<Integer> getRadius() {
+    public Optional<AllowedRadius> getRadius() {
         return radius;
     }
 
@@ -68,7 +69,7 @@ public final class LabTestsGetOrderPscInfoRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<Integer> radius = Optional.empty();
+        private Optional<AllowedRadius> radius = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -81,12 +82,12 @@ public final class LabTestsGetOrderPscInfoRequest {
         }
 
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
-        public Builder radius(Optional<Integer> radius) {
+        public Builder radius(Optional<AllowedRadius> radius) {
             this.radius = radius;
             return this;
         }
 
-        public Builder radius(Integer radius) {
+        public Builder radius(AllowedRadius radius) {
             this.radius = Optional.of(radius);
             return this;
         }

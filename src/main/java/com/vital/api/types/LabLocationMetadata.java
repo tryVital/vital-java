@@ -28,9 +28,9 @@ public final class LabLocationMetadata {
 
     private final String zipCode;
 
-    private final String address;
+    private final String firstLine;
 
-    private final Optional<String> unit;
+    private final Optional<String> secondLine;
 
     private final Optional<String> phoneNumber;
 
@@ -45,8 +45,8 @@ public final class LabLocationMetadata {
             String state,
             String city,
             String zipCode,
-            String address,
-            Optional<String> unit,
+            String firstLine,
+            Optional<String> secondLine,
             Optional<String> phoneNumber,
             Optional<String> faxNumber,
             Optional<Map<String, Object>> hours,
@@ -55,8 +55,8 @@ public final class LabLocationMetadata {
         this.state = state;
         this.city = city;
         this.zipCode = zipCode;
-        this.address = address;
-        this.unit = unit;
+        this.firstLine = firstLine;
+        this.secondLine = secondLine;
         this.phoneNumber = phoneNumber;
         this.faxNumber = faxNumber;
         this.hours = hours;
@@ -83,14 +83,14 @@ public final class LabLocationMetadata {
         return zipCode;
     }
 
-    @JsonProperty("address")
-    public String getAddress() {
-        return address;
+    @JsonProperty("first_line")
+    public String getFirstLine() {
+        return firstLine;
     }
 
-    @JsonProperty("unit")
-    public Optional<String> getUnit() {
-        return unit;
+    @JsonProperty("second_line")
+    public Optional<String> getSecondLine() {
+        return secondLine;
     }
 
     @JsonProperty("phone_number")
@@ -124,8 +124,8 @@ public final class LabLocationMetadata {
                 && state.equals(other.state)
                 && city.equals(other.city)
                 && zipCode.equals(other.zipCode)
-                && address.equals(other.address)
-                && unit.equals(other.unit)
+                && firstLine.equals(other.firstLine)
+                && secondLine.equals(other.secondLine)
                 && phoneNumber.equals(other.phoneNumber)
                 && faxNumber.equals(other.faxNumber)
                 && hours.equals(other.hours);
@@ -138,8 +138,8 @@ public final class LabLocationMetadata {
                 this.state,
                 this.city,
                 this.zipCode,
-                this.address,
-                this.unit,
+                this.firstLine,
+                this.secondLine,
                 this.phoneNumber,
                 this.faxNumber,
                 this.hours);
@@ -169,19 +169,19 @@ public final class LabLocationMetadata {
     }
 
     public interface ZipCodeStage {
-        AddressStage zipCode(String zipCode);
+        FirstLineStage zipCode(String zipCode);
     }
 
-    public interface AddressStage {
-        _FinalStage address(String address);
+    public interface FirstLineStage {
+        _FinalStage firstLine(String firstLine);
     }
 
     public interface _FinalStage {
         LabLocationMetadata build();
 
-        _FinalStage unit(Optional<String> unit);
+        _FinalStage secondLine(Optional<String> secondLine);
 
-        _FinalStage unit(String unit);
+        _FinalStage secondLine(String secondLine);
 
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
@@ -198,7 +198,7 @@ public final class LabLocationMetadata {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements NameStage, StateStage, CityStage, ZipCodeStage, AddressStage, _FinalStage {
+            implements NameStage, StateStage, CityStage, ZipCodeStage, FirstLineStage, _FinalStage {
         private String name;
 
         private String state;
@@ -207,7 +207,7 @@ public final class LabLocationMetadata {
 
         private String zipCode;
 
-        private String address;
+        private String firstLine;
 
         private Optional<Map<String, Object>> hours = Optional.empty();
 
@@ -215,7 +215,7 @@ public final class LabLocationMetadata {
 
         private Optional<String> phoneNumber = Optional.empty();
 
-        private Optional<String> unit = Optional.empty();
+        private Optional<String> secondLine = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -228,8 +228,8 @@ public final class LabLocationMetadata {
             state(other.getState());
             city(other.getCity());
             zipCode(other.getZipCode());
-            address(other.getAddress());
-            unit(other.getUnit());
+            firstLine(other.getFirstLine());
+            secondLine(other.getSecondLine());
             phoneNumber(other.getPhoneNumber());
             faxNumber(other.getFaxNumber());
             hours(other.getHours());
@@ -259,15 +259,15 @@ public final class LabLocationMetadata {
 
         @Override
         @JsonSetter("zip_code")
-        public AddressStage zipCode(String zipCode) {
+        public FirstLineStage zipCode(String zipCode) {
             this.zipCode = zipCode;
             return this;
         }
 
         @Override
-        @JsonSetter("address")
-        public _FinalStage address(String address) {
-            this.address = address;
+        @JsonSetter("first_line")
+        public _FinalStage firstLine(String firstLine) {
+            this.firstLine = firstLine;
             return this;
         }
 
@@ -311,22 +311,31 @@ public final class LabLocationMetadata {
         }
 
         @Override
-        public _FinalStage unit(String unit) {
-            this.unit = Optional.of(unit);
+        public _FinalStage secondLine(String secondLine) {
+            this.secondLine = Optional.of(secondLine);
             return this;
         }
 
         @Override
-        @JsonSetter(value = "unit", nulls = Nulls.SKIP)
-        public _FinalStage unit(Optional<String> unit) {
-            this.unit = unit;
+        @JsonSetter(value = "second_line", nulls = Nulls.SKIP)
+        public _FinalStage secondLine(Optional<String> secondLine) {
+            this.secondLine = secondLine;
             return this;
         }
 
         @Override
         public LabLocationMetadata build() {
             return new LabLocationMetadata(
-                    name, state, city, zipCode, address, unit, phoneNumber, faxNumber, hours, additionalProperties);
+                    name,
+                    state,
+                    city,
+                    zipCode,
+                    firstLine,
+                    secondLine,
+                    phoneNumber,
+                    faxNumber,
+                    hours,
+                    additionalProperties);
         }
     }
 }

@@ -23,12 +23,16 @@ import java.util.Objects;
 public final class PscInfo {
     private final int labId;
 
+    private final Labs slug;
+
     private final List<ClientFacingLabLocation> pscs;
 
     private final Map<String, Object> additionalProperties;
 
-    private PscInfo(int labId, List<ClientFacingLabLocation> pscs, Map<String, Object> additionalProperties) {
+    private PscInfo(
+            int labId, Labs slug, List<ClientFacingLabLocation> pscs, Map<String, Object> additionalProperties) {
         this.labId = labId;
+        this.slug = slug;
         this.pscs = pscs;
         this.additionalProperties = additionalProperties;
     }
@@ -36,6 +40,11 @@ public final class PscInfo {
     @JsonProperty("lab_id")
     public int getLabId() {
         return labId;
+    }
+
+    @JsonProperty("slug")
+    public Labs getSlug() {
+        return slug;
     }
 
     @JsonProperty("pscs")
@@ -55,12 +64,12 @@ public final class PscInfo {
     }
 
     private boolean equalTo(PscInfo other) {
-        return labId == other.labId && pscs.equals(other.pscs);
+        return labId == other.labId && slug.equals(other.slug) && pscs.equals(other.pscs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.labId, this.pscs);
+        return Objects.hash(this.labId, this.slug, this.pscs);
     }
 
     @Override
@@ -73,9 +82,13 @@ public final class PscInfo {
     }
 
     public interface LabIdStage {
-        _FinalStage labId(int labId);
+        SlugStage labId(int labId);
 
         Builder from(PscInfo other);
+    }
+
+    public interface SlugStage {
+        _FinalStage slug(Labs slug);
     }
 
     public interface _FinalStage {
@@ -89,8 +102,10 @@ public final class PscInfo {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements LabIdStage, _FinalStage {
+    public static final class Builder implements LabIdStage, SlugStage, _FinalStage {
         private int labId;
+
+        private Labs slug;
 
         private List<ClientFacingLabLocation> pscs = new ArrayList<>();
 
@@ -102,14 +117,22 @@ public final class PscInfo {
         @Override
         public Builder from(PscInfo other) {
             labId(other.getLabId());
+            slug(other.getSlug());
             pscs(other.getPscs());
             return this;
         }
 
         @Override
         @JsonSetter("lab_id")
-        public _FinalStage labId(int labId) {
+        public SlugStage labId(int labId) {
             this.labId = labId;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("slug")
+        public _FinalStage slug(Labs slug) {
+            this.slug = slug;
             return this;
         }
 
@@ -135,7 +158,7 @@ public final class PscInfo {
 
         @Override
         public PscInfo build() {
-            return new PscInfo(labId, pscs, additionalProperties);
+            return new PscInfo(labId, slug, pscs, additionalProperties);
         }
     }
 }

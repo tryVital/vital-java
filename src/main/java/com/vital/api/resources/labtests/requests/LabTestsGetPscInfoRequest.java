@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.AllowedRadius;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,12 +25,12 @@ public final class LabTestsGetPscInfoRequest {
 
     private final int labId;
 
-    private final Optional<Integer> radius;
+    private final Optional<AllowedRadius> radius;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetPscInfoRequest(
-            String zipCode, int labId, Optional<Integer> radius, Map<String, Object> additionalProperties) {
+            String zipCode, int labId, Optional<AllowedRadius> radius, Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.labId = labId;
         this.radius = radius;
@@ -56,7 +57,7 @@ public final class LabTestsGetPscInfoRequest {
      * @return Radius in which to search. (meters)
      */
     @JsonProperty("radius")
-    public Optional<Integer> getRadius() {
+    public Optional<AllowedRadius> getRadius() {
         return radius;
     }
 
@@ -102,9 +103,9 @@ public final class LabTestsGetPscInfoRequest {
     public interface _FinalStage {
         LabTestsGetPscInfoRequest build();
 
-        _FinalStage radius(Optional<Integer> radius);
+        _FinalStage radius(Optional<AllowedRadius> radius);
 
-        _FinalStage radius(Integer radius);
+        _FinalStage radius(AllowedRadius radius);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -113,7 +114,7 @@ public final class LabTestsGetPscInfoRequest {
 
         private int labId;
 
-        private Optional<Integer> radius = Optional.empty();
+        private Optional<AllowedRadius> radius = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -155,14 +156,14 @@ public final class LabTestsGetPscInfoRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage radius(Integer radius) {
+        public _FinalStage radius(AllowedRadius radius) {
             this.radius = Optional.of(radius);
             return this;
         }
 
         @Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
-        public _FinalStage radius(Optional<Integer> radius) {
+        public _FinalStage radius(Optional<AllowedRadius> radius) {
             this.radius = radius;
             return this;
         }

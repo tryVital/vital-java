@@ -650,6 +650,9 @@ public class LabTestsClient {
         if (request.getRadius().isPresent()) {
             httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
         }
+        if (request.getLab().isPresent()) {
+            httpUrl.addQueryParameter("lab", request.getLab().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

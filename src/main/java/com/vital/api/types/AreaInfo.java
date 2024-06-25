@@ -9,9 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -22,15 +24,18 @@ public final class AreaInfo {
 
     private final PhlebotomyAreaInfo phlebotomy;
 
-    private final PscAreaInfo psc;
+    private final Map<String, PscAreaInfo> centralLabs;
 
     private final Map<String, Object> additionalProperties;
 
     private AreaInfo(
-            String zipCode, PhlebotomyAreaInfo phlebotomy, PscAreaInfo psc, Map<String, Object> additionalProperties) {
+            String zipCode,
+            PhlebotomyAreaInfo phlebotomy,
+            Map<String, PscAreaInfo> centralLabs,
+            Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.phlebotomy = phlebotomy;
-        this.psc = psc;
+        this.centralLabs = centralLabs;
         this.additionalProperties = additionalProperties;
     }
 
@@ -44,9 +49,9 @@ public final class AreaInfo {
         return phlebotomy;
     }
 
-    @JsonProperty("psc")
-    public PscAreaInfo getPsc() {
-        return psc;
+    @JsonProperty("central_labs")
+    public Map<String, PscAreaInfo> getCentralLabs() {
+        return centralLabs;
     }
 
     @Override
@@ -61,12 +66,14 @@ public final class AreaInfo {
     }
 
     private boolean equalTo(AreaInfo other) {
-        return zipCode.equals(other.zipCode) && phlebotomy.equals(other.phlebotomy) && psc.equals(other.psc);
+        return zipCode.equals(other.zipCode)
+                && phlebotomy.equals(other.phlebotomy)
+                && centralLabs.equals(other.centralLabs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.phlebotomy, this.psc);
+        return Objects.hash(this.zipCode, this.phlebotomy, this.centralLabs);
     }
 
     @Override
@@ -85,24 +92,26 @@ public final class AreaInfo {
     }
 
     public interface PhlebotomyStage {
-        PscStage phlebotomy(PhlebotomyAreaInfo phlebotomy);
-    }
-
-    public interface PscStage {
-        _FinalStage psc(PscAreaInfo psc);
+        _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy);
     }
 
     public interface _FinalStage {
         AreaInfo build();
+
+        _FinalStage centralLabs(Map<String, PscAreaInfo> centralLabs);
+
+        _FinalStage putAllCentralLabs(Map<String, PscAreaInfo> centralLabs);
+
+        _FinalStage centralLabs(String key, PscAreaInfo value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ZipCodeStage, PhlebotomyStage, PscStage, _FinalStage {
+    public static final class Builder implements ZipCodeStage, PhlebotomyStage, _FinalStage {
         private String zipCode;
 
         private PhlebotomyAreaInfo phlebotomy;
 
-        private PscAreaInfo psc;
+        private Map<String, PscAreaInfo> centralLabs = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -113,7 +122,7 @@ public final class AreaInfo {
         public Builder from(AreaInfo other) {
             zipCode(other.getZipCode());
             phlebotomy(other.getPhlebotomy());
-            psc(other.getPsc());
+            centralLabs(other.getCentralLabs());
             return this;
         }
 
@@ -126,21 +135,34 @@ public final class AreaInfo {
 
         @Override
         @JsonSetter("phlebotomy")
-        public PscStage phlebotomy(PhlebotomyAreaInfo phlebotomy) {
+        public _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy) {
             this.phlebotomy = phlebotomy;
             return this;
         }
 
         @Override
-        @JsonSetter("psc")
-        public _FinalStage psc(PscAreaInfo psc) {
-            this.psc = psc;
+        public _FinalStage centralLabs(String key, PscAreaInfo value) {
+            this.centralLabs.put(key, value);
+            return this;
+        }
+
+        @Override
+        public _FinalStage putAllCentralLabs(Map<String, PscAreaInfo> centralLabs) {
+            this.centralLabs.putAll(centralLabs);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "central_labs", nulls = Nulls.SKIP)
+        public _FinalStage centralLabs(Map<String, PscAreaInfo> centralLabs) {
+            this.centralLabs.clear();
+            this.centralLabs.putAll(centralLabs);
             return this;
         }
 
         @Override
         public AreaInfo build() {
-            return new AreaInfo(zipCode, phlebotomy, psc, additionalProperties);
+            return new AreaInfo(zipCode, phlebotomy, centralLabs, additionalProperties);
         }
     }
 }

@@ -20,11 +20,11 @@ import java.util.Objects;
 public final class PscAreaInfoDetails {
     private final int withinRadius;
 
-    private final int radius;
+    private final String radius;
 
     private final Map<String, Object> additionalProperties;
 
-    private PscAreaInfoDetails(int withinRadius, int radius, Map<String, Object> additionalProperties) {
+    private PscAreaInfoDetails(int withinRadius, String radius, Map<String, Object> additionalProperties) {
         this.withinRadius = withinRadius;
         this.radius = radius;
         this.additionalProperties = additionalProperties;
@@ -36,7 +36,7 @@ public final class PscAreaInfoDetails {
     }
 
     @JsonProperty("radius")
-    public int getRadius() {
+    public String getRadius() {
         return radius;
     }
 
@@ -52,7 +52,7 @@ public final class PscAreaInfoDetails {
     }
 
     private boolean equalTo(PscAreaInfoDetails other) {
-        return withinRadius == other.withinRadius && radius == other.radius;
+        return withinRadius == other.withinRadius && radius.equals(other.radius);
     }
 
     @Override
@@ -76,7 +76,7 @@ public final class PscAreaInfoDetails {
     }
 
     public interface RadiusStage {
-        _FinalStage radius(int radius);
+        _FinalStage radius(String radius);
     }
 
     public interface _FinalStage {
@@ -87,7 +87,7 @@ public final class PscAreaInfoDetails {
     public static final class Builder implements WithinRadiusStage, RadiusStage, _FinalStage {
         private int withinRadius;
 
-        private int radius;
+        private String radius;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -110,7 +110,7 @@ public final class PscAreaInfoDetails {
 
         @Override
         @JsonSetter("radius")
-        public _FinalStage radius(int radius) {
+        public _FinalStage radius(String radius) {
             this.radius = radius;
             return this;
         }

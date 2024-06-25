@@ -13,8 +13,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.LabTestCollectionMethod;
-import com.vital.api.types.LabTestSampleType;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,15 +22,15 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateLabTestRequest.Builder.class)
 public final class CreateLabTestRequest {
-    private final List<Integer> markerIds;
+    private final Optional<List<Integer>> markerIds;
+
+    private final Optional<List<String>> providerIds;
 
     private final int labId;
 
     private final String name;
 
     private final LabTestCollectionMethod method;
-
-    private final LabTestSampleType sampleType;
 
     private final String description;
 
@@ -41,27 +39,32 @@ public final class CreateLabTestRequest {
     private final Map<String, Object> additionalProperties;
 
     private CreateLabTestRequest(
-            List<Integer> markerIds,
+            Optional<List<Integer>> markerIds,
+            Optional<List<String>> providerIds,
             int labId,
             String name,
             LabTestCollectionMethod method,
-            LabTestSampleType sampleType,
             String description,
             Optional<Boolean> fasting,
             Map<String, Object> additionalProperties) {
         this.markerIds = markerIds;
+        this.providerIds = providerIds;
         this.labId = labId;
         this.name = name;
         this.method = method;
-        this.sampleType = sampleType;
         this.description = description;
         this.fasting = fasting;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("marker_ids")
-    public List<Integer> getMarkerIds() {
+    public Optional<List<Integer>> getMarkerIds() {
         return markerIds;
+    }
+
+    @JsonProperty("provider_ids")
+    public Optional<List<String>> getProviderIds() {
+        return providerIds;
     }
 
     @JsonProperty("lab_id")
@@ -77,11 +80,6 @@ public final class CreateLabTestRequest {
     @JsonProperty("method")
     public LabTestCollectionMethod getMethod() {
         return method;
-    }
-
-    @JsonProperty("sample_type")
-    public LabTestSampleType getSampleType() {
-        return sampleType;
     }
 
     @JsonProperty("description")
@@ -107,10 +105,10 @@ public final class CreateLabTestRequest {
 
     private boolean equalTo(CreateLabTestRequest other) {
         return markerIds.equals(other.markerIds)
+                && providerIds.equals(other.providerIds)
                 && labId == other.labId
                 && name.equals(other.name)
                 && method.equals(other.method)
-                && sampleType.equals(other.sampleType)
                 && description.equals(other.description)
                 && fasting.equals(other.fasting);
     }
@@ -118,7 +116,7 @@ public final class CreateLabTestRequest {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.markerIds, this.labId, this.name, this.method, this.sampleType, this.description, this.fasting);
+                this.markerIds, this.providerIds, this.labId, this.name, this.method, this.description, this.fasting);
     }
 
     @Override
@@ -141,11 +139,7 @@ public final class CreateLabTestRequest {
     }
 
     public interface MethodStage {
-        SampleTypeStage method(LabTestCollectionMethod method);
-    }
-
-    public interface SampleTypeStage {
-        DescriptionStage sampleType(LabTestSampleType sampleType);
+        DescriptionStage method(LabTestCollectionMethod method);
     }
 
     public interface DescriptionStage {
@@ -155,11 +149,13 @@ public final class CreateLabTestRequest {
     public interface _FinalStage {
         CreateLabTestRequest build();
 
+        _FinalStage markerIds(Optional<List<Integer>> markerIds);
+
         _FinalStage markerIds(List<Integer> markerIds);
 
-        _FinalStage addMarkerIds(Integer markerIds);
+        _FinalStage providerIds(Optional<List<String>> providerIds);
 
-        _FinalStage addAllMarkerIds(List<Integer> markerIds);
+        _FinalStage providerIds(List<String> providerIds);
 
         _FinalStage fasting(Optional<Boolean> fasting);
 
@@ -167,21 +163,20 @@ public final class CreateLabTestRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements LabIdStage, NameStage, MethodStage, SampleTypeStage, DescriptionStage, _FinalStage {
+    public static final class Builder implements LabIdStage, NameStage, MethodStage, DescriptionStage, _FinalStage {
         private int labId;
 
         private String name;
 
         private LabTestCollectionMethod method;
 
-        private LabTestSampleType sampleType;
-
         private String description;
 
         private Optional<Boolean> fasting = Optional.empty();
 
-        private List<Integer> markerIds = new ArrayList<>();
+        private Optional<List<String>> providerIds = Optional.empty();
+
+        private Optional<List<Integer>> markerIds = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,10 +186,10 @@ public final class CreateLabTestRequest {
         @Override
         public Builder from(CreateLabTestRequest other) {
             markerIds(other.getMarkerIds());
+            providerIds(other.getProviderIds());
             labId(other.getLabId());
             name(other.getName());
             method(other.getMethod());
-            sampleType(other.getSampleType());
             description(other.getDescription());
             fasting(other.getFasting());
             return this;
@@ -216,15 +211,8 @@ public final class CreateLabTestRequest {
 
         @Override
         @JsonSetter("method")
-        public SampleTypeStage method(LabTestCollectionMethod method) {
+        public DescriptionStage method(LabTestCollectionMethod method) {
             this.method = method;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("sample_type")
-        public DescriptionStage sampleType(LabTestSampleType sampleType) {
-            this.sampleType = sampleType;
             return this;
         }
 
@@ -249,29 +237,35 @@ public final class CreateLabTestRequest {
         }
 
         @Override
-        public _FinalStage addAllMarkerIds(List<Integer> markerIds) {
-            this.markerIds.addAll(markerIds);
+        public _FinalStage providerIds(List<String> providerIds) {
+            this.providerIds = Optional.of(providerIds);
             return this;
         }
 
         @Override
-        public _FinalStage addMarkerIds(Integer markerIds) {
-            this.markerIds.add(markerIds);
+        @JsonSetter(value = "provider_ids", nulls = Nulls.SKIP)
+        public _FinalStage providerIds(Optional<List<String>> providerIds) {
+            this.providerIds = providerIds;
+            return this;
+        }
+
+        @Override
+        public _FinalStage markerIds(List<Integer> markerIds) {
+            this.markerIds = Optional.of(markerIds);
             return this;
         }
 
         @Override
         @JsonSetter(value = "marker_ids", nulls = Nulls.SKIP)
-        public _FinalStage markerIds(List<Integer> markerIds) {
-            this.markerIds.clear();
-            this.markerIds.addAll(markerIds);
+        public _FinalStage markerIds(Optional<List<Integer>> markerIds) {
+            this.markerIds = markerIds;
             return this;
         }
 
         @Override
         public CreateLabTestRequest build() {
             return new CreateLabTestRequest(
-                    markerIds, labId, name, method, sampleType, description, fasting, additionalProperties);
+                    markerIds, providerIds, labId, name, method, description, fasting, additionalProperties);
         }
     }
 }

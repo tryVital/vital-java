@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.AllowedRadius;
+import com.vital.api.types.Labs;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,14 +24,20 @@ import java.util.Optional;
 public final class LabTestsGetAreaInfoRequest {
     private final String zipCode;
 
-    private final Optional<Integer> radius;
+    private final Optional<AllowedRadius> radius;
+
+    private final Optional<Labs> lab;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetAreaInfoRequest(
-            String zipCode, Optional<Integer> radius, Map<String, Object> additionalProperties) {
+            String zipCode,
+            Optional<AllowedRadius> radius,
+            Optional<Labs> lab,
+            Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.radius = radius;
+        this.lab = lab;
         this.additionalProperties = additionalProperties;
     }
 
@@ -42,11 +50,19 @@ public final class LabTestsGetAreaInfoRequest {
     }
 
     /**
-     * @return Radius in which to search (meters)
+     * @return Radius in which to search in miles
      */
     @JsonProperty("radius")
-    public Optional<Integer> getRadius() {
+    public Optional<AllowedRadius> getRadius() {
         return radius;
+    }
+
+    /**
+     * @return Lab to check for PSCs
+     */
+    @JsonProperty("lab")
+    public Optional<Labs> getLab() {
+        return lab;
     }
 
     @Override
@@ -61,12 +77,12 @@ public final class LabTestsGetAreaInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetAreaInfoRequest other) {
-        return zipCode.equals(other.zipCode) && radius.equals(other.radius);
+        return zipCode.equals(other.zipCode) && radius.equals(other.radius) && lab.equals(other.lab);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.radius);
+        return Objects.hash(this.zipCode, this.radius, this.lab);
     }
 
     @Override
@@ -87,16 +103,22 @@ public final class LabTestsGetAreaInfoRequest {
     public interface _FinalStage {
         LabTestsGetAreaInfoRequest build();
 
-        _FinalStage radius(Optional<Integer> radius);
+        _FinalStage radius(Optional<AllowedRadius> radius);
 
-        _FinalStage radius(Integer radius);
+        _FinalStage radius(AllowedRadius radius);
+
+        _FinalStage lab(Optional<Labs> lab);
+
+        _FinalStage lab(Labs lab);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ZipCodeStage, _FinalStage {
         private String zipCode;
 
-        private Optional<Integer> radius = Optional.empty();
+        private Optional<Labs> lab = Optional.empty();
+
+        private Optional<AllowedRadius> radius = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -107,6 +129,7 @@ public final class LabTestsGetAreaInfoRequest {
         public Builder from(LabTestsGetAreaInfoRequest other) {
             zipCode(other.getZipCode());
             radius(other.getRadius());
+            lab(other.getLab());
             return this;
         }
 
@@ -122,25 +145,42 @@ public final class LabTestsGetAreaInfoRequest {
         }
 
         /**
-         * <p>Radius in which to search (meters)</p>
+         * <p>Lab to check for PSCs</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage radius(Integer radius) {
+        public _FinalStage lab(Labs lab) {
+            this.lab = Optional.of(lab);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "lab", nulls = Nulls.SKIP)
+        public _FinalStage lab(Optional<Labs> lab) {
+            this.lab = lab;
+            return this;
+        }
+
+        /**
+         * <p>Radius in which to search in miles</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage radius(AllowedRadius radius) {
             this.radius = Optional.of(radius);
             return this;
         }
 
         @Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
-        public _FinalStage radius(Optional<Integer> radius) {
+        public _FinalStage radius(Optional<AllowedRadius> radius) {
             this.radius = radius;
             return this;
         }
 
         @Override
         public LabTestsGetAreaInfoRequest build() {
-            return new LabTestsGetAreaInfoRequest(zipCode, radius, additionalProperties);
+            return new LabTestsGetAreaInfoRequest(zipCode, radius, lab, additionalProperties);
         }
     }
 }

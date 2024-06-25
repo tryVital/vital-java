@@ -9,29 +9,27 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PscAreaInfo.Builder.class)
 public final class PscAreaInfo {
-    private final Map<String, PscAreaInfoDetails> locations;
+    private final PscAreaInfoDetails patientServiceCenters;
 
     private final Map<String, Object> additionalProperties;
 
-    private PscAreaInfo(Map<String, PscAreaInfoDetails> locations, Map<String, Object> additionalProperties) {
-        this.locations = locations;
+    private PscAreaInfo(PscAreaInfoDetails patientServiceCenters, Map<String, Object> additionalProperties) {
+        this.patientServiceCenters = patientServiceCenters;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("locations")
-    public Map<String, PscAreaInfoDetails> getLocations() {
-        return locations;
+    @JsonProperty("patient_service_centers")
+    public PscAreaInfoDetails getPatientServiceCenters() {
+        return patientServiceCenters;
     }
 
     @Override
@@ -46,12 +44,12 @@ public final class PscAreaInfo {
     }
 
     private boolean equalTo(PscAreaInfo other) {
-        return locations.equals(other.locations);
+        return patientServiceCenters.equals(other.patientServiceCenters);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.locations);
+        return Objects.hash(this.patientServiceCenters);
     }
 
     @Override
@@ -59,43 +57,45 @@ public final class PscAreaInfo {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static PatientServiceCentersStage builder() {
         return new Builder();
     }
 
+    public interface PatientServiceCentersStage {
+        _FinalStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters);
+
+        Builder from(PscAreaInfo other);
+    }
+
+    public interface _FinalStage {
+        PscAreaInfo build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Map<String, PscAreaInfoDetails> locations = new LinkedHashMap<>();
+    public static final class Builder implements PatientServiceCentersStage, _FinalStage {
+        private PscAreaInfoDetails patientServiceCenters;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @Override
         public Builder from(PscAreaInfo other) {
-            locations(other.getLocations());
+            patientServiceCenters(other.getPatientServiceCenters());
             return this;
         }
 
-        @JsonSetter(value = "locations", nulls = Nulls.SKIP)
-        public Builder locations(Map<String, PscAreaInfoDetails> locations) {
-            this.locations.clear();
-            this.locations.putAll(locations);
+        @Override
+        @JsonSetter("patient_service_centers")
+        public _FinalStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters) {
+            this.patientServiceCenters = patientServiceCenters;
             return this;
         }
 
-        public Builder putAllLocations(Map<String, PscAreaInfoDetails> locations) {
-            this.locations.putAll(locations);
-            return this;
-        }
-
-        public Builder locations(String key, PscAreaInfoDetails value) {
-            this.locations.put(key, value);
-            return this;
-        }
-
+        @Override
         public PscAreaInfo build() {
-            return new PscAreaInfo(locations, additionalProperties);
+            return new PscAreaInfo(patientServiceCenters, additionalProperties);
         }
     }
 }
