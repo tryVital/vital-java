@@ -78,6 +78,8 @@ public enum ClientFacingResource {
 
     STRESS_LEVEL("stress_level"),
 
+    MENSTRUAL_CYCLE("menstrual_cycle"),
+
     ELECTROCARDIOGRAM_VOLTAGE("electrocardiogram_voltage"),
 
     SLEEP_STREAM("sleep_stream");
