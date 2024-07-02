@@ -25,15 +25,18 @@ public final class PscInfo {
 
     private final Labs slug;
 
-    private final List<ClientFacingLabLocation> pscs;
+    private final List<ClientFacingLabLocation> patientServiceCenters;
 
     private final Map<String, Object> additionalProperties;
 
     private PscInfo(
-            int labId, Labs slug, List<ClientFacingLabLocation> pscs, Map<String, Object> additionalProperties) {
+            int labId,
+            Labs slug,
+            List<ClientFacingLabLocation> patientServiceCenters,
+            Map<String, Object> additionalProperties) {
         this.labId = labId;
         this.slug = slug;
-        this.pscs = pscs;
+        this.patientServiceCenters = patientServiceCenters;
         this.additionalProperties = additionalProperties;
     }
 
@@ -47,9 +50,9 @@ public final class PscInfo {
         return slug;
     }
 
-    @JsonProperty("pscs")
-    public List<ClientFacingLabLocation> getPscs() {
-        return pscs;
+    @JsonProperty("patient_service_centers")
+    public List<ClientFacingLabLocation> getPatientServiceCenters() {
+        return patientServiceCenters;
     }
 
     @Override
@@ -64,12 +67,14 @@ public final class PscInfo {
     }
 
     private boolean equalTo(PscInfo other) {
-        return labId == other.labId && slug.equals(other.slug) && pscs.equals(other.pscs);
+        return labId == other.labId
+                && slug.equals(other.slug)
+                && patientServiceCenters.equals(other.patientServiceCenters);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.labId, this.slug, this.pscs);
+        return Objects.hash(this.labId, this.slug, this.patientServiceCenters);
     }
 
     @Override
@@ -94,11 +99,11 @@ public final class PscInfo {
     public interface _FinalStage {
         PscInfo build();
 
-        _FinalStage pscs(List<ClientFacingLabLocation> pscs);
+        _FinalStage patientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters);
 
-        _FinalStage addPscs(ClientFacingLabLocation pscs);
+        _FinalStage addPatientServiceCenters(ClientFacingLabLocation patientServiceCenters);
 
-        _FinalStage addAllPscs(List<ClientFacingLabLocation> pscs);
+        _FinalStage addAllPatientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -107,7 +112,7 @@ public final class PscInfo {
 
         private Labs slug;
 
-        private List<ClientFacingLabLocation> pscs = new ArrayList<>();
+        private List<ClientFacingLabLocation> patientServiceCenters = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -118,7 +123,7 @@ public final class PscInfo {
         public Builder from(PscInfo other) {
             labId(other.getLabId());
             slug(other.getSlug());
-            pscs(other.getPscs());
+            patientServiceCenters(other.getPatientServiceCenters());
             return this;
         }
 
@@ -137,28 +142,28 @@ public final class PscInfo {
         }
 
         @Override
-        public _FinalStage addAllPscs(List<ClientFacingLabLocation> pscs) {
-            this.pscs.addAll(pscs);
+        public _FinalStage addAllPatientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters) {
+            this.patientServiceCenters.addAll(patientServiceCenters);
             return this;
         }
 
         @Override
-        public _FinalStage addPscs(ClientFacingLabLocation pscs) {
-            this.pscs.add(pscs);
+        public _FinalStage addPatientServiceCenters(ClientFacingLabLocation patientServiceCenters) {
+            this.patientServiceCenters.add(patientServiceCenters);
             return this;
         }
 
         @Override
-        @JsonSetter(value = "pscs", nulls = Nulls.SKIP)
-        public _FinalStage pscs(List<ClientFacingLabLocation> pscs) {
-            this.pscs.clear();
-            this.pscs.addAll(pscs);
+        @JsonSetter(value = "patient_service_centers", nulls = Nulls.SKIP)
+        public _FinalStage patientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters) {
+            this.patientServiceCenters.clear();
+            this.patientServiceCenters.addAll(patientServiceCenters);
             return this;
         }
 
         @Override
         public PscInfo build() {
-            return new PscInfo(labId, slug, pscs, additionalProperties);
+            return new PscInfo(labId, slug, patientServiceCenters, additionalProperties);
         }
     }
 }

@@ -26,11 +26,11 @@ public final class ClientFacingSource {
 
     private final Optional<String> appId;
 
-    private final String name;
+    private final Optional<String> name;
 
-    private final String slug;
+    private final Optional<String> slug;
 
-    private final String logo;
+    private final Optional<String> logo;
 
     private final Map<String, Object> additionalProperties;
 
@@ -38,9 +38,9 @@ public final class ClientFacingSource {
             String provider,
             Optional<String> type,
             Optional<String> appId,
-            String name,
-            String slug,
-            String logo,
+            Optional<String> name,
+            Optional<String> slug,
+            Optional<String> logo,
             Map<String, Object> additionalProperties) {
         this.provider = provider;
         this.type = type;
@@ -76,7 +76,7 @@ public final class ClientFacingSource {
      * @return Deprecated. Subject to removal after 1 Jan 2024.
      */
     @JsonProperty("name")
-    public String getName() {
+    public Optional<String> getName() {
         return name;
     }
 
@@ -84,7 +84,7 @@ public final class ClientFacingSource {
      * @return Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.
      */
     @JsonProperty("slug")
-    public String getSlug() {
+    public Optional<String> getSlug() {
         return slug;
     }
 
@@ -92,7 +92,7 @@ public final class ClientFacingSource {
      * @return Deprecated. Subject to removal after 1 Jan 2024.
      */
     @JsonProperty("logo")
-    public String getLogo() {
+    public Optional<String> getLogo() {
         return logo;
     }
 
@@ -131,21 +131,9 @@ public final class ClientFacingSource {
     }
 
     public interface ProviderStage {
-        NameStage provider(String provider);
+        _FinalStage provider(String provider);
 
         Builder from(ClientFacingSource other);
-    }
-
-    public interface NameStage {
-        SlugStage name(String name);
-    }
-
-    public interface SlugStage {
-        LogoStage slug(String slug);
-    }
-
-    public interface LogoStage {
-        _FinalStage logo(String logo);
     }
 
     public interface _FinalStage {
@@ -158,17 +146,29 @@ public final class ClientFacingSource {
         _FinalStage appId(Optional<String> appId);
 
         _FinalStage appId(String appId);
+
+        _FinalStage name(Optional<String> name);
+
+        _FinalStage name(String name);
+
+        _FinalStage slug(Optional<String> slug);
+
+        _FinalStage slug(String slug);
+
+        _FinalStage logo(Optional<String> logo);
+
+        _FinalStage logo(String logo);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ProviderStage, NameStage, SlugStage, LogoStage, _FinalStage {
+    public static final class Builder implements ProviderStage, _FinalStage {
         private String provider;
 
-        private String name;
+        private Optional<String> logo = Optional.empty();
 
-        private String slug;
+        private Optional<String> slug = Optional.empty();
 
-        private String logo;
+        private Optional<String> name = Optional.empty();
 
         private Optional<String> appId = Optional.empty();
 
@@ -196,7 +196,7 @@ public final class ClientFacingSource {
          */
         @Override
         @JsonSetter("provider")
-        public NameStage provider(String provider) {
+        public _FinalStage provider(String provider) {
             this.provider = provider;
             return this;
         }
@@ -206,9 +206,15 @@ public final class ClientFacingSource {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public _FinalStage logo(String logo) {
+            this.logo = Optional.of(logo);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "logo", nulls = Nulls.SKIP)
+        public _FinalStage logo(Optional<String> logo) {
+            this.logo = logo;
             return this;
         }
 
@@ -217,8 +223,14 @@ public final class ClientFacingSource {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        @JsonSetter("slug")
-        public LogoStage slug(String slug) {
+        public _FinalStage slug(String slug) {
+            this.slug = Optional.of(slug);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "slug", nulls = Nulls.SKIP)
+        public _FinalStage slug(Optional<String> slug) {
             this.slug = slug;
             return this;
         }
@@ -228,9 +240,15 @@ public final class ClientFacingSource {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        @JsonSetter("logo")
-        public _FinalStage logo(String logo) {
-            this.logo = logo;
+        public _FinalStage name(String name) {
+            this.name = Optional.of(name);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "name", nulls = Nulls.SKIP)
+        public _FinalStage name(Optional<String> name) {
+            this.name = name;
             return this;
         }
 
