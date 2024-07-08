@@ -13,6 +13,7 @@ import com.vital.api.resources.introspect.IntrospectClient;
 import com.vital.api.resources.labtests.LabTestsClient;
 import com.vital.api.resources.link.LinkClient;
 import com.vital.api.resources.meal.MealClient;
+import com.vital.api.resources.menstrualcycle.MenstrualCycleClient;
 import com.vital.api.resources.profile.ProfileClient;
 import com.vital.api.resources.providers.ProvidersClient;
 import com.vital.api.resources.sleep.SleepClient;
@@ -42,6 +43,8 @@ public class Vital {
 
     protected final Supplier<MealClient> mealClient;
 
+    protected final Supplier<MenstrualCycleClient> menstrualCycleClient;
+
     protected final Supplier<VitalsClient> vitalsClient;
 
     protected final Supplier<UserClient> userClient;
@@ -68,6 +71,7 @@ public class Vital {
         this.sleepClient = Suppliers.memoize(() -> new SleepClient(clientOptions));
         this.bodyClient = Suppliers.memoize(() -> new BodyClient(clientOptions));
         this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
+        this.menstrualCycleClient = Suppliers.memoize(() -> new MenstrualCycleClient(clientOptions));
         this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
@@ -108,6 +112,10 @@ public class Vital {
 
     public MealClient meal() {
         return this.mealClient.get();
+    }
+
+    public MenstrualCycleClient menstrualCycle() {
+        return this.menstrualCycleClient.get();
     }
 
     public VitalsClient vitals() {
