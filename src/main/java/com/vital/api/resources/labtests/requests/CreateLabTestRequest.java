@@ -26,8 +26,6 @@ public final class CreateLabTestRequest {
 
     private final Optional<List<String>> providerIds;
 
-    private final int labId;
-
     private final String name;
 
     private final LabTestCollectionMethod method;
@@ -41,7 +39,6 @@ public final class CreateLabTestRequest {
     private CreateLabTestRequest(
             Optional<List<Integer>> markerIds,
             Optional<List<String>> providerIds,
-            int labId,
             String name,
             LabTestCollectionMethod method,
             String description,
@@ -49,7 +46,6 @@ public final class CreateLabTestRequest {
             Map<String, Object> additionalProperties) {
         this.markerIds = markerIds;
         this.providerIds = providerIds;
-        this.labId = labId;
         this.name = name;
         this.method = method;
         this.description = description;
@@ -65,11 +61,6 @@ public final class CreateLabTestRequest {
     @JsonProperty("provider_ids")
     public Optional<List<String>> getProviderIds() {
         return providerIds;
-    }
-
-    @JsonProperty("lab_id")
-    public int getLabId() {
-        return labId;
     }
 
     @JsonProperty("name")
@@ -106,7 +97,6 @@ public final class CreateLabTestRequest {
     private boolean equalTo(CreateLabTestRequest other) {
         return markerIds.equals(other.markerIds)
                 && providerIds.equals(other.providerIds)
-                && labId == other.labId
                 && name.equals(other.name)
                 && method.equals(other.method)
                 && description.equals(other.description)
@@ -115,8 +105,7 @@ public final class CreateLabTestRequest {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.markerIds, this.providerIds, this.labId, this.name, this.method, this.description, this.fasting);
+        return Objects.hash(this.markerIds, this.providerIds, this.name, this.method, this.description, this.fasting);
     }
 
     @Override
@@ -124,18 +113,14 @@ public final class CreateLabTestRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static LabIdStage builder() {
+    public static NameStage builder() {
         return new Builder();
-    }
-
-    public interface LabIdStage {
-        NameStage labId(int labId);
-
-        Builder from(CreateLabTestRequest other);
     }
 
     public interface NameStage {
         MethodStage name(String name);
+
+        Builder from(CreateLabTestRequest other);
     }
 
     public interface MethodStage {
@@ -163,9 +148,7 @@ public final class CreateLabTestRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements LabIdStage, NameStage, MethodStage, DescriptionStage, _FinalStage {
-        private int labId;
-
+    public static final class Builder implements NameStage, MethodStage, DescriptionStage, _FinalStage {
         private String name;
 
         private LabTestCollectionMethod method;
@@ -187,18 +170,10 @@ public final class CreateLabTestRequest {
         public Builder from(CreateLabTestRequest other) {
             markerIds(other.getMarkerIds());
             providerIds(other.getProviderIds());
-            labId(other.getLabId());
             name(other.getName());
             method(other.getMethod());
             description(other.getDescription());
             fasting(other.getFasting());
-            return this;
-        }
-
-        @Override
-        @JsonSetter("lab_id")
-        public NameStage labId(int labId) {
-            this.labId = labId;
             return this;
         }
 
@@ -265,7 +240,7 @@ public final class CreateLabTestRequest {
         @Override
         public CreateLabTestRequest build() {
             return new CreateLabTestRequest(
-                    markerIds, providerIds, labId, name, method, description, fasting, additionalProperties);
+                    markerIds, providerIds, name, method, description, fasting, additionalProperties);
         }
     }
 }
