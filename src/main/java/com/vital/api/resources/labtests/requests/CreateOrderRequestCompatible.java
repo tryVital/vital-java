@@ -15,7 +15,7 @@ import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AoEAnswer;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
-import com.vital.api.types.PatientAddressCompatibleInput;
+import com.vital.api.types.PatientAddressCompatible;
 import com.vital.api.types.PatientDetails;
 import com.vital.api.types.PhysicianCreateRequest;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public final class CreateOrderRequestCompatible {
 
     private final PatientDetails patientDetails;
 
-    private final PatientAddressCompatibleInput patientAddress;
+    private final PatientAddressCompatible patientAddress;
 
     private final Map<String, Object> additionalProperties;
 
@@ -62,7 +62,7 @@ public final class CreateOrderRequestCompatible {
             Optional<List<AoEAnswer>> aoeAnswers,
             Optional<String> passthrough,
             PatientDetails patientDetails,
-            PatientAddressCompatibleInput patientAddress,
+            PatientAddressCompatible patientAddress,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.labTestId = labTestId;
@@ -132,7 +132,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     @JsonProperty("patient_address")
-    public PatientAddressCompatibleInput getPatientAddress() {
+    public PatientAddressCompatible getPatientAddress() {
         return patientAddress;
     }
 
@@ -201,7 +201,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     public interface PatientAddressStage {
-        _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress);
+        _FinalStage patientAddress(PatientAddressCompatible patientAddress);
     }
 
     public interface _FinalStage {
@@ -245,7 +245,7 @@ public final class CreateOrderRequestCompatible {
 
         private PatientDetails patientDetails;
 
-        private PatientAddressCompatibleInput patientAddress;
+        private PatientAddressCompatible patientAddress;
 
         private Optional<String> passthrough = Optional.empty();
 
@@ -305,7 +305,7 @@ public final class CreateOrderRequestCompatible {
 
         @Override
         @JsonSetter("patient_address")
-        public _FinalStage patientAddress(PatientAddressCompatibleInput patientAddress) {
+        public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }

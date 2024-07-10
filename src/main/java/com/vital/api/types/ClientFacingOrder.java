@@ -31,7 +31,7 @@ public final class ClientFacingOrder {
 
     private final Optional<ClientFacingPatientDetailsCompatible> patientDetails;
 
-    private final Optional<PatientAddressCompatibleOutput> patientAddress;
+    private final Optional<PatientAddressCompatible> patientAddress;
 
     private final ClientFacingLabTest labTest;
 
@@ -70,7 +70,7 @@ public final class ClientFacingOrder {
             String id,
             String teamId,
             Optional<ClientFacingPatientDetailsCompatible> patientDetails,
-            Optional<PatientAddressCompatibleOutput> patientAddress,
+            Optional<PatientAddressCompatible> patientAddress,
             ClientFacingLabTest labTest,
             ClientFacingOrderDetails details,
             Optional<String> sampleId,
@@ -140,7 +140,7 @@ public final class ClientFacingOrder {
     }
 
     @JsonProperty("patient_address")
-    public Optional<PatientAddressCompatibleOutput> getPatientAddress() {
+    public Optional<PatientAddressCompatible> getPatientAddress() {
         return patientAddress;
     }
 
@@ -336,9 +336,9 @@ public final class ClientFacingOrder {
 
         _FinalStage patientDetails(ClientFacingPatientDetailsCompatible patientDetails);
 
-        _FinalStage patientAddress(Optional<PatientAddressCompatibleOutput> patientAddress);
+        _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress);
 
-        _FinalStage patientAddress(PatientAddressCompatibleOutput patientAddress);
+        _FinalStage patientAddress(PatientAddressCompatible patientAddress);
 
         _FinalStage sampleId(Optional<String> sampleId);
 
@@ -433,7 +433,7 @@ public final class ClientFacingOrder {
 
         private Optional<String> sampleId = Optional.empty();
 
-        private Optional<PatientAddressCompatibleOutput> patientAddress = Optional.empty();
+        private Optional<PatientAddressCompatible> patientAddress = Optional.empty();
 
         private Optional<ClientFacingPatientDetailsCompatible> patientDetails = Optional.empty();
 
@@ -695,14 +695,14 @@ public final class ClientFacingOrder {
         }
 
         @Override
-        public _FinalStage patientAddress(PatientAddressCompatibleOutput patientAddress) {
+        public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = Optional.of(patientAddress);
             return this;
         }
 
         @Override
         @JsonSetter(value = "patient_address", nulls = Nulls.SKIP)
-        public _FinalStage patientAddress(Optional<PatientAddressCompatibleOutput> patientAddress) {
+        public _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }

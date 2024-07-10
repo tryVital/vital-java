@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Question.Builder.class)
@@ -35,6 +36,8 @@ public final class Question {
 
     private final List<Answer> answers;
 
+    private final Optional<String> constraint;
+
     private final Map<String, Object> additionalProperties;
 
     private Question(
@@ -45,6 +48,7 @@ public final class Question {
             QuestionType type,
             int sequence,
             List<Answer> answers,
+            Optional<String> constraint,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.required = required;
@@ -53,6 +57,7 @@ public final class Question {
         this.type = type;
         this.sequence = sequence;
         this.answers = answers;
+        this.constraint = constraint;
         this.additionalProperties = additionalProperties;
     }
 
@@ -91,6 +96,11 @@ public final class Question {
         return answers;
     }
 
+    @JsonProperty("constraint")
+    public Optional<String> getConstraint() {
+        return constraint;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -109,12 +119,14 @@ public final class Question {
                 && value.equals(other.value)
                 && type.equals(other.type)
                 && sequence == other.sequence
-                && answers.equals(other.answers);
+                && answers.equals(other.answers)
+                && constraint.equals(other.constraint);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.required, this.code, this.value, this.type, this.sequence, this.answers);
+        return Objects.hash(
+                this.id, this.required, this.code, this.value, this.type, this.sequence, this.answers, this.constraint);
     }
 
     @Override
@@ -160,6 +172,10 @@ public final class Question {
         _FinalStage addAnswers(Answer answers);
 
         _FinalStage addAllAnswers(List<Answer> answers);
+
+        _FinalStage constraint(Optional<String> constraint);
+
+        _FinalStage constraint(String constraint);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -177,6 +193,8 @@ public final class Question {
 
         private int sequence;
 
+        private Optional<String> constraint = Optional.empty();
+
         private List<Answer> answers = new ArrayList<>();
 
         @JsonAnySetter
@@ -193,6 +211,7 @@ public final class Question {
             type(other.getType());
             sequence(other.getSequence());
             answers(other.getAnswers());
+            constraint(other.getConstraint());
             return this;
         }
 
@@ -239,6 +258,19 @@ public final class Question {
         }
 
         @Override
+        public _FinalStage constraint(String constraint) {
+            this.constraint = Optional.of(constraint);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "constraint", nulls = Nulls.SKIP)
+        public _FinalStage constraint(Optional<String> constraint) {
+            this.constraint = constraint;
+            return this;
+        }
+
+        @Override
         public _FinalStage addAllAnswers(List<Answer> answers) {
             this.answers.addAll(answers);
             return this;
@@ -260,7 +292,7 @@ public final class Question {
 
         @Override
         public Question build() {
-            return new Question(id, required, code, value, type, sequence, answers, additionalProperties);
+            return new Question(id, required, code, value, type, sequence, answers, constraint, additionalProperties);
         }
     }
 }
