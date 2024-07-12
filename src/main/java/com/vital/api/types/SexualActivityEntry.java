@@ -9,22 +9,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SexualActivityEntry.Builder.class)
 public final class SexualActivityEntry {
     private final String date;
 
-    private final boolean protectionUsed;
+    private final Optional<Boolean> protectionUsed;
 
     private final Map<String, Object> additionalProperties;
 
-    private SexualActivityEntry(String date, boolean protectionUsed, Map<String, Object> additionalProperties) {
+    private SexualActivityEntry(
+            String date, Optional<Boolean> protectionUsed, Map<String, Object> additionalProperties) {
         this.date = date;
         this.protectionUsed = protectionUsed;
         this.additionalProperties = additionalProperties;
@@ -36,7 +39,7 @@ public final class SexualActivityEntry {
     }
 
     @JsonProperty("protection_used")
-    public boolean getProtectionUsed() {
+    public Optional<Boolean> getProtectionUsed() {
         return protectionUsed;
     }
 
@@ -52,7 +55,7 @@ public final class SexualActivityEntry {
     }
 
     private boolean equalTo(SexualActivityEntry other) {
-        return date.equals(other.date) && protectionUsed == other.protectionUsed;
+        return date.equals(other.date) && protectionUsed.equals(other.protectionUsed);
     }
 
     @Override
@@ -70,24 +73,24 @@ public final class SexualActivityEntry {
     }
 
     public interface DateStage {
-        ProtectionUsedStage date(String date);
+        _FinalStage date(String date);
 
         Builder from(SexualActivityEntry other);
     }
 
-    public interface ProtectionUsedStage {
-        _FinalStage protectionUsed(boolean protectionUsed);
-    }
-
     public interface _FinalStage {
         SexualActivityEntry build();
+
+        _FinalStage protectionUsed(Optional<Boolean> protectionUsed);
+
+        _FinalStage protectionUsed(Boolean protectionUsed);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DateStage, ProtectionUsedStage, _FinalStage {
+    public static final class Builder implements DateStage, _FinalStage {
         private String date;
 
-        private boolean protectionUsed;
+        private Optional<Boolean> protectionUsed = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,14 +106,20 @@ public final class SexualActivityEntry {
 
         @Override
         @JsonSetter("date")
-        public ProtectionUsedStage date(String date) {
+        public _FinalStage date(String date) {
             this.date = date;
             return this;
         }
 
         @Override
-        @JsonSetter("protection_used")
-        public _FinalStage protectionUsed(boolean protectionUsed) {
+        public _FinalStage protectionUsed(Boolean protectionUsed) {
+            this.protectionUsed = Optional.of(protectionUsed);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "protection_used", nulls = Nulls.SKIP)
+        public _FinalStage protectionUsed(Optional<Boolean> protectionUsed) {
             this.protectionUsed = protectionUsed;
             return this;
         }

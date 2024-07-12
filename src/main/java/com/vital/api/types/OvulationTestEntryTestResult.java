@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum OvulationTestEntryTestResult {
     NEGATIVE("negative"),
 
+    POSITIVE("positive"),
+
     LUTEINIZING_HORMONE_SURGE("luteinizing_hormone_surge"),
 
     ESTROGEN_SURGE("estrogen_surge"),
