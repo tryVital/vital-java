@@ -46,7 +46,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.tryvital'
             artifactId = 'vital-java'
-            version = '1.2.55'
+            version = '1.2.56'
             from components.java
         }
     }
