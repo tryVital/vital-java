@@ -62,7 +62,13 @@ public enum TimeseriesResource {
 
     CAFFEINE("caffeine"),
 
-    MINDFULNESS_MINUTES("mindfulness_minutes");
+    MINDFULNESS_MINUTES("mindfulness_minutes"),
+
+    WORKOUT_DURATION("workout_duration"),
+
+    INSULIN_INJECTION("insulin_injection"),
+
+    CARBOHYDRATES("carbohydrates");
 
     private final String value;
 

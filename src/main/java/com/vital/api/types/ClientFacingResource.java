@@ -82,6 +82,12 @@ public enum ClientFacingResource {
 
     ELECTROCARDIOGRAM_VOLTAGE("electrocardiogram_voltage"),
 
+    WORKOUT_DURATION("workout_duration"),
+
+    INSULIN_INJECTION("insulin_injection"),
+
+    CARBOHYDRATES("carbohydrates"),
+
     SLEEP_STREAM("sleep_stream");
 
     private final String value;
