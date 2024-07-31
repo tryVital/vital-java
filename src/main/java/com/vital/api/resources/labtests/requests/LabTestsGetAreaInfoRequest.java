@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
-import com.vital.api.types.Labs;
+import com.vital.api.types.ClientFacingLabs;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,14 +26,14 @@ public final class LabTestsGetAreaInfoRequest {
 
     private final Optional<AllowedRadius> radius;
 
-    private final Optional<Labs> lab;
+    private final Optional<ClientFacingLabs> lab;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetAreaInfoRequest(
             String zipCode,
             Optional<AllowedRadius> radius,
-            Optional<Labs> lab,
+            Optional<ClientFacingLabs> lab,
             Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.radius = radius;
@@ -61,7 +61,7 @@ public final class LabTestsGetAreaInfoRequest {
      * @return Lab to check for PSCs
      */
     @JsonProperty("lab")
-    public Optional<Labs> getLab() {
+    public Optional<ClientFacingLabs> getLab() {
         return lab;
     }
 
@@ -107,16 +107,16 @@ public final class LabTestsGetAreaInfoRequest {
 
         _FinalStage radius(AllowedRadius radius);
 
-        _FinalStage lab(Optional<Labs> lab);
+        _FinalStage lab(Optional<ClientFacingLabs> lab);
 
-        _FinalStage lab(Labs lab);
+        _FinalStage lab(ClientFacingLabs lab);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ZipCodeStage, _FinalStage {
         private String zipCode;
 
-        private Optional<Labs> lab = Optional.empty();
+        private Optional<ClientFacingLabs> lab = Optional.empty();
 
         private Optional<AllowedRadius> radius = Optional.empty();
 
@@ -149,14 +149,14 @@ public final class LabTestsGetAreaInfoRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage lab(Labs lab) {
+        public _FinalStage lab(ClientFacingLabs lab) {
             this.lab = Optional.of(lab);
             return this;
         }
 
         @Override
         @JsonSetter(value = "lab", nulls = Nulls.SKIP)
-        public _FinalStage lab(Optional<Labs> lab) {
+        public _FinalStage lab(Optional<ClientFacingLabs> lab) {
             this.lab = lab;
             return this;
         }

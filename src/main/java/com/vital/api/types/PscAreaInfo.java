@@ -9,9 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,16 +23,27 @@ import java.util.Objects;
 public final class PscAreaInfo {
     private final PscAreaInfoDetails patientServiceCenters;
 
+    private final List<Billing> supportedBillTypes;
+
     private final Map<String, Object> additionalProperties;
 
-    private PscAreaInfo(PscAreaInfoDetails patientServiceCenters, Map<String, Object> additionalProperties) {
+    private PscAreaInfo(
+            PscAreaInfoDetails patientServiceCenters,
+            List<Billing> supportedBillTypes,
+            Map<String, Object> additionalProperties) {
         this.patientServiceCenters = patientServiceCenters;
+        this.supportedBillTypes = supportedBillTypes;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("patient_service_centers")
     public PscAreaInfoDetails getPatientServiceCenters() {
         return patientServiceCenters;
+    }
+
+    @JsonProperty("supported_bill_types")
+    public List<Billing> getSupportedBillTypes() {
+        return supportedBillTypes;
     }
 
     @Override
@@ -44,12 +58,13 @@ public final class PscAreaInfo {
     }
 
     private boolean equalTo(PscAreaInfo other) {
-        return patientServiceCenters.equals(other.patientServiceCenters);
+        return patientServiceCenters.equals(other.patientServiceCenters)
+                && supportedBillTypes.equals(other.supportedBillTypes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.patientServiceCenters);
+        return Objects.hash(this.patientServiceCenters, this.supportedBillTypes);
     }
 
     @Override
@@ -69,11 +84,19 @@ public final class PscAreaInfo {
 
     public interface _FinalStage {
         PscAreaInfo build();
+
+        _FinalStage supportedBillTypes(List<Billing> supportedBillTypes);
+
+        _FinalStage addSupportedBillTypes(Billing supportedBillTypes);
+
+        _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements PatientServiceCentersStage, _FinalStage {
         private PscAreaInfoDetails patientServiceCenters;
+
+        private List<Billing> supportedBillTypes = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -83,6 +106,7 @@ public final class PscAreaInfo {
         @Override
         public Builder from(PscAreaInfo other) {
             patientServiceCenters(other.getPatientServiceCenters());
+            supportedBillTypes(other.getSupportedBillTypes());
             return this;
         }
 
@@ -94,8 +118,28 @@ public final class PscAreaInfo {
         }
 
         @Override
+        public _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes) {
+            this.supportedBillTypes.addAll(supportedBillTypes);
+            return this;
+        }
+
+        @Override
+        public _FinalStage addSupportedBillTypes(Billing supportedBillTypes) {
+            this.supportedBillTypes.add(supportedBillTypes);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "supported_bill_types", nulls = Nulls.SKIP)
+        public _FinalStage supportedBillTypes(List<Billing> supportedBillTypes) {
+            this.supportedBillTypes.clear();
+            this.supportedBillTypes.addAll(supportedBillTypes);
+            return this;
+        }
+
+        @Override
         public PscAreaInfo build() {
-            return new PscAreaInfo(patientServiceCenters, additionalProperties);
+            return new PscAreaInfo(patientServiceCenters, supportedBillTypes, additionalProperties);
         }
     }
 }

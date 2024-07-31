@@ -9,9 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -22,14 +25,21 @@ public final class ClientFacingPayorSearchResponse {
 
     private final String name;
 
+    private final List<String> aliases;
+
     private final Address orgAddress;
 
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingPayorSearchResponse(
-            String code, String name, Address orgAddress, Map<String, Object> additionalProperties) {
+            String code,
+            String name,
+            List<String> aliases,
+            Address orgAddress,
+            Map<String, Object> additionalProperties) {
         this.code = code;
         this.name = name;
+        this.aliases = aliases;
         this.orgAddress = orgAddress;
         this.additionalProperties = additionalProperties;
     }
@@ -48,6 +58,14 @@ public final class ClientFacingPayorSearchResponse {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Insurance name aliases returned for the insurance information.
+     */
+    @JsonProperty("aliases")
+    public List<String> getAliases() {
+        return aliases;
     }
 
     /**
@@ -70,12 +88,15 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     private boolean equalTo(ClientFacingPayorSearchResponse other) {
-        return code.equals(other.code) && name.equals(other.name) && orgAddress.equals(other.orgAddress);
+        return code.equals(other.code)
+                && name.equals(other.name)
+                && aliases.equals(other.aliases)
+                && orgAddress.equals(other.orgAddress);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.code, this.name, this.orgAddress);
+        return Objects.hash(this.code, this.name, this.aliases, this.orgAddress);
     }
 
     @Override
@@ -103,6 +124,12 @@ public final class ClientFacingPayorSearchResponse {
 
     public interface _FinalStage {
         ClientFacingPayorSearchResponse build();
+
+        _FinalStage aliases(List<String> aliases);
+
+        _FinalStage addAliases(String aliases);
+
+        _FinalStage addAllAliases(List<String> aliases);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -113,6 +140,8 @@ public final class ClientFacingPayorSearchResponse {
 
         private Address orgAddress;
 
+        private List<String> aliases = new ArrayList<>();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -122,6 +151,7 @@ public final class ClientFacingPayorSearchResponse {
         public Builder from(ClientFacingPayorSearchResponse other) {
             code(other.getCode());
             name(other.getName());
+            aliases(other.getAliases());
             orgAddress(other.getOrgAddress());
             return this;
         }
@@ -159,9 +189,37 @@ public final class ClientFacingPayorSearchResponse {
             return this;
         }
 
+        /**
+         * <p>Insurance name aliases returned for the insurance information.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage addAllAliases(List<String> aliases) {
+            this.aliases.addAll(aliases);
+            return this;
+        }
+
+        /**
+         * <p>Insurance name aliases returned for the insurance information.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage addAliases(String aliases) {
+            this.aliases.add(aliases);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "aliases", nulls = Nulls.SKIP)
+        public _FinalStage aliases(List<String> aliases) {
+            this.aliases.clear();
+            this.aliases.addAll(aliases);
+            return this;
+        }
+
         @Override
         public ClientFacingPayorSearchResponse build() {
-            return new ClientFacingPayorSearchResponse(code, name, orgAddress, additionalProperties);
+            return new ClientFacingPayorSearchResponse(code, name, aliases, orgAddress, additionalProperties);
         }
     }
 }
