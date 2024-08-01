@@ -88,6 +88,8 @@ public enum ClientFacingResource {
 
     CARBOHYDRATES("carbohydrates"),
 
+    NOTE("note"),
+
     SLEEP_STREAM("sleep_stream");
 
     private final String value;

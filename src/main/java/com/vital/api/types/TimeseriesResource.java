@@ -68,7 +68,9 @@ public enum TimeseriesResource {
 
     INSULIN_INJECTION("insulin_injection"),
 
-    CARBOHYDRATES("carbohydrates");
+    CARBOHYDRATES("carbohydrates"),
+
+    NOTE("note");
 
     private final String value;
 
