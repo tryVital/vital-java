@@ -63,6 +63,10 @@ public final class ClientFacingOrder {
 
     private final Optional<String> passthrough;
 
+    private final Optional<Billing> billingType;
+
+    private final Optional<List<String>> icdCodes;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -86,6 +90,8 @@ public final class ClientFacingOrder {
             Optional<ShippingAddress> shippingDetails,
             Optional<String> activateBy,
             Optional<String> passthrough,
+            Optional<Billing> billingType,
+            Optional<List<String>> icdCodes,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -107,6 +113,8 @@ public final class ClientFacingOrder {
         this.shippingDetails = shippingDetails;
         this.activateBy = activateBy;
         this.passthrough = passthrough;
+        this.billingType = billingType;
+        this.icdCodes = icdCodes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -231,6 +239,16 @@ public final class ClientFacingOrder {
         return passthrough;
     }
 
+    @JsonProperty("billing_type")
+    public Optional<Billing> getBillingType() {
+        return billingType;
+    }
+
+    @JsonProperty("icd_codes")
+    public Optional<List<String>> getIcdCodes() {
+        return icdCodes;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -262,7 +280,9 @@ public final class ClientFacingOrder {
                 && priority.equals(other.priority)
                 && shippingDetails.equals(other.shippingDetails)
                 && activateBy.equals(other.activateBy)
-                && passthrough.equals(other.passthrough);
+                && passthrough.equals(other.passthrough)
+                && billingType.equals(other.billingType)
+                && icdCodes.equals(other.icdCodes);
     }
 
     @Override
@@ -287,7 +307,9 @@ public final class ClientFacingOrder {
                 this.priority,
                 this.shippingDetails,
                 this.activateBy,
-                this.passthrough);
+                this.passthrough,
+                this.billingType,
+                this.icdCodes);
     }
 
     @Override
@@ -385,6 +407,14 @@ public final class ClientFacingOrder {
         _FinalStage passthrough(Optional<String> passthrough);
 
         _FinalStage passthrough(String passthrough);
+
+        _FinalStage billingType(Optional<Billing> billingType);
+
+        _FinalStage billingType(Billing billingType);
+
+        _FinalStage icdCodes(Optional<List<String>> icdCodes);
+
+        _FinalStage icdCodes(List<String> icdCodes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -410,6 +440,10 @@ public final class ClientFacingOrder {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
+
+        private Optional<List<String>> icdCodes = Optional.empty();
+
+        private Optional<Billing> billingType = Optional.empty();
 
         private Optional<String> passthrough = Optional.empty();
 
@@ -464,6 +498,8 @@ public final class ClientFacingOrder {
             shippingDetails(other.getShippingDetails());
             activateBy(other.getActivateBy());
             passthrough(other.getPassthrough());
+            billingType(other.getBillingType());
+            icdCodes(other.getIcdCodes());
             return this;
         }
 
@@ -537,6 +573,32 @@ public final class ClientFacingOrder {
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @Override
+        public _FinalStage icdCodes(List<String> icdCodes) {
+            this.icdCodes = Optional.of(icdCodes);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "icd_codes", nulls = Nulls.SKIP)
+        public _FinalStage icdCodes(Optional<List<String>> icdCodes) {
+            this.icdCodes = icdCodes;
+            return this;
+        }
+
+        @Override
+        public _FinalStage billingType(Billing billingType) {
+            this.billingType = Optional.of(billingType);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "billing_type", nulls = Nulls.SKIP)
+        public _FinalStage billingType(Optional<Billing> billingType) {
+            this.billingType = billingType;
             return this;
         }
 
@@ -743,6 +805,8 @@ public final class ClientFacingOrder {
                     shippingDetails,
                     activateBy,
                     passthrough,
+                    billingType,
+                    icdCodes,
                     additionalProperties);
         }
     }

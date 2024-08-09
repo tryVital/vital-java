@@ -10,7 +10,7 @@ public enum ResponsibleRelationship {
 
     SPOUSE("Spouse"),
 
-    OTHER_RELATIONSHIP("Other Relationship");
+    OTHER("Other");
 
     private final String value;
 

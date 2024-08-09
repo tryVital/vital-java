@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AoEAnswer;
+import com.vital.api.types.Billing;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
 import com.vital.api.types.PatientAddressCompatible;
@@ -37,6 +38,10 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<Boolean> priority;
 
+    private final Optional<Billing> billingType;
+
+    private final Optional<List<String>> icdCodes;
+
     private final Optional<List<Consent>> consents;
 
     private final Optional<String> activateBy;
@@ -57,6 +62,8 @@ public final class CreateOrderRequestCompatible {
             Optional<PhysicianCreateRequest> physician,
             Optional<HealthInsuranceCreateRequest> healthInsurance,
             Optional<Boolean> priority,
+            Optional<Billing> billingType,
+            Optional<List<String>> icdCodes,
             Optional<List<Consent>> consents,
             Optional<String> activateBy,
             Optional<List<AoEAnswer>> aoeAnswers,
@@ -69,6 +76,8 @@ public final class CreateOrderRequestCompatible {
         this.physician = physician;
         this.healthInsurance = healthInsurance;
         this.priority = priority;
+        this.billingType = billingType;
+        this.icdCodes = icdCodes;
         this.consents = consents;
         this.activateBy = activateBy;
         this.aoeAnswers = aoeAnswers;
@@ -104,6 +113,16 @@ public final class CreateOrderRequestCompatible {
     @JsonProperty("priority")
     public Optional<Boolean> getPriority() {
         return priority;
+    }
+
+    @JsonProperty("billing_type")
+    public Optional<Billing> getBillingType() {
+        return billingType;
+    }
+
+    @JsonProperty("icd_codes")
+    public Optional<List<String>> getIcdCodes() {
+        return icdCodes;
     }
 
     @JsonProperty("consents")
@@ -153,6 +172,8 @@ public final class CreateOrderRequestCompatible {
                 && physician.equals(other.physician)
                 && healthInsurance.equals(other.healthInsurance)
                 && priority.equals(other.priority)
+                && billingType.equals(other.billingType)
+                && icdCodes.equals(other.icdCodes)
                 && consents.equals(other.consents)
                 && activateBy.equals(other.activateBy)
                 && aoeAnswers.equals(other.aoeAnswers)
@@ -169,6 +190,8 @@ public final class CreateOrderRequestCompatible {
                 this.physician,
                 this.healthInsurance,
                 this.priority,
+                this.billingType,
+                this.icdCodes,
                 this.consents,
                 this.activateBy,
                 this.aoeAnswers,
@@ -219,6 +242,14 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage priority(Boolean priority);
 
+        _FinalStage billingType(Optional<Billing> billingType);
+
+        _FinalStage billingType(Billing billingType);
+
+        _FinalStage icdCodes(Optional<List<String>> icdCodes);
+
+        _FinalStage icdCodes(List<String> icdCodes);
+
         _FinalStage consents(Optional<List<Consent>> consents);
 
         _FinalStage consents(List<Consent> consents);
@@ -255,6 +286,10 @@ public final class CreateOrderRequestCompatible {
 
         private Optional<List<Consent>> consents = Optional.empty();
 
+        private Optional<List<String>> icdCodes = Optional.empty();
+
+        private Optional<Billing> billingType = Optional.empty();
+
         private Optional<Boolean> priority = Optional.empty();
 
         private Optional<HealthInsuranceCreateRequest> healthInsurance = Optional.empty();
@@ -273,6 +308,8 @@ public final class CreateOrderRequestCompatible {
             physician(other.getPhysician());
             healthInsurance(other.getHealthInsurance());
             priority(other.getPriority());
+            billingType(other.getBillingType());
+            icdCodes(other.getIcdCodes());
             consents(other.getConsents());
             activateBy(other.getActivateBy());
             aoeAnswers(other.getAoeAnswers());
@@ -362,6 +399,32 @@ public final class CreateOrderRequestCompatible {
             return this;
         }
 
+        @Override
+        public _FinalStage icdCodes(List<String> icdCodes) {
+            this.icdCodes = Optional.of(icdCodes);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "icd_codes", nulls = Nulls.SKIP)
+        public _FinalStage icdCodes(Optional<List<String>> icdCodes) {
+            this.icdCodes = icdCodes;
+            return this;
+        }
+
+        @Override
+        public _FinalStage billingType(Billing billingType) {
+            this.billingType = Optional.of(billingType);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "billing_type", nulls = Nulls.SKIP)
+        public _FinalStage billingType(Optional<Billing> billingType) {
+            this.billingType = billingType;
+            return this;
+        }
+
         /**
          * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -413,6 +476,8 @@ public final class CreateOrderRequestCompatible {
                     physician,
                     healthInsurance,
                     priority,
+                    billingType,
+                    icdCodes,
                     consents,
                     activateBy,
                     aoeAnswers,

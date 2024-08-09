@@ -9,41 +9,47 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = PersonDetails.Builder.class)
-public final class PersonDetails {
+@JsonDeserialize(builder = VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails.Builder.class)
+public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
     private final String firstName;
 
     private final String lastName;
 
+    private final Gender gender;
+
     private final Address address;
+
+    private final String dob;
+
+    private final String email;
 
     private final String phoneNumber;
 
-    private final Optional<String> phoneType;
-
     private final Map<String, Object> additionalProperties;
 
-    private PersonDetails(
+    private VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails(
             String firstName,
             String lastName,
+            Gender gender,
             Address address,
+            String dob,
+            String email,
             String phoneNumber,
-            Optional<String> phoneType,
             Map<String, Object> additionalProperties) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.gender = gender;
         this.address = address;
+        this.dob = dob;
+        this.email = email;
         this.phoneNumber = phoneNumber;
-        this.phoneType = phoneType;
         this.additionalProperties = additionalProperties;
     }
 
@@ -57,9 +63,24 @@ public final class PersonDetails {
         return lastName;
     }
 
+    @JsonProperty("gender")
+    public Gender getGender() {
+        return gender;
+    }
+
     @JsonProperty("address")
     public Address getAddress() {
         return address;
+    }
+
+    @JsonProperty("dob")
+    public String getDob() {
+        return dob;
+    }
+
+    @JsonProperty("email")
+    public String getEmail() {
+        return email;
     }
 
     @JsonProperty("phone_number")
@@ -67,15 +88,11 @@ public final class PersonDetails {
         return phoneNumber;
     }
 
-    @JsonProperty("phone_type")
-    public Optional<String> getPhoneType() {
-        return phoneType;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof PersonDetails && equalTo((PersonDetails) other);
+        return other instanceof VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails
+                && equalTo((VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails) other);
     }
 
     @JsonAnyGetter
@@ -83,17 +100,20 @@ public final class PersonDetails {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(PersonDetails other) {
+    private boolean equalTo(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails other) {
         return firstName.equals(other.firstName)
                 && lastName.equals(other.lastName)
+                && gender.equals(other.gender)
                 && address.equals(other.address)
-                && phoneNumber.equals(other.phoneNumber)
-                && phoneType.equals(other.phoneType);
+                && dob.equals(other.dob)
+                && email.equals(other.email)
+                && phoneNumber.equals(other.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.firstName, this.lastName, this.address, this.phoneNumber, this.phoneType);
+        return Objects.hash(
+                this.firstName, this.lastName, this.gender, this.address, this.dob, this.email, this.phoneNumber);
     }
 
     @Override
@@ -108,15 +128,27 @@ public final class PersonDetails {
     public interface FirstNameStage {
         LastNameStage firstName(String firstName);
 
-        Builder from(PersonDetails other);
+        Builder from(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails other);
     }
 
     public interface LastNameStage {
-        AddressStage lastName(String lastName);
+        GenderStage lastName(String lastName);
+    }
+
+    public interface GenderStage {
+        AddressStage gender(Gender gender);
     }
 
     public interface AddressStage {
-        PhoneNumberStage address(Address address);
+        DobStage address(Address address);
+    }
+
+    public interface DobStage {
+        EmailStage dob(String dob);
+    }
+
+    public interface EmailStage {
+        PhoneNumberStage email(String email);
     }
 
     public interface PhoneNumberStage {
@@ -124,25 +156,32 @@ public final class PersonDetails {
     }
 
     public interface _FinalStage {
-        PersonDetails build();
-
-        _FinalStage phoneType(Optional<String> phoneType);
-
-        _FinalStage phoneType(String phoneType);
+        VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements FirstNameStage, LastNameStage, AddressStage, PhoneNumberStage, _FinalStage {
+            implements FirstNameStage,
+                    LastNameStage,
+                    GenderStage,
+                    AddressStage,
+                    DobStage,
+                    EmailStage,
+                    PhoneNumberStage,
+                    _FinalStage {
         private String firstName;
 
         private String lastName;
 
+        private Gender gender;
+
         private Address address;
 
-        private String phoneNumber;
+        private String dob;
 
-        private Optional<String> phoneType = Optional.empty();
+        private String email;
+
+        private String phoneNumber;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -150,12 +189,14 @@ public final class PersonDetails {
         private Builder() {}
 
         @Override
-        public Builder from(PersonDetails other) {
+        public Builder from(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
+            gender(other.getGender());
             address(other.getAddress());
+            dob(other.getDob());
+            email(other.getEmail());
             phoneNumber(other.getPhoneNumber());
-            phoneType(other.getPhoneType());
             return this;
         }
 
@@ -168,15 +209,36 @@ public final class PersonDetails {
 
         @Override
         @JsonSetter("last_name")
-        public AddressStage lastName(String lastName) {
+        public GenderStage lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
         @Override
+        @JsonSetter("gender")
+        public AddressStage gender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        @Override
         @JsonSetter("address")
-        public PhoneNumberStage address(Address address) {
+        public DobStage address(Address address) {
             this.address = address;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("dob")
+        public EmailStage dob(String dob) {
+            this.dob = dob;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("email")
+        public PhoneNumberStage email(String email) {
+            this.email = email;
             return this;
         }
 
@@ -188,21 +250,9 @@ public final class PersonDetails {
         }
 
         @Override
-        public _FinalStage phoneType(String phoneType) {
-            this.phoneType = Optional.of(phoneType);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "phone_type", nulls = Nulls.SKIP)
-        public _FinalStage phoneType(Optional<String> phoneType) {
-            this.phoneType = phoneType;
-            return this;
-        }
-
-        @Override
-        public PersonDetails build() {
-            return new PersonDetails(firstName, lastName, address, phoneNumber, phoneType, additionalProperties);
+        public VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails build() {
+            return new VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails(
+                    firstName, lastName, gender, address, dob, email, phoneNumber, additionalProperties);
         }
     }
 }

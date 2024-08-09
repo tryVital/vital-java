@@ -8,17 +8,21 @@ import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
+import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
 import com.vital.api.resources.user.requests.UserRefreshRequest;
 import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
+import com.vital.api.types.ClientFacingInsurance;
 import com.vital.api.types.ClientFacingProviderWithStatus;
 import com.vital.api.types.ClientFacingUser;
 import com.vital.api.types.ClientFacingUserKey;
 import com.vital.api.types.MetricsResult;
 import com.vital.api.types.PaginatedUsersResponse;
 import com.vital.api.types.Providers;
+import com.vital.api.types.UserInfo;
 import com.vital.api.types.UserRefreshSuccessResponse;
 import com.vital.api.types.UserSignInTokenResponse;
 import com.vital.api.types.UserSuccessResponse;
@@ -338,6 +342,145 @@ public class UserClient {
 
     public void patch(String userId, UserPatchBody request) {
         patch(userId, request, null);
+    }
+
+    public UserInfo getLatestUserInfo(String userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/user")
+                .addPathSegment(userId)
+                .addPathSegments("info/latest")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserInfo.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UserInfo getLatestUserInfo(String userId) {
+        return getLatestUserInfo(userId, null);
+    }
+
+    public ClientFacingInsurance createInsurance(
+            String userId, CreateInsuranceRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/user")
+                .addPathSegment(userId)
+                .addPathSegments("insurance")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingInsurance.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingInsurance createInsurance(String userId, CreateInsuranceRequest request) {
+        return createInsurance(userId, request, null);
+    }
+
+    public ClientFacingInsurance getLatestInsurance(String userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/user")
+                .addPathSegment(userId)
+                .addPathSegments("insurance/latest")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingInsurance.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingInsurance getLatestInsurance(String userId) {
+        return getLatestInsurance(userId, null);
+    }
+
+    public UserInfo upsertUserInfo(String userId, UserInfoCreateRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/user")
+                .addPathSegment(userId)
+                .addPathSegments("info")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserInfo.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UserInfo upsertUserInfo(String userId, UserInfoCreateRequest request) {
+        return upsertUserInfo(userId, request, null);
     }
 
     /**

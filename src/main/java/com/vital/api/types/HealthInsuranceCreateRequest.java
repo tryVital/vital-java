@@ -37,7 +37,7 @@ public final class HealthInsuranceCreateRequest {
 
     private final Optional<ResponsibleRelationship> responsibleRelationship;
 
-    private final Optional<PersonDetails> responsibleDetails;
+    private final Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> responsibleDetails;
 
     private final Optional<List<String>> diagnosisCodes;
 
@@ -52,7 +52,7 @@ public final class HealthInsuranceCreateRequest {
             Optional<String> payorCode,
             Optional<String> insuranceId,
             Optional<ResponsibleRelationship> responsibleRelationship,
-            Optional<PersonDetails> responsibleDetails,
+            Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> responsibleDetails,
             Optional<List<String>> diagnosisCodes,
             Map<String, Object> additionalProperties) {
         this.frontImage = frontImage;
@@ -118,7 +118,7 @@ public final class HealthInsuranceCreateRequest {
     }
 
     @JsonProperty("responsible_details")
-    public Optional<PersonDetails> getResponsibleDetails() {
+    public Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> getResponsibleDetails() {
         return responsibleDetails;
     }
 
@@ -193,7 +193,8 @@ public final class HealthInsuranceCreateRequest {
 
         private Optional<ResponsibleRelationship> responsibleRelationship = Optional.empty();
 
-        private Optional<PersonDetails> responsibleDetails = Optional.empty();
+        private Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> responsibleDetails =
+                Optional.empty();
 
         private Optional<List<String>> diagnosisCodes = Optional.empty();
 
@@ -306,12 +307,14 @@ public final class HealthInsuranceCreateRequest {
         }
 
         @JsonSetter(value = "responsible_details", nulls = Nulls.SKIP)
-        public Builder responsibleDetails(Optional<PersonDetails> responsibleDetails) {
+        public Builder responsibleDetails(
+                Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> responsibleDetails) {
             this.responsibleDetails = responsibleDetails;
             return this;
         }
 
-        public Builder responsibleDetails(PersonDetails responsibleDetails) {
+        public Builder responsibleDetails(
+                VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails responsibleDetails) {
             this.responsibleDetails = Optional.of(responsibleDetails);
             return this;
         }
