@@ -1129,11 +1129,29 @@ public class LabTestsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/orders");
+        if (request.getSearchInput().isPresent()) {
+            httpUrl.addQueryParameter("search_input", request.getSearchInput().get());
+        }
         if (request.getStartDate().isPresent()) {
             httpUrl.addQueryParameter("start_date", request.getStartDate().get().toString());
         }
         if (request.getEndDate().isPresent()) {
             httpUrl.addQueryParameter("end_date", request.getEndDate().get().toString());
+        }
+        if (request.getUpdatedStartDate().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "updated_start_date", request.getUpdatedStartDate().get().toString());
+        }
+        if (request.getUpdatedEndDate().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "updated_end_date", request.getUpdatedEndDate().get().toString());
+        }
+        if (request.getOrderKey().isPresent()) {
+            httpUrl.addQueryParameter("order_key", request.getOrderKey().get().toString());
+        }
+        if (request.getOrderDirection().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "order_direction", request.getOrderDirection().get().toString());
         }
         if (request.getUserId().isPresent()) {
             httpUrl.addQueryParameter("user_id", request.getUserId().get());

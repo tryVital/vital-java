@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.labtests.types.LabTestsGetOrdersRequestOrderDirection;
+import com.vital.api.resources.labtests.types.LabTestsGetOrdersRequestOrderKey;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +23,19 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LabTestsGetOrdersRequest.Builder.class)
 public final class LabTestsGetOrdersRequest {
+    private final Optional<String> searchInput;
+
     private final Optional<OffsetDateTime> startDate;
 
     private final Optional<OffsetDateTime> endDate;
+
+    private final Optional<OffsetDateTime> updatedStartDate;
+
+    private final Optional<OffsetDateTime> updatedEndDate;
+
+    private final Optional<LabTestsGetOrdersRequestOrderKey> orderKey;
+
+    private final Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection;
 
     private final Optional<String> userId;
 
@@ -40,8 +52,13 @@ public final class LabTestsGetOrdersRequest {
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetOrdersRequest(
+            Optional<String> searchInput,
             Optional<OffsetDateTime> startDate,
             Optional<OffsetDateTime> endDate,
+            Optional<OffsetDateTime> updatedStartDate,
+            Optional<OffsetDateTime> updatedEndDate,
+            Optional<LabTestsGetOrdersRequestOrderKey> orderKey,
+            Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection,
             Optional<String> userId,
             Optional<String> patientName,
             Optional<String> shippingRecipientName,
@@ -49,8 +66,13 @@ public final class LabTestsGetOrdersRequest {
             Optional<Integer> page,
             Optional<Integer> size,
             Map<String, Object> additionalProperties) {
+        this.searchInput = searchInput;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.updatedStartDate = updatedStartDate;
+        this.updatedEndDate = updatedEndDate;
+        this.orderKey = orderKey;
+        this.orderDirection = orderDirection;
         this.userId = userId;
         this.patientName = patientName;
         this.shippingRecipientName = shippingRecipientName;
@@ -58,6 +80,14 @@ public final class LabTestsGetOrdersRequest {
         this.page = page;
         this.size = size;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Search by order id, user id, patient name, shipping dob, or shipping recipient name.
+     */
+    @JsonProperty("search_input")
+    public Optional<String> getSearchInput() {
+        return searchInput;
     }
 
     /**
@@ -74,6 +104,32 @@ public final class LabTestsGetOrdersRequest {
     @JsonProperty("end_date")
     public Optional<OffsetDateTime> getEndDate() {
         return endDate;
+    }
+
+    /**
+     * @return Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00
+     */
+    @JsonProperty("updated_start_date")
+    public Optional<OffsetDateTime> getUpdatedStartDate() {
+        return updatedStartDate;
+    }
+
+    /**
+     * @return Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00
+     */
+    @JsonProperty("updated_end_date")
+    public Optional<OffsetDateTime> getUpdatedEndDate() {
+        return updatedEndDate;
+    }
+
+    @JsonProperty("order_key")
+    public Optional<LabTestsGetOrdersRequestOrderKey> getOrderKey() {
+        return orderKey;
+    }
+
+    @JsonProperty("order_direction")
+    public Optional<LabTestsGetOrdersRequestOrderDirection> getOrderDirection() {
+        return orderDirection;
     }
 
     /**
@@ -130,8 +186,13 @@ public final class LabTestsGetOrdersRequest {
     }
 
     private boolean equalTo(LabTestsGetOrdersRequest other) {
-        return startDate.equals(other.startDate)
+        return searchInput.equals(other.searchInput)
+                && startDate.equals(other.startDate)
                 && endDate.equals(other.endDate)
+                && updatedStartDate.equals(other.updatedStartDate)
+                && updatedEndDate.equals(other.updatedEndDate)
+                && orderKey.equals(other.orderKey)
+                && orderDirection.equals(other.orderDirection)
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
                 && shippingRecipientName.equals(other.shippingRecipientName)
@@ -143,8 +204,13 @@ public final class LabTestsGetOrdersRequest {
     @Override
     public int hashCode() {
         return Objects.hash(
+                this.searchInput,
                 this.startDate,
                 this.endDate,
+                this.updatedStartDate,
+                this.updatedEndDate,
+                this.orderKey,
+                this.orderDirection,
                 this.userId,
                 this.patientName,
                 this.shippingRecipientName,
@@ -164,9 +230,19 @@ public final class LabTestsGetOrdersRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<String> searchInput = Optional.empty();
+
         private Optional<OffsetDateTime> startDate = Optional.empty();
 
         private Optional<OffsetDateTime> endDate = Optional.empty();
+
+        private Optional<OffsetDateTime> updatedStartDate = Optional.empty();
+
+        private Optional<OffsetDateTime> updatedEndDate = Optional.empty();
+
+        private Optional<LabTestsGetOrdersRequestOrderKey> orderKey = Optional.empty();
+
+        private Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection = Optional.empty();
 
         private Optional<String> userId = Optional.empty();
 
@@ -186,14 +262,30 @@ public final class LabTestsGetOrdersRequest {
         private Builder() {}
 
         public Builder from(LabTestsGetOrdersRequest other) {
+            searchInput(other.getSearchInput());
             startDate(other.getStartDate());
             endDate(other.getEndDate());
+            updatedStartDate(other.getUpdatedStartDate());
+            updatedEndDate(other.getUpdatedEndDate());
+            orderKey(other.getOrderKey());
+            orderDirection(other.getOrderDirection());
             userId(other.getUserId());
             patientName(other.getPatientName());
             shippingRecipientName(other.getShippingRecipientName());
             orderIds(other.getOrderIds());
             page(other.getPage());
             size(other.getSize());
+            return this;
+        }
+
+        @JsonSetter(value = "search_input", nulls = Nulls.SKIP)
+        public Builder searchInput(Optional<String> searchInput) {
+            this.searchInput = searchInput;
+            return this;
+        }
+
+        public Builder searchInput(String searchInput) {
+            this.searchInput = Optional.of(searchInput);
             return this;
         }
 
@@ -216,6 +308,50 @@ public final class LabTestsGetOrdersRequest {
 
         public Builder endDate(OffsetDateTime endDate) {
             this.endDate = Optional.of(endDate);
+            return this;
+        }
+
+        @JsonSetter(value = "updated_start_date", nulls = Nulls.SKIP)
+        public Builder updatedStartDate(Optional<OffsetDateTime> updatedStartDate) {
+            this.updatedStartDate = updatedStartDate;
+            return this;
+        }
+
+        public Builder updatedStartDate(OffsetDateTime updatedStartDate) {
+            this.updatedStartDate = Optional.of(updatedStartDate);
+            return this;
+        }
+
+        @JsonSetter(value = "updated_end_date", nulls = Nulls.SKIP)
+        public Builder updatedEndDate(Optional<OffsetDateTime> updatedEndDate) {
+            this.updatedEndDate = updatedEndDate;
+            return this;
+        }
+
+        public Builder updatedEndDate(OffsetDateTime updatedEndDate) {
+            this.updatedEndDate = Optional.of(updatedEndDate);
+            return this;
+        }
+
+        @JsonSetter(value = "order_key", nulls = Nulls.SKIP)
+        public Builder orderKey(Optional<LabTestsGetOrdersRequestOrderKey> orderKey) {
+            this.orderKey = orderKey;
+            return this;
+        }
+
+        public Builder orderKey(LabTestsGetOrdersRequestOrderKey orderKey) {
+            this.orderKey = Optional.of(orderKey);
+            return this;
+        }
+
+        @JsonSetter(value = "order_direction", nulls = Nulls.SKIP)
+        public Builder orderDirection(Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection) {
+            this.orderDirection = orderDirection;
+            return this;
+        }
+
+        public Builder orderDirection(LabTestsGetOrdersRequestOrderDirection orderDirection) {
+            this.orderDirection = Optional.of(orderDirection);
             return this;
         }
 
@@ -287,8 +423,13 @@ public final class LabTestsGetOrdersRequest {
 
         public LabTestsGetOrdersRequest build() {
             return new LabTestsGetOrdersRequest(
+                    searchInput,
                     startDate,
                     endDate,
+                    updatedStartDate,
+                    updatedEndDate,
+                    orderKey,
+                    orderDirection,
                     userId,
                     patientName,
                     shippingRecipientName,

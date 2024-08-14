@@ -24,6 +24,7 @@ import com.vital.api.resources.vitals.requests.VitalsCaloriesActiveGroupedReques
 import com.vital.api.resources.vitals.requests.VitalsCaloriesActiveRequest;
 import com.vital.api.resources.vitals.requests.VitalsCaloriesBasalGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCaloriesBasalRequest;
+import com.vital.api.resources.vitals.requests.VitalsCarbohydratesGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolHdlRequest;
 import com.vital.api.resources.vitals.requests.VitalsCholesterolLdlRequest;
@@ -48,8 +49,10 @@ import com.vital.api.resources.vitals.requests.VitalsIgeGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsIgeRequest;
 import com.vital.api.resources.vitals.requests.VitalsIggGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsIggRequest;
+import com.vital.api.resources.vitals.requests.VitalsInsulinInjectionGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesRequest;
+import com.vital.api.resources.vitals.requests.VitalsNoteGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsRespiratoryRateGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsRespiratoryRateRequest;
 import com.vital.api.resources.vitals.requests.VitalsStepsGroupedRequest;
@@ -60,6 +63,7 @@ import com.vital.api.resources.vitals.requests.VitalsVo2MaxGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsVo2MaxRequest;
 import com.vital.api.resources.vitals.requests.VitalsWaterGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsWaterRequest;
+import com.vital.api.resources.vitals.requests.VitalsWorkoutDurationGroupedRequest;
 import com.vital.api.types.ClientFacingBloodOxygenTimeseries;
 import com.vital.api.types.ClientFacingBloodPressureTimeseries;
 import com.vital.api.types.ClientFacingBodyFatTimeseries;
@@ -74,6 +78,10 @@ import com.vital.api.types.ClientFacingFloorsClimbedTimeseries;
 import com.vital.api.types.ClientFacingGlucoseTimeseries;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingNoteSample;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample;
 import com.vital.api.types.ClientFacingHeartRateTimeseries;
 import com.vital.api.types.ClientFacingHrvTimeseries;
 import com.vital.api.types.ClientFacingHypnogramTimeseries;
@@ -120,6 +128,53 @@ public class VitalsClient {
 
     public VitalsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample workoutDurationGrouped(
+            String userId, VitalsWorkoutDurationGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("workout_duration/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(),
+                        ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample workoutDurationGrouped(
+            String userId, VitalsWorkoutDurationGroupedRequest request) {
+        return workoutDurationGrouped(userId, request, null);
     }
 
     public GroupedVo2MaxResponse vo2MaxGrouped(
@@ -614,6 +669,99 @@ public class VitalsClient {
         return respiratoryRateGrouped(userId, request, null);
     }
 
+    public ClientFacingGroupedTimeseriesResponseClientFacingNoteSample noteGrouped(
+            String userId, VitalsNoteGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("note/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(), ClientFacingGroupedTimeseriesResponseClientFacingNoteSample.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingNoteSample noteGrouped(
+            String userId, VitalsNoteGroupedRequest request) {
+        return noteGrouped(userId, request, null);
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample insulinInjectionGrouped(
+            String userId, VitalsInsulinInjectionGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("insulin_injection/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(),
+                        ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample insulinInjectionGrouped(
+            String userId, VitalsInsulinInjectionGroupedRequest request) {
+        return insulinInjectionGrouped(userId, request, null);
+    }
+
     public GroupedIgeResponse igeGrouped(
             String userId, VitalsIgeGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -920,6 +1068,53 @@ public class VitalsClient {
 
     public GroupedCholesterolResponse cholesterolGrouped(String userId, VitalsCholesterolGroupedRequest request) {
         return cholesterolGrouped(userId, request, null);
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample carbohydratesGrouped(
+            String userId, VitalsCarbohydratesGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("carbohydrates/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        response.body().string(),
+                        ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample carbohydratesGrouped(
+            String userId, VitalsCarbohydratesGroupedRequest request) {
+        return carbohydratesGrouped(userId, request, null);
     }
 
     public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample bodyTemperatureDeltaGrouped(
