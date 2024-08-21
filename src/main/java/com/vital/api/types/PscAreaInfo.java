@@ -25,14 +25,18 @@ public final class PscAreaInfo {
 
     private final List<Billing> supportedBillTypes;
 
+    private final int labId;
+
     private final Map<String, Object> additionalProperties;
 
     private PscAreaInfo(
             PscAreaInfoDetails patientServiceCenters,
             List<Billing> supportedBillTypes,
+            int labId,
             Map<String, Object> additionalProperties) {
         this.patientServiceCenters = patientServiceCenters;
         this.supportedBillTypes = supportedBillTypes;
+        this.labId = labId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -44,6 +48,11 @@ public final class PscAreaInfo {
     @JsonProperty("supported_bill_types")
     public List<Billing> getSupportedBillTypes() {
         return supportedBillTypes;
+    }
+
+    @JsonProperty("lab_id")
+    public int getLabId() {
+        return labId;
     }
 
     @Override
@@ -59,12 +68,13 @@ public final class PscAreaInfo {
 
     private boolean equalTo(PscAreaInfo other) {
         return patientServiceCenters.equals(other.patientServiceCenters)
-                && supportedBillTypes.equals(other.supportedBillTypes);
+                && supportedBillTypes.equals(other.supportedBillTypes)
+                && labId == other.labId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.patientServiceCenters, this.supportedBillTypes);
+        return Objects.hash(this.patientServiceCenters, this.supportedBillTypes, this.labId);
     }
 
     @Override
@@ -77,9 +87,13 @@ public final class PscAreaInfo {
     }
 
     public interface PatientServiceCentersStage {
-        _FinalStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters);
+        LabIdStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters);
 
         Builder from(PscAreaInfo other);
+    }
+
+    public interface LabIdStage {
+        _FinalStage labId(int labId);
     }
 
     public interface _FinalStage {
@@ -93,8 +107,10 @@ public final class PscAreaInfo {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PatientServiceCentersStage, _FinalStage {
+    public static final class Builder implements PatientServiceCentersStage, LabIdStage, _FinalStage {
         private PscAreaInfoDetails patientServiceCenters;
+
+        private int labId;
 
         private List<Billing> supportedBillTypes = new ArrayList<>();
 
@@ -107,13 +123,21 @@ public final class PscAreaInfo {
         public Builder from(PscAreaInfo other) {
             patientServiceCenters(other.getPatientServiceCenters());
             supportedBillTypes(other.getSupportedBillTypes());
+            labId(other.getLabId());
             return this;
         }
 
         @Override
         @JsonSetter("patient_service_centers")
-        public _FinalStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters) {
+        public LabIdStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters) {
             this.patientServiceCenters = patientServiceCenters;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("lab_id")
+        public _FinalStage labId(int labId) {
+            this.labId = labId;
             return this;
         }
 
@@ -139,7 +163,7 @@ public final class PscAreaInfo {
 
         @Override
         public PscAreaInfo build() {
-            return new PscAreaInfo(patientServiceCenters, supportedBillTypes, additionalProperties);
+            return new PscAreaInfo(patientServiceCenters, supportedBillTypes, labId, additionalProperties);
         }
     }
 }
