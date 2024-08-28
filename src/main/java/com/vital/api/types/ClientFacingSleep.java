@@ -63,6 +63,8 @@ public final class ClientFacingSleep {
 
     private final Optional<Double> hrDip;
 
+    private final Optional<SleepSummaryState> state;
+
     private final Optional<Double> averageHrv;
 
     private final Optional<Double> respiratoryRate;
@@ -95,6 +97,7 @@ public final class ClientFacingSleep {
             Optional<Double> temperatureDelta,
             Optional<Double> skinTemperature,
             Optional<Double> hrDip,
+            Optional<SleepSummaryState> state,
             Optional<Double> averageHrv,
             Optional<Double> respiratoryRate,
             ClientFacingSource source,
@@ -121,6 +124,7 @@ public final class ClientFacingSleep {
         this.temperatureDelta = temperatureDelta;
         this.skinTemperature = skinTemperature;
         this.hrDip = hrDip;
+        this.state = state;
         this.averageHrv = averageHrv;
         this.respiratoryRate = respiratoryRate;
         this.source = source;
@@ -266,6 +270,11 @@ public final class ClientFacingSleep {
         return hrDip;
     }
 
+    @JsonProperty("state")
+    public Optional<SleepSummaryState> getState() {
+        return state;
+    }
+
     @JsonProperty("average_hrv")
     public Optional<Double> getAverageHrv() {
         return averageHrv;
@@ -322,6 +331,7 @@ public final class ClientFacingSleep {
                 && temperatureDelta.equals(other.temperatureDelta)
                 && skinTemperature.equals(other.skinTemperature)
                 && hrDip.equals(other.hrDip)
+                && state.equals(other.state)
                 && averageHrv.equals(other.averageHrv)
                 && respiratoryRate.equals(other.respiratoryRate)
                 && source.equals(other.source)
@@ -352,6 +362,7 @@ public final class ClientFacingSleep {
                 this.temperatureDelta,
                 this.skinTemperature,
                 this.hrDip,
+                this.state,
                 this.averageHrv,
                 this.respiratoryRate,
                 this.source,
@@ -460,6 +471,10 @@ public final class ClientFacingSleep {
 
         _FinalStage hrDip(Double hrDip);
 
+        _FinalStage state(Optional<SleepSummaryState> state);
+
+        _FinalStage state(SleepSummaryState state);
+
         _FinalStage averageHrv(Optional<Double> averageHrv);
 
         _FinalStage averageHrv(Double averageHrv);
@@ -521,6 +536,8 @@ public final class ClientFacingSleep {
 
         private Optional<Double> averageHrv = Optional.empty();
 
+        private Optional<SleepSummaryState> state = Optional.empty();
+
         private Optional<Double> hrDip = Optional.empty();
 
         private Optional<Double> skinTemperature = Optional.empty();
@@ -567,6 +584,7 @@ public final class ClientFacingSleep {
             temperatureDelta(other.getTemperatureDelta());
             skinTemperature(other.getSkinTemperature());
             hrDip(other.getHrDip());
+            state(other.getState());
             averageHrv(other.getAverageHrv());
             respiratoryRate(other.getRespiratoryRate());
             source(other.getSource());
@@ -753,6 +771,19 @@ public final class ClientFacingSleep {
         }
 
         @Override
+        public _FinalStage state(SleepSummaryState state) {
+            this.state = Optional.of(state);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "state", nulls = Nulls.SKIP)
+        public _FinalStage state(Optional<SleepSummaryState> state) {
+            this.state = state;
+            return this;
+        }
+
+        @Override
         public _FinalStage hrDip(Double hrDip) {
             this.hrDip = Optional.of(hrDip);
             return this;
@@ -893,6 +924,7 @@ public final class ClientFacingSleep {
                     temperatureDelta,
                     skinTemperature,
                     hrDip,
+                    state,
                     averageHrv,
                     respiratoryRate,
                     source,
