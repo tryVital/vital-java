@@ -41,6 +41,8 @@ public final class ClientFacingStream {
 
     private final Optional<ClientFacingStreamResistance> resistance;
 
+    private final Optional<ClientFacingStreamTemperature> temperature;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingStream(
@@ -54,6 +56,7 @@ public final class ClientFacingStream {
             Optional<ClientFacingStreamDistance> distance,
             Optional<ClientFacingStreamPower> power,
             Optional<ClientFacingStreamResistance> resistance,
+            Optional<ClientFacingStreamTemperature> temperature,
             Map<String, Object> additionalProperties) {
         this.cadence = cadence;
         this.time = time;
@@ -65,6 +68,7 @@ public final class ClientFacingStream {
         this.distance = distance;
         this.power = power;
         this.resistance = resistance;
+        this.temperature = temperature;
         this.additionalProperties = additionalProperties;
     }
 
@@ -145,6 +149,14 @@ public final class ClientFacingStream {
         return resistance;
     }
 
+    /**
+     * @return Temperature stream measured by device in Celsius
+     */
+    @JsonProperty("temperature")
+    public Optional<ClientFacingStreamTemperature> getTemperature() {
+        return temperature;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -166,7 +178,8 @@ public final class ClientFacingStream {
                 && lng.equals(other.lng)
                 && distance.equals(other.distance)
                 && power.equals(other.power)
-                && resistance.equals(other.resistance);
+                && resistance.equals(other.resistance)
+                && temperature.equals(other.temperature);
     }
 
     @Override
@@ -181,7 +194,8 @@ public final class ClientFacingStream {
                 this.lng,
                 this.distance,
                 this.power,
-                this.resistance);
+                this.resistance,
+                this.temperature);
     }
 
     @Override
@@ -215,6 +229,8 @@ public final class ClientFacingStream {
 
         private Optional<ClientFacingStreamResistance> resistance = Optional.empty();
 
+        private Optional<ClientFacingStreamTemperature> temperature = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -231,6 +247,7 @@ public final class ClientFacingStream {
             distance(other.getDistance());
             power(other.getPower());
             resistance(other.getResistance());
+            temperature(other.getTemperature());
             return this;
         }
 
@@ -344,6 +361,17 @@ public final class ClientFacingStream {
             return this;
         }
 
+        @JsonSetter(value = "temperature", nulls = Nulls.SKIP)
+        public Builder temperature(Optional<ClientFacingStreamTemperature> temperature) {
+            this.temperature = temperature;
+            return this;
+        }
+
+        public Builder temperature(ClientFacingStreamTemperature temperature) {
+            this.temperature = Optional.of(temperature);
+            return this;
+        }
+
         public ClientFacingStream build() {
             return new ClientFacingStream(
                     cadence,
@@ -356,6 +384,7 @@ public final class ClientFacingStream {
                     distance,
                     power,
                     resistance,
+                    temperature,
                     additionalProperties);
         }
     }
