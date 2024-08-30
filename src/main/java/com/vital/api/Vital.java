@@ -6,6 +6,7 @@ package com.vital.api;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.Suppliers;
 import com.vital.api.resources.activity.ActivityClient;
+import com.vital.api.resources.aggregate.AggregateClient;
 import com.vital.api.resources.body.BodyClient;
 import com.vital.api.resources.devices.DevicesClient;
 import com.vital.api.resources.insurance.InsuranceClient;
@@ -61,6 +62,8 @@ public class Vital {
 
     protected final Supplier<InsuranceClient> insuranceClient;
 
+    protected final Supplier<AggregateClient> aggregateClient;
+
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
@@ -80,6 +83,7 @@ public class Vital {
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
+        this.aggregateClient = Suppliers.memoize(() -> new AggregateClient(clientOptions));
     }
 
     public LinkClient link() {
@@ -148,6 +152,10 @@ public class Vital {
 
     public InsuranceClient insurance() {
         return this.insuranceClient.get();
+    }
+
+    public AggregateClient aggregate() {
+        return this.aggregateClient.get();
     }
 
     public static VitalBuilder builder() {
