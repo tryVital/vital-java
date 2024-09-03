@@ -72,7 +72,9 @@ public enum Providers {
 
     KARDIA("kardia"),
 
-    WHOOP_V_2("whoop_v2");
+    WHOOP_V_2("whoop_v2"),
+
+    ULTRAHUMAN("ultrahuman");
 
     private final String value;
 

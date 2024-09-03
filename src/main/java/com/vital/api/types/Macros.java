@@ -34,6 +34,8 @@ public final class Macros {
 
     private final Optional<Double> sugar;
 
+    private final Optional<Double> cholesterol;
+
     private final Map<String, Object> additionalProperties;
 
     private Macros(
@@ -44,6 +46,7 @@ public final class Macros {
             Optional<Double> water,
             Optional<Double> fibre,
             Optional<Double> sugar,
+            Optional<Double> cholesterol,
             Map<String, Object> additionalProperties) {
         this.carbs = carbs;
         this.protein = protein;
@@ -52,6 +55,7 @@ public final class Macros {
         this.water = water;
         this.fibre = fibre;
         this.sugar = sugar;
+        this.cholesterol = cholesterol;
         this.additionalProperties = additionalProperties;
     }
 
@@ -93,6 +97,11 @@ public final class Macros {
         return sugar;
     }
 
+    @JsonProperty("cholesterol")
+    public Optional<Double> getCholesterol() {
+        return cholesterol;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -111,12 +120,21 @@ public final class Macros {
                 && alcohol.equals(other.alcohol)
                 && water.equals(other.water)
                 && fibre.equals(other.fibre)
-                && sugar.equals(other.sugar);
+                && sugar.equals(other.sugar)
+                && cholesterol.equals(other.cholesterol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.carbs, this.protein, this.fats, this.alcohol, this.water, this.fibre, this.sugar);
+        return Objects.hash(
+                this.carbs,
+                this.protein,
+                this.fats,
+                this.alcohol,
+                this.water,
+                this.fibre,
+                this.sugar,
+                this.cholesterol);
     }
 
     @Override
@@ -144,6 +162,8 @@ public final class Macros {
 
         private Optional<Double> sugar = Optional.empty();
 
+        private Optional<Double> cholesterol = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -157,6 +177,7 @@ public final class Macros {
             water(other.getWater());
             fibre(other.getFibre());
             sugar(other.getSugar());
+            cholesterol(other.getCholesterol());
             return this;
         }
 
@@ -237,8 +258,19 @@ public final class Macros {
             return this;
         }
 
+        @JsonSetter(value = "cholesterol", nulls = Nulls.SKIP)
+        public Builder cholesterol(Optional<Double> cholesterol) {
+            this.cholesterol = cholesterol;
+            return this;
+        }
+
+        public Builder cholesterol(Double cholesterol) {
+            this.cholesterol = Optional.of(cholesterol);
+            return this;
+        }
+
         public Macros build() {
-            return new Macros(carbs, protein, fats, alcohol, water, fibre, sugar, additionalProperties);
+            return new Macros(carbs, protein, fats, alcohol, water, fibre, sugar, cholesterol, additionalProperties);
         }
     }
 }
