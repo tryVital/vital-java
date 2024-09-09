@@ -22,11 +22,11 @@ import java.util.Optional;
 public final class Period {
     private final Optional<Integer> value;
 
-    private final DateTimeUnit unit;
+    private final PeriodUnit unit;
 
     private final Map<String, Object> additionalProperties;
 
-    private Period(Optional<Integer> value, DateTimeUnit unit, Map<String, Object> additionalProperties) {
+    private Period(Optional<Integer> value, PeriodUnit unit, Map<String, Object> additionalProperties) {
         this.value = value;
         this.unit = unit;
         this.additionalProperties = additionalProperties;
@@ -38,7 +38,7 @@ public final class Period {
     }
 
     @JsonProperty("unit")
-    public DateTimeUnit getUnit() {
+    public PeriodUnit getUnit() {
         return unit;
     }
 
@@ -72,7 +72,7 @@ public final class Period {
     }
 
     public interface UnitStage {
-        _FinalStage unit(DateTimeUnit unit);
+        _FinalStage unit(PeriodUnit unit);
 
         Builder from(Period other);
     }
@@ -87,7 +87,7 @@ public final class Period {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements UnitStage, _FinalStage {
-        private DateTimeUnit unit;
+        private PeriodUnit unit;
 
         private Optional<Integer> value = Optional.empty();
 
@@ -105,7 +105,7 @@ public final class Period {
 
         @Override
         @JsonSetter("unit")
-        public _FinalStage unit(DateTimeUnit unit) {
+        public _FinalStage unit(PeriodUnit unit) {
             this.unit = unit;
             return this;
         }

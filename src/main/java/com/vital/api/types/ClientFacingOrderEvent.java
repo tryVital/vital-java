@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,14 +20,14 @@ import java.util.Objects;
 public final class ClientFacingOrderEvent {
     private final int id;
 
-    private final OffsetDateTime createdAt;
+    private final String createdAt;
 
     private final OrderStatus status;
 
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrderEvent(
-            int id, OffsetDateTime createdAt, OrderStatus status, Map<String, Object> additionalProperties) {
+            int id, String createdAt, OrderStatus status, Map<String, Object> additionalProperties) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
@@ -41,7 +40,7 @@ public final class ClientFacingOrderEvent {
     }
 
     @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
@@ -86,7 +85,7 @@ public final class ClientFacingOrderEvent {
     }
 
     public interface CreatedAtStage {
-        StatusStage createdAt(OffsetDateTime createdAt);
+        StatusStage createdAt(String createdAt);
     }
 
     public interface StatusStage {
@@ -101,7 +100,7 @@ public final class ClientFacingOrderEvent {
     public static final class Builder implements IdStage, CreatedAtStage, StatusStage, _FinalStage {
         private int id;
 
-        private OffsetDateTime createdAt;
+        private String createdAt;
 
         private OrderStatus status;
 
@@ -127,7 +126,7 @@ public final class ClientFacingOrderEvent {
 
         @Override
         @JsonSetter("created_at")
-        public StatusStage createdAt(OffsetDateTime createdAt) {
+        public StatusStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }

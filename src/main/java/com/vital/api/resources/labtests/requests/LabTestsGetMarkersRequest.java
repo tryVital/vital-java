@@ -24,6 +24,8 @@ public final class LabTestsGetMarkersRequest {
 
     private final Optional<String> name;
 
+    private final Optional<Boolean> aLaCarteEnabled;
+
     private final Optional<Integer> page;
 
     private final Optional<Integer> size;
@@ -33,11 +35,13 @@ public final class LabTestsGetMarkersRequest {
     private LabTestsGetMarkersRequest(
             Optional<Integer> labId,
             Optional<String> name,
+            Optional<Boolean> aLaCarteEnabled,
             Optional<Integer> page,
             Optional<Integer> size,
             Map<String, Object> additionalProperties) {
         this.labId = labId;
         this.name = name;
+        this.aLaCarteEnabled = aLaCarteEnabled;
         this.page = page;
         this.size = size;
         this.additionalProperties = additionalProperties;
@@ -57,6 +61,11 @@ public final class LabTestsGetMarkersRequest {
     @JsonProperty("name")
     public Optional<String> getName() {
         return name;
+    }
+
+    @JsonProperty("a_la_carte_enabled")
+    public Optional<Boolean> getALaCarteEnabled() {
+        return aLaCarteEnabled;
     }
 
     @JsonProperty("page")
@@ -83,13 +92,14 @@ public final class LabTestsGetMarkersRequest {
     private boolean equalTo(LabTestsGetMarkersRequest other) {
         return labId.equals(other.labId)
                 && name.equals(other.name)
+                && aLaCarteEnabled.equals(other.aLaCarteEnabled)
                 && page.equals(other.page)
                 && size.equals(other.size);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.labId, this.name, this.page, this.size);
+        return Objects.hash(this.labId, this.name, this.aLaCarteEnabled, this.page, this.size);
     }
 
     @Override
@@ -107,6 +117,8 @@ public final class LabTestsGetMarkersRequest {
 
         private Optional<String> name = Optional.empty();
 
+        private Optional<Boolean> aLaCarteEnabled = Optional.empty();
+
         private Optional<Integer> page = Optional.empty();
 
         private Optional<Integer> size = Optional.empty();
@@ -119,6 +131,7 @@ public final class LabTestsGetMarkersRequest {
         public Builder from(LabTestsGetMarkersRequest other) {
             labId(other.getLabId());
             name(other.getName());
+            aLaCarteEnabled(other.getALaCarteEnabled());
             page(other.getPage());
             size(other.getSize());
             return this;
@@ -146,6 +159,17 @@ public final class LabTestsGetMarkersRequest {
             return this;
         }
 
+        @JsonSetter(value = "a_la_carte_enabled", nulls = Nulls.SKIP)
+        public Builder aLaCarteEnabled(Optional<Boolean> aLaCarteEnabled) {
+            this.aLaCarteEnabled = aLaCarteEnabled;
+            return this;
+        }
+
+        public Builder aLaCarteEnabled(Boolean aLaCarteEnabled) {
+            this.aLaCarteEnabled = Optional.of(aLaCarteEnabled);
+            return this;
+        }
+
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -169,7 +193,7 @@ public final class LabTestsGetMarkersRequest {
         }
 
         public LabTestsGetMarkersRequest build() {
-            return new LabTestsGetMarkersRequest(labId, name, page, size, additionalProperties);
+            return new LabTestsGetMarkersRequest(labId, name, aLaCarteEnabled, page, size, additionalProperties);
         }
     }
 }

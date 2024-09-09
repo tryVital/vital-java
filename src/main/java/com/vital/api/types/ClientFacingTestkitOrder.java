@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,17 +24,17 @@ public final class ClientFacingTestkitOrder {
 
     private final Optional<ClientFacingShipment> shipment;
 
-    private final OffsetDateTime createdAt;
+    private final String createdAt;
 
-    private final OffsetDateTime updatedAt;
+    private final String updatedAt;
 
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingTestkitOrder(
             String id,
             Optional<ClientFacingShipment> shipment,
-            OffsetDateTime createdAt,
-            OffsetDateTime updatedAt,
+            String createdAt,
+            String updatedAt,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.shipment = shipment;
@@ -58,12 +57,12 @@ public final class ClientFacingTestkitOrder {
     }
 
     @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
     @JsonProperty("updated_at")
-    public OffsetDateTime getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -106,11 +105,11 @@ public final class ClientFacingTestkitOrder {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(String createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(String updatedAt);
     }
 
     public interface _FinalStage {
@@ -125,9 +124,9 @@ public final class ClientFacingTestkitOrder {
     public static final class Builder implements IdStage, CreatedAtStage, UpdatedAtStage, _FinalStage {
         private String id;
 
-        private OffsetDateTime createdAt;
+        private String createdAt;
 
-        private OffsetDateTime updatedAt;
+        private String updatedAt;
 
         private Optional<ClientFacingShipment> shipment = Optional.empty();
 
@@ -158,14 +157,14 @@ public final class ClientFacingTestkitOrder {
 
         @Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+        public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
         @Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+        public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,13 +24,13 @@ public final class ClientFacingSleep {
 
     private final String id;
 
-    private final OffsetDateTime date;
+    private final String date;
 
     private final String calendarDate;
 
-    private final OffsetDateTime bedtimeStart;
+    private final String bedtimeStart;
 
-    private final OffsetDateTime bedtimeStop;
+    private final String bedtimeStop;
 
     private final Optional<Integer> timezoneOffset;
 
@@ -78,10 +77,10 @@ public final class ClientFacingSleep {
     private ClientFacingSleep(
             String userId,
             String id,
-            OffsetDateTime date,
+            String date,
             String calendarDate,
-            OffsetDateTime bedtimeStart,
-            OffsetDateTime bedtimeStop,
+            String bedtimeStart,
+            String bedtimeStop,
             Optional<Integer> timezoneOffset,
             int duration,
             int total,
@@ -149,7 +148,7 @@ public final class ClientFacingSleep {
      * @return Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
      */
     @JsonProperty("date")
-    public OffsetDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -165,7 +164,7 @@ public final class ClientFacingSleep {
      * @return UTC Time when the sleep period started
      */
     @JsonProperty("bedtime_start")
-    public OffsetDateTime getBedtimeStart() {
+    public String getBedtimeStart() {
         return bedtimeStart;
     }
 
@@ -173,7 +172,7 @@ public final class ClientFacingSleep {
      * @return UTC Time when the sleep period ended
      */
     @JsonProperty("bedtime_stop")
-    public OffsetDateTime getBedtimeStop() {
+    public String getBedtimeStop() {
         return bedtimeStop;
     }
 
@@ -389,7 +388,7 @@ public final class ClientFacingSleep {
     }
 
     public interface DateStage {
-        CalendarDateStage date(OffsetDateTime date);
+        CalendarDateStage date(String date);
     }
 
     public interface CalendarDateStage {
@@ -397,11 +396,11 @@ public final class ClientFacingSleep {
     }
 
     public interface BedtimeStartStage {
-        BedtimeStopStage bedtimeStart(OffsetDateTime bedtimeStart);
+        BedtimeStopStage bedtimeStart(String bedtimeStart);
     }
 
     public interface BedtimeStopStage {
-        DurationStage bedtimeStop(OffsetDateTime bedtimeStop);
+        DurationStage bedtimeStop(String bedtimeStop);
     }
 
     public interface DurationStage {
@@ -508,13 +507,13 @@ public final class ClientFacingSleep {
 
         private String id;
 
-        private OffsetDateTime date;
+        private String date;
 
         private String calendarDate;
 
-        private OffsetDateTime bedtimeStart;
+        private String bedtimeStart;
 
-        private OffsetDateTime bedtimeStop;
+        private String bedtimeStop;
 
         private int duration;
 
@@ -616,7 +615,7 @@ public final class ClientFacingSleep {
          */
         @Override
         @JsonSetter("date")
-        public CalendarDateStage date(OffsetDateTime date) {
+        public CalendarDateStage date(String date) {
             this.date = date;
             return this;
         }
@@ -638,7 +637,7 @@ public final class ClientFacingSleep {
          */
         @Override
         @JsonSetter("bedtime_start")
-        public BedtimeStopStage bedtimeStart(OffsetDateTime bedtimeStart) {
+        public BedtimeStopStage bedtimeStart(String bedtimeStart) {
             this.bedtimeStart = bedtimeStart;
             return this;
         }
@@ -649,7 +648,7 @@ public final class ClientFacingSleep {
          */
         @Override
         @JsonSetter("bedtime_stop")
-        public DurationStage bedtimeStop(OffsetDateTime bedtimeStop) {
+        public DurationStage bedtimeStop(String bedtimeStop) {
             this.bedtimeStop = bedtimeStop;
             return this;
         }

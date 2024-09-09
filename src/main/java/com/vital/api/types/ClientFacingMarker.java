@@ -40,6 +40,8 @@ public final class ClientFacingMarker {
 
     private final Optional<AoE> aoe;
 
+    private final Optional<Boolean> aLaCarteEnabled;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingMarker(
@@ -53,6 +55,7 @@ public final class ClientFacingMarker {
             Optional<String> unit,
             Optional<String> price,
             Optional<AoE> aoe,
+            Optional<Boolean> aLaCarteEnabled,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -64,6 +67,7 @@ public final class ClientFacingMarker {
         this.unit = unit;
         this.price = price;
         this.aoe = aoe;
+        this.aLaCarteEnabled = aLaCarteEnabled;
         this.additionalProperties = additionalProperties;
     }
 
@@ -117,6 +121,11 @@ public final class ClientFacingMarker {
         return aoe;
     }
 
+    @JsonProperty("a_la_carte_enabled")
+    public Optional<Boolean> getALaCarteEnabled() {
+        return aLaCarteEnabled;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -138,7 +147,8 @@ public final class ClientFacingMarker {
                 && type.equals(other.type)
                 && unit.equals(other.unit)
                 && price.equals(other.price)
-                && aoe.equals(other.aoe);
+                && aoe.equals(other.aoe)
+                && aLaCarteEnabled.equals(other.aLaCarteEnabled);
     }
 
     @Override
@@ -153,7 +163,8 @@ public final class ClientFacingMarker {
                 this.type,
                 this.unit,
                 this.price,
-                this.aoe);
+                this.aoe,
+                this.aLaCarteEnabled);
     }
 
     @Override
@@ -209,6 +220,10 @@ public final class ClientFacingMarker {
         _FinalStage aoe(Optional<AoE> aoe);
 
         _FinalStage aoe(AoE aoe);
+
+        _FinalStage aLaCarteEnabled(Optional<Boolean> aLaCarteEnabled);
+
+        _FinalStage aLaCarteEnabled(Boolean aLaCarteEnabled);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -218,6 +233,8 @@ public final class ClientFacingMarker {
         private String name;
 
         private String slug;
+
+        private Optional<Boolean> aLaCarteEnabled = Optional.empty();
 
         private Optional<AoE> aoe = Optional.empty();
 
@@ -250,6 +267,7 @@ public final class ClientFacingMarker {
             unit(other.getUnit());
             price(other.getPrice());
             aoe(other.getAoe());
+            aLaCarteEnabled(other.getALaCarteEnabled());
             return this;
         }
 
@@ -271,6 +289,19 @@ public final class ClientFacingMarker {
         @JsonSetter("slug")
         public _FinalStage slug(String slug) {
             this.slug = slug;
+            return this;
+        }
+
+        @Override
+        public _FinalStage aLaCarteEnabled(Boolean aLaCarteEnabled) {
+            this.aLaCarteEnabled = Optional.of(aLaCarteEnabled);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "a_la_carte_enabled", nulls = Nulls.SKIP)
+        public _FinalStage aLaCarteEnabled(Optional<Boolean> aLaCarteEnabled) {
+            this.aLaCarteEnabled = aLaCarteEnabled;
             return this;
         }
 
@@ -368,7 +399,18 @@ public final class ClientFacingMarker {
         @Override
         public ClientFacingMarker build() {
             return new ClientFacingMarker(
-                    id, name, slug, description, labId, providerId, type, unit, price, aoe, additionalProperties);
+                    id,
+                    name,
+                    slug,
+                    description,
+                    labId,
+                    providerId,
+                    type,
+                    unit,
+                    price,
+                    aoe,
+                    aLaCarteEnabled,
+                    additionalProperties);
         }
     }
 }

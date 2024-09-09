@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum DateTimeUnit {
+public enum PeriodUnit {
     MINUTE("minute"),
 
     HOUR("hour"),
@@ -20,7 +20,7 @@ public enum DateTimeUnit {
 
     private final String value;
 
-    DateTimeUnit(String value) {
+    PeriodUnit(String value) {
         this.value = value;
     }
 

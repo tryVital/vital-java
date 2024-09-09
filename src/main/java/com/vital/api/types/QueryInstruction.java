@@ -26,11 +26,9 @@ public final class QueryInstruction {
 
     private final QueryInstructionPartitionBy partitionBy;
 
-    private final QueryInstructionSwizzleBy swizzleBy;
+    private final Optional<Swizzling> swizzleBy;
 
     private final List<Reducer> reduceBy;
-
-    private final Optional<List<String>> prioritizeBy;
 
     private final Optional<Boolean> splitBySource;
 
@@ -39,16 +37,14 @@ public final class QueryInstruction {
     private QueryInstruction(
             QueryInstructionSelect select,
             QueryInstructionPartitionBy partitionBy,
-            QueryInstructionSwizzleBy swizzleBy,
+            Optional<Swizzling> swizzleBy,
             List<Reducer> reduceBy,
-            Optional<List<String>> prioritizeBy,
             Optional<Boolean> splitBySource,
             Map<String, Object> additionalProperties) {
         this.select = select;
         this.partitionBy = partitionBy;
         this.swizzleBy = swizzleBy;
         this.reduceBy = reduceBy;
-        this.prioritizeBy = prioritizeBy;
         this.splitBySource = splitBySource;
         this.additionalProperties = additionalProperties;
     }
@@ -64,18 +60,13 @@ public final class QueryInstruction {
     }
 
     @JsonProperty("swizzle_by")
-    public QueryInstructionSwizzleBy getSwizzleBy() {
+    public Optional<Swizzling> getSwizzleBy() {
         return swizzleBy;
     }
 
     @JsonProperty("reduce_by")
     public List<Reducer> getReduceBy() {
         return reduceBy;
-    }
-
-    @JsonProperty("prioritize_by")
-    public Optional<List<String>> getPrioritizeBy() {
-        return prioritizeBy;
     }
 
     @JsonProperty("split_by_source")
@@ -99,14 +90,12 @@ public final class QueryInstruction {
                 && partitionBy.equals(other.partitionBy)
                 && swizzleBy.equals(other.swizzleBy)
                 && reduceBy.equals(other.reduceBy)
-                && prioritizeBy.equals(other.prioritizeBy)
                 && splitBySource.equals(other.splitBySource);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                this.select, this.partitionBy, this.swizzleBy, this.reduceBy, this.prioritizeBy, this.splitBySource);
+        return Objects.hash(this.select, this.partitionBy, this.swizzleBy, this.reduceBy, this.splitBySource);
     }
 
     @Override
@@ -125,15 +114,15 @@ public final class QueryInstruction {
     }
 
     public interface PartitionByStage {
-        SwizzleByStage partitionBy(QueryInstructionPartitionBy partitionBy);
-    }
-
-    public interface SwizzleByStage {
-        _FinalStage swizzleBy(QueryInstructionSwizzleBy swizzleBy);
+        _FinalStage partitionBy(QueryInstructionPartitionBy partitionBy);
     }
 
     public interface _FinalStage {
         QueryInstruction build();
+
+        _FinalStage swizzleBy(Optional<Swizzling> swizzleBy);
+
+        _FinalStage swizzleBy(Swizzling swizzleBy);
 
         _FinalStage reduceBy(List<Reducer> reduceBy);
 
@@ -141,28 +130,22 @@ public final class QueryInstruction {
 
         _FinalStage addAllReduceBy(List<Reducer> reduceBy);
 
-        _FinalStage prioritizeBy(Optional<List<String>> prioritizeBy);
-
-        _FinalStage prioritizeBy(List<String> prioritizeBy);
-
         _FinalStage splitBySource(Optional<Boolean> splitBySource);
 
         _FinalStage splitBySource(Boolean splitBySource);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SelectStage, PartitionByStage, SwizzleByStage, _FinalStage {
+    public static final class Builder implements SelectStage, PartitionByStage, _FinalStage {
         private QueryInstructionSelect select;
 
         private QueryInstructionPartitionBy partitionBy;
 
-        private QueryInstructionSwizzleBy swizzleBy;
-
         private Optional<Boolean> splitBySource = Optional.empty();
 
-        private Optional<List<String>> prioritizeBy = Optional.empty();
-
         private List<Reducer> reduceBy = new ArrayList<>();
+
+        private Optional<Swizzling> swizzleBy = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -175,7 +158,6 @@ public final class QueryInstruction {
             partitionBy(other.getPartitionBy());
             swizzleBy(other.getSwizzleBy());
             reduceBy(other.getReduceBy());
-            prioritizeBy(other.getPrioritizeBy());
             splitBySource(other.getSplitBySource());
             return this;
         }
@@ -189,15 +171,8 @@ public final class QueryInstruction {
 
         @Override
         @JsonSetter("partition_by")
-        public SwizzleByStage partitionBy(QueryInstructionPartitionBy partitionBy) {
+        public _FinalStage partitionBy(QueryInstructionPartitionBy partitionBy) {
             this.partitionBy = partitionBy;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("swizzle_by")
-        public _FinalStage swizzleBy(QueryInstructionSwizzleBy swizzleBy) {
-            this.swizzleBy = swizzleBy;
             return this;
         }
 
@@ -211,19 +186,6 @@ public final class QueryInstruction {
         @JsonSetter(value = "split_by_source", nulls = Nulls.SKIP)
         public _FinalStage splitBySource(Optional<Boolean> splitBySource) {
             this.splitBySource = splitBySource;
-            return this;
-        }
-
-        @Override
-        public _FinalStage prioritizeBy(List<String> prioritizeBy) {
-            this.prioritizeBy = Optional.of(prioritizeBy);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "prioritize_by", nulls = Nulls.SKIP)
-        public _FinalStage prioritizeBy(Optional<List<String>> prioritizeBy) {
-            this.prioritizeBy = prioritizeBy;
             return this;
         }
 
@@ -248,9 +210,21 @@ public final class QueryInstruction {
         }
 
         @Override
+        public _FinalStage swizzleBy(Swizzling swizzleBy) {
+            this.swizzleBy = Optional.of(swizzleBy);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "swizzle_by", nulls = Nulls.SKIP)
+        public _FinalStage swizzleBy(Optional<Swizzling> swizzleBy) {
+            this.swizzleBy = swizzleBy;
+            return this;
+        }
+
+        @Override
         public QueryInstruction build() {
-            return new QueryInstruction(
-                    select, partitionBy, swizzleBy, reduceBy, prioritizeBy, splitBySource, additionalProperties);
+            return new QueryInstruction(select, partitionBy, swizzleBy, reduceBy, splitBySource, additionalProperties);
         }
     }
 }

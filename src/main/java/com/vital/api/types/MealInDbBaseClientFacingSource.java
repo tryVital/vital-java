@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +30,7 @@ public final class MealInDbBaseClientFacingSource {
 
     private final String providerId;
 
-    private final OffsetDateTime timestamp;
+    private final String timestamp;
 
     private final String name;
 
@@ -45,9 +44,11 @@ public final class MealInDbBaseClientFacingSource {
 
     private final ClientFacingSource source;
 
-    private final OffsetDateTime createdAt;
+    private final String createdAt;
 
-    private final OffsetDateTime updatedAt;
+    private final String updatedAt;
+
+    private final Optional<String> sourceAppId;
 
     private final Map<String, Object> additionalProperties;
 
@@ -57,15 +58,16 @@ public final class MealInDbBaseClientFacingSource {
             int priorityId,
             int sourceId,
             String providerId,
-            OffsetDateTime timestamp,
+            String timestamp,
             String name,
             Optional<Energy> energy,
             Optional<Macros> macros,
             Optional<Micros> micros,
             Optional<Map<String, ClientFacingFood>> data,
             ClientFacingSource source,
-            OffsetDateTime createdAt,
-            OffsetDateTime updatedAt,
+            String createdAt,
+            String updatedAt,
+            Optional<String> sourceAppId,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.userId = userId;
@@ -81,6 +83,7 @@ public final class MealInDbBaseClientFacingSource {
         this.source = source;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.sourceAppId = sourceAppId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -110,7 +113,7 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     @JsonProperty("timestamp")
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -145,13 +148,18 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
     @JsonProperty("updated_at")
-    public OffsetDateTime getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    @JsonProperty("source_app_id")
+    public Optional<String> getSourceAppId() {
+        return sourceAppId;
     }
 
     @Override
@@ -179,7 +187,8 @@ public final class MealInDbBaseClientFacingSource {
                 && data.equals(other.data)
                 && source.equals(other.source)
                 && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt);
+                && updatedAt.equals(other.updatedAt)
+                && sourceAppId.equals(other.sourceAppId);
     }
 
     @Override
@@ -198,7 +207,8 @@ public final class MealInDbBaseClientFacingSource {
                 this.data,
                 this.source,
                 this.createdAt,
-                this.updatedAt);
+                this.updatedAt,
+                this.sourceAppId);
     }
 
     @Override
@@ -233,7 +243,7 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     public interface TimestampStage {
-        NameStage timestamp(OffsetDateTime timestamp);
+        NameStage timestamp(String timestamp);
     }
 
     public interface NameStage {
@@ -245,11 +255,11 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(String createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(String updatedAt);
     }
 
     public interface _FinalStage {
@@ -270,6 +280,10 @@ public final class MealInDbBaseClientFacingSource {
         _FinalStage data(Optional<Map<String, ClientFacingFood>> data);
 
         _FinalStage data(Map<String, ClientFacingFood> data);
+
+        _FinalStage sourceAppId(Optional<String> sourceAppId);
+
+        _FinalStage sourceAppId(String sourceAppId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -295,15 +309,17 @@ public final class MealInDbBaseClientFacingSource {
 
         private String providerId;
 
-        private OffsetDateTime timestamp;
+        private String timestamp;
 
         private String name;
 
         private ClientFacingSource source;
 
-        private OffsetDateTime createdAt;
+        private String createdAt;
 
-        private OffsetDateTime updatedAt;
+        private String updatedAt;
+
+        private Optional<String> sourceAppId = Optional.empty();
 
         private Optional<Map<String, ClientFacingFood>> data = Optional.empty();
 
@@ -334,6 +350,7 @@ public final class MealInDbBaseClientFacingSource {
             source(other.getSource());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            sourceAppId(other.getSourceAppId());
             return this;
         }
 
@@ -374,7 +391,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @Override
         @JsonSetter("timestamp")
-        public NameStage timestamp(OffsetDateTime timestamp) {
+        public NameStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -395,15 +412,28 @@ public final class MealInDbBaseClientFacingSource {
 
         @Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+        public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
         @Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+        public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @Override
+        public _FinalStage sourceAppId(String sourceAppId) {
+            this.sourceAppId = Optional.of(sourceAppId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "source_app_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceAppId(Optional<String> sourceAppId) {
+            this.sourceAppId = sourceAppId;
             return this;
         }
 
@@ -476,6 +506,7 @@ public final class MealInDbBaseClientFacingSource {
                     source,
                     createdAt,
                     updatedAt,
+                    sourceAppId,
                     additionalProperties);
         }
     }

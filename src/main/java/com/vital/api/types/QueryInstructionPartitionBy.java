@@ -33,7 +33,7 @@ public final class QueryInstructionPartitionBy {
         if (this.type == 0) {
             return visitor.visit((Period) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((SessionPartitioning) this.value);
+            return visitor.visit((Placeholder) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -62,14 +62,14 @@ public final class QueryInstructionPartitionBy {
         return new QueryInstructionPartitionBy(value, 0);
     }
 
-    public static QueryInstructionPartitionBy of(SessionPartitioning value) {
+    public static QueryInstructionPartitionBy of(Placeholder value) {
         return new QueryInstructionPartitionBy(value, 1);
     }
 
     public interface Visitor<T> {
         T visit(Period value);
 
-        T visit(SessionPartitioning value);
+        T visit(Placeholder value);
     }
 
     static final class Deserializer extends StdDeserializer<QueryInstructionPartitionBy> {
@@ -85,7 +85,7 @@ public final class QueryInstructionPartitionBy {
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SessionPartitioning.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Placeholder.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

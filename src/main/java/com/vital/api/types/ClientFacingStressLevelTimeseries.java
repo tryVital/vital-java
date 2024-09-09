@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,7 +28,7 @@ public final class ClientFacingStressLevelTimeseries {
 
     private final String unit;
 
-    private final OffsetDateTime timestamp;
+    private final String timestamp;
 
     private final double value;
 
@@ -40,7 +39,7 @@ public final class ClientFacingStressLevelTimeseries {
             Optional<Integer> timezoneOffset,
             Optional<String> type,
             String unit,
-            OffsetDateTime timestamp,
+            String timestamp,
             double value,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -79,7 +78,7 @@ public final class ClientFacingStressLevelTimeseries {
      * @return The timestamp of the measurement.
      */
     @JsonProperty("timestamp")
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -129,7 +128,7 @@ public final class ClientFacingStressLevelTimeseries {
     }
 
     public interface TimestampStage {
-        ValueStage timestamp(OffsetDateTime timestamp);
+        ValueStage timestamp(String timestamp);
     }
 
     public interface ValueStage {
@@ -156,7 +155,7 @@ public final class ClientFacingStressLevelTimeseries {
     public static final class Builder implements UnitStage, TimestampStage, ValueStage, _FinalStage {
         private String unit;
 
-        private OffsetDateTime timestamp;
+        private String timestamp;
 
         private double value;
 
@@ -199,7 +198,7 @@ public final class ClientFacingStressLevelTimeseries {
          */
         @Override
         @JsonSetter("timestamp")
-        public ValueStage timestamp(OffsetDateTime timestamp) {
+        public ValueStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }

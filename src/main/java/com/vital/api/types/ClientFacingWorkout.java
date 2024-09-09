@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +37,9 @@ public final class ClientFacingWorkout {
 
     private final String calendarDate;
 
-    private final OffsetDateTime timeStart;
+    private final String timeStart;
 
-    private final OffsetDateTime timeEnd;
+    private final String timeEnd;
 
     private final Optional<Double> calories;
 
@@ -87,8 +86,8 @@ public final class ClientFacingWorkout {
             Optional<Integer> maxHr,
             Optional<Double> distance,
             String calendarDate,
-            OffsetDateTime timeStart,
-            OffsetDateTime timeEnd,
+            String timeStart,
+            String timeEnd,
             Optional<Double> calories,
             Optional<ClientFacingSport> sport,
             Optional<List<Integer>> hrZones,
@@ -187,7 +186,7 @@ public final class ClientFacingWorkout {
      * @return Start time of the workout::time
      */
     @JsonProperty("time_start")
-    public OffsetDateTime getTimeStart() {
+    public String getTimeStart() {
         return timeStart;
     }
 
@@ -195,7 +194,7 @@ public final class ClientFacingWorkout {
      * @return End time of the workout::time
      */
     @JsonProperty("time_end")
-    public OffsetDateTime getTimeEnd() {
+    public String getTimeEnd() {
         return timeEnd;
     }
 
@@ -390,11 +389,11 @@ public final class ClientFacingWorkout {
     }
 
     public interface TimeStartStage {
-        TimeEndStage timeStart(OffsetDateTime timeStart);
+        TimeEndStage timeStart(String timeStart);
     }
 
     public interface TimeEndStage {
-        ProviderIdStage timeEnd(OffsetDateTime timeEnd);
+        ProviderIdStage timeEnd(String timeEnd);
     }
 
     public interface ProviderIdStage {
@@ -505,9 +504,9 @@ public final class ClientFacingWorkout {
 
         private String calendarDate;
 
-        private OffsetDateTime timeStart;
+        private String timeStart;
 
-        private OffsetDateTime timeEnd;
+        private String timeEnd;
 
         private String providerId;
 
@@ -625,7 +624,7 @@ public final class ClientFacingWorkout {
          */
         @Override
         @JsonSetter("time_start")
-        public TimeEndStage timeStart(OffsetDateTime timeStart) {
+        public TimeEndStage timeStart(String timeStart) {
             this.timeStart = timeStart;
             return this;
         }
@@ -636,7 +635,7 @@ public final class ClientFacingWorkout {
          */
         @Override
         @JsonSetter("time_end")
-        public ProviderIdStage timeEnd(OffsetDateTime timeEnd) {
+        public ProviderIdStage timeEnd(String timeEnd) {
             this.timeEnd = timeEnd;
             return this;
         }

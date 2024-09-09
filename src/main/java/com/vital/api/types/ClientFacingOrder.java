@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +40,9 @@ public final class ClientFacingOrder {
 
     private final Optional<String> notes;
 
-    private final OffsetDateTime createdAt;
+    private final String createdAt;
 
-    private final OffsetDateTime updatedAt;
+    private final String updatedAt;
 
     private final List<ClientFacingOrderEvent> events;
 
@@ -79,8 +78,8 @@ public final class ClientFacingOrder {
             ClientFacingOrderDetails details,
             Optional<String> sampleId,
             Optional<String> notes,
-            OffsetDateTime createdAt,
-            OffsetDateTime updatedAt,
+            String createdAt,
+            String updatedAt,
             List<ClientFacingOrderEvent> events,
             Optional<OrderTopLevelStatus> status,
             Optional<ClientFacingPhysician> physician,
@@ -179,7 +178,7 @@ public final class ClientFacingOrder {
      * @return When your order was created
      */
     @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
@@ -187,7 +186,7 @@ public final class ClientFacingOrder {
      * @return When your order was last updated.
      */
     @JsonProperty("updated_at")
-    public OffsetDateTime getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -344,11 +343,11 @@ public final class ClientFacingOrder {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(String createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(String updatedAt);
     }
 
     public interface _FinalStage {
@@ -437,9 +436,9 @@ public final class ClientFacingOrder {
 
         private ClientFacingOrderDetails details;
 
-        private OffsetDateTime createdAt;
+        private String createdAt;
 
-        private OffsetDateTime updatedAt;
+        private String updatedAt;
 
         private Optional<List<String>> icdCodes = Optional.empty();
 
@@ -560,7 +559,7 @@ public final class ClientFacingOrder {
          */
         @Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+        public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
@@ -571,7 +570,7 @@ public final class ClientFacingOrder {
          */
         @Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+        public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

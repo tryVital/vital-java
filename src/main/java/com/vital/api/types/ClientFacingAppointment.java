@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +32,9 @@ public final class ClientFacingAppointment {
 
     private final LngLat location;
 
-    private final Optional<OffsetDateTime> startAt;
+    private final Optional<String> startAt;
 
-    private final Optional<OffsetDateTime> endAt;
+    private final Optional<String> endAt;
 
     private final Optional<String> ianaTimezone;
 
@@ -63,8 +62,8 @@ public final class ClientFacingAppointment {
             String orderId,
             UsAddress address,
             LngLat location,
-            Optional<OffsetDateTime> startAt,
-            Optional<OffsetDateTime> endAt,
+            Optional<String> startAt,
+            Optional<String> endAt,
             Optional<String> ianaTimezone,
             String type,
             AppointmentProvider provider,
@@ -120,12 +119,12 @@ public final class ClientFacingAppointment {
     }
 
     @JsonProperty("start_at")
-    public Optional<OffsetDateTime> getStartAt() {
+    public Optional<String> getStartAt() {
         return startAt;
     }
 
     @JsonProperty("end_at")
-    public Optional<OffsetDateTime> getEndAt() {
+    public Optional<String> getEndAt() {
         return endAt;
     }
 
@@ -283,13 +282,13 @@ public final class ClientFacingAppointment {
     public interface _FinalStage {
         ClientFacingAppointment build();
 
-        _FinalStage startAt(Optional<OffsetDateTime> startAt);
+        _FinalStage startAt(Optional<String> startAt);
 
-        _FinalStage startAt(OffsetDateTime startAt);
+        _FinalStage startAt(String startAt);
 
-        _FinalStage endAt(Optional<OffsetDateTime> endAt);
+        _FinalStage endAt(Optional<String> endAt);
 
-        _FinalStage endAt(OffsetDateTime endAt);
+        _FinalStage endAt(String endAt);
 
         _FinalStage ianaTimezone(Optional<String> ianaTimezone);
 
@@ -348,9 +347,9 @@ public final class ClientFacingAppointment {
 
         private Optional<String> ianaTimezone = Optional.empty();
 
-        private Optional<OffsetDateTime> endAt = Optional.empty();
+        private Optional<String> endAt = Optional.empty();
 
-        private Optional<OffsetDateTime> startAt = Optional.empty();
+        private Optional<String> startAt = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -502,27 +501,27 @@ public final class ClientFacingAppointment {
         }
 
         @Override
-        public _FinalStage endAt(OffsetDateTime endAt) {
+        public _FinalStage endAt(String endAt) {
             this.endAt = Optional.of(endAt);
             return this;
         }
 
         @Override
         @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
-        public _FinalStage endAt(Optional<OffsetDateTime> endAt) {
+        public _FinalStage endAt(Optional<String> endAt) {
             this.endAt = endAt;
             return this;
         }
 
         @Override
-        public _FinalStage startAt(OffsetDateTime startAt) {
+        public _FinalStage startAt(String startAt) {
             this.startAt = Optional.of(startAt);
             return this;
         }
 
         @Override
         @JsonSetter(value = "start_at", nulls = Nulls.SKIP)
-        public _FinalStage startAt(Optional<OffsetDateTime> startAt) {
+        public _FinalStage startAt(Optional<String> startAt) {
             this.startAt = startAt;
             return this;
         }

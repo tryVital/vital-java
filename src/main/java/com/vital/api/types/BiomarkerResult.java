@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,7 +32,7 @@ public final class BiomarkerResult {
 
     private final Optional<String> unit;
 
-    private final Optional<OffsetDateTime> timestamp;
+    private final Optional<String> timestamp;
 
     private final Optional<String> notes;
 
@@ -51,6 +50,8 @@ public final class BiomarkerResult {
 
     private final Optional<String> loincSlug;
 
+    private final Optional<String> providerId;
+
     private final Map<String, Object> additionalProperties;
 
     private BiomarkerResult(
@@ -60,7 +61,7 @@ public final class BiomarkerResult {
             String result,
             ResultType type,
             Optional<String> unit,
-            Optional<OffsetDateTime> timestamp,
+            Optional<String> timestamp,
             Optional<String> notes,
             Optional<Double> minRangeValue,
             Optional<Double> maxRangeValue,
@@ -69,6 +70,7 @@ public final class BiomarkerResult {
             Optional<String> interpretation,
             Optional<String> loinc,
             Optional<String> loincSlug,
+            Optional<String> providerId,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
@@ -85,6 +87,7 @@ public final class BiomarkerResult {
         this.interpretation = interpretation;
         this.loinc = loinc;
         this.loincSlug = loincSlug;
+        this.providerId = providerId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -119,7 +122,7 @@ public final class BiomarkerResult {
     }
 
     @JsonProperty("timestamp")
-    public Optional<OffsetDateTime> getTimestamp() {
+    public Optional<String> getTimestamp() {
         return timestamp;
     }
 
@@ -163,6 +166,11 @@ public final class BiomarkerResult {
         return loincSlug;
     }
 
+    @JsonProperty("provider_id")
+    public Optional<String> getProviderId() {
+        return providerId;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -189,7 +197,8 @@ public final class BiomarkerResult {
                 && isBelowMinRange.equals(other.isBelowMinRange)
                 && interpretation.equals(other.interpretation)
                 && loinc.equals(other.loinc)
-                && loincSlug.equals(other.loincSlug);
+                && loincSlug.equals(other.loincSlug)
+                && providerId.equals(other.providerId);
     }
 
     @Override
@@ -209,7 +218,8 @@ public final class BiomarkerResult {
                 this.isBelowMinRange,
                 this.interpretation,
                 this.loinc,
-                this.loincSlug);
+                this.loincSlug,
+                this.providerId);
     }
 
     @Override
@@ -250,9 +260,9 @@ public final class BiomarkerResult {
 
         _FinalStage unit(String unit);
 
-        _FinalStage timestamp(Optional<OffsetDateTime> timestamp);
+        _FinalStage timestamp(Optional<String> timestamp);
 
-        _FinalStage timestamp(OffsetDateTime timestamp);
+        _FinalStage timestamp(String timestamp);
 
         _FinalStage notes(Optional<String> notes);
 
@@ -285,6 +295,10 @@ public final class BiomarkerResult {
         _FinalStage loincSlug(Optional<String> loincSlug);
 
         _FinalStage loincSlug(String loincSlug);
+
+        _FinalStage providerId(Optional<String> providerId);
+
+        _FinalStage providerId(String providerId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -296,6 +310,8 @@ public final class BiomarkerResult {
         private String result;
 
         private ResultType type;
+
+        private Optional<String> providerId = Optional.empty();
 
         private Optional<String> loincSlug = Optional.empty();
 
@@ -313,7 +329,7 @@ public final class BiomarkerResult {
 
         private Optional<String> notes = Optional.empty();
 
-        private Optional<OffsetDateTime> timestamp = Optional.empty();
+        private Optional<String> timestamp = Optional.empty();
 
         private Optional<String> unit = Optional.empty();
 
@@ -341,6 +357,7 @@ public final class BiomarkerResult {
             interpretation(other.getInterpretation());
             loinc(other.getLoinc());
             loincSlug(other.getLoincSlug());
+            providerId(other.getProviderId());
             return this;
         }
 
@@ -369,6 +386,19 @@ public final class BiomarkerResult {
         @JsonSetter("type")
         public _FinalStage type(ResultType type) {
             this.type = type;
+            return this;
+        }
+
+        @Override
+        public _FinalStage providerId(String providerId) {
+            this.providerId = Optional.of(providerId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
+        public _FinalStage providerId(Optional<String> providerId) {
+            this.providerId = providerId;
             return this;
         }
 
@@ -477,14 +507,14 @@ public final class BiomarkerResult {
         }
 
         @Override
-        public _FinalStage timestamp(OffsetDateTime timestamp) {
+        public _FinalStage timestamp(String timestamp) {
             this.timestamp = Optional.of(timestamp);
             return this;
         }
 
         @Override
         @JsonSetter(value = "timestamp", nulls = Nulls.SKIP)
-        public _FinalStage timestamp(Optional<OffsetDateTime> timestamp) {
+        public _FinalStage timestamp(Optional<String> timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -533,6 +563,7 @@ public final class BiomarkerResult {
                     interpretation,
                     loinc,
                     loincSlug,
+                    providerId,
                     additionalProperties);
         }
     }

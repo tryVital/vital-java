@@ -16,26 +16,26 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SessionPartitioning.Builder.class)
-public final class SessionPartitioning {
-    private final SessionPartitioningSession session;
+@JsonDeserialize(builder = Placeholder.Builder.class)
+public final class Placeholder {
+    private final boolean placeholder;
 
     private final Map<String, Object> additionalProperties;
 
-    private SessionPartitioning(SessionPartitioningSession session, Map<String, Object> additionalProperties) {
-        this.session = session;
+    private Placeholder(boolean placeholder, Map<String, Object> additionalProperties) {
+        this.placeholder = placeholder;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("session")
-    public SessionPartitioningSession getSession() {
-        return session;
+    @JsonProperty("placeholder")
+    public boolean getPlaceholder() {
+        return placeholder;
     }
 
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SessionPartitioning && equalTo((SessionPartitioning) other);
+        return other instanceof Placeholder && equalTo((Placeholder) other);
     }
 
     @JsonAnyGetter
@@ -43,13 +43,13 @@ public final class SessionPartitioning {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(SessionPartitioning other) {
-        return session.equals(other.session);
+    private boolean equalTo(Placeholder other) {
+        return placeholder == other.placeholder;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.session);
+        return Objects.hash(this.placeholder);
     }
 
     @Override
@@ -57,23 +57,23 @@ public final class SessionPartitioning {
         return ObjectMappers.stringify(this);
     }
 
-    public static SessionStage builder() {
+    public static PlaceholderStage builder() {
         return new Builder();
     }
 
-    public interface SessionStage {
-        _FinalStage session(SessionPartitioningSession session);
+    public interface PlaceholderStage {
+        _FinalStage placeholder(boolean placeholder);
 
-        Builder from(SessionPartitioning other);
+        Builder from(Placeholder other);
     }
 
     public interface _FinalStage {
-        SessionPartitioning build();
+        Placeholder build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SessionStage, _FinalStage {
-        private SessionPartitioningSession session;
+    public static final class Builder implements PlaceholderStage, _FinalStage {
+        private boolean placeholder;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -81,21 +81,21 @@ public final class SessionPartitioning {
         private Builder() {}
 
         @Override
-        public Builder from(SessionPartitioning other) {
-            session(other.getSession());
+        public Builder from(Placeholder other) {
+            placeholder(other.getPlaceholder());
             return this;
         }
 
         @Override
-        @JsonSetter("session")
-        public _FinalStage session(SessionPartitioningSession session) {
-            this.session = session;
+        @JsonSetter("placeholder")
+        public _FinalStage placeholder(boolean placeholder) {
+            this.placeholder = placeholder;
             return this;
         }
 
         @Override
-        public SessionPartitioning build() {
-            return new SessionPartitioning(session, additionalProperties);
+        public Placeholder build() {
+            return new Placeholder(placeholder, additionalProperties);
         }
     }
 }

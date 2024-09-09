@@ -16,6 +16,8 @@ import com.vital.api.types.AoEAnswer;
 import com.vital.api.types.Billing;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
+import com.vital.api.types.LabTestCollectionMethod;
+import com.vital.api.types.OrderSetRequest;
 import com.vital.api.types.PatientAddressCompatible;
 import com.vital.api.types.PatientDetails;
 import com.vital.api.types.PhysicianCreateRequest;
@@ -30,7 +32,11 @@ import java.util.Optional;
 public final class CreateOrderRequestCompatible {
     private final String userId;
 
-    private final String labTestId;
+    private final Optional<String> labTestId;
+
+    private final Optional<OrderSetRequest> orderSet;
+
+    private final Optional<LabTestCollectionMethod> collectionMethod;
 
     private final Optional<PhysicianCreateRequest> physician;
 
@@ -58,7 +64,9 @@ public final class CreateOrderRequestCompatible {
 
     private CreateOrderRequestCompatible(
             String userId,
-            String labTestId,
+            Optional<String> labTestId,
+            Optional<OrderSetRequest> orderSet,
+            Optional<LabTestCollectionMethod> collectionMethod,
             Optional<PhysicianCreateRequest> physician,
             Optional<HealthInsuranceCreateRequest> healthInsurance,
             Optional<Boolean> priority,
@@ -73,6 +81,8 @@ public final class CreateOrderRequestCompatible {
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.labTestId = labTestId;
+        this.orderSet = orderSet;
+        this.collectionMethod = collectionMethod;
         this.physician = physician;
         this.healthInsurance = healthInsurance;
         this.priority = priority;
@@ -93,8 +103,18 @@ public final class CreateOrderRequestCompatible {
     }
 
     @JsonProperty("lab_test_id")
-    public String getLabTestId() {
+    public Optional<String> getLabTestId() {
         return labTestId;
+    }
+
+    @JsonProperty("order_set")
+    public Optional<OrderSetRequest> getOrderSet() {
+        return orderSet;
+    }
+
+    @JsonProperty("collection_method")
+    public Optional<LabTestCollectionMethod> getCollectionMethod() {
+        return collectionMethod;
     }
 
     @JsonProperty("physician")
@@ -169,6 +189,8 @@ public final class CreateOrderRequestCompatible {
     private boolean equalTo(CreateOrderRequestCompatible other) {
         return userId.equals(other.userId)
                 && labTestId.equals(other.labTestId)
+                && orderSet.equals(other.orderSet)
+                && collectionMethod.equals(other.collectionMethod)
                 && physician.equals(other.physician)
                 && healthInsurance.equals(other.healthInsurance)
                 && priority.equals(other.priority)
@@ -187,6 +209,8 @@ public final class CreateOrderRequestCompatible {
         return Objects.hash(
                 this.userId,
                 this.labTestId,
+                this.orderSet,
+                this.collectionMethod,
                 this.physician,
                 this.healthInsurance,
                 this.priority,
@@ -210,13 +234,9 @@ public final class CreateOrderRequestCompatible {
     }
 
     public interface UserIdStage {
-        LabTestIdStage userId(String userId);
+        PatientDetailsStage userId(String userId);
 
         Builder from(CreateOrderRequestCompatible other);
-    }
-
-    public interface LabTestIdStage {
-        PatientDetailsStage labTestId(String labTestId);
     }
 
     public interface PatientDetailsStage {
@@ -229,6 +249,18 @@ public final class CreateOrderRequestCompatible {
 
     public interface _FinalStage {
         CreateOrderRequestCompatible build();
+
+        _FinalStage labTestId(Optional<String> labTestId);
+
+        _FinalStage labTestId(String labTestId);
+
+        _FinalStage orderSet(Optional<OrderSetRequest> orderSet);
+
+        _FinalStage orderSet(OrderSetRequest orderSet);
+
+        _FinalStage collectionMethod(Optional<LabTestCollectionMethod> collectionMethod);
+
+        _FinalStage collectionMethod(LabTestCollectionMethod collectionMethod);
 
         _FinalStage physician(Optional<PhysicianCreateRequest> physician);
 
@@ -268,11 +300,8 @@ public final class CreateOrderRequestCompatible {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements UserIdStage, LabTestIdStage, PatientDetailsStage, PatientAddressStage, _FinalStage {
+    public static final class Builder implements UserIdStage, PatientDetailsStage, PatientAddressStage, _FinalStage {
         private String userId;
-
-        private String labTestId;
 
         private PatientDetails patientDetails;
 
@@ -296,6 +325,12 @@ public final class CreateOrderRequestCompatible {
 
         private Optional<PhysicianCreateRequest> physician = Optional.empty();
 
+        private Optional<LabTestCollectionMethod> collectionMethod = Optional.empty();
+
+        private Optional<OrderSetRequest> orderSet = Optional.empty();
+
+        private Optional<String> labTestId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -305,6 +340,8 @@ public final class CreateOrderRequestCompatible {
         public Builder from(CreateOrderRequestCompatible other) {
             userId(other.getUserId());
             labTestId(other.getLabTestId());
+            orderSet(other.getOrderSet());
+            collectionMethod(other.getCollectionMethod());
             physician(other.getPhysician());
             healthInsurance(other.getHealthInsurance());
             priority(other.getPriority());
@@ -321,15 +358,8 @@ public final class CreateOrderRequestCompatible {
 
         @Override
         @JsonSetter("user_id")
-        public LabTestIdStage userId(String userId) {
+        public PatientDetailsStage userId(String userId) {
             this.userId = userId;
-            return this;
-        }
-
-        @Override
-        @JsonSetter("lab_test_id")
-        public PatientDetailsStage labTestId(String labTestId) {
-            this.labTestId = labTestId;
             return this;
         }
 
@@ -469,10 +499,51 @@ public final class CreateOrderRequestCompatible {
         }
 
         @Override
+        public _FinalStage collectionMethod(LabTestCollectionMethod collectionMethod) {
+            this.collectionMethod = Optional.of(collectionMethod);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "collection_method", nulls = Nulls.SKIP)
+        public _FinalStage collectionMethod(Optional<LabTestCollectionMethod> collectionMethod) {
+            this.collectionMethod = collectionMethod;
+            return this;
+        }
+
+        @Override
+        public _FinalStage orderSet(OrderSetRequest orderSet) {
+            this.orderSet = Optional.of(orderSet);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "order_set", nulls = Nulls.SKIP)
+        public _FinalStage orderSet(Optional<OrderSetRequest> orderSet) {
+            this.orderSet = orderSet;
+            return this;
+        }
+
+        @Override
+        public _FinalStage labTestId(String labTestId) {
+            this.labTestId = Optional.of(labTestId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "lab_test_id", nulls = Nulls.SKIP)
+        public _FinalStage labTestId(Optional<String> labTestId) {
+            this.labTestId = labTestId;
+            return this;
+        }
+
+        @Override
         public CreateOrderRequestCompatible build() {
             return new CreateOrderRequestCompatible(
                     userId,
                     labTestId,
+                    orderSet,
+                    collectionMethod,
                     physician,
                     healthInsurance,
                     priority,

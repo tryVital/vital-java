@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,14 +20,14 @@ import java.util.Objects;
 public final class ClientFacingWalkInTestOrder {
     private final String id;
 
-    private final OffsetDateTime createdAt;
+    private final String createdAt;
 
-    private final OffsetDateTime updatedAt;
+    private final String updatedAt;
 
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingWalkInTestOrder(
-            String id, OffsetDateTime createdAt, OffsetDateTime updatedAt, Map<String, Object> additionalProperties) {
+            String id, String createdAt, String updatedAt, Map<String, Object> additionalProperties) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -44,12 +43,12 @@ public final class ClientFacingWalkInTestOrder {
     }
 
     @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
     @JsonProperty("updated_at")
-    public OffsetDateTime getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
@@ -89,11 +88,11 @@ public final class ClientFacingWalkInTestOrder {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(String createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(String updatedAt);
     }
 
     public interface _FinalStage {
@@ -104,9 +103,9 @@ public final class ClientFacingWalkInTestOrder {
     public static final class Builder implements IdStage, CreatedAtStage, UpdatedAtStage, _FinalStage {
         private String id;
 
-        private OffsetDateTime createdAt;
+        private String createdAt;
 
-        private OffsetDateTime updatedAt;
+        private String updatedAt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -134,14 +133,14 @@ public final class ClientFacingWalkInTestOrder {
 
         @Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+        public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
         @Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+        public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

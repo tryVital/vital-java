@@ -146,6 +146,10 @@ public class LabTestsClient {
         if (request.getName().isPresent()) {
             httpUrl.addQueryParameter("name", request.getName().get());
         }
+        if (request.getALaCarteEnabled().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "a_la_carte_enabled", request.getALaCarteEnabled().get().toString());
+        }
         if (request.getPage().isPresent()) {
             httpUrl.addQueryParameter("page", request.getPage().get().toString());
         }

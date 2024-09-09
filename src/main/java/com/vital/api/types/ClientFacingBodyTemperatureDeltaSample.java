@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,11 +26,11 @@ public final class ClientFacingBodyTemperatureDeltaSample {
 
     private final Optional<String> type;
 
-    private final OffsetDateTime timestamp;
+    private final String timestamp;
 
-    private final OffsetDateTime start;
+    private final String start;
 
-    private final OffsetDateTime end;
+    private final String end;
 
     private final double value;
 
@@ -43,9 +42,9 @@ public final class ClientFacingBodyTemperatureDeltaSample {
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
             Optional<String> type,
-            OffsetDateTime timestamp,
-            OffsetDateTime start,
-            OffsetDateTime end,
+            String timestamp,
+            String start,
+            String end,
             double value,
             Optional<ClientFacingBodyTemperatureDeltaSampleSensorLocation> sensorLocation,
             Map<String, Object> additionalProperties) {
@@ -84,7 +83,7 @@ public final class ClientFacingBodyTemperatureDeltaSample {
      * @return Depracated. The start time (inclusive) of the interval.
      */
     @JsonProperty("timestamp")
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -92,7 +91,7 @@ public final class ClientFacingBodyTemperatureDeltaSample {
      * @return The start time (inclusive) of the interval.
      */
     @JsonProperty("start")
-    public OffsetDateTime getStart() {
+    public String getStart() {
         return start;
     }
 
@@ -100,7 +99,7 @@ public final class ClientFacingBodyTemperatureDeltaSample {
      * @return The end time (exclusive) of the interval.
      */
     @JsonProperty("end")
-    public OffsetDateTime getEnd() {
+    public String getEnd() {
         return end;
     }
 
@@ -163,17 +162,17 @@ public final class ClientFacingBodyTemperatureDeltaSample {
     }
 
     public interface TimestampStage {
-        StartStage timestamp(OffsetDateTime timestamp);
+        StartStage timestamp(String timestamp);
 
         Builder from(ClientFacingBodyTemperatureDeltaSample other);
     }
 
     public interface StartStage {
-        EndStage start(OffsetDateTime start);
+        EndStage start(String start);
     }
 
     public interface EndStage {
-        ValueStage end(OffsetDateTime end);
+        ValueStage end(String end);
     }
 
     public interface ValueStage {
@@ -202,11 +201,11 @@ public final class ClientFacingBodyTemperatureDeltaSample {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TimestampStage, StartStage, EndStage, ValueStage, _FinalStage {
-        private OffsetDateTime timestamp;
+        private String timestamp;
 
-        private OffsetDateTime start;
+        private String start;
 
-        private OffsetDateTime end;
+        private String end;
 
         private double value;
 
@@ -242,7 +241,7 @@ public final class ClientFacingBodyTemperatureDeltaSample {
          */
         @Override
         @JsonSetter("timestamp")
-        public StartStage timestamp(OffsetDateTime timestamp) {
+        public StartStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -253,7 +252,7 @@ public final class ClientFacingBodyTemperatureDeltaSample {
          */
         @Override
         @JsonSetter("start")
-        public EndStage start(OffsetDateTime start) {
+        public EndStage start(String start) {
             this.start = start;
             return this;
         }
@@ -264,7 +263,7 @@ public final class ClientFacingBodyTemperatureDeltaSample {
          */
         @Override
         @JsonSetter("end")
-        public ValueStage end(OffsetDateTime end) {
+        public ValueStage end(String end) {
             this.end = end;
             return this;
         }

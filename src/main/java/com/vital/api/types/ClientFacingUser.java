@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,7 @@ public final class ClientFacingUser {
 
     private final String clientUserId;
 
-    private final OffsetDateTime createdOn;
+    private final String createdOn;
 
     private final List<ConnectedSourceClientFacing> connectedSources;
 
@@ -47,7 +46,7 @@ public final class ClientFacingUser {
             String userId,
             String teamId,
             String clientUserId,
-            OffsetDateTime createdOn,
+            String createdOn,
             List<ConnectedSourceClientFacing> connectedSources,
             Optional<FallbackTimeZone> fallbackTimeZone,
             Optional<FallbackBirthDate> fallbackBirthDate,
@@ -94,7 +93,7 @@ public final class ClientFacingUser {
      * @return When your item is created
      */
     @JsonProperty("created_on")
-    public OffsetDateTime getCreatedOn() {
+    public String getCreatedOn() {
         return createdOn;
     }
 
@@ -187,7 +186,7 @@ public final class ClientFacingUser {
     }
 
     public interface CreatedOnStage {
-        _FinalStage createdOn(OffsetDateTime createdOn);
+        _FinalStage createdOn(String createdOn);
     }
 
     public interface _FinalStage {
@@ -225,7 +224,7 @@ public final class ClientFacingUser {
 
         private String clientUserId;
 
-        private OffsetDateTime createdOn;
+        private String createdOn;
 
         private Optional<String> ingestionEnd = Optional.empty();
 
@@ -295,7 +294,7 @@ public final class ClientFacingUser {
          */
         @Override
         @JsonSetter("created_on")
-        public _FinalStage createdOn(OffsetDateTime createdOn) {
+        public _FinalStage createdOn(String createdOn) {
             this.createdOn = createdOn;
             return this;
         }

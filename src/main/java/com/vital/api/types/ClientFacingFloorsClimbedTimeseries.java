@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +26,7 @@ public final class ClientFacingFloorsClimbedTimeseries {
 
     private final Optional<String> type;
 
-    private final OffsetDateTime timestamp;
+    private final String timestamp;
 
     private final double value;
 
@@ -37,7 +36,7 @@ public final class ClientFacingFloorsClimbedTimeseries {
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
             Optional<String> type,
-            OffsetDateTime timestamp,
+            String timestamp,
             double value,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -75,7 +74,7 @@ public final class ClientFacingFloorsClimbedTimeseries {
      * @return The timestamp of the measurement.
      */
     @JsonProperty("timestamp")
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -122,7 +121,7 @@ public final class ClientFacingFloorsClimbedTimeseries {
     }
 
     public interface TimestampStage {
-        ValueStage timestamp(OffsetDateTime timestamp);
+        ValueStage timestamp(String timestamp);
 
         Builder from(ClientFacingFloorsClimbedTimeseries other);
     }
@@ -149,7 +148,7 @@ public final class ClientFacingFloorsClimbedTimeseries {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TimestampStage, ValueStage, _FinalStage {
-        private OffsetDateTime timestamp;
+        private String timestamp;
 
         private double value;
 
@@ -180,7 +179,7 @@ public final class ClientFacingFloorsClimbedTimeseries {
          */
         @Override
         @JsonSetter("timestamp")
-        public ValueStage timestamp(OffsetDateTime timestamp) {
+        public ValueStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }

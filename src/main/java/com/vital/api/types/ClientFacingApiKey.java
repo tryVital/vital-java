@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,9 +28,9 @@ public final class ClientFacingApiKey {
 
     private final String id;
 
-    private final OffsetDateTime createdAt;
+    private final String createdAt;
 
-    private final Optional<OffsetDateTime> deletedAt;
+    private final Optional<String> deletedAt;
 
     private final Map<String, Object> additionalProperties;
 
@@ -40,8 +39,8 @@ public final class ClientFacingApiKey {
             String value,
             Optional<String> teamId,
             String id,
-            OffsetDateTime createdAt,
-            Optional<OffsetDateTime> deletedAt,
+            String createdAt,
+            Optional<String> deletedAt,
             Map<String, Object> additionalProperties) {
         this.label = label;
         this.value = value;
@@ -73,12 +72,12 @@ public final class ClientFacingApiKey {
     }
 
     @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
     @JsonProperty("deleted_at")
-    public Optional<OffsetDateTime> getDeletedAt() {
+    public Optional<String> getDeletedAt() {
         return deletedAt;
     }
 
@@ -131,7 +130,7 @@ public final class ClientFacingApiKey {
     }
 
     public interface CreatedAtStage {
-        _FinalStage createdAt(OffsetDateTime createdAt);
+        _FinalStage createdAt(String createdAt);
     }
 
     public interface _FinalStage {
@@ -141,9 +140,9 @@ public final class ClientFacingApiKey {
 
         _FinalStage teamId(String teamId);
 
-        _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt);
+        _FinalStage deletedAt(Optional<String> deletedAt);
 
-        _FinalStage deletedAt(OffsetDateTime deletedAt);
+        _FinalStage deletedAt(String deletedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -154,9 +153,9 @@ public final class ClientFacingApiKey {
 
         private String id;
 
-        private OffsetDateTime createdAt;
+        private String createdAt;
 
-        private Optional<OffsetDateTime> deletedAt = Optional.empty();
+        private Optional<String> deletedAt = Optional.empty();
 
         private Optional<String> teamId = Optional.empty();
 
@@ -199,20 +198,20 @@ public final class ClientFacingApiKey {
 
         @Override
         @JsonSetter("created_at")
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
+        public _FinalStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
         @Override
-        public _FinalStage deletedAt(OffsetDateTime deletedAt) {
+        public _FinalStage deletedAt(String deletedAt) {
             this.deletedAt = Optional.of(deletedAt);
             return this;
         }
 
         @Override
         @JsonSetter(value = "deleted_at", nulls = Nulls.SKIP)
-        public _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt) {
+        public _FinalStage deletedAt(Optional<String> deletedAt) {
             this.deletedAt = deletedAt;
             return this;
         }

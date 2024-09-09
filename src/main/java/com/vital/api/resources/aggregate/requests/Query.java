@@ -12,9 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.aggregate.types.QueryTimeframe;
 import com.vital.api.types.QueryConfig;
 import com.vital.api.types.QueryInstruction;
-import com.vital.api.types.RelativeTimeframe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Query.Builder.class)
 public final class Query {
-    private final RelativeTimeframe timeframe;
+    private final QueryTimeframe timeframe;
 
     private final List<QueryInstruction> instructions;
 
@@ -34,7 +34,7 @@ public final class Query {
     private final Map<String, Object> additionalProperties;
 
     private Query(
-            RelativeTimeframe timeframe,
+            QueryTimeframe timeframe,
             List<QueryInstruction> instructions,
             Optional<QueryConfig> config,
             Map<String, Object> additionalProperties) {
@@ -50,7 +50,7 @@ public final class Query {
     }
 
     @JsonProperty("timeframe")
-    public RelativeTimeframe getTimeframe() {
+    public QueryTimeframe getTimeframe() {
         return timeframe;
     }
 
@@ -96,7 +96,7 @@ public final class Query {
     }
 
     public interface TimeframeStage {
-        _FinalStage timeframe(RelativeTimeframe timeframe);
+        _FinalStage timeframe(QueryTimeframe timeframe);
 
         Builder from(Query other);
     }
@@ -117,7 +117,7 @@ public final class Query {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TimeframeStage, _FinalStage {
-        private RelativeTimeframe timeframe;
+        private QueryTimeframe timeframe;
 
         private Optional<QueryConfig> config = Optional.empty();
 
@@ -138,7 +138,7 @@ public final class Query {
 
         @Override
         @JsonSetter("timeframe")
-        public _FinalStage timeframe(RelativeTimeframe timeframe) {
+        public _FinalStage timeframe(QueryTimeframe timeframe) {
             this.timeframe = timeframe;
             return this;
         }

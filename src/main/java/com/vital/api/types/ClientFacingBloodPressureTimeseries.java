@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,7 +28,7 @@ public final class ClientFacingBloodPressureTimeseries {
 
     private final String unit;
 
-    private final OffsetDateTime timestamp;
+    private final String timestamp;
 
     private final double systolic;
 
@@ -42,7 +41,7 @@ public final class ClientFacingBloodPressureTimeseries {
             Optional<Integer> timezoneOffset,
             Optional<String> type,
             String unit,
-            OffsetDateTime timestamp,
+            String timestamp,
             double systolic,
             double diastolic,
             Map<String, Object> additionalProperties) {
@@ -80,7 +79,7 @@ public final class ClientFacingBloodPressureTimeseries {
     }
 
     @JsonProperty("timestamp")
-    public OffsetDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -138,7 +137,7 @@ public final class ClientFacingBloodPressureTimeseries {
     }
 
     public interface TimestampStage {
-        SystolicStage timestamp(OffsetDateTime timestamp);
+        SystolicStage timestamp(String timestamp);
     }
 
     public interface SystolicStage {
@@ -169,7 +168,7 @@ public final class ClientFacingBloodPressureTimeseries {
     public static final class Builder implements UnitStage, TimestampStage, SystolicStage, DiastolicStage, _FinalStage {
         private String unit;
 
-        private OffsetDateTime timestamp;
+        private String timestamp;
 
         private double systolic;
 
@@ -211,7 +210,7 @@ public final class ClientFacingBloodPressureTimeseries {
 
         @Override
         @JsonSetter("timestamp")
-        public SystolicStage timestamp(OffsetDateTime timestamp) {
+        public SystolicStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
