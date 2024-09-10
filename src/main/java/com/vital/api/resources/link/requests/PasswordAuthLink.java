@@ -74,7 +74,7 @@ public final class PasswordAuthLink {
         return authType;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PasswordAuthLink && equalTo((PasswordAuthLink) other);
@@ -93,12 +93,12 @@ public final class PasswordAuthLink {
                 && authType.equals(other.authType);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.vitalLinkToken, this.username, this.password, this.provider, this.authType);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -151,7 +151,7 @@ public final class PasswordAuthLink {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PasswordAuthLink other) {
             vitalLinkToken(other.getVitalLinkToken());
             username(other.getUsername());
@@ -161,48 +161,48 @@ public final class PasswordAuthLink {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("username")
         public PasswordStage username(String username) {
             this.username = username;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("password")
         public ProviderStage password(String password) {
             this.password = password;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public AuthTypeStage provider(Providers provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("auth_type")
         public _FinalStage authType(AuthType authType) {
             this.authType = authType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
             this.vitalLinkToken = Optional.of(vitalLinkToken);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
         public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
             this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PasswordAuthLink build() {
             return new PasswordAuthLink(vitalLinkToken, username, password, provider, authType, additionalProperties);
         }

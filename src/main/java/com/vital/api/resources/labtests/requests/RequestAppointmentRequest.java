@@ -46,7 +46,7 @@ public final class RequestAppointmentRequest {
         return provider;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RequestAppointmentRequest && equalTo((RequestAppointmentRequest) other);
@@ -61,12 +61,12 @@ public final class RequestAppointmentRequest {
         return address.equals(other.address) && provider.equals(other.provider);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.address, this.provider);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,7 +100,7 @@ public final class RequestAppointmentRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RequestAppointmentRequest other) {
             address(other.getAddress());
             provider(other.getProvider());
@@ -111,21 +111,21 @@ public final class RequestAppointmentRequest {
          * <p>At-home phlebotomy appointment address.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("address")
         public ProviderStage address(UsAddress address) {
             this.address = address;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(AppointmentProvider provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RequestAppointmentRequest build() {
             return new RequestAppointmentRequest(address, provider, additionalProperties);
         }

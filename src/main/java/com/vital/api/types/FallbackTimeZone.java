@@ -55,7 +55,7 @@ public final class FallbackTimeZone {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FallbackTimeZone && equalTo((FallbackTimeZone) other);
@@ -70,12 +70,12 @@ public final class FallbackTimeZone {
         return id.equals(other.id) && sourceSlug.equals(other.sourceSlug) && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.sourceSlug, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -115,7 +115,7 @@ public final class FallbackTimeZone {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(FallbackTimeZone other) {
             id(other.getId());
             sourceSlug(other.getSourceSlug());
@@ -128,7 +128,7 @@ public final class FallbackTimeZone {
          * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SourceSlugStage id(String id) {
             this.id = id;
@@ -139,21 +139,21 @@ public final class FallbackTimeZone {
          * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("source_slug")
         public UpdatedAtStage sourceSlug(String sourceSlug) {
             this.sourceSlug = sourceSlug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public FallbackTimeZone build() {
             return new FallbackTimeZone(id, sourceSlug, updatedAt, additionalProperties);
         }

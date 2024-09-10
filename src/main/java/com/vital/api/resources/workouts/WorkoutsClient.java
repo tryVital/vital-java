@@ -3,26 +3,39 @@
  */
 package com.vital.api.resources.workouts;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.core.VitalException;
+import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
 import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
+import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawWorkout;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class WorkoutsClient {
     protected final ClientOptions clientOptions;
 
     public WorkoutsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Get Daily workout for user_id
+     */
+    public ClientWorkoutResponse get(String userId, WorkoutsGetRequest request) {
+        return get(userId, request, null);
     }
 
     /**
@@ -46,25 +59,38 @@ public class WorkoutsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientWorkoutResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientWorkoutResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
      * Get Daily workout for user_id
      */
-    public ClientWorkoutResponse get(String userId, WorkoutsGetRequest request) {
-        return get(userId, request, null);
+    public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request) {
+        return getRaw(userId, request, null);
     }
 
     /**
@@ -89,25 +115,35 @@ public class WorkoutsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RawWorkout.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawWorkout.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
-    /**
-     * Get Daily workout for user_id
-     */
-    public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request) {
-        return getRaw(userId, request, null);
+    public ClientFacingStream getByWorkoutId(String workoutId) {
+        return getByWorkoutId(workoutId, null);
     }
 
     public ClientFacingStream getByWorkoutId(String workoutId, RequestOptions requestOptions) {
@@ -123,21 +159,30 @@ public class WorkoutsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingStream.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingStream.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    public ClientFacingStream getByWorkoutId(String workoutId) {
-        return getByWorkoutId(workoutId, null);
     }
 }

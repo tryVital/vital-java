@@ -72,7 +72,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
         return phoneType;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails
@@ -92,12 +92,12 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
                 && phoneType.equals(other.phoneType);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.firstName, this.lastName, this.address, this.phoneNumber, this.phoneType);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -150,7 +150,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
@@ -160,48 +160,48 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_name")
         public LastNameStage firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("last_name")
         public AddressStage lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("address")
         public PhoneNumberStage address(Address address) {
             this.address = address;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("phone_number")
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage phoneType(String phoneType) {
             this.phoneType = Optional.of(phoneType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "phone_type", nulls = Nulls.SKIP)
         public _FinalStage phoneType(Optional<String> phoneType) {
             this.phoneType = phoneType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails build() {
             return new VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails(
                     firstName, lastName, address, phoneNumber, phoneType, additionalProperties);

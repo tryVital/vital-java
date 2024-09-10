@@ -55,7 +55,7 @@ public final class FallbackBirthDate {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FallbackBirthDate && equalTo((FallbackBirthDate) other);
@@ -70,12 +70,12 @@ public final class FallbackBirthDate {
         return value.equals(other.value) && sourceSlug.equals(other.sourceSlug) && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.value, this.sourceSlug, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -115,7 +115,7 @@ public final class FallbackBirthDate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(FallbackBirthDate other) {
             value(other.getValue());
             sourceSlug(other.getSourceSlug());
@@ -127,7 +127,7 @@ public final class FallbackBirthDate {
          * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public SourceSlugStage value(String value) {
             this.value = value;
@@ -138,21 +138,21 @@ public final class FallbackBirthDate {
          * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("source_slug")
         public UpdatedAtStage sourceSlug(String sourceSlug) {
             this.sourceSlug = sourceSlug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public FallbackBirthDate build() {
             return new FallbackBirthDate(value, sourceSlug, updatedAt, additionalProperties);
         }

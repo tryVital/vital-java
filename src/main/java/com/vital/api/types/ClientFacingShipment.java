@@ -67,42 +67,63 @@ public final class ClientFacingShipment {
         return id;
     }
 
+    /**
+     * @return Tracking number for delivery to customer
+     */
     @JsonProperty("outbound_tracking_number")
     public Optional<String> getOutboundTrackingNumber() {
         return outboundTrackingNumber;
     }
 
+    /**
+     * @return Tracking url for delivery to customer
+     */
     @JsonProperty("outbound_tracking_url")
     public Optional<String> getOutboundTrackingUrl() {
         return outboundTrackingUrl;
     }
 
+    /**
+     * @return Tracking number for delivery to lab
+     */
     @JsonProperty("inbound_tracking_number")
     public Optional<String> getInboundTrackingNumber() {
         return inboundTrackingNumber;
     }
 
+    /**
+     * @return Tracking url for delivery to lab
+     */
     @JsonProperty("inbound_tracking_url")
     public Optional<String> getInboundTrackingUrl() {
         return inboundTrackingUrl;
     }
 
+    /**
+     * @return Courier used for delivery to customer
+     */
     @JsonProperty("outbound_courier")
     public Optional<String> getOutboundCourier() {
         return outboundCourier;
     }
 
+    /**
+     * @return Courier used for delivery to lab
+     */
     @JsonProperty("inbound_courier")
     public Optional<String> getInboundCourier() {
         return inboundCourier;
     }
 
+    /**
+     * @return Notes associated to the Vital shipment
+     */
     @JsonProperty("notes")
     public Optional<String> getNotes() {
         return notes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingShipment && equalTo((ClientFacingShipment) other);
@@ -124,7 +145,7 @@ public final class ClientFacingShipment {
                 && notes.equals(other.notes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -137,7 +158,7 @@ public final class ClientFacingShipment {
                 this.notes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -207,7 +228,7 @@ public final class ClientFacingShipment {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingShipment other) {
             id(other.getId());
             outboundTrackingNumber(other.getOutboundTrackingNumber());
@@ -224,105 +245,133 @@ public final class ClientFacingShipment {
          * <p>The Vital Shipment ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Notes associated to the Vital shipment</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.of(notes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
             this.notes = notes;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Courier used for delivery to lab</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage inboundCourier(String inboundCourier) {
             this.inboundCourier = Optional.of(inboundCourier);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "inbound_courier", nulls = Nulls.SKIP)
         public _FinalStage inboundCourier(Optional<String> inboundCourier) {
             this.inboundCourier = inboundCourier;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Courier used for delivery to customer</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage outboundCourier(String outboundCourier) {
             this.outboundCourier = Optional.of(outboundCourier);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "outbound_courier", nulls = Nulls.SKIP)
         public _FinalStage outboundCourier(Optional<String> outboundCourier) {
             this.outboundCourier = outboundCourier;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Tracking url for delivery to lab</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage inboundTrackingUrl(String inboundTrackingUrl) {
             this.inboundTrackingUrl = Optional.of(inboundTrackingUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "inbound_tracking_url", nulls = Nulls.SKIP)
         public _FinalStage inboundTrackingUrl(Optional<String> inboundTrackingUrl) {
             this.inboundTrackingUrl = inboundTrackingUrl;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Tracking number for delivery to lab</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage inboundTrackingNumber(String inboundTrackingNumber) {
             this.inboundTrackingNumber = Optional.of(inboundTrackingNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "inbound_tracking_number", nulls = Nulls.SKIP)
         public _FinalStage inboundTrackingNumber(Optional<String> inboundTrackingNumber) {
             this.inboundTrackingNumber = inboundTrackingNumber;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Tracking url for delivery to customer</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage outboundTrackingUrl(String outboundTrackingUrl) {
             this.outboundTrackingUrl = Optional.of(outboundTrackingUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "outbound_tracking_url", nulls = Nulls.SKIP)
         public _FinalStage outboundTrackingUrl(Optional<String> outboundTrackingUrl) {
             this.outboundTrackingUrl = outboundTrackingUrl;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Tracking number for delivery to customer</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage outboundTrackingNumber(String outboundTrackingNumber) {
             this.outboundTrackingNumber = Optional.of(outboundTrackingNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "outbound_tracking_number", nulls = Nulls.SKIP)
         public _FinalStage outboundTrackingNumber(Optional<String> outboundTrackingNumber) {
             this.outboundTrackingNumber = outboundTrackingNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingShipment build() {
             return new ClientFacingShipment(
                     id,

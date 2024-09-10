@@ -34,14 +34,14 @@ public final class ClientFacingStreamDistance {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((List<Optional<Double>>) this.value);
+            return visitor.visitListOfOptionalDouble((List<Optional<Double>>) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((List<Double>) this.value);
+            return visitor.visitListOfDouble((List<Double>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingStreamDistance && equalTo((ClientFacingStreamDistance) other);
@@ -51,28 +51,28 @@ public final class ClientFacingStreamDistance {
         return value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return this.value.toString();
     }
 
-    public static ClientFacingStreamDistance of(List<Optional<Double>> value) {
+    public static ClientFacingStreamDistance ofListOfOptionalDouble(List<Optional<Double>> value) {
         return new ClientFacingStreamDistance(value, 0);
     }
 
-    public static ClientFacingStreamDistance of(List<Double> value) {
+    public static ClientFacingStreamDistance ofListOfDouble(List<Double> value) {
         return new ClientFacingStreamDistance(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(List<Optional<Double>> value);
+        T visitListOfOptionalDouble(List<Optional<Double>> value);
 
-        T visit(List<Double> value);
+        T visitListOfDouble(List<Double> value);
     }
 
     static final class Deserializer extends StdDeserializer<ClientFacingStreamDistance> {
@@ -80,16 +80,17 @@ public final class ClientFacingStreamDistance {
             super(ClientFacingStreamDistance.class);
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingStreamDistance deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(
+                return ofListOfOptionalDouble(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Double>>>() {}));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Double>>() {}));
+                return ofListOfDouble(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Double>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

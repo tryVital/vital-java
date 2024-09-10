@@ -55,7 +55,7 @@ public final class Consent {
         return timeOfConsent;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Consent && equalTo((Consent) other);
@@ -72,12 +72,12 @@ public final class Consent {
                 && timeOfConsent.equals(other.timeOfConsent);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.consentType, this.version, this.timeOfConsent);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -117,7 +117,7 @@ public final class Consent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Consent other) {
             consentType(other.getConsentType());
             version(other.getVersion());
@@ -125,40 +125,40 @@ public final class Consent {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("consentType")
         public _FinalStage consentType(ConsentType consentType) {
             this.consentType = consentType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage timeOfConsent(OffsetDateTime timeOfConsent) {
             this.timeOfConsent = Optional.of(timeOfConsent);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timeOfConsent", nulls = Nulls.SKIP)
         public _FinalStage timeOfConsent(Optional<OffsetDateTime> timeOfConsent) {
             this.timeOfConsent = timeOfConsent;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage version(String version) {
             this.version = Optional.of(version);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "version", nulls = Nulls.SKIP)
         public _FinalStage version(Optional<String> version) {
             this.version = version;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Consent build() {
             return new Consent(consentType, version, timeOfConsent, additionalProperties);
         }

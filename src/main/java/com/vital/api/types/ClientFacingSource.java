@@ -67,6 +67,9 @@ public final class ClientFacingSource {
         return type;
     }
 
+    /**
+     * @return The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+     */
     @JsonProperty("app_id")
     public Optional<String> getAppId() {
         return appId;
@@ -96,7 +99,7 @@ public final class ClientFacingSource {
         return logo;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingSource && equalTo((ClientFacingSource) other);
@@ -116,12 +119,12 @@ public final class ClientFacingSource {
                 && logo.equals(other.logo);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.provider, this.type, this.appId, this.name, this.slug, this.logo);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -179,7 +182,7 @@ public final class ClientFacingSource {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingSource other) {
             provider(other.getProvider());
             type(other.getType());
@@ -194,7 +197,7 @@ public final class ClientFacingSource {
          * <p>Provider slug. e.g., <code>oura</code>, <code>fitbit</code>, <code>garmin</code>.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(String provider) {
             this.provider = provider;
@@ -205,13 +208,13 @@ public final class ClientFacingSource {
          * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage logo(String logo) {
             this.logo = Optional.of(logo);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "logo", nulls = Nulls.SKIP)
         public _FinalStage logo(Optional<String> logo) {
             this.logo = logo;
@@ -222,13 +225,13 @@ public final class ClientFacingSource {
          * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage slug(String slug) {
             this.slug = Optional.of(slug);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "slug", nulls = Nulls.SKIP)
         public _FinalStage slug(Optional<String> slug) {
             this.slug = slug;
@@ -239,26 +242,30 @@ public final class ClientFacingSource {
          * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage name(String name) {
             this.name = Optional.of(name);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public _FinalStage name(Optional<String> name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage appId(String appId) {
             this.appId = Optional.of(appId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "app_id", nulls = Nulls.SKIP)
         public _FinalStage appId(Optional<String> appId) {
             this.appId = appId;
@@ -269,20 +276,20 @@ public final class ClientFacingSource {
          * <p>The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to <code>unknown</code> when Vital cannot extract or infer that information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingSource build() {
             return new ClientFacingSource(provider, type, appId, name, slug, logo, additionalProperties);
         }

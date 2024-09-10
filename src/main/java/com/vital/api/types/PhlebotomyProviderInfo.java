@@ -46,7 +46,7 @@ public final class PhlebotomyProviderInfo {
         return serviceTypes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PhlebotomyProviderInfo && equalTo((PhlebotomyProviderInfo) other);
@@ -61,12 +61,12 @@ public final class PhlebotomyProviderInfo {
         return name.equals(other.name) && serviceTypes.equals(other.serviceTypes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.serviceTypes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,33 +102,33 @@ public final class PhlebotomyProviderInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PhlebotomyProviderInfo other) {
             name(other.getName());
             serviceTypes(other.getServiceTypes());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(AppointmentProvider name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllServiceTypes(List<AppointmentServiceType> serviceTypes) {
             this.serviceTypes.addAll(serviceTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addServiceTypes(AppointmentServiceType serviceTypes) {
             this.serviceTypes.add(serviceTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "service_types", nulls = Nulls.SKIP)
         public _FinalStage serviceTypes(List<AppointmentServiceType> serviceTypes) {
             this.serviceTypes.clear();
@@ -136,7 +136,7 @@ public final class PhlebotomyProviderInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PhlebotomyProviderInfo build() {
             return new PhlebotomyProviderInfo(name, serviceTypes, additionalProperties);
         }

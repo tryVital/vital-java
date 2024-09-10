@@ -46,7 +46,7 @@ public final class QueryConfig {
         return providerPriorityOverrides;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof QueryConfig && equalTo((QueryConfig) other);
@@ -62,12 +62,12 @@ public final class QueryConfig {
                 && providerPriorityOverrides.equals(other.providerPriorityOverrides);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.weekStartsOn, this.providerPriorityOverrides);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

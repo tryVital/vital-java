@@ -81,7 +81,7 @@ public final class ClientFacingApiKey {
         return deletedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingApiKey && equalTo((ClientFacingApiKey) other);
@@ -101,12 +101,12 @@ public final class ClientFacingApiKey {
                 && deletedAt.equals(other.deletedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.label, this.value, this.teamId, this.id, this.createdAt, this.deletedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -164,7 +164,7 @@ public final class ClientFacingApiKey {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingApiKey other) {
             label(other.getLabel());
             value(other.getValue());
@@ -175,61 +175,61 @@ public final class ClientFacingApiKey {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("label")
         public ValueStage label(String label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public IdStage value(String value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public _FinalStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage deletedAt(String deletedAt) {
             this.deletedAt = Optional.of(deletedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "deleted_at", nulls = Nulls.SKIP)
         public _FinalStage deletedAt(Optional<String> deletedAt) {
             this.deletedAt = deletedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage teamId(String teamId) {
             this.teamId = Optional.of(teamId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
         public _FinalStage teamId(Optional<String> teamId) {
             this.teamId = teamId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingApiKey build() {
             return new ClientFacingApiKey(label, value, teamId, id, createdAt, deletedAt, additionalProperties);
         }

@@ -3,23 +3,33 @@
  */
 package com.vital.api.resources.menstrualcycle;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.core.VitalException;
+import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.menstrualcycle.requests.MenstrualCycleGetRequest;
+import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.MenstrualCycleResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class MenstrualCycleClient {
     protected final ClientOptions clientOptions;
 
     public MenstrualCycleClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    public MenstrualCycleResponse get(String userId, MenstrualCycleGetRequest request) {
+        return get(userId, request, null);
     }
 
     public MenstrualCycleResponse get(String userId, MenstrualCycleGetRequest request, RequestOptions requestOptions) {
@@ -40,21 +50,30 @@ public class MenstrualCycleClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), MenstrualCycleResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MenstrualCycleResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    public MenstrualCycleResponse get(String userId, MenstrualCycleGetRequest request) {
-        return get(userId, request, null);
     }
 }

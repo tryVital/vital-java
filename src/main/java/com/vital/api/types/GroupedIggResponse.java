@@ -49,17 +49,23 @@ public final class GroupedIggResponse {
         return groups;
     }
 
+    /**
+     * @return The cursor for fetching the next page, or <code>null</code> if there is no more data.
+     */
     @JsonProperty("next")
     public Optional<String> getNext() {
         return next;
     }
 
+    /**
+     * @return The cursor for fetching the next page, or <code>null</code> if there is no more data.
+     */
     @JsonProperty("next_cursor")
     public Optional<String> getNextCursor() {
         return nextCursor;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GroupedIggResponse && equalTo((GroupedIggResponse) other);
@@ -74,12 +80,12 @@ public final class GroupedIggResponse {
         return groups.equals(other.groups) && next.equals(other.next) && nextCursor.equals(other.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.groups, this.next, this.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

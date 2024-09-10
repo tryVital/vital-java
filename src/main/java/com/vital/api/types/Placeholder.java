@@ -32,7 +32,7 @@ public final class Placeholder {
         return placeholder;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Placeholder && equalTo((Placeholder) other);
@@ -47,12 +47,12 @@ public final class Placeholder {
         return placeholder == other.placeholder;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.placeholder);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class Placeholder {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Placeholder other) {
             placeholder(other.getPlaceholder());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("placeholder")
         public _FinalStage placeholder(boolean placeholder) {
             this.placeholder = placeholder;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Placeholder build() {
             return new Placeholder(placeholder, additionalProperties);
         }

@@ -32,7 +32,7 @@ public final class SleepSelector {
         return sleep;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SleepSelector && equalTo((SleepSelector) other);
@@ -47,12 +47,12 @@ public final class SleepSelector {
         return sleep.equals(other.sleep);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sleep);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class SleepSelector {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SleepSelector other) {
             sleep(other.getSleep());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sleep")
         public _FinalStage sleep(SleepSelectorSleep sleep) {
             this.sleep = sleep;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SleepSelector build() {
             return new SleepSelector(sleep, additionalProperties);
         }

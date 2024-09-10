@@ -60,7 +60,7 @@ public final class PaginatedUsersResponse {
         return limit;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PaginatedUsersResponse && equalTo((PaginatedUsersResponse) other);
@@ -75,12 +75,12 @@ public final class PaginatedUsersResponse {
         return users.equals(other.users) && total == other.total && offset == other.offset && limit == other.limit;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.users, this.total, this.offset, this.limit);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -128,7 +128,7 @@ public final class PaginatedUsersResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PaginatedUsersResponse other) {
             users(other.getUsers());
             total(other.getTotal());
@@ -137,40 +137,40 @@ public final class PaginatedUsersResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("total")
         public OffsetStage total(int total) {
             this.total = total;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("offset")
         public LimitStage offset(int offset) {
             this.offset = offset;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("limit")
         public _FinalStage limit(int limit) {
             this.limit = limit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllUsers(List<ClientFacingUser> users) {
             this.users.addAll(users);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addUsers(ClientFacingUser users) {
             this.users.add(users);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "users", nulls = Nulls.SKIP)
         public _FinalStage users(List<ClientFacingUser> users) {
             this.users.clear();
@@ -178,7 +178,7 @@ public final class PaginatedUsersResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PaginatedUsersResponse build() {
             return new PaginatedUsersResponse(users, total, offset, limit, additionalProperties);
         }

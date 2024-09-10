@@ -32,7 +32,7 @@ public final class RawProfile {
         return profile;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RawProfile && equalTo((RawProfile) other);
@@ -47,12 +47,12 @@ public final class RawProfile {
         return profile.equals(other.profile);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.profile);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class RawProfile {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RawProfile other) {
             profile(other.getProfile());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("profile")
         public _FinalStage profile(ProfileInDb profile) {
             this.profile = profile;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RawProfile build() {
             return new RawProfile(profile, additionalProperties);
         }

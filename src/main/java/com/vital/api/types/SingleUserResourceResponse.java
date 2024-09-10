@@ -45,7 +45,7 @@ public final class SingleUserResourceResponse {
         return provider;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SingleUserResourceResponse && equalTo((SingleUserResourceResponse) other);
@@ -60,12 +60,12 @@ public final class SingleUserResourceResponse {
         return userId.equals(other.userId) && provider.equals(other.provider);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.provider);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,33 +101,33 @@ public final class SingleUserResourceResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SingleUserResourceResponse other) {
             userId(other.getUserId());
             provider(other.getProvider());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage provider(String key, Map<String, SingleResourceStatistics> value) {
             this.provider.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllProvider(Map<String, Map<String, SingleResourceStatistics>> provider) {
             this.provider.putAll(provider);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Map<String, Map<String, SingleResourceStatistics>> provider) {
             this.provider.clear();
@@ -135,7 +135,7 @@ public final class SingleUserResourceResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SingleUserResourceResponse build() {
             return new SingleUserResourceResponse(userId, provider, additionalProperties);
         }

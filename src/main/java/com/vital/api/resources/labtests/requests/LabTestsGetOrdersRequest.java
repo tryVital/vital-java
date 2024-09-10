@@ -174,7 +174,7 @@ public final class LabTestsGetOrdersRequest {
         return size;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabTestsGetOrdersRequest && equalTo((LabTestsGetOrdersRequest) other);
@@ -201,7 +201,7 @@ public final class LabTestsGetOrdersRequest {
                 && size.equals(other.size);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.searchInput,
@@ -219,7 +219,7 @@ public final class LabTestsGetOrdersRequest {
                 this.size);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

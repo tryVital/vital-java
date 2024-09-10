@@ -83,7 +83,7 @@ public final class CreateInsuranceRequest {
         return guarantor;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateInsuranceRequest && equalTo((CreateInsuranceRequest) other);
@@ -103,13 +103,13 @@ public final class CreateInsuranceRequest {
                 && guarantor.equals(other.guarantor);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.payorCode, this.memberId, this.groupId, this.relationship, this.insured, this.guarantor);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -168,7 +168,7 @@ public final class CreateInsuranceRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateInsuranceRequest other) {
             payorCode(other.getPayorCode());
             memberId(other.getMemberId());
@@ -179,61 +179,61 @@ public final class CreateInsuranceRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("payor_code")
         public MemberIdStage payorCode(String payorCode) {
             this.payorCode = payorCode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("member_id")
         public RelationshipStage memberId(String memberId) {
             this.memberId = memberId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("relationship")
         public InsuredStage relationship(ResponsibleRelationship relationship) {
             this.relationship = relationship;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("insured")
         public _FinalStage insured(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured) {
             this.insured = insured;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage guarantor(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails guarantor) {
             this.guarantor = Optional.of(guarantor);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "guarantor", nulls = Nulls.SKIP)
         public _FinalStage guarantor(Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> guarantor) {
             this.guarantor = guarantor;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage groupId(String groupId) {
             this.groupId = Optional.of(groupId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "group_id", nulls = Nulls.SKIP)
         public _FinalStage groupId(Optional<String> groupId) {
             this.groupId = groupId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateInsuranceRequest build() {
             return new CreateInsuranceRequest(
                     payorCode, memberId, groupId, relationship, insured, guarantor, additionalProperties);

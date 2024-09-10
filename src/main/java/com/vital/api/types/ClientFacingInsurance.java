@@ -90,7 +90,7 @@ public final class ClientFacingInsurance {
         return guarantor;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingInsurance && equalTo((ClientFacingInsurance) other);
@@ -111,7 +111,7 @@ public final class ClientFacingInsurance {
                 && guarantor.equals(other.guarantor);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.memberId,
@@ -123,7 +123,7 @@ public final class ClientFacingInsurance {
                 this.guarantor);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -188,7 +188,7 @@ public final class ClientFacingInsurance {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingInsurance other) {
             memberId(other.getMemberId());
             payorCode(other.getPayorCode());
@@ -200,68 +200,68 @@ public final class ClientFacingInsurance {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("member_id")
         public PayorCodeStage memberId(String memberId) {
             this.memberId = memberId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("payor_code")
         public RelationshipStage payorCode(String payorCode) {
             this.payorCode = payorCode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("relationship")
         public InsuredStage relationship(ResponsibleRelationship relationship) {
             this.relationship = relationship;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("insured")
         public CompanyStage insured(PersonDetailsOutput insured) {
             this.insured = insured;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("company")
         public _FinalStage company(CompanyDetails company) {
             this.company = company;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage guarantor(PersonDetailsOutput guarantor) {
             this.guarantor = Optional.of(guarantor);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "guarantor", nulls = Nulls.SKIP)
         public _FinalStage guarantor(Optional<PersonDetailsOutput> guarantor) {
             this.guarantor = guarantor;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage groupId(String groupId) {
             this.groupId = Optional.of(groupId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "group_id", nulls = Nulls.SKIP)
         public _FinalStage groupId(Optional<String> groupId) {
             this.groupId = groupId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingInsurance build() {
             return new ClientFacingInsurance(
                     memberId, payorCode, relationship, insured, company, groupId, guarantor, additionalProperties);

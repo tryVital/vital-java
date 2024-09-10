@@ -55,27 +55,40 @@ public final class UserCreateBody {
         return clientUserId;
     }
 
+    /**
+     * @return Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+     * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).
+     */
     @JsonProperty("fallback_time_zone")
     public Optional<String> getFallbackTimeZone() {
         return fallbackTimeZone;
     }
 
+    /**
+     * @return Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.
+     */
     @JsonProperty("fallback_birth_date")
     public Optional<String> getFallbackBirthDate() {
         return fallbackBirthDate;
     }
 
+    /**
+     * @return Starting bound for user data ingestion. Data older than this date will not be ingested.
+     */
     @JsonProperty("ingestion_start")
     public Optional<String> getIngestionStart() {
         return ingestionStart;
     }
 
+    /**
+     * @return Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.
+     */
     @JsonProperty("ingestion_end")
     public Optional<String> getIngestionEnd() {
         return ingestionEnd;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserCreateBody && equalTo((UserCreateBody) other);
@@ -94,7 +107,7 @@ public final class UserCreateBody {
                 && ingestionEnd.equals(other.ingestionEnd);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.clientUserId,
@@ -104,7 +117,7 @@ public final class UserCreateBody {
                 this.ingestionEnd);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -156,7 +169,7 @@ public final class UserCreateBody {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserCreateBody other) {
             clientUserId(other.getClientUserId());
             fallbackTimeZone(other.getFallbackTimeZone());
@@ -170,66 +183,83 @@ public final class UserCreateBody {
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_user_id")
         public _FinalStage clientUserId(String clientUserId) {
             this.clientUserId = clientUserId;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage ingestionEnd(String ingestionEnd) {
             this.ingestionEnd = Optional.of(ingestionEnd);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
         public _FinalStage ingestionEnd(Optional<String> ingestionEnd) {
             this.ingestionEnd = ingestionEnd;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Starting bound for user data ingestion. Data older than this date will not be ingested.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage ingestionStart(String ingestionStart) {
             this.ingestionStart = Optional.of(ingestionStart);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "ingestion_start", nulls = Nulls.SKIP)
         public _FinalStage ingestionStart(Optional<String> ingestionStart) {
             this.ingestionStart = ingestionStart;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage fallbackBirthDate(String fallbackBirthDate) {
             this.fallbackBirthDate = Optional.of(fallbackBirthDate);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
         public _FinalStage fallbackBirthDate(Optional<String> fallbackBirthDate) {
             this.fallbackBirthDate = fallbackBirthDate;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage fallbackTimeZone(String fallbackTimeZone) {
             this.fallbackTimeZone = Optional.of(fallbackTimeZone);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fallback_time_zone", nulls = Nulls.SKIP)
         public _FinalStage fallbackTimeZone(Optional<String> fallbackTimeZone) {
             this.fallbackTimeZone = fallbackTimeZone;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserCreateBody build() {
             return new UserCreateBody(
                     clientUserId,

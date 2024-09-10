@@ -50,7 +50,7 @@ public final class LabTestsGetLabelsPdfRequest {
         return collectionDate;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabTestsGetLabelsPdfRequest && equalTo((LabTestsGetLabelsPdfRequest) other);
@@ -65,12 +65,12 @@ public final class LabTestsGetLabelsPdfRequest {
         return numberOfLabels.equals(other.numberOfLabels) && collectionDate.equals(other.collectionDate);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.numberOfLabels, this.collectionDate);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -104,7 +104,7 @@ public final class LabTestsGetLabelsPdfRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LabTestsGetLabelsPdfRequest other) {
             numberOfLabels(other.getNumberOfLabels());
             collectionDate(other.getCollectionDate());
@@ -115,7 +115,7 @@ public final class LabTestsGetLabelsPdfRequest {
          * <p>Collection date</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("collection_date")
         public _FinalStage collectionDate(OffsetDateTime collectionDate) {
             this.collectionDate = collectionDate;
@@ -126,20 +126,20 @@ public final class LabTestsGetLabelsPdfRequest {
          * <p>Number of labels to generate</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage numberOfLabels(Integer numberOfLabels) {
             this.numberOfLabels = Optional.of(numberOfLabels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "number_of_labels", nulls = Nulls.SKIP)
         public _FinalStage numberOfLabels(Optional<Integer> numberOfLabels) {
             this.numberOfLabels = numberOfLabels;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LabTestsGetLabelsPdfRequest build() {
             return new LabTestsGetLabelsPdfRequest(numberOfLabels, collectionDate, additionalProperties);
         }

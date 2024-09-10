@@ -43,7 +43,7 @@ public final class UserGetAllRequest {
         return limit;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserGetAllRequest && equalTo((UserGetAllRequest) other);
@@ -58,12 +58,12 @@ public final class UserGetAllRequest {
         return offset.equals(other.offset) && limit.equals(other.limit);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.offset, this.limit);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

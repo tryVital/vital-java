@@ -96,7 +96,7 @@ public final class RegisterTestkitRequest {
         return consents;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RegisterTestkitRequest && equalTo((RegisterTestkitRequest) other);
@@ -117,7 +117,7 @@ public final class RegisterTestkitRequest {
                 && consents.equals(other.consents);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.userId,
@@ -129,7 +129,7 @@ public final class RegisterTestkitRequest {
                 this.consents);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -194,7 +194,7 @@ public final class RegisterTestkitRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RegisterTestkitRequest other) {
             userId(other.getUserId());
             sampleId(other.getSampleId());
@@ -206,74 +206,74 @@ public final class RegisterTestkitRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SampleIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sample_id")
         public PatientDetailsStage sampleId(String sampleId) {
             this.sampleId = sampleId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("patient_details")
         public PatientAddressStage patientDetails(PatientDetails patientDetails) {
             this.patientDetails = patientDetails;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage consents(List<Consent> consents) {
             this.consents = Optional.of(consents);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "consents", nulls = Nulls.SKIP)
         public _FinalStage consents(Optional<List<Consent>> consents) {
             this.consents = consents;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
             this.healthInsurance = Optional.of(healthInsurance);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "health_insurance", nulls = Nulls.SKIP)
         public _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance) {
             this.healthInsurance = healthInsurance;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequestBase physician) {
             this.physician = Optional.of(physician);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "physician", nulls = Nulls.SKIP)
         public _FinalStage physician(Optional<PhysicianCreateRequestBase> physician) {
             this.physician = physician;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RegisterTestkitRequest build() {
             return new RegisterTestkitRequest(
                     userId,

@@ -35,7 +35,7 @@ public final class MenstrualCycleResponse {
         return menstrualCycle;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MenstrualCycleResponse && equalTo((MenstrualCycleResponse) other);
@@ -50,12 +50,12 @@ public final class MenstrualCycleResponse {
         return menstrualCycle.equals(other.menstrualCycle);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.menstrualCycle);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

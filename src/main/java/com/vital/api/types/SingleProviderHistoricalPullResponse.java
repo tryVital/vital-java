@@ -47,7 +47,7 @@ public final class SingleProviderHistoricalPullResponse {
         return notPulled;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SingleProviderHistoricalPullResponse
@@ -63,12 +63,12 @@ public final class SingleProviderHistoricalPullResponse {
         return pulled.equals(other.pulled) && notPulled.equals(other.notPulled);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.pulled, this.notPulled);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

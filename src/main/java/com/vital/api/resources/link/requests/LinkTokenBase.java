@@ -54,7 +54,7 @@ public final class LinkTokenBase {
         return oauthInfo;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LinkTokenBase && equalTo((LinkTokenBase) other);
@@ -69,12 +69,12 @@ public final class LinkTokenBase {
         return token.equals(other.token) && isUsed.equals(other.isUsed) && oauthInfo.equals(other.oauthInfo);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.token, this.isUsed, this.oauthInfo);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class LinkTokenBase {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LinkTokenBase other) {
             token(other.getToken());
             isUsed(other.getIsUsed());
@@ -122,40 +122,40 @@ public final class LinkTokenBase {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("token")
         public _FinalStage token(String token) {
             this.token = token;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage oauthInfo(Map<String, Object> oauthInfo) {
             this.oauthInfo = Optional.of(oauthInfo);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "oauth_info", nulls = Nulls.SKIP)
         public _FinalStage oauthInfo(Optional<Map<String, Object>> oauthInfo) {
             this.oauthInfo = oauthInfo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage isUsed(Boolean isUsed) {
             this.isUsed = Optional.of(isUsed);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "is_used", nulls = Nulls.SKIP)
         public _FinalStage isUsed(Optional<Boolean> isUsed) {
             this.isUsed = isUsed;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LinkTokenBase build() {
             return new LinkTokenBase(token, isUsed, oauthInfo, additionalProperties);
         }

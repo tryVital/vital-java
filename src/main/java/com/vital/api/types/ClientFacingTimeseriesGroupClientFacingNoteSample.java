@@ -44,7 +44,7 @@ public final class ClientFacingTimeseriesGroupClientFacingNoteSample {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingTimeseriesGroupClientFacingNoteSample
@@ -60,12 +60,12 @@ public final class ClientFacingTimeseriesGroupClientFacingNoteSample {
         return source.equals(other.source) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.source, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,33 +101,33 @@ public final class ClientFacingTimeseriesGroupClientFacingNoteSample {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingTimeseriesGroupClientFacingNoteSample other) {
             source(other.getSource());
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllData(List<ClientFacingNoteSample> data) {
             this.data.addAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addData(ClientFacingNoteSample data) {
             this.data.add(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingNoteSample> data) {
             this.data.clear();
@@ -135,7 +135,7 @@ public final class ClientFacingTimeseriesGroupClientFacingNoteSample {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingTimeseriesGroupClientFacingNoteSample build() {
             return new ClientFacingTimeseriesGroupClientFacingNoteSample(source, data, additionalProperties);
         }

@@ -9,10 +9,15 @@ import com.vital.api.core.Environment;
 public final class VitalBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String apiKey = null;
+
     private Environment environment = Environment.PRODUCTION;
 
+    /**
+     * Sets apiKey
+     */
     public VitalBuilder apiKey(String apiKey) {
-        this.clientOptionsBuilder.addHeader("x-vital-api-key", apiKey);
+        this.apiKey = apiKey;
         return this;
     }
 
@@ -27,6 +32,10 @@ public final class VitalBuilder {
     }
 
     public Vital build() {
+        if (apiKey == null) {
+            throw new RuntimeException("Please provide apiKey");
+        }
+        this.clientOptionsBuilder.addHeader("x-vital-api-key", this.apiKey);
         clientOptionsBuilder.environment(this.environment);
         return new Vital(clientOptionsBuilder.build());
     }

@@ -34,7 +34,7 @@ public final class TeamGetSourcePrioritiesRequest {
         return dataType;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TeamGetSourcePrioritiesRequest && equalTo((TeamGetSourcePrioritiesRequest) other);
@@ -49,12 +49,12 @@ public final class TeamGetSourcePrioritiesRequest {
         return dataType.equals(other.dataType);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.dataType);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

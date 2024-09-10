@@ -45,7 +45,7 @@ public final class RelativeTimeframe {
         return past;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RelativeTimeframe && equalTo((RelativeTimeframe) other);
@@ -60,12 +60,12 @@ public final class RelativeTimeframe {
         return anchor.equals(other.anchor) && past.equals(other.past);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.anchor, this.past);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -99,28 +99,28 @@ public final class RelativeTimeframe {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RelativeTimeframe other) {
             anchor(other.getAnchor());
             past(other.getPast());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("anchor")
         public PastStage anchor(String anchor) {
             this.anchor = anchor;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("past")
         public _FinalStage past(Period past) {
             this.past = past;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RelativeTimeframe build() {
             return new RelativeTimeframe(anchor, past, additionalProperties);
         }

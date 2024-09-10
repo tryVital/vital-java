@@ -45,7 +45,7 @@ public final class ResourceAvailability {
         return scopeRequirements;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ResourceAvailability && equalTo((ResourceAvailability) other);
@@ -60,12 +60,12 @@ public final class ResourceAvailability {
         return status.equals(other.status) && scopeRequirements.equals(other.scopeRequirements);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.status, this.scopeRequirements);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -99,34 +99,34 @@ public final class ResourceAvailability {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ResourceAvailability other) {
             status(other.getStatus());
             scopeRequirements(other.getScopeRequirements());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(Availability status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage scopeRequirements(ScopeRequirementsGrants scopeRequirements) {
             this.scopeRequirements = Optional.of(scopeRequirements);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "scope_requirements", nulls = Nulls.SKIP)
         public _FinalStage scopeRequirements(Optional<ScopeRequirementsGrants> scopeRequirements) {
             this.scopeRequirements = scopeRequirements;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ResourceAvailability build() {
             return new ResourceAvailability(status, scopeRequirements, additionalProperties);
         }

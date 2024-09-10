@@ -46,7 +46,7 @@ public final class EventDestinationPreferences {
         return enabled;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EventDestinationPreferences && equalTo((EventDestinationPreferences) other);
@@ -61,12 +61,12 @@ public final class EventDestinationPreferences {
         return preferred.equals(other.preferred) && enabled.equals(other.enabled);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.preferred, this.enabled);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,33 +102,33 @@ public final class EventDestinationPreferences {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(EventDestinationPreferences other) {
             preferred(other.getPreferred());
             enabled(other.getEnabled());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("preferred")
         public _FinalStage preferred(EventDestinationPreferencesPreferred preferred) {
             this.preferred = preferred;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllEnabled(List<EventDestinationPreferencesEnabledItem> enabled) {
             this.enabled.addAll(enabled);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addEnabled(EventDestinationPreferencesEnabledItem enabled) {
             this.enabled.add(enabled);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "enabled", nulls = Nulls.SKIP)
         public _FinalStage enabled(List<EventDestinationPreferencesEnabledItem> enabled) {
             this.enabled.clear();
@@ -136,7 +136,7 @@ public final class EventDestinationPreferences {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public EventDestinationPreferences build() {
             return new EventDestinationPreferences(preferred, enabled, additionalProperties);
         }

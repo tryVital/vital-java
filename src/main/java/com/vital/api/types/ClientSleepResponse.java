@@ -35,7 +35,7 @@ public final class ClientSleepResponse {
         return sleep;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientSleepResponse && equalTo((ClientSleepResponse) other);
@@ -50,12 +50,12 @@ public final class ClientSleepResponse {
         return sleep.equals(other.sleep);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sleep);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

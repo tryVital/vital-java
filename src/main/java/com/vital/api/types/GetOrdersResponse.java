@@ -65,7 +65,7 @@ public final class GetOrdersResponse {
         return size;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetOrdersResponse && equalTo((GetOrdersResponse) other);
@@ -83,12 +83,12 @@ public final class GetOrdersResponse {
                 && size.equals(other.size);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.orders, this.total, this.page, this.size);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

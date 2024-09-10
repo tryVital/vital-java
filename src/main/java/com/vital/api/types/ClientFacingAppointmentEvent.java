@@ -54,7 +54,7 @@ public final class ClientFacingAppointmentEvent {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingAppointmentEvent && equalTo((ClientFacingAppointmentEvent) other);
@@ -69,12 +69,12 @@ public final class ClientFacingAppointmentEvent {
         return createdAt.equals(other.createdAt) && status.equals(other.status) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.createdAt, this.status, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class ClientFacingAppointmentEvent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingAppointmentEvent other) {
             createdAt(other.getCreatedAt());
             status(other.getStatus());
@@ -122,34 +122,34 @@ public final class ClientFacingAppointmentEvent {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public StatusStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(AppointmentEventStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(Map<String, Object> data) {
             this.data = Optional.of(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Optional<Map<String, Object>> data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingAppointmentEvent build() {
             return new ClientFacingAppointmentEvent(createdAt, status, data, additionalProperties);
         }

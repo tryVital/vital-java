@@ -52,7 +52,7 @@ public final class ClientFacingWalkInTestOrder {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingWalkInTestOrder && equalTo((ClientFacingWalkInTestOrder) other);
@@ -67,12 +67,12 @@ public final class ClientFacingWalkInTestOrder {
         return id.equals(other.id) && createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.createdAt, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -112,7 +112,7 @@ public final class ClientFacingWalkInTestOrder {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingWalkInTestOrder other) {
             id(other.getId());
             createdAt(other.getCreatedAt());
@@ -124,28 +124,28 @@ public final class ClientFacingWalkInTestOrder {
          * <p>The Vital walk-in test Order ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingWalkInTestOrder build() {
             return new ClientFacingWalkInTestOrder(id, createdAt, updatedAt, additionalProperties);
         }

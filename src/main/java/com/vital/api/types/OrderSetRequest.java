@@ -44,7 +44,7 @@ public final class OrderSetRequest {
         return addOn;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof OrderSetRequest && equalTo((OrderSetRequest) other);
@@ -59,12 +59,12 @@ public final class OrderSetRequest {
         return labTestIds.equals(other.labTestIds) && addOn.equals(other.addOn);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.labTestIds, this.addOn);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

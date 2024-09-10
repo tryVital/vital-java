@@ -96,7 +96,7 @@ public final class TimeSlot {
         return numAppointmentsAvailable;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TimeSlot && equalTo((TimeSlot) other);
@@ -117,7 +117,7 @@ public final class TimeSlot {
                 && numAppointmentsAvailable == other.numAppointmentsAvailable;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.bookingKey,
@@ -129,7 +129,7 @@ public final class TimeSlot {
                 this.numAppointmentsAvailable);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -194,7 +194,7 @@ public final class TimeSlot {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TimeSlot other) {
             bookingKey(other.getBookingKey());
             start(other.getStart());
@@ -210,7 +210,7 @@ public final class TimeSlot {
          * <p>Time is in UTC</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(String start) {
             this.start = start;
@@ -221,61 +221,61 @@ public final class TimeSlot {
          * <p>Time is in UTC</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public PriceStage end(String end) {
             this.end = end;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("price")
         public IsPriorityStage price(double price) {
             this.price = price;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("is_priority")
         public NumAppointmentsAvailableStage isPriority(boolean isPriority) {
             this.isPriority = isPriority;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("num_appointments_available")
         public _FinalStage numAppointmentsAvailable(int numAppointmentsAvailable) {
             this.numAppointmentsAvailable = numAppointmentsAvailable;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage expiresAt(String expiresAt) {
             this.expiresAt = Optional.of(expiresAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expires_at", nulls = Nulls.SKIP)
         public _FinalStage expiresAt(Optional<String> expiresAt) {
             this.expiresAt = expiresAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage bookingKey(String bookingKey) {
             this.bookingKey = Optional.of(bookingKey);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "booking_key", nulls = Nulls.SKIP)
         public _FinalStage bookingKey(Optional<String> bookingKey) {
             this.bookingKey = bookingKey;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TimeSlot build() {
             return new TimeSlot(
                     bookingKey,

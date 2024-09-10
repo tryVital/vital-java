@@ -84,7 +84,7 @@ public final class ClientFacingProviderWithStatus {
         return resourceAvailability;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingProviderWithStatus && equalTo((ClientFacingProviderWithStatus) other);
@@ -103,12 +103,12 @@ public final class ClientFacingProviderWithStatus {
                 && resourceAvailability.equals(other.resourceAvailability);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.slug, this.logo, this.status, this.resourceAvailability);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -162,7 +162,7 @@ public final class ClientFacingProviderWithStatus {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingProviderWithStatus other) {
             name(other.getName());
             slug(other.getSlug());
@@ -176,7 +176,7 @@ public final class ClientFacingProviderWithStatus {
          * <p>Name of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
@@ -187,7 +187,7 @@ public final class ClientFacingProviderWithStatus {
          * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public LogoStage slug(String slug) {
             this.slug = slug;
@@ -198,7 +198,7 @@ public final class ClientFacingProviderWithStatus {
          * <p>URL for source logo</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("logo")
         public StatusStage logo(String logo) {
             this.logo = logo;
@@ -209,26 +209,26 @@ public final class ClientFacingProviderWithStatus {
          * <p>Status of source, either error or connected</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(String status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage resourceAvailability(String key, ResourceAvailability value) {
             this.resourceAvailability.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
             this.resourceAvailability.putAll(resourceAvailability);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "resource_availability", nulls = Nulls.SKIP)
         public _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
             this.resourceAvailability.clear();
@@ -236,7 +236,7 @@ public final class ClientFacingProviderWithStatus {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingProviderWithStatus build() {
             return new ClientFacingProviderWithStatus(
                     name, slug, logo, status, resourceAvailability, additionalProperties);

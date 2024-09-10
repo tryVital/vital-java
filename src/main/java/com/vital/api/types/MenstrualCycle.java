@@ -163,7 +163,7 @@ public final class MenstrualCycle {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MenstrualCycle && equalTo((MenstrualCycle) other);
@@ -192,7 +192,7 @@ public final class MenstrualCycle {
                 && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.periodStart,
@@ -212,7 +212,7 @@ public final class MenstrualCycle {
                 this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -324,7 +324,7 @@ public final class MenstrualCycle {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MenstrualCycle other) {
             periodStart(other.getPeriodStart());
             periodEnd(other.getPeriodEnd());
@@ -344,190 +344,190 @@ public final class MenstrualCycle {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("period_start")
         public SourceStage periodStart(String periodStart) {
             this.periodStart = periodStart;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage basalBodyTemperature(List<BasalBodyTemperatureEntry> basalBodyTemperature) {
             this.basalBodyTemperature = Optional.of(basalBodyTemperature);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "basal_body_temperature", nulls = Nulls.SKIP)
         public _FinalStage basalBodyTemperature(Optional<List<BasalBodyTemperatureEntry>> basalBodyTemperature) {
             this.basalBodyTemperature = basalBodyTemperature;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sexualActivity(List<SexualActivityEntry> sexualActivity) {
             this.sexualActivity = Optional.of(sexualActivity);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sexual_activity", nulls = Nulls.SKIP)
         public _FinalStage sexualActivity(Optional<List<SexualActivityEntry>> sexualActivity) {
             this.sexualActivity = sexualActivity;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage homeProgesteroneTest(List<HomeProgesteroneTestEntry> homeProgesteroneTest) {
             this.homeProgesteroneTest = Optional.of(homeProgesteroneTest);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "home_progesterone_test", nulls = Nulls.SKIP)
         public _FinalStage homeProgesteroneTest(Optional<List<HomeProgesteroneTestEntry>> homeProgesteroneTest) {
             this.homeProgesteroneTest = homeProgesteroneTest;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage homePregnancyTest(List<HomePregnancyTestEntry> homePregnancyTest) {
             this.homePregnancyTest = Optional.of(homePregnancyTest);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "home_pregnancy_test", nulls = Nulls.SKIP)
         public _FinalStage homePregnancyTest(Optional<List<HomePregnancyTestEntry>> homePregnancyTest) {
             this.homePregnancyTest = homePregnancyTest;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage ovulationTest(List<OvulationTestEntry> ovulationTest) {
             this.ovulationTest = Optional.of(ovulationTest);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "ovulation_test", nulls = Nulls.SKIP)
         public _FinalStage ovulationTest(Optional<List<OvulationTestEntry>> ovulationTest) {
             this.ovulationTest = ovulationTest;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage detectedDeviations(List<DetectedDeviationEntry> detectedDeviations) {
             this.detectedDeviations = Optional.of(detectedDeviations);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "detected_deviations", nulls = Nulls.SKIP)
         public _FinalStage detectedDeviations(Optional<List<DetectedDeviationEntry>> detectedDeviations) {
             this.detectedDeviations = detectedDeviations;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage contraceptive(List<ContraceptiveEntry> contraceptive) {
             this.contraceptive = Optional.of(contraceptive);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "contraceptive", nulls = Nulls.SKIP)
         public _FinalStage contraceptive(Optional<List<ContraceptiveEntry>> contraceptive) {
             this.contraceptive = contraceptive;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage intermenstrualBleeding(List<IntermenstrualBleedingEntry> intermenstrualBleeding) {
             this.intermenstrualBleeding = Optional.of(intermenstrualBleeding);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "intermenstrual_bleeding", nulls = Nulls.SKIP)
         public _FinalStage intermenstrualBleeding(Optional<List<IntermenstrualBleedingEntry>> intermenstrualBleeding) {
             this.intermenstrualBleeding = intermenstrualBleeding;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage cervicalMucus(List<CervicalMucusEntry> cervicalMucus) {
             this.cervicalMucus = Optional.of(cervicalMucus);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "cervical_mucus", nulls = Nulls.SKIP)
         public _FinalStage cervicalMucus(Optional<List<CervicalMucusEntry>> cervicalMucus) {
             this.cervicalMucus = cervicalMucus;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage menstrualFlow(List<MenstrualFlowEntry> menstrualFlow) {
             this.menstrualFlow = Optional.of(menstrualFlow);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "menstrual_flow", nulls = Nulls.SKIP)
         public _FinalStage menstrualFlow(Optional<List<MenstrualFlowEntry>> menstrualFlow) {
             this.menstrualFlow = menstrualFlow;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage isPredicted(Boolean isPredicted) {
             this.isPredicted = Optional.of(isPredicted);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "is_predicted", nulls = Nulls.SKIP)
         public _FinalStage isPredicted(Optional<Boolean> isPredicted) {
             this.isPredicted = isPredicted;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage cycleEnd(String cycleEnd) {
             this.cycleEnd = Optional.of(cycleEnd);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "cycle_end", nulls = Nulls.SKIP)
         public _FinalStage cycleEnd(Optional<String> cycleEnd) {
             this.cycleEnd = cycleEnd;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage periodEnd(String periodEnd) {
             this.periodEnd = Optional.of(periodEnd);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "period_end", nulls = Nulls.SKIP)
         public _FinalStage periodEnd(Optional<String> periodEnd) {
             this.periodEnd = periodEnd;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MenstrualCycle build() {
             return new MenstrualCycle(
                     periodStart,

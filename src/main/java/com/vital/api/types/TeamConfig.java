@@ -100,7 +100,7 @@ public final class TeamConfig {
         return eventTypePrefixes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof TeamConfig && equalTo((TeamConfig) other);
@@ -122,7 +122,7 @@ public final class TeamConfig {
                 && eventTypePrefixes.equals(other.eventTypePrefixes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.libreview,
@@ -135,7 +135,7 @@ public final class TeamConfig {
                 this.eventTypePrefixes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -205,7 +205,7 @@ public final class TeamConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(TeamConfig other) {
             libreview(other.getLibreview());
             textsEnabled(other.getTextsEnabled());
@@ -218,105 +218,105 @@ public final class TeamConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("libreview")
         public _FinalStage libreview(LibreConfig libreview) {
             this.libreview = libreview;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage eventTypePrefixes(List<String> eventTypePrefixes) {
             this.eventTypePrefixes = Optional.of(eventTypePrefixes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "event_type_prefixes", nulls = Nulls.SKIP)
         public _FinalStage eventTypePrefixes(Optional<List<String>> eventTypePrefixes) {
             this.eventTypePrefixes = eventTypePrefixes;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage edsPreferences(EventDestinationPreferences edsPreferences) {
             this.edsPreferences = Optional.of(edsPreferences);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "eds_preferences", nulls = Nulls.SKIP)
         public _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences) {
             this.edsPreferences = edsPreferences;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sdkPerDeviceActivityTimeseries(Boolean sdkPerDeviceActivityTimeseries) {
             this.sdkPerDeviceActivityTimeseries = Optional.of(sdkPerDeviceActivityTimeseries);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sdk_per_device_activity_timeseries", nulls = Nulls.SKIP)
         public _FinalStage sdkPerDeviceActivityTimeseries(Optional<Boolean> sdkPerDeviceActivityTimeseries) {
             this.sdkPerDeviceActivityTimeseries = sdkPerDeviceActivityTimeseries;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage rejectDuplicateConnection(Boolean rejectDuplicateConnection) {
             this.rejectDuplicateConnection = Optional.of(rejectDuplicateConnection);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "reject_duplicate_connection", nulls = Nulls.SKIP)
         public _FinalStage rejectDuplicateConnection(Optional<Boolean> rejectDuplicateConnection) {
             this.rejectDuplicateConnection = rejectDuplicateConnection;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerRawData(Boolean providerRawData) {
             this.providerRawData = Optional.of(providerRawData);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_raw_data", nulls = Nulls.SKIP)
         public _FinalStage providerRawData(Optional<Boolean> providerRawData) {
             this.providerRawData = providerRawData;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage pushHistoricalData(Boolean pushHistoricalData) {
             this.pushHistoricalData = Optional.of(pushHistoricalData);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "push_historical_data", nulls = Nulls.SKIP)
         public _FinalStage pushHistoricalData(Optional<Boolean> pushHistoricalData) {
             this.pushHistoricalData = pushHistoricalData;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage textsEnabled(Boolean textsEnabled) {
             this.textsEnabled = Optional.of(textsEnabled);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "texts_enabled", nulls = Nulls.SKIP)
         public _FinalStage textsEnabled(Optional<Boolean> textsEnabled) {
             this.textsEnabled = textsEnabled;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public TeamConfig build() {
             return new TeamConfig(
                     libreview,

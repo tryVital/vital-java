@@ -40,7 +40,7 @@ public final class DemoConnectionStatus {
         return detail;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DemoConnectionStatus && equalTo((DemoConnectionStatus) other);
@@ -55,12 +55,12 @@ public final class DemoConnectionStatus {
         return success == other.success && detail.equals(other.detail);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.success, this.detail);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class DemoConnectionStatus {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DemoConnectionStatus other) {
             success(other.getSuccess());
             detail(other.getDetail());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public DetailStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("detail")
         public _FinalStage detail(String detail) {
             this.detail = detail;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DemoConnectionStatus build() {
             return new DemoConnectionStatus(success, detail, additionalProperties);
         }

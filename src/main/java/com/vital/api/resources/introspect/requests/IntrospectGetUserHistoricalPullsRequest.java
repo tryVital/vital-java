@@ -76,7 +76,7 @@ public final class IntrospectGetUserHistoricalPullsRequest {
         return nextCursor;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IntrospectGetUserHistoricalPullsRequest
@@ -96,12 +96,12 @@ public final class IntrospectGetUserHistoricalPullsRequest {
                 && nextCursor.equals(other.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.provider, this.userLimit, this.cursor, this.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

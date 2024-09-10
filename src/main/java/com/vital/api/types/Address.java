@@ -81,7 +81,7 @@ public final class Address {
         return state;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Address && equalTo((Address) other);
@@ -101,12 +101,12 @@ public final class Address {
                 && state.equals(other.state);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.firstLine, this.secondLine, this.country, this.zip, this.city, this.state);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -165,7 +165,7 @@ public final class Address {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Address other) {
             firstLine(other.getFirstLine());
             secondLine(other.getSecondLine());
@@ -176,55 +176,55 @@ public final class Address {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_line")
         public CountryStage firstLine(String firstLine) {
             this.firstLine = firstLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("country")
         public ZipStage country(String country) {
             this.country = country;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("zip")
         public CityStage zip(String zip) {
             this.zip = zip;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("city")
         public StateStage city(String city) {
             this.city = city;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public _FinalStage state(String state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
             this.secondLine = Optional.of(secondLine);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "second_line", nulls = Nulls.SKIP)
         public _FinalStage secondLine(Optional<String> secondLine) {
             this.secondLine = secondLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Address build() {
             return new Address(firstLine, secondLine, country, zip, city, state, additionalProperties);
         }

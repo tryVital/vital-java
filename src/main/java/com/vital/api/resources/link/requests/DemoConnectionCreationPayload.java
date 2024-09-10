@@ -48,7 +48,7 @@ public final class DemoConnectionCreationPayload {
         return provider;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DemoConnectionCreationPayload && equalTo((DemoConnectionCreationPayload) other);
@@ -63,12 +63,12 @@ public final class DemoConnectionCreationPayload {
         return userId.equals(other.userId) && provider.equals(other.provider);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.provider);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,7 +102,7 @@ public final class DemoConnectionCreationPayload {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DemoConnectionCreationPayload other) {
             userId(other.getUserId());
             provider(other.getProvider());
@@ -113,7 +113,7 @@ public final class DemoConnectionCreationPayload {
          * <p>Vital user ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public ProviderStage userId(String userId) {
             this.userId = userId;
@@ -124,14 +124,14 @@ public final class DemoConnectionCreationPayload {
          * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(DemoProviders provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DemoConnectionCreationPayload build() {
             return new DemoConnectionCreationPayload(userId, provider, additionalProperties);
         }

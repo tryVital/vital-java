@@ -76,7 +76,7 @@ public final class ClientFacingPayorSearchResponse {
         return orgAddress;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingPayorSearchResponse && equalTo((ClientFacingPayorSearchResponse) other);
@@ -94,12 +94,12 @@ public final class ClientFacingPayorSearchResponse {
                 && orgAddress.equals(other.orgAddress);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.code, this.name, this.aliases, this.orgAddress);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -147,7 +147,7 @@ public final class ClientFacingPayorSearchResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingPayorSearchResponse other) {
             code(other.getCode());
             name(other.getName());
@@ -160,7 +160,7 @@ public final class ClientFacingPayorSearchResponse {
          * <p>Payor code returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("code")
         public NameStage code(String code) {
             this.code = code;
@@ -171,7 +171,7 @@ public final class ClientFacingPayorSearchResponse {
          * <p>Insurance name returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public OrgAddressStage name(String name) {
             this.name = name;
@@ -182,7 +182,7 @@ public final class ClientFacingPayorSearchResponse {
          * <p>Insurance business address returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("org_address")
         public _FinalStage orgAddress(Address orgAddress) {
             this.orgAddress = orgAddress;
@@ -193,7 +193,7 @@ public final class ClientFacingPayorSearchResponse {
          * <p>Insurance name aliases returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllAliases(List<String> aliases) {
             this.aliases.addAll(aliases);
             return this;
@@ -203,13 +203,13 @@ public final class ClientFacingPayorSearchResponse {
          * <p>Insurance name aliases returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAliases(String aliases) {
             this.aliases.add(aliases);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "aliases", nulls = Nulls.SKIP)
         public _FinalStage aliases(List<String> aliases) {
             this.aliases.clear();
@@ -217,7 +217,7 @@ public final class ClientFacingPayorSearchResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingPayorSearchResponse build() {
             return new ClientFacingPayorSearchResponse(code, name, aliases, orgAddress, additionalProperties);
         }

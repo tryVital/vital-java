@@ -35,7 +35,7 @@ public final class UserSuccessResponse {
         return success;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserSuccessResponse && equalTo((UserSuccessResponse) other);
@@ -50,12 +50,12 @@ public final class UserSuccessResponse {
         return success == other.success;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.success);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class UserSuccessResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserSuccessResponse other) {
             success(other.getSuccess());
             return this;
@@ -93,14 +93,14 @@ public final class UserSuccessResponse {
          * <p>Whether operation was successful or not</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public _FinalStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserSuccessResponse build() {
             return new UserSuccessResponse(success, additionalProperties);
         }

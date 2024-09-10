@@ -90,7 +90,7 @@ public final class SingleHistoricalPullStatistics {
         return traceId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SingleHistoricalPullStatistics && equalTo((SingleHistoricalPullStatistics) other);
@@ -111,7 +111,7 @@ public final class SingleHistoricalPullStatistics {
                 && traceId.equals(other.traceId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.status,
@@ -123,7 +123,7 @@ public final class SingleHistoricalPullStatistics {
                 this.traceId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -187,7 +187,7 @@ public final class SingleHistoricalPullStatistics {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SingleHistoricalPullStatistics other) {
             status(other.getStatus());
             rangeStart(other.getRangeStart());
@@ -199,80 +199,80 @@ public final class SingleHistoricalPullStatistics {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public TimelineStage status(HistoricalPullStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timeline")
         public ReleaseStage timeline(HistoricalPullTimeline timeline) {
             this.timeline = timeline;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("release")
         public _FinalStage release(String release) {
             this.release = release;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage traceId(String traceId) {
             this.traceId = Optional.of(traceId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "trace_id", nulls = Nulls.SKIP)
         public _FinalStage traceId(Optional<String> traceId) {
             this.traceId = traceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage daysWithData(Integer daysWithData) {
             this.daysWithData = Optional.of(daysWithData);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "days_with_data", nulls = Nulls.SKIP)
         public _FinalStage daysWithData(Optional<Integer> daysWithData) {
             this.daysWithData = daysWithData;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage rangeEnd(String rangeEnd) {
             this.rangeEnd = Optional.of(rangeEnd);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "range_end", nulls = Nulls.SKIP)
         public _FinalStage rangeEnd(Optional<String> rangeEnd) {
             this.rangeEnd = rangeEnd;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage rangeStart(String rangeStart) {
             this.rangeStart = Optional.of(rangeStart);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "range_start", nulls = Nulls.SKIP)
         public _FinalStage rangeStart(Optional<String> rangeStart) {
             this.rangeStart = rangeStart;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SingleHistoricalPullStatistics build() {
             return new SingleHistoricalPullStatistics(
                     status, rangeStart, rangeEnd, timeline, daysWithData, release, traceId, additionalProperties);

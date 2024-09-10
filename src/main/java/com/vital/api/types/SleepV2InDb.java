@@ -110,7 +110,7 @@ public final class SleepV2InDb {
         return priority;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SleepV2InDb && equalTo((SleepV2InDb) other);
@@ -133,7 +133,7 @@ public final class SleepV2InDb {
                 && priority.equals(other.priority);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.timestamp,
@@ -147,7 +147,7 @@ public final class SleepV2InDb {
                 this.priority);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -226,7 +226,7 @@ public final class SleepV2InDb {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SleepV2InDb other) {
             timestamp(other.getTimestamp());
             data(other.getData());
@@ -240,87 +240,87 @@ public final class SleepV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public ProviderIdStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider_id")
         public UserIdStage providerId(String providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SourceIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source_id")
         public IdStage sourceId(int sourceId) {
             this.sourceId = sourceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SourceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingProvider source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage priority(Integer priority) {
             this.priority = Optional.of(priority);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "priority", nulls = Nulls.SKIP)
         public _FinalStage priority(Optional<Integer> priority) {
             this.priority = priority;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
             this.priorityId = Optional.of(priorityId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "priority_id", nulls = Nulls.SKIP)
         public _FinalStage priorityId(Optional<Integer> priorityId) {
             this.priorityId = priorityId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(String key, Object value) {
             this.data.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllData(Map<String, Object> data) {
             this.data.putAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Map<String, Object> data) {
             this.data.clear();
@@ -328,7 +328,7 @@ public final class SleepV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SleepV2InDb build() {
             return new SleepV2InDb(
                     timestamp,

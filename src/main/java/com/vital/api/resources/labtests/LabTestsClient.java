@@ -3,11 +3,15 @@
  */
 package com.vital.api.resources.labtests;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
+import com.vital.api.core.MediaTypes;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.core.VitalException;
+import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.labtests.requests.AppointmentBookingRequest;
 import com.vital.api.resources.labtests.requests.AppointmentCancelRequest;
 import com.vital.api.resources.labtests.requests.AppointmentRescheduleRequest;
@@ -32,6 +36,7 @@ import com.vital.api.types.ClientFacingMarker;
 import com.vital.api.types.ClientFacingOrder;
 import com.vital.api.types.GetMarkersResponse;
 import com.vital.api.types.GetOrdersResponse;
+import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.PostOrderResponse;
@@ -42,16 +47,24 @@ import java.io.InputStream;
 import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class LabTestsClient {
     protected final ClientOptions clientOptions;
 
     public LabTestsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public List<ClientFacingLabTest> get() {
+        return get(null);
     }
 
     /**
@@ -68,26 +81,28 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(), new TypeReference<List<ClientFacingLabTest>>() {});
+                        responseBody.string(), new TypeReference<List<ClientFacingLabTest>>() {});
             }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
-    /**
-     * GET all the lab tests the team has access to.
-     */
-    public List<ClientFacingLabTest> get() {
-        return get(null);
+    public ClientFacingLabTest create(CreateLabTestRequest request) {
+        return create(request, null);
     }
 
     public ClientFacingLabTest create(CreateLabTestRequest request, RequestOptions requestOptions) {
@@ -98,9 +113,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -108,22 +123,31 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingLabTest.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingLabTest.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    public ClientFacingLabTest create(CreateLabTestRequest request) {
-        return create(request, null);
     }
 
     /**
@@ -131,6 +155,13 @@ public class LabTestsClient {
      */
     public GetMarkersResponse getMarkers() {
         return getMarkers(LabTestsGetMarkersRequest.builder().build());
+    }
+
+    /**
+     * GET all the markers for the given lab.
+     */
+    public GetMarkersResponse getMarkers(LabTestsGetMarkersRequest request) {
+        return getMarkers(request, null);
     }
 
     /**
@@ -162,30 +193,40 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GetMarkersResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetMarkersResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * GET all the markers for the given lab.
-     */
-    public GetMarkersResponse getMarkers(LabTestsGetMarkersRequest request) {
-        return getMarkers(request, null);
     }
 
     public GetMarkersResponse getMarkersForLabTest(String labTestId) {
         return getMarkersForLabTest(
                 labTestId, LabTestsGetMarkersForLabTestRequest.builder().build());
+    }
+
+    public GetMarkersResponse getMarkersForLabTest(String labTestId, LabTestsGetMarkersForLabTestRequest request) {
+        return getMarkersForLabTest(labTestId, request, null);
     }
 
     public GetMarkersResponse getMarkersForLabTest(
@@ -207,22 +248,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GetMarkersResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetMarkersResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
-    public GetMarkersResponse getMarkersForLabTest(String labTestId, LabTestsGetMarkersForLabTestRequest request) {
-        return getMarkersForLabTest(labTestId, request, null);
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public ClientFacingMarker getMarkersByLabAndProviderId(String providerId, int labId) {
+        return getMarkersByLabAndProviderId(providerId, labId, null);
     }
 
     /**
@@ -243,25 +300,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingMarker.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingMarker.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * GET a specific marker for the given lab and provider_id
+     * GET all the labs.
      */
-    public ClientFacingMarker getMarkersByLabAndProviderId(String providerId, int labId) {
-        return getMarkersByLabAndProviderId(providerId, labId, null);
+    public List<ClientFacingLab> getLabs() {
+        return getLabs(null);
     }
 
     /**
@@ -278,26 +348,31 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(), new TypeReference<List<ClientFacingLab>>() {});
+                        responseBody.string(), new TypeReference<List<ClientFacingLab>>() {});
             }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * GET all the labs.
+     * GET all the lab tests the team has access to.
      */
-    public List<ClientFacingLab> getLabs() {
-        return getLabs(null);
+    public ClientFacingLabTest getById(String labTestId) {
+        return getById(labTestId, null);
     }
 
     /**
@@ -315,25 +390,39 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingLabTest.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingLabTest.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * GET all the lab tests the team has access to.
+     * Return the available time slots to book an appointment with a phlebotomist
+     * for the given address and order.
      */
-    public ClientFacingLabTest getById(String labTestId) {
-        return getById(labTestId, null);
+    public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(UsAddress request) {
+        return getPhlebotomyAppointmentAvailability(request, null);
     }
 
     /**
@@ -349,9 +438,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -359,27 +448,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(), AppointmentAvailabilitySlots.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), AppointmentAvailabilitySlots.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Return the available time slots to book an appointment with a phlebotomist
-     * for the given address and order.
+     * Book an at-home phlebotomy appointment.
      */
-    public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(UsAddress request) {
-        return getPhlebotomyAppointmentAvailability(request, null);
+    public ClientFacingAppointment bookPhlebotomyAppointment(String orderId, AppointmentBookingRequest request) {
+        return bookPhlebotomyAppointment(orderId, request, null);
     }
 
     /**
@@ -396,9 +496,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -406,25 +506,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingAppointment.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Book an at-home phlebotomy appointment.
+     * Request an at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment bookPhlebotomyAppointment(String orderId, AppointmentBookingRequest request) {
-        return bookPhlebotomyAppointment(orderId, request, null);
+    public ClientFacingAppointment requestPhlebotomyAppointment(String orderId, RequestAppointmentRequest request) {
+        return requestPhlebotomyAppointment(orderId, request, null);
     }
 
     /**
@@ -441,9 +554,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -451,25 +564,39 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingAppointment.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Request an at-home phlebotomy appointment.
+     * Reschedule a previously booked at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment requestPhlebotomyAppointment(String orderId, RequestAppointmentRequest request) {
-        return requestPhlebotomyAppointment(orderId, request, null);
+    public ClientFacingAppointment reschedulePhlebotomyAppointment(
+            String orderId, AppointmentRescheduleRequest request) {
+        return reschedulePhlebotomyAppointment(orderId, request, null);
     }
 
     /**
@@ -486,9 +613,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -496,26 +623,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingAppointment.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Reschedule a previously booked at-home phlebotomy appointment.
+     * Cancel a previously booked at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment reschedulePhlebotomyAppointment(
-            String orderId, AppointmentRescheduleRequest request) {
-        return reschedulePhlebotomyAppointment(orderId, request, null);
+    public ClientFacingAppointment cancelPhlebotomyAppointment(String orderId, AppointmentCancelRequest request) {
+        return cancelPhlebotomyAppointment(orderId, request, null);
     }
 
     /**
@@ -532,9 +671,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -542,25 +681,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingAppointment.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Cancel a previously booked at-home phlebotomy appointment.
+     * Get the list of reasons for cancelling an at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment cancelPhlebotomyAppointment(String orderId, AppointmentCancelRequest request) {
-        return cancelPhlebotomyAppointment(orderId, request, null);
+    public List<ClientFacingAppointmentCancellationReason> getPhlebotomyAppointmentCancellationReason() {
+        return getPhlebotomyAppointmentCancellationReason(null);
     }
 
     /**
@@ -578,27 +730,31 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        response.body().string(),
-                        new TypeReference<List<ClientFacingAppointmentCancellationReason>>() {});
+                        responseBody.string(), new TypeReference<List<ClientFacingAppointmentCancellationReason>>() {});
             }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Get the list of reasons for cancelling an at-home phlebotomy appointment.
+     * Get the appointment associated with an order.
      */
-    public List<ClientFacingAppointmentCancellationReason> getPhlebotomyAppointmentCancellationReason() {
-        return getPhlebotomyAppointmentCancellationReason(null);
+    public ClientFacingAppointment getPhlebotomyAppointment(String orderId) {
+        return getPhlebotomyAppointment(orderId, null);
     }
 
     /**
@@ -617,25 +773,43 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingAppointment.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Get the appointment associated with an order.
+     * GET information about an area with respect to lab-testing.
+     * <p>Information returned:</p>
+     * <ul>
+     * <li>Whether a given zip code is served by our Phlebotomy network.</li>
+     * <li>List of Lab locations in the area.</li>
+     * </ul>
      */
-    public ClientFacingAppointment getPhlebotomyAppointment(String orderId) {
-        return getPhlebotomyAppointment(orderId, null);
+    public AreaInfo getAreaInfo(LabTestsGetAreaInfoRequest request) {
+        return getAreaInfo(request, null);
     }
 
     /**
@@ -663,30 +837,35 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), AreaInfo.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), AreaInfo.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
-    /**
-     * GET information about an area with respect to lab-testing.
-     * <p>Information returned:</p>
-     * <ul>
-     * <li>Whether a given zip code is served by our Phlebotomy network.</li>
-     * <li>List of Lab locations in the area.</li>
-     * </ul>
-     */
-    public AreaInfo getAreaInfo(LabTestsGetAreaInfoRequest request) {
-        return getAreaInfo(request, null);
+    public PscInfo getPscInfo(LabTestsGetPscInfoRequest request) {
+        return getPscInfo(request, null);
     }
 
     public PscInfo getPscInfo(LabTestsGetPscInfoRequest request, RequestOptions requestOptions) {
@@ -704,26 +883,39 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PscInfo.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PscInfo.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    public PscInfo getPscInfo(LabTestsGetPscInfoRequest request) {
-        return getPscInfo(request, null);
     }
 
     public PscInfo getOrderPscInfo(String orderId) {
         return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build());
+    }
+
+    public PscInfo getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
+        return getOrderPscInfo(orderId, request, null);
     }
 
     public PscInfo getOrderPscInfo(
@@ -742,22 +934,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PscInfo.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PscInfo.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
-    public PscInfo getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
-        return getOrderPscInfo(orderId, request, null);
+    /**
+     * This endpoint returns the lab results for the order.
+     */
+    public InputStream getResultPdf(String orderId) {
+        return getResultPdf(orderId, null);
     }
 
     /**
@@ -776,25 +984,39 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return response.body().byteStream();
+                return responseBody.byteStream();
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * This endpoint returns the lab results for the order.
+     * Return metadata related to order results, such as lab metadata,
+     * provider and sample dates.
      */
-    public InputStream getResultPdf(String orderId) {
-        return getResultPdf(orderId, null);
+    public LabResultsMetadata getResultMetadata(String orderId) {
+        return getResultMetadata(orderId, null);
     }
 
     /**
@@ -814,26 +1036,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LabResultsMetadata.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), LabResultsMetadata.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Return metadata related to order results, such as lab metadata,
-     * provider and sample dates.
+     * Return both metadata and raw json test data
      */
-    public LabResultsMetadata getResultMetadata(String orderId) {
-        return getResultMetadata(orderId, null);
+    public LabResultsRaw getResultRaw(String orderId) {
+        return getResultRaw(orderId, null);
     }
 
     /**
@@ -852,25 +1086,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), LabResultsRaw.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), LabResultsRaw.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * Return both metadata and raw json test data
+     * This endpoint returns the printed labels for the order.
      */
-    public LabResultsRaw getResultRaw(String orderId) {
-        return getResultRaw(orderId, null);
+    public InputStream getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
+        return getLabelsPdf(orderId, request, null);
     }
 
     /**
@@ -894,25 +1141,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return response.body().byteStream();
+                return responseBody.byteStream();
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * This endpoint returns the printed labels for the order.
+     * GET requisition pdf for an order
      */
-    public InputStream getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
-        return getLabelsPdf(orderId, request, null);
+    public InputStream getOrderRequistionPdf(String orderId) {
+        return getOrderRequistionPdf(orderId, null);
     }
 
     /**
@@ -931,25 +1191,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return response.body().byteStream();
+                return responseBody.byteStream();
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * GET requisition pdf for an order
+     * GET individual order by ID.
      */
-    public InputStream getOrderRequistionPdf(String orderId) {
-        return getOrderRequistionPdf(orderId, null);
+    public ClientFacingOrder getOrder(String orderId) {
+        return getOrder(orderId, null);
     }
 
     /**
@@ -967,25 +1240,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingOrder.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingOrder.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * GET individual order by ID.
+     * POST create new order
      */
-    public ClientFacingOrder getOrder(String orderId) {
-        return getOrder(orderId, null);
+    public PostOrderResponse createOrder(CreateOrderRequestCompatible request) {
+        return createOrder(request, null);
     }
 
     /**
@@ -999,9 +1285,9 @@ public class LabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -1009,25 +1295,38 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PostOrderResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PostOrderResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     /**
-     * POST create new order
+     * POST cancel order
      */
-    public PostOrderResponse createOrder(CreateOrderRequestCompatible request) {
-        return createOrder(request, null);
+    public PostOrderResponse cancelOrder(String orderId) {
+        return cancelOrder(orderId, null);
     }
 
     /**
@@ -1046,25 +1345,31 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PostOrderResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PostOrderResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * POST cancel order
-     */
-    public PostOrderResponse cancelOrder(String orderId) {
-        return cancelOrder(orderId, null);
     }
 
     /**
@@ -1073,6 +1378,13 @@ public class LabTestsClient {
     public Object simulateOrderProcess(String orderId) {
         return simulateOrderProcess(
                 orderId, LabTestsSimulateOrderProcessRequest.builder().build());
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(String orderId, LabTestsSimulateOrderProcessRequest request) {
+        return simulateOrderProcess(orderId, request, null);
     }
 
     /**
@@ -1098,25 +1410,31 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * Get available test kits.
-     */
-    public Object simulateOrderProcess(String orderId, LabTestsSimulateOrderProcessRequest request) {
-        return simulateOrderProcess(orderId, request, null);
     }
 
     /**
@@ -1124,6 +1442,13 @@ public class LabTestsClient {
      */
     public GetOrdersResponse getOrders() {
         return getOrders(LabTestsGetOrdersRequest.builder().build());
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request) {
+        return getOrders(request, null);
     }
 
     /**
@@ -1183,24 +1508,30 @@ public class LabTestsClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GetOrdersResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetOrdersResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * GET many orders with filters.
-     */
-    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request) {
-        return getOrders(request, null);
     }
 }

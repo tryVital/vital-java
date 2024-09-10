@@ -101,7 +101,7 @@ public final class Question {
         return constraint;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Question && equalTo((Question) other);
@@ -123,13 +123,13 @@ public final class Question {
                 && constraint.equals(other.constraint);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id, this.required, this.code, this.value, this.type, this.sequence, this.answers, this.constraint);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -202,7 +202,7 @@ public final class Question {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Question other) {
             id(other.getId());
             required(other.getRequired());
@@ -215,74 +215,74 @@ public final class Question {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public RequiredStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("required")
         public CodeStage required(boolean required) {
             this.required = required;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("code")
         public ValueStage code(String code) {
             this.code = code;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public TypeStage value(String value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public SequenceStage type(QuestionType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sequence")
         public _FinalStage sequence(int sequence) {
             this.sequence = sequence;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage constraint(String constraint) {
             this.constraint = Optional.of(constraint);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "constraint", nulls = Nulls.SKIP)
         public _FinalStage constraint(Optional<String> constraint) {
             this.constraint = constraint;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllAnswers(List<Answer> answers) {
             this.answers.addAll(answers);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAnswers(Answer answers) {
             this.answers.add(answers);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "answers", nulls = Nulls.SKIP)
         public _FinalStage answers(List<Answer> answers) {
             this.answers.clear();
@@ -290,7 +290,7 @@ public final class Question {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Question build() {
             return new Question(id, required, code, value, type, sequence, answers, constraint, additionalProperties);
         }

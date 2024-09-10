@@ -81,7 +81,7 @@ public final class ClientFacingPatientDetailsCompatible {
         return email;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingPatientDetailsCompatible
@@ -102,12 +102,12 @@ public final class ClientFacingPatientDetailsCompatible {
                 && email.equals(other.email);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.firstName, this.lastName, this.dob, this.gender, this.phoneNumber, this.email);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -165,7 +165,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingPatientDetailsCompatible other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
@@ -176,73 +176,73 @@ public final class ClientFacingPatientDetailsCompatible {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("dob")
         public GenderStage dob(String dob) {
             this.dob = dob;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("gender")
         public _FinalStage gender(String gender) {
             this.gender = gender;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage email(String email) {
             this.email = Optional.of(email);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
         public _FinalStage email(Optional<String> email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = Optional.of(phoneNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
         public _FinalStage phoneNumber(Optional<String> phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage lastName(String lastName) {
             this.lastName = Optional.of(lastName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "last_name", nulls = Nulls.SKIP)
         public _FinalStage lastName(Optional<String> lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage firstName(String firstName) {
             this.firstName = Optional.of(firstName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "first_name", nulls = Nulls.SKIP)
         public _FinalStage firstName(Optional<String> firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingPatientDetailsCompatible build() {
             return new ClientFacingPatientDetailsCompatible(
                     firstName, lastName, dob, gender, phoneNumber, email, additionalProperties);

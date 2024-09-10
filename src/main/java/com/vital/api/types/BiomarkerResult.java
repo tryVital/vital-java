@@ -171,7 +171,7 @@ public final class BiomarkerResult {
         return providerId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BiomarkerResult && equalTo((BiomarkerResult) other);
@@ -201,7 +201,7 @@ public final class BiomarkerResult {
                 && providerId.equals(other.providerId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -222,7 +222,7 @@ public final class BiomarkerResult {
                 this.providerId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -340,7 +340,7 @@ public final class BiomarkerResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BiomarkerResult other) {
             name(other.getName());
             slug(other.getSlug());
@@ -361,191 +361,191 @@ public final class BiomarkerResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public ValueStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public ResultStage value(double value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("result")
         public TypeStage result(String result) {
             this.result = result;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(ResultType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.of(providerId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage loincSlug(String loincSlug) {
             this.loincSlug = Optional.of(loincSlug);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "loinc_slug", nulls = Nulls.SKIP)
         public _FinalStage loincSlug(Optional<String> loincSlug) {
             this.loincSlug = loincSlug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage loinc(String loinc) {
             this.loinc = Optional.of(loinc);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "loinc", nulls = Nulls.SKIP)
         public _FinalStage loinc(Optional<String> loinc) {
             this.loinc = loinc;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage interpretation(String interpretation) {
             this.interpretation = Optional.of(interpretation);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public _FinalStage interpretation(Optional<String> interpretation) {
             this.interpretation = interpretation;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage isBelowMinRange(Boolean isBelowMinRange) {
             this.isBelowMinRange = Optional.of(isBelowMinRange);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "is_below_min_range", nulls = Nulls.SKIP)
         public _FinalStage isBelowMinRange(Optional<Boolean> isBelowMinRange) {
             this.isBelowMinRange = isBelowMinRange;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage isAboveMaxRange(Boolean isAboveMaxRange) {
             this.isAboveMaxRange = Optional.of(isAboveMaxRange);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "is_above_max_range", nulls = Nulls.SKIP)
         public _FinalStage isAboveMaxRange(Optional<Boolean> isAboveMaxRange) {
             this.isAboveMaxRange = isAboveMaxRange;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage maxRangeValue(Double maxRangeValue) {
             this.maxRangeValue = Optional.of(maxRangeValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "max_range_value", nulls = Nulls.SKIP)
         public _FinalStage maxRangeValue(Optional<Double> maxRangeValue) {
             this.maxRangeValue = maxRangeValue;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage minRangeValue(Double minRangeValue) {
             this.minRangeValue = Optional.of(minRangeValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "min_range_value", nulls = Nulls.SKIP)
         public _FinalStage minRangeValue(Optional<Double> minRangeValue) {
             this.minRangeValue = minRangeValue;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.of(notes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
             this.notes = notes;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage timestamp(String timestamp) {
             this.timestamp = Optional.of(timestamp);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timestamp", nulls = Nulls.SKIP)
         public _FinalStage timestamp(Optional<String> timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.of(unit);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage slug(String slug) {
             this.slug = Optional.of(slug);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "slug", nulls = Nulls.SKIP)
         public _FinalStage slug(Optional<String> slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BiomarkerResult build() {
             return new BiomarkerResult(
                     name,

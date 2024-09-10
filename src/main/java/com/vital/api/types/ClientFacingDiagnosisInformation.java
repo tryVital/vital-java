@@ -47,7 +47,7 @@ public final class ClientFacingDiagnosisInformation {
         return description;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingDiagnosisInformation && equalTo((ClientFacingDiagnosisInformation) other);
@@ -62,12 +62,12 @@ public final class ClientFacingDiagnosisInformation {
         return diagnosisCode.equals(other.diagnosisCode) && description.equals(other.description);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.diagnosisCode, this.description);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,7 +101,7 @@ public final class ClientFacingDiagnosisInformation {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingDiagnosisInformation other) {
             diagnosisCode(other.getDiagnosisCode());
             description(other.getDescription());
@@ -112,7 +112,7 @@ public final class ClientFacingDiagnosisInformation {
          * <p>Diagnosis code for insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("diagnosis_code")
         public DescriptionStage diagnosisCode(String diagnosisCode) {
             this.diagnosisCode = diagnosisCode;
@@ -123,14 +123,14 @@ public final class ClientFacingDiagnosisInformation {
          * <p>Diagnosis description insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("description")
         public _FinalStage description(String description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingDiagnosisInformation build() {
             return new ClientFacingDiagnosisInformation(diagnosisCode, description, additionalProperties);
         }

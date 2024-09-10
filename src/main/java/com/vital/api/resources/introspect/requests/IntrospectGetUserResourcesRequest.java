@@ -76,7 +76,7 @@ public final class IntrospectGetUserResourcesRequest {
         return nextCursor;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IntrospectGetUserResourcesRequest && equalTo((IntrospectGetUserResourcesRequest) other);
@@ -95,12 +95,12 @@ public final class IntrospectGetUserResourcesRequest {
                 && nextCursor.equals(other.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.provider, this.userLimit, this.cursor, this.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -43,7 +43,7 @@ public final class DaySlots {
         return slots;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DaySlots && equalTo((DaySlots) other);
@@ -58,12 +58,12 @@ public final class DaySlots {
         return date.equals(other.date) && slots.equals(other.slots);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date, this.slots);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -99,33 +99,33 @@ public final class DaySlots {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DaySlots other) {
             date(other.getDate());
             slots(other.getSlots());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public _FinalStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSlots(List<TimeSlot> slots) {
             this.slots.addAll(slots);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSlots(TimeSlot slots) {
             this.slots.add(slots);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "slots", nulls = Nulls.SKIP)
         public _FinalStage slots(List<TimeSlot> slots) {
             this.slots.clear();
@@ -133,7 +133,7 @@ public final class DaySlots {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DaySlots build() {
             return new DaySlots(date, slots, additionalProperties);
         }

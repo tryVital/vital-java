@@ -81,7 +81,7 @@ public final class DeviceV2InDb {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeviceV2InDb && equalTo((DeviceV2InDb) other);
@@ -101,12 +101,12 @@ public final class DeviceV2InDb {
                 && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.data, this.providerId, this.userId, this.sourceId, this.id, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -167,7 +167,7 @@ public final class DeviceV2InDb {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DeviceV2InDb other) {
             data(other.getData());
             providerId(other.getProviderId());
@@ -178,54 +178,54 @@ public final class DeviceV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider_id")
         public UserIdStage providerId(String providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SourceIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source_id")
         public IdStage sourceId(int sourceId) {
             this.sourceId = sourceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SourceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingProvider source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(String key, Object value) {
             this.data.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllData(Map<String, Object> data) {
             this.data.putAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Map<String, Object> data) {
             this.data.clear();
@@ -233,7 +233,7 @@ public final class DeviceV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DeviceV2InDb build() {
             return new DeviceV2InDb(data, providerId, userId, sourceId, id, source, additionalProperties);
         }

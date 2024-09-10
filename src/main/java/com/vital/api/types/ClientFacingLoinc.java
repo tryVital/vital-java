@@ -72,7 +72,7 @@ public final class ClientFacingLoinc {
         return unit;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingLoinc && equalTo((ClientFacingLoinc) other);
@@ -91,12 +91,12 @@ public final class ClientFacingLoinc {
                 && unit.equals(other.unit);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.slug, this.code, this.unit);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -148,7 +148,7 @@ public final class ClientFacingLoinc {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingLoinc other) {
             id(other.getId());
             name(other.getName());
@@ -158,48 +158,48 @@ public final class ClientFacingLoinc {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public CodeStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("code")
         public _FinalStage code(String code) {
             this.code = code;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.of(unit);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingLoinc build() {
             return new ClientFacingLoinc(id, name, slug, code, unit, additionalProperties);
         }

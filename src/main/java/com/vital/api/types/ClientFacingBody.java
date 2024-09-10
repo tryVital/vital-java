@@ -84,11 +84,17 @@ public final class ClientFacingBody {
         return calendarDate;
     }
 
+    /**
+     * @return Weight in kg::kg
+     */
     @JsonProperty("weight")
     public Optional<Double> getWeight() {
         return weight;
     }
 
+    /**
+     * @return Body fat percentage::perc
+     */
     @JsonProperty("fat")
     public Optional<Double> getFat() {
         return fat;
@@ -99,7 +105,7 @@ public final class ClientFacingBody {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingBody && equalTo((ClientFacingBody) other);
@@ -120,12 +126,12 @@ public final class ClientFacingBody {
                 && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.id, this.date, this.calendarDate, this.weight, this.fat, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -190,7 +196,7 @@ public final class ClientFacingBody {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingBody other) {
             userId(other.getUserId());
             id(other.getId());
@@ -206,14 +212,14 @@ public final class ClientFacingBody {
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public IdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public DateStage id(String id) {
             this.id = id;
@@ -224,7 +230,7 @@ public final class ClientFacingBody {
          * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public CalendarDateStage date(String date) {
             this.date = date;
@@ -235,47 +241,55 @@ public final class ClientFacingBody {
          * <p>Date of the summary in the YYYY-mm-dd format.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("calendar_date")
         public SourceStage calendarDate(String calendarDate) {
             this.calendarDate = calendarDate;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Body fat percentage::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage fat(Double fat) {
             this.fat = Optional.of(fat);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fat", nulls = Nulls.SKIP)
         public _FinalStage fat(Optional<Double> fat) {
             this.fat = fat;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Weight in kg::kg</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage weight(Double weight) {
             this.weight = Optional.of(weight);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "weight", nulls = Nulls.SKIP)
         public _FinalStage weight(Optional<Double> weight) {
             this.weight = weight;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingBody build() {
             return new ClientFacingBody(userId, id, date, calendarDate, weight, fat, source, additionalProperties);
         }

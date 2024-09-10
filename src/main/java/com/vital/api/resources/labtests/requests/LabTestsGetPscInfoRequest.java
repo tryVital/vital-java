@@ -61,7 +61,7 @@ public final class LabTestsGetPscInfoRequest {
         return radius;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabTestsGetPscInfoRequest && equalTo((LabTestsGetPscInfoRequest) other);
@@ -76,12 +76,12 @@ public final class LabTestsGetPscInfoRequest {
         return zipCode.equals(other.zipCode) && labId == other.labId && radius.equals(other.radius);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.zipCode, this.labId, this.radius);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -121,7 +121,7 @@ public final class LabTestsGetPscInfoRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LabTestsGetPscInfoRequest other) {
             zipCode(other.getZipCode());
             labId(other.getLabId());
@@ -133,7 +133,7 @@ public final class LabTestsGetPscInfoRequest {
          * <p>Zip code of the area to check</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("zip_code")
         public LabIdStage zipCode(String zipCode) {
             this.zipCode = zipCode;
@@ -144,7 +144,7 @@ public final class LabTestsGetPscInfoRequest {
          * <p>Lab ID to check for PSCs</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_id")
         public _FinalStage labId(int labId) {
             this.labId = labId;
@@ -155,20 +155,20 @@ public final class LabTestsGetPscInfoRequest {
          * <p>Radius in which to search. (meters)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage radius(AllowedRadius radius) {
             this.radius = Optional.of(radius);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
         public _FinalStage radius(Optional<AllowedRadius> radius) {
             this.radius = radius;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LabTestsGetPscInfoRequest build() {
             return new LabTestsGetPscInfoRequest(zipCode, labId, radius, additionalProperties);
         }

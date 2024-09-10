@@ -45,7 +45,7 @@ public final class SingleUserHistoricalPullResponse {
         return provider;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SingleUserHistoricalPullResponse && equalTo((SingleUserHistoricalPullResponse) other);
@@ -60,12 +60,12 @@ public final class SingleUserHistoricalPullResponse {
         return userId.equals(other.userId) && provider.equals(other.provider);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.provider);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -101,33 +101,33 @@ public final class SingleUserHistoricalPullResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SingleUserHistoricalPullResponse other) {
             userId(other.getUserId());
             provider(other.getProvider());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage provider(String key, SingleProviderHistoricalPullResponse value) {
             this.provider.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllProvider(Map<String, SingleProviderHistoricalPullResponse> provider) {
             this.provider.putAll(provider);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Map<String, SingleProviderHistoricalPullResponse> provider) {
             this.provider.clear();
@@ -135,7 +135,7 @@ public final class SingleUserHistoricalPullResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SingleUserHistoricalPullResponse build() {
             return new SingleUserHistoricalPullResponse(userId, provider, additionalProperties);
         }

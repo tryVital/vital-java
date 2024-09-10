@@ -79,7 +79,7 @@ public final class UserRefreshSuccessResponse {
         return failedSources;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserRefreshSuccessResponse && equalTo((UserRefreshSuccessResponse) other);
@@ -98,13 +98,13 @@ public final class UserRefreshSuccessResponse {
                 && failedSources.equals(other.failedSources);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.success, this.userId, this.refreshedSources, this.inProgressSources, this.failedSources);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -162,7 +162,7 @@ public final class UserRefreshSuccessResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserRefreshSuccessResponse other) {
             success(other.getSuccess());
             userId(other.getUserId());
@@ -176,7 +176,7 @@ public final class UserRefreshSuccessResponse {
          * <p>Whether operation was successful or not</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public UserIdStage success(boolean success) {
             this.success = success;
@@ -187,26 +187,26 @@ public final class UserRefreshSuccessResponse {
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllFailedSources(List<String> failedSources) {
             this.failedSources.addAll(failedSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addFailedSources(String failedSources) {
             this.failedSources.add(failedSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "failed_sources", nulls = Nulls.SKIP)
         public _FinalStage failedSources(List<String> failedSources) {
             this.failedSources.clear();
@@ -214,19 +214,19 @@ public final class UserRefreshSuccessResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllInProgressSources(List<String> inProgressSources) {
             this.inProgressSources.addAll(inProgressSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addInProgressSources(String inProgressSources) {
             this.inProgressSources.add(inProgressSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "in_progress_sources", nulls = Nulls.SKIP)
         public _FinalStage inProgressSources(List<String> inProgressSources) {
             this.inProgressSources.clear();
@@ -234,19 +234,19 @@ public final class UserRefreshSuccessResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllRefreshedSources(List<String> refreshedSources) {
             this.refreshedSources.addAll(refreshedSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addRefreshedSources(String refreshedSources) {
             this.refreshedSources.add(refreshedSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "refreshed_sources", nulls = Nulls.SKIP)
         public _FinalStage refreshedSources(List<String> refreshedSources) {
             this.refreshedSources.clear();
@@ -254,7 +254,7 @@ public final class UserRefreshSuccessResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserRefreshSuccessResponse build() {
             return new UserRefreshSuccessResponse(
                     success, userId, refreshedSources, inProgressSources, failedSources, additionalProperties);

@@ -82,7 +82,7 @@ public final class MetricsResult {
         return numberOfOrderedTests;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MetricsResult && equalTo((MetricsResult) other);
@@ -102,7 +102,7 @@ public final class MetricsResult {
                 && numberOfOrderedTests.equals(other.numberOfOrderedTests);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.teamId,
@@ -113,7 +113,7 @@ public final class MetricsResult {
                 this.numberOfOrderedTests);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -172,7 +172,7 @@ public final class MetricsResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MetricsResult other) {
             teamId(other.getTeamId());
             numberOfConnectedSources(other.getNumberOfConnectedSources());
@@ -183,33 +183,33 @@ public final class MetricsResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("team_id")
         public _FinalStage teamId(String teamId) {
             this.teamId = teamId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage numberOfOrderedTests(Integer numberOfOrderedTests) {
             this.numberOfOrderedTests = Optional.of(numberOfOrderedTests);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "number_of_ordered_tests", nulls = Nulls.SKIP)
         public _FinalStage numberOfOrderedTests(Optional<Integer> numberOfOrderedTests) {
             this.numberOfOrderedTests = numberOfOrderedTests;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage numberOfConnectedSourcesByWeek(List<TimeseriesMetricPoint> numberOfConnectedSourcesByWeek) {
             this.numberOfConnectedSourcesByWeek = Optional.of(numberOfConnectedSourcesByWeek);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "number_of_connected_sources_by_week", nulls = Nulls.SKIP)
         public _FinalStage numberOfConnectedSourcesByWeek(
                 Optional<List<TimeseriesMetricPoint>> numberOfConnectedSourcesByWeek) {
@@ -217,46 +217,46 @@ public final class MetricsResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage numberOfErroredConnectedSources(Integer numberOfErroredConnectedSources) {
             this.numberOfErroredConnectedSources = Optional.of(numberOfErroredConnectedSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "number_of_errored_connected_sources", nulls = Nulls.SKIP)
         public _FinalStage numberOfErroredConnectedSources(Optional<Integer> numberOfErroredConnectedSources) {
             this.numberOfErroredConnectedSources = numberOfErroredConnectedSources;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage numberOfUsers(Integer numberOfUsers) {
             this.numberOfUsers = Optional.of(numberOfUsers);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "number_of_users", nulls = Nulls.SKIP)
         public _FinalStage numberOfUsers(Optional<Integer> numberOfUsers) {
             this.numberOfUsers = numberOfUsers;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage numberOfConnectedSources(Integer numberOfConnectedSources) {
             this.numberOfConnectedSources = Optional.of(numberOfConnectedSources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "number_of_connected_sources", nulls = Nulls.SKIP)
         public _FinalStage numberOfConnectedSources(Optional<Integer> numberOfConnectedSources) {
             this.numberOfConnectedSources = numberOfConnectedSources;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MetricsResult build() {
             return new MetricsResult(
                     teamId,

@@ -108,7 +108,7 @@ public final class LabLocationMetadata {
         return hours;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabLocationMetadata && equalTo((LabLocationMetadata) other);
@@ -131,7 +131,7 @@ public final class LabLocationMetadata {
                 && hours.equals(other.hours);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -145,7 +145,7 @@ public final class LabLocationMetadata {
                 this.hours);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -222,7 +222,7 @@ public final class LabLocationMetadata {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LabLocationMetadata other) {
             name(other.getName());
             state(other.getState());
@@ -236,94 +236,94 @@ public final class LabLocationMetadata {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public StateStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public CityStage state(String state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("city")
         public ZipCodeStage city(String city) {
             this.city = city;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("zip_code")
         public FirstLineStage zipCode(String zipCode) {
             this.zipCode = zipCode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_line")
         public _FinalStage firstLine(String firstLine) {
             this.firstLine = firstLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage hours(Map<String, Object> hours) {
             this.hours = Optional.of(hours);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "hours", nulls = Nulls.SKIP)
         public _FinalStage hours(Optional<Map<String, Object>> hours) {
             this.hours = hours;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage faxNumber(String faxNumber) {
             this.faxNumber = Optional.of(faxNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fax_number", nulls = Nulls.SKIP)
         public _FinalStage faxNumber(Optional<String> faxNumber) {
             this.faxNumber = faxNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = Optional.of(phoneNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
         public _FinalStage phoneNumber(Optional<String> phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
             this.secondLine = Optional.of(secondLine);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "second_line", nulls = Nulls.SKIP)
         public _FinalStage secondLine(Optional<String> secondLine) {
             this.secondLine = secondLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LabLocationMetadata build() {
             return new LabLocationMetadata(
                     name,

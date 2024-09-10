@@ -49,7 +49,7 @@ public final class ClientFacingAppointmentCancellationReason {
         return isRefundable;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingAppointmentCancellationReason
@@ -65,12 +65,12 @@ public final class ClientFacingAppointmentCancellationReason {
         return id.equals(other.id) && name.equals(other.name) && isRefundable == other.isRefundable;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.isRefundable);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -110,7 +110,7 @@ public final class ClientFacingAppointmentCancellationReason {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingAppointmentCancellationReason other) {
             id(other.getId());
             name(other.getName());
@@ -118,28 +118,28 @@ public final class ClientFacingAppointmentCancellationReason {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public IsRefundableStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("is_refundable")
         public _FinalStage isRefundable(boolean isRefundable) {
             this.isRefundable = isRefundable;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingAppointmentCancellationReason build() {
             return new ClientFacingAppointmentCancellationReason(id, name, isRefundable, additionalProperties);
         }

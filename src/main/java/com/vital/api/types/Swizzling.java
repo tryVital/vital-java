@@ -54,7 +54,7 @@ public final class Swizzling {
         return gatherEvery;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Swizzling && equalTo((Swizzling) other);
@@ -71,12 +71,12 @@ public final class Swizzling {
                 && gatherEvery.equals(other.gatherEvery);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.binGranularity, this.binCount, this.gatherEvery);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -116,7 +116,7 @@ public final class Swizzling {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Swizzling other) {
             binGranularity(other.getBinGranularity());
             binCount(other.getBinCount());
@@ -124,34 +124,34 @@ public final class Swizzling {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("bin_granularity")
         public GatherEveryStage binGranularity(SwizzlingBinGranularity binGranularity) {
             this.binGranularity = binGranularity;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("gather_every")
         public _FinalStage gatherEvery(Period gatherEvery) {
             this.gatherEvery = gatherEvery;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage binCount(Integer binCount) {
             this.binCount = Optional.of(binCount);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "bin_count", nulls = Nulls.SKIP)
         public _FinalStage binCount(Optional<Integer> binCount) {
             this.binCount = binCount;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Swizzling build() {
             return new Swizzling(binGranularity, binCount, gatherEvery, additionalProperties);
         }

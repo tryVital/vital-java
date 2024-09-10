@@ -64,7 +64,7 @@ public final class Query {
         return config;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Query && equalTo((Query) other);
@@ -81,12 +81,12 @@ public final class Query {
                 && config.equals(other.config);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.timeframe, this.instructions, this.config);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -128,7 +128,7 @@ public final class Query {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Query other) {
             timeframe(other.getTimeframe());
             instructions(other.getInstructions());
@@ -136,39 +136,39 @@ public final class Query {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timeframe")
         public _FinalStage timeframe(QueryTimeframe timeframe) {
             this.timeframe = timeframe;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage config(QueryConfig config) {
             this.config = Optional.of(config);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "config", nulls = Nulls.SKIP)
         public _FinalStage config(Optional<QueryConfig> config) {
             this.config = config;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllInstructions(List<QueryInstruction> instructions) {
             this.instructions.addAll(instructions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addInstructions(QueryInstruction instructions) {
             this.instructions.add(instructions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "instructions", nulls = Nulls.SKIP)
         public _FinalStage instructions(List<QueryInstruction> instructions) {
             this.instructions.clear();
@@ -176,7 +176,7 @@ public final class Query {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Query build() {
             return new Query(timeframe, instructions, config, additionalProperties);
         }

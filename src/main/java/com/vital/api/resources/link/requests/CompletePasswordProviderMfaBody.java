@@ -43,7 +43,7 @@ public final class CompletePasswordProviderMfaBody {
         return mfaCode;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CompletePasswordProviderMfaBody && equalTo((CompletePasswordProviderMfaBody) other);
@@ -58,12 +58,12 @@ public final class CompletePasswordProviderMfaBody {
         return vitalLinkToken.equals(other.vitalLinkToken) && mfaCode.equals(other.mfaCode);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.vitalLinkToken, this.mfaCode);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,34 +97,34 @@ public final class CompletePasswordProviderMfaBody {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CompletePasswordProviderMfaBody other) {
             vitalLinkToken(other.getVitalLinkToken());
             mfaCode(other.getMfaCode());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("mfa_code")
         public _FinalStage mfaCode(String mfaCode) {
             this.mfaCode = mfaCode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
             this.vitalLinkToken = Optional.of(vitalLinkToken);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
         public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
             this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CompletePasswordProviderMfaBody build() {
             return new CompletePasswordProviderMfaBody(vitalLinkToken, mfaCode, additionalProperties);
         }

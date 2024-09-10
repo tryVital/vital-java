@@ -34,7 +34,7 @@ public final class UserRefreshRequest {
         return timeout;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserRefreshRequest && equalTo((UserRefreshRequest) other);
@@ -49,12 +49,12 @@ public final class UserRefreshRequest {
         return timeout.equals(other.timeout);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.timeout);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

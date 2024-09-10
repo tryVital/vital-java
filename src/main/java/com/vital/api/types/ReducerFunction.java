@@ -31,7 +31,7 @@ public enum ReducerFunction {
     }
 
     @JsonValue
-    @Override
+    @java.lang.Override
     public String toString() {
         return this.value;
     }

@@ -51,12 +51,15 @@ public final class UserHistoricalPullsResponse {
         return next;
     }
 
+    /**
+     * @return The cursor for fetching the next page, or <code>null</code> to fetch the first page.
+     */
     @JsonProperty("next_cursor")
     public Optional<String> getNextCursor() {
         return nextCursor;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserHistoricalPullsResponse && equalTo((UserHistoricalPullsResponse) other);
@@ -71,12 +74,12 @@ public final class UserHistoricalPullsResponse {
         return data.equals(other.data) && next.equals(other.next) && nextCursor.equals(other.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.data, this.next, this.nextCursor);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

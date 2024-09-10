@@ -74,7 +74,7 @@ public final class QueryInstruction {
         return splitBySource;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof QueryInstruction && equalTo((QueryInstruction) other);
@@ -93,12 +93,12 @@ public final class QueryInstruction {
                 && splitBySource.equals(other.splitBySource);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.select, this.partitionBy, this.swizzleBy, this.reduceBy, this.splitBySource);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -152,7 +152,7 @@ public final class QueryInstruction {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(QueryInstruction other) {
             select(other.getSelect());
             partitionBy(other.getPartitionBy());
@@ -162,46 +162,46 @@ public final class QueryInstruction {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("select")
         public PartitionByStage select(QueryInstructionSelect select) {
             this.select = select;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("partition_by")
         public _FinalStage partitionBy(QueryInstructionPartitionBy partitionBy) {
             this.partitionBy = partitionBy;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage splitBySource(Boolean splitBySource) {
             this.splitBySource = Optional.of(splitBySource);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "split_by_source", nulls = Nulls.SKIP)
         public _FinalStage splitBySource(Optional<Boolean> splitBySource) {
             this.splitBySource = splitBySource;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllReduceBy(List<Reducer> reduceBy) {
             this.reduceBy.addAll(reduceBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addReduceBy(Reducer reduceBy) {
             this.reduceBy.add(reduceBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "reduce_by", nulls = Nulls.SKIP)
         public _FinalStage reduceBy(List<Reducer> reduceBy) {
             this.reduceBy.clear();
@@ -209,20 +209,20 @@ public final class QueryInstruction {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage swizzleBy(Swizzling swizzleBy) {
             this.swizzleBy = Optional.of(swizzleBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "swizzle_by", nulls = Nulls.SKIP)
         public _FinalStage swizzleBy(Optional<Swizzling> swizzleBy) {
             this.swizzleBy = swizzleBy;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public QueryInstruction build() {
             return new QueryInstruction(select, partitionBy, swizzleBy, reduceBy, splitBySource, additionalProperties);
         }

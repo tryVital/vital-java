@@ -42,7 +42,7 @@ public final class Period {
         return unit;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Period && equalTo((Period) other);
@@ -57,12 +57,12 @@ public final class Period {
         return value.equals(other.value) && unit.equals(other.unit);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.value, this.unit);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class Period {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Period other) {
             value(other.getValue());
             unit(other.getUnit());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("unit")
         public _FinalStage unit(PeriodUnit unit) {
             this.unit = unit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage value(Integer value) {
             this.value = Optional.of(value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "value", nulls = Nulls.SKIP)
         public _FinalStage value(Optional<Integer> value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Period build() {
             return new Period(value, unit, additionalProperties);
         }

@@ -40,7 +40,7 @@ public final class VitalTokenCreatedResponse {
         return exchangeUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VitalTokenCreatedResponse && equalTo((VitalTokenCreatedResponse) other);
@@ -55,12 +55,12 @@ public final class VitalTokenCreatedResponse {
         return code.equals(other.code) && exchangeUrl.equals(other.exchangeUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.code, this.exchangeUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class VitalTokenCreatedResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(VitalTokenCreatedResponse other) {
             code(other.getCode());
             exchangeUrl(other.getExchangeUrl());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("code")
         public ExchangeUrlStage code(String code) {
             this.code = code;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("exchange_url")
         public _FinalStage exchangeUrl(String exchangeUrl) {
             this.exchangeUrl = exchangeUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public VitalTokenCreatedResponse build() {
             return new VitalTokenCreatedResponse(code, exchangeUrl, additionalProperties);
         }

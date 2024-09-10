@@ -48,7 +48,7 @@ public final class AoEAnswer {
         return answer;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AoEAnswer && equalTo((AoEAnswer) other);
@@ -63,12 +63,12 @@ public final class AoEAnswer {
         return markerId == other.markerId && questionId == other.questionId && answer.equals(other.answer);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.markerId, this.questionId, this.answer);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -108,7 +108,7 @@ public final class AoEAnswer {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AoEAnswer other) {
             markerId(other.getMarkerId());
             questionId(other.getQuestionId());
@@ -116,28 +116,28 @@ public final class AoEAnswer {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("marker_id")
         public QuestionIdStage markerId(int markerId) {
             this.markerId = markerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("question_id")
         public AnswerStage questionId(int questionId) {
             this.questionId = questionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("answer")
         public _FinalStage answer(String answer) {
             this.answer = answer;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AoEAnswer build() {
             return new AoEAnswer(markerId, questionId, answer, additionalProperties);
         }

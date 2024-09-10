@@ -46,7 +46,7 @@ public final class LinkTokenExchangeResponse {
         return linkWebUrl;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LinkTokenExchangeResponse && equalTo((LinkTokenExchangeResponse) other);
@@ -61,12 +61,12 @@ public final class LinkTokenExchangeResponse {
         return linkToken.equals(other.linkToken) && linkWebUrl.equals(other.linkWebUrl);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.linkToken, this.linkWebUrl);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,7 +100,7 @@ public final class LinkTokenExchangeResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LinkTokenExchangeResponse other) {
             linkToken(other.getLinkToken());
             linkWebUrl(other.getLinkWebUrl());
@@ -111,7 +111,7 @@ public final class LinkTokenExchangeResponse {
          * <p>A short-lived Vital Link token for your Custom Link Widget to communicate with the Vital API.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("link_token")
         public LinkWebUrlStage linkToken(String linkToken) {
             this.linkToken = linkToken;
@@ -122,14 +122,14 @@ public final class LinkTokenExchangeResponse {
          * <p>The web browser link to launch the default Vital Link experience. If you requested the token for one specific provider, the link would redirect directly to the provider authentication flow. Otherwise, the user would be presented with a list of providers based on your team and token configurations.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("link_web_url")
         public _FinalStage linkWebUrl(String linkWebUrl) {
             this.linkWebUrl = linkWebUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LinkTokenExchangeResponse build() {
             return new LinkTokenExchangeResponse(linkToken, linkWebUrl, additionalProperties);
         }

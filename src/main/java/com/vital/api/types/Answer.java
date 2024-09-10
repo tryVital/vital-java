@@ -48,7 +48,7 @@ public final class Answer {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Answer && equalTo((Answer) other);
@@ -63,12 +63,12 @@ public final class Answer {
         return id == other.id && code.equals(other.code) && value.equals(other.value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.code, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -108,7 +108,7 @@ public final class Answer {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Answer other) {
             id(other.getId());
             code(other.getCode());
@@ -116,28 +116,28 @@ public final class Answer {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CodeStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("code")
         public ValueStage code(String code) {
             this.code = code;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(String value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Answer build() {
             return new Answer(id, code, value, additionalProperties);
         }

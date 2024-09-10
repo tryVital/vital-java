@@ -35,7 +35,7 @@ public final class RawWorkout {
         return workouts;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RawWorkout && equalTo((RawWorkout) other);
@@ -50,12 +50,12 @@ public final class RawWorkout {
         return workouts.equals(other.workouts);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.workouts);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

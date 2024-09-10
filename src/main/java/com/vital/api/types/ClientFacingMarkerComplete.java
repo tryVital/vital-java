@@ -137,7 +137,7 @@ public final class ClientFacingMarkerComplete {
         return expectedResults;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingMarkerComplete && equalTo((ClientFacingMarkerComplete) other);
@@ -163,7 +163,7 @@ public final class ClientFacingMarkerComplete {
                 && expectedResults.equals(other.expectedResults);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -180,7 +180,7 @@ public final class ClientFacingMarkerComplete {
                 this.expectedResults);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -276,7 +276,7 @@ public final class ClientFacingMarkerComplete {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingMarkerComplete other) {
             id(other.getId());
             name(other.getName());
@@ -293,40 +293,40 @@ public final class ClientFacingMarkerComplete {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public _FinalStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllExpectedResults(List<ClientFacingResult> expectedResults) {
             this.expectedResults.addAll(expectedResults);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addExpectedResults(ClientFacingResult expectedResults) {
             this.expectedResults.add(expectedResults);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expected_results", nulls = Nulls.SKIP)
         public _FinalStage expectedResults(List<ClientFacingResult> expectedResults) {
             this.expectedResults.clear();
@@ -334,111 +334,111 @@ public final class ClientFacingMarkerComplete {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage aLaCarteEnabled(Boolean aLaCarteEnabled) {
             this.aLaCarteEnabled = Optional.of(aLaCarteEnabled);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "a_la_carte_enabled", nulls = Nulls.SKIP)
         public _FinalStage aLaCarteEnabled(Optional<Boolean> aLaCarteEnabled) {
             this.aLaCarteEnabled = aLaCarteEnabled;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage aoe(AoE aoe) {
             this.aoe = Optional.of(aoe);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "aoe", nulls = Nulls.SKIP)
         public _FinalStage aoe(Optional<AoE> aoe) {
             this.aoe = aoe;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage price(String price) {
             this.price = Optional.of(price);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "price", nulls = Nulls.SKIP)
         public _FinalStage price(Optional<String> price) {
             this.price = price;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.of(unit);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage type(MarkerType type) {
             this.type = Optional.of(type);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<MarkerType> type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.of(providerId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage labId(Integer labId) {
             this.labId = Optional.of(labId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lab_id", nulls = Nulls.SKIP)
         public _FinalStage labId(Optional<Integer> labId) {
             this.labId = labId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingMarkerComplete build() {
             return new ClientFacingMarkerComplete(
                     id,

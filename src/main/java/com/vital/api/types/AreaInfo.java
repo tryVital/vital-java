@@ -54,7 +54,7 @@ public final class AreaInfo {
         return centralLabs;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AreaInfo && equalTo((AreaInfo) other);
@@ -71,12 +71,12 @@ public final class AreaInfo {
                 && centralLabs.equals(other.centralLabs);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.zipCode, this.phlebotomy, this.centralLabs);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -118,7 +118,7 @@ public final class AreaInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AreaInfo other) {
             zipCode(other.getZipCode());
             phlebotomy(other.getPhlebotomy());
@@ -126,33 +126,33 @@ public final class AreaInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("zip_code")
         public PhlebotomyStage zipCode(String zipCode) {
             this.zipCode = zipCode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("phlebotomy")
         public _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy) {
             this.phlebotomy = phlebotomy;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage centralLabs(String key, PscAreaInfo value) {
             this.centralLabs.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllCentralLabs(Map<String, PscAreaInfo> centralLabs) {
             this.centralLabs.putAll(centralLabs);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "central_labs", nulls = Nulls.SKIP)
         public _FinalStage centralLabs(Map<String, PscAreaInfo> centralLabs) {
             this.centralLabs.clear();
@@ -160,7 +160,7 @@ public final class AreaInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AreaInfo build() {
             return new AreaInfo(zipCode, phlebotomy, centralLabs, additionalProperties);
         }

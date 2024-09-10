@@ -54,7 +54,7 @@ public final class HistoricalPullTimeline {
         return endedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof HistoricalPullTimeline && equalTo((HistoricalPullTimeline) other);
@@ -71,12 +71,12 @@ public final class HistoricalPullTimeline {
                 && endedAt.equals(other.endedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.scheduledAt, this.startedAt, this.endedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -116,7 +116,7 @@ public final class HistoricalPullTimeline {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(HistoricalPullTimeline other) {
             scheduledAt(other.getScheduledAt());
             startedAt(other.getStartedAt());
@@ -124,40 +124,40 @@ public final class HistoricalPullTimeline {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("scheduled_at")
         public _FinalStage scheduledAt(String scheduledAt) {
             this.scheduledAt = scheduledAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage endedAt(String endedAt) {
             this.endedAt = Optional.of(endedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "ended_at", nulls = Nulls.SKIP)
         public _FinalStage endedAt(Optional<String> endedAt) {
             this.endedAt = endedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage startedAt(String startedAt) {
             this.startedAt = Optional.of(startedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "started_at", nulls = Nulls.SKIP)
         public _FinalStage startedAt(Optional<String> startedAt) {
             this.startedAt = startedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public HistoricalPullTimeline build() {
             return new HistoricalPullTimeline(scheduledAt, startedAt, endedAt, additionalProperties);
         }

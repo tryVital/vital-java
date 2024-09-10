@@ -40,7 +40,7 @@ public final class LastAttempt {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LastAttempt && equalTo((LastAttempt) other);
@@ -55,12 +55,12 @@ public final class LastAttempt {
         return timestamp.equals(other.timestamp) && status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.timestamp, this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class LastAttempt {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LastAttempt other) {
             timestamp(other.getTimestamp());
             status(other.getStatus());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public StatusStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(AttemptStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LastAttempt build() {
             return new LastAttempt(timestamp, status, additionalProperties);
         }

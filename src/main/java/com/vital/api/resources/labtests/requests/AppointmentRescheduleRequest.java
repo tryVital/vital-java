@@ -32,7 +32,7 @@ public final class AppointmentRescheduleRequest {
         return bookingKey;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AppointmentRescheduleRequest && equalTo((AppointmentRescheduleRequest) other);
@@ -47,12 +47,12 @@ public final class AppointmentRescheduleRequest {
         return bookingKey.equals(other.bookingKey);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.bookingKey);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class AppointmentRescheduleRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AppointmentRescheduleRequest other) {
             bookingKey(other.getBookingKey());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("booking_key")
         public _FinalStage bookingKey(String bookingKey) {
             this.bookingKey = bookingKey;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AppointmentRescheduleRequest build() {
             return new AppointmentRescheduleRequest(bookingKey, additionalProperties);
         }

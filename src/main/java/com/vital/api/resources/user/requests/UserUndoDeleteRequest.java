@@ -49,7 +49,7 @@ public final class UserUndoDeleteRequest {
         return clientUserId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserUndoDeleteRequest && equalTo((UserUndoDeleteRequest) other);
@@ -64,12 +64,12 @@ public final class UserUndoDeleteRequest {
         return userId.equals(other.userId) && clientUserId.equals(other.clientUserId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.clientUserId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

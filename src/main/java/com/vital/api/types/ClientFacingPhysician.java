@@ -49,7 +49,7 @@ public final class ClientFacingPhysician {
         return npi;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingPhysician && equalTo((ClientFacingPhysician) other);
@@ -64,12 +64,12 @@ public final class ClientFacingPhysician {
         return firstName.equals(other.firstName) && lastName.equals(other.lastName) && npi.equals(other.npi);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.firstName, this.lastName, this.npi);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -109,7 +109,7 @@ public final class ClientFacingPhysician {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingPhysician other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
@@ -117,28 +117,28 @@ public final class ClientFacingPhysician {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_name")
         public LastNameStage firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("last_name")
         public NpiStage lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("npi")
         public _FinalStage npi(String npi) {
             this.npi = npi;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingPhysician build() {
             return new ClientFacingPhysician(firstName, lastName, npi, additionalProperties);
         }

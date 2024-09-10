@@ -76,6 +76,9 @@ public final class ClientFacingProviderDetailed {
         return description;
     }
 
+    /**
+     * @return URL for source logo
+     */
     @JsonProperty("logo")
     public Optional<String> getLogo() {
         return logo;
@@ -91,7 +94,7 @@ public final class ClientFacingProviderDetailed {
         return supportedResources;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingProviderDetailed && equalTo((ClientFacingProviderDetailed) other);
@@ -111,12 +114,12 @@ public final class ClientFacingProviderDetailed {
                 && supportedResources.equals(other.supportedResources);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.slug, this.description, this.logo, this.authType, this.supportedResources);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -174,7 +177,7 @@ public final class ClientFacingProviderDetailed {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingProviderDetailed other) {
             name(other.getName());
             slug(other.getSlug());
@@ -189,7 +192,7 @@ public final class ClientFacingProviderDetailed {
          * <p>Name of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
@@ -200,7 +203,7 @@ public final class ClientFacingProviderDetailed {
          * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public DescriptionStage slug(String slug) {
             this.slug = slug;
@@ -211,53 +214,57 @@ public final class ClientFacingProviderDetailed {
          * <p>Description of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("description")
         public _FinalStage description(String description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage supportedResources(List<ClientFacingResource> supportedResources) {
             this.supportedResources = Optional.of(supportedResources);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "supported_resources", nulls = Nulls.SKIP)
         public _FinalStage supportedResources(Optional<List<ClientFacingResource>> supportedResources) {
             this.supportedResources = supportedResources;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.of(authType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
             this.authType = authType;
             return this;
         }
 
-        @Override
+        /**
+         * <p>URL for source logo</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage logo(String logo) {
             this.logo = Optional.of(logo);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "logo", nulls = Nulls.SKIP)
         public _FinalStage logo(Optional<String> logo) {
             this.logo = logo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingProviderDetailed build() {
             return new ClientFacingProviderDetailed(
                     name, slug, description, logo, authType, supportedResources, additionalProperties);

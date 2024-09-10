@@ -59,16 +59,25 @@ public final class ClientFacingHypnogramTimeseries {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Deprecated
+     */
     @JsonProperty("id")
     public Optional<Integer> getId() {
         return id;
     }
 
+    /**
+     * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
+    /**
+     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+     */
     @JsonProperty("type")
     public Optional<String> getType() {
         return type;
@@ -114,7 +123,7 @@ public final class ClientFacingHypnogramTimeseries {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingHypnogramTimeseries && equalTo((ClientFacingHypnogramTimeseries) other);
@@ -136,13 +145,13 @@ public final class ClientFacingHypnogramTimeseries {
                 && value == other.value;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id, this.timezoneOffset, this.type, this.unit, this.timestamp, this.start, this.end, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -213,7 +222,7 @@ public final class ClientFacingHypnogramTimeseries {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingHypnogramTimeseries other) {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
@@ -230,7 +239,7 @@ public final class ClientFacingHypnogramTimeseries {
          * <p>enum: 1: deep, 2: light, 3: rem, 4: awake, -1: missing_data.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("unit")
         public TimestampStage unit(String unit) {
             this.unit = unit;
@@ -241,7 +250,7 @@ public final class ClientFacingHypnogramTimeseries {
          * <p>Depracated. The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public StartStage timestamp(String timestamp) {
             this.timestamp = timestamp;
@@ -252,7 +261,7 @@ public final class ClientFacingHypnogramTimeseries {
          * <p>The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(String start) {
             this.start = start;
@@ -263,7 +272,7 @@ public final class ClientFacingHypnogramTimeseries {
          * <p>The end time (exclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public ValueStage end(String end) {
             this.end = end;
@@ -274,53 +283,65 @@ public final class ClientFacingHypnogramTimeseries {
          * <p>Hypnogram for sleep stages {&quot;deep&quot;: 1, &quot;light&quot;: 2, &quot;rem&quot;: 3, &quot;awake&quot;: 4, &quot;manual&quot;: 5, &quot;missing_data&quot;: -1}</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Deprecated</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage id(Integer id) {
             this.id = Optional.of(id);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingHypnogramTimeseries build() {
             return new ClientFacingHypnogramTimeseries(
                     id, timezoneOffset, type, unit, timestamp, start, end, value, additionalProperties);

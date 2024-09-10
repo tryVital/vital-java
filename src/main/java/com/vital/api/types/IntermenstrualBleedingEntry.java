@@ -32,7 +32,7 @@ public final class IntermenstrualBleedingEntry {
         return date;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IntermenstrualBleedingEntry && equalTo((IntermenstrualBleedingEntry) other);
@@ -47,12 +47,12 @@ public final class IntermenstrualBleedingEntry {
         return date.equals(other.date);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class IntermenstrualBleedingEntry {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IntermenstrualBleedingEntry other) {
             date(other.getDate());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public _FinalStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IntermenstrualBleedingEntry build() {
             return new IntermenstrualBleedingEntry(date, additionalProperties);
         }

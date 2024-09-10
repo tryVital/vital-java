@@ -32,7 +32,7 @@ public final class ActivitySelector {
         return activity;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ActivitySelector && equalTo((ActivitySelector) other);
@@ -47,12 +47,12 @@ public final class ActivitySelector {
         return activity.equals(other.activity);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.activity);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class ActivitySelector {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ActivitySelector other) {
             activity(other.getActivity());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("activity")
         public _FinalStage activity(ActivitySelectorActivity activity) {
             this.activity = activity;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ActivitySelector build() {
             return new ActivitySelector(activity, additionalProperties);
         }

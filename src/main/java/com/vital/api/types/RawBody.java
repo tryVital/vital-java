@@ -35,7 +35,7 @@ public final class RawBody {
         return body;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RawBody && equalTo((RawBody) other);
@@ -50,12 +50,12 @@ public final class RawBody {
         return body.equals(other.body);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.body);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

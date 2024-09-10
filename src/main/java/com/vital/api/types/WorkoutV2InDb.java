@@ -119,7 +119,7 @@ public final class WorkoutV2InDb {
         return sport;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WorkoutV2InDb && equalTo((WorkoutV2InDb) other);
@@ -143,7 +143,7 @@ public final class WorkoutV2InDb {
                 && sport.equals(other.sport);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.timestamp,
@@ -158,7 +158,7 @@ public final class WorkoutV2InDb {
                 this.sport);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -251,7 +251,7 @@ public final class WorkoutV2InDb {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WorkoutV2InDb other) {
             timestamp(other.getTimestamp());
             data(other.getData());
@@ -266,88 +266,88 @@ public final class WorkoutV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public ProviderIdStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider_id")
         public UserIdStage providerId(String providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SourceIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source_id")
         public IdStage sourceId(int sourceId) {
             this.sourceId = sourceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SportIdStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sport_id")
         public SourceStage sportId(int sportId) {
             this.sportId = sportId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public SportStage source(ClientFacingProvider source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sport")
         public _FinalStage sport(ClientFacingSport sport) {
             this.sport = sport;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
             this.priorityId = Optional.of(priorityId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "priority_id", nulls = Nulls.SKIP)
         public _FinalStage priorityId(Optional<Integer> priorityId) {
             this.priorityId = priorityId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(String key, Object value) {
             this.data.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllData(Map<String, Object> data) {
             this.data.putAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Map<String, Object> data) {
             this.data.clear();
@@ -355,7 +355,7 @@ public final class WorkoutV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public WorkoutV2InDb build() {
             return new WorkoutV2InDb(
                     timestamp,

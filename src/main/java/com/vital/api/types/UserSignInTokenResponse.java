@@ -40,7 +40,7 @@ public final class UserSignInTokenResponse {
         return signInToken;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserSignInTokenResponse && equalTo((UserSignInTokenResponse) other);
@@ -55,12 +55,12 @@ public final class UserSignInTokenResponse {
         return userId.equals(other.userId) && signInToken.equals(other.signInToken);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.signInToken);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class UserSignInTokenResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserSignInTokenResponse other) {
             userId(other.getUserId());
             signInToken(other.getSignInToken());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SignInTokenStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sign_in_token")
         public _FinalStage signInToken(String signInToken) {
             this.signInToken = signInToken;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserSignInTokenResponse build() {
             return new UserSignInTokenResponse(userId, signInToken, additionalProperties);
         }

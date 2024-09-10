@@ -44,7 +44,7 @@ public final class LibreConfig {
         return stripTz;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LibreConfig && equalTo((LibreConfig) other);
@@ -59,12 +59,12 @@ public final class LibreConfig {
         return practiceId.equals(other.practiceId) && stripTz.equals(other.stripTz);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.practiceId, this.stripTz);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

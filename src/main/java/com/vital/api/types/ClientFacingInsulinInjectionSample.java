@@ -55,11 +55,17 @@ public final class ClientFacingInsulinInjectionSample {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Deprecated
+     */
     @JsonProperty("id")
     public Optional<Integer> getId() {
         return id;
     }
 
+    /**
+     * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
@@ -110,7 +116,7 @@ public final class ClientFacingInsulinInjectionSample {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingInsulinInjectionSample
@@ -132,12 +138,12 @@ public final class ClientFacingInsulinInjectionSample {
                 && value == other.value;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.timezoneOffset, this.type, this.timestamp, this.start, this.end, this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -202,7 +208,7 @@ public final class ClientFacingInsulinInjectionSample {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingInsulinInjectionSample other) {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
@@ -218,7 +224,7 @@ public final class ClientFacingInsulinInjectionSample {
          * <p>Insulin type: rapid vs long acting</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public TimestampStage type(ClientFacingInsulinInjectionSampleType type) {
             this.type = type;
@@ -229,7 +235,7 @@ public final class ClientFacingInsulinInjectionSample {
          * <p>Depracated. The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public StartStage timestamp(String timestamp) {
             this.timestamp = timestamp;
@@ -240,7 +246,7 @@ public final class ClientFacingInsulinInjectionSample {
          * <p>The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(String start) {
             this.start = start;
@@ -251,7 +257,7 @@ public final class ClientFacingInsulinInjectionSample {
          * <p>The end time (exclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public ValueStage end(String end) {
             this.end = end;
@@ -262,40 +268,48 @@ public final class ClientFacingInsulinInjectionSample {
          * <p>The recorded value for the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Deprecated</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage id(Integer id) {
             this.id = Optional.of(id);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingInsulinInjectionSample build() {
             return new ClientFacingInsulinInjectionSample(
                     id, timezoneOffset, type, timestamp, start, end, value, additionalProperties);

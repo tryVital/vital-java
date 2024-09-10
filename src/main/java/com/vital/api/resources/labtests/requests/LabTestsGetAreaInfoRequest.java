@@ -65,7 +65,7 @@ public final class LabTestsGetAreaInfoRequest {
         return lab;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabTestsGetAreaInfoRequest && equalTo((LabTestsGetAreaInfoRequest) other);
@@ -80,12 +80,12 @@ public final class LabTestsGetAreaInfoRequest {
         return zipCode.equals(other.zipCode) && radius.equals(other.radius) && lab.equals(other.lab);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.zipCode, this.radius, this.lab);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -125,7 +125,7 @@ public final class LabTestsGetAreaInfoRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LabTestsGetAreaInfoRequest other) {
             zipCode(other.getZipCode());
             radius(other.getRadius());
@@ -137,7 +137,7 @@ public final class LabTestsGetAreaInfoRequest {
          * <p>Zip code of the area to check</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("zip_code")
         public _FinalStage zipCode(String zipCode) {
             this.zipCode = zipCode;
@@ -148,13 +148,13 @@ public final class LabTestsGetAreaInfoRequest {
          * <p>Lab to check for PSCs</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage lab(ClientFacingLabs lab) {
             this.lab = Optional.of(lab);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lab", nulls = Nulls.SKIP)
         public _FinalStage lab(Optional<ClientFacingLabs> lab) {
             this.lab = lab;
@@ -165,20 +165,20 @@ public final class LabTestsGetAreaInfoRequest {
          * <p>Radius in which to search in miles</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage radius(AllowedRadius radius) {
             this.radius = Optional.of(radius);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
         public _FinalStage radius(Optional<AllowedRadius> radius) {
             this.radius = radius;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LabTestsGetAreaInfoRequest build() {
             return new LabTestsGetAreaInfoRequest(zipCode, radius, lab, additionalProperties);
         }

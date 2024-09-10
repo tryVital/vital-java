@@ -51,6 +51,9 @@ public final class ClientFacingTestkitOrder {
         return id;
     }
 
+    /**
+     * @return Shipment object
+     */
     @JsonProperty("shipment")
     public Optional<ClientFacingShipment> getShipment() {
         return shipment;
@@ -66,7 +69,7 @@ public final class ClientFacingTestkitOrder {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingTestkitOrder && equalTo((ClientFacingTestkitOrder) other);
@@ -84,12 +87,12 @@ public final class ClientFacingTestkitOrder {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.shipment, this.createdAt, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -135,7 +138,7 @@ public final class ClientFacingTestkitOrder {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingTestkitOrder other) {
             id(other.getId());
             shipment(other.getShipment());
@@ -148,41 +151,45 @@ public final class ClientFacingTestkitOrder {
          * <p>The Vital TestKit Order ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Shipment object</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage shipment(ClientFacingShipment shipment) {
             this.shipment = Optional.of(shipment);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "shipment", nulls = Nulls.SKIP)
         public _FinalStage shipment(Optional<ClientFacingShipment> shipment) {
             this.shipment = shipment;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingTestkitOrder build() {
             return new ClientFacingTestkitOrder(id, shipment, createdAt, updatedAt, additionalProperties);
         }

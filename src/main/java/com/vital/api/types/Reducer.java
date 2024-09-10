@@ -32,7 +32,7 @@ public final class Reducer {
         return function;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Reducer && equalTo((Reducer) other);
@@ -47,12 +47,12 @@ public final class Reducer {
         return function.equals(other.function);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.function);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class Reducer {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Reducer other) {
             function(other.getFunction());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("function")
         public _FinalStage function(ReducerFunction function) {
             this.function = function;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Reducer build() {
             return new Reducer(function, additionalProperties);
         }

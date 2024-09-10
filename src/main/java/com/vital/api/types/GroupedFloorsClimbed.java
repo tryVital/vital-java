@@ -46,7 +46,7 @@ public final class GroupedFloorsClimbed {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GroupedFloorsClimbed && equalTo((GroupedFloorsClimbed) other);
@@ -61,12 +61,12 @@ public final class GroupedFloorsClimbed {
         return source.equals(other.source) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.source, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,33 +102,33 @@ public final class GroupedFloorsClimbed {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GroupedFloorsClimbed other) {
             source(other.getSource());
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllData(List<ClientFacingFloorsClimbedTimeseries> data) {
             this.data.addAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addData(ClientFacingFloorsClimbedTimeseries data) {
             this.data.add(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingFloorsClimbedTimeseries> data) {
             this.data.clear();
@@ -136,7 +136,7 @@ public final class GroupedFloorsClimbed {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GroupedFloorsClimbed build() {
             return new GroupedFloorsClimbed(source, data, additionalProperties);
         }

@@ -52,7 +52,7 @@ public final class ValidationError {
         return type;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ValidationError && equalTo((ValidationError) other);
@@ -67,12 +67,12 @@ public final class ValidationError {
         return loc.equals(other.loc) && msg.equals(other.msg) && type.equals(other.type);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.loc, this.msg, this.type);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class ValidationError {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ValidationError other) {
             loc(other.getLoc());
             msg(other.getMsg());
@@ -122,33 +122,33 @@ public final class ValidationError {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("msg")
         public TypeStage msg(String msg) {
             this.msg = msg;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(String type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllLoc(List<ValidationErrorLocItem> loc) {
             this.loc.addAll(loc);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addLoc(ValidationErrorLocItem loc) {
             this.loc.add(loc);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "loc", nulls = Nulls.SKIP)
         public _FinalStage loc(List<ValidationErrorLocItem> loc) {
             this.loc.clear();
@@ -156,7 +156,7 @@ public final class ValidationError {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ValidationError build() {
             return new ValidationError(loc, msg, type, additionalProperties);
         }

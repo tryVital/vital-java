@@ -99,7 +99,7 @@ public final class SourceLink {
         return formComponents;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SourceLink && equalTo((SourceLink) other);
@@ -121,7 +121,7 @@ public final class SourceLink {
                 && formComponents.equals(other.formComponents);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -134,7 +134,7 @@ public final class SourceLink {
                 this.formComponents);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -205,7 +205,7 @@ public final class SourceLink {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SourceLink other) {
             id(other.getId());
             name(other.getName());
@@ -218,81 +218,81 @@ public final class SourceLink {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public DescriptionStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("description")
         public LogoStage description(String description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("logo")
         public _FinalStage logo(String logo) {
             this.logo = logo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage formComponents(Map<String, Object> formComponents) {
             this.formComponents = Optional.of(formComponents);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "form_components", nulls = Nulls.SKIP)
         public _FinalStage formComponents(Optional<Map<String, Object>> formComponents) {
             this.formComponents = formComponents;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.of(authType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
             this.authType = authType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage oauthUrl(String oauthUrl) {
             this.oauthUrl = Optional.of(oauthUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "oauth_url", nulls = Nulls.SKIP)
         public _FinalStage oauthUrl(Optional<String> oauthUrl) {
             this.oauthUrl = oauthUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SourceLink build() {
             return new SourceLink(
                     id, name, slug, description, logo, oauthUrl, authType, formComponents, additionalProperties);

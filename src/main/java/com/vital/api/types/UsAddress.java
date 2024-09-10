@@ -76,12 +76,15 @@ public final class UsAddress {
         return zipCode;
     }
 
+    /**
+     * @return Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.
+     */
     @JsonProperty("unit")
     public Optional<String> getUnit() {
         return unit;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UsAddress && equalTo((UsAddress) other);
@@ -101,12 +104,12 @@ public final class UsAddress {
                 && unit.equals(other.unit);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.firstLine, this.secondLine, this.city, this.state, this.zipCode, this.unit);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -164,7 +167,7 @@ public final class UsAddress {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UsAddress other) {
             firstLine(other.getFirstLine());
             secondLine(other.getSecondLine());
@@ -175,61 +178,65 @@ public final class UsAddress {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_line")
         public CityStage firstLine(String firstLine) {
             this.firstLine = firstLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("city")
         public StateStage city(String city) {
             this.city = city;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public ZipCodeStage state(String state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("zip_code")
         public _FinalStage zipCode(String zipCode) {
             this.zipCode = zipCode;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.of(unit);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
             this.secondLine = Optional.of(secondLine);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "second_line", nulls = Nulls.SKIP)
         public _FinalStage secondLine(Optional<String> secondLine) {
             this.secondLine = secondLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UsAddress build() {
             return new UsAddress(firstLine, secondLine, city, state, zipCode, unit, additionalProperties);
         }

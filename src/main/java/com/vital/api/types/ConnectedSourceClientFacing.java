@@ -61,7 +61,7 @@ public final class ConnectedSourceClientFacing {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ConnectedSourceClientFacing && equalTo((ConnectedSourceClientFacing) other);
@@ -76,12 +76,12 @@ public final class ConnectedSourceClientFacing {
         return provider.equals(other.provider) && createdOn.equals(other.createdOn) && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.provider, this.createdOn, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -121,7 +121,7 @@ public final class ConnectedSourceClientFacing {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ConnectedSourceClientFacing other) {
             provider(other.getProvider());
             createdOn(other.getCreatedOn());
@@ -133,7 +133,7 @@ public final class ConnectedSourceClientFacing {
          * <p>The provider of this connected source.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public CreatedOnStage provider(ClientFacingProvider provider) {
             this.provider = provider;
@@ -144,7 +144,7 @@ public final class ConnectedSourceClientFacing {
          * <p>When your item is created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("created_on")
         public SourceStage createdOn(String createdOn) {
             this.createdOn = createdOn;
@@ -155,14 +155,14 @@ public final class ConnectedSourceClientFacing {
          * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingProvider source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ConnectedSourceClientFacing build() {
             return new ConnectedSourceClientFacing(provider, createdOn, source, additionalProperties);
         }

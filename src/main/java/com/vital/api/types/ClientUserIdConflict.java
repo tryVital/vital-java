@@ -62,7 +62,7 @@ public final class ClientUserIdConflict {
         return createdOn;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientUserIdConflict && equalTo((ClientUserIdConflict) other);
@@ -80,12 +80,12 @@ public final class ClientUserIdConflict {
                 && createdOn.equals(other.createdOn);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.errorType, this.errorMessage, this.userId, this.createdOn);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -132,7 +132,7 @@ public final class ClientUserIdConflict {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientUserIdConflict other) {
             errorType(other.getErrorType());
             errorMessage(other.getErrorMessage());
@@ -141,35 +141,35 @@ public final class ClientUserIdConflict {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("error_type")
         public ErrorMessageStage errorType(String errorType) {
             this.errorType = errorType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("error_message")
         public UserIdStage errorMessage(String errorMessage) {
             this.errorMessage = errorMessage;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public CreatedOnStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_on")
         public _FinalStage createdOn(OffsetDateTime createdOn) {
             this.createdOn = createdOn;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientUserIdConflict build() {
             return new ClientUserIdConflict(errorType, errorMessage, userId, createdOn, additionalProperties);
         }

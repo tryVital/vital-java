@@ -41,7 +41,7 @@ public final class LabResultsRaw {
         return results;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabResultsRaw && equalTo((LabResultsRaw) other);
@@ -56,12 +56,12 @@ public final class LabResultsRaw {
         return metadata.equals(other.metadata) && results.equals(other.results);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.metadata, this.results);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class LabResultsRaw {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LabResultsRaw other) {
             metadata(other.getMetadata());
             results(other.getResults());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("metadata")
         public ResultsStage metadata(LabResultsMetadata metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("results")
         public _FinalStage results(LabResultsRawResults results) {
             this.results = results;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LabResultsRaw build() {
             return new LabResultsRaw(metadata, results, additionalProperties);
         }

@@ -40,7 +40,7 @@ public final class PscAreaInfoDetails {
         return radius;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PscAreaInfoDetails && equalTo((PscAreaInfoDetails) other);
@@ -55,12 +55,12 @@ public final class PscAreaInfoDetails {
         return withinRadius == other.withinRadius && radius.equals(other.radius);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.withinRadius, this.radius);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class PscAreaInfoDetails {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PscAreaInfoDetails other) {
             withinRadius(other.getWithinRadius());
             radius(other.getRadius());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("within_radius")
         public RadiusStage withinRadius(int withinRadius) {
             this.withinRadius = withinRadius;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("radius")
         public _FinalStage radius(String radius) {
             this.radius = radius;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PscAreaInfoDetails build() {
             return new PscAreaInfoDetails(withinRadius, radius, additionalProperties);
         }

@@ -55,7 +55,7 @@ public final class PscInfo {
         return patientServiceCenters;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PscInfo && equalTo((PscInfo) other);
@@ -72,12 +72,12 @@ public final class PscInfo {
                 && patientServiceCenters.equals(other.patientServiceCenters);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.labId, this.slug, this.patientServiceCenters);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -119,7 +119,7 @@ public final class PscInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PscInfo other) {
             labId(other.getLabId());
             slug(other.getSlug());
@@ -127,33 +127,33 @@ public final class PscInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_id")
         public SlugStage labId(int labId) {
             this.labId = labId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public _FinalStage slug(Labs slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllPatientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters) {
             this.patientServiceCenters.addAll(patientServiceCenters);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addPatientServiceCenters(ClientFacingLabLocation patientServiceCenters) {
             this.patientServiceCenters.add(patientServiceCenters);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "patient_service_centers", nulls = Nulls.SKIP)
         public _FinalStage patientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters) {
             this.patientServiceCenters.clear();
@@ -161,7 +161,7 @@ public final class PscInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PscInfo build() {
             return new PscInfo(labId, slug, patientServiceCenters, additionalProperties);
         }

@@ -43,7 +43,7 @@ public final class ScopeRequirementsGrants {
         return userDenied;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ScopeRequirementsGrants && equalTo((ScopeRequirementsGrants) other);
@@ -58,12 +58,12 @@ public final class ScopeRequirementsGrants {
         return userGranted.equals(other.userGranted) && userDenied.equals(other.userDenied);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userGranted, this.userDenied);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,28 +97,28 @@ public final class ScopeRequirementsGrants {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ScopeRequirementsGrants other) {
             userGranted(other.getUserGranted());
             userDenied(other.getUserDenied());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_granted")
         public UserDeniedStage userGranted(ScopeRequirementsStr userGranted) {
             this.userGranted = userGranted;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_denied")
         public _FinalStage userDenied(ScopeRequirementsStr userDenied) {
             this.userDenied = userDenied;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ScopeRequirementsGrants build() {
             return new ScopeRequirementsGrants(userGranted, userDenied, additionalProperties);
         }

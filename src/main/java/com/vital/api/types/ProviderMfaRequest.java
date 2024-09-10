@@ -40,7 +40,7 @@ public final class ProviderMfaRequest {
         return hint;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProviderMfaRequest && equalTo((ProviderMfaRequest) other);
@@ -55,12 +55,12 @@ public final class ProviderMfaRequest {
         return method.equals(other.method) && hint.equals(other.hint);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.method, this.hint);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class ProviderMfaRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ProviderMfaRequest other) {
             method(other.getMethod());
             hint(other.getHint());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("method")
         public HintStage method(ProviderMfaRequestMethod method) {
             this.method = method;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("hint")
         public _FinalStage hint(String hint) {
             this.hint = hint;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ProviderMfaRequest build() {
             return new ProviderMfaRequest(method, hint, additionalProperties);
         }

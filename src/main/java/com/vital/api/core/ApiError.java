@@ -3,26 +3,42 @@
  */
 package com.vital.api.core;
 
-public final class ApiError extends RuntimeException {
+/**
+ * This exception type will be thrown for any non-2XX API responses.
+ */
+public class ApiError extends VitalException {
+    /**
+     * The error code of the response that triggered the exception.
+     */
     private final int statusCode;
 
+    /**
+     * The body of the response that triggered the exception.
+     */
     private final Object body;
 
-    public ApiError(int statusCode, Object body) {
+    public ApiError(String message, int statusCode, Object body) {
+        super(message);
         this.statusCode = statusCode;
         this.body = body;
     }
 
+    /**
+     * @return the statusCode
+     */
     public int statusCode() {
         return this.statusCode;
     }
 
+    /**
+     * @return the body
+     */
     public Object body() {
         return this.body;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
-        return "ApiError{" + "statusCode: " + statusCode + ", body: " + body + "}";
+        return "ApiError{" + "message: " + getMessage() + ", statusCode: " + statusCode + ", body: " + body + "}";
     }
 }

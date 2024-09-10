@@ -83,7 +83,7 @@ public final class CreateLabTestRequest {
         return fasting;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateLabTestRequest && equalTo((CreateLabTestRequest) other);
@@ -103,12 +103,12 @@ public final class CreateLabTestRequest {
                 && fasting.equals(other.fasting);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.markerIds, this.providerIds, this.name, this.method, this.description, this.fasting);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -166,7 +166,7 @@ public final class CreateLabTestRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateLabTestRequest other) {
             markerIds(other.getMarkerIds());
             providerIds(other.getProviderIds());
@@ -177,67 +177,67 @@ public final class CreateLabTestRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public MethodStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("method")
         public DescriptionStage method(LabTestCollectionMethod method) {
             this.method = method;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("description")
         public _FinalStage description(String description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage fasting(Boolean fasting) {
             this.fasting = Optional.of(fasting);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fasting", nulls = Nulls.SKIP)
         public _FinalStage fasting(Optional<Boolean> fasting) {
             this.fasting = fasting;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerIds(List<String> providerIds) {
             this.providerIds = Optional.of(providerIds);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_ids", nulls = Nulls.SKIP)
         public _FinalStage providerIds(Optional<List<String>> providerIds) {
             this.providerIds = providerIds;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage markerIds(List<Integer> markerIds) {
             this.markerIds = Optional.of(markerIds);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "marker_ids", nulls = Nulls.SKIP)
         public _FinalStage markerIds(Optional<List<Integer>> markerIds) {
             this.markerIds = markerIds;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateLabTestRequest build() {
             return new CreateLabTestRequest(
                     markerIds, providerIds, name, method, description, fasting, additionalProperties);

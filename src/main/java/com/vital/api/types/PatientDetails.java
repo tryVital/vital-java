@@ -80,7 +80,7 @@ public final class PatientDetails {
         return email;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PatientDetails && equalTo((PatientDetails) other);
@@ -100,12 +100,12 @@ public final class PatientDetails {
                 && email.equals(other.email);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.firstName, this.lastName, this.dob, this.gender, this.phoneNumber, this.email);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -164,7 +164,7 @@ public final class PatientDetails {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PatientDetails other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
@@ -175,49 +175,49 @@ public final class PatientDetails {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_name")
         public LastNameStage firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("last_name")
         public DobStage lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("dob")
         public GenderStage dob(OffsetDateTime dob) {
             this.dob = dob;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("gender")
         public PhoneNumberStage gender(Gender gender) {
             this.gender = gender;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("phone_number")
         public EmailStage phoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public _FinalStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PatientDetails build() {
             return new PatientDetails(firstName, lastName, dob, gender, phoneNumber, email, additionalProperties);
         }

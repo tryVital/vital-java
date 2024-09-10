@@ -41,7 +41,7 @@ public final class ClientFacingLabLocation {
         return distance;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingLabLocation && equalTo((ClientFacingLabLocation) other);
@@ -56,12 +56,12 @@ public final class ClientFacingLabLocation {
         return metadata.equals(other.metadata) && distance == other.distance;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.metadata, this.distance);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class ClientFacingLabLocation {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingLabLocation other) {
             metadata(other.getMetadata());
             distance(other.getDistance());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("metadata")
         public DistanceStage metadata(LabLocationMetadata metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("distance")
         public _FinalStage distance(int distance) {
             this.distance = distance;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingLabLocation build() {
             return new ClientFacingLabLocation(metadata, distance, additionalProperties);
         }

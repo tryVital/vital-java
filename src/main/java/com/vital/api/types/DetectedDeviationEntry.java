@@ -41,7 +41,7 @@ public final class DetectedDeviationEntry {
         return deviation;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DetectedDeviationEntry && equalTo((DetectedDeviationEntry) other);
@@ -56,12 +56,12 @@ public final class DetectedDeviationEntry {
         return date.equals(other.date) && deviation.equals(other.deviation);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date, this.deviation);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class DetectedDeviationEntry {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DetectedDeviationEntry other) {
             date(other.getDate());
             deviation(other.getDeviation());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public DeviationStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("deviation")
         public _FinalStage deviation(DetectedDeviationEntryDeviation deviation) {
             this.deviation = deviation;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DetectedDeviationEntry build() {
             return new DetectedDeviationEntry(date, deviation, additionalProperties);
         }

@@ -57,7 +57,7 @@ public final class ClientFacingProvider {
         return logo;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingProvider && equalTo((ClientFacingProvider) other);
@@ -72,12 +72,12 @@ public final class ClientFacingProvider {
         return name.equals(other.name) && slug.equals(other.slug) && logo.equals(other.logo);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.slug, this.logo);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -117,7 +117,7 @@ public final class ClientFacingProvider {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingProvider other) {
             name(other.getName());
             slug(other.getSlug());
@@ -129,7 +129,7 @@ public final class ClientFacingProvider {
          * <p>Name of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
@@ -140,7 +140,7 @@ public final class ClientFacingProvider {
          * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public LogoStage slug(String slug) {
             this.slug = slug;
@@ -151,14 +151,14 @@ public final class ClientFacingProvider {
          * <p>URL for source logo</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("logo")
         public _FinalStage logo(String logo) {
             this.logo = logo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingProvider build() {
             return new ClientFacingProvider(name, slug, logo, additionalProperties);
         }

@@ -32,7 +32,7 @@ public final class PayorSearchRequest {
         return insuranceName;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PayorSearchRequest && equalTo((PayorSearchRequest) other);
@@ -47,12 +47,12 @@ public final class PayorSearchRequest {
         return insuranceName.equals(other.insuranceName);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.insuranceName);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class PayorSearchRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PayorSearchRequest other) {
             insuranceName(other.getInsuranceName());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("insurance_name")
         public _FinalStage insuranceName(String insuranceName) {
             this.insuranceName = insuranceName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PayorSearchRequest build() {
             return new PayorSearchRequest(insuranceName, additionalProperties);
         }

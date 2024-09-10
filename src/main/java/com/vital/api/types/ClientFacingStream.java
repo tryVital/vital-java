@@ -80,6 +80,9 @@ public final class ClientFacingStream {
         return cadence;
     }
 
+    /**
+     * @return Corresponding time stamp in unix time for datapoint
+     */
     @JsonProperty("time")
     public Optional<List<Integer>> getTime() {
         return time;
@@ -157,7 +160,7 @@ public final class ClientFacingStream {
         return temperature;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingStream && equalTo((ClientFacingStream) other);
@@ -182,7 +185,7 @@ public final class ClientFacingStream {
                 && temperature.equals(other.temperature);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.cadence,
@@ -198,7 +201,7 @@ public final class ClientFacingStream {
                 this.temperature);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

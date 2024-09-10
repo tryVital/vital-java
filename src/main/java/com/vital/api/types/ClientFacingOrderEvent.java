@@ -49,7 +49,7 @@ public final class ClientFacingOrderEvent {
         return status;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingOrderEvent && equalTo((ClientFacingOrderEvent) other);
@@ -64,12 +64,12 @@ public final class ClientFacingOrderEvent {
         return id == other.id && createdAt.equals(other.createdAt) && status.equals(other.status);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.createdAt, this.status);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -109,7 +109,7 @@ public final class ClientFacingOrderEvent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingOrderEvent other) {
             id(other.getId());
             createdAt(other.getCreatedAt());
@@ -117,28 +117,28 @@ public final class ClientFacingOrderEvent {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public StatusStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(OrderStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingOrderEvent build() {
             return new ClientFacingOrderEvent(id, createdAt, status, additionalProperties);
         }

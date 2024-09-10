@@ -118,11 +118,17 @@ public final class ClientFacingAppointment {
         return location;
     }
 
+    /**
+     * @return Time is in UTC
+     */
     @JsonProperty("start_at")
     public Optional<String> getStartAt() {
         return startAt;
     }
 
+    /**
+     * @return Time is in UTC
+     */
     @JsonProperty("end_at")
     public Optional<String> getEndAt() {
         return endAt;
@@ -173,7 +179,7 @@ public final class ClientFacingAppointment {
         return events;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingAppointment && equalTo((ClientFacingAppointment) other);
@@ -203,7 +209,7 @@ public final class ClientFacingAppointment {
                 && events.equals(other.events);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -224,7 +230,7 @@ public final class ClientFacingAppointment {
                 this.events);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -356,7 +362,7 @@ public final class ClientFacingAppointment {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingAppointment other) {
             id(other.getId());
             userId(other.getUserId());
@@ -377,96 +383,96 @@ public final class ClientFacingAppointment {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public UserIdStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public OrderIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("order_id")
         public AddressStage orderId(String orderId) {
             this.orderId = orderId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("address")
         public LocationStage address(UsAddress address) {
             this.address = address;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("location")
         public TypeStage location(LngLat location) {
             this.location = location;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public ProviderStage type(String type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public StatusStage provider(AppointmentProvider provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public ProviderIdStage status(AppointmentStatus status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider_id")
         public CanRescheduleStage providerId(String providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("can_reschedule")
         public EventStatusStage canReschedule(boolean canReschedule) {
             this.canReschedule = canReschedule;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("event_status")
         public _FinalStage eventStatus(AppointmentEventStatus eventStatus) {
             this.eventStatus = eventStatus;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllEvents(List<ClientFacingAppointmentEvent> events) {
             this.events.addAll(events);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addEvents(ClientFacingAppointmentEvent events) {
             this.events.add(events);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "events", nulls = Nulls.SKIP)
         public _FinalStage events(List<ClientFacingAppointmentEvent> events) {
             this.events.clear();
@@ -474,59 +480,67 @@ public final class ClientFacingAppointment {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage eventData(Map<String, Object> eventData) {
             this.eventData = Optional.of(eventData);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "event_data", nulls = Nulls.SKIP)
         public _FinalStage eventData(Optional<Map<String, Object>> eventData) {
             this.eventData = eventData;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage ianaTimezone(String ianaTimezone) {
             this.ianaTimezone = Optional.of(ianaTimezone);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "iana_timezone", nulls = Nulls.SKIP)
         public _FinalStage ianaTimezone(Optional<String> ianaTimezone) {
             this.ianaTimezone = ianaTimezone;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Time is in UTC</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage endAt(String endAt) {
             this.endAt = Optional.of(endAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
         public _FinalStage endAt(Optional<String> endAt) {
             this.endAt = endAt;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Time is in UTC</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage startAt(String startAt) {
             this.startAt = Optional.of(startAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "start_at", nulls = Nulls.SKIP)
         public _FinalStage startAt(Optional<String> startAt) {
             this.startAt = startAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingAppointment build() {
             return new ClientFacingAppointment(
                     id,

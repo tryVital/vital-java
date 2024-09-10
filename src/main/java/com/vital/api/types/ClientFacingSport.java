@@ -54,7 +54,7 @@ public final class ClientFacingSport {
         return slug;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingSport && equalTo((ClientFacingSport) other);
@@ -69,12 +69,12 @@ public final class ClientFacingSport {
         return id == other.id && name.equals(other.name) && slug.equals(other.slug);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.slug);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class ClientFacingSport {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingSport other) {
             id(other.getId());
             name(other.getName());
@@ -122,7 +122,7 @@ public final class ClientFacingSport {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(int id) {
             this.id = id;
@@ -133,7 +133,7 @@ public final class ClientFacingSport {
          * <p>Sport's name</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
@@ -144,14 +144,14 @@ public final class ClientFacingSport {
          * <p>Slug for designated sport</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public _FinalStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingSport build() {
             return new ClientFacingSport(id, name, slug, additionalProperties);
         }

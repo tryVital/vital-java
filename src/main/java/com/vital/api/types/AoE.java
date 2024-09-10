@@ -35,7 +35,7 @@ public final class AoE {
         return questions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AoE && equalTo((AoE) other);
@@ -50,12 +50,12 @@ public final class AoE {
         return questions.equals(other.questions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.questions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

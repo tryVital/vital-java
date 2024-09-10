@@ -63,7 +63,7 @@ public final class VitalsHeartrateRequest {
         return endDate;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VitalsHeartrateRequest && equalTo((VitalsHeartrateRequest) other);
@@ -78,12 +78,12 @@ public final class VitalsHeartrateRequest {
         return provider.equals(other.provider) && startDate.equals(other.startDate) && endDate.equals(other.endDate);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.provider, this.startDate, this.endDate);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -123,7 +123,7 @@ public final class VitalsHeartrateRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(VitalsHeartrateRequest other) {
             provider(other.getProvider());
             startDate(other.getStartDate());
@@ -135,7 +135,7 @@ public final class VitalsHeartrateRequest {
          * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start_date")
         public _FinalStage startDate(String startDate) {
             this.startDate = startDate;
@@ -146,13 +146,13 @@ public final class VitalsHeartrateRequest {
          * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage endDate(String endDate) {
             this.endDate = Optional.of(endDate);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "end_date", nulls = Nulls.SKIP)
         public _FinalStage endDate(Optional<String> endDate) {
             this.endDate = endDate;
@@ -163,20 +163,20 @@ public final class VitalsHeartrateRequest {
          * <p>Provider oura/strava etc</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage provider(String provider) {
             this.provider = Optional.of(provider);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<String> provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public VitalsHeartrateRequest build() {
             return new VitalsHeartrateRequest(provider, startDate, endDate, additionalProperties);
         }

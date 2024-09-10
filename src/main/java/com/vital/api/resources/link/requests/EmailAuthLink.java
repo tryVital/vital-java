@@ -75,7 +75,7 @@ public final class EmailAuthLink {
         return region;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EmailAuthLink && equalTo((EmailAuthLink) other);
@@ -94,12 +94,12 @@ public final class EmailAuthLink {
                 && region.equals(other.region);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.vitalLinkToken, this.email, this.provider, this.authType, this.region);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -151,7 +151,7 @@ public final class EmailAuthLink {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(EmailAuthLink other) {
             vitalLinkToken(other.getVitalLinkToken());
             email(other.getEmail());
@@ -161,54 +161,54 @@ public final class EmailAuthLink {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public ProviderStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public AuthTypeStage provider(Providers provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("auth_type")
         public _FinalStage authType(AuthType authType) {
             this.authType = authType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage region(Region region) {
             this.region = Optional.of(region);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
         public _FinalStage region(Optional<Region> region) {
             this.region = region;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
             this.vitalLinkToken = Optional.of(vitalLinkToken);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
         public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
             this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public EmailAuthLink build() {
             return new EmailAuthLink(vitalLinkToken, email, provider, authType, region, additionalProperties);
         }

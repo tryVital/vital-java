@@ -41,7 +41,7 @@ public final class BeginLinkTokenRequest {
         return provider;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BeginLinkTokenRequest && equalTo((BeginLinkTokenRequest) other);
@@ -56,12 +56,12 @@ public final class BeginLinkTokenRequest {
         return linkToken.equals(other.linkToken) && provider.equals(other.provider);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.linkToken, this.provider);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class BeginLinkTokenRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BeginLinkTokenRequest other) {
             linkToken(other.getLinkToken());
             provider(other.getProvider());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("link_token")
         public ProviderStage linkToken(String linkToken) {
             this.linkToken = linkToken;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(Providers provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BeginLinkTokenRequest build() {
             return new BeginLinkTokenRequest(linkToken, provider, additionalProperties);
         }

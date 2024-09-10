@@ -40,7 +40,7 @@ public final class CompanyDetails {
         return address;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CompanyDetails && equalTo((CompanyDetails) other);
@@ -55,12 +55,12 @@ public final class CompanyDetails {
         return name.equals(other.name) && address.equals(other.address);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.address);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class CompanyDetails {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CompanyDetails other) {
             name(other.getName());
             address(other.getAddress());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public AddressStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("address")
         public _FinalStage address(Address address) {
             this.address = address;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CompanyDetails build() {
             return new CompanyDetails(name, address, additionalProperties);
         }

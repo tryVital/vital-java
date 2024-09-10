@@ -44,7 +44,7 @@ public final class PhlebotomyAreaInfo {
         return providers;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PhlebotomyAreaInfo && equalTo((PhlebotomyAreaInfo) other);
@@ -59,12 +59,12 @@ public final class PhlebotomyAreaInfo {
         return isServed == other.isServed && providers.equals(other.providers);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.isServed, this.providers);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,33 +100,33 @@ public final class PhlebotomyAreaInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PhlebotomyAreaInfo other) {
             isServed(other.getIsServed());
             providers(other.getProviders());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("is_served")
         public _FinalStage isServed(boolean isServed) {
             this.isServed = isServed;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllProviders(List<PhlebotomyProviderInfo> providers) {
             this.providers.addAll(providers);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addProviders(PhlebotomyProviderInfo providers) {
             this.providers.add(providers);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "providers", nulls = Nulls.SKIP)
         public _FinalStage providers(List<PhlebotomyProviderInfo> providers) {
             this.providers.clear();
@@ -134,7 +134,7 @@ public final class PhlebotomyAreaInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PhlebotomyAreaInfo build() {
             return new PhlebotomyAreaInfo(isServed, providers, additionalProperties);
         }

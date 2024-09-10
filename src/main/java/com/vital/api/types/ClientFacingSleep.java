@@ -176,6 +176,9 @@ public final class ClientFacingSleep {
         return bedtimeStop;
     }
 
+    /**
+     * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
+     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
@@ -229,56 +232,89 @@ public final class ClientFacingSleep {
         return deep;
     }
 
+    /**
+     * @return A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar
+     */
     @JsonProperty("score")
     public Optional<Integer> getScore() {
         return score;
     }
 
+    /**
+     * @return The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute
+     */
     @JsonProperty("hr_lowest")
     public Optional<Integer> getHrLowest() {
         return hrLowest;
     }
 
+    /**
+     * @return The average heart rate registered during the sleep period::beats per minute
+     */
     @JsonProperty("hr_average")
     public Optional<Integer> getHrAverage() {
         return hrAverage;
     }
 
+    /**
+     * @return Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc
+     */
     @JsonProperty("efficiency")
     public Optional<Double> getEfficiency() {
         return efficiency;
     }
 
+    /**
+     * @return Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds
+     */
     @JsonProperty("latency")
     public Optional<Integer> getLatency() {
         return latency;
     }
 
+    /**
+     * @return Skin temperature deviation from the long-term temperature average::celcius
+     */
     @JsonProperty("temperature_delta")
     public Optional<Double> getTemperatureDelta() {
         return temperatureDelta;
     }
 
+    /**
+     * @return The skin temperature::celcius
+     */
     @JsonProperty("skin_temperature")
     public Optional<Double> getSkinTemperature() {
         return skinTemperature;
     }
 
+    /**
+     * @return Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc
+     */
     @JsonProperty("hr_dip")
     public Optional<Double> getHrDip() {
         return hrDip;
     }
 
+    /**
+     * @return Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str
+     */
     @JsonProperty("state")
     public Optional<SleepSummaryState> getState() {
         return state;
     }
 
+    /**
+     * @return The average heart rate variability registered during the sleep period::rmssd
+     */
     @JsonProperty("average_hrv")
     public Optional<Double> getAverageHrv() {
         return averageHrv;
     }
 
+    /**
+     * @return Average respiratory rate::breaths per minute
+     */
     @JsonProperty("respiratory_rate")
     public Optional<Double> getRespiratoryRate() {
         return respiratoryRate;
@@ -297,7 +333,7 @@ public final class ClientFacingSleep {
         return sleepStream;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingSleep && equalTo((ClientFacingSleep) other);
@@ -337,7 +373,7 @@ public final class ClientFacingSleep {
                 && sleepStream.equals(other.sleepStream);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.userId,
@@ -368,7 +404,7 @@ public final class ClientFacingSleep {
                 this.sleepStream);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -560,7 +596,7 @@ public final class ClientFacingSleep {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingSleep other) {
             userId(other.getUserId());
             id(other.getId());
@@ -595,14 +631,14 @@ public final class ClientFacingSleep {
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public IdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public DateStage id(String id) {
             this.id = id;
@@ -613,7 +649,7 @@ public final class ClientFacingSleep {
          * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public CalendarDateStage date(String date) {
             this.date = date;
@@ -624,7 +660,7 @@ public final class ClientFacingSleep {
          * <p>Date of the sleep summary in the YYYY-mm-dd format. This generally matches the sleep end date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("calendar_date")
         public BedtimeStartStage calendarDate(String calendarDate) {
             this.calendarDate = calendarDate;
@@ -635,7 +671,7 @@ public final class ClientFacingSleep {
          * <p>UTC Time when the sleep period started</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("bedtime_start")
         public BedtimeStopStage bedtimeStart(String bedtimeStart) {
             this.bedtimeStart = bedtimeStart;
@@ -646,7 +682,7 @@ public final class ClientFacingSleep {
          * <p>UTC Time when the sleep period ended</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("bedtime_stop")
         public DurationStage bedtimeStop(String bedtimeStop) {
             this.bedtimeStop = bedtimeStop;
@@ -657,7 +693,7 @@ public final class ClientFacingSleep {
          * <p>Total duration of the sleep period (sleep.duration = sleep.bedtime_end - sleep.bedtime_start)::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("duration")
         public TotalStage duration(int duration) {
             this.duration = duration;
@@ -668,7 +704,7 @@ public final class ClientFacingSleep {
          * <p>Total amount of sleep registered during the sleep period (sleep.total = sleep.rem + sleep.light + sleep.deep)::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("total")
         public AwakeStage total(int total) {
             this.total = total;
@@ -679,7 +715,7 @@ public final class ClientFacingSleep {
          * <p>Total amount of awake time registered during the sleep period::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("awake")
         public LightStage awake(int awake) {
             this.awake = awake;
@@ -690,7 +726,7 @@ public final class ClientFacingSleep {
          * <p>Total amount of light sleep registered during the sleep period::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("light")
         public RemStage light(int light) {
             this.light = light;
@@ -701,7 +737,7 @@ public final class ClientFacingSleep {
          * <p>Total amount of REM sleep registered during the sleep period, minutes::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("rem")
         public DeepStage rem(int rem) {
             this.rem = rem;
@@ -712,7 +748,7 @@ public final class ClientFacingSleep {
          * <p>Total amount of deep (N3) sleep registered during the sleep period::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("deep")
         public SourceStage deep(int deep) {
             this.deep = deep;
@@ -723,183 +759,231 @@ public final class ClientFacingSleep {
          * <p>Source the data has come from.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sleepStream(ClientFacingSleepStream sleepStream) {
             this.sleepStream = Optional.of(sleepStream);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sleep_stream", nulls = Nulls.SKIP)
         public _FinalStage sleepStream(Optional<ClientFacingSleepStream> sleepStream) {
             this.sleepStream = sleepStream;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Average respiratory rate::breaths per minute</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage respiratoryRate(Double respiratoryRate) {
             this.respiratoryRate = Optional.of(respiratoryRate);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "respiratory_rate", nulls = Nulls.SKIP)
         public _FinalStage respiratoryRate(Optional<Double> respiratoryRate) {
             this.respiratoryRate = respiratoryRate;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The average heart rate variability registered during the sleep period::rmssd</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage averageHrv(Double averageHrv) {
             this.averageHrv = Optional.of(averageHrv);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "average_hrv", nulls = Nulls.SKIP)
         public _FinalStage averageHrv(Optional<Double> averageHrv) {
             this.averageHrv = averageHrv;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage state(SleepSummaryState state) {
             this.state = Optional.of(state);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "state", nulls = Nulls.SKIP)
         public _FinalStage state(Optional<SleepSummaryState> state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage hrDip(Double hrDip) {
             this.hrDip = Optional.of(hrDip);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "hr_dip", nulls = Nulls.SKIP)
         public _FinalStage hrDip(Optional<Double> hrDip) {
             this.hrDip = hrDip;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The skin temperature::celcius</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage skinTemperature(Double skinTemperature) {
             this.skinTemperature = Optional.of(skinTemperature);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "skin_temperature", nulls = Nulls.SKIP)
         public _FinalStage skinTemperature(Optional<Double> skinTemperature) {
             this.skinTemperature = skinTemperature;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Skin temperature deviation from the long-term temperature average::celcius</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage temperatureDelta(Double temperatureDelta) {
             this.temperatureDelta = Optional.of(temperatureDelta);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "temperature_delta", nulls = Nulls.SKIP)
         public _FinalStage temperatureDelta(Optional<Double> temperatureDelta) {
             this.temperatureDelta = temperatureDelta;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage latency(Integer latency) {
             this.latency = Optional.of(latency);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "latency", nulls = Nulls.SKIP)
         public _FinalStage latency(Optional<Integer> latency) {
             this.latency = latency;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage efficiency(Double efficiency) {
             this.efficiency = Optional.of(efficiency);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "efficiency", nulls = Nulls.SKIP)
         public _FinalStage efficiency(Optional<Double> efficiency) {
             this.efficiency = efficiency;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The average heart rate registered during the sleep period::beats per minute</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage hrAverage(Integer hrAverage) {
             this.hrAverage = Optional.of(hrAverage);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "hr_average", nulls = Nulls.SKIP)
         public _FinalStage hrAverage(Optional<Integer> hrAverage) {
             this.hrAverage = hrAverage;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage hrLowest(Integer hrLowest) {
             this.hrLowest = Optional.of(hrLowest);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "hr_lowest", nulls = Nulls.SKIP)
         public _FinalStage hrLowest(Optional<Integer> hrLowest) {
             this.hrLowest = hrLowest;
             return this;
         }
 
-        @Override
+        /**
+         * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage score(Integer score) {
             this.score = Optional.of(score);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "score", nulls = Nulls.SKIP)
         public _FinalStage score(Optional<Integer> score) {
             this.score = score;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingSleep build() {
             return new ClientFacingSleep(
                     userId,

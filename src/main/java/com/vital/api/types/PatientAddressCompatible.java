@@ -99,7 +99,7 @@ public final class PatientAddressCompatible {
         return phoneNumber;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PatientAddressCompatible && equalTo((PatientAddressCompatible) other);
@@ -121,7 +121,7 @@ public final class PatientAddressCompatible {
                 && phoneNumber.equals(other.phoneNumber);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.receiverName,
@@ -134,7 +134,7 @@ public final class PatientAddressCompatible {
                 this.phoneNumber);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -205,7 +205,7 @@ public final class PatientAddressCompatible {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PatientAddressCompatible other) {
             receiverName(other.getReceiverName());
             firstLine(other.getFirstLine());
@@ -218,81 +218,81 @@ public final class PatientAddressCompatible {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_line")
         public CityStage firstLine(String firstLine) {
             this.firstLine = firstLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("city")
         public StateStage city(String city) {
             this.city = city;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public ZipStage state(String state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("zip")
         public CountryStage zip(String zip) {
             this.zip = zip;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("country")
         public _FinalStage country(String country) {
             this.country = country;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = Optional.of(phoneNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
         public _FinalStage phoneNumber(Optional<String> phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
             this.secondLine = Optional.of(secondLine);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "second_line", nulls = Nulls.SKIP)
         public _FinalStage secondLine(Optional<String> secondLine) {
             this.secondLine = secondLine;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage receiverName(String receiverName) {
             this.receiverName = Optional.of(receiverName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "receiver_name", nulls = Nulls.SKIP)
         public _FinalStage receiverName(Optional<String> receiverName) {
             this.receiverName = receiverName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PatientAddressCompatible build() {
             return new PatientAddressCompatible(
                     receiverName, firstLine, secondLine, city, state, zip, country, phoneNumber, additionalProperties);

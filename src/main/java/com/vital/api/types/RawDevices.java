@@ -35,7 +35,7 @@ public final class RawDevices {
         return devices;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RawDevices && equalTo((RawDevices) other);
@@ -50,12 +50,12 @@ public final class RawDevices {
         return devices.equals(other.devices);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.devices);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

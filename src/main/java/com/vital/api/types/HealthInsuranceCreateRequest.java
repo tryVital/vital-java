@@ -92,42 +92,63 @@ public final class HealthInsuranceCreateRequest {
         return patientSignatureImage;
     }
 
+    /**
+     * @return Textual description of what are the patient symptoms and attempted treatments.
+     */
     @JsonProperty("subjective")
     public Optional<String> getSubjective() {
         return subjective;
     }
 
+    /**
+     * @return Textual description of what are the physician assessments and testing plans.
+     */
     @JsonProperty("assessment_plan")
     public Optional<String> getAssessmentPlan() {
         return assessmentPlan;
     }
 
+    /**
+     * @return Unique identifier representing a specific Health Insurance.
+     */
     @JsonProperty("payor_code")
     public Optional<String> getPayorCode() {
         return payorCode;
     }
 
+    /**
+     * @return Insurance unique number assigned to a patient, usually present on the insurance card.
+     */
     @JsonProperty("insurance_id")
     public Optional<String> getInsuranceId() {
         return insuranceId;
     }
 
+    /**
+     * @return Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship).
+     */
     @JsonProperty("responsible_relationship")
     public Optional<ResponsibleRelationship> getResponsibleRelationship() {
         return responsibleRelationship;
     }
 
+    /**
+     * @return Responsible details when the value of responsible_relationship is not 'Self'.
+     */
     @JsonProperty("responsible_details")
     public Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> getResponsibleDetails() {
         return responsibleDetails;
     }
 
+    /**
+     * @return Diagnosis codes for insurance billing.
+     */
     @JsonProperty("diagnosis_codes")
     public Optional<List<String>> getDiagnosisCodes() {
         return diagnosisCodes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof HealthInsuranceCreateRequest && equalTo((HealthInsuranceCreateRequest) other);
@@ -151,7 +172,7 @@ public final class HealthInsuranceCreateRequest {
                 && diagnosisCodes.equals(other.diagnosisCodes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.frontImage,
@@ -166,7 +187,7 @@ public final class HealthInsuranceCreateRequest {
                 this.diagnosisCodes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

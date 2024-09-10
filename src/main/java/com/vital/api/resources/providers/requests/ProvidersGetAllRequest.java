@@ -34,7 +34,7 @@ public final class ProvidersGetAllRequest {
         return sourceType;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProvidersGetAllRequest && equalTo((ProvidersGetAllRequest) other);
@@ -49,12 +49,12 @@ public final class ProvidersGetAllRequest {
         return sourceType.equals(other.sourceType);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sourceType);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

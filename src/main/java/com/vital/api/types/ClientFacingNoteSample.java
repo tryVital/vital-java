@@ -64,16 +64,25 @@ public final class ClientFacingNoteSample {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Deprecated
+     */
     @JsonProperty("id")
     public Optional<Integer> getId() {
         return id;
     }
 
+    /**
+     * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
+    /**
+     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+     */
     @JsonProperty("type")
     public Optional<String> getType() {
         return type;
@@ -119,12 +128,15 @@ public final class ClientFacingNoteSample {
         return value;
     }
 
+    /**
+     * @return What the note refers to.
+     */
     @JsonProperty("tags")
     public Optional<List<ClientFacingNoteSampleTagsItem>> getTags() {
         return tags;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingNoteSample && equalTo((ClientFacingNoteSample) other);
@@ -147,7 +159,7 @@ public final class ClientFacingNoteSample {
                 && tags.equals(other.tags);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -161,7 +173,7 @@ public final class ClientFacingNoteSample {
                 this.tags);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -238,7 +250,7 @@ public final class ClientFacingNoteSample {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingNoteSample other) {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
@@ -256,7 +268,7 @@ public final class ClientFacingNoteSample {
          * <p>User notes as text.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("unit")
         public TimestampStage unit(String unit) {
             this.unit = unit;
@@ -267,7 +279,7 @@ public final class ClientFacingNoteSample {
          * <p>Depracated. The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public StartStage timestamp(String timestamp) {
             this.timestamp = timestamp;
@@ -278,7 +290,7 @@ public final class ClientFacingNoteSample {
          * <p>The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("start")
         public EndStage start(String start) {
             this.start = start;
@@ -289,7 +301,7 @@ public final class ClientFacingNoteSample {
          * <p>The end time (exclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("end")
         public ValueStage end(String end) {
             this.end = end;
@@ -300,66 +312,82 @@ public final class ClientFacingNoteSample {
          * <p>The recorded value for the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(String value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        /**
+         * <p>What the note refers to.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage tags(List<ClientFacingNoteSampleTagsItem> tags) {
             this.tags = Optional.of(tags);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "tags", nulls = Nulls.SKIP)
         public _FinalStage tags(Optional<List<ClientFacingNoteSampleTagsItem>> tags) {
             this.tags = tags;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Deprecated</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage id(Integer id) {
             this.id = Optional.of(id);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingNoteSample build() {
             return new ClientFacingNoteSample(
                     id, timezoneOffset, type, unit, timestamp, start, end, value, tags, additionalProperties);

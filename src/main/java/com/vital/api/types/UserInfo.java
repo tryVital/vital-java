@@ -88,7 +88,7 @@ public final class UserInfo {
         return address;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserInfo && equalTo((UserInfo) other);
@@ -109,13 +109,13 @@ public final class UserInfo {
                 && address.equals(other.address);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.firstName, this.lastName, this.email, this.phoneNumber, this.gender, this.dob, this.address);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -187,7 +187,7 @@ public final class UserInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserInfo other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
@@ -199,56 +199,56 @@ public final class UserInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_name")
         public LastNameStage firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("last_name")
         public EmailStage lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public PhoneNumberStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("phone_number")
         public GenderStage phoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("gender")
         public DobStage gender(String gender) {
             this.gender = gender;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("dob")
         public AddressStage dob(String dob) {
             this.dob = dob;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("address")
         public _FinalStage address(Address address) {
             this.address = address;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserInfo build() {
             return new UserInfo(firstName, lastName, email, phoneNumber, gender, dob, address, additionalProperties);
         }

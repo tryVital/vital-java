@@ -81,7 +81,7 @@ public final class ConnectionStatus {
         return success;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ConnectionStatus && equalTo((ConnectionStatus) other);
@@ -101,12 +101,12 @@ public final class ConnectionStatus {
                 && success == other.success;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.state, this.redirectUrl, this.errorType, this.error, this.providerMfa, this.success);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -164,7 +164,7 @@ public final class ConnectionStatus {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ConnectionStatus other) {
             state(other.getState());
             redirectUrl(other.getRedirectUrl());
@@ -175,73 +175,73 @@ public final class ConnectionStatus {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public SuccessStage state(ConnectionStatusState state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public _FinalStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerMfa(ProviderMfaRequest providerMfa) {
             this.providerMfa = Optional.of(providerMfa);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_mfa", nulls = Nulls.SKIP)
         public _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa) {
             this.providerMfa = providerMfa;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage error(String error) {
             this.error = Optional.of(error);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "error", nulls = Nulls.SKIP)
         public _FinalStage error(Optional<String> error) {
             this.error = error;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage errorType(String errorType) {
             this.errorType = Optional.of(errorType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
         public _FinalStage errorType(Optional<String> errorType) {
             this.errorType = errorType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage redirectUrl(String redirectUrl) {
             this.redirectUrl = Optional.of(redirectUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
         public _FinalStage redirectUrl(Optional<String> redirectUrl) {
             this.redirectUrl = redirectUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ConnectionStatus build() {
             return new ConnectionStatus(
                     state, redirectUrl, errorType, error, providerMfa, success, additionalProperties);

@@ -32,7 +32,7 @@ public final class InsuranceSearchDiagnosisRequest {
         return diagnosisQuery;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InsuranceSearchDiagnosisRequest && equalTo((InsuranceSearchDiagnosisRequest) other);
@@ -47,12 +47,12 @@ public final class InsuranceSearchDiagnosisRequest {
         return diagnosisQuery.equals(other.diagnosisQuery);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.diagnosisQuery);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class InsuranceSearchDiagnosisRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(InsuranceSearchDiagnosisRequest other) {
             diagnosisQuery(other.getDiagnosisQuery());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("diagnosis_query")
         public _FinalStage diagnosisQuery(String diagnosisQuery) {
             this.diagnosisQuery = diagnosisQuery;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public InsuranceSearchDiagnosisRequest build() {
             return new InsuranceSearchDiagnosisRequest(diagnosisQuery, additionalProperties);
         }

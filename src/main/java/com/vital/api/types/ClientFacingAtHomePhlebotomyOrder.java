@@ -66,7 +66,7 @@ public final class ClientFacingAtHomePhlebotomyOrder {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingAtHomePhlebotomyOrder && equalTo((ClientFacingAtHomePhlebotomyOrder) other);
@@ -84,12 +84,12 @@ public final class ClientFacingAtHomePhlebotomyOrder {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.appointmentId, this.createdAt, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -135,7 +135,7 @@ public final class ClientFacingAtHomePhlebotomyOrder {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingAtHomePhlebotomyOrder other) {
             id(other.getId());
             appointmentId(other.getAppointmentId());
@@ -148,41 +148,41 @@ public final class ClientFacingAtHomePhlebotomyOrder {
          * <p>The Vital at-home phlebotomy Order ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage appointmentId(String appointmentId) {
             this.appointmentId = Optional.of(appointmentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "appointment_id", nulls = Nulls.SKIP)
         public _FinalStage appointmentId(Optional<String> appointmentId) {
             this.appointmentId = appointmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingAtHomePhlebotomyOrder build() {
             return new ClientFacingAtHomePhlebotomyOrder(id, appointmentId, createdAt, updatedAt, additionalProperties);
         }

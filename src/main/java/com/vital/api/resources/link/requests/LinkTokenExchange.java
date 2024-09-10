@@ -68,7 +68,7 @@ public final class LinkTokenExchange {
         return filterOnProviders;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LinkTokenExchange && equalTo((LinkTokenExchange) other);
@@ -86,12 +86,12 @@ public final class LinkTokenExchange {
                 && filterOnProviders.equals(other.filterOnProviders);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.provider, this.redirectUrl, this.filterOnProviders);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -137,7 +137,7 @@ public final class LinkTokenExchange {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LinkTokenExchange other) {
             userId(other.getUserId());
             provider(other.getProvider());
@@ -150,53 +150,53 @@ public final class LinkTokenExchange {
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage filterOnProviders(List<Providers> filterOnProviders) {
             this.filterOnProviders = Optional.of(filterOnProviders);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filter_on_providers", nulls = Nulls.SKIP)
         public _FinalStage filterOnProviders(Optional<List<Providers>> filterOnProviders) {
             this.filterOnProviders = filterOnProviders;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage redirectUrl(String redirectUrl) {
             this.redirectUrl = Optional.of(redirectUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
         public _FinalStage redirectUrl(Optional<String> redirectUrl) {
             this.redirectUrl = redirectUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage provider(Providers provider) {
             this.provider = Optional.of(provider);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<Providers> provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LinkTokenExchange build() {
             return new LinkTokenExchange(userId, provider, redirectUrl, filterOnProviders, additionalProperties);
         }

@@ -46,7 +46,7 @@ public final class GroupedRespiratoryRate {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GroupedRespiratoryRate && equalTo((GroupedRespiratoryRate) other);
@@ -61,12 +61,12 @@ public final class GroupedRespiratoryRate {
         return source.equals(other.source) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.source, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,33 +102,33 @@ public final class GroupedRespiratoryRate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GroupedRespiratoryRate other) {
             source(other.getSource());
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllData(List<ClientFacingRespiratoryRateTimeseries> data) {
             this.data.addAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addData(ClientFacingRespiratoryRateTimeseries data) {
             this.data.add(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingRespiratoryRateTimeseries> data) {
             this.data.clear();
@@ -136,7 +136,7 @@ public final class GroupedRespiratoryRate {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GroupedRespiratoryRate build() {
             return new GroupedRespiratoryRate(source, data, additionalProperties);
         }

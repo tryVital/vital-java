@@ -46,7 +46,7 @@ public final class GroupedBloodOxygen {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GroupedBloodOxygen && equalTo((GroupedBloodOxygen) other);
@@ -61,12 +61,12 @@ public final class GroupedBloodOxygen {
         return source.equals(other.source) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.source, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -102,33 +102,33 @@ public final class GroupedBloodOxygen {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GroupedBloodOxygen other) {
             source(other.getSource());
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllData(List<ClientFacingBloodOxygenTimeseries> data) {
             this.data.addAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addData(ClientFacingBloodOxygenTimeseries data) {
             this.data.add(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingBloodOxygenTimeseries> data) {
             this.data.clear();
@@ -136,7 +136,7 @@ public final class GroupedBloodOxygen {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GroupedBloodOxygen build() {
             return new GroupedBloodOxygen(source, data, additionalProperties);
         }

@@ -74,7 +74,7 @@ public final class GetMarkersResponse {
         return pages;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetMarkersResponse && equalTo((GetMarkersResponse) other);
@@ -93,12 +93,12 @@ public final class GetMarkersResponse {
                 && pages.equals(other.pages);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.markers, this.total, this.page, this.size, this.pages);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -100,7 +100,7 @@ public final class ActivityV2InDb {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ActivityV2InDb && equalTo((ActivityV2InDb) other);
@@ -122,7 +122,7 @@ public final class ActivityV2InDb {
                 && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.timestamp,
@@ -135,7 +135,7 @@ public final class ActivityV2InDb {
                 this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -215,7 +215,7 @@ public final class ActivityV2InDb {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ActivityV2InDb other) {
             timestamp(other.getTimestamp());
             data(other.getData());
@@ -228,68 +228,68 @@ public final class ActivityV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public ProviderIdStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider_id")
         public UserIdStage providerId(String providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SourceIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source_id")
         public PriorityIdStage sourceId(int sourceId) {
             this.sourceId = sourceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("priority_id")
         public IdStage priorityId(int priorityId) {
             this.priorityId = priorityId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SourceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingProvider source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(String key, Object value) {
             this.data.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllData(Map<String, Object> data) {
             this.data.putAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Map<String, Object> data) {
             this.data.clear();
@@ -297,7 +297,7 @@ public final class ActivityV2InDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ActivityV2InDb build() {
             return new ActivityV2InDb(
                     timestamp, data, providerId, userId, sourceId, priorityId, id, source, additionalProperties);

@@ -55,16 +55,25 @@ public final class ClientFacingBloodPressureTimeseries {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Deprecated
+     */
     @JsonProperty("id")
     public Optional<Integer> getId() {
         return id;
     }
 
+    /**
+     * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
+    /**
+     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+     */
     @JsonProperty("type")
     public Optional<String> getType() {
         return type;
@@ -93,7 +102,7 @@ public final class ClientFacingBloodPressureTimeseries {
         return diastolic;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingBloodPressureTimeseries
@@ -115,13 +124,13 @@ public final class ClientFacingBloodPressureTimeseries {
                 && diastolic == other.diastolic;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id, this.timezoneOffset, this.type, this.unit, this.timestamp, this.systolic, this.diastolic);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -185,7 +194,7 @@ public final class ClientFacingBloodPressureTimeseries {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingBloodPressureTimeseries other) {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
@@ -201,74 +210,86 @@ public final class ClientFacingBloodPressureTimeseries {
          * <p>The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("unit")
         public TimestampStage unit(String unit) {
             this.unit = unit;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public SystolicStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("systolic")
         public DiastolicStage systolic(double systolic) {
             this.systolic = systolic;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("diastolic")
         public _FinalStage diastolic(double diastolic) {
             this.diastolic = diastolic;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Deprecated</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage id(Integer id) {
             this.id = Optional.of(id);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingBloodPressureTimeseries build() {
             return new ClientFacingBloodPressureTimeseries(
                     id, timezoneOffset, type, unit, timestamp, systolic, diastolic, additionalProperties);

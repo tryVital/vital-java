@@ -64,7 +64,7 @@ public final class ClientFacingSleepStream {
         return respiratoryRate;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingSleepStream && equalTo((ClientFacingSleepStream) other);
@@ -82,12 +82,12 @@ public final class ClientFacingSleepStream {
                 && respiratoryRate.equals(other.respiratoryRate);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.hrv, this.heartrate, this.hypnogram, this.respiratoryRate);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

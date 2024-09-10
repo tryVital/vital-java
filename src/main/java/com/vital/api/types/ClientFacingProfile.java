@@ -66,7 +66,7 @@ public final class ClientFacingProfile {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingProfile && equalTo((ClientFacingProfile) other);
@@ -84,12 +84,12 @@ public final class ClientFacingProfile {
                 && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.id, this.height, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -135,7 +135,7 @@ public final class ClientFacingProfile {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingProfile other) {
             userId(other.getUserId());
             id(other.getId());
@@ -148,41 +148,41 @@ public final class ClientFacingProfile {
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public IdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SourceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage height(Integer height) {
             this.height = Optional.of(height);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "height", nulls = Nulls.SKIP)
         public _FinalStage height(Optional<Integer> height) {
             this.height = height;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingProfile build() {
             return new ClientFacingProfile(userId, id, height, source, additionalProperties);
         }

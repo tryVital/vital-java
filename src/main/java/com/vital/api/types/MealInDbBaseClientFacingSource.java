@@ -162,7 +162,7 @@ public final class MealInDbBaseClientFacingSource {
         return sourceAppId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MealInDbBaseClientFacingSource && equalTo((MealInDbBaseClientFacingSource) other);
@@ -191,7 +191,7 @@ public final class MealInDbBaseClientFacingSource {
                 && sourceAppId.equals(other.sourceAppId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -211,7 +211,7 @@ public final class MealInDbBaseClientFacingSource {
                 this.sourceAppId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -334,7 +334,7 @@ public final class MealInDbBaseClientFacingSource {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MealInDbBaseClientFacingSource other) {
             id(other.getId());
             userId(other.getUserId());
@@ -354,142 +354,142 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public UserIdStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public PriorityIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("priority_id")
         public SourceIdStage priorityId(int priorityId) {
             this.priorityId = priorityId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source_id")
         public ProviderIdStage sourceId(int sourceId) {
             this.sourceId = sourceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider_id")
         public TimestampStage providerId(String providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("timestamp")
         public NameStage timestamp(String timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SourceStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public CreatedAtStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created_at")
         public UpdatedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
             this.sourceAppId = Optional.of(sourceAppId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "source_app_id", nulls = Nulls.SKIP)
         public _FinalStage sourceAppId(Optional<String> sourceAppId) {
             this.sourceAppId = sourceAppId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage data(Map<String, ClientFacingFood> data) {
             this.data = Optional.of(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(Optional<Map<String, ClientFacingFood>> data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage micros(Micros micros) {
             this.micros = Optional.of(micros);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "micros", nulls = Nulls.SKIP)
         public _FinalStage micros(Optional<Micros> micros) {
             this.micros = micros;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage macros(Macros macros) {
             this.macros = Optional.of(macros);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "macros", nulls = Nulls.SKIP)
         public _FinalStage macros(Optional<Macros> macros) {
             this.macros = macros;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage energy(Energy energy) {
             this.energy = Optional.of(energy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "energy", nulls = Nulls.SKIP)
         public _FinalStage energy(Optional<Energy> energy) {
             this.energy = energy;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MealInDbBaseClientFacingSource build() {
             return new MealInDbBaseClientFacingSource(
                     id,

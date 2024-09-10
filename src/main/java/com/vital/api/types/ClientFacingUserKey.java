@@ -46,7 +46,7 @@ public final class ClientFacingUserKey {
         return clientUserId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingUserKey && equalTo((ClientFacingUserKey) other);
@@ -61,12 +61,12 @@ public final class ClientFacingUserKey {
         return userId.equals(other.userId) && clientUserId.equals(other.clientUserId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.clientUserId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,7 +100,7 @@ public final class ClientFacingUserKey {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingUserKey other) {
             userId(other.getUserId());
             clientUserId(other.getClientUserId());
@@ -111,7 +111,7 @@ public final class ClientFacingUserKey {
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public ClientUserIdStage userId(String userId) {
             this.userId = userId;
@@ -122,14 +122,14 @@ public final class ClientFacingUserKey {
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("client_user_id")
         public _FinalStage clientUserId(String clientUserId) {
             this.clientUserId = clientUserId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingUserKey build() {
             return new ClientFacingUserKey(userId, clientUserId, additionalProperties);
         }

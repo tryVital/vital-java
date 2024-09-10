@@ -126,7 +126,7 @@ public final class Source {
         return id;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Source && equalTo((Source) other);
@@ -151,7 +151,7 @@ public final class Source {
                 && id == other.id;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -167,7 +167,7 @@ public final class Source {
                 this.id);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -256,7 +256,7 @@ public final class Source {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Source other) {
             name(other.getName());
             slug(other.getSlug());
@@ -272,120 +272,120 @@ public final class Source {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public DescriptionStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("description")
         public LogoStage description(String description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("logo")
         public IdStage logo(String logo) {
             this.logo = logo;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage backfillNumDays(Integer backfillNumDays) {
             this.backfillNumDays = Optional.of(backfillNumDays);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "backfill_num_days", nulls = Nulls.SKIP)
         public _FinalStage backfillNumDays(Optional<Integer> backfillNumDays) {
             this.backfillNumDays = backfillNumDays;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage isActive(Boolean isActive) {
             this.isActive = Optional.of(isActive);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "is_active", nulls = Nulls.SKIP)
         public _FinalStage isActive(Optional<Boolean> isActive) {
             this.isActive = isActive;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sourceType(SourceType sourceType) {
             this.sourceType = Optional.of(sourceType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "source_type", nulls = Nulls.SKIP)
         public _FinalStage sourceType(Optional<SourceType> sourceType) {
             this.sourceType = sourceType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.of(authType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
             this.authType = authType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage oauthUrl(String oauthUrl) {
             this.oauthUrl = Optional.of(oauthUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "oauth_url", nulls = Nulls.SKIP)
         public _FinalStage oauthUrl(Optional<String> oauthUrl) {
             this.oauthUrl = oauthUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage group(String group) {
             this.group = Optional.of(group);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "group", nulls = Nulls.SKIP)
         public _FinalStage group(Optional<String> group) {
             this.group = group;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Source build() {
             return new Source(
                     name,

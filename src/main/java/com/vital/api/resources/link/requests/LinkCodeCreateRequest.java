@@ -44,7 +44,7 @@ public final class LinkCodeCreateRequest {
         return expiresAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LinkCodeCreateRequest && equalTo((LinkCodeCreateRequest) other);
@@ -59,12 +59,12 @@ public final class LinkCodeCreateRequest {
         return userId.equals(other.userId) && expiresAt.equals(other.expiresAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.expiresAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -98,34 +98,34 @@ public final class LinkCodeCreateRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LinkCodeCreateRequest other) {
             userId(other.getUserId());
             expiresAt(other.getExpiresAt());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage expiresAt(OffsetDateTime expiresAt) {
             this.expiresAt = Optional.of(expiresAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expires_at", nulls = Nulls.SKIP)
         public _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt) {
             this.expiresAt = expiresAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LinkCodeCreateRequest build() {
             return new LinkCodeCreateRequest(userId, expiresAt, additionalProperties);
         }

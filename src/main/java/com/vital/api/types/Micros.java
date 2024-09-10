@@ -39,22 +39,31 @@ public final class Micros {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Amount of each mineral in grams (g)
+     */
     @JsonProperty("minerals")
     public Optional<Map<String, Optional<Double>>> getMinerals() {
         return minerals;
     }
 
+    /**
+     * @return Amount of each trace element in grams (g)
+     */
     @JsonProperty("trace_elements")
     public Optional<Map<String, Optional<Double>>> getTraceElements() {
         return traceElements;
     }
 
+    /**
+     * @return Amount of each vitamin in grams (g)
+     */
     @JsonProperty("vitamins")
     public Optional<Map<String, Optional<Double>>> getVitamins() {
         return vitamins;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Micros && equalTo((Micros) other);
@@ -71,12 +80,12 @@ public final class Micros {
                 && vitamins.equals(other.vitamins);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.minerals, this.traceElements, this.vitamins);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

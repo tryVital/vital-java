@@ -150,6 +150,9 @@ public final class CreateOrderRequestCompatible {
         return consents;
     }
 
+    /**
+     * @return Schedule an Order to be processed in a future date.
+     */
     @JsonProperty("activate_by")
     public Optional<String> getActivateBy() {
         return activateBy;
@@ -175,7 +178,7 @@ public final class CreateOrderRequestCompatible {
         return patientAddress;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateOrderRequestCompatible && equalTo((CreateOrderRequestCompatible) other);
@@ -204,7 +207,7 @@ public final class CreateOrderRequestCompatible {
                 && patientAddress.equals(other.patientAddress);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.userId,
@@ -224,7 +227,7 @@ public final class CreateOrderRequestCompatible {
                 this.patientAddress);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -336,7 +339,7 @@ public final class CreateOrderRequestCompatible {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateOrderRequestCompatible other) {
             userId(other.getUserId());
             labTestId(other.getLabTestId());
@@ -356,99 +359,103 @@ public final class CreateOrderRequestCompatible {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public PatientDetailsStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("patient_details")
         public PatientAddressStage patientDetails(PatientDetails patientDetails) {
             this.patientDetails = patientDetails;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
             this.passthrough = Optional.of(passthrough);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "passthrough", nulls = Nulls.SKIP)
         public _FinalStage passthrough(Optional<String> passthrough) {
             this.passthrough = passthrough;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers) {
             this.aoeAnswers = Optional.of(aoeAnswers);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "aoe_answers", nulls = Nulls.SKIP)
         public _FinalStage aoeAnswers(Optional<List<AoEAnswer>> aoeAnswers) {
             this.aoeAnswers = aoeAnswers;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage activateBy(String activateBy) {
             this.activateBy = Optional.of(activateBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "activate_by", nulls = Nulls.SKIP)
         public _FinalStage activateBy(Optional<String> activateBy) {
             this.activateBy = activateBy;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage consents(List<Consent> consents) {
             this.consents = Optional.of(consents);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "consents", nulls = Nulls.SKIP)
         public _FinalStage consents(Optional<List<Consent>> consents) {
             this.consents = consents;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage icdCodes(List<String> icdCodes) {
             this.icdCodes = Optional.of(icdCodes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icd_codes", nulls = Nulls.SKIP)
         public _FinalStage icdCodes(Optional<List<String>> icdCodes) {
             this.icdCodes = icdCodes;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage billingType(Billing billingType) {
             this.billingType = Optional.of(billingType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "billing_type", nulls = Nulls.SKIP)
         public _FinalStage billingType(Optional<Billing> billingType) {
             this.billingType = billingType;
@@ -459,85 +466,85 @@ public final class CreateOrderRequestCompatible {
          * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage priority(Boolean priority) {
             this.priority = Optional.of(priority);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "priority", nulls = Nulls.SKIP)
         public _FinalStage priority(Optional<Boolean> priority) {
             this.priority = priority;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
             this.healthInsurance = Optional.of(healthInsurance);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "health_insurance", nulls = Nulls.SKIP)
         public _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance) {
             this.healthInsurance = healthInsurance;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequest physician) {
             this.physician = Optional.of(physician);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "physician", nulls = Nulls.SKIP)
         public _FinalStage physician(Optional<PhysicianCreateRequest> physician) {
             this.physician = physician;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage collectionMethod(LabTestCollectionMethod collectionMethod) {
             this.collectionMethod = Optional.of(collectionMethod);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "collection_method", nulls = Nulls.SKIP)
         public _FinalStage collectionMethod(Optional<LabTestCollectionMethod> collectionMethod) {
             this.collectionMethod = collectionMethod;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage orderSet(OrderSetRequest orderSet) {
             this.orderSet = Optional.of(orderSet);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "order_set", nulls = Nulls.SKIP)
         public _FinalStage orderSet(Optional<OrderSetRequest> orderSet) {
             this.orderSet = orderSet;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage labTestId(String labTestId) {
             this.labTestId = Optional.of(labTestId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lab_test_id", nulls = Nulls.SKIP)
         public _FinalStage labTestId(Optional<String> labTestId) {
             this.labTestId = labTestId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateOrderRequestCompatible build() {
             return new CreateOrderRequestCompatible(
                     userId,

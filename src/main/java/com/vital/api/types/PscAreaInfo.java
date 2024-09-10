@@ -55,7 +55,7 @@ public final class PscAreaInfo {
         return labId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PscAreaInfo && equalTo((PscAreaInfo) other);
@@ -72,12 +72,12 @@ public final class PscAreaInfo {
                 && labId == other.labId;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.patientServiceCenters, this.supportedBillTypes, this.labId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -119,7 +119,7 @@ public final class PscAreaInfo {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PscAreaInfo other) {
             patientServiceCenters(other.getPatientServiceCenters());
             supportedBillTypes(other.getSupportedBillTypes());
@@ -127,33 +127,33 @@ public final class PscAreaInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("patient_service_centers")
         public LabIdStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters) {
             this.patientServiceCenters = patientServiceCenters;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_id")
         public _FinalStage labId(int labId) {
             this.labId = labId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes) {
             this.supportedBillTypes.addAll(supportedBillTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSupportedBillTypes(Billing supportedBillTypes) {
             this.supportedBillTypes.add(supportedBillTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "supported_bill_types", nulls = Nulls.SKIP)
         public _FinalStage supportedBillTypes(List<Billing> supportedBillTypes) {
             this.supportedBillTypes.clear();
@@ -161,7 +161,7 @@ public final class PscAreaInfo {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PscAreaInfo build() {
             return new PscAreaInfo(patientServiceCenters, supportedBillTypes, labId, additionalProperties);
         }

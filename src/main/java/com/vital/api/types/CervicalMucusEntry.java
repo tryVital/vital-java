@@ -41,7 +41,7 @@ public final class CervicalMucusEntry {
         return quality;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CervicalMucusEntry && equalTo((CervicalMucusEntry) other);
@@ -56,12 +56,12 @@ public final class CervicalMucusEntry {
         return date.equals(other.date) && quality.equals(other.quality);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date, this.quality);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class CervicalMucusEntry {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CervicalMucusEntry other) {
             date(other.getDate());
             quality(other.getQuality());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public QualityStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("quality")
         public _FinalStage quality(CervicalMucusEntryQuality quality) {
             this.quality = quality;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CervicalMucusEntry build() {
             return new CervicalMucusEntry(date, quality, additionalProperties);
         }

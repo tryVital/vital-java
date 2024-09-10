@@ -190,7 +190,7 @@ public final class ClientFacingTeam {
         return delegatedFlow;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingTeam && equalTo((ClientFacingTeam) other);
@@ -222,7 +222,7 @@ public final class ClientFacingTeam {
                 && delegatedFlow.equals(other.delegatedFlow);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -245,7 +245,7 @@ public final class ClientFacingTeam {
                 this.delegatedFlow);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -386,7 +386,7 @@ public final class ClientFacingTeam {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingTeam other) {
             id(other.getId());
             orgId(other.getOrgId());
@@ -409,35 +409,35 @@ public final class ClientFacingTeam {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public OrgIdStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("org_id")
         public NameStage orgId(String orgId) {
             this.orgId = orgId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public TestkitsTextsEnabledStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("testkits_texts_enabled")
         public LabTestsPatientCommunicationEnabledStage testkitsTextsEnabled(boolean testkitsTextsEnabled) {
             this.testkitsTextsEnabled = testkitsTextsEnabled;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_tests_patient_communication_enabled")
         public LabTestsPatientSmsCommunicationEnabledStage labTestsPatientCommunicationEnabled(
                 boolean labTestsPatientCommunicationEnabled) {
@@ -445,7 +445,7 @@ public final class ClientFacingTeam {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_tests_patient_sms_communication_enabled")
         public LabTestsPatientEmailCommunicationEnabledStage labTestsPatientSmsCommunicationEnabled(
                 boolean labTestsPatientSmsCommunicationEnabled) {
@@ -453,7 +453,7 @@ public final class ClientFacingTeam {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_tests_patient_email_communication_enabled")
         public DelegatedFlowStage labTestsPatientEmailCommunicationEnabled(
                 boolean labTestsPatientEmailCommunicationEnabled) {
@@ -461,144 +461,144 @@ public final class ClientFacingTeam {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("delegated_flow")
         public _FinalStage delegatedFlow(DelegatedFlowType delegatedFlow) {
             this.delegatedFlow = delegatedFlow;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage logoUrl(String logoUrl) {
             this.logoUrl = Optional.of(logoUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "logo_url", nulls = Nulls.SKIP)
         public _FinalStage logoUrl(Optional<String> logoUrl) {
             this.logoUrl = logoUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage configuration(TeamConfig configuration) {
             this.configuration = Optional.of(configuration);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "configuration", nulls = Nulls.SKIP)
         public _FinalStage configuration(Optional<TeamConfig> configuration) {
             this.configuration = configuration;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage apiKeys(List<ClientFacingApiKey> apiKeys) {
             this.apiKeys = Optional.of(apiKeys);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "api_keys", nulls = Nulls.SKIP)
         public _FinalStage apiKeys(Optional<List<ClientFacingApiKey>> apiKeys) {
             this.apiKeys = apiKeys;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage apiKey(String apiKey) {
             this.apiKey = Optional.of(apiKey);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "api_key", nulls = Nulls.SKIP)
         public _FinalStage apiKey(Optional<String> apiKey) {
             this.apiKey = apiKey;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage webhookSecret(String webhookSecret) {
             this.webhookSecret = Optional.of(webhookSecret);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "webhook_secret", nulls = Nulls.SKIP)
         public _FinalStage webhookSecret(Optional<String> webhookSecret) {
             this.webhookSecret = webhookSecret;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage airtableBaseId(String airtableBaseId) {
             this.airtableBaseId = Optional.of(airtableBaseId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "airtable_base_id", nulls = Nulls.SKIP)
         public _FinalStage airtableBaseId(Optional<String> airtableBaseId) {
             this.airtableBaseId = airtableBaseId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage airtableApiKey(String airtableApiKey) {
             this.airtableApiKey = Optional.of(airtableApiKey);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "airtable_api_key", nulls = Nulls.SKIP)
         public _FinalStage airtableApiKey(Optional<String> airtableApiKey) {
             this.airtableApiKey = airtableApiKey;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage clientSecret(String clientSecret) {
             this.clientSecret = Optional.of(clientSecret);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "client_secret", nulls = Nulls.SKIP)
         public _FinalStage clientSecret(Optional<String> clientSecret) {
             this.clientSecret = clientSecret;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage clientId(String clientId) {
             this.clientId = Optional.of(clientId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "client_id", nulls = Nulls.SKIP)
         public _FinalStage clientId(Optional<String> clientId) {
             this.clientId = clientId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage svixAppId(String svixAppId) {
             this.svixAppId = Optional.of(svixAppId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "svix_app_id", nulls = Nulls.SKIP)
         public _FinalStage svixAppId(Optional<String> svixAppId) {
             this.svixAppId = svixAppId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingTeam build() {
             return new ClientFacingTeam(
                     id,

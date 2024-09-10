@@ -40,7 +40,7 @@ public final class LngLat {
         return lat;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LngLat && equalTo((LngLat) other);
@@ -55,12 +55,12 @@ public final class LngLat {
         return lng == other.lng && lat == other.lat;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.lng, this.lat);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class LngLat {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LngLat other) {
             lng(other.getLng());
             lat(other.getLat());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lng")
         public LatStage lng(double lng) {
             this.lng = lng;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lat")
         public _FinalStage lat(double lat) {
             this.lat = lat;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LngLat build() {
             return new LngLat(lng, lat, additionalProperties);
         }

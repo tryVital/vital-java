@@ -124,41 +124,65 @@ public final class ClientFacingActivity {
         return calendarDate;
     }
 
+    /**
+     * @return Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories
+     */
     @JsonProperty("calories_total")
     public Optional<Double> getCaloriesTotal() {
         return caloriesTotal;
     }
 
+    /**
+     * @return Energy consumption caused by the physical activity of the day in kilocalories::kilocalories
+     */
     @JsonProperty("calories_active")
     public Optional<Double> getCaloriesActive() {
         return caloriesActive;
     }
 
+    /**
+     * @return Total number of steps registered during the day::steps
+     */
     @JsonProperty("steps")
     public Optional<Integer> getSteps() {
         return steps;
     }
 
+    /**
+     * @return Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
+     */
     @JsonProperty("daily_movement")
     public Optional<Double> getDailyMovement() {
         return dailyMovement;
     }
 
+    /**
+     * @return Distance traveled during activities throughout the day::meters
+     */
     @JsonProperty("distance")
     public Optional<Double> getDistance() {
         return distance;
     }
 
+    /**
+     * @return Number of minutes during the day with low intensity activity (e.g. household work)::minutes
+     */
     @JsonProperty("low")
     public Optional<Double> getLow() {
         return low;
     }
 
+    /**
+     * @return Number of minutes during the day with medium intensity activity (e.g. walking)::minutes
+     */
     @JsonProperty("medium")
     public Optional<Double> getMedium() {
         return medium;
     }
 
+    /**
+     * @return Number of minutes during the day with high intensity activity (e.g. running)::minutes
+     */
     @JsonProperty("high")
     public Optional<Double> getHigh() {
         return high;
@@ -172,27 +196,39 @@ public final class ClientFacingActivity {
         return source;
     }
 
+    /**
+     * @return Number of floors climbed by the user::count
+     */
     @JsonProperty("floors_climbed")
     public Optional<Integer> getFloorsClimbed() {
         return floorsClimbed;
     }
 
+    /**
+     * @return [DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.
+     */
     @JsonProperty("time_zone")
     public Optional<String> getTimeZone() {
         return timeZone;
     }
 
+    /**
+     * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
+     */
     @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
         return timezoneOffset;
     }
 
+    /**
+     * @return Heart rate daily summary.
+     */
     @JsonProperty("heart_rate")
     public Optional<ClientFacingHeartRate> getHeartRate() {
         return heartRate;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingActivity && equalTo((ClientFacingActivity) other);
@@ -223,7 +259,7 @@ public final class ClientFacingActivity {
                 && heartRate.equals(other.heartRate);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.userId,
@@ -245,7 +281,7 @@ public final class ClientFacingActivity {
                 this.heartRate);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -370,7 +406,7 @@ public final class ClientFacingActivity {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingActivity other) {
             userId(other.getUserId());
             id(other.getId());
@@ -396,14 +432,14 @@ public final class ClientFacingActivity {
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public IdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public DateStage id(String id) {
             this.id = id;
@@ -414,7 +450,7 @@ public final class ClientFacingActivity {
          * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public CalendarDateStage date(String date) {
             this.date = date;
@@ -425,7 +461,7 @@ public final class ClientFacingActivity {
          * <p>Date of the summary in the YYYY-mm-dd format.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("calendar_date")
         public SourceStage calendarDate(String calendarDate) {
             this.calendarDate = calendarDate;
@@ -436,170 +472,218 @@ public final class ClientFacingActivity {
          * <p>Source the data has come from.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Heart rate daily summary.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage heartRate(ClientFacingHeartRate heartRate) {
             this.heartRate = Optional.of(heartRate);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "heart_rate", nulls = Nulls.SKIP)
         public _FinalStage heartRate(Optional<ClientFacingHeartRate> heartRate) {
             this.heartRate = heartRate;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.of(timezoneOffset);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
             return this;
         }
 
-        @Override
+        /**
+         * <p>[DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timeZone(String timeZone) {
             this.timeZone = Optional.of(timeZone);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "time_zone", nulls = Nulls.SKIP)
         public _FinalStage timeZone(Optional<String> timeZone) {
             this.timeZone = timeZone;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Number of floors climbed by the user::count</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage floorsClimbed(Integer floorsClimbed) {
             this.floorsClimbed = Optional.of(floorsClimbed);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "floors_climbed", nulls = Nulls.SKIP)
         public _FinalStage floorsClimbed(Optional<Integer> floorsClimbed) {
             this.floorsClimbed = floorsClimbed;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Number of minutes during the day with high intensity activity (e.g. running)::minutes</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage high(Double high) {
             this.high = Optional.of(high);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "high", nulls = Nulls.SKIP)
         public _FinalStage high(Optional<Double> high) {
             this.high = high;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Number of minutes during the day with medium intensity activity (e.g. walking)::minutes</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage medium(Double medium) {
             this.medium = Optional.of(medium);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "medium", nulls = Nulls.SKIP)
         public _FinalStage medium(Optional<Double> medium) {
             this.medium = medium;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Number of minutes during the day with low intensity activity (e.g. household work)::minutes</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage low(Double low) {
             this.low = Optional.of(low);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "low", nulls = Nulls.SKIP)
         public _FinalStage low(Optional<Double> low) {
             this.low = low;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Distance traveled during activities throughout the day::meters</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage distance(Double distance) {
             this.distance = Optional.of(distance);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "distance", nulls = Nulls.SKIP)
         public _FinalStage distance(Optional<Double> distance) {
             this.distance = distance;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage dailyMovement(Double dailyMovement) {
             this.dailyMovement = Optional.of(dailyMovement);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "daily_movement", nulls = Nulls.SKIP)
         public _FinalStage dailyMovement(Optional<Double> dailyMovement) {
             this.dailyMovement = dailyMovement;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Total number of steps registered during the day::steps</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage steps(Integer steps) {
             this.steps = Optional.of(steps);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "steps", nulls = Nulls.SKIP)
         public _FinalStage steps(Optional<Integer> steps) {
             this.steps = steps;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Energy consumption caused by the physical activity of the day in kilocalories::kilocalories</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage caloriesActive(Double caloriesActive) {
             this.caloriesActive = Optional.of(caloriesActive);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "calories_active", nulls = Nulls.SKIP)
         public _FinalStage caloriesActive(Optional<Double> caloriesActive) {
             this.caloriesActive = caloriesActive;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage caloriesTotal(Double caloriesTotal) {
             this.caloriesTotal = Optional.of(caloriesTotal);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "calories_total", nulls = Nulls.SKIP)
         public _FinalStage caloriesTotal(Optional<Double> caloriesTotal) {
             this.caloriesTotal = caloriesTotal;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingActivity build() {
             return new ClientFacingActivity(
                     userId,

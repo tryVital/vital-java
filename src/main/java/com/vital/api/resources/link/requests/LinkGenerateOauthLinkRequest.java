@@ -34,7 +34,7 @@ public final class LinkGenerateOauthLinkRequest {
         return vitalLinkToken;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LinkGenerateOauthLinkRequest && equalTo((LinkGenerateOauthLinkRequest) other);
@@ -49,12 +49,12 @@ public final class LinkGenerateOauthLinkRequest {
         return vitalLinkToken.equals(other.vitalLinkToken);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.vitalLinkToken);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

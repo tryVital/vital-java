@@ -99,7 +99,7 @@ public final class ProviderLinkResponse {
         return providerId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProviderLinkResponse && equalTo((ProviderLinkResponse) other);
@@ -121,7 +121,7 @@ public final class ProviderLinkResponse {
                 && providerId.equals(other.providerId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.state,
@@ -134,7 +134,7 @@ public final class ProviderLinkResponse {
                 this.providerId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -204,7 +204,7 @@ public final class ProviderLinkResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ProviderLinkResponse other) {
             state(other.getState());
             redirectUrl(other.getRedirectUrl());
@@ -217,93 +217,93 @@ public final class ProviderLinkResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("state")
         public ProviderStage state(ProviderLinkResponseState state) {
             this.state = state;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("provider")
         public ConnectedStage provider(PasswordProviders provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("connected")
         public _FinalStage connected(boolean connected) {
             this.connected = connected;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.of(providerId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerMfa(ProviderMfaRequest providerMfa) {
             this.providerMfa = Optional.of(providerMfa);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_mfa", nulls = Nulls.SKIP)
         public _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa) {
             this.providerMfa = providerMfa;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage error(String error) {
             this.error = Optional.of(error);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "error", nulls = Nulls.SKIP)
         public _FinalStage error(Optional<String> error) {
             this.error = error;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage errorType(String errorType) {
             this.errorType = Optional.of(errorType);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
         public _FinalStage errorType(Optional<String> errorType) {
             this.errorType = errorType;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage redirectUrl(String redirectUrl) {
             this.redirectUrl = Optional.of(redirectUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
         public _FinalStage redirectUrl(Optional<String> redirectUrl) {
             this.redirectUrl = redirectUrl;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ProviderLinkResponse build() {
             return new ProviderLinkResponse(
                     state,

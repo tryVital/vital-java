@@ -41,7 +41,7 @@ public final class HomePregnancyTestEntry {
         return testResult;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof HomePregnancyTestEntry && equalTo((HomePregnancyTestEntry) other);
@@ -56,12 +56,12 @@ public final class HomePregnancyTestEntry {
         return date.equals(other.date) && testResult.equals(other.testResult);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date, this.testResult);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class HomePregnancyTestEntry {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(HomePregnancyTestEntry other) {
             date(other.getDate());
             testResult(other.getTestResult());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public TestResultStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("test_result")
         public _FinalStage testResult(HomePregnancyTestEntryTestResult testResult) {
             this.testResult = testResult;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public HomePregnancyTestEntry build() {
             return new HomePregnancyTestEntry(date, testResult, additionalProperties);
         }

@@ -90,7 +90,7 @@ public final class ClientFacingResult {
         return loinc;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingResult && equalTo((ClientFacingResult) other);
@@ -111,12 +111,12 @@ public final class ClientFacingResult {
                 && loinc.equals(other.loinc);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.name, this.slug, this.labId, this.providerId, this.required, this.loinc);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -180,7 +180,7 @@ public final class ClientFacingResult {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingResult other) {
             id(other.getId());
             name(other.getName());
@@ -192,74 +192,74 @@ public final class ClientFacingResult {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public RequiredStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("required")
         public _FinalStage required(boolean required) {
             this.required = required;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage loinc(ClientFacingLoinc loinc) {
             this.loinc = Optional.of(loinc);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "loinc", nulls = Nulls.SKIP)
         public _FinalStage loinc(Optional<ClientFacingLoinc> loinc) {
             this.loinc = loinc;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.of(providerId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage labId(Integer labId) {
             this.labId = Optional.of(labId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lab_id", nulls = Nulls.SKIP)
         public _FinalStage labId(Optional<Integer> labId) {
             this.labId = labId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingResult build() {
             return new ClientFacingResult(id, name, slug, labId, providerId, required, loinc, additionalProperties);
         }

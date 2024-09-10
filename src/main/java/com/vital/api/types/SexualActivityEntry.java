@@ -43,7 +43,7 @@ public final class SexualActivityEntry {
         return protectionUsed;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SexualActivityEntry && equalTo((SexualActivityEntry) other);
@@ -58,12 +58,12 @@ public final class SexualActivityEntry {
         return date.equals(other.date) && protectionUsed.equals(other.protectionUsed);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date, this.protectionUsed);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,34 +97,34 @@ public final class SexualActivityEntry {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SexualActivityEntry other) {
             date(other.getDate());
             protectionUsed(other.getProtectionUsed());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public _FinalStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage protectionUsed(Boolean protectionUsed) {
             this.protectionUsed = Optional.of(protectionUsed);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "protection_used", nulls = Nulls.SKIP)
         public _FinalStage protectionUsed(Optional<Boolean> protectionUsed) {
             this.protectionUsed = protectionUsed;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SexualActivityEntry build() {
             return new SexualActivityEntry(date, protectionUsed, additionalProperties);
         }

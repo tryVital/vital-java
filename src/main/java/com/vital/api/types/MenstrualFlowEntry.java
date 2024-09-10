@@ -40,7 +40,7 @@ public final class MenstrualFlowEntry {
         return flow;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MenstrualFlowEntry && equalTo((MenstrualFlowEntry) other);
@@ -55,12 +55,12 @@ public final class MenstrualFlowEntry {
         return date.equals(other.date) && flow.equals(other.flow);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.date, this.flow);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class MenstrualFlowEntry {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MenstrualFlowEntry other) {
             date(other.getDate());
             flow(other.getFlow());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date")
         public FlowStage date(String date) {
             this.date = date;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("flow")
         public _FinalStage flow(MenstrualFlowEntryFlow flow) {
             this.flow = flow;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MenstrualFlowEntry build() {
             return new MenstrualFlowEntry(date, flow, additionalProperties);
         }

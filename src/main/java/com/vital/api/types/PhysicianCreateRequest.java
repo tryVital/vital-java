@@ -85,7 +85,7 @@ public final class PhysicianCreateRequest {
         return signatureImage;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PhysicianCreateRequest && equalTo((PhysicianCreateRequest) other);
@@ -105,13 +105,13 @@ public final class PhysicianCreateRequest {
                 && signatureImage.equals(other.signatureImage);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.firstName, this.lastName, this.email, this.npi, this.licensedStates, this.signatureImage);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -169,7 +169,7 @@ public final class PhysicianCreateRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PhysicianCreateRequest other) {
             firstName(other.getFirstName());
             lastName(other.getLastName());
@@ -180,21 +180,21 @@ public final class PhysicianCreateRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_name")
         public LastNameStage firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("last_name")
         public NpiStage lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("npi")
         public _FinalStage npi(String npi) {
             this.npi = npi;
@@ -205,46 +205,46 @@ public final class PhysicianCreateRequest {
          * <p>An image of the physician signature for health insurance billing</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage signatureImage(PhysicianCreateRequestSignatureImage signatureImage) {
             this.signatureImage = Optional.of(signatureImage);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "signature_image", nulls = Nulls.SKIP)
         public _FinalStage signatureImage(Optional<PhysicianCreateRequestSignatureImage> signatureImage) {
             this.signatureImage = signatureImage;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage licensedStates(List<String> licensedStates) {
             this.licensedStates = Optional.of(licensedStates);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "licensed_states", nulls = Nulls.SKIP)
         public _FinalStage licensedStates(Optional<List<String>> licensedStates) {
             this.licensedStates = licensedStates;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage email(String email) {
             this.email = Optional.of(email);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
         public _FinalStage email(Optional<String> email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PhysicianCreateRequest build() {
             return new PhysicianCreateRequest(
                     firstName, lastName, email, npi, licensedStates, signatureImage, additionalProperties);

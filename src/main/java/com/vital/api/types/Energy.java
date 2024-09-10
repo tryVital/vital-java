@@ -37,7 +37,7 @@ public final class Energy {
         return value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Energy && equalTo((Energy) other);
@@ -52,12 +52,12 @@ public final class Energy {
         return value == other.value;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -85,20 +85,20 @@ public final class Energy {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Energy other) {
             value(other.getValue());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Energy build() {
             return new Energy(value, additionalProperties);
         }

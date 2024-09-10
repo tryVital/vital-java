@@ -43,7 +43,7 @@ public final class AppointmentCancelRequest {
         return notes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AppointmentCancelRequest && equalTo((AppointmentCancelRequest) other);
@@ -58,12 +58,12 @@ public final class AppointmentCancelRequest {
         return cancellationReasonId.equals(other.cancellationReasonId) && notes.equals(other.notes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.cancellationReasonId, this.notes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,34 +97,34 @@ public final class AppointmentCancelRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AppointmentCancelRequest other) {
             cancellationReasonId(other.getCancellationReasonId());
             notes(other.getNotes());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("cancellation_reason_id")
         public _FinalStage cancellationReasonId(String cancellationReasonId) {
             this.cancellationReasonId = cancellationReasonId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.of(notes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
             this.notes = notes;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AppointmentCancelRequest build() {
             return new AppointmentCancelRequest(cancellationReasonId, notes, additionalProperties);
         }

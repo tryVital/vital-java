@@ -44,7 +44,7 @@ public final class GroupedIge {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GroupedIge && equalTo((GroupedIge) other);
@@ -59,12 +59,12 @@ public final class GroupedIge {
         return source.equals(other.source) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.source, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -100,33 +100,33 @@ public final class GroupedIge {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GroupedIge other) {
             source(other.getSource());
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllData(List<ClientFacingIgeTimeseries> data) {
             this.data.addAll(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addData(ClientFacingIgeTimeseries data) {
             this.data.add(data);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingIgeTimeseries> data) {
             this.data.clear();
@@ -134,7 +134,7 @@ public final class GroupedIge {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GroupedIge build() {
             return new GroupedIge(source, data, additionalProperties);
         }

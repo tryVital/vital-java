@@ -3,19 +3,25 @@
  */
 package com.vital.api.resources.profile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.core.VitalException;
+import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.profile.requests.ProfileGetRawRequest;
 import com.vital.api.resources.profile.requests.ProfileGetRequest;
 import com.vital.api.types.ClientFacingProfile;
+import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawProfile;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ProfileClient {
     protected final ClientOptions clientOptions;
@@ -29,6 +35,13 @@ public class ProfileClient {
      */
     public ClientFacingProfile get(String userId) {
         return get(userId, ProfileGetRequest.builder().build());
+    }
+
+    /**
+     * Get Daily profile for user_id
+     */
+    public ClientFacingProfile get(String userId, ProfileGetRequest request) {
+        return get(userId, request, null);
     }
 
     /**
@@ -48,25 +61,31 @@ public class ProfileClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ClientFacingProfile.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingProfile.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * Get Daily profile for user_id
-     */
-    public ClientFacingProfile get(String userId, ProfileGetRequest request) {
-        return get(userId, request, null);
     }
 
     /**
@@ -74,6 +93,13 @@ public class ProfileClient {
      */
     public RawProfile getRaw(String userId) {
         return getRaw(userId, ProfileGetRawRequest.builder().build());
+    }
+
+    /**
+     * Get Daily profile for user_id
+     */
+    public RawProfile getRaw(String userId, ProfileGetRawRequest request) {
+        return getRaw(userId, request, null);
     }
 
     /**
@@ -94,24 +120,30 @@ public class ProfileClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RawProfile.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawProfile.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
             }
             throw new ApiError(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new VitalException("Network error executing HTTP request", e);
         }
-    }
-
-    /**
-     * Get Daily profile for user_id
-     */
-    public RawProfile getRaw(String userId, ProfileGetRawRequest request) {
-        return getRaw(userId, request, null);
     }
 }

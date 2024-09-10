@@ -91,7 +91,7 @@ public final class ProfileInDb {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProfileInDb && equalTo((ProfileInDb) other);
@@ -112,13 +112,13 @@ public final class ProfileInDb {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.data, this.userId, this.sourceId, this.priorityId, this.id, this.source, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -183,7 +183,7 @@ public final class ProfileInDb {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ProfileInDb other) {
             data(other.getData());
             userId(other.getUserId());
@@ -195,68 +195,68 @@ public final class ProfileInDb {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("data")
         public UserIdStage data(Object data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public SourceIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source_id")
         public IdStage sourceId(int sourceId) {
             this.sourceId = sourceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SourceStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(ClientFacingProvider source) {
             this.source = source;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = Optional.of(updatedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
         public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
             this.priorityId = Optional.of(priorityId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "priority_id", nulls = Nulls.SKIP)
         public _FinalStage priorityId(Optional<Integer> priorityId) {
             this.priorityId = priorityId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ProfileInDb build() {
             return new ProfileInDb(data, userId, sourceId, priorityId, id, source, updatedAt, additionalProperties);
         }

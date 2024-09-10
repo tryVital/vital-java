@@ -43,27 +43,39 @@ public final class ClientFacingHeartRate {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Average heart rate::bpm
+     */
     @JsonProperty("avg_bpm")
     public Optional<Double> getAvgBpm() {
         return avgBpm;
     }
 
+    /**
+     * @return Minimum heart rate::bpm
+     */
     @JsonProperty("min_bpm")
     public Optional<Double> getMinBpm() {
         return minBpm;
     }
 
+    /**
+     * @return Maximum heart rate::bpm
+     */
     @JsonProperty("max_bpm")
     public Optional<Double> getMaxBpm() {
         return maxBpm;
     }
 
+    /**
+     * @return Resting heart rate::bpm
+     */
     @JsonProperty("resting_bpm")
     public Optional<Double> getRestingBpm() {
         return restingBpm;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingHeartRate && equalTo((ClientFacingHeartRate) other);
@@ -81,12 +93,12 @@ public final class ClientFacingHeartRate {
                 && restingBpm.equals(other.restingBpm);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.avgBpm, this.minBpm, this.maxBpm, this.restingBpm);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

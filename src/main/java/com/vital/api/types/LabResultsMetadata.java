@@ -135,7 +135,7 @@ public final class LabResultsMetadata {
         return interpretation;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof LabResultsMetadata && equalTo((LabResultsMetadata) other);
@@ -161,7 +161,7 @@ public final class LabResultsMetadata {
                 && interpretation.equals(other.interpretation);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.age,
@@ -178,7 +178,7 @@ public final class LabResultsMetadata {
                 this.interpretation);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -273,7 +273,7 @@ public final class LabResultsMetadata {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(LabResultsMetadata other) {
             age(other.getAge());
             dob(other.getDob());
@@ -290,133 +290,133 @@ public final class LabResultsMetadata {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("age")
         public DobStage age(String age) {
             this.age = age;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("dob")
         public PatientStage dob(String dob) {
             this.dob = dob;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("patient")
         public DateReportedStage patient(String patient) {
             this.patient = patient;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("date_reported")
         public SpecimenNumberStage dateReported(String dateReported) {
             this.dateReported = dateReported;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("specimen_number")
         public _FinalStage specimenNumber(String specimenNumber) {
             this.specimenNumber = specimenNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage interpretation(String interpretation) {
             this.interpretation = Optional.of(interpretation);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public _FinalStage interpretation(Optional<String> interpretation) {
             this.interpretation = interpretation;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage status(String status) {
             this.status = Optional.of(status);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
         public _FinalStage status(Optional<String> status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage dateReceived(String dateReceived) {
             this.dateReceived = Optional.of(dateReceived);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "date_received", nulls = Nulls.SKIP)
         public _FinalStage dateReceived(Optional<String> dateReceived) {
             this.dateReceived = dateReceived;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage dateCollected(String dateCollected) {
             this.dateCollected = Optional.of(dateCollected);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "date_collected", nulls = Nulls.SKIP)
         public _FinalStage dateCollected(Optional<String> dateCollected) {
             this.dateCollected = dateCollected;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage laboratory(String laboratory) {
             this.laboratory = Optional.of(laboratory);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "laboratory", nulls = Nulls.SKIP)
         public _FinalStage laboratory(Optional<String> laboratory) {
             this.laboratory = laboratory;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage provider(String provider) {
             this.provider = Optional.of(provider);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<String> provider) {
             this.provider = provider;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage clia(String clia) {
             this.clia = Optional.of(clia);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "clia_#", nulls = Nulls.SKIP)
         public _FinalStage clia(Optional<String> clia) {
             this.clia = clia;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public LabResultsMetadata build() {
             return new LabResultsMetadata(
                     age,

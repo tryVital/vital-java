@@ -54,7 +54,7 @@ public final class ClientFacingFood {
         return micros;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingFood && equalTo((ClientFacingFood) other);
@@ -69,12 +69,12 @@ public final class ClientFacingFood {
         return energy.equals(other.energy) && macros.equals(other.macros) && micros.equals(other.micros);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.energy, this.macros, this.micros);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

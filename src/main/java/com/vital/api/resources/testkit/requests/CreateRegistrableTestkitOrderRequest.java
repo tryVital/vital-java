@@ -64,7 +64,7 @@ public final class CreateRegistrableTestkitOrderRequest {
         return passthrough;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateRegistrableTestkitOrderRequest
@@ -83,12 +83,12 @@ public final class CreateRegistrableTestkitOrderRequest {
                 && passthrough.equals(other.passthrough);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.labTestId, this.shippingDetails, this.passthrough);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -134,7 +134,7 @@ public final class CreateRegistrableTestkitOrderRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateRegistrableTestkitOrderRequest other) {
             userId(other.getUserId());
             labTestId(other.getLabTestId());
@@ -143,41 +143,41 @@ public final class CreateRegistrableTestkitOrderRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public LabTestIdStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("lab_test_id")
         public ShippingDetailsStage labTestId(String labTestId) {
             this.labTestId = labTestId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("shipping_details")
         public _FinalStage shippingDetails(ShippingAddress shippingDetails) {
             this.shippingDetails = shippingDetails;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
             this.passthrough = Optional.of(passthrough);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "passthrough", nulls = Nulls.SKIP)
         public _FinalStage passthrough(Optional<String> passthrough) {
             this.passthrough = passthrough;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateRegistrableTestkitOrderRequest build() {
             return new CreateRegistrableTestkitOrderRequest(
                     userId, labTestId, shippingDetails, passthrough, additionalProperties);

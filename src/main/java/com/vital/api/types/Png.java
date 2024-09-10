@@ -37,7 +37,7 @@ public final class Png {
         return "image/png";
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Png && equalTo((Png) other);
@@ -52,12 +52,12 @@ public final class Png {
         return content.equals(other.content);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.content);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -85,20 +85,20 @@ public final class Png {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Png other) {
             content(other.getContent());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("content")
         public _FinalStage content(String content) {
             this.content = content;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Png build() {
             return new Png(content, additionalProperties);
         }

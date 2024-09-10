@@ -49,7 +49,7 @@ public final class PostOrderResponse {
         return message;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PostOrderResponse && equalTo((PostOrderResponse) other);
@@ -64,12 +64,12 @@ public final class PostOrderResponse {
         return order.equals(other.order) && status.equals(other.status) && message.equals(other.message);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.order, this.status, this.message);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -109,7 +109,7 @@ public final class PostOrderResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PostOrderResponse other) {
             order(other.getOrder());
             status(other.getStatus());
@@ -117,28 +117,28 @@ public final class PostOrderResponse {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("order")
         public StatusStage order(ClientFacingOrder order) {
             this.order = order;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public MessageStage status(String status) {
             this.status = status;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("message")
         public _FinalStage message(String message) {
             this.message = message;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PostOrderResponse build() {
             return new PostOrderResponse(order, status, message, additionalProperties);
         }

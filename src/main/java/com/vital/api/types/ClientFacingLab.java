@@ -100,7 +100,7 @@ public final class ClientFacingLab {
         return sampleTypes;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ClientFacingLab && equalTo((ClientFacingLab) other);
@@ -122,7 +122,7 @@ public final class ClientFacingLab {
                 && sampleTypes.equals(other.sampleTypes);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -135,7 +135,7 @@ public final class ClientFacingLab {
                 this.sampleTypes);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -210,7 +210,7 @@ public final class ClientFacingLab {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ClientFacingLab other) {
             id(other.getId());
             slug(other.getSlug());
@@ -223,61 +223,61 @@ public final class ClientFacingLab {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SlugStage id(int id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public NameStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public FirstLineAddressStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("first_line_address")
         public CityStage firstLineAddress(String firstLineAddress) {
             this.firstLineAddress = firstLineAddress;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("city")
         public ZipcodeStage city(String city) {
             this.city = city;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("zipcode")
         public _FinalStage zipcode(String zipcode) {
             this.zipcode = zipcode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSampleTypes(List<LabTestSampleType> sampleTypes) {
             this.sampleTypes.addAll(sampleTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSampleTypes(LabTestSampleType sampleTypes) {
             this.sampleTypes.add(sampleTypes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sample_types", nulls = Nulls.SKIP)
         public _FinalStage sampleTypes(List<LabTestSampleType> sampleTypes) {
             this.sampleTypes.clear();
@@ -285,19 +285,19 @@ public final class ClientFacingLab {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllCollectionMethods(List<LabTestCollectionMethod> collectionMethods) {
             this.collectionMethods.addAll(collectionMethods);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addCollectionMethods(LabTestCollectionMethod collectionMethods) {
             this.collectionMethods.add(collectionMethods);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "collection_methods", nulls = Nulls.SKIP)
         public _FinalStage collectionMethods(List<LabTestCollectionMethod> collectionMethods) {
             this.collectionMethods.clear();
@@ -305,7 +305,7 @@ public final class ClientFacingLab {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ClientFacingLab build() {
             return new ClientFacingLab(
                     id,

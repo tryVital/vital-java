@@ -70,7 +70,7 @@ public final class IndividualProviderData {
         return region;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof IndividualProviderData && equalTo((IndividualProviderData) other);
@@ -88,12 +88,12 @@ public final class IndividualProviderData {
                 && region.equals(other.region);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.vitalLinkToken, this.username, this.password, this.region);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -139,7 +139,7 @@ public final class IndividualProviderData {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(IndividualProviderData other) {
             vitalLinkToken(other.getVitalLinkToken());
             username(other.getUsername());
@@ -152,7 +152,7 @@ public final class IndividualProviderData {
          * <p>Username for provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("username")
         public PasswordStage username(String username) {
             this.username = username;
@@ -163,40 +163,40 @@ public final class IndividualProviderData {
          * <p>Password for provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("password")
         public _FinalStage password(String password) {
             this.password = password;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage region(Region region) {
             this.region = Optional.of(region);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
         public _FinalStage region(Optional<Region> region) {
             this.region = region;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
             this.vitalLinkToken = Optional.of(vitalLinkToken);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
         public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
             this.vitalLinkToken = vitalLinkToken;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public IndividualProviderData build() {
             return new IndividualProviderData(vitalLinkToken, username, password, region, additionalProperties);
         }

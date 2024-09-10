@@ -42,7 +42,7 @@ public final class ManualConnectionData {
         return providerId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ManualConnectionData && equalTo((ManualConnectionData) other);
@@ -57,12 +57,12 @@ public final class ManualConnectionData {
         return userId.equals(other.userId) && providerId.equals(other.providerId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.userId, this.providerId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class ManualConnectionData {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ManualConnectionData other) {
             userId(other.getUserId());
             providerId(other.getProviderId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.of(providerId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ManualConnectionData build() {
             return new ManualConnectionData(userId, providerId, additionalProperties);
         }
