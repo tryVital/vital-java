@@ -16,26 +16,26 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SleepSelector.Builder.class)
-public final class SleepSelector {
-    private final SleepSelectorSleep sleep;
+@JsonDeserialize(builder = SleepColumnExpr.Builder.class)
+public final class SleepColumnExpr {
+    private final SleepColumnExprSleep sleep;
 
     private final Map<String, Object> additionalProperties;
 
-    private SleepSelector(SleepSelectorSleep sleep, Map<String, Object> additionalProperties) {
+    private SleepColumnExpr(SleepColumnExprSleep sleep, Map<String, Object> additionalProperties) {
         this.sleep = sleep;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("sleep")
-    public SleepSelectorSleep getSleep() {
+    public SleepColumnExprSleep getSleep() {
         return sleep;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SleepSelector && equalTo((SleepSelector) other);
+        return other instanceof SleepColumnExpr && equalTo((SleepColumnExpr) other);
     }
 
     @JsonAnyGetter
@@ -43,7 +43,7 @@ public final class SleepSelector {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(SleepSelector other) {
+    private boolean equalTo(SleepColumnExpr other) {
         return sleep.equals(other.sleep);
     }
 
@@ -62,18 +62,18 @@ public final class SleepSelector {
     }
 
     public interface SleepStage {
-        _FinalStage sleep(SleepSelectorSleep sleep);
+        _FinalStage sleep(SleepColumnExprSleep sleep);
 
-        Builder from(SleepSelector other);
+        Builder from(SleepColumnExpr other);
     }
 
     public interface _FinalStage {
-        SleepSelector build();
+        SleepColumnExpr build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SleepStage, _FinalStage {
-        private SleepSelectorSleep sleep;
+        private SleepColumnExprSleep sleep;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -81,21 +81,21 @@ public final class SleepSelector {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(SleepSelector other) {
+        public Builder from(SleepColumnExpr other) {
             sleep(other.getSleep());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sleep")
-        public _FinalStage sleep(SleepSelectorSleep sleep) {
+        public _FinalStage sleep(SleepColumnExprSleep sleep) {
             this.sleep = sleep;
             return this;
         }
 
         @java.lang.Override
-        public SleepSelector build() {
-            return new SleepSelector(sleep, additionalProperties);
+        public SleepColumnExpr build() {
+            return new SleepColumnExpr(sleep, additionalProperties);
         }
     }
 }

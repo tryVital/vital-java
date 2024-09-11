@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum SleepSelectorSleep {
+public enum SleepColumnExprSleep {
     SESSION_START("session_start"),
 
     SESSION_END("session_end"),
@@ -56,7 +56,7 @@ public enum SleepSelectorSleep {
 
     private final String value;
 
-    SleepSelectorSleep(String value) {
+    SleepColumnExprSleep(String value) {
         this.value = value;
     }
 

@@ -5,26 +5,28 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Labs {
-    AYUMETRIX("ayumetrix"),
+public enum AggregateExprFunc {
+    MEAN("mean"),
 
-    SPIRIPLEX("spiriplex"),
+    MIN("min"),
 
-    USSL("ussl"),
+    MAX("max"),
 
-    QUEST("quest"),
+    SUM("sum"),
 
-    LABCORP("labcorp"),
+    COUNT("count"),
 
-    BIOREFERENCE("bioreference"),
+    MEDIAN("median"),
 
-    MANUAL("manual"),
+    STDDEV("stddev"),
 
-    SANOCARDIO("sanocardio");
+    OLDEST("oldest"),
+
+    NEWEST("newest");
 
     private final String value;
 
-    Labs(String value) {
+    AggregateExprFunc(String value) {
         this.value = value;
     }
 

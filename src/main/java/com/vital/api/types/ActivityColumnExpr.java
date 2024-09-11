@@ -16,26 +16,26 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = ActivitySelector.Builder.class)
-public final class ActivitySelector {
-    private final ActivitySelectorActivity activity;
+@JsonDeserialize(builder = ActivityColumnExpr.Builder.class)
+public final class ActivityColumnExpr {
+    private final ActivityColumnExprActivity activity;
 
     private final Map<String, Object> additionalProperties;
 
-    private ActivitySelector(ActivitySelectorActivity activity, Map<String, Object> additionalProperties) {
+    private ActivityColumnExpr(ActivityColumnExprActivity activity, Map<String, Object> additionalProperties) {
         this.activity = activity;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("activity")
-    public ActivitySelectorActivity getActivity() {
+    public ActivityColumnExprActivity getActivity() {
         return activity;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ActivitySelector && equalTo((ActivitySelector) other);
+        return other instanceof ActivityColumnExpr && equalTo((ActivityColumnExpr) other);
     }
 
     @JsonAnyGetter
@@ -43,7 +43,7 @@ public final class ActivitySelector {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ActivitySelector other) {
+    private boolean equalTo(ActivityColumnExpr other) {
         return activity.equals(other.activity);
     }
 
@@ -62,18 +62,18 @@ public final class ActivitySelector {
     }
 
     public interface ActivityStage {
-        _FinalStage activity(ActivitySelectorActivity activity);
+        _FinalStage activity(ActivityColumnExprActivity activity);
 
-        Builder from(ActivitySelector other);
+        Builder from(ActivityColumnExpr other);
     }
 
     public interface _FinalStage {
-        ActivitySelector build();
+        ActivityColumnExpr build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ActivityStage, _FinalStage {
-        private ActivitySelectorActivity activity;
+        private ActivityColumnExprActivity activity;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -81,21 +81,21 @@ public final class ActivitySelector {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ActivitySelector other) {
+        public Builder from(ActivityColumnExpr other) {
             activity(other.getActivity());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("activity")
-        public _FinalStage activity(ActivitySelectorActivity activity) {
+        public _FinalStage activity(ActivityColumnExprActivity activity) {
             this.activity = activity;
             return this;
         }
 
         @java.lang.Override
-        public ActivitySelector build() {
-            return new ActivitySelector(activity, additionalProperties);
+        public ActivityColumnExpr build() {
+            return new ActivityColumnExpr(activity, additionalProperties);
         }
     }
 }

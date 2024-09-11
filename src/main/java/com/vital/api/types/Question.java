@@ -38,6 +38,8 @@ public final class Question {
 
     private final Optional<String> constraint;
 
+    private final Optional<String> default_;
+
     private final Map<String, Object> additionalProperties;
 
     private Question(
@@ -49,6 +51,7 @@ public final class Question {
             int sequence,
             List<Answer> answers,
             Optional<String> constraint,
+            Optional<String> default_,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.required = required;
@@ -58,6 +61,7 @@ public final class Question {
         this.sequence = sequence;
         this.answers = answers;
         this.constraint = constraint;
+        this.default_ = default_;
         this.additionalProperties = additionalProperties;
     }
 
@@ -101,6 +105,11 @@ public final class Question {
         return constraint;
     }
 
+    @JsonProperty("default")
+    public Optional<String> getDefault() {
+        return default_;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -120,13 +129,22 @@ public final class Question {
                 && type.equals(other.type)
                 && sequence == other.sequence
                 && answers.equals(other.answers)
-                && constraint.equals(other.constraint);
+                && constraint.equals(other.constraint)
+                && default_.equals(other.default_);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.required, this.code, this.value, this.type, this.sequence, this.answers, this.constraint);
+                this.id,
+                this.required,
+                this.code,
+                this.value,
+                this.type,
+                this.sequence,
+                this.answers,
+                this.constraint,
+                this.default_);
     }
 
     @java.lang.Override
@@ -176,6 +194,10 @@ public final class Question {
         _FinalStage constraint(Optional<String> constraint);
 
         _FinalStage constraint(String constraint);
+
+        _FinalStage default_(Optional<String> default_);
+
+        _FinalStage default_(String default_);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -192,6 +214,8 @@ public final class Question {
         private QuestionType type;
 
         private int sequence;
+
+        private Optional<String> default_ = Optional.empty();
 
         private Optional<String> constraint = Optional.empty();
 
@@ -212,6 +236,7 @@ public final class Question {
             sequence(other.getSequence());
             answers(other.getAnswers());
             constraint(other.getConstraint());
+            default_(other.getDefault());
             return this;
         }
 
@@ -258,6 +283,19 @@ public final class Question {
         }
 
         @java.lang.Override
+        public _FinalStage default_(String default_) {
+            this.default_ = Optional.of(default_);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "default", nulls = Nulls.SKIP)
+        public _FinalStage default_(Optional<String> default_) {
+            this.default_ = default_;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage constraint(String constraint) {
             this.constraint = Optional.of(constraint);
             return this;
@@ -292,7 +330,8 @@ public final class Question {
 
         @java.lang.Override
         public Question build() {
-            return new Question(id, required, code, value, type, sequence, answers, constraint, additionalProperties);
+            return new Question(
+                    id, required, code, value, type, sequence, answers, constraint, default_, additionalProperties);
         }
     }
 }

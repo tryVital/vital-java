@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ActivitySelectorActivity {
+public enum ActivityColumnExprActivity {
     DATE("date"),
 
     CALORIES_TOTAL("calories_total"),
@@ -44,7 +44,7 @@ public enum ActivitySelectorActivity {
 
     private final String value;
 
-    ActivitySelectorActivity(String value) {
+    ActivityColumnExprActivity(String value) {
         this.value = value;
     }
 

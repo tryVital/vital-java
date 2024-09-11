@@ -22,51 +22,33 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = QueryInstruction.Builder.class)
 public final class QueryInstruction {
-    private final QueryInstructionSelect select;
+    private final List<QueryInstructionSelectItem> select;
 
-    private final QueryInstructionPartitionBy partitionBy;
-
-    private final Optional<Swizzling> swizzleBy;
-
-    private final List<Reducer> reduceBy;
+    private final List<QueryInstructionGroupByItem> groupBy;
 
     private final Optional<Boolean> splitBySource;
 
     private final Map<String, Object> additionalProperties;
 
     private QueryInstruction(
-            QueryInstructionSelect select,
-            QueryInstructionPartitionBy partitionBy,
-            Optional<Swizzling> swizzleBy,
-            List<Reducer> reduceBy,
+            List<QueryInstructionSelectItem> select,
+            List<QueryInstructionGroupByItem> groupBy,
             Optional<Boolean> splitBySource,
             Map<String, Object> additionalProperties) {
         this.select = select;
-        this.partitionBy = partitionBy;
-        this.swizzleBy = swizzleBy;
-        this.reduceBy = reduceBy;
+        this.groupBy = groupBy;
         this.splitBySource = splitBySource;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("select")
-    public QueryInstructionSelect getSelect() {
+    public List<QueryInstructionSelectItem> getSelect() {
         return select;
     }
 
-    @JsonProperty("partition_by")
-    public QueryInstructionPartitionBy getPartitionBy() {
-        return partitionBy;
-    }
-
-    @JsonProperty("swizzle_by")
-    public Optional<Swizzling> getSwizzleBy() {
-        return swizzleBy;
-    }
-
-    @JsonProperty("reduce_by")
-    public List<Reducer> getReduceBy() {
-        return reduceBy;
+    @JsonProperty("group_by")
+    public List<QueryInstructionGroupByItem> getGroupBy() {
+        return groupBy;
     }
 
     @JsonProperty("split_by_source")
@@ -87,15 +69,13 @@ public final class QueryInstruction {
 
     private boolean equalTo(QueryInstruction other) {
         return select.equals(other.select)
-                && partitionBy.equals(other.partitionBy)
-                && swizzleBy.equals(other.swizzleBy)
-                && reduceBy.equals(other.reduceBy)
+                && groupBy.equals(other.groupBy)
                 && splitBySource.equals(other.splitBySource);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.select, this.partitionBy, this.swizzleBy, this.reduceBy, this.splitBySource);
+        return Objects.hash(this.select, this.groupBy, this.splitBySource);
     }
 
     @java.lang.Override
@@ -103,128 +83,77 @@ public final class QueryInstruction {
         return ObjectMappers.stringify(this);
     }
 
-    public static SelectStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface SelectStage {
-        PartitionByStage select(QueryInstructionSelect select);
-
-        Builder from(QueryInstruction other);
-    }
-
-    public interface PartitionByStage {
-        _FinalStage partitionBy(QueryInstructionPartitionBy partitionBy);
-    }
-
-    public interface _FinalStage {
-        QueryInstruction build();
-
-        _FinalStage swizzleBy(Optional<Swizzling> swizzleBy);
-
-        _FinalStage swizzleBy(Swizzling swizzleBy);
-
-        _FinalStage reduceBy(List<Reducer> reduceBy);
-
-        _FinalStage addReduceBy(Reducer reduceBy);
-
-        _FinalStage addAllReduceBy(List<Reducer> reduceBy);
-
-        _FinalStage splitBySource(Optional<Boolean> splitBySource);
-
-        _FinalStage splitBySource(Boolean splitBySource);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SelectStage, PartitionByStage, _FinalStage {
-        private QueryInstructionSelect select;
+    public static final class Builder {
+        private List<QueryInstructionSelectItem> select = new ArrayList<>();
 
-        private QueryInstructionPartitionBy partitionBy;
+        private List<QueryInstructionGroupByItem> groupBy = new ArrayList<>();
 
         private Optional<Boolean> splitBySource = Optional.empty();
-
-        private List<Reducer> reduceBy = new ArrayList<>();
-
-        private Optional<Swizzling> swizzleBy = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(QueryInstruction other) {
             select(other.getSelect());
-            partitionBy(other.getPartitionBy());
-            swizzleBy(other.getSwizzleBy());
-            reduceBy(other.getReduceBy());
+            groupBy(other.getGroupBy());
             splitBySource(other.getSplitBySource());
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("select")
-        public PartitionByStage select(QueryInstructionSelect select) {
-            this.select = select;
+        @JsonSetter(value = "select", nulls = Nulls.SKIP)
+        public Builder select(List<QueryInstructionSelectItem> select) {
+            this.select.clear();
+            this.select.addAll(select);
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("partition_by")
-        public _FinalStage partitionBy(QueryInstructionPartitionBy partitionBy) {
-            this.partitionBy = partitionBy;
+        public Builder addSelect(QueryInstructionSelectItem select) {
+            this.select.add(select);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage splitBySource(Boolean splitBySource) {
-            this.splitBySource = Optional.of(splitBySource);
+        public Builder addAllSelect(List<QueryInstructionSelectItem> select) {
+            this.select.addAll(select);
             return this;
         }
 
-        @java.lang.Override
+        @JsonSetter(value = "group_by", nulls = Nulls.SKIP)
+        public Builder groupBy(List<QueryInstructionGroupByItem> groupBy) {
+            this.groupBy.clear();
+            this.groupBy.addAll(groupBy);
+            return this;
+        }
+
+        public Builder addGroupBy(QueryInstructionGroupByItem groupBy) {
+            this.groupBy.add(groupBy);
+            return this;
+        }
+
+        public Builder addAllGroupBy(List<QueryInstructionGroupByItem> groupBy) {
+            this.groupBy.addAll(groupBy);
+            return this;
+        }
+
         @JsonSetter(value = "split_by_source", nulls = Nulls.SKIP)
-        public _FinalStage splitBySource(Optional<Boolean> splitBySource) {
+        public Builder splitBySource(Optional<Boolean> splitBySource) {
             this.splitBySource = splitBySource;
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage addAllReduceBy(List<Reducer> reduceBy) {
-            this.reduceBy.addAll(reduceBy);
+        public Builder splitBySource(Boolean splitBySource) {
+            this.splitBySource = Optional.of(splitBySource);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage addReduceBy(Reducer reduceBy) {
-            this.reduceBy.add(reduceBy);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "reduce_by", nulls = Nulls.SKIP)
-        public _FinalStage reduceBy(List<Reducer> reduceBy) {
-            this.reduceBy.clear();
-            this.reduceBy.addAll(reduceBy);
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage swizzleBy(Swizzling swizzleBy) {
-            this.swizzleBy = Optional.of(swizzleBy);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "swizzle_by", nulls = Nulls.SKIP)
-        public _FinalStage swizzleBy(Optional<Swizzling> swizzleBy) {
-            this.swizzleBy = swizzleBy;
-            return this;
-        }
-
-        @java.lang.Override
         public QueryInstruction build() {
-            return new QueryInstruction(select, partitionBy, swizzleBy, reduceBy, splitBySource, additionalProperties);
+            return new QueryInstruction(select, groupBy, splitBySource, additionalProperties);
         }
     }
 }

@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum LabTestSampleType {
     DRIED_BLOOD_SPOT("dried_blood_spot"),
 
+    ARM_COLLECTOR("arm_collector"),
+
     SERUM("serum"),
 
     SALIVA("saliva"),

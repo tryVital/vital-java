@@ -16,26 +16,26 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = Reducer.Builder.class)
-public final class Reducer {
-    private final ReducerFunction function;
+@JsonDeserialize(builder = IndexColumnExpr.Builder.class)
+public final class IndexColumnExpr {
+    private final IndexColumnExprIndex index;
 
     private final Map<String, Object> additionalProperties;
 
-    private Reducer(ReducerFunction function, Map<String, Object> additionalProperties) {
-        this.function = function;
+    private IndexColumnExpr(IndexColumnExprIndex index, Map<String, Object> additionalProperties) {
+        this.index = index;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("function")
-    public ReducerFunction getFunction() {
-        return function;
+    @JsonProperty("index")
+    public IndexColumnExprIndex getIndex() {
+        return index;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Reducer && equalTo((Reducer) other);
+        return other instanceof IndexColumnExpr && equalTo((IndexColumnExpr) other);
     }
 
     @JsonAnyGetter
@@ -43,13 +43,13 @@ public final class Reducer {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(Reducer other) {
-        return function.equals(other.function);
+    private boolean equalTo(IndexColumnExpr other) {
+        return index.equals(other.index);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.function);
+        return Objects.hash(this.index);
     }
 
     @java.lang.Override
@@ -57,23 +57,23 @@ public final class Reducer {
         return ObjectMappers.stringify(this);
     }
 
-    public static FunctionStage builder() {
+    public static IndexStage builder() {
         return new Builder();
     }
 
-    public interface FunctionStage {
-        _FinalStage function(ReducerFunction function);
+    public interface IndexStage {
+        _FinalStage index(IndexColumnExprIndex index);
 
-        Builder from(Reducer other);
+        Builder from(IndexColumnExpr other);
     }
 
     public interface _FinalStage {
-        Reducer build();
+        IndexColumnExpr build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements FunctionStage, _FinalStage {
-        private ReducerFunction function;
+    public static final class Builder implements IndexStage, _FinalStage {
+        private IndexColumnExprIndex index;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -81,21 +81,21 @@ public final class Reducer {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(Reducer other) {
-            function(other.getFunction());
+        public Builder from(IndexColumnExpr other) {
+            index(other.getIndex());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("function")
-        public _FinalStage function(ReducerFunction function) {
-            this.function = function;
+        @JsonSetter("index")
+        public _FinalStage index(IndexColumnExprIndex index) {
+            this.index = index;
             return this;
         }
 
         @java.lang.Override
-        public Reducer build() {
-            return new Reducer(function, additionalProperties);
+        public IndexColumnExpr build() {
+            return new IndexColumnExpr(index, additionalProperties);
         }
     }
 }

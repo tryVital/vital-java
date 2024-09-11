@@ -5,28 +5,28 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ReducerFunction {
-    MEAN("mean"),
+public enum DatePartExprDatePart {
+    MINUTE("minute"),
 
-    MIN("min"),
+    HOUR("hour"),
 
-    MAX("max"),
+    DAY("day"),
 
-    SUM("sum"),
+    WEEK("week"),
 
-    COUNT("count"),
+    MONTH("month"),
 
-    MEDIAN("median"),
+    YEAR("year"),
 
-    STDDEV("stddev"),
+    WEEKDAY("weekday"),
 
-    OLDEST("oldest"),
+    WEEK_OF_YEAR("week_of_year"),
 
-    NEWEST("newest");
+    DAY_OF_YEAR("day_of_year");
 
     private final String value;
 
-    ReducerFunction(String value) {
+    DatePartExprDatePart(String value) {
         this.value = value;
     }
 

@@ -13,13 +13,13 @@ import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = QueryInstructionSelect.Deserializer.class)
-public final class QueryInstructionSelect {
+@JsonDeserialize(using = QueryInstructionGroupByItem.Deserializer.class)
+public final class QueryInstructionGroupByItem {
     private final Object value;
 
     private final int type;
 
-    private QueryInstructionSelect(Object value, int type) {
+    private QueryInstructionGroupByItem(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -31,9 +31,9 @@ public final class QueryInstructionSelect {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((SleepSelector) this.value);
+            return visitor.visit((DateTruncExpr) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((ActivitySelector) this.value);
+            return visitor.visit((DatePartExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -41,10 +41,10 @@ public final class QueryInstructionSelect {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof QueryInstructionSelect && equalTo((QueryInstructionSelect) other);
+        return other instanceof QueryInstructionGroupByItem && equalTo((QueryInstructionGroupByItem) other);
     }
 
-    private boolean equalTo(QueryInstructionSelect other) {
+    private boolean equalTo(QueryInstructionGroupByItem other) {
         return value.equals(other.value);
     }
 
@@ -58,34 +58,34 @@ public final class QueryInstructionSelect {
         return this.value.toString();
     }
 
-    public static QueryInstructionSelect of(SleepSelector value) {
-        return new QueryInstructionSelect(value, 0);
+    public static QueryInstructionGroupByItem of(DateTruncExpr value) {
+        return new QueryInstructionGroupByItem(value, 0);
     }
 
-    public static QueryInstructionSelect of(ActivitySelector value) {
-        return new QueryInstructionSelect(value, 1);
+    public static QueryInstructionGroupByItem of(DatePartExpr value) {
+        return new QueryInstructionGroupByItem(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(SleepSelector value);
+        T visit(DateTruncExpr value);
 
-        T visit(ActivitySelector value);
+        T visit(DatePartExpr value);
     }
 
-    static final class Deserializer extends StdDeserializer<QueryInstructionSelect> {
+    static final class Deserializer extends StdDeserializer<QueryInstructionGroupByItem> {
         Deserializer() {
-            super(QueryInstructionSelect.class);
+            super(QueryInstructionGroupByItem.class);
         }
 
         @java.lang.Override
-        public QueryInstructionSelect deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public QueryInstructionGroupByItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepSelector.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, DateTruncExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ActivitySelector.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, DatePartExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

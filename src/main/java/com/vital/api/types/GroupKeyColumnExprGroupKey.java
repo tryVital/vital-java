@@ -6,6 +6,7 @@ package com.vital.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -13,13 +14,13 @@ import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = QueryInstructionPartitionBy.Deserializer.class)
-public final class QueryInstructionPartitionBy {
+@JsonDeserialize(using = GroupKeyColumnExprGroupKey.Deserializer.class)
+public final class GroupKeyColumnExprGroupKey {
     private final Object value;
 
     private final int type;
 
-    private QueryInstructionPartitionBy(Object value, int type) {
+    private GroupKeyColumnExprGroupKey(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -31,9 +32,9 @@ public final class QueryInstructionPartitionBy {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((Period) this.value);
+            return visitor.visit((int) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((Placeholder) this.value);
+            return visitor.visit((String) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -41,10 +42,10 @@ public final class QueryInstructionPartitionBy {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof QueryInstructionPartitionBy && equalTo((QueryInstructionPartitionBy) other);
+        return other instanceof GroupKeyColumnExprGroupKey && equalTo((GroupKeyColumnExprGroupKey) other);
     }
 
-    private boolean equalTo(QueryInstructionPartitionBy other) {
+    private boolean equalTo(GroupKeyColumnExprGroupKey other) {
         return value.equals(other.value);
     }
 
@@ -58,34 +59,33 @@ public final class QueryInstructionPartitionBy {
         return this.value.toString();
     }
 
-    public static QueryInstructionPartitionBy of(Period value) {
-        return new QueryInstructionPartitionBy(value, 0);
+    public static GroupKeyColumnExprGroupKey of(int value) {
+        return new GroupKeyColumnExprGroupKey(value, 0);
     }
 
-    public static QueryInstructionPartitionBy of(Placeholder value) {
-        return new QueryInstructionPartitionBy(value, 1);
+    public static GroupKeyColumnExprGroupKey of(String value) {
+        return new GroupKeyColumnExprGroupKey(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(Period value);
+        T visit(int value);
 
-        T visit(Placeholder value);
+        T visit(String value);
     }
 
-    static final class Deserializer extends StdDeserializer<QueryInstructionPartitionBy> {
+    static final class Deserializer extends StdDeserializer<GroupKeyColumnExprGroupKey> {
         Deserializer() {
-            super(QueryInstructionPartitionBy.class);
+            super(GroupKeyColumnExprGroupKey.class);
         }
 
         @java.lang.Override
-        public QueryInstructionPartitionBy deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public GroupKeyColumnExprGroupKey deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Period.class));
-            } catch (IllegalArgumentException e) {
+            if (value instanceof Integer) {
+                return of((Integer) value);
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Placeholder.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<String>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

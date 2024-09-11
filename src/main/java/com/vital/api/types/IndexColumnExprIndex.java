@@ -5,20 +5,14 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum SwizzlingBinGranularity {
-    MINUTE("minute"),
+public enum IndexColumnExprIndex {
+    SLEEP("sleep"),
 
-    HOUR("hour"),
-
-    DAY("day"),
-
-    WEEK("week"),
-
-    MONTH("month");
+    ACTIVITY("activity");
 
     private final String value;
 
-    SwizzlingBinGranularity(String value) {
+    IndexColumnExprIndex(String value) {
         this.value = value;
     }
 

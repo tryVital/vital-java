@@ -22,11 +22,14 @@ public final class TimeseriesMetricPoint {
 
     private final double value;
 
+    private final double all;
+
     private final Map<String, Object> additionalProperties;
 
-    private TimeseriesMetricPoint(String date, double value, Map<String, Object> additionalProperties) {
+    private TimeseriesMetricPoint(String date, double value, double all, Map<String, Object> additionalProperties) {
         this.date = date;
         this.value = value;
+        this.all = all;
         this.additionalProperties = additionalProperties;
     }
 
@@ -38,6 +41,11 @@ public final class TimeseriesMetricPoint {
     @JsonProperty("value")
     public double getValue() {
         return value;
+    }
+
+    @JsonProperty("all")
+    public double getAll() {
+        return all;
     }
 
     @java.lang.Override
@@ -52,12 +60,12 @@ public final class TimeseriesMetricPoint {
     }
 
     private boolean equalTo(TimeseriesMetricPoint other) {
-        return date.equals(other.date) && value == other.value;
+        return date.equals(other.date) && value == other.value && all == other.all;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.date, this.value);
+        return Objects.hash(this.date, this.value, this.all);
     }
 
     @java.lang.Override
@@ -76,7 +84,11 @@ public final class TimeseriesMetricPoint {
     }
 
     public interface ValueStage {
-        _FinalStage value(double value);
+        AllStage value(double value);
+    }
+
+    public interface AllStage {
+        _FinalStage all(double all);
     }
 
     public interface _FinalStage {
@@ -84,10 +96,12 @@ public final class TimeseriesMetricPoint {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DateStage, ValueStage, _FinalStage {
+    public static final class Builder implements DateStage, ValueStage, AllStage, _FinalStage {
         private String date;
 
         private double value;
+
+        private double all;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -98,6 +112,7 @@ public final class TimeseriesMetricPoint {
         public Builder from(TimeseriesMetricPoint other) {
             date(other.getDate());
             value(other.getValue());
+            all(other.getAll());
             return this;
         }
 
@@ -110,14 +125,21 @@ public final class TimeseriesMetricPoint {
 
         @java.lang.Override
         @JsonSetter("value")
-        public _FinalStage value(double value) {
+        public AllStage value(double value) {
             this.value = value;
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("all")
+        public _FinalStage all(double all) {
+            this.all = all;
+            return this;
+        }
+
+        @java.lang.Override
         public TimeseriesMetricPoint build() {
-            return new TimeseriesMetricPoint(date, value, additionalProperties);
+            return new TimeseriesMetricPoint(date, value, all, additionalProperties);
         }
     }
 }
