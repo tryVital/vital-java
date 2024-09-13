@@ -9,11 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LabResultsRaw.Builder.class)
@@ -22,12 +25,18 @@ public final class LabResultsRaw {
 
     private final LabResultsRawResults results;
 
+    private final Optional<List<MissingBiomarkerResult>> missingResults;
+
     private final Map<String, Object> additionalProperties;
 
     private LabResultsRaw(
-            LabResultsMetadata metadata, LabResultsRawResults results, Map<String, Object> additionalProperties) {
+            LabResultsMetadata metadata,
+            LabResultsRawResults results,
+            Optional<List<MissingBiomarkerResult>> missingResults,
+            Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.results = results;
+        this.missingResults = missingResults;
         this.additionalProperties = additionalProperties;
     }
 
@@ -39,6 +48,11 @@ public final class LabResultsRaw {
     @JsonProperty("results")
     public LabResultsRawResults getResults() {
         return results;
+    }
+
+    @JsonProperty("missing_results")
+    public Optional<List<MissingBiomarkerResult>> getMissingResults() {
+        return missingResults;
     }
 
     @java.lang.Override
@@ -53,12 +67,14 @@ public final class LabResultsRaw {
     }
 
     private boolean equalTo(LabResultsRaw other) {
-        return metadata.equals(other.metadata) && results.equals(other.results);
+        return metadata.equals(other.metadata)
+                && results.equals(other.results)
+                && missingResults.equals(other.missingResults);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.results);
+        return Objects.hash(this.metadata, this.results, this.missingResults);
     }
 
     @java.lang.Override
@@ -82,6 +98,10 @@ public final class LabResultsRaw {
 
     public interface _FinalStage {
         LabResultsRaw build();
+
+        _FinalStage missingResults(Optional<List<MissingBiomarkerResult>> missingResults);
+
+        _FinalStage missingResults(List<MissingBiomarkerResult> missingResults);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -89,6 +109,8 @@ public final class LabResultsRaw {
         private LabResultsMetadata metadata;
 
         private LabResultsRawResults results;
+
+        private Optional<List<MissingBiomarkerResult>> missingResults = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -99,6 +121,7 @@ public final class LabResultsRaw {
         public Builder from(LabResultsRaw other) {
             metadata(other.getMetadata());
             results(other.getResults());
+            missingResults(other.getMissingResults());
             return this;
         }
 
@@ -117,8 +140,21 @@ public final class LabResultsRaw {
         }
 
         @java.lang.Override
+        public _FinalStage missingResults(List<MissingBiomarkerResult> missingResults) {
+            this.missingResults = Optional.of(missingResults);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "missing_results", nulls = Nulls.SKIP)
+        public _FinalStage missingResults(Optional<List<MissingBiomarkerResult>> missingResults) {
+            this.missingResults = missingResults;
+            return this;
+        }
+
+        @java.lang.Override
         public LabResultsRaw build() {
-            return new LabResultsRaw(metadata, results, additionalProperties);
+            return new LabResultsRaw(metadata, results, missingResults, additionalProperties);
         }
     }
 }
