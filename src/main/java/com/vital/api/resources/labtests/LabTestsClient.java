@@ -23,6 +23,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestReq
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPhlebotomyAppointmentAvailabilityRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
@@ -41,7 +42,6 @@ import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
-import com.vital.api.types.UsAddress;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -421,7 +421,8 @@ public class LabTestsClient {
      * Return the available time slots to book an appointment with a phlebotomist
      * for the given address and order.
      */
-    public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(UsAddress request) {
+    public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(
+            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request) {
         return getPhlebotomyAppointmentAvailability(request, null);
     }
 
@@ -430,24 +431,26 @@ public class LabTestsClient {
      * for the given address and order.
      */
     public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(
-            UsAddress request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/order/phlebotomy/appointment/availability")
-                .build();
+                .addPathSegments("v3/order/phlebotomy/appointment/availability");
+        if (request.getStartDate().isPresent()) {
+            httpUrl.addQueryParameter("start_date", request.getStartDate().get());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
