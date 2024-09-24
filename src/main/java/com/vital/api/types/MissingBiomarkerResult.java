@@ -24,7 +24,9 @@ public final class MissingBiomarkerResult {
 
     private final String slug;
 
-    private final FailureType reason;
+    private final FailureType inferredFailureType;
+
+    private final Optional<String> note;
 
     private final Optional<String> loinc;
 
@@ -37,14 +39,16 @@ public final class MissingBiomarkerResult {
     private MissingBiomarkerResult(
             String name,
             String slug,
-            FailureType reason,
+            FailureType inferredFailureType,
+            Optional<String> note,
             Optional<String> loinc,
             Optional<String> loincSlug,
             Optional<String> providerId,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
-        this.reason = reason;
+        this.inferredFailureType = inferredFailureType;
+        this.note = note;
         this.loinc = loinc;
         this.loincSlug = loincSlug;
         this.providerId = providerId;
@@ -61,9 +65,14 @@ public final class MissingBiomarkerResult {
         return slug;
     }
 
-    @JsonProperty("reason")
-    public FailureType getReason() {
-        return reason;
+    @JsonProperty("inferred_failure_type")
+    public FailureType getInferredFailureType() {
+        return inferredFailureType;
+    }
+
+    @JsonProperty("note")
+    public Optional<String> getNote() {
+        return note;
     }
 
     @JsonProperty("loinc")
@@ -95,7 +104,8 @@ public final class MissingBiomarkerResult {
     private boolean equalTo(MissingBiomarkerResult other) {
         return name.equals(other.name)
                 && slug.equals(other.slug)
-                && reason.equals(other.reason)
+                && inferredFailureType.equals(other.inferredFailureType)
+                && note.equals(other.note)
                 && loinc.equals(other.loinc)
                 && loincSlug.equals(other.loincSlug)
                 && providerId.equals(other.providerId);
@@ -103,7 +113,8 @@ public final class MissingBiomarkerResult {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.slug, this.reason, this.loinc, this.loincSlug, this.providerId);
+        return Objects.hash(
+                this.name, this.slug, this.inferredFailureType, this.note, this.loinc, this.loincSlug, this.providerId);
     }
 
     @java.lang.Override
@@ -122,15 +133,19 @@ public final class MissingBiomarkerResult {
     }
 
     public interface SlugStage {
-        ReasonStage slug(String slug);
+        InferredFailureTypeStage slug(String slug);
     }
 
-    public interface ReasonStage {
-        _FinalStage reason(FailureType reason);
+    public interface InferredFailureTypeStage {
+        _FinalStage inferredFailureType(FailureType inferredFailureType);
     }
 
     public interface _FinalStage {
         MissingBiomarkerResult build();
+
+        _FinalStage note(Optional<String> note);
+
+        _FinalStage note(String note);
 
         _FinalStage loinc(Optional<String> loinc);
 
@@ -146,18 +161,20 @@ public final class MissingBiomarkerResult {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, SlugStage, ReasonStage, _FinalStage {
+    public static final class Builder implements NameStage, SlugStage, InferredFailureTypeStage, _FinalStage {
         private String name;
 
         private String slug;
 
-        private FailureType reason;
+        private FailureType inferredFailureType;
 
         private Optional<String> providerId = Optional.empty();
 
         private Optional<String> loincSlug = Optional.empty();
 
         private Optional<String> loinc = Optional.empty();
+
+        private Optional<String> note = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -168,7 +185,8 @@ public final class MissingBiomarkerResult {
         public Builder from(MissingBiomarkerResult other) {
             name(other.getName());
             slug(other.getSlug());
-            reason(other.getReason());
+            inferredFailureType(other.getInferredFailureType());
+            note(other.getNote());
             loinc(other.getLoinc());
             loincSlug(other.getLoincSlug());
             providerId(other.getProviderId());
@@ -184,15 +202,15 @@ public final class MissingBiomarkerResult {
 
         @java.lang.Override
         @JsonSetter("slug")
-        public ReasonStage slug(String slug) {
+        public InferredFailureTypeStage slug(String slug) {
             this.slug = slug;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("reason")
-        public _FinalStage reason(FailureType reason) {
-            this.reason = reason;
+        @JsonSetter("inferred_failure_type")
+        public _FinalStage inferredFailureType(FailureType inferredFailureType) {
+            this.inferredFailureType = inferredFailureType;
             return this;
         }
 
@@ -236,8 +254,22 @@ public final class MissingBiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage note(String note) {
+            this.note = Optional.of(note);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "note", nulls = Nulls.SKIP)
+        public _FinalStage note(Optional<String> note) {
+            this.note = note;
+            return this;
+        }
+
+        @java.lang.Override
         public MissingBiomarkerResult build() {
-            return new MissingBiomarkerResult(name, slug, reason, loinc, loincSlug, providerId, additionalProperties);
+            return new MissingBiomarkerResult(
+                    name, slug, inferredFailureType, note, loinc, loincSlug, providerId, additionalProperties);
         }
     }
 }
