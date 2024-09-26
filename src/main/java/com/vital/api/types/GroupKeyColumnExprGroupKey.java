@@ -6,7 +6,6 @@ package com.vital.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -34,7 +33,7 @@ public final class GroupKeyColumnExprGroupKey {
         if (this.type == 0) {
             return visitor.visit((int) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((Select) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -63,14 +62,14 @@ public final class GroupKeyColumnExprGroupKey {
         return new GroupKeyColumnExprGroupKey(value, 0);
     }
 
-    public static GroupKeyColumnExprGroupKey of(String value) {
+    public static GroupKeyColumnExprGroupKey of(Select value) {
         return new GroupKeyColumnExprGroupKey(value, 1);
     }
 
     public interface Visitor<T> {
         T visit(int value);
 
-        T visit(String value);
+        T visit(Select value);
     }
 
     static final class Deserializer extends StdDeserializer<GroupKeyColumnExprGroupKey> {
@@ -85,7 +84,7 @@ public final class GroupKeyColumnExprGroupKey {
                 return of((Integer) value);
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<String>() {}));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Select.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
