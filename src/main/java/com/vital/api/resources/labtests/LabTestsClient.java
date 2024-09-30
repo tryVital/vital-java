@@ -229,7 +229,7 @@ public class LabTestsClient {
             LabTestsGetMarkersForOrderSetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/lab_tests/order_set/markers");
+                .addPathSegments("v3/lab_tests/list_order_set_markers");
         if (request.getPage().isPresent()) {
             httpUrl.addQueryParameter("page", request.getPage().get().toString());
         }

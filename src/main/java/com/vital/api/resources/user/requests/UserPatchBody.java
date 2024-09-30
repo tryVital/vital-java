@@ -28,6 +28,8 @@ public final class UserPatchBody {
 
     private final Optional<String> ingestionEnd;
 
+    private final Optional<String> clientUserId;
+
     private final Map<String, Object> additionalProperties;
 
     private UserPatchBody(
@@ -35,11 +37,13 @@ public final class UserPatchBody {
             Optional<String> fallbackBirthDate,
             Optional<String> ingestionStart,
             Optional<String> ingestionEnd,
+            Optional<String> clientUserId,
             Map<String, Object> additionalProperties) {
         this.fallbackTimeZone = fallbackTimeZone;
         this.fallbackBirthDate = fallbackBirthDate;
         this.ingestionStart = ingestionStart;
         this.ingestionEnd = ingestionEnd;
+        this.clientUserId = clientUserId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -76,6 +80,14 @@ public final class UserPatchBody {
         return ingestionEnd;
     }
 
+    /**
+     * @return A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.
+     */
+    @JsonProperty("client_user_id")
+    public Optional<String> getClientUserId() {
+        return clientUserId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -91,12 +103,18 @@ public final class UserPatchBody {
         return fallbackTimeZone.equals(other.fallbackTimeZone)
                 && fallbackBirthDate.equals(other.fallbackBirthDate)
                 && ingestionStart.equals(other.ingestionStart)
-                && ingestionEnd.equals(other.ingestionEnd);
+                && ingestionEnd.equals(other.ingestionEnd)
+                && clientUserId.equals(other.clientUserId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.fallbackTimeZone, this.fallbackBirthDate, this.ingestionStart, this.ingestionEnd);
+        return Objects.hash(
+                this.fallbackTimeZone,
+                this.fallbackBirthDate,
+                this.ingestionStart,
+                this.ingestionEnd,
+                this.clientUserId);
     }
 
     @java.lang.Override
@@ -118,6 +136,8 @@ public final class UserPatchBody {
 
         private Optional<String> ingestionEnd = Optional.empty();
 
+        private Optional<String> clientUserId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -128,6 +148,7 @@ public final class UserPatchBody {
             fallbackBirthDate(other.getFallbackBirthDate());
             ingestionStart(other.getIngestionStart());
             ingestionEnd(other.getIngestionEnd());
+            clientUserId(other.getClientUserId());
             return this;
         }
 
@@ -175,9 +196,25 @@ public final class UserPatchBody {
             return this;
         }
 
+        @JsonSetter(value = "client_user_id", nulls = Nulls.SKIP)
+        public Builder clientUserId(Optional<String> clientUserId) {
+            this.clientUserId = clientUserId;
+            return this;
+        }
+
+        public Builder clientUserId(String clientUserId) {
+            this.clientUserId = Optional.of(clientUserId);
+            return this;
+        }
+
         public UserPatchBody build() {
             return new UserPatchBody(
-                    fallbackTimeZone, fallbackBirthDate, ingestionStart, ingestionEnd, additionalProperties);
+                    fallbackTimeZone,
+                    fallbackBirthDate,
+                    ingestionStart,
+                    ingestionEnd,
+                    clientUserId,
+                    additionalProperties);
         }
     }
 }
