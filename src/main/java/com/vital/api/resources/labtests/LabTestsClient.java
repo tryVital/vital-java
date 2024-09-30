@@ -20,6 +20,7 @@ import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForOrderSetRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
@@ -190,6 +191,61 @@ public class LabTestsClient {
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetMarkersResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public GetMarkersResponse getMarkersForOrderSet(LabTestsGetMarkersForOrderSetRequest request) {
+        return getMarkersForOrderSet(request, null);
+    }
+
+    public GetMarkersResponse getMarkersForOrderSet(
+            LabTestsGetMarkersForOrderSetRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/lab_tests/order_set/markers");
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
+        if (request.getSize().isPresent()) {
+            httpUrl.addQueryParameter("size", request.getSize().get().toString());
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
