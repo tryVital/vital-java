@@ -30,9 +30,9 @@ public enum ActivityColumnExprActivity {
 
     HEART_RATE_MEAN("heart_rate_mean"),
 
-    HEART_RATE_MIN("heart_rate_min"),
+    HEART_RATE_MINIMUM("heart_rate_minimum"),
 
-    HEART_RATE_MAX("heart_rate_max"),
+    HEART_RATE_MAXIMUM("heart_rate_maximum"),
 
     HEART_RATE_RESTING("heart_rate_resting"),
 

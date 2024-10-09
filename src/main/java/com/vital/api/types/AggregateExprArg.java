@@ -35,8 +35,10 @@ public final class AggregateExprArg {
         } else if (this.type == 1) {
             return visitor.visit((ActivityColumnExpr) this.value);
         } else if (this.type == 2) {
-            return visitor.visit((IndexColumnExpr) this.value);
+            return visitor.visit((WorkoutColumnExpr) this.value);
         } else if (this.type == 3) {
+            return visitor.visit((IndexColumnExpr) this.value);
+        } else if (this.type == 4) {
             return visitor.visit((GroupKeyColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -70,18 +72,24 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 1);
     }
 
-    public static AggregateExprArg of(IndexColumnExpr value) {
+    public static AggregateExprArg of(WorkoutColumnExpr value) {
         return new AggregateExprArg(value, 2);
     }
 
-    public static AggregateExprArg of(GroupKeyColumnExpr value) {
+    public static AggregateExprArg of(IndexColumnExpr value) {
         return new AggregateExprArg(value, 3);
+    }
+
+    public static AggregateExprArg of(GroupKeyColumnExpr value) {
+        return new AggregateExprArg(value, 4);
     }
 
     public interface Visitor<T> {
         T visit(SleepColumnExpr value);
 
         T visit(ActivityColumnExpr value);
+
+        T visit(WorkoutColumnExpr value);
 
         T visit(IndexColumnExpr value);
 
@@ -102,6 +110,10 @@ public final class AggregateExprArg {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, ActivityColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, WorkoutColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {

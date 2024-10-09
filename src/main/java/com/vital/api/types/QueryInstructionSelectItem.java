@@ -37,8 +37,10 @@ public final class QueryInstructionSelectItem {
         } else if (this.type == 2) {
             return visitor.visit((ActivityColumnExpr) this.value);
         } else if (this.type == 3) {
-            return visitor.visit((IndexColumnExpr) this.value);
+            return visitor.visit((WorkoutColumnExpr) this.value);
         } else if (this.type == 4) {
+            return visitor.visit((IndexColumnExpr) this.value);
+        } else if (this.type == 5) {
             return visitor.visit((GroupKeyColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -76,12 +78,16 @@ public final class QueryInstructionSelectItem {
         return new QueryInstructionSelectItem(value, 2);
     }
 
-    public static QueryInstructionSelectItem of(IndexColumnExpr value) {
+    public static QueryInstructionSelectItem of(WorkoutColumnExpr value) {
         return new QueryInstructionSelectItem(value, 3);
     }
 
-    public static QueryInstructionSelectItem of(GroupKeyColumnExpr value) {
+    public static QueryInstructionSelectItem of(IndexColumnExpr value) {
         return new QueryInstructionSelectItem(value, 4);
+    }
+
+    public static QueryInstructionSelectItem of(GroupKeyColumnExpr value) {
+        return new QueryInstructionSelectItem(value, 5);
     }
 
     public interface Visitor<T> {
@@ -90,6 +96,8 @@ public final class QueryInstructionSelectItem {
         T visit(SleepColumnExpr value);
 
         T visit(ActivityColumnExpr value);
+
+        T visit(WorkoutColumnExpr value);
 
         T visit(IndexColumnExpr value);
 
@@ -114,6 +122,10 @@ public final class QueryInstructionSelectItem {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, ActivityColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, WorkoutColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {
