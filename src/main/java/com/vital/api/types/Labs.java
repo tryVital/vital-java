@@ -18,6 +18,8 @@ public enum Labs {
 
     BIOREFERENCE("bioreference"),
 
+    US_BIOTEK("us_biotek"),
+
     MANUAL("manual"),
 
     SANOCARDIO("sanocardio");

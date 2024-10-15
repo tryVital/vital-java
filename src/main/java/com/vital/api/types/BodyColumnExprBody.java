@@ -5,18 +5,22 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum IndexColumnExprIndex {
-    SLEEP("sleep"),
+public enum BodyColumnExprBody {
+    MEASURED_AT("measured_at"),
 
-    ACTIVITY("activity"),
+    WEIGHT_KILOGRAM("weight_kilogram"),
 
-    WORKOUT("workout"),
+    FAT_PERCENTAGE("fat_percentage"),
 
-    BODY("body");
+    SOURCE_TYPE("source_type"),
+
+    SOURCE_PROVIDER("source_provider"),
+
+    SOURCE_APP_ID("source_app_id");
 
     private final String value;
 
-    IndexColumnExprIndex(String value) {
+    BodyColumnExprBody(String value) {
         this.value = value;
     }
 
