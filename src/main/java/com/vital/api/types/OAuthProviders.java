@@ -30,7 +30,9 @@ public enum OAuthProviders {
 
     OMRON("omron"),
 
-    WHOOP_V_2("whoop_v2");
+    WHOOP_V_2("whoop_v2"),
+
+    MY_FITNESS_PAL_V_2("my_fitness_pal_v2");
 
     private final String value;
 

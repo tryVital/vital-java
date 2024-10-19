@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingWalkInTestOrder.Builder.class)
@@ -24,13 +26,20 @@ public final class ClientFacingWalkInTestOrder {
 
     private final String updatedAt;
 
+    private final Optional<String> appointmentId;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingWalkInTestOrder(
-            String id, String createdAt, String updatedAt, Map<String, Object> additionalProperties) {
+            String id,
+            String createdAt,
+            String updatedAt,
+            Optional<String> appointmentId,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.appointmentId = appointmentId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,6 +61,11 @@ public final class ClientFacingWalkInTestOrder {
         return updatedAt;
     }
 
+    @JsonProperty("appointment_id")
+    public Optional<String> getAppointmentId() {
+        return appointmentId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -64,12 +78,15 @@ public final class ClientFacingWalkInTestOrder {
     }
 
     private boolean equalTo(ClientFacingWalkInTestOrder other) {
-        return id.equals(other.id) && createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt);
+        return id.equals(other.id)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt)
+                && appointmentId.equals(other.appointmentId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.createdAt, this.updatedAt);
+        return Objects.hash(this.id, this.createdAt, this.updatedAt, this.appointmentId);
     }
 
     @java.lang.Override
@@ -97,6 +114,10 @@ public final class ClientFacingWalkInTestOrder {
 
     public interface _FinalStage {
         ClientFacingWalkInTestOrder build();
+
+        _FinalStage appointmentId(Optional<String> appointmentId);
+
+        _FinalStage appointmentId(String appointmentId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -106,6 +127,8 @@ public final class ClientFacingWalkInTestOrder {
         private String createdAt;
 
         private String updatedAt;
+
+        private Optional<String> appointmentId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -117,6 +140,7 @@ public final class ClientFacingWalkInTestOrder {
             id(other.getId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            appointmentId(other.getAppointmentId());
             return this;
         }
 
@@ -146,8 +170,21 @@ public final class ClientFacingWalkInTestOrder {
         }
 
         @java.lang.Override
+        public _FinalStage appointmentId(String appointmentId) {
+            this.appointmentId = Optional.of(appointmentId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appointment_id", nulls = Nulls.SKIP)
+        public _FinalStage appointmentId(Optional<String> appointmentId) {
+            this.appointmentId = appointmentId;
+            return this;
+        }
+
+        @java.lang.Override
         public ClientFacingWalkInTestOrder build() {
-            return new ClientFacingWalkInTestOrder(id, createdAt, updatedAt, additionalProperties);
+            return new ClientFacingWalkInTestOrder(id, createdAt, updatedAt, appointmentId, additionalProperties);
         }
     }
 }

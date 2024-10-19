@@ -17,20 +17,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DaySlots.Builder.class)
 public final class DaySlots {
+    private final Optional<AppointmentLocation> location;
+
     private final String date;
 
     private final List<TimeSlot> slots;
 
     private final Map<String, Object> additionalProperties;
 
-    private DaySlots(String date, List<TimeSlot> slots, Map<String, Object> additionalProperties) {
+    private DaySlots(
+            Optional<AppointmentLocation> location,
+            String date,
+            List<TimeSlot> slots,
+            Map<String, Object> additionalProperties) {
+        this.location = location;
         this.date = date;
         this.slots = slots;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("location")
+    public Optional<AppointmentLocation> getLocation() {
+        return location;
     }
 
     @JsonProperty("date")
@@ -55,12 +68,12 @@ public final class DaySlots {
     }
 
     private boolean equalTo(DaySlots other) {
-        return date.equals(other.date) && slots.equals(other.slots);
+        return location.equals(other.location) && date.equals(other.date) && slots.equals(other.slots);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.date, this.slots);
+        return Objects.hash(this.location, this.date, this.slots);
     }
 
     @java.lang.Override
@@ -81,6 +94,10 @@ public final class DaySlots {
     public interface _FinalStage {
         DaySlots build();
 
+        _FinalStage location(Optional<AppointmentLocation> location);
+
+        _FinalStage location(AppointmentLocation location);
+
         _FinalStage slots(List<TimeSlot> slots);
 
         _FinalStage addSlots(TimeSlot slots);
@@ -94,6 +111,8 @@ public final class DaySlots {
 
         private List<TimeSlot> slots = new ArrayList<>();
 
+        private Optional<AppointmentLocation> location = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -101,6 +120,7 @@ public final class DaySlots {
 
         @java.lang.Override
         public Builder from(DaySlots other) {
+            location(other.getLocation());
             date(other.getDate());
             slots(other.getSlots());
             return this;
@@ -134,8 +154,21 @@ public final class DaySlots {
         }
 
         @java.lang.Override
+        public _FinalStage location(AppointmentLocation location) {
+            this.location = Optional.of(location);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "location", nulls = Nulls.SKIP)
+        public _FinalStage location(Optional<AppointmentLocation> location) {
+            this.location = location;
+            return this;
+        }
+
+        @java.lang.Override
         public DaySlots build() {
-            return new DaySlots(date, slots, additionalProperties);
+            return new DaySlots(location, date, slots, additionalProperties);
         }
     }
 }

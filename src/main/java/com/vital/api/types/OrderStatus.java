@@ -18,6 +18,12 @@ public enum OrderStatus {
 
     CANCELLED_WALK_IN_TEST_CANCELLED("cancelled.walk_in_test.cancelled"),
 
+    COLLECTING_SAMPLE_WALK_IN_TEST_APPOINTMENT_PENDING("collecting_sample.walk_in_test.appointment_pending"),
+
+    COLLECTING_SAMPLE_WALK_IN_TEST_APPOINTMENT_SCHEDULED("collecting_sample.walk_in_test.appointment_scheduled"),
+
+    COLLECTING_SAMPLE_WALK_IN_TEST_APPOINTMENT_CANCELLED("collecting_sample.walk_in_test.appointment_cancelled"),
+
     RECEIVED_AT_HOME_PHLEBOTOMY_ORDERED("received.at_home_phlebotomy.ordered"),
 
     RECEIVED_AT_HOME_PHLEBOTOMY_REQUISITION_CREATED("received.at_home_phlebotomy.requisition_created"),

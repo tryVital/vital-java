@@ -38,7 +38,7 @@ public final class ClientFacingAppointment {
 
     private final Optional<String> ianaTimezone;
 
-    private final String type;
+    private final AppointmentType type;
 
     private final AppointmentProvider provider;
 
@@ -65,7 +65,7 @@ public final class ClientFacingAppointment {
             Optional<String> startAt,
             Optional<String> endAt,
             Optional<String> ianaTimezone,
-            String type,
+            AppointmentType type,
             AppointmentProvider provider,
             AppointmentStatus status,
             String providerId,
@@ -140,7 +140,7 @@ public final class ClientFacingAppointment {
     }
 
     @JsonProperty("type")
-    public String getType() {
+    public AppointmentType getType() {
         return type;
     }
 
@@ -262,7 +262,7 @@ public final class ClientFacingAppointment {
     }
 
     public interface TypeStage {
-        ProviderStage type(String type);
+        ProviderStage type(AppointmentType type);
     }
 
     public interface ProviderStage {
@@ -335,7 +335,7 @@ public final class ClientFacingAppointment {
 
         private LngLat location;
 
-        private String type;
+        private AppointmentType type;
 
         private AppointmentProvider provider;
 
@@ -420,7 +420,7 @@ public final class ClientFacingAppointment {
 
         @java.lang.Override
         @JsonSetter("type")
-        public ProviderStage type(String type) {
+        public ProviderStage type(AppointmentType type) {
             this.type = type;
             return this;
         }

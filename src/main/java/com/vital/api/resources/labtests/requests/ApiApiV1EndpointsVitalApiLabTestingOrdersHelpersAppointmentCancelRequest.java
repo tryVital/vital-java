@@ -18,15 +18,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = AppointmentCancelRequest.Builder.class)
-public final class AppointmentCancelRequest {
+@JsonDeserialize(builder = ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest.Builder.class)
+public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest {
     private final String cancellationReasonId;
 
     private final Optional<String> notes;
 
     private final Map<String, Object> additionalProperties;
 
-    private AppointmentCancelRequest(
+    private ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest(
             String cancellationReasonId, Optional<String> notes, Map<String, Object> additionalProperties) {
         this.cancellationReasonId = cancellationReasonId;
         this.notes = notes;
@@ -46,7 +46,8 @@ public final class AppointmentCancelRequest {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof AppointmentCancelRequest && equalTo((AppointmentCancelRequest) other);
+        return other instanceof ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest
+                && equalTo((ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest) other);
     }
 
     @JsonAnyGetter
@@ -54,7 +55,7 @@ public final class AppointmentCancelRequest {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(AppointmentCancelRequest other) {
+    private boolean equalTo(ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest other) {
         return cancellationReasonId.equals(other.cancellationReasonId) && notes.equals(other.notes);
     }
 
@@ -75,11 +76,11 @@ public final class AppointmentCancelRequest {
     public interface CancellationReasonIdStage {
         _FinalStage cancellationReasonId(String cancellationReasonId);
 
-        Builder from(AppointmentCancelRequest other);
+        Builder from(ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest other);
     }
 
     public interface _FinalStage {
-        AppointmentCancelRequest build();
+        ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest build();
 
         _FinalStage notes(Optional<String> notes);
 
@@ -98,7 +99,7 @@ public final class AppointmentCancelRequest {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(AppointmentCancelRequest other) {
+        public Builder from(ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest other) {
             cancellationReasonId(other.getCancellationReasonId());
             notes(other.getNotes());
             return this;
@@ -125,8 +126,9 @@ public final class AppointmentCancelRequest {
         }
 
         @java.lang.Override
-        public AppointmentCancelRequest build() {
-            return new AppointmentCancelRequest(cancellationReasonId, notes, additionalProperties);
+        public ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest build() {
+            return new ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest(
+                    cancellationReasonId, notes, additionalProperties);
         }
     }
 }

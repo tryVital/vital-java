@@ -74,7 +74,9 @@ public enum Providers {
 
     WHOOP_V_2("whoop_v2"),
 
-    ULTRAHUMAN("ultrahuman");
+    ULTRAHUMAN("ultrahuman"),
+
+    MY_FITNESS_PAL_V_2("my_fitness_pal_v2");
 
     private final String value;
 

@@ -12,9 +12,7 @@ import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.labtests.requests.AppointmentBookingRequest;
-import com.vital.api.resources.labtests.requests.AppointmentCancelRequest;
-import com.vital.api.resources.labtests.requests.AppointmentRescheduleRequest;
+import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
@@ -25,10 +23,14 @@ import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetPhlebotomyAppointmentAvailabilityRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscAppointmentAvailabilityRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
+import com.vital.api.resources.labtests.requests.VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
+import com.vital.api.types.AppointmentBookingRequest;
+import com.vital.api.types.AppointmentRescheduleRequest;
 import com.vital.api.types.AreaInfo;
 import com.vital.api.types.ClientFacingAppointment;
 import com.vital.api.types.ClientFacingAppointmentCancellationReason;
@@ -712,7 +714,8 @@ public class LabTestsClient {
     /**
      * Cancel a previously booked at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment cancelPhlebotomyAppointment(String orderId, AppointmentCancelRequest request) {
+    public ClientFacingAppointment cancelPhlebotomyAppointment(
+            String orderId, ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest request) {
         return cancelPhlebotomyAppointment(orderId, request, null);
     }
 
@@ -720,7 +723,9 @@ public class LabTestsClient {
      * Cancel a previously booked at-home phlebotomy appointment.
      */
     public ClientFacingAppointment cancelPhlebotomyAppointment(
-            String orderId, AppointmentCancelRequest request, RequestOptions requestOptions) {
+            String orderId,
+            ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest request,
+            RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -1218,6 +1223,257 @@ public class LabTestsClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public AppointmentAvailabilitySlots getPscAppointmentAvailability(
+            LabTestsGetPscAppointmentAvailabilityRequest request) {
+        return getPscAppointmentAvailability(request, null);
+    }
+
+    public AppointmentAvailabilitySlots getPscAppointmentAvailability(
+            LabTestsGetPscAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order/psc/appointment/availability");
+        httpUrl.addQueryParameter("lab", request.getLab());
+        if (request.getStartDate().isPresent()) {
+            httpUrl.addQueryParameter("start_date", request.getStartDate().get());
+        }
+        if (request.getSiteCodes().isPresent()) {
+            httpUrl.addQueryParameter("site_codes", request.getSiteCodes().get());
+        }
+        if (request.getZipCode().isPresent()) {
+            httpUrl.addQueryParameter("zip_code", request.getZipCode().get());
+        }
+        if (request.getRadius().isPresent()) {
+            httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), AppointmentAvailabilitySlots.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public ClientFacingAppointment bookPscAppointment(String orderId, AppointmentBookingRequest request) {
+        return bookPscAppointment(orderId, request, null);
+    }
+
+    public ClientFacingAppointment bookPscAppointment(
+            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("psc/appointment/book")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public ClientFacingAppointment reschedulePscAppointment(String orderId, AppointmentRescheduleRequest request) {
+        return reschedulePscAppointment(orderId, request, null);
+    }
+
+    public ClientFacingAppointment reschedulePscAppointment(
+            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("psc/appointment/reschedule")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public ClientFacingAppointment cancelPscAppointment(
+            String orderId, VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest request) {
+        return cancelPscAppointment(orderId, request, null);
+    }
+
+    public ClientFacingAppointment cancelPscAppointment(
+            String orderId,
+            VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("psc/appointment/cancel")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingAppointment.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public List<ClientFacingAppointmentCancellationReason> getPscAppointmentCancellationReason() {
+        return getPscAppointmentCancellationReason(null);
+    }
+
+    public List<ClientFacingAppointmentCancellationReason> getPscAppointmentCancellationReason(
+            RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order/psc/appointment/cancellation-reasons")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), new TypeReference<List<ClientFacingAppointmentCancellationReason>>() {});
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new ApiError(
                     "Error with status code " + response.code(),
                     response.code(),
