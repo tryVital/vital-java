@@ -18,16 +18,25 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PscAreaInfoDetails.Builder.class)
 public final class PscAreaInfoDetails {
+    private final boolean appointmentWithVital;
+
     private final int withinRadius;
 
     private final String radius;
 
     private final Map<String, Object> additionalProperties;
 
-    private PscAreaInfoDetails(int withinRadius, String radius, Map<String, Object> additionalProperties) {
+    private PscAreaInfoDetails(
+            boolean appointmentWithVital, int withinRadius, String radius, Map<String, Object> additionalProperties) {
+        this.appointmentWithVital = appointmentWithVital;
         this.withinRadius = withinRadius;
         this.radius = radius;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("appointment_with_vital")
+    public boolean getAppointmentWithVital() {
+        return appointmentWithVital;
     }
 
     @JsonProperty("within_radius")
@@ -52,12 +61,14 @@ public final class PscAreaInfoDetails {
     }
 
     private boolean equalTo(PscAreaInfoDetails other) {
-        return withinRadius == other.withinRadius && radius.equals(other.radius);
+        return appointmentWithVital == other.appointmentWithVital
+                && withinRadius == other.withinRadius
+                && radius.equals(other.radius);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.withinRadius, this.radius);
+        return Objects.hash(this.appointmentWithVital, this.withinRadius, this.radius);
     }
 
     @java.lang.Override
@@ -65,14 +76,18 @@ public final class PscAreaInfoDetails {
         return ObjectMappers.stringify(this);
     }
 
-    public static WithinRadiusStage builder() {
+    public static AppointmentWithVitalStage builder() {
         return new Builder();
+    }
+
+    public interface AppointmentWithVitalStage {
+        WithinRadiusStage appointmentWithVital(boolean appointmentWithVital);
+
+        Builder from(PscAreaInfoDetails other);
     }
 
     public interface WithinRadiusStage {
         RadiusStage withinRadius(int withinRadius);
-
-        Builder from(PscAreaInfoDetails other);
     }
 
     public interface RadiusStage {
@@ -84,7 +99,10 @@ public final class PscAreaInfoDetails {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements WithinRadiusStage, RadiusStage, _FinalStage {
+    public static final class Builder
+            implements AppointmentWithVitalStage, WithinRadiusStage, RadiusStage, _FinalStage {
+        private boolean appointmentWithVital;
+
         private int withinRadius;
 
         private String radius;
@@ -96,8 +114,16 @@ public final class PscAreaInfoDetails {
 
         @java.lang.Override
         public Builder from(PscAreaInfoDetails other) {
+            appointmentWithVital(other.getAppointmentWithVital());
             withinRadius(other.getWithinRadius());
             radius(other.getRadius());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("appointment_with_vital")
+        public WithinRadiusStage appointmentWithVital(boolean appointmentWithVital) {
+            this.appointmentWithVital = appointmentWithVital;
             return this;
         }
 
@@ -117,7 +143,7 @@ public final class PscAreaInfoDetails {
 
         @java.lang.Override
         public PscAreaInfoDetails build() {
-            return new PscAreaInfoDetails(withinRadius, radius, additionalProperties);
+            return new PscAreaInfoDetails(appointmentWithVital, withinRadius, radius, additionalProperties);
         }
     }
 }

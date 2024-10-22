@@ -22,12 +22,15 @@ public final class ClientFacingLabLocation {
 
     private final int distance;
 
+    private final String siteCode;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingLabLocation(
-            LabLocationMetadata metadata, int distance, Map<String, Object> additionalProperties) {
+            LabLocationMetadata metadata, int distance, String siteCode, Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.distance = distance;
+        this.siteCode = siteCode;
         this.additionalProperties = additionalProperties;
     }
 
@@ -39,6 +42,11 @@ public final class ClientFacingLabLocation {
     @JsonProperty("distance")
     public int getDistance() {
         return distance;
+    }
+
+    @JsonProperty("site_code")
+    public String getSiteCode() {
+        return siteCode;
     }
 
     @java.lang.Override
@@ -53,12 +61,12 @@ public final class ClientFacingLabLocation {
     }
 
     private boolean equalTo(ClientFacingLabLocation other) {
-        return metadata.equals(other.metadata) && distance == other.distance;
+        return metadata.equals(other.metadata) && distance == other.distance && siteCode.equals(other.siteCode);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.distance);
+        return Objects.hash(this.metadata, this.distance, this.siteCode);
     }
 
     @java.lang.Override
@@ -77,7 +85,11 @@ public final class ClientFacingLabLocation {
     }
 
     public interface DistanceStage {
-        _FinalStage distance(int distance);
+        SiteCodeStage distance(int distance);
+    }
+
+    public interface SiteCodeStage {
+        _FinalStage siteCode(String siteCode);
     }
 
     public interface _FinalStage {
@@ -85,10 +97,12 @@ public final class ClientFacingLabLocation {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements MetadataStage, DistanceStage, _FinalStage {
+    public static final class Builder implements MetadataStage, DistanceStage, SiteCodeStage, _FinalStage {
         private LabLocationMetadata metadata;
 
         private int distance;
+
+        private String siteCode;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -99,6 +113,7 @@ public final class ClientFacingLabLocation {
         public Builder from(ClientFacingLabLocation other) {
             metadata(other.getMetadata());
             distance(other.getDistance());
+            siteCode(other.getSiteCode());
             return this;
         }
 
@@ -111,14 +126,21 @@ public final class ClientFacingLabLocation {
 
         @java.lang.Override
         @JsonSetter("distance")
-        public _FinalStage distance(int distance) {
+        public SiteCodeStage distance(int distance) {
             this.distance = distance;
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("site_code")
+        public _FinalStage siteCode(String siteCode) {
+            this.siteCode = siteCode;
+            return this;
+        }
+
+        @java.lang.Override
         public ClientFacingLabLocation build() {
-            return new ClientFacingLabLocation(metadata, distance, additionalProperties);
+            return new ClientFacingLabLocation(metadata, distance, siteCode, additionalProperties);
         }
     }
 }
