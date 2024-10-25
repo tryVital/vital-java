@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.GuarantorDetails;
 import com.vital.api.types.ResponsibleRelationship;
 import com.vital.api.types.VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public final class CreateInsuranceRequest {
 
     private final VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured;
 
-    private final Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> guarantor;
+    private final Optional<GuarantorDetails> guarantor;
 
     private final Map<String, Object> additionalProperties;
 
@@ -42,7 +43,7 @@ public final class CreateInsuranceRequest {
             Optional<String> groupId,
             ResponsibleRelationship relationship,
             VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured,
-            Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> guarantor,
+            Optional<GuarantorDetails> guarantor,
             Map<String, Object> additionalProperties) {
         this.payorCode = payorCode;
         this.memberId = memberId;
@@ -79,7 +80,7 @@ public final class CreateInsuranceRequest {
     }
 
     @JsonProperty("guarantor")
-    public Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> getGuarantor() {
+    public Optional<GuarantorDetails> getGuarantor() {
         return guarantor;
     }
 
@@ -143,9 +144,9 @@ public final class CreateInsuranceRequest {
 
         _FinalStage groupId(String groupId);
 
-        _FinalStage guarantor(Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> guarantor);
+        _FinalStage guarantor(Optional<GuarantorDetails> guarantor);
 
-        _FinalStage guarantor(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails guarantor);
+        _FinalStage guarantor(GuarantorDetails guarantor);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -159,7 +160,7 @@ public final class CreateInsuranceRequest {
 
         private VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured;
 
-        private Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> guarantor = Optional.empty();
+        private Optional<GuarantorDetails> guarantor = Optional.empty();
 
         private Optional<String> groupId = Optional.empty();
 
@@ -208,14 +209,14 @@ public final class CreateInsuranceRequest {
         }
 
         @java.lang.Override
-        public _FinalStage guarantor(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails guarantor) {
+        public _FinalStage guarantor(GuarantorDetails guarantor) {
             this.guarantor = Optional.of(guarantor);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "guarantor", nulls = Nulls.SKIP)
-        public _FinalStage guarantor(Optional<VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails> guarantor) {
+        public _FinalStage guarantor(Optional<GuarantorDetails> guarantor) {
             this.guarantor = guarantor;
             return this;
         }

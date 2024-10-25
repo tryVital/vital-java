@@ -32,7 +32,7 @@ public final class ClientFacingInsurance {
 
     private final Optional<String> groupId;
 
-    private final Optional<PersonDetailsOutput> guarantor;
+    private final Optional<GuarantorDetails> guarantor;
 
     private final Map<String, Object> additionalProperties;
 
@@ -43,7 +43,7 @@ public final class ClientFacingInsurance {
             PersonDetailsOutput insured,
             CompanyDetails company,
             Optional<String> groupId,
-            Optional<PersonDetailsOutput> guarantor,
+            Optional<GuarantorDetails> guarantor,
             Map<String, Object> additionalProperties) {
         this.memberId = memberId;
         this.payorCode = payorCode;
@@ -86,7 +86,7 @@ public final class ClientFacingInsurance {
     }
 
     @JsonProperty("guarantor")
-    public Optional<PersonDetailsOutput> getGuarantor() {
+    public Optional<GuarantorDetails> getGuarantor() {
         return guarantor;
     }
 
@@ -161,9 +161,9 @@ public final class ClientFacingInsurance {
 
         _FinalStage groupId(String groupId);
 
-        _FinalStage guarantor(Optional<PersonDetailsOutput> guarantor);
+        _FinalStage guarantor(Optional<GuarantorDetails> guarantor);
 
-        _FinalStage guarantor(PersonDetailsOutput guarantor);
+        _FinalStage guarantor(GuarantorDetails guarantor);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -179,7 +179,7 @@ public final class ClientFacingInsurance {
 
         private CompanyDetails company;
 
-        private Optional<PersonDetailsOutput> guarantor = Optional.empty();
+        private Optional<GuarantorDetails> guarantor = Optional.empty();
 
         private Optional<String> groupId = Optional.empty();
 
@@ -236,14 +236,14 @@ public final class ClientFacingInsurance {
         }
 
         @java.lang.Override
-        public _FinalStage guarantor(PersonDetailsOutput guarantor) {
+        public _FinalStage guarantor(GuarantorDetails guarantor) {
             this.guarantor = Optional.of(guarantor);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "guarantor", nulls = Nulls.SKIP)
-        public _FinalStage guarantor(Optional<PersonDetailsOutput> guarantor) {
+        public _FinalStage guarantor(Optional<GuarantorDetails> guarantor) {
             this.guarantor = guarantor;
             return this;
         }

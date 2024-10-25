@@ -10,7 +10,9 @@ public enum Billing {
 
     COMMERCIAL_INSURANCE("commercial_insurance"),
 
-    PATIENT_BILL_PASSTHROUGH("patient_bill_passthrough");
+    PATIENT_BILL_PASSTHROUGH("patient_bill_passthrough"),
+
+    PATIENT_BILL("patient_bill");
 
     private final String value;
 

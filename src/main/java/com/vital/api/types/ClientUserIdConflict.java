@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public final class ClientUserIdConflict {
 
     private final String userId;
 
-    private final OffsetDateTime createdOn;
+    private final String createdOn;
 
     private final Map<String, Object> additionalProperties;
 
@@ -33,7 +32,7 @@ public final class ClientUserIdConflict {
             String errorType,
             String errorMessage,
             String userId,
-            OffsetDateTime createdOn,
+            String createdOn,
             Map<String, Object> additionalProperties) {
         this.errorType = errorType;
         this.errorMessage = errorMessage;
@@ -58,7 +57,7 @@ public final class ClientUserIdConflict {
     }
 
     @JsonProperty("created_on")
-    public OffsetDateTime getCreatedOn() {
+    public String getCreatedOn() {
         return createdOn;
     }
 
@@ -109,7 +108,7 @@ public final class ClientUserIdConflict {
     }
 
     public interface CreatedOnStage {
-        _FinalStage createdOn(OffsetDateTime createdOn);
+        _FinalStage createdOn(String createdOn);
     }
 
     public interface _FinalStage {
@@ -125,7 +124,7 @@ public final class ClientUserIdConflict {
 
         private String userId;
 
-        private OffsetDateTime createdOn;
+        private String createdOn;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -164,7 +163,7 @@ public final class ClientUserIdConflict {
 
         @java.lang.Override
         @JsonSetter("created_on")
-        public _FinalStage createdOn(OffsetDateTime createdOn) {
+        public _FinalStage createdOn(String createdOn) {
             this.createdOn = createdOn;
             return this;
         }
