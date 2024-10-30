@@ -32,7 +32,9 @@ public enum OAuthProviders {
 
     WHOOP_V_2("whoop_v2"),
 
-    MY_FITNESS_PAL_V_2("my_fitness_pal_v2");
+    MY_FITNESS_PAL_V_2("my_fitness_pal_v2"),
+
+    ULTRAHUMAN("ultrahuman");
 
     private final String value;
 
