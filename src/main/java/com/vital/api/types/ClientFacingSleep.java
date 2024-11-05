@@ -32,6 +32,8 @@ public final class ClientFacingSleep {
 
     private final String bedtimeStop;
 
+    private final SleepType type;
+
     private final Optional<Integer> timezoneOffset;
 
     private final int duration;
@@ -81,6 +83,7 @@ public final class ClientFacingSleep {
             String calendarDate,
             String bedtimeStart,
             String bedtimeStop,
+            SleepType type,
             Optional<Integer> timezoneOffset,
             int duration,
             int total,
@@ -108,6 +111,7 @@ public final class ClientFacingSleep {
         this.calendarDate = calendarDate;
         this.bedtimeStart = bedtimeStart;
         this.bedtimeStop = bedtimeStop;
+        this.type = type;
         this.timezoneOffset = timezoneOffset;
         this.duration = duration;
         this.total = total;
@@ -174,6 +178,17 @@ public final class ClientFacingSleep {
     @JsonProperty("bedtime_stop")
     public String getBedtimeStop() {
         return bedtimeStop;
+    }
+
+    /**
+     * @return <code>long_sleep</code>: &gt;=3 hours of sleep;
+     * <code>short_sleep</code>: &lt;3 hours of sleep that was ended before 6:00 PM in local time;
+     * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
+     * <code>indeterminate</code>: The sleep session recording is ongoing.
+     */
+    @JsonProperty("type")
+    public SleepType getType() {
+        return type;
     }
 
     /**
@@ -351,6 +366,7 @@ public final class ClientFacingSleep {
                 && calendarDate.equals(other.calendarDate)
                 && bedtimeStart.equals(other.bedtimeStart)
                 && bedtimeStop.equals(other.bedtimeStop)
+                && type.equals(other.type)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && duration == other.duration
                 && total == other.total
@@ -382,6 +398,7 @@ public final class ClientFacingSleep {
                 this.calendarDate,
                 this.bedtimeStart,
                 this.bedtimeStop,
+                this.type,
                 this.timezoneOffset,
                 this.duration,
                 this.total,
@@ -436,7 +453,11 @@ public final class ClientFacingSleep {
     }
 
     public interface BedtimeStopStage {
-        DurationStage bedtimeStop(String bedtimeStop);
+        TypeStage bedtimeStop(String bedtimeStop);
+    }
+
+    public interface TypeStage {
+        DurationStage type(SleepType type);
     }
 
     public interface DurationStage {
@@ -531,6 +552,7 @@ public final class ClientFacingSleep {
                     CalendarDateStage,
                     BedtimeStartStage,
                     BedtimeStopStage,
+                    TypeStage,
                     DurationStage,
                     TotalStage,
                     AwakeStage,
@@ -550,6 +572,8 @@ public final class ClientFacingSleep {
         private String bedtimeStart;
 
         private String bedtimeStop;
+
+        private SleepType type;
 
         private int duration;
 
@@ -604,6 +628,7 @@ public final class ClientFacingSleep {
             calendarDate(other.getCalendarDate());
             bedtimeStart(other.getBedtimeStart());
             bedtimeStop(other.getBedtimeStop());
+            type(other.getType());
             timezoneOffset(other.getTimezoneOffset());
             duration(other.getDuration());
             total(other.getTotal());
@@ -684,8 +709,22 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         @JsonSetter("bedtime_stop")
-        public DurationStage bedtimeStop(String bedtimeStop) {
+        public TypeStage bedtimeStop(String bedtimeStop) {
             this.bedtimeStop = bedtimeStop;
+            return this;
+        }
+
+        /**
+         * <p><code>long_sleep</code>: &gt;=3 hours of sleep;
+         * <code>short_sleep</code>: &lt;3 hours of sleep that was ended before 6:00 PM in local time;
+         * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
+         * <code>indeterminate</code>: The sleep session recording is ongoing.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("type")
+        public DurationStage type(SleepType type) {
+            this.type = type;
             return this;
         }
 
@@ -992,6 +1031,7 @@ public final class ClientFacingSleep {
                     calendarDate,
                     bedtimeStart,
                     bedtimeStop,
+                    type,
                     timezoneOffset,
                     duration,
                     total,

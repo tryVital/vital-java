@@ -44,6 +44,10 @@ public final class QueryInstructionSelectItem {
             return visitor.visit((IndexColumnExpr) this.value);
         } else if (this.type == 6) {
             return visitor.visit((GroupKeyColumnExpr) this.value);
+        } else if (this.type == 7) {
+            return visitor.visit((SleepScoreValueMacroExpr) this.value);
+        } else if (this.type == 8) {
+            return visitor.visit((UnrecognizedValueMacroExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -96,6 +100,14 @@ public final class QueryInstructionSelectItem {
         return new QueryInstructionSelectItem(value, 6);
     }
 
+    public static QueryInstructionSelectItem of(SleepScoreValueMacroExpr value) {
+        return new QueryInstructionSelectItem(value, 7);
+    }
+
+    public static QueryInstructionSelectItem of(UnrecognizedValueMacroExpr value) {
+        return new QueryInstructionSelectItem(value, 8);
+    }
+
     public interface Visitor<T> {
         T visit(AggregateExpr value);
 
@@ -110,6 +122,10 @@ public final class QueryInstructionSelectItem {
         T visit(IndexColumnExpr value);
 
         T visit(GroupKeyColumnExpr value);
+
+        T visit(SleepScoreValueMacroExpr value);
+
+        T visit(UnrecognizedValueMacroExpr value);
     }
 
     static final class Deserializer extends StdDeserializer<QueryInstructionSelectItem> {
@@ -146,6 +162,14 @@ public final class QueryInstructionSelectItem {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, GroupKeyColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepScoreValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UnrecognizedValueMacroExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

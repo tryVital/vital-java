@@ -24,7 +24,7 @@ import java.util.Optional;
 public final class QueryInstruction {
     private final List<QueryInstructionSelectItem> select;
 
-    private final List<QueryInstructionGroupByItem> groupBy;
+    private final Optional<List<QueryInstructionGroupByItem>> groupBy;
 
     private final Optional<Boolean> splitBySource;
 
@@ -32,7 +32,7 @@ public final class QueryInstruction {
 
     private QueryInstruction(
             List<QueryInstructionSelectItem> select,
-            List<QueryInstructionGroupByItem> groupBy,
+            Optional<List<QueryInstructionGroupByItem>> groupBy,
             Optional<Boolean> splitBySource,
             Map<String, Object> additionalProperties) {
         this.select = select;
@@ -47,7 +47,7 @@ public final class QueryInstruction {
     }
 
     @JsonProperty("group_by")
-    public List<QueryInstructionGroupByItem> getGroupBy() {
+    public Optional<List<QueryInstructionGroupByItem>> getGroupBy() {
         return groupBy;
     }
 
@@ -91,7 +91,7 @@ public final class QueryInstruction {
     public static final class Builder {
         private List<QueryInstructionSelectItem> select = new ArrayList<>();
 
-        private List<QueryInstructionGroupByItem> groupBy = new ArrayList<>();
+        private Optional<List<QueryInstructionGroupByItem>> groupBy = Optional.empty();
 
         private Optional<Boolean> splitBySource = Optional.empty();
 
@@ -125,19 +125,13 @@ public final class QueryInstruction {
         }
 
         @JsonSetter(value = "group_by", nulls = Nulls.SKIP)
+        public Builder groupBy(Optional<List<QueryInstructionGroupByItem>> groupBy) {
+            this.groupBy = groupBy;
+            return this;
+        }
+
         public Builder groupBy(List<QueryInstructionGroupByItem> groupBy) {
-            this.groupBy.clear();
-            this.groupBy.addAll(groupBy);
-            return this;
-        }
-
-        public Builder addGroupBy(QueryInstructionGroupByItem groupBy) {
-            this.groupBy.add(groupBy);
-            return this;
-        }
-
-        public Builder addAllGroupBy(List<QueryInstructionGroupByItem> groupBy) {
-            this.groupBy.addAll(groupBy);
+            this.groupBy = Optional.of(groupBy);
             return this;
         }
 

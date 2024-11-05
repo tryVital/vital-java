@@ -42,6 +42,10 @@ public final class AggregateExprArg {
             return visitor.visit((IndexColumnExpr) this.value);
         } else if (this.type == 5) {
             return visitor.visit((GroupKeyColumnExpr) this.value);
+        } else if (this.type == 6) {
+            return visitor.visit((SleepScoreValueMacroExpr) this.value);
+        } else if (this.type == 7) {
+            return visitor.visit((UnrecognizedValueMacroExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -90,6 +94,14 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 5);
     }
 
+    public static AggregateExprArg of(SleepScoreValueMacroExpr value) {
+        return new AggregateExprArg(value, 6);
+    }
+
+    public static AggregateExprArg of(UnrecognizedValueMacroExpr value) {
+        return new AggregateExprArg(value, 7);
+    }
+
     public interface Visitor<T> {
         T visit(SleepColumnExpr value);
 
@@ -102,6 +114,10 @@ public final class AggregateExprArg {
         T visit(IndexColumnExpr value);
 
         T visit(GroupKeyColumnExpr value);
+
+        T visit(SleepScoreValueMacroExpr value);
+
+        T visit(UnrecognizedValueMacroExpr value);
     }
 
     static final class Deserializer extends StdDeserializer<AggregateExprArg> {
@@ -134,6 +150,14 @@ public final class AggregateExprArg {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, GroupKeyColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepScoreValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UnrecognizedValueMacroExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
