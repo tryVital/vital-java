@@ -80,6 +80,8 @@ public enum ClientFacingResource {
 
     MENSTRUAL_CYCLE("menstrual_cycle"),
 
+    SLEEP_CYCLE("sleep_cycle"),
+
     ELECTROCARDIOGRAM_VOLTAGE("electrocardiogram_voltage"),
 
     WORKOUT_DURATION("workout_duration"),

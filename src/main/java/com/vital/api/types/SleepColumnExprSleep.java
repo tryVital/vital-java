@@ -12,6 +12,8 @@ public enum SleepColumnExprSleep {
 
     STATE("state"),
 
+    TYPE("type"),
+
     DURATION_SECOND("duration_second"),
 
     STAGE_ASLEEP_SECOND("stage_asleep_second"),

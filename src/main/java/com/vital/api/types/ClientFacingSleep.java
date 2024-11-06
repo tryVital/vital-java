@@ -182,9 +182,9 @@ public final class ClientFacingSleep {
 
     /**
      * @return <code>long_sleep</code>: &gt;=3 hours of sleep;
-     * <code>short_sleep</code>: &lt;3 hours of sleep that was ended before 6:00 PM in local time;
+     * <code>short_sleep</code>: &lt;3 hours of sleep;
      * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
-     * <code>indeterminate</code>: The sleep session recording is ongoing.
+     * <code>unknown</code>: The sleep session recording is ongoing.
      */
     @JsonProperty("type")
     public SleepType getType() {
@@ -716,9 +716,9 @@ public final class ClientFacingSleep {
 
         /**
          * <p><code>long_sleep</code>: &gt;=3 hours of sleep;
-         * <code>short_sleep</code>: &lt;3 hours of sleep that was ended before 6:00 PM in local time;
+         * <code>short_sleep</code>: &lt;3 hours of sleep;
          * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
-         * <code>indeterminate</code>: The sleep session recording is ongoing.</p>
+         * <code>unknown</code>: The sleep session recording is ongoing.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
