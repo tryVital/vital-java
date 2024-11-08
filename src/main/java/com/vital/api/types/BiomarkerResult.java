@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,6 +53,8 @@ public final class BiomarkerResult {
 
     private final Optional<String> providerId;
 
+    private final Optional<List<ParentBiomarkerData>> sourceMarkers;
+
     private final Map<String, Object> additionalProperties;
 
     private BiomarkerResult(
@@ -71,6 +74,7 @@ public final class BiomarkerResult {
             Optional<String> loinc,
             Optional<String> loincSlug,
             Optional<String> providerId,
+            Optional<List<ParentBiomarkerData>> sourceMarkers,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
@@ -88,6 +92,7 @@ public final class BiomarkerResult {
         this.loinc = loinc;
         this.loincSlug = loincSlug;
         this.providerId = providerId;
+        this.sourceMarkers = sourceMarkers;
         this.additionalProperties = additionalProperties;
     }
 
@@ -171,6 +176,11 @@ public final class BiomarkerResult {
         return providerId;
     }
 
+    @JsonProperty("source_markers")
+    public Optional<List<ParentBiomarkerData>> getSourceMarkers() {
+        return sourceMarkers;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -198,7 +208,8 @@ public final class BiomarkerResult {
                 && interpretation.equals(other.interpretation)
                 && loinc.equals(other.loinc)
                 && loincSlug.equals(other.loincSlug)
-                && providerId.equals(other.providerId);
+                && providerId.equals(other.providerId)
+                && sourceMarkers.equals(other.sourceMarkers);
     }
 
     @java.lang.Override
@@ -219,7 +230,8 @@ public final class BiomarkerResult {
                 this.interpretation,
                 this.loinc,
                 this.loincSlug,
-                this.providerId);
+                this.providerId,
+                this.sourceMarkers);
     }
 
     @java.lang.Override
@@ -299,6 +311,10 @@ public final class BiomarkerResult {
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
+
+        _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers);
+
+        _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -310,6 +326,8 @@ public final class BiomarkerResult {
         private String result;
 
         private ResultType type;
+
+        private Optional<List<ParentBiomarkerData>> sourceMarkers = Optional.empty();
 
         private Optional<String> providerId = Optional.empty();
 
@@ -358,6 +376,7 @@ public final class BiomarkerResult {
             loinc(other.getLoinc());
             loincSlug(other.getLoincSlug());
             providerId(other.getProviderId());
+            sourceMarkers(other.getSourceMarkers());
             return this;
         }
 
@@ -386,6 +405,19 @@ public final class BiomarkerResult {
         @JsonSetter("type")
         public _FinalStage type(ResultType type) {
             this.type = type;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers) {
+            this.sourceMarkers = Optional.of(sourceMarkers);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_markers", nulls = Nulls.SKIP)
+        public _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers) {
+            this.sourceMarkers = sourceMarkers;
             return this;
         }
 
@@ -564,6 +596,7 @@ public final class BiomarkerResult {
                     loinc,
                     loincSlug,
                     providerId,
+                    sourceMarkers,
                     additionalProperties);
         }
     }

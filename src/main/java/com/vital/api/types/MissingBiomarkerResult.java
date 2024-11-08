@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,6 +35,8 @@ public final class MissingBiomarkerResult {
 
     private final Optional<String> providerId;
 
+    private final Optional<List<ParentBiomarkerData>> sourceMarkers;
+
     private final Map<String, Object> additionalProperties;
 
     private MissingBiomarkerResult(
@@ -44,6 +47,7 @@ public final class MissingBiomarkerResult {
             Optional<String> loinc,
             Optional<String> loincSlug,
             Optional<String> providerId,
+            Optional<List<ParentBiomarkerData>> sourceMarkers,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
@@ -52,6 +56,7 @@ public final class MissingBiomarkerResult {
         this.loinc = loinc;
         this.loincSlug = loincSlug;
         this.providerId = providerId;
+        this.sourceMarkers = sourceMarkers;
         this.additionalProperties = additionalProperties;
     }
 
@@ -90,6 +95,11 @@ public final class MissingBiomarkerResult {
         return providerId;
     }
 
+    @JsonProperty("source_markers")
+    public Optional<List<ParentBiomarkerData>> getSourceMarkers() {
+        return sourceMarkers;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -108,13 +118,21 @@ public final class MissingBiomarkerResult {
                 && note.equals(other.note)
                 && loinc.equals(other.loinc)
                 && loincSlug.equals(other.loincSlug)
-                && providerId.equals(other.providerId);
+                && providerId.equals(other.providerId)
+                && sourceMarkers.equals(other.sourceMarkers);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name, this.slug, this.inferredFailureType, this.note, this.loinc, this.loincSlug, this.providerId);
+                this.name,
+                this.slug,
+                this.inferredFailureType,
+                this.note,
+                this.loinc,
+                this.loincSlug,
+                this.providerId,
+                this.sourceMarkers);
     }
 
     @java.lang.Override
@@ -158,6 +176,10 @@ public final class MissingBiomarkerResult {
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
+
+        _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers);
+
+        _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -167,6 +189,8 @@ public final class MissingBiomarkerResult {
         private String slug;
 
         private FailureType inferredFailureType;
+
+        private Optional<List<ParentBiomarkerData>> sourceMarkers = Optional.empty();
 
         private Optional<String> providerId = Optional.empty();
 
@@ -190,6 +214,7 @@ public final class MissingBiomarkerResult {
             loinc(other.getLoinc());
             loincSlug(other.getLoincSlug());
             providerId(other.getProviderId());
+            sourceMarkers(other.getSourceMarkers());
             return this;
         }
 
@@ -211,6 +236,19 @@ public final class MissingBiomarkerResult {
         @JsonSetter("inferred_failure_type")
         public _FinalStage inferredFailureType(FailureType inferredFailureType) {
             this.inferredFailureType = inferredFailureType;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers) {
+            this.sourceMarkers = Optional.of(sourceMarkers);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_markers", nulls = Nulls.SKIP)
+        public _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers) {
+            this.sourceMarkers = sourceMarkers;
             return this;
         }
 
@@ -269,7 +307,15 @@ public final class MissingBiomarkerResult {
         @java.lang.Override
         public MissingBiomarkerResult build() {
             return new MissingBiomarkerResult(
-                    name, slug, inferredFailureType, note, loinc, loincSlug, providerId, additionalProperties);
+                    name,
+                    slug,
+                    inferredFailureType,
+                    note,
+                    loinc,
+                    loincSlug,
+                    providerId,
+                    sourceMarkers,
+                    additionalProperties);
         }
     }
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.LinkRequirements;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,16 +27,20 @@ public final class LinkTokenBase {
 
     private final Optional<Map<String, Object>> oauthInfo;
 
+    private final Optional<LinkRequirements> requirements;
+
     private final Map<String, Object> additionalProperties;
 
     private LinkTokenBase(
             String token,
             Optional<Boolean> isUsed,
             Optional<Map<String, Object>> oauthInfo,
+            Optional<LinkRequirements> requirements,
             Map<String, Object> additionalProperties) {
         this.token = token;
         this.isUsed = isUsed;
         this.oauthInfo = oauthInfo;
+        this.requirements = requirements;
         this.additionalProperties = additionalProperties;
     }
 
@@ -54,6 +59,11 @@ public final class LinkTokenBase {
         return oauthInfo;
     }
 
+    @JsonProperty("requirements")
+    public Optional<LinkRequirements> getRequirements() {
+        return requirements;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -66,12 +76,15 @@ public final class LinkTokenBase {
     }
 
     private boolean equalTo(LinkTokenBase other) {
-        return token.equals(other.token) && isUsed.equals(other.isUsed) && oauthInfo.equals(other.oauthInfo);
+        return token.equals(other.token)
+                && isUsed.equals(other.isUsed)
+                && oauthInfo.equals(other.oauthInfo)
+                && requirements.equals(other.requirements);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.token, this.isUsed, this.oauthInfo);
+        return Objects.hash(this.token, this.isUsed, this.oauthInfo, this.requirements);
     }
 
     @java.lang.Override
@@ -99,11 +112,17 @@ public final class LinkTokenBase {
         _FinalStage oauthInfo(Optional<Map<String, Object>> oauthInfo);
 
         _FinalStage oauthInfo(Map<String, Object> oauthInfo);
+
+        _FinalStage requirements(Optional<LinkRequirements> requirements);
+
+        _FinalStage requirements(LinkRequirements requirements);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TokenStage, _FinalStage {
         private String token;
+
+        private Optional<LinkRequirements> requirements = Optional.empty();
 
         private Optional<Map<String, Object>> oauthInfo = Optional.empty();
 
@@ -119,6 +138,7 @@ public final class LinkTokenBase {
             token(other.getToken());
             isUsed(other.getIsUsed());
             oauthInfo(other.getOauthInfo());
+            requirements(other.getRequirements());
             return this;
         }
 
@@ -126,6 +146,19 @@ public final class LinkTokenBase {
         @JsonSetter("token")
         public _FinalStage token(String token) {
             this.token = token;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage requirements(LinkRequirements requirements) {
+            this.requirements = Optional.of(requirements);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "requirements", nulls = Nulls.SKIP)
+        public _FinalStage requirements(Optional<LinkRequirements> requirements) {
+            this.requirements = requirements;
             return this;
         }
 
@@ -157,7 +190,7 @@ public final class LinkTokenBase {
 
         @java.lang.Override
         public LinkTokenBase build() {
-            return new LinkTokenBase(token, isUsed, oauthInfo, additionalProperties);
+            return new LinkTokenBase(token, isUsed, oauthInfo, requirements, additionalProperties);
         }
     }
 }
