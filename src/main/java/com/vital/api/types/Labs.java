@@ -22,7 +22,9 @@ public enum Labs {
 
     MANUAL("manual"),
 
-    SANOCARDIO("sanocardio");
+    SANOCARDIO("sanocardio"),
+
+    IHD("ihd");
 
     private final String value;
 

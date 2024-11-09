@@ -18,6 +18,7 @@ import com.vital.api.resources.menstrualcycle.MenstrualCycleClient;
 import com.vital.api.resources.profile.ProfileClient;
 import com.vital.api.resources.providers.ProvidersClient;
 import com.vital.api.resources.sleep.SleepClient;
+import com.vital.api.resources.sleepcycle.SleepCycleClient;
 import com.vital.api.resources.team.TeamClient;
 import com.vital.api.resources.testkit.TestkitClient;
 import com.vital.api.resources.user.UserClient;
@@ -29,6 +30,8 @@ public class Vital {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<LinkClient> linkClient;
+
+    protected final Supplier<SleepCycleClient> sleepCycleClient;
 
     protected final Supplier<ProfileClient> profileClient;
 
@@ -67,6 +70,7 @@ public class Vital {
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
+        this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
         this.devicesClient = Suppliers.memoize(() -> new DevicesClient(clientOptions));
         this.activityClient = Suppliers.memoize(() -> new ActivityClient(clientOptions));
@@ -88,6 +92,10 @@ public class Vital {
 
     public LinkClient link() {
         return this.linkClient.get();
+    }
+
+    public SleepCycleClient sleepCycle() {
+        return this.sleepCycleClient.get();
     }
 
     public ProfileClient profile() {
