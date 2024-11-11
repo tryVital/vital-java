@@ -21,9 +21,9 @@ import com.vital.api.resources.link.requests.IndividualProviderData;
 import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
 import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
 import com.vital.api.resources.link.requests.LinkGetAllProvidersRequest;
-import com.vital.api.resources.link.requests.LinkTokenBase;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
 import com.vital.api.resources.link.requests.LinkTokenStateRequest;
+import com.vital.api.resources.link.requests.LinkTokenValidationRequest;
 import com.vital.api.resources.link.requests.ManualConnectionData;
 import com.vital.api.resources.link.requests.PasswordAuthLink;
 import com.vital.api.types.ConnectionStatus;
@@ -121,11 +121,11 @@ public class LinkClient {
         }
     }
 
-    public Map<String, Object> isTokenValid(LinkTokenBase request) {
+    public Map<String, Object> isTokenValid(LinkTokenValidationRequest request) {
         return isTokenValid(request, null);
     }
 
-    public Map<String, Object> isTokenValid(LinkTokenBase request, RequestOptions requestOptions) {
+    public Map<String, Object> isTokenValid(LinkTokenValidationRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/token/isValid")
