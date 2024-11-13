@@ -48,9 +48,9 @@ public enum WorkoutColumnExprWorkout {
 
     ELEVATION_MINIMUM_METER("elevation_minimum_meter"),
 
-    AVERAGE_SPEED("average_speed"),
+    SPEED_MEAN("speed_mean"),
 
-    MAX_SPEED("max_speed"),
+    SPEED_MAXIMUM("speed_maximum"),
 
     POWER_SOURCE("power_source"),
 
