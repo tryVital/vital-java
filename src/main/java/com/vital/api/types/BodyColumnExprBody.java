@@ -10,7 +10,13 @@ public enum BodyColumnExprBody {
 
     WEIGHT_KILOGRAM("weight_kilogram"),
 
-    FAT_PERCENTAGE("fat_percentage"),
+    FAT_MASS_PERCENTAGE("fat_mass_percentage"),
+
+    WATER_PERCENTAGE("water_percentage"),
+
+    MUSCLE_MASS_PERCENTAGE("muscle_mass_percentage"),
+
+    VISCERAL_FAT_INDEX("visceral_fat_index"),
 
     SOURCE_TYPE("source_type"),
 

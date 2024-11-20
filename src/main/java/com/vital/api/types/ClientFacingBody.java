@@ -32,6 +32,12 @@ public final class ClientFacingBody {
 
     private final Optional<Double> fat;
 
+    private final Optional<Double> waterPercentage;
+
+    private final Optional<Double> muscleMassPercentage;
+
+    private final Optional<Double> visceralFatIndex;
+
     private final ClientFacingSource source;
 
     private final Map<String, Object> additionalProperties;
@@ -43,6 +49,9 @@ public final class ClientFacingBody {
             String calendarDate,
             Optional<Double> weight,
             Optional<Double> fat,
+            Optional<Double> waterPercentage,
+            Optional<Double> muscleMassPercentage,
+            Optional<Double> visceralFatIndex,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -51,6 +60,9 @@ public final class ClientFacingBody {
         this.calendarDate = calendarDate;
         this.weight = weight;
         this.fat = fat;
+        this.waterPercentage = waterPercentage;
+        this.muscleMassPercentage = muscleMassPercentage;
+        this.visceralFatIndex = visceralFatIndex;
         this.source = source;
         this.additionalProperties = additionalProperties;
     }
@@ -93,11 +105,35 @@ public final class ClientFacingBody {
     }
 
     /**
-     * @return Body fat percentage::perc
+     * @return Total body fat percentage::perc
      */
     @JsonProperty("fat")
     public Optional<Double> getFat() {
         return fat;
+    }
+
+    /**
+     * @return Water percentage in the body::perc
+     */
+    @JsonProperty("water_percentage")
+    public Optional<Double> getWaterPercentage() {
+        return waterPercentage;
+    }
+
+    /**
+     * @return Muscle mass percentage in the body::perc
+     */
+    @JsonProperty("muscle_mass_percentage")
+    public Optional<Double> getMuscleMassPercentage() {
+        return muscleMassPercentage;
+    }
+
+    /**
+     * @return Visceral fat index::scalar
+     */
+    @JsonProperty("visceral_fat_index")
+    public Optional<Double> getVisceralFatIndex() {
+        return visceralFatIndex;
     }
 
     @JsonProperty("source")
@@ -123,12 +159,25 @@ public final class ClientFacingBody {
                 && calendarDate.equals(other.calendarDate)
                 && weight.equals(other.weight)
                 && fat.equals(other.fat)
+                && waterPercentage.equals(other.waterPercentage)
+                && muscleMassPercentage.equals(other.muscleMassPercentage)
+                && visceralFatIndex.equals(other.visceralFatIndex)
                 && source.equals(other.source);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.id, this.date, this.calendarDate, this.weight, this.fat, this.source);
+        return Objects.hash(
+                this.userId,
+                this.id,
+                this.date,
+                this.calendarDate,
+                this.weight,
+                this.fat,
+                this.waterPercentage,
+                this.muscleMassPercentage,
+                this.visceralFatIndex,
+                this.source);
     }
 
     @java.lang.Override
@@ -172,6 +221,18 @@ public final class ClientFacingBody {
         _FinalStage fat(Optional<Double> fat);
 
         _FinalStage fat(Double fat);
+
+        _FinalStage waterPercentage(Optional<Double> waterPercentage);
+
+        _FinalStage waterPercentage(Double waterPercentage);
+
+        _FinalStage muscleMassPercentage(Optional<Double> muscleMassPercentage);
+
+        _FinalStage muscleMassPercentage(Double muscleMassPercentage);
+
+        _FinalStage visceralFatIndex(Optional<Double> visceralFatIndex);
+
+        _FinalStage visceralFatIndex(Double visceralFatIndex);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -186,6 +247,12 @@ public final class ClientFacingBody {
         private String calendarDate;
 
         private ClientFacingSource source;
+
+        private Optional<Double> visceralFatIndex = Optional.empty();
+
+        private Optional<Double> muscleMassPercentage = Optional.empty();
+
+        private Optional<Double> waterPercentage = Optional.empty();
 
         private Optional<Double> fat = Optional.empty();
 
@@ -204,6 +271,9 @@ public final class ClientFacingBody {
             calendarDate(other.getCalendarDate());
             weight(other.getWeight());
             fat(other.getFat());
+            waterPercentage(other.getWaterPercentage());
+            muscleMassPercentage(other.getMuscleMassPercentage());
+            visceralFatIndex(other.getVisceralFatIndex());
             source(other.getSource());
             return this;
         }
@@ -256,7 +326,58 @@ public final class ClientFacingBody {
         }
 
         /**
-         * <p>Body fat percentage::perc</p>
+         * <p>Visceral fat index::scalar</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage visceralFatIndex(Double visceralFatIndex) {
+            this.visceralFatIndex = Optional.of(visceralFatIndex);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "visceral_fat_index", nulls = Nulls.SKIP)
+        public _FinalStage visceralFatIndex(Optional<Double> visceralFatIndex) {
+            this.visceralFatIndex = visceralFatIndex;
+            return this;
+        }
+
+        /**
+         * <p>Muscle mass percentage in the body::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage muscleMassPercentage(Double muscleMassPercentage) {
+            this.muscleMassPercentage = Optional.of(muscleMassPercentage);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "muscle_mass_percentage", nulls = Nulls.SKIP)
+        public _FinalStage muscleMassPercentage(Optional<Double> muscleMassPercentage) {
+            this.muscleMassPercentage = muscleMassPercentage;
+            return this;
+        }
+
+        /**
+         * <p>Water percentage in the body::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage waterPercentage(Double waterPercentage) {
+            this.waterPercentage = Optional.of(waterPercentage);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "water_percentage", nulls = Nulls.SKIP)
+        public _FinalStage waterPercentage(Optional<Double> waterPercentage) {
+            this.waterPercentage = waterPercentage;
+            return this;
+        }
+
+        /**
+         * <p>Total body fat percentage::perc</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -291,7 +412,18 @@ public final class ClientFacingBody {
 
         @java.lang.Override
         public ClientFacingBody build() {
-            return new ClientFacingBody(userId, id, date, calendarDate, weight, fat, source, additionalProperties);
+            return new ClientFacingBody(
+                    userId,
+                    id,
+                    date,
+                    calendarDate,
+                    weight,
+                    fat,
+                    waterPercentage,
+                    muscleMassPercentage,
+                    visceralFatIndex,
+                    source,
+                    additionalProperties);
         }
     }
 }
