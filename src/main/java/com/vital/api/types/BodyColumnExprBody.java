@@ -18,6 +18,8 @@ public enum BodyColumnExprBody {
 
     VISCERAL_FAT_INDEX("visceral_fat_index"),
 
+    BONE_MASS_PERCENTAGE("bone_mass_percentage"),
+
     SOURCE_TYPE("source_type"),
 
     SOURCE_PROVIDER("source_provider"),

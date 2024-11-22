@@ -38,6 +38,8 @@ public final class ClientFacingBody {
 
     private final Optional<Double> visceralFatIndex;
 
+    private final Optional<Double> boneMassPercentage;
+
     private final ClientFacingSource source;
 
     private final Map<String, Object> additionalProperties;
@@ -52,6 +54,7 @@ public final class ClientFacingBody {
             Optional<Double> waterPercentage,
             Optional<Double> muscleMassPercentage,
             Optional<Double> visceralFatIndex,
+            Optional<Double> boneMassPercentage,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -63,6 +66,7 @@ public final class ClientFacingBody {
         this.waterPercentage = waterPercentage;
         this.muscleMassPercentage = muscleMassPercentage;
         this.visceralFatIndex = visceralFatIndex;
+        this.boneMassPercentage = boneMassPercentage;
         this.source = source;
         this.additionalProperties = additionalProperties;
     }
@@ -136,6 +140,14 @@ public final class ClientFacingBody {
         return visceralFatIndex;
     }
 
+    /**
+     * @return Bone mass percentage in the body::perc
+     */
+    @JsonProperty("bone_mass_percentage")
+    public Optional<Double> getBoneMassPercentage() {
+        return boneMassPercentage;
+    }
+
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
@@ -162,6 +174,7 @@ public final class ClientFacingBody {
                 && waterPercentage.equals(other.waterPercentage)
                 && muscleMassPercentage.equals(other.muscleMassPercentage)
                 && visceralFatIndex.equals(other.visceralFatIndex)
+                && boneMassPercentage.equals(other.boneMassPercentage)
                 && source.equals(other.source);
     }
 
@@ -177,6 +190,7 @@ public final class ClientFacingBody {
                 this.waterPercentage,
                 this.muscleMassPercentage,
                 this.visceralFatIndex,
+                this.boneMassPercentage,
                 this.source);
     }
 
@@ -233,6 +247,10 @@ public final class ClientFacingBody {
         _FinalStage visceralFatIndex(Optional<Double> visceralFatIndex);
 
         _FinalStage visceralFatIndex(Double visceralFatIndex);
+
+        _FinalStage boneMassPercentage(Optional<Double> boneMassPercentage);
+
+        _FinalStage boneMassPercentage(Double boneMassPercentage);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -247,6 +265,8 @@ public final class ClientFacingBody {
         private String calendarDate;
 
         private ClientFacingSource source;
+
+        private Optional<Double> boneMassPercentage = Optional.empty();
 
         private Optional<Double> visceralFatIndex = Optional.empty();
 
@@ -274,6 +294,7 @@ public final class ClientFacingBody {
             waterPercentage(other.getWaterPercentage());
             muscleMassPercentage(other.getMuscleMassPercentage());
             visceralFatIndex(other.getVisceralFatIndex());
+            boneMassPercentage(other.getBoneMassPercentage());
             source(other.getSource());
             return this;
         }
@@ -322,6 +343,23 @@ public final class ClientFacingBody {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        /**
+         * <p>Bone mass percentage in the body::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage boneMassPercentage(Double boneMassPercentage) {
+            this.boneMassPercentage = Optional.of(boneMassPercentage);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "bone_mass_percentage", nulls = Nulls.SKIP)
+        public _FinalStage boneMassPercentage(Optional<Double> boneMassPercentage) {
+            this.boneMassPercentage = boneMassPercentage;
             return this;
         }
 
@@ -422,6 +460,7 @@ public final class ClientFacingBody {
                     waterPercentage,
                     muscleMassPercentage,
                     visceralFatIndex,
+                    boneMassPercentage,
                     source,
                     additionalProperties);
         }
