@@ -13,13 +13,13 @@ import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = SleepCycleSourceProvider.Deserializer.class)
-public final class SleepCycleSourceProvider {
+@JsonDeserialize(using = ClientFacingSleepCycleSourceProvider.Deserializer.class)
+public final class ClientFacingSleepCycleSourceProvider {
     private final Object value;
 
     private final int type;
 
-    private SleepCycleSourceProvider(Object value, int type) {
+    private ClientFacingSleepCycleSourceProvider(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -41,10 +41,11 @@ public final class SleepCycleSourceProvider {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SleepCycleSourceProvider && equalTo((SleepCycleSourceProvider) other);
+        return other instanceof ClientFacingSleepCycleSourceProvider
+                && equalTo((ClientFacingSleepCycleSourceProvider) other);
     }
 
-    private boolean equalTo(SleepCycleSourceProvider other) {
+    private boolean equalTo(ClientFacingSleepCycleSourceProvider other) {
         return value.equals(other.value);
     }
 
@@ -58,12 +59,12 @@ public final class SleepCycleSourceProvider {
         return this.value.toString();
     }
 
-    public static SleepCycleSourceProvider of(Providers value) {
-        return new SleepCycleSourceProvider(value, 0);
+    public static ClientFacingSleepCycleSourceProvider of(Providers value) {
+        return new ClientFacingSleepCycleSourceProvider(value, 0);
     }
 
-    public static SleepCycleSourceProvider of(Labs value) {
-        return new SleepCycleSourceProvider(value, 1);
+    public static ClientFacingSleepCycleSourceProvider of(Labs value) {
+        return new ClientFacingSleepCycleSourceProvider(value, 1);
     }
 
     public interface Visitor<T> {
@@ -72,13 +73,14 @@ public final class SleepCycleSourceProvider {
         T visit(Labs value);
     }
 
-    static final class Deserializer extends StdDeserializer<SleepCycleSourceProvider> {
+    static final class Deserializer extends StdDeserializer<ClientFacingSleepCycleSourceProvider> {
         Deserializer() {
-            super(SleepCycleSourceProvider.class);
+            super(ClientFacingSleepCycleSourceProvider.class);
         }
 
         @java.lang.Override
-        public SleepCycleSourceProvider deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public ClientFacingSleepCycleSourceProvider deserialize(JsonParser p, DeserializationContext ctxt)
+                throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Providers.class));

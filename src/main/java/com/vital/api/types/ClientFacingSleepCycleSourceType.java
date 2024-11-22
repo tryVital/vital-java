@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum SleepCycleSourceType {
+public enum ClientFacingSleepCycleSourceType {
     UNKNOWN("unknown"),
 
     PHONE("phone"),
@@ -34,7 +34,7 @@ public enum SleepCycleSourceType {
 
     private final String value;
 
-    SleepCycleSourceType(String value) {
+    ClientFacingSleepCycleSourceType(String value) {
         this.value = value;
     }
 

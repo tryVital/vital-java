@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,17 +20,17 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = HttpValidationError.Builder.class)
 public final class HttpValidationError {
-    private final Optional<List<ValidationError>> detail;
+    private final Optional<Object> detail;
 
     private final Map<String, Object> additionalProperties;
 
-    private HttpValidationError(Optional<List<ValidationError>> detail, Map<String, Object> additionalProperties) {
+    private HttpValidationError(Optional<Object> detail, Map<String, Object> additionalProperties) {
         this.detail = detail;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("detail")
-    public Optional<List<ValidationError>> getDetail() {
+    public Optional<Object> getDetail() {
         return detail;
     }
 
@@ -66,7 +65,7 @@ public final class HttpValidationError {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<List<ValidationError>> detail = Optional.empty();
+        private Optional<Object> detail = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -79,12 +78,12 @@ public final class HttpValidationError {
         }
 
         @JsonSetter(value = "detail", nulls = Nulls.SKIP)
-        public Builder detail(Optional<List<ValidationError>> detail) {
+        public Builder detail(Optional<Object> detail) {
             this.detail = detail;
             return this;
         }
 
-        public Builder detail(List<ValidationError> detail) {
+        public Builder detail(Object detail) {
             this.detail = Optional.of(detail);
             return this;
         }

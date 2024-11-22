@@ -21,17 +21,18 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientSleepCycleResponse.Builder.class)
 public final class ClientSleepCycleResponse {
-    private final List<SleepCycle> sleepCycle;
+    private final List<ClientFacingSleepCycle> sleepCycle;
 
     private final Map<String, Object> additionalProperties;
 
-    private ClientSleepCycleResponse(List<SleepCycle> sleepCycle, Map<String, Object> additionalProperties) {
+    private ClientSleepCycleResponse(
+            List<ClientFacingSleepCycle> sleepCycle, Map<String, Object> additionalProperties) {
         this.sleepCycle = sleepCycle;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("sleep_cycle")
-    public List<SleepCycle> getSleepCycle() {
+    public List<ClientFacingSleepCycle> getSleepCycle() {
         return sleepCycle;
     }
 
@@ -66,7 +67,7 @@ public final class ClientSleepCycleResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<SleepCycle> sleepCycle = new ArrayList<>();
+        private List<ClientFacingSleepCycle> sleepCycle = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -79,18 +80,18 @@ public final class ClientSleepCycleResponse {
         }
 
         @JsonSetter(value = "sleep_cycle", nulls = Nulls.SKIP)
-        public Builder sleepCycle(List<SleepCycle> sleepCycle) {
+        public Builder sleepCycle(List<ClientFacingSleepCycle> sleepCycle) {
             this.sleepCycle.clear();
             this.sleepCycle.addAll(sleepCycle);
             return this;
         }
 
-        public Builder addSleepCycle(SleepCycle sleepCycle) {
+        public Builder addSleepCycle(ClientFacingSleepCycle sleepCycle) {
             this.sleepCycle.add(sleepCycle);
             return this;
         }
 
-        public Builder addAllSleepCycle(List<SleepCycle> sleepCycle) {
+        public Builder addAllSleepCycle(List<ClientFacingSleepCycle> sleepCycle) {
             this.sleepCycle.addAll(sleepCycle);
             return this;
         }

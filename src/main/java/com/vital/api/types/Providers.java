@@ -76,7 +76,9 @@ public enum Providers {
 
     ULTRAHUMAN("ultrahuman"),
 
-    MY_FITNESS_PAL_V_2("my_fitness_pal_v2");
+    MY_FITNESS_PAL_V_2("my_fitness_pal_v2"),
+
+    MAP_MY_FITNESS("map_my_fitness");
 
     private final String value;
 

@@ -21,8 +21,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = SleepCycle.Builder.class)
-public final class SleepCycle {
+@JsonDeserialize(builder = ClientFacingSleepCycle.Builder.class)
+public final class ClientFacingSleepCycle {
     private final String id;
 
     private final String sleepId;
@@ -39,15 +39,19 @@ public final class SleepCycle {
 
     private final Optional<String> timeZone;
 
-    private final SleepCycleSourceProvider sourceProvider;
+    private final ClientFacingSleepCycleSourceProvider sourceProvider;
 
-    private final SleepCycleSourceType sourceType;
+    private final ClientFacingSleepCycleSourceType sourceType;
 
     private final Optional<String> sourceAppId;
 
+    private final String userId;
+
+    private final ClientFacingSource source;
+
     private final Map<String, Object> additionalProperties;
 
-    private SleepCycle(
+    private ClientFacingSleepCycle(
             String id,
             String sleepId,
             OffsetDateTime sessionStart,
@@ -56,9 +60,11 @@ public final class SleepCycle {
             List<Integer> stageEndOffsetSecond,
             List<Integer> stageType,
             Optional<String> timeZone,
-            SleepCycleSourceProvider sourceProvider,
-            SleepCycleSourceType sourceType,
+            ClientFacingSleepCycleSourceProvider sourceProvider,
+            ClientFacingSleepCycleSourceType sourceType,
             Optional<String> sourceAppId,
+            String userId,
+            ClientFacingSource source,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.sleepId = sleepId;
@@ -71,6 +77,8 @@ public final class SleepCycle {
         this.sourceProvider = sourceProvider;
         this.sourceType = sourceType;
         this.sourceAppId = sourceAppId;
+        this.userId = userId;
+        this.source = source;
         this.additionalProperties = additionalProperties;
     }
 
@@ -115,12 +123,12 @@ public final class SleepCycle {
     }
 
     @JsonProperty("source_provider")
-    public SleepCycleSourceProvider getSourceProvider() {
+    public ClientFacingSleepCycleSourceProvider getSourceProvider() {
         return sourceProvider;
     }
 
     @JsonProperty("source_type")
-    public SleepCycleSourceType getSourceType() {
+    public ClientFacingSleepCycleSourceType getSourceType() {
         return sourceType;
     }
 
@@ -129,10 +137,20 @@ public final class SleepCycle {
         return sourceAppId;
     }
 
+    @JsonProperty("user_id")
+    public String getUserId() {
+        return userId;
+    }
+
+    @JsonProperty("source")
+    public ClientFacingSource getSource() {
+        return source;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SleepCycle && equalTo((SleepCycle) other);
+        return other instanceof ClientFacingSleepCycle && equalTo((ClientFacingSleepCycle) other);
     }
 
     @JsonAnyGetter
@@ -140,7 +158,7 @@ public final class SleepCycle {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(SleepCycle other) {
+    private boolean equalTo(ClientFacingSleepCycle other) {
         return id.equals(other.id)
                 && sleepId.equals(other.sleepId)
                 && sessionStart.equals(other.sessionStart)
@@ -151,7 +169,9 @@ public final class SleepCycle {
                 && timeZone.equals(other.timeZone)
                 && sourceProvider.equals(other.sourceProvider)
                 && sourceType.equals(other.sourceType)
-                && sourceAppId.equals(other.sourceAppId);
+                && sourceAppId.equals(other.sourceAppId)
+                && userId.equals(other.userId)
+                && source.equals(other.source);
     }
 
     @java.lang.Override
@@ -167,7 +187,9 @@ public final class SleepCycle {
                 this.timeZone,
                 this.sourceProvider,
                 this.sourceType,
-                this.sourceAppId);
+                this.sourceAppId,
+                this.userId,
+                this.source);
     }
 
     @java.lang.Override
@@ -182,7 +204,7 @@ public final class SleepCycle {
     public interface IdStage {
         SleepIdStage id(String id);
 
-        Builder from(SleepCycle other);
+        Builder from(ClientFacingSleepCycle other);
     }
 
     public interface SleepIdStage {
@@ -198,15 +220,23 @@ public final class SleepCycle {
     }
 
     public interface SourceProviderStage {
-        SourceTypeStage sourceProvider(SleepCycleSourceProvider sourceProvider);
+        SourceTypeStage sourceProvider(ClientFacingSleepCycleSourceProvider sourceProvider);
     }
 
     public interface SourceTypeStage {
-        _FinalStage sourceType(SleepCycleSourceType sourceType);
+        UserIdStage sourceType(ClientFacingSleepCycleSourceType sourceType);
+    }
+
+    public interface UserIdStage {
+        SourceStage userId(String userId);
+    }
+
+    public interface SourceStage {
+        _FinalStage source(ClientFacingSource source);
     }
 
     public interface _FinalStage {
-        SleepCycle build();
+        ClientFacingSleepCycle build();
 
         _FinalStage stageStartOffsetSecond(List<Integer> stageStartOffsetSecond);
 
@@ -243,6 +273,8 @@ public final class SleepCycle {
                     SessionEndStage,
                     SourceProviderStage,
                     SourceTypeStage,
+                    UserIdStage,
+                    SourceStage,
                     _FinalStage {
         private String id;
 
@@ -252,9 +284,13 @@ public final class SleepCycle {
 
         private OffsetDateTime sessionEnd;
 
-        private SleepCycleSourceProvider sourceProvider;
+        private ClientFacingSleepCycleSourceProvider sourceProvider;
 
-        private SleepCycleSourceType sourceType;
+        private ClientFacingSleepCycleSourceType sourceType;
+
+        private String userId;
+
+        private ClientFacingSource source;
 
         private Optional<String> sourceAppId = Optional.empty();
 
@@ -272,7 +308,7 @@ public final class SleepCycle {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(SleepCycle other) {
+        public Builder from(ClientFacingSleepCycle other) {
             id(other.getId());
             sleepId(other.getSleepId());
             sessionStart(other.getSessionStart());
@@ -284,6 +320,8 @@ public final class SleepCycle {
             sourceProvider(other.getSourceProvider());
             sourceType(other.getSourceType());
             sourceAppId(other.getSourceAppId());
+            userId(other.getUserId());
+            source(other.getSource());
             return this;
         }
 
@@ -317,15 +355,29 @@ public final class SleepCycle {
 
         @java.lang.Override
         @JsonSetter("source_provider")
-        public SourceTypeStage sourceProvider(SleepCycleSourceProvider sourceProvider) {
+        public SourceTypeStage sourceProvider(ClientFacingSleepCycleSourceProvider sourceProvider) {
             this.sourceProvider = sourceProvider;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source_type")
-        public _FinalStage sourceType(SleepCycleSourceType sourceType) {
+        public UserIdStage sourceType(ClientFacingSleepCycleSourceType sourceType) {
             this.sourceType = sourceType;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("user_id")
+        public SourceStage userId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("source")
+        public _FinalStage source(ClientFacingSource source) {
+            this.source = source;
             return this;
         }
 
@@ -416,8 +468,8 @@ public final class SleepCycle {
         }
 
         @java.lang.Override
-        public SleepCycle build() {
-            return new SleepCycle(
+        public ClientFacingSleepCycle build() {
+            return new ClientFacingSleepCycle(
                     id,
                     sleepId,
                     sessionStart,
@@ -429,6 +481,8 @@ public final class SleepCycle {
                     sourceProvider,
                     sourceType,
                     sourceAppId,
+                    userId,
+                    source,
                     additionalProperties);
         }
     }
