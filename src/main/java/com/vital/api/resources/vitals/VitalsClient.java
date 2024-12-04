@@ -11,6 +11,7 @@ import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.errors.UnprocessableEntityError;
+import com.vital.api.resources.vitals.requests.VitalsAfibBurdenGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBloodOxygenGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBloodOxygenRequest;
 import com.vital.api.resources.vitals.requests.VitalsBloodPressureGroupedRequest;
@@ -42,6 +43,7 @@ import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedGroupedRequest
 import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedRequest;
 import com.vital.api.resources.vitals.requests.VitalsGlucoseGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsGlucoseRequest;
+import com.vital.api.resources.vitals.requests.VitalsHeartRateAlertGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartrateGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartrateRequest;
 import com.vital.api.resources.vitals.requests.VitalsHrvGroupedRequest;
@@ -79,9 +81,11 @@ import com.vital.api.types.ClientFacingDistanceTimeseries;
 import com.vital.api.types.ClientFacingElectrocardiogramVoltageTimeseries;
 import com.vital.api.types.ClientFacingFloorsClimbedTimeseries;
 import com.vital.api.types.ClientFacingGlucoseTimeseries;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample;
+import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingNoteSample;
 import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample;
@@ -134,6 +138,125 @@ public class VitalsClient {
 
     public VitalsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample heartRateAlertGrouped(
+            String userId, VitalsHeartRateAlertGroupedRequest request) {
+        return heartRateAlertGrouped(userId, request, null);
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample heartRateAlertGrouped(
+            String userId, VitalsHeartRateAlertGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("heart_rate_alert/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(),
+                        ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample afibBurdenGrouped(
+            String userId, VitalsAfibBurdenGroupedRequest request) {
+        return afibBurdenGrouped(userId, request, null);
+    }
+
+    public ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample afibBurdenGrouped(
+            String userId, VitalsAfibBurdenGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("afib_burden/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
     }
 
     public ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample workoutDurationGrouped(

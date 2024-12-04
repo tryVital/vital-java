@@ -64,6 +64,10 @@ public enum TimeseriesResource {
 
     MINDFULNESS_MINUTES("mindfulness_minutes"),
 
+    AFIB_BURDEN("afib_burden"),
+
+    HEART_RATE_ALERT("heart_rate_alert"),
+
     WORKOUT_DURATION("workout_duration"),
 
     INSULIN_INJECTION("insulin_injection"),

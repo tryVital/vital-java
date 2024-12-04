@@ -45,6 +45,8 @@ public final class AggregateExprArg {
         } else if (this.type == 6) {
             return visitor.visit((SleepScoreValueMacroExpr) this.value);
         } else if (this.type == 7) {
+            return visitor.visit((ChronotypeValueMacroExpr) this.value);
+        } else if (this.type == 8) {
             return visitor.visit((UnrecognizedValueMacroExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -98,8 +100,12 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 6);
     }
 
-    public static AggregateExprArg of(UnrecognizedValueMacroExpr value) {
+    public static AggregateExprArg of(ChronotypeValueMacroExpr value) {
         return new AggregateExprArg(value, 7);
+    }
+
+    public static AggregateExprArg of(UnrecognizedValueMacroExpr value) {
+        return new AggregateExprArg(value, 8);
     }
 
     public interface Visitor<T> {
@@ -116,6 +122,8 @@ public final class AggregateExprArg {
         T visit(GroupKeyColumnExpr value);
 
         T visit(SleepScoreValueMacroExpr value);
+
+        T visit(ChronotypeValueMacroExpr value);
 
         T visit(UnrecognizedValueMacroExpr value);
     }
@@ -154,6 +162,10 @@ public final class AggregateExprArg {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepScoreValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ChronotypeValueMacroExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {

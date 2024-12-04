@@ -84,6 +84,10 @@ public enum ClientFacingResource {
 
     ELECTROCARDIOGRAM_VOLTAGE("electrocardiogram_voltage"),
 
+    AFIB_BURDEN("afib_burden"),
+
+    HEART_RATE_ALERT("heart_rate_alert"),
+
     WORKOUT_DURATION("workout_duration"),
 
     INSULIN_INJECTION("insulin_injection"),
