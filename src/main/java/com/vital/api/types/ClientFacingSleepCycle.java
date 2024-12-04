@@ -112,6 +112,15 @@ public final class ClientFacingSleepCycle {
         return stageEndOffsetSecond;
     }
 
+    /**
+     * @return Sleep stage classification:
+     * <code>-1</code>: Unknown or unclassified sleep stage;
+     * <code>1</code>: Deep sleep;
+     * <code>2</code>: Light/non-REM sleep;
+     * <code>3</code>: Rapid Eye Movement sleep;
+     * <code>4</code>: Awake period;
+     * <code>5</code>: Manually classified stage.
+     */
     @JsonProperty("stage_type")
     public List<Integer> getStageType() {
         return stageType;
@@ -407,12 +416,32 @@ public final class ClientFacingSleepCycle {
             return this;
         }
 
+        /**
+         * <p>Sleep stage classification:
+         * <code>-1</code>: Unknown or unclassified sleep stage;
+         * <code>1</code>: Deep sleep;
+         * <code>2</code>: Light/non-REM sleep;
+         * <code>3</code>: Rapid Eye Movement sleep;
+         * <code>4</code>: Awake period;
+         * <code>5</code>: Manually classified stage.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addAllStageType(List<Integer> stageType) {
             this.stageType.addAll(stageType);
             return this;
         }
 
+        /**
+         * <p>Sleep stage classification:
+         * <code>-1</code>: Unknown or unclassified sleep stage;
+         * <code>1</code>: Deep sleep;
+         * <code>2</code>: Light/non-REM sleep;
+         * <code>3</code>: Rapid Eye Movement sleep;
+         * <code>4</code>: Awake period;
+         * <code>5</code>: Manually classified stage.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage addStageType(Integer stageType) {
             this.stageType.add(stageType);
