@@ -22,65 +22,7 @@ public enum Minerals {
 
     FLUORIDE("fluoride"),
 
-    CHLORIDE("chloride"),
-
-    BORON("boron"),
-
-    COBALT("cobalt"),
-
-    NICKEL("nickel"),
-
-    SILICON("silicon"),
-
-    VANADIUM("vanadium"),
-
-    LITHIUM("lithium"),
-
-    RUBIDIUM("rubidium"),
-
-    STRONTIUM("strontium"),
-
-    ALUMINUM("aluminum"),
-
-    ARSENIC("arsenic"),
-
-    BARIUM("barium"),
-
-    BERYLLIUM("beryllium"),
-
-    BISMUTH("bismuth"),
-
-    CADMIUM("cadmium"),
-
-    CESIUM("cesium"),
-
-    GERMANIUM("germanium"),
-
-    GOLD("gold"),
-
-    LEAD("lead"),
-
-    MERCURY("mercury"),
-
-    PALLADIUM("palladium"),
-
-    PLATINUM("platinum"),
-
-    SILVER("silver"),
-
-    THALLIUM("thallium"),
-
-    THORIUM("thorium"),
-
-    TIN("tin"),
-
-    TITANIUM("titanium"),
-
-    TUNGSTEN("tungsten"),
-
-    URANIUM("uranium"),
-
-    ZIRCONIUM("zirconium");
+    CHLORIDE("chloride");
 
     private final String value;
 
