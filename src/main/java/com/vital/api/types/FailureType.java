@@ -24,7 +24,9 @@ public enum FailureType {
 
     MISSING_RESULT_CALC_FAILURE("missing_result_calc_failure"),
 
-    MISSING_DEMO_AOE_CALC_FAILURE("missing_demo_aoe_calc_failure");
+    MISSING_DEMO_AOE_CALC_FAILURE("missing_demo_aoe_calc_failure"),
+
+    INSUFFICIENT_VOLUME("insufficient_volume");
 
     private final String value;
 
