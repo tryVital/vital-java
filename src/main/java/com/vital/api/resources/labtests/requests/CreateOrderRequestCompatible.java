@@ -19,7 +19,7 @@ import com.vital.api.types.HealthInsuranceCreateRequest;
 import com.vital.api.types.LabTestCollectionMethod;
 import com.vital.api.types.OrderSetRequest;
 import com.vital.api.types.PatientAddressCompatible;
-import com.vital.api.types.PatientDetails;
+import com.vital.api.types.PatientDetailsWithValidation;
 import com.vital.api.types.PhysicianCreateRequest;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +56,7 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<String> passthrough;
 
-    private final PatientDetails patientDetails;
+    private final PatientDetailsWithValidation patientDetails;
 
     private final PatientAddressCompatible patientAddress;
 
@@ -76,7 +76,7 @@ public final class CreateOrderRequestCompatible {
             Optional<String> activateBy,
             Optional<List<AoEAnswer>> aoeAnswers,
             Optional<String> passthrough,
-            PatientDetails patientDetails,
+            PatientDetailsWithValidation patientDetails,
             PatientAddressCompatible patientAddress,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -169,7 +169,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     @JsonProperty("patient_details")
-    public PatientDetails getPatientDetails() {
+    public PatientDetailsWithValidation getPatientDetails() {
         return patientDetails;
     }
 
@@ -243,7 +243,7 @@ public final class CreateOrderRequestCompatible {
     }
 
     public interface PatientDetailsStage {
-        PatientAddressStage patientDetails(PatientDetails patientDetails);
+        PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails);
     }
 
     public interface PatientAddressStage {
@@ -306,7 +306,7 @@ public final class CreateOrderRequestCompatible {
     public static final class Builder implements UserIdStage, PatientDetailsStage, PatientAddressStage, _FinalStage {
         private String userId;
 
-        private PatientDetails patientDetails;
+        private PatientDetailsWithValidation patientDetails;
 
         private PatientAddressCompatible patientAddress;
 
@@ -368,7 +368,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         @JsonSetter("patient_details")
-        public PatientAddressStage patientDetails(PatientDetails patientDetails) {
+        public PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails) {
             this.patientDetails = patientDetails;
             return this;
         }
