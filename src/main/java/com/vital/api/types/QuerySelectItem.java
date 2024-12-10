@@ -13,13 +13,13 @@ import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = QueryInstructionSelectItem.Deserializer.class)
-public final class QueryInstructionSelectItem {
+@JsonDeserialize(using = QuerySelectItem.Deserializer.class)
+public final class QuerySelectItem {
     private final Object value;
 
     private final int type;
 
-    private QueryInstructionSelectItem(Object value, int type) {
+    private QuerySelectItem(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -57,10 +57,10 @@ public final class QueryInstructionSelectItem {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof QueryInstructionSelectItem && equalTo((QueryInstructionSelectItem) other);
+        return other instanceof QuerySelectItem && equalTo((QuerySelectItem) other);
     }
 
-    private boolean equalTo(QueryInstructionSelectItem other) {
+    private boolean equalTo(QuerySelectItem other) {
         return value.equals(other.value);
     }
 
@@ -74,44 +74,44 @@ public final class QueryInstructionSelectItem {
         return this.value.toString();
     }
 
-    public static QueryInstructionSelectItem of(AggregateExpr value) {
-        return new QueryInstructionSelectItem(value, 0);
+    public static QuerySelectItem of(AggregateExpr value) {
+        return new QuerySelectItem(value, 0);
     }
 
-    public static QueryInstructionSelectItem of(SleepColumnExpr value) {
-        return new QueryInstructionSelectItem(value, 1);
+    public static QuerySelectItem of(SleepColumnExpr value) {
+        return new QuerySelectItem(value, 1);
     }
 
-    public static QueryInstructionSelectItem of(ActivityColumnExpr value) {
-        return new QueryInstructionSelectItem(value, 2);
+    public static QuerySelectItem of(ActivityColumnExpr value) {
+        return new QuerySelectItem(value, 2);
     }
 
-    public static QueryInstructionSelectItem of(WorkoutColumnExpr value) {
-        return new QueryInstructionSelectItem(value, 3);
+    public static QuerySelectItem of(WorkoutColumnExpr value) {
+        return new QuerySelectItem(value, 3);
     }
 
-    public static QueryInstructionSelectItem of(BodyColumnExpr value) {
-        return new QueryInstructionSelectItem(value, 4);
+    public static QuerySelectItem of(BodyColumnExpr value) {
+        return new QuerySelectItem(value, 4);
     }
 
-    public static QueryInstructionSelectItem of(IndexColumnExpr value) {
-        return new QueryInstructionSelectItem(value, 5);
+    public static QuerySelectItem of(IndexColumnExpr value) {
+        return new QuerySelectItem(value, 5);
     }
 
-    public static QueryInstructionSelectItem of(GroupKeyColumnExpr value) {
-        return new QueryInstructionSelectItem(value, 6);
+    public static QuerySelectItem of(GroupKeyColumnExpr value) {
+        return new QuerySelectItem(value, 6);
     }
 
-    public static QueryInstructionSelectItem of(SleepScoreValueMacroExpr value) {
-        return new QueryInstructionSelectItem(value, 7);
+    public static QuerySelectItem of(SleepScoreValueMacroExpr value) {
+        return new QuerySelectItem(value, 7);
     }
 
-    public static QueryInstructionSelectItem of(ChronotypeValueMacroExpr value) {
-        return new QueryInstructionSelectItem(value, 8);
+    public static QuerySelectItem of(ChronotypeValueMacroExpr value) {
+        return new QuerySelectItem(value, 8);
     }
 
-    public static QueryInstructionSelectItem of(UnrecognizedValueMacroExpr value) {
-        return new QueryInstructionSelectItem(value, 9);
+    public static QuerySelectItem of(UnrecognizedValueMacroExpr value) {
+        return new QuerySelectItem(value, 9);
     }
 
     public interface Visitor<T> {
@@ -136,13 +136,13 @@ public final class QueryInstructionSelectItem {
         T visit(UnrecognizedValueMacroExpr value);
     }
 
-    static final class Deserializer extends StdDeserializer<QueryInstructionSelectItem> {
+    static final class Deserializer extends StdDeserializer<QuerySelectItem> {
         Deserializer() {
-            super(QueryInstructionSelectItem.class);
+            super(QuerySelectItem.class);
         }
 
         @java.lang.Override
-        public QueryInstructionSelectItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public QuerySelectItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, AggregateExpr.class));

@@ -33,14 +33,14 @@ public class SleepClient {
     }
 
     /**
-     * Get Daily sleep for user_id
+     * Get sleep summary for user_id
      */
     public ClientSleepResponse get(String userId, SleepGetRequest request) {
         return get(userId, request, null);
     }
 
     /**
-     * Get Daily sleep for user_id
+     * Get sleep summary for user_id
      */
     public ClientSleepResponse get(String userId, SleepGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -88,14 +88,14 @@ public class SleepClient {
     }
 
     /**
-     * Get Daily sleep stream for user_id
+     * Get sleep stream for user_id
      */
     public ClientSleepResponse getStream(String userId, SleepGetStreamRequest request) {
         return getStream(userId, request, null);
     }
 
     /**
-     * Get Daily sleep stream for user_id
+     * Get sleep stream for user_id
      */
     public ClientSleepResponse getStream(String userId, SleepGetStreamRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -144,14 +144,14 @@ public class SleepClient {
     }
 
     /**
-     * Get Daily sleep for user_id
+     * Get raw sleep summary for user_id
      */
     public RawSleep getRaw(String userId, SleepGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
-     * Get Daily sleep for user_id
+     * Get raw sleep summary for user_id
      */
     public RawSleep getRaw(String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

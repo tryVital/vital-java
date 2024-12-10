@@ -31,21 +31,21 @@ public class ProfileClient {
     }
 
     /**
-     * Get Daily profile for user_id
+     * Get profile for user_id
      */
     public ClientFacingProfile get(String userId) {
         return get(userId, ProfileGetRequest.builder().build());
     }
 
     /**
-     * Get Daily profile for user_id
+     * Get profile for user_id
      */
     public ClientFacingProfile get(String userId, ProfileGetRequest request) {
         return get(userId, request, null);
     }
 
     /**
-     * Get Daily profile for user_id
+     * Get profile for user_id
      */
     public ClientFacingProfile get(String userId, ProfileGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -89,21 +89,21 @@ public class ProfileClient {
     }
 
     /**
-     * Get Daily profile for user_id
+     * Get raw profile for user_id
      */
     public RawProfile getRaw(String userId) {
         return getRaw(userId, ProfileGetRawRequest.builder().build());
     }
 
     /**
-     * Get Daily profile for user_id
+     * Get raw profile for user_id
      */
     public RawProfile getRaw(String userId, ProfileGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
-     * Get Daily profile for user_id
+     * Get raw profile for user_id
      */
     public RawProfile getRaw(String userId, ProfileGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

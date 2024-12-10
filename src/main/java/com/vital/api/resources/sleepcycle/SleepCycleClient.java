@@ -29,14 +29,14 @@ public class SleepCycleClient {
     }
 
     /**
-     * Get Daily sleep cycle for user_id
+     * Get sleep cycle for user_id
      */
     public ClientSleepCycleResponse get(String userId, SleepCycleGetRequest request) {
         return get(userId, request, null);
     }
 
     /**
-     * Get Daily sleep cycle for user_id
+     * Get sleep cycle for user_id
      */
     public ClientSleepCycleResponse get(String userId, SleepCycleGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

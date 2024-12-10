@@ -12,9 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.aggregate.types.QueryTimeframe;
+import com.vital.api.resources.aggregate.types.QueryBatchTimeframe;
+import com.vital.api.types.Query;
 import com.vital.api.types.QueryConfig;
-import com.vital.api.types.QueryInstruction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,23 +23,23 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = Query.Builder.class)
-public final class Query {
-    private final QueryTimeframe timeframe;
+@JsonDeserialize(builder = QueryBatch.Builder.class)
+public final class QueryBatch {
+    private final QueryBatchTimeframe timeframe;
 
-    private final List<QueryInstruction> instructions;
+    private final List<Query> queries;
 
     private final Optional<QueryConfig> config;
 
     private final Map<String, Object> additionalProperties;
 
-    private Query(
-            QueryTimeframe timeframe,
-            List<QueryInstruction> instructions,
+    private QueryBatch(
+            QueryBatchTimeframe timeframe,
+            List<Query> queries,
             Optional<QueryConfig> config,
             Map<String, Object> additionalProperties) {
         this.timeframe = timeframe;
-        this.instructions = instructions;
+        this.queries = queries;
         this.config = config;
         this.additionalProperties = additionalProperties;
     }
@@ -50,13 +50,13 @@ public final class Query {
     }
 
     @JsonProperty("timeframe")
-    public QueryTimeframe getTimeframe() {
+    public QueryBatchTimeframe getTimeframe() {
         return timeframe;
     }
 
-    @JsonProperty("instructions")
-    public List<QueryInstruction> getInstructions() {
-        return instructions;
+    @JsonProperty("queries")
+    public List<Query> getQueries() {
+        return queries;
     }
 
     @JsonProperty("config")
@@ -67,7 +67,7 @@ public final class Query {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Query && equalTo((Query) other);
+        return other instanceof QueryBatch && equalTo((QueryBatch) other);
     }
 
     @JsonAnyGetter
@@ -75,15 +75,13 @@ public final class Query {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(Query other) {
-        return timeframe.equals(other.timeframe)
-                && instructions.equals(other.instructions)
-                && config.equals(other.config);
+    private boolean equalTo(QueryBatch other) {
+        return timeframe.equals(other.timeframe) && queries.equals(other.queries) && config.equals(other.config);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.timeframe, this.instructions, this.config);
+        return Objects.hash(this.timeframe, this.queries, this.config);
     }
 
     @java.lang.Override
@@ -96,19 +94,19 @@ public final class Query {
     }
 
     public interface TimeframeStage {
-        _FinalStage timeframe(QueryTimeframe timeframe);
+        _FinalStage timeframe(QueryBatchTimeframe timeframe);
 
-        Builder from(Query other);
+        Builder from(QueryBatch other);
     }
 
     public interface _FinalStage {
-        Query build();
+        QueryBatch build();
 
-        _FinalStage instructions(List<QueryInstruction> instructions);
+        _FinalStage queries(List<Query> queries);
 
-        _FinalStage addInstructions(QueryInstruction instructions);
+        _FinalStage addQueries(Query queries);
 
-        _FinalStage addAllInstructions(List<QueryInstruction> instructions);
+        _FinalStage addAllQueries(List<Query> queries);
 
         _FinalStage config(Optional<QueryConfig> config);
 
@@ -117,11 +115,11 @@ public final class Query {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TimeframeStage, _FinalStage {
-        private QueryTimeframe timeframe;
+        private QueryBatchTimeframe timeframe;
 
         private Optional<QueryConfig> config = Optional.empty();
 
-        private List<QueryInstruction> instructions = new ArrayList<>();
+        private List<Query> queries = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -129,16 +127,16 @@ public final class Query {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(Query other) {
+        public Builder from(QueryBatch other) {
             timeframe(other.getTimeframe());
-            instructions(other.getInstructions());
+            queries(other.getQueries());
             config(other.getConfig());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("timeframe")
-        public _FinalStage timeframe(QueryTimeframe timeframe) {
+        public _FinalStage timeframe(QueryBatchTimeframe timeframe) {
             this.timeframe = timeframe;
             return this;
         }
@@ -157,28 +155,28 @@ public final class Query {
         }
 
         @java.lang.Override
-        public _FinalStage addAllInstructions(List<QueryInstruction> instructions) {
-            this.instructions.addAll(instructions);
+        public _FinalStage addAllQueries(List<Query> queries) {
+            this.queries.addAll(queries);
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage addInstructions(QueryInstruction instructions) {
-            this.instructions.add(instructions);
+        public _FinalStage addQueries(Query queries) {
+            this.queries.add(queries);
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "instructions", nulls = Nulls.SKIP)
-        public _FinalStage instructions(List<QueryInstruction> instructions) {
-            this.instructions.clear();
-            this.instructions.addAll(instructions);
+        @JsonSetter(value = "queries", nulls = Nulls.SKIP)
+        public _FinalStage queries(List<Query> queries) {
+            this.queries.clear();
+            this.queries.addAll(queries);
             return this;
         }
 
         @java.lang.Override
-        public Query build() {
-            return new Query(timeframe, instructions, config, additionalProperties);
+        public QueryBatch build() {
+            return new QueryBatch(timeframe, queries, config, additionalProperties);
         }
     }
 }

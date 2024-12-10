@@ -82,6 +82,8 @@ public enum ClientFacingResource {
 
     SLEEP_CYCLE("sleep_cycle"),
 
+    ELECTROCARDIOGRAM("electrocardiogram"),
+
     ELECTROCARDIOGRAM_VOLTAGE("electrocardiogram_voltage"),
 
     AFIB_BURDEN("afib_burden"),

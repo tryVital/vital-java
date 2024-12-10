@@ -12,7 +12,9 @@ public enum IndexColumnExprIndex {
 
     WORKOUT("workout"),
 
-    BODY("body");
+    BODY("body"),
+
+    MEAL("meal");
 
     private final String value;
 

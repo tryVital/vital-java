@@ -20,19 +20,19 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = QueryInstruction.Builder.class)
-public final class QueryInstruction {
-    private final List<QueryInstructionSelectItem> select;
+@JsonDeserialize(builder = Query.Builder.class)
+public final class Query {
+    private final List<QuerySelectItem> select;
 
-    private final Optional<List<QueryInstructionGroupByItem>> groupBy;
+    private final Optional<List<QueryGroupByItem>> groupBy;
 
     private final Optional<Boolean> splitBySource;
 
     private final Map<String, Object> additionalProperties;
 
-    private QueryInstruction(
-            List<QueryInstructionSelectItem> select,
-            Optional<List<QueryInstructionGroupByItem>> groupBy,
+    private Query(
+            List<QuerySelectItem> select,
+            Optional<List<QueryGroupByItem>> groupBy,
             Optional<Boolean> splitBySource,
             Map<String, Object> additionalProperties) {
         this.select = select;
@@ -42,12 +42,12 @@ public final class QueryInstruction {
     }
 
     @JsonProperty("select")
-    public List<QueryInstructionSelectItem> getSelect() {
+    public List<QuerySelectItem> getSelect() {
         return select;
     }
 
     @JsonProperty("group_by")
-    public Optional<List<QueryInstructionGroupByItem>> getGroupBy() {
+    public Optional<List<QueryGroupByItem>> getGroupBy() {
         return groupBy;
     }
 
@@ -59,7 +59,7 @@ public final class QueryInstruction {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof QueryInstruction && equalTo((QueryInstruction) other);
+        return other instanceof Query && equalTo((Query) other);
     }
 
     @JsonAnyGetter
@@ -67,7 +67,7 @@ public final class QueryInstruction {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(QueryInstruction other) {
+    private boolean equalTo(Query other) {
         return select.equals(other.select)
                 && groupBy.equals(other.groupBy)
                 && splitBySource.equals(other.splitBySource);
@@ -89,9 +89,9 @@ public final class QueryInstruction {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<QueryInstructionSelectItem> select = new ArrayList<>();
+        private List<QuerySelectItem> select = new ArrayList<>();
 
-        private Optional<List<QueryInstructionGroupByItem>> groupBy = Optional.empty();
+        private Optional<List<QueryGroupByItem>> groupBy = Optional.empty();
 
         private Optional<Boolean> splitBySource = Optional.empty();
 
@@ -100,7 +100,7 @@ public final class QueryInstruction {
 
         private Builder() {}
 
-        public Builder from(QueryInstruction other) {
+        public Builder from(Query other) {
             select(other.getSelect());
             groupBy(other.getGroupBy());
             splitBySource(other.getSplitBySource());
@@ -108,29 +108,29 @@ public final class QueryInstruction {
         }
 
         @JsonSetter(value = "select", nulls = Nulls.SKIP)
-        public Builder select(List<QueryInstructionSelectItem> select) {
+        public Builder select(List<QuerySelectItem> select) {
             this.select.clear();
             this.select.addAll(select);
             return this;
         }
 
-        public Builder addSelect(QueryInstructionSelectItem select) {
+        public Builder addSelect(QuerySelectItem select) {
             this.select.add(select);
             return this;
         }
 
-        public Builder addAllSelect(List<QueryInstructionSelectItem> select) {
+        public Builder addAllSelect(List<QuerySelectItem> select) {
             this.select.addAll(select);
             return this;
         }
 
         @JsonSetter(value = "group_by", nulls = Nulls.SKIP)
-        public Builder groupBy(Optional<List<QueryInstructionGroupByItem>> groupBy) {
+        public Builder groupBy(Optional<List<QueryGroupByItem>> groupBy) {
             this.groupBy = groupBy;
             return this;
         }
 
-        public Builder groupBy(List<QueryInstructionGroupByItem> groupBy) {
+        public Builder groupBy(List<QueryGroupByItem> groupBy) {
             this.groupBy = Optional.of(groupBy);
             return this;
         }
@@ -146,8 +146,8 @@ public final class QueryInstruction {
             return this;
         }
 
-        public QueryInstruction build() {
-            return new QueryInstruction(select, groupBy, splitBySource, additionalProperties);
+        public Query build() {
+            return new Query(select, groupBy, splitBySource, additionalProperties);
         }
     }
 }

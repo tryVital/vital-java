@@ -31,14 +31,14 @@ public class ActivityClient {
     }
 
     /**
-     * Get Daily Activity for user_id
+     * Get activity summary for user_id
      */
     public ClientActivityResponse get(String userId, ActivityGetRequest request) {
         return get(userId, request, null);
     }
 
     /**
-     * Get Daily Activity for user_id
+     * Get activity summary for user_id
      */
     public ClientActivityResponse get(String userId, ActivityGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -86,14 +86,14 @@ public class ActivityClient {
     }
 
     /**
-     * Get Daily Activity for user_id
+     * Get raw activity summary for user_id
      */
     public RawActivity getRaw(String userId, ActivityGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
-     * Get Daily Activity for user_id
+     * Get raw activity summary for user_id
      */
     public RawActivity getRaw(String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

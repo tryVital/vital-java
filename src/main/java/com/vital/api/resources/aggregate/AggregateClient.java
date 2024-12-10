@@ -11,7 +11,8 @@ import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.aggregate.requests.Query;
+import com.vital.api.resources.aggregate.requests.QueryBatch;
+import com.vital.api.types.AggregationResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,19 +32,20 @@ public class AggregateClient {
         this.clientOptions = clientOptions;
     }
 
-    public Object queryOne(String userId, Query request) {
+    public AggregationResponse queryOne(String userId, QueryBatch request) {
         return queryOne(userId, request, null);
     }
 
-    public Object queryOne(String userId, Query request, RequestOptions requestOptions) {
+    public AggregationResponse queryOne(String userId, QueryBatch request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("aggregate/v1/query_one")
+                .addPathSegments("aggregate/v1/user")
                 .addPathSegment(userId)
+                .addPathSegments("query")
                 .build();
         Map<String, Object> properties = new HashMap<>();
         properties.put("timeframe", request.getTimeframe());
-        properties.put("instructions", request.getInstructions());
+        properties.put("queries", request.getQueries());
         if (request.getConfig().isPresent()) {
             properties.put("config", request.getConfig());
         }
@@ -68,7 +70,7 @@ public class AggregateClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), AggregationResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {

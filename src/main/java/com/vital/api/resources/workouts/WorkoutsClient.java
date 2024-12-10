@@ -32,14 +32,14 @@ public class WorkoutsClient {
     }
 
     /**
-     * Get Daily workout for user_id
+     * Get workout summary for user_id
      */
     public ClientWorkoutResponse get(String userId, WorkoutsGetRequest request) {
         return get(userId, request, null);
     }
 
     /**
-     * Get Daily workout for user_id
+     * Get workout summary for user_id
      */
     public ClientWorkoutResponse get(String userId, WorkoutsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -87,14 +87,14 @@ public class WorkoutsClient {
     }
 
     /**
-     * Get Daily workout for user_id
+     * Get raw workout summary for user_id
      */
     public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
-     * Get Daily workout for user_id
+     * Get raw workout summary for user_id
      */
     public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

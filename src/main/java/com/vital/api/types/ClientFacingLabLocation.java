@@ -9,9 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,13 +27,20 @@ public final class ClientFacingLabLocation {
 
     private final String siteCode;
 
+    private final List<Billing> supportedBillTypes;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingLabLocation(
-            LabLocationMetadata metadata, int distance, String siteCode, Map<String, Object> additionalProperties) {
+            LabLocationMetadata metadata,
+            int distance,
+            String siteCode,
+            List<Billing> supportedBillTypes,
+            Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.distance = distance;
         this.siteCode = siteCode;
+        this.supportedBillTypes = supportedBillTypes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -49,6 +59,11 @@ public final class ClientFacingLabLocation {
         return siteCode;
     }
 
+    @JsonProperty("supported_bill_types")
+    public List<Billing> getSupportedBillTypes() {
+        return supportedBillTypes;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -61,12 +76,15 @@ public final class ClientFacingLabLocation {
     }
 
     private boolean equalTo(ClientFacingLabLocation other) {
-        return metadata.equals(other.metadata) && distance == other.distance && siteCode.equals(other.siteCode);
+        return metadata.equals(other.metadata)
+                && distance == other.distance
+                && siteCode.equals(other.siteCode)
+                && supportedBillTypes.equals(other.supportedBillTypes);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.distance, this.siteCode);
+        return Objects.hash(this.metadata, this.distance, this.siteCode, this.supportedBillTypes);
     }
 
     @java.lang.Override
@@ -94,6 +112,12 @@ public final class ClientFacingLabLocation {
 
     public interface _FinalStage {
         ClientFacingLabLocation build();
+
+        _FinalStage supportedBillTypes(List<Billing> supportedBillTypes);
+
+        _FinalStage addSupportedBillTypes(Billing supportedBillTypes);
+
+        _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -103,6 +127,8 @@ public final class ClientFacingLabLocation {
         private int distance;
 
         private String siteCode;
+
+        private List<Billing> supportedBillTypes = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -114,6 +140,7 @@ public final class ClientFacingLabLocation {
             metadata(other.getMetadata());
             distance(other.getDistance());
             siteCode(other.getSiteCode());
+            supportedBillTypes(other.getSupportedBillTypes());
             return this;
         }
 
@@ -139,8 +166,28 @@ public final class ClientFacingLabLocation {
         }
 
         @java.lang.Override
+        public _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes) {
+            this.supportedBillTypes.addAll(supportedBillTypes);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addSupportedBillTypes(Billing supportedBillTypes) {
+            this.supportedBillTypes.add(supportedBillTypes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "supported_bill_types", nulls = Nulls.SKIP)
+        public _FinalStage supportedBillTypes(List<Billing> supportedBillTypes) {
+            this.supportedBillTypes.clear();
+            this.supportedBillTypes.addAll(supportedBillTypes);
+            return this;
+        }
+
+        @java.lang.Override
         public ClientFacingLabLocation build() {
-            return new ClientFacingLabLocation(metadata, distance, siteCode, additionalProperties);
+            return new ClientFacingLabLocation(metadata, distance, siteCode, supportedBillTypes, additionalProperties);
         }
     }
 }

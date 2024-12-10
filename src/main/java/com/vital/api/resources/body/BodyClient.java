@@ -31,14 +31,14 @@ public class BodyClient {
     }
 
     /**
-     * Get Daily Body data for user_id
+     * Get Body summary for user_id
      */
     public ClientBodyResponse get(String userId, BodyGetRequest request) {
         return get(userId, request, null);
     }
 
     /**
-     * Get Daily Body data for user_id
+     * Get Body summary for user_id
      */
     public ClientBodyResponse get(String userId, BodyGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -86,14 +86,14 @@ public class BodyClient {
     }
 
     /**
-     * Get Daily Body data for user_id
+     * Get raw Body summary for user_id
      */
     public RawBody getRaw(String userId, BodyGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
-     * Get Daily Body data for user_id
+     * Get raw Body summary for user_id
      */
     public RawBody getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

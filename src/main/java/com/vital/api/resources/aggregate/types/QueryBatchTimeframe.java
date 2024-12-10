@@ -15,13 +15,13 @@ import com.vital.api.types.RelativeTimeframe;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = QueryTimeframe.Deserializer.class)
-public final class QueryTimeframe {
+@JsonDeserialize(using = QueryBatchTimeframe.Deserializer.class)
+public final class QueryBatchTimeframe {
     private final Object value;
 
     private final int type;
 
-    private QueryTimeframe(Object value, int type) {
+    private QueryBatchTimeframe(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -43,10 +43,10 @@ public final class QueryTimeframe {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof QueryTimeframe && equalTo((QueryTimeframe) other);
+        return other instanceof QueryBatchTimeframe && equalTo((QueryBatchTimeframe) other);
     }
 
-    private boolean equalTo(QueryTimeframe other) {
+    private boolean equalTo(QueryBatchTimeframe other) {
         return value.equals(other.value);
     }
 
@@ -60,12 +60,12 @@ public final class QueryTimeframe {
         return this.value.toString();
     }
 
-    public static QueryTimeframe of(RelativeTimeframe value) {
-        return new QueryTimeframe(value, 0);
+    public static QueryBatchTimeframe of(RelativeTimeframe value) {
+        return new QueryBatchTimeframe(value, 0);
     }
 
-    public static QueryTimeframe of(Placeholder value) {
-        return new QueryTimeframe(value, 1);
+    public static QueryBatchTimeframe of(Placeholder value) {
+        return new QueryBatchTimeframe(value, 1);
     }
 
     public interface Visitor<T> {
@@ -74,13 +74,13 @@ public final class QueryTimeframe {
         T visit(Placeholder value);
     }
 
-    static final class Deserializer extends StdDeserializer<QueryTimeframe> {
+    static final class Deserializer extends StdDeserializer<QueryBatchTimeframe> {
         Deserializer() {
-            super(QueryTimeframe.class);
+            super(QueryBatchTimeframe.class);
         }
 
         @java.lang.Override
-        public QueryTimeframe deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public QueryBatchTimeframe deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, RelativeTimeframe.class));

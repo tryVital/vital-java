@@ -13,13 +13,13 @@ import com.vital.api.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = QueryInstructionGroupByItem.Deserializer.class)
-public final class QueryInstructionGroupByItem {
+@JsonDeserialize(using = QueryGroupByItem.Deserializer.class)
+public final class QueryGroupByItem {
     private final Object value;
 
     private final int type;
 
-    private QueryInstructionGroupByItem(Object value, int type) {
+    private QueryGroupByItem(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -41,10 +41,10 @@ public final class QueryInstructionGroupByItem {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof QueryInstructionGroupByItem && equalTo((QueryInstructionGroupByItem) other);
+        return other instanceof QueryGroupByItem && equalTo((QueryGroupByItem) other);
     }
 
-    private boolean equalTo(QueryInstructionGroupByItem other) {
+    private boolean equalTo(QueryGroupByItem other) {
         return value.equals(other.value);
     }
 
@@ -58,12 +58,12 @@ public final class QueryInstructionGroupByItem {
         return this.value.toString();
     }
 
-    public static QueryInstructionGroupByItem of(DateTruncExpr value) {
-        return new QueryInstructionGroupByItem(value, 0);
+    public static QueryGroupByItem of(DateTruncExpr value) {
+        return new QueryGroupByItem(value, 0);
     }
 
-    public static QueryInstructionGroupByItem of(DatePartExpr value) {
-        return new QueryInstructionGroupByItem(value, 1);
+    public static QueryGroupByItem of(DatePartExpr value) {
+        return new QueryGroupByItem(value, 1);
     }
 
     public interface Visitor<T> {
@@ -72,13 +72,13 @@ public final class QueryInstructionGroupByItem {
         T visit(DatePartExpr value);
     }
 
-    static final class Deserializer extends StdDeserializer<QueryInstructionGroupByItem> {
+    static final class Deserializer extends StdDeserializer<QueryGroupByItem> {
         Deserializer() {
-            super(QueryInstructionGroupByItem.class);
+            super(QueryGroupByItem.class);
         }
 
         @java.lang.Override
-        public QueryInstructionGroupByItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public QueryGroupByItem deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, DateTruncExpr.class));
