@@ -9,6 +9,7 @@ import com.vital.api.resources.activity.ActivityClient;
 import com.vital.api.resources.aggregate.AggregateClient;
 import com.vital.api.resources.body.BodyClient;
 import com.vital.api.resources.devices.DevicesClient;
+import com.vital.api.resources.electrocardiogram.ElectrocardiogramClient;
 import com.vital.api.resources.insurance.InsuranceClient;
 import com.vital.api.resources.introspect.IntrospectClient;
 import com.vital.api.resources.labtests.LabTestsClient;
@@ -30,6 +31,8 @@ public class Vital {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<LinkClient> linkClient;
+
+    protected final Supplier<ElectrocardiogramClient> electrocardiogramClient;
 
     protected final Supplier<SleepCycleClient> sleepCycleClient;
 
@@ -70,6 +73,7 @@ public class Vital {
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
+        this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
         this.devicesClient = Suppliers.memoize(() -> new DevicesClient(clientOptions));
@@ -92,6 +96,10 @@ public class Vital {
 
     public LinkClient link() {
         return this.linkClient.get();
+    }
+
+    public ElectrocardiogramClient electrocardiogram() {
+        return this.electrocardiogramClient.get();
     }
 
     public SleepCycleClient sleepCycle() {

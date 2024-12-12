@@ -19,8 +19,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = MenstrualCycle.Builder.class)
-public final class MenstrualCycle {
+@JsonDeserialize(builder = ClientFacingMenstrualCycle.Builder.class)
+public final class ClientFacingMenstrualCycle {
+    private final String id;
+
     private final String periodStart;
 
     private final Optional<String> periodEnd;
@@ -49,11 +51,20 @@ public final class MenstrualCycle {
 
     private final Optional<List<BasalBodyTemperatureEntry>> basalBodyTemperature;
 
+    private final ClientFacingMenstrualCycleSourceProvider sourceProvider;
+
+    private final ClientFacingMenstrualCycleSourceType sourceType;
+
+    private final Optional<String> sourceAppId;
+
+    private final String userId;
+
     private final ClientFacingSource source;
 
     private final Map<String, Object> additionalProperties;
 
-    private MenstrualCycle(
+    private ClientFacingMenstrualCycle(
+            String id,
             String periodStart,
             Optional<String> periodEnd,
             Optional<String> cycleEnd,
@@ -68,8 +79,13 @@ public final class MenstrualCycle {
             Optional<List<HomeProgesteroneTestEntry>> homeProgesteroneTest,
             Optional<List<SexualActivityEntry>> sexualActivity,
             Optional<List<BasalBodyTemperatureEntry>> basalBodyTemperature,
+            ClientFacingMenstrualCycleSourceProvider sourceProvider,
+            ClientFacingMenstrualCycleSourceType sourceType,
+            Optional<String> sourceAppId,
+            String userId,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
+        this.id = id;
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
         this.cycleEnd = cycleEnd;
@@ -84,8 +100,17 @@ public final class MenstrualCycle {
         this.homeProgesteroneTest = homeProgesteroneTest;
         this.sexualActivity = sexualActivity;
         this.basalBodyTemperature = basalBodyTemperature;
+        this.sourceProvider = sourceProvider;
+        this.sourceType = sourceType;
+        this.sourceAppId = sourceAppId;
+        this.userId = userId;
         this.source = source;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     @JsonProperty("period_start")
@@ -158,6 +183,26 @@ public final class MenstrualCycle {
         return basalBodyTemperature;
     }
 
+    @JsonProperty("source_provider")
+    public ClientFacingMenstrualCycleSourceProvider getSourceProvider() {
+        return sourceProvider;
+    }
+
+    @JsonProperty("source_type")
+    public ClientFacingMenstrualCycleSourceType getSourceType() {
+        return sourceType;
+    }
+
+    @JsonProperty("source_app_id")
+    public Optional<String> getSourceAppId() {
+        return sourceAppId;
+    }
+
+    @JsonProperty("user_id")
+    public String getUserId() {
+        return userId;
+    }
+
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
@@ -166,7 +211,7 @@ public final class MenstrualCycle {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof MenstrualCycle && equalTo((MenstrualCycle) other);
+        return other instanceof ClientFacingMenstrualCycle && equalTo((ClientFacingMenstrualCycle) other);
     }
 
     @JsonAnyGetter
@@ -174,8 +219,9 @@ public final class MenstrualCycle {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(MenstrualCycle other) {
-        return periodStart.equals(other.periodStart)
+    private boolean equalTo(ClientFacingMenstrualCycle other) {
+        return id.equals(other.id)
+                && periodStart.equals(other.periodStart)
                 && periodEnd.equals(other.periodEnd)
                 && cycleEnd.equals(other.cycleEnd)
                 && isPredicted.equals(other.isPredicted)
@@ -189,12 +235,17 @@ public final class MenstrualCycle {
                 && homeProgesteroneTest.equals(other.homeProgesteroneTest)
                 && sexualActivity.equals(other.sexualActivity)
                 && basalBodyTemperature.equals(other.basalBodyTemperature)
+                && sourceProvider.equals(other.sourceProvider)
+                && sourceType.equals(other.sourceType)
+                && sourceAppId.equals(other.sourceAppId)
+                && userId.equals(other.userId)
                 && source.equals(other.source);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.id,
                 this.periodStart,
                 this.periodEnd,
                 this.cycleEnd,
@@ -209,6 +260,10 @@ public final class MenstrualCycle {
                 this.homeProgesteroneTest,
                 this.sexualActivity,
                 this.basalBodyTemperature,
+                this.sourceProvider,
+                this.sourceType,
+                this.sourceAppId,
+                this.userId,
                 this.source);
     }
 
@@ -217,14 +272,30 @@ public final class MenstrualCycle {
         return ObjectMappers.stringify(this);
     }
 
-    public static PeriodStartStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface PeriodStartStage {
-        SourceStage periodStart(String periodStart);
+    public interface IdStage {
+        PeriodStartStage id(String id);
 
-        Builder from(MenstrualCycle other);
+        Builder from(ClientFacingMenstrualCycle other);
+    }
+
+    public interface PeriodStartStage {
+        SourceProviderStage periodStart(String periodStart);
+    }
+
+    public interface SourceProviderStage {
+        SourceTypeStage sourceProvider(ClientFacingMenstrualCycleSourceProvider sourceProvider);
+    }
+
+    public interface SourceTypeStage {
+        UserIdStage sourceType(ClientFacingMenstrualCycleSourceType sourceType);
+    }
+
+    public interface UserIdStage {
+        SourceStage userId(String userId);
     }
 
     public interface SourceStage {
@@ -232,7 +303,7 @@ public final class MenstrualCycle {
     }
 
     public interface _FinalStage {
-        MenstrualCycle build();
+        ClientFacingMenstrualCycle build();
 
         _FinalStage periodEnd(Optional<String> periodEnd);
 
@@ -285,13 +356,34 @@ public final class MenstrualCycle {
         _FinalStage basalBodyTemperature(Optional<List<BasalBodyTemperatureEntry>> basalBodyTemperature);
 
         _FinalStage basalBodyTemperature(List<BasalBodyTemperatureEntry> basalBodyTemperature);
+
+        _FinalStage sourceAppId(Optional<String> sourceAppId);
+
+        _FinalStage sourceAppId(String sourceAppId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PeriodStartStage, SourceStage, _FinalStage {
+    public static final class Builder
+            implements IdStage,
+                    PeriodStartStage,
+                    SourceProviderStage,
+                    SourceTypeStage,
+                    UserIdStage,
+                    SourceStage,
+                    _FinalStage {
+        private String id;
+
         private String periodStart;
 
+        private ClientFacingMenstrualCycleSourceProvider sourceProvider;
+
+        private ClientFacingMenstrualCycleSourceType sourceType;
+
+        private String userId;
+
         private ClientFacingSource source;
+
+        private Optional<String> sourceAppId = Optional.empty();
 
         private Optional<List<BasalBodyTemperatureEntry>> basalBodyTemperature = Optional.empty();
 
@@ -325,7 +417,8 @@ public final class MenstrualCycle {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(MenstrualCycle other) {
+        public Builder from(ClientFacingMenstrualCycle other) {
+            id(other.getId());
             periodStart(other.getPeriodStart());
             periodEnd(other.getPeriodEnd());
             cycleEnd(other.getCycleEnd());
@@ -340,14 +433,46 @@ public final class MenstrualCycle {
             homeProgesteroneTest(other.getHomeProgesteroneTest());
             sexualActivity(other.getSexualActivity());
             basalBodyTemperature(other.getBasalBodyTemperature());
+            sourceProvider(other.getSourceProvider());
+            sourceType(other.getSourceType());
+            sourceAppId(other.getSourceAppId());
+            userId(other.getUserId());
             source(other.getSource());
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("id")
+        public PeriodStartStage id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        @java.lang.Override
         @JsonSetter("period_start")
-        public SourceStage periodStart(String periodStart) {
+        public SourceProviderStage periodStart(String periodStart) {
             this.periodStart = periodStart;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("source_provider")
+        public SourceTypeStage sourceProvider(ClientFacingMenstrualCycleSourceProvider sourceProvider) {
+            this.sourceProvider = sourceProvider;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("source_type")
+        public UserIdStage sourceType(ClientFacingMenstrualCycleSourceType sourceType) {
+            this.sourceType = sourceType;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("user_id")
+        public SourceStage userId(String userId) {
+            this.userId = userId;
             return this;
         }
 
@@ -355,6 +480,19 @@ public final class MenstrualCycle {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceAppId(String sourceAppId) {
+            this.sourceAppId = Optional.of(sourceAppId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_app_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceAppId(Optional<String> sourceAppId) {
+            this.sourceAppId = sourceAppId;
             return this;
         }
 
@@ -528,8 +666,9 @@ public final class MenstrualCycle {
         }
 
         @java.lang.Override
-        public MenstrualCycle build() {
-            return new MenstrualCycle(
+        public ClientFacingMenstrualCycle build() {
+            return new ClientFacingMenstrualCycle(
+                    id,
                     periodStart,
                     periodEnd,
                     cycleEnd,
@@ -544,6 +683,10 @@ public final class MenstrualCycle {
                     homeProgesteroneTest,
                     sexualActivity,
                     basalBodyTemperature,
+                    sourceProvider,
+                    sourceType,
+                    sourceAppId,
+                    userId,
                     source,
                     additionalProperties);
         }

@@ -21,17 +21,18 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = MenstrualCycleResponse.Builder.class)
 public final class MenstrualCycleResponse {
-    private final List<MenstrualCycle> menstrualCycle;
+    private final List<ClientFacingMenstrualCycle> menstrualCycle;
 
     private final Map<String, Object> additionalProperties;
 
-    private MenstrualCycleResponse(List<MenstrualCycle> menstrualCycle, Map<String, Object> additionalProperties) {
+    private MenstrualCycleResponse(
+            List<ClientFacingMenstrualCycle> menstrualCycle, Map<String, Object> additionalProperties) {
         this.menstrualCycle = menstrualCycle;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("menstrual_cycle")
-    public List<MenstrualCycle> getMenstrualCycle() {
+    public List<ClientFacingMenstrualCycle> getMenstrualCycle() {
         return menstrualCycle;
     }
 
@@ -66,7 +67,7 @@ public final class MenstrualCycleResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<MenstrualCycle> menstrualCycle = new ArrayList<>();
+        private List<ClientFacingMenstrualCycle> menstrualCycle = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -79,18 +80,18 @@ public final class MenstrualCycleResponse {
         }
 
         @JsonSetter(value = "menstrual_cycle", nulls = Nulls.SKIP)
-        public Builder menstrualCycle(List<MenstrualCycle> menstrualCycle) {
+        public Builder menstrualCycle(List<ClientFacingMenstrualCycle> menstrualCycle) {
             this.menstrualCycle.clear();
             this.menstrualCycle.addAll(menstrualCycle);
             return this;
         }
 
-        public Builder addMenstrualCycle(MenstrualCycle menstrualCycle) {
+        public Builder addMenstrualCycle(ClientFacingMenstrualCycle menstrualCycle) {
             this.menstrualCycle.add(menstrualCycle);
             return this;
         }
 
-        public Builder addAllMenstrualCycle(List<MenstrualCycle> menstrualCycle) {
+        public Builder addAllMenstrualCycle(List<ClientFacingMenstrualCycle> menstrualCycle) {
             this.menstrualCycle.addAll(menstrualCycle);
             return this;
         }

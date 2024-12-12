@@ -33,6 +33,9 @@ public final class ClientFacingSport {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return This ID is unstable across environments. Use the slug instead.
+     */
     @JsonProperty("id")
     public int getId() {
         return id;
@@ -122,6 +125,10 @@ public final class ClientFacingSport {
             return this;
         }
 
+        /**
+         * <p>This ID is unstable across environments. Use the slug instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("id")
         public NameStage id(int id) {

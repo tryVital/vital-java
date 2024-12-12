@@ -12,8 +12,6 @@ public enum WorkoutColumnExprWorkout {
 
     TITLE("title"),
 
-    SPORT_ID("sport_id"),
-
     SPORT_NAME("sport_name"),
 
     SPORT_SLUG("sport_slug"),
