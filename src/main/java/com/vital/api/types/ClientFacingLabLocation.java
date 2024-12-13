@@ -29,6 +29,8 @@ public final class ClientFacingLabLocation {
 
     private final List<Billing> supportedBillTypes;
 
+    private final LngLat location;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingLabLocation(
@@ -36,11 +38,13 @@ public final class ClientFacingLabLocation {
             int distance,
             String siteCode,
             List<Billing> supportedBillTypes,
+            LngLat location,
             Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.distance = distance;
         this.siteCode = siteCode;
         this.supportedBillTypes = supportedBillTypes;
+        this.location = location;
         this.additionalProperties = additionalProperties;
     }
 
@@ -64,6 +68,11 @@ public final class ClientFacingLabLocation {
         return supportedBillTypes;
     }
 
+    @JsonProperty("location")
+    public LngLat getLocation() {
+        return location;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -79,12 +88,13 @@ public final class ClientFacingLabLocation {
         return metadata.equals(other.metadata)
                 && distance == other.distance
                 && siteCode.equals(other.siteCode)
-                && supportedBillTypes.equals(other.supportedBillTypes);
+                && supportedBillTypes.equals(other.supportedBillTypes)
+                && location.equals(other.location);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.distance, this.siteCode, this.supportedBillTypes);
+        return Objects.hash(this.metadata, this.distance, this.siteCode, this.supportedBillTypes, this.location);
     }
 
     @java.lang.Override
@@ -107,7 +117,11 @@ public final class ClientFacingLabLocation {
     }
 
     public interface SiteCodeStage {
-        _FinalStage siteCode(String siteCode);
+        LocationStage siteCode(String siteCode);
+    }
+
+    public interface LocationStage {
+        _FinalStage location(LngLat location);
     }
 
     public interface _FinalStage {
@@ -121,12 +135,15 @@ public final class ClientFacingLabLocation {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements MetadataStage, DistanceStage, SiteCodeStage, _FinalStage {
+    public static final class Builder
+            implements MetadataStage, DistanceStage, SiteCodeStage, LocationStage, _FinalStage {
         private LabLocationMetadata metadata;
 
         private int distance;
 
         private String siteCode;
+
+        private LngLat location;
 
         private List<Billing> supportedBillTypes = new ArrayList<>();
 
@@ -141,6 +158,7 @@ public final class ClientFacingLabLocation {
             distance(other.getDistance());
             siteCode(other.getSiteCode());
             supportedBillTypes(other.getSupportedBillTypes());
+            location(other.getLocation());
             return this;
         }
 
@@ -160,8 +178,15 @@ public final class ClientFacingLabLocation {
 
         @java.lang.Override
         @JsonSetter("site_code")
-        public _FinalStage siteCode(String siteCode) {
+        public LocationStage siteCode(String siteCode) {
             this.siteCode = siteCode;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("location")
+        public _FinalStage location(LngLat location) {
+            this.location = location;
             return this;
         }
 
@@ -187,7 +212,8 @@ public final class ClientFacingLabLocation {
 
         @java.lang.Override
         public ClientFacingLabLocation build() {
-            return new ClientFacingLabLocation(metadata, distance, siteCode, supportedBillTypes, additionalProperties);
+            return new ClientFacingLabLocation(
+                    metadata, distance, siteCode, supportedBillTypes, location, additionalProperties);
         }
     }
 }
