@@ -33,17 +33,17 @@ public final class QuerySelectItem {
         if (this.type == 0) {
             return visitor.visit((AggregateExpr) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((SleepColumnExpr) this.value);
-        } else if (this.type == 2) {
-            return visitor.visit((ActivityColumnExpr) this.value);
-        } else if (this.type == 3) {
-            return visitor.visit((WorkoutColumnExpr) this.value);
-        } else if (this.type == 4) {
-            return visitor.visit((BodyColumnExpr) this.value);
-        } else if (this.type == 5) {
-            return visitor.visit((IndexColumnExpr) this.value);
-        } else if (this.type == 6) {
             return visitor.visit((GroupKeyColumnExpr) this.value);
+        } else if (this.type == 2) {
+            return visitor.visit((SleepColumnExpr) this.value);
+        } else if (this.type == 3) {
+            return visitor.visit((ActivityColumnExpr) this.value);
+        } else if (this.type == 4) {
+            return visitor.visit((WorkoutColumnExpr) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((BodyColumnExpr) this.value);
+        } else if (this.type == 6) {
+            return visitor.visit((IndexColumnExpr) this.value);
         } else if (this.type == 7) {
             return visitor.visit((SleepScoreValueMacroExpr) this.value);
         } else if (this.type == 8) {
@@ -78,27 +78,27 @@ public final class QuerySelectItem {
         return new QuerySelectItem(value, 0);
     }
 
-    public static QuerySelectItem of(SleepColumnExpr value) {
+    public static QuerySelectItem of(GroupKeyColumnExpr value) {
         return new QuerySelectItem(value, 1);
     }
 
-    public static QuerySelectItem of(ActivityColumnExpr value) {
+    public static QuerySelectItem of(SleepColumnExpr value) {
         return new QuerySelectItem(value, 2);
     }
 
-    public static QuerySelectItem of(WorkoutColumnExpr value) {
+    public static QuerySelectItem of(ActivityColumnExpr value) {
         return new QuerySelectItem(value, 3);
     }
 
-    public static QuerySelectItem of(BodyColumnExpr value) {
+    public static QuerySelectItem of(WorkoutColumnExpr value) {
         return new QuerySelectItem(value, 4);
     }
 
-    public static QuerySelectItem of(IndexColumnExpr value) {
+    public static QuerySelectItem of(BodyColumnExpr value) {
         return new QuerySelectItem(value, 5);
     }
 
-    public static QuerySelectItem of(GroupKeyColumnExpr value) {
+    public static QuerySelectItem of(IndexColumnExpr value) {
         return new QuerySelectItem(value, 6);
     }
 
@@ -117,6 +117,8 @@ public final class QuerySelectItem {
     public interface Visitor<T> {
         T visit(AggregateExpr value);
 
+        T visit(GroupKeyColumnExpr value);
+
         T visit(SleepColumnExpr value);
 
         T visit(ActivityColumnExpr value);
@@ -126,8 +128,6 @@ public final class QuerySelectItem {
         T visit(BodyColumnExpr value);
 
         T visit(IndexColumnExpr value);
-
-        T visit(GroupKeyColumnExpr value);
 
         T visit(SleepScoreValueMacroExpr value);
 
@@ -149,6 +149,10 @@ public final class QuerySelectItem {
             } catch (IllegalArgumentException e) {
             }
             try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, GroupKeyColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
@@ -166,10 +170,6 @@ public final class QuerySelectItem {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, IndexColumnExpr.class));
-            } catch (IllegalArgumentException e) {
-            }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, GroupKeyColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {
