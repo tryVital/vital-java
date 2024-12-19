@@ -22,11 +22,15 @@ public final class VitalTokenCreatedResponse {
 
     private final String exchangeUrl;
 
+    private final String expiresAt;
+
     private final Map<String, Object> additionalProperties;
 
-    private VitalTokenCreatedResponse(String code, String exchangeUrl, Map<String, Object> additionalProperties) {
+    private VitalTokenCreatedResponse(
+            String code, String exchangeUrl, String expiresAt, Map<String, Object> additionalProperties) {
         this.code = code;
         this.exchangeUrl = exchangeUrl;
+        this.expiresAt = expiresAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -38,6 +42,11 @@ public final class VitalTokenCreatedResponse {
     @JsonProperty("exchange_url")
     public String getExchangeUrl() {
         return exchangeUrl;
+    }
+
+    @JsonProperty("expires_at")
+    public String getExpiresAt() {
+        return expiresAt;
     }
 
     @java.lang.Override
@@ -52,12 +61,12 @@ public final class VitalTokenCreatedResponse {
     }
 
     private boolean equalTo(VitalTokenCreatedResponse other) {
-        return code.equals(other.code) && exchangeUrl.equals(other.exchangeUrl);
+        return code.equals(other.code) && exchangeUrl.equals(other.exchangeUrl) && expiresAt.equals(other.expiresAt);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.code, this.exchangeUrl);
+        return Objects.hash(this.code, this.exchangeUrl, this.expiresAt);
     }
 
     @java.lang.Override
@@ -76,7 +85,11 @@ public final class VitalTokenCreatedResponse {
     }
 
     public interface ExchangeUrlStage {
-        _FinalStage exchangeUrl(String exchangeUrl);
+        ExpiresAtStage exchangeUrl(String exchangeUrl);
+    }
+
+    public interface ExpiresAtStage {
+        _FinalStage expiresAt(String expiresAt);
     }
 
     public interface _FinalStage {
@@ -84,10 +97,12 @@ public final class VitalTokenCreatedResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements CodeStage, ExchangeUrlStage, _FinalStage {
+    public static final class Builder implements CodeStage, ExchangeUrlStage, ExpiresAtStage, _FinalStage {
         private String code;
 
         private String exchangeUrl;
+
+        private String expiresAt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -98,6 +113,7 @@ public final class VitalTokenCreatedResponse {
         public Builder from(VitalTokenCreatedResponse other) {
             code(other.getCode());
             exchangeUrl(other.getExchangeUrl());
+            expiresAt(other.getExpiresAt());
             return this;
         }
 
@@ -110,14 +126,21 @@ public final class VitalTokenCreatedResponse {
 
         @java.lang.Override
         @JsonSetter("exchange_url")
-        public _FinalStage exchangeUrl(String exchangeUrl) {
+        public ExpiresAtStage exchangeUrl(String exchangeUrl) {
             this.exchangeUrl = exchangeUrl;
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("expires_at")
+        public _FinalStage expiresAt(String expiresAt) {
+            this.expiresAt = expiresAt;
+            return this;
+        }
+
+        @java.lang.Override
         public VitalTokenCreatedResponse build() {
-            return new VitalTokenCreatedResponse(code, exchangeUrl, additionalProperties);
+            return new VitalTokenCreatedResponse(code, exchangeUrl, expiresAt, additionalProperties);
         }
     }
 }

@@ -34,6 +34,10 @@ public class InsuranceClient {
         this.clientOptions = clientOptions;
     }
 
+    public List<ClientFacingPayorSearchResponse> searchPayorInfo() {
+        return searchPayorInfo(PayorSearchRequest.builder().build());
+    }
+
     public List<ClientFacingPayorSearchResponse> searchPayorInfo(PayorSearchRequest request) {
         return searchPayorInfo(request, null);
     }

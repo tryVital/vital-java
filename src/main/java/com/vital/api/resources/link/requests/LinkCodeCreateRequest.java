@@ -39,6 +39,9 @@ public final class LinkCodeCreateRequest {
         return userId;
     }
 
+    /**
+     * @return When the link code should expire. Defaults to server time plus 1 hour.
+     */
     @JsonProperty("expires_at")
     public Optional<OffsetDateTime> getExpiresAt() {
         return expiresAt;
@@ -112,6 +115,10 @@ public final class LinkCodeCreateRequest {
             return this;
         }
 
+        /**
+         * <p>When the link code should expire. Defaults to server time plus 1 hour.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage expiresAt(OffsetDateTime expiresAt) {
             this.expiresAt = Optional.of(expiresAt);

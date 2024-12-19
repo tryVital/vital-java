@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingProviderWithStatus.Builder.class)
@@ -26,7 +27,11 @@ public final class ClientFacingProviderWithStatus {
 
     private final String logo;
 
+    private final String createdOn;
+
     private final String status;
+
+    private final Optional<ClientFacingConnectionErrorDetails> errorDetails;
 
     private final Map<String, ResourceAvailability> resourceAvailability;
 
@@ -36,13 +41,17 @@ public final class ClientFacingProviderWithStatus {
             String name,
             String slug,
             String logo,
+            String createdOn,
             String status,
+            Optional<ClientFacingConnectionErrorDetails> errorDetails,
             Map<String, ResourceAvailability> resourceAvailability,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
         this.logo = logo;
+        this.createdOn = createdOn;
         this.status = status;
+        this.errorDetails = errorDetails;
         this.resourceAvailability = resourceAvailability;
         this.additionalProperties = additionalProperties;
     }
@@ -71,12 +80,25 @@ public final class ClientFacingProviderWithStatus {
         return logo;
     }
 
+    @JsonProperty("created_on")
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
     /**
      * @return Status of source, either error or connected
      */
     @JsonProperty("status")
     public String getStatus() {
         return status;
+    }
+
+    /**
+     * @return Details of the terminal connection error — populated only when the status is <code>error</code>.
+     */
+    @JsonProperty("error_details")
+    public Optional<ClientFacingConnectionErrorDetails> getErrorDetails() {
+        return errorDetails;
     }
 
     @JsonProperty("resource_availability")
@@ -99,13 +121,22 @@ public final class ClientFacingProviderWithStatus {
         return name.equals(other.name)
                 && slug.equals(other.slug)
                 && logo.equals(other.logo)
+                && createdOn.equals(other.createdOn)
                 && status.equals(other.status)
+                && errorDetails.equals(other.errorDetails)
                 && resourceAvailability.equals(other.resourceAvailability);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.slug, this.logo, this.status, this.resourceAvailability);
+        return Objects.hash(
+                this.name,
+                this.slug,
+                this.logo,
+                this.createdOn,
+                this.status,
+                this.errorDetails,
+                this.resourceAvailability);
     }
 
     @java.lang.Override
@@ -128,7 +159,11 @@ public final class ClientFacingProviderWithStatus {
     }
 
     public interface LogoStage {
-        StatusStage logo(String logo);
+        CreatedOnStage logo(String logo);
+    }
+
+    public interface CreatedOnStage {
+        StatusStage createdOn(String createdOn);
     }
 
     public interface StatusStage {
@@ -138,6 +173,10 @@ public final class ClientFacingProviderWithStatus {
     public interface _FinalStage {
         ClientFacingProviderWithStatus build();
 
+        _FinalStage errorDetails(Optional<ClientFacingConnectionErrorDetails> errorDetails);
+
+        _FinalStage errorDetails(ClientFacingConnectionErrorDetails errorDetails);
+
         _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
 
         _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
@@ -146,16 +185,21 @@ public final class ClientFacingProviderWithStatus {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, SlugStage, LogoStage, StatusStage, _FinalStage {
+    public static final class Builder
+            implements NameStage, SlugStage, LogoStage, CreatedOnStage, StatusStage, _FinalStage {
         private String name;
 
         private String slug;
 
         private String logo;
 
+        private String createdOn;
+
         private String status;
 
         private Map<String, ResourceAvailability> resourceAvailability = new LinkedHashMap<>();
+
+        private Optional<ClientFacingConnectionErrorDetails> errorDetails = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -167,7 +211,9 @@ public final class ClientFacingProviderWithStatus {
             name(other.getName());
             slug(other.getSlug());
             logo(other.getLogo());
+            createdOn(other.getCreatedOn());
             status(other.getStatus());
+            errorDetails(other.getErrorDetails());
             resourceAvailability(other.getResourceAvailability());
             return this;
         }
@@ -200,8 +246,15 @@ public final class ClientFacingProviderWithStatus {
          */
         @java.lang.Override
         @JsonSetter("logo")
-        public StatusStage logo(String logo) {
+        public CreatedOnStage logo(String logo) {
             this.logo = logo;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("created_on")
+        public StatusStage createdOn(String createdOn) {
+            this.createdOn = createdOn;
             return this;
         }
 
@@ -236,10 +289,27 @@ public final class ClientFacingProviderWithStatus {
             return this;
         }
 
+        /**
+         * <p>Details of the terminal connection error — populated only when the status is <code>error</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage errorDetails(ClientFacingConnectionErrorDetails errorDetails) {
+            this.errorDetails = Optional.of(errorDetails);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "error_details", nulls = Nulls.SKIP)
+        public _FinalStage errorDetails(Optional<ClientFacingConnectionErrorDetails> errorDetails) {
+            this.errorDetails = errorDetails;
+            return this;
+        }
+
         @java.lang.Override
         public ClientFacingProviderWithStatus build() {
             return new ClientFacingProviderWithStatus(
-                    name, slug, logo, status, resourceAvailability, additionalProperties);
+                    name, slug, logo, createdOn, status, errorDetails, resourceAvailability, additionalProperties);
         }
     }
 }
