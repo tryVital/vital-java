@@ -19,9 +19,9 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = ClientFacingPayorSearchResponse.Builder.class)
-public final class ClientFacingPayorSearchResponse {
-    private final String payorCode;
+@JsonDeserialize(builder = ClientFacingPayorSearchResponseDeprecated.Builder.class)
+public final class ClientFacingPayorSearchResponseDeprecated {
+    private final String code;
 
     private final String name;
 
@@ -31,13 +31,13 @@ public final class ClientFacingPayorSearchResponse {
 
     private final Map<String, Object> additionalProperties;
 
-    private ClientFacingPayorSearchResponse(
-            String payorCode,
+    private ClientFacingPayorSearchResponseDeprecated(
+            String code,
             String name,
             List<String> aliases,
             Address orgAddress,
             Map<String, Object> additionalProperties) {
-        this.payorCode = payorCode;
+        this.code = code;
         this.name = name;
         this.aliases = aliases;
         this.orgAddress = orgAddress;
@@ -47,9 +47,9 @@ public final class ClientFacingPayorSearchResponse {
     /**
      * @return Payor code returned for the insurance information.
      */
-    @JsonProperty("payor_code")
-    public String getPayorCode() {
-        return payorCode;
+    @JsonProperty("code")
+    public String getCode() {
+        return code;
     }
 
     /**
@@ -79,7 +79,8 @@ public final class ClientFacingPayorSearchResponse {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ClientFacingPayorSearchResponse && equalTo((ClientFacingPayorSearchResponse) other);
+        return other instanceof ClientFacingPayorSearchResponseDeprecated
+                && equalTo((ClientFacingPayorSearchResponseDeprecated) other);
     }
 
     @JsonAnyGetter
@@ -87,8 +88,8 @@ public final class ClientFacingPayorSearchResponse {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ClientFacingPayorSearchResponse other) {
-        return payorCode.equals(other.payorCode)
+    private boolean equalTo(ClientFacingPayorSearchResponseDeprecated other) {
+        return code.equals(other.code)
                 && name.equals(other.name)
                 && aliases.equals(other.aliases)
                 && orgAddress.equals(other.orgAddress);
@@ -96,7 +97,7 @@ public final class ClientFacingPayorSearchResponse {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.payorCode, this.name, this.aliases, this.orgAddress);
+        return Objects.hash(this.code, this.name, this.aliases, this.orgAddress);
     }
 
     @java.lang.Override
@@ -104,14 +105,14 @@ public final class ClientFacingPayorSearchResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static PayorCodeStage builder() {
+    public static CodeStage builder() {
         return new Builder();
     }
 
-    public interface PayorCodeStage {
-        NameStage payorCode(String payorCode);
+    public interface CodeStage {
+        NameStage code(String code);
 
-        Builder from(ClientFacingPayorSearchResponse other);
+        Builder from(ClientFacingPayorSearchResponseDeprecated other);
     }
 
     public interface NameStage {
@@ -123,7 +124,7 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     public interface _FinalStage {
-        ClientFacingPayorSearchResponse build();
+        ClientFacingPayorSearchResponseDeprecated build();
 
         _FinalStage aliases(List<String> aliases);
 
@@ -133,8 +134,8 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PayorCodeStage, NameStage, OrgAddressStage, _FinalStage {
-        private String payorCode;
+    public static final class Builder implements CodeStage, NameStage, OrgAddressStage, _FinalStage {
+        private String code;
 
         private String name;
 
@@ -148,8 +149,8 @@ public final class ClientFacingPayorSearchResponse {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ClientFacingPayorSearchResponse other) {
-            payorCode(other.getPayorCode());
+        public Builder from(ClientFacingPayorSearchResponseDeprecated other) {
+            code(other.getCode());
             name(other.getName());
             aliases(other.getAliases());
             orgAddress(other.getOrgAddress());
@@ -161,9 +162,9 @@ public final class ClientFacingPayorSearchResponse {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("payor_code")
-        public NameStage payorCode(String payorCode) {
-            this.payorCode = payorCode;
+        @JsonSetter("code")
+        public NameStage code(String code) {
+            this.code = code;
             return this;
         }
 
@@ -218,8 +219,8 @@ public final class ClientFacingPayorSearchResponse {
         }
 
         @java.lang.Override
-        public ClientFacingPayorSearchResponse build() {
-            return new ClientFacingPayorSearchResponse(payorCode, name, aliases, orgAddress, additionalProperties);
+        public ClientFacingPayorSearchResponseDeprecated build() {
+            return new ClientFacingPayorSearchResponseDeprecated(code, name, aliases, orgAddress, additionalProperties);
         }
     }
 }
