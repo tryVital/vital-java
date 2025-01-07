@@ -21,24 +21,15 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = QueryConfig.Builder.class)
 public final class QueryConfig {
-    private final Optional<QueryConfigWeekStartsOn> weekStartsOn;
-
     private final Optional<List<QueryConfigProviderPriorityOverridesItem>> providerPriorityOverrides;
 
     private final Map<String, Object> additionalProperties;
 
     private QueryConfig(
-            Optional<QueryConfigWeekStartsOn> weekStartsOn,
             Optional<List<QueryConfigProviderPriorityOverridesItem>> providerPriorityOverrides,
             Map<String, Object> additionalProperties) {
-        this.weekStartsOn = weekStartsOn;
         this.providerPriorityOverrides = providerPriorityOverrides;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("week_starts_on")
-    public Optional<QueryConfigWeekStartsOn> getWeekStartsOn() {
-        return weekStartsOn;
     }
 
     @JsonProperty("provider_priority_overrides")
@@ -58,13 +49,12 @@ public final class QueryConfig {
     }
 
     private boolean equalTo(QueryConfig other) {
-        return weekStartsOn.equals(other.weekStartsOn)
-                && providerPriorityOverrides.equals(other.providerPriorityOverrides);
+        return providerPriorityOverrides.equals(other.providerPriorityOverrides);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.weekStartsOn, this.providerPriorityOverrides);
+        return Objects.hash(this.providerPriorityOverrides);
     }
 
     @java.lang.Override
@@ -78,8 +68,6 @@ public final class QueryConfig {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<QueryConfigWeekStartsOn> weekStartsOn = Optional.empty();
-
         private Optional<List<QueryConfigProviderPriorityOverridesItem>> providerPriorityOverrides = Optional.empty();
 
         @JsonAnySetter
@@ -88,19 +76,7 @@ public final class QueryConfig {
         private Builder() {}
 
         public Builder from(QueryConfig other) {
-            weekStartsOn(other.getWeekStartsOn());
             providerPriorityOverrides(other.getProviderPriorityOverrides());
-            return this;
-        }
-
-        @JsonSetter(value = "week_starts_on", nulls = Nulls.SKIP)
-        public Builder weekStartsOn(Optional<QueryConfigWeekStartsOn> weekStartsOn) {
-            this.weekStartsOn = weekStartsOn;
-            return this;
-        }
-
-        public Builder weekStartsOn(QueryConfigWeekStartsOn weekStartsOn) {
-            this.weekStartsOn = Optional.of(weekStartsOn);
             return this;
         }
 
@@ -118,7 +94,7 @@ public final class QueryConfig {
         }
 
         public QueryConfig build() {
-            return new QueryConfig(weekStartsOn, providerPriorityOverrides, additionalProperties);
+            return new QueryConfig(providerPriorityOverrides, additionalProperties);
         }
     }
 }
