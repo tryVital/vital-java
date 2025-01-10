@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ClientFacingResource {
+public enum Resource {
     PROFILE("profile"),
 
     ACTIVITY("activity"),
@@ -31,8 +31,6 @@ public enum ClientFacingResource {
     HEARTRATE("heartrate"),
 
     HRV("hrv"),
-
-    HYPNOGRAM("hypnogram"),
 
     IGE("ige"),
 
@@ -98,11 +96,13 @@ public enum ClientFacingResource {
 
     NOTE("note"),
 
-    SLEEP_STREAM("sleep_stream");
+    SLEEP_STREAM("sleep_stream"),
+
+    HYPNOGRAM("hypnogram");
 
     private final String value;
 
-    ClientFacingResource(String value) {
+    Resource(String value) {
         this.value = value;
     }
 

@@ -31,7 +31,7 @@ public final class ClientFacingProviderDetailed {
 
     private final Optional<SourceAuthType> authType;
 
-    private final Optional<List<ClientFacingResource>> supportedResources;
+    private final Optional<List<Resource>> supportedResources;
 
     private final Map<String, Object> additionalProperties;
 
@@ -41,7 +41,7 @@ public final class ClientFacingProviderDetailed {
             String description,
             Optional<String> logo,
             Optional<SourceAuthType> authType,
-            Optional<List<ClientFacingResource>> supportedResources,
+            Optional<List<Resource>> supportedResources,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
@@ -90,7 +90,7 @@ public final class ClientFacingProviderDetailed {
     }
 
     @JsonProperty("supported_resources")
-    public Optional<List<ClientFacingResource>> getSupportedResources() {
+    public Optional<List<Resource>> getSupportedResources() {
         return supportedResources;
     }
 
@@ -153,9 +153,9 @@ public final class ClientFacingProviderDetailed {
 
         _FinalStage authType(SourceAuthType authType);
 
-        _FinalStage supportedResources(Optional<List<ClientFacingResource>> supportedResources);
+        _FinalStage supportedResources(Optional<List<Resource>> supportedResources);
 
-        _FinalStage supportedResources(List<ClientFacingResource> supportedResources);
+        _FinalStage supportedResources(List<Resource> supportedResources);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -166,7 +166,7 @@ public final class ClientFacingProviderDetailed {
 
         private String description;
 
-        private Optional<List<ClientFacingResource>> supportedResources = Optional.empty();
+        private Optional<List<Resource>> supportedResources = Optional.empty();
 
         private Optional<SourceAuthType> authType = Optional.empty();
 
@@ -222,14 +222,14 @@ public final class ClientFacingProviderDetailed {
         }
 
         @java.lang.Override
-        public _FinalStage supportedResources(List<ClientFacingResource> supportedResources) {
+        public _FinalStage supportedResources(List<Resource> supportedResources) {
             this.supportedResources = Optional.of(supportedResources);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "supported_resources", nulls = Nulls.SKIP)
-        public _FinalStage supportedResources(Optional<List<ClientFacingResource>> supportedResources) {
+        public _FinalStage supportedResources(Optional<List<Resource>> supportedResources) {
             this.supportedResources = supportedResources;
             return this;
         }
