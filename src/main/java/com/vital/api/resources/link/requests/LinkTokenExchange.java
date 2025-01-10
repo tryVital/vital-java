@@ -30,6 +30,8 @@ public final class LinkTokenExchange {
 
     private final Optional<List<Providers>> filterOnProviders;
 
+    private final Optional<String> onError;
+
     private final Map<String, Object> additionalProperties;
 
     private LinkTokenExchange(
@@ -37,11 +39,13 @@ public final class LinkTokenExchange {
             Optional<Providers> provider,
             Optional<String> redirectUrl,
             Optional<List<Providers>> filterOnProviders,
+            Optional<String> onError,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.provider = provider;
         this.redirectUrl = redirectUrl;
         this.filterOnProviders = filterOnProviders;
+        this.onError = onError;
         this.additionalProperties = additionalProperties;
     }
 
@@ -68,6 +72,11 @@ public final class LinkTokenExchange {
         return filterOnProviders;
     }
 
+    @JsonProperty("on_error")
+    public Optional<String> getOnError() {
+        return onError;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -83,12 +92,13 @@ public final class LinkTokenExchange {
         return userId.equals(other.userId)
                 && provider.equals(other.provider)
                 && redirectUrl.equals(other.redirectUrl)
-                && filterOnProviders.equals(other.filterOnProviders);
+                && filterOnProviders.equals(other.filterOnProviders)
+                && onError.equals(other.onError);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.provider, this.redirectUrl, this.filterOnProviders);
+        return Objects.hash(this.userId, this.provider, this.redirectUrl, this.filterOnProviders, this.onError);
     }
 
     @java.lang.Override
@@ -120,11 +130,17 @@ public final class LinkTokenExchange {
         _FinalStage filterOnProviders(Optional<List<Providers>> filterOnProviders);
 
         _FinalStage filterOnProviders(List<Providers> filterOnProviders);
+
+        _FinalStage onError(Optional<String> onError);
+
+        _FinalStage onError(String onError);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements UserIdStage, _FinalStage {
         private String userId;
+
+        private Optional<String> onError = Optional.empty();
 
         private Optional<List<Providers>> filterOnProviders = Optional.empty();
 
@@ -143,6 +159,7 @@ public final class LinkTokenExchange {
             provider(other.getProvider());
             redirectUrl(other.getRedirectUrl());
             filterOnProviders(other.getFilterOnProviders());
+            onError(other.getOnError());
             return this;
         }
 
@@ -154,6 +171,19 @@ public final class LinkTokenExchange {
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage onError(String onError) {
+            this.onError = Optional.of(onError);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "on_error", nulls = Nulls.SKIP)
+        public _FinalStage onError(Optional<String> onError) {
+            this.onError = onError;
             return this;
         }
 
@@ -198,7 +228,8 @@ public final class LinkTokenExchange {
 
         @java.lang.Override
         public LinkTokenExchange build() {
-            return new LinkTokenExchange(userId, provider, redirectUrl, filterOnProviders, additionalProperties);
+            return new LinkTokenExchange(
+                    userId, provider, redirectUrl, filterOnProviders, onError, additionalProperties);
         }
     }
 }
