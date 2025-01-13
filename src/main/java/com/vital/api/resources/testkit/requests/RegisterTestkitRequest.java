@@ -26,7 +26,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RegisterTestkitRequest.Builder.class)
 public final class RegisterTestkitRequest {
-    private final String userId;
+    private final Optional<String> userId;
 
     private final String sampleId;
 
@@ -43,7 +43,7 @@ public final class RegisterTestkitRequest {
     private final Map<String, Object> additionalProperties;
 
     private RegisterTestkitRequest(
-            String userId,
+            Optional<String> userId,
             String sampleId,
             PatientDetails patientDetails,
             PatientAddressCompatible patientAddress,
@@ -61,8 +61,11 @@ public final class RegisterTestkitRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The user ID of the patient.
+     */
     @JsonProperty("user_id")
-    public String getUserId() {
+    public Optional<String> getUserId() {
         return userId;
     }
 
@@ -134,18 +137,14 @@ public final class RegisterTestkitRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static UserIdStage builder() {
+    public static SampleIdStage builder() {
         return new Builder();
-    }
-
-    public interface UserIdStage {
-        SampleIdStage userId(String userId);
-
-        Builder from(RegisterTestkitRequest other);
     }
 
     public interface SampleIdStage {
         PatientDetailsStage sampleId(String sampleId);
+
+        Builder from(RegisterTestkitRequest other);
     }
 
     public interface PatientDetailsStage {
@@ -158,6 +157,10 @@ public final class RegisterTestkitRequest {
 
     public interface _FinalStage {
         RegisterTestkitRequest build();
+
+        _FinalStage userId(Optional<String> userId);
+
+        _FinalStage userId(String userId);
 
         _FinalStage physician(Optional<PhysicianCreateRequestBase> physician);
 
@@ -173,10 +176,7 @@ public final class RegisterTestkitRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements UserIdStage, SampleIdStage, PatientDetailsStage, PatientAddressStage, _FinalStage {
-        private String userId;
-
+    public static final class Builder implements SampleIdStage, PatientDetailsStage, PatientAddressStage, _FinalStage {
         private String sampleId;
 
         private PatientDetails patientDetails;
@@ -188,6 +188,8 @@ public final class RegisterTestkitRequest {
         private Optional<HealthInsuranceCreateRequest> healthInsurance = Optional.empty();
 
         private Optional<PhysicianCreateRequestBase> physician = Optional.empty();
+
+        private Optional<String> userId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -203,13 +205,6 @@ public final class RegisterTestkitRequest {
             physician(other.getPhysician());
             healthInsurance(other.getHealthInsurance());
             consents(other.getConsents());
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("user_id")
-        public SampleIdStage userId(String userId) {
-            this.userId = userId;
             return this;
         }
 
@@ -270,6 +265,23 @@ public final class RegisterTestkitRequest {
         @JsonSetter(value = "physician", nulls = Nulls.SKIP)
         public _FinalStage physician(Optional<PhysicianCreateRequestBase> physician) {
             this.physician = physician;
+            return this;
+        }
+
+        /**
+         * <p>The user ID of the patient.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage userId(String userId) {
+            this.userId = Optional.of(userId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
+        public _FinalStage userId(Optional<String> userId) {
+            this.userId = userId;
             return this;
         }
 
