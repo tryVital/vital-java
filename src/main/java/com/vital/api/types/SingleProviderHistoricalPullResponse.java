@@ -24,13 +24,13 @@ import java.util.Objects;
 public final class SingleProviderHistoricalPullResponse {
     private final Map<String, SingleHistoricalPullStatistics> pulled;
 
-    private final List<Resource> notPulled;
+    private final List<ClientFacingResource> notPulled;
 
     private final Map<String, Object> additionalProperties;
 
     private SingleProviderHistoricalPullResponse(
             Map<String, SingleHistoricalPullStatistics> pulled,
-            List<Resource> notPulled,
+            List<ClientFacingResource> notPulled,
             Map<String, Object> additionalProperties) {
         this.pulled = pulled;
         this.notPulled = notPulled;
@@ -43,7 +43,7 @@ public final class SingleProviderHistoricalPullResponse {
     }
 
     @JsonProperty("not_pulled")
-    public List<Resource> getNotPulled() {
+    public List<ClientFacingResource> getNotPulled() {
         return notPulled;
     }
 
@@ -81,7 +81,7 @@ public final class SingleProviderHistoricalPullResponse {
     public static final class Builder {
         private Map<String, SingleHistoricalPullStatistics> pulled = new LinkedHashMap<>();
 
-        private List<Resource> notPulled = new ArrayList<>();
+        private List<ClientFacingResource> notPulled = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -112,18 +112,18 @@ public final class SingleProviderHistoricalPullResponse {
         }
 
         @JsonSetter(value = "not_pulled", nulls = Nulls.SKIP)
-        public Builder notPulled(List<Resource> notPulled) {
+        public Builder notPulled(List<ClientFacingResource> notPulled) {
             this.notPulled.clear();
             this.notPulled.addAll(notPulled);
             return this;
         }
 
-        public Builder addNotPulled(Resource notPulled) {
+        public Builder addNotPulled(ClientFacingResource notPulled) {
             this.notPulled.add(notPulled);
             return this;
         }
 
-        public Builder addAllNotPulled(List<Resource> notPulled) {
+        public Builder addAllNotPulled(List<ClientFacingResource> notPulled) {
             this.notPulled.addAll(notPulled);
             return this;
         }

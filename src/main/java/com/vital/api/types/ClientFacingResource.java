@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Resource {
+public enum ClientFacingResource {
     PROFILE("profile"),
 
     ACTIVITY("activity"),
@@ -102,7 +102,7 @@ public enum Resource {
 
     private final String value;
 
-    Resource(String value) {
+    ClientFacingResource(String value) {
         this.value = value;
     }
 
