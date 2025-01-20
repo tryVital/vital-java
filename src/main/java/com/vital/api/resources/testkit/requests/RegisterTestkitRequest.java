@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
-import com.vital.api.types.PatientAddressCompatible;
-import com.vital.api.types.PatientDetails;
+import com.vital.api.types.PatientAddressWithValidation;
+import com.vital.api.types.PatientDetailsWithValidation;
 import com.vital.api.types.PhysicianCreateRequestBase;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +30,9 @@ public final class RegisterTestkitRequest {
 
     private final String sampleId;
 
-    private final PatientDetails patientDetails;
+    private final PatientDetailsWithValidation patientDetails;
 
-    private final PatientAddressCompatible patientAddress;
+    private final PatientAddressWithValidation patientAddress;
 
     private final Optional<PhysicianCreateRequestBase> physician;
 
@@ -45,8 +45,8 @@ public final class RegisterTestkitRequest {
     private RegisterTestkitRequest(
             Optional<String> userId,
             String sampleId,
-            PatientDetails patientDetails,
-            PatientAddressCompatible patientAddress,
+            PatientDetailsWithValidation patientDetails,
+            PatientAddressWithValidation patientAddress,
             Optional<PhysicianCreateRequestBase> physician,
             Optional<HealthInsuranceCreateRequest> healthInsurance,
             Optional<List<Consent>> consents,
@@ -75,12 +75,12 @@ public final class RegisterTestkitRequest {
     }
 
     @JsonProperty("patient_details")
-    public PatientDetails getPatientDetails() {
+    public PatientDetailsWithValidation getPatientDetails() {
         return patientDetails;
     }
 
     @JsonProperty("patient_address")
-    public PatientAddressCompatible getPatientAddress() {
+    public PatientAddressWithValidation getPatientAddress() {
         return patientAddress;
     }
 
@@ -148,11 +148,11 @@ public final class RegisterTestkitRequest {
     }
 
     public interface PatientDetailsStage {
-        PatientAddressStage patientDetails(PatientDetails patientDetails);
+        PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails);
     }
 
     public interface PatientAddressStage {
-        _FinalStage patientAddress(PatientAddressCompatible patientAddress);
+        _FinalStage patientAddress(PatientAddressWithValidation patientAddress);
     }
 
     public interface _FinalStage {
@@ -179,9 +179,9 @@ public final class RegisterTestkitRequest {
     public static final class Builder implements SampleIdStage, PatientDetailsStage, PatientAddressStage, _FinalStage {
         private String sampleId;
 
-        private PatientDetails patientDetails;
+        private PatientDetailsWithValidation patientDetails;
 
-        private PatientAddressCompatible patientAddress;
+        private PatientAddressWithValidation patientAddress;
 
         private Optional<List<Consent>> consents = Optional.empty();
 
@@ -217,14 +217,14 @@ public final class RegisterTestkitRequest {
 
         @java.lang.Override
         @JsonSetter("patient_details")
-        public PatientAddressStage patientDetails(PatientDetails patientDetails) {
+        public PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails) {
             this.patientDetails = patientDetails;
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_address")
-        public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
+        public _FinalStage patientAddress(PatientAddressWithValidation patientAddress) {
             this.patientAddress = patientAddress;
             return this;
         }

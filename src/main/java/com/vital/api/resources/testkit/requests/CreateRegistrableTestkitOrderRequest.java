@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.types.ShippingAddress;
+import com.vital.api.types.ShippingAddressWithValidation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +25,7 @@ public final class CreateRegistrableTestkitOrderRequest {
 
     private final String labTestId;
 
-    private final ShippingAddress shippingDetails;
+    private final ShippingAddressWithValidation shippingDetails;
 
     private final Optional<String> passthrough;
 
@@ -34,7 +34,7 @@ public final class CreateRegistrableTestkitOrderRequest {
     private CreateRegistrableTestkitOrderRequest(
             String userId,
             String labTestId,
-            ShippingAddress shippingDetails,
+            ShippingAddressWithValidation shippingDetails,
             Optional<String> passthrough,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -55,7 +55,7 @@ public final class CreateRegistrableTestkitOrderRequest {
     }
 
     @JsonProperty("shipping_details")
-    public ShippingAddress getShippingDetails() {
+    public ShippingAddressWithValidation getShippingDetails() {
         return shippingDetails;
     }
 
@@ -108,7 +108,7 @@ public final class CreateRegistrableTestkitOrderRequest {
     }
 
     public interface ShippingDetailsStage {
-        _FinalStage shippingDetails(ShippingAddress shippingDetails);
+        _FinalStage shippingDetails(ShippingAddressWithValidation shippingDetails);
     }
 
     public interface _FinalStage {
@@ -125,7 +125,7 @@ public final class CreateRegistrableTestkitOrderRequest {
 
         private String labTestId;
 
-        private ShippingAddress shippingDetails;
+        private ShippingAddressWithValidation shippingDetails;
 
         private Optional<String> passthrough = Optional.empty();
 
@@ -159,7 +159,7 @@ public final class CreateRegistrableTestkitOrderRequest {
 
         @java.lang.Override
         @JsonSetter("shipping_details")
-        public _FinalStage shippingDetails(ShippingAddress shippingDetails) {
+        public _FinalStage shippingDetails(ShippingAddressWithValidation shippingDetails) {
             this.shippingDetails = shippingDetails;
             return this;
         }
