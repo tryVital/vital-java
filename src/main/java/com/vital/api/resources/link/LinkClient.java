@@ -26,7 +26,6 @@ import com.vital.api.resources.link.requests.LinkTokenStateRequest;
 import com.vital.api.resources.link.requests.LinkTokenValidationRequest;
 import com.vital.api.resources.link.requests.ManualConnectionData;
 import com.vital.api.resources.link.requests.PasswordAuthLink;
-import com.vital.api.types.ConnectionStatus;
 import com.vital.api.types.DemoConnectionStatus;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.LinkTokenExchangeResponse;
@@ -346,14 +345,14 @@ public class LinkClient {
     /**
      * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
      */
-    public ConnectionStatus emailAuth(EmailAuthLink request) {
+    public Object emailAuth(EmailAuthLink request) {
         return emailAuth(request, null);
     }
 
     /**
      * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
      */
-    public ConnectionStatus emailAuth(EmailAuthLink request, RequestOptions requestOptions) {
+    public Object emailAuth(EmailAuthLink request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/auth/email")
@@ -389,7 +388,7 @@ public class LinkClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ConnectionStatus.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -412,14 +411,14 @@ public class LinkClient {
     /**
      * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
      */
-    public ConnectionStatus passwordAuth(PasswordAuthLink request) {
+    public Object passwordAuth(PasswordAuthLink request) {
         return passwordAuth(request, null);
     }
 
     /**
      * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
      */
-    public ConnectionStatus passwordAuth(PasswordAuthLink request, RequestOptions requestOptions) {
+    public Object passwordAuth(PasswordAuthLink request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/auth")
@@ -453,7 +452,7 @@ public class LinkClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ConnectionStatus.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -670,14 +669,14 @@ public class LinkClient {
     /**
      * This connects auth providers that are email based.
      */
-    public ConnectionStatus connectEmailAuthProvider(String provider, EmailProviderAuthLink request) {
+    public Object connectEmailAuthProvider(String provider, EmailProviderAuthLink request) {
         return connectEmailAuthProvider(provider, request, null);
     }
 
     /**
      * This connects auth providers that are email based.
      */
-    public ConnectionStatus connectEmailAuthProvider(
+    public Object connectEmailAuthProvider(
             String provider, EmailProviderAuthLink request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -716,7 +715,7 @@ public class LinkClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ConnectionStatus.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
