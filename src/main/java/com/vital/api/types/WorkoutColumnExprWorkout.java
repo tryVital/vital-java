@@ -60,7 +60,9 @@ public enum WorkoutColumnExprWorkout {
 
     STEPS("steps"),
 
-    MAP("map"),
+    MAP_POLYLINE("map_polyline"),
+
+    MAP_SUMMARY_POLYLINE("map_summary_polyline"),
 
     SOURCE_TYPE("source_type"),
 

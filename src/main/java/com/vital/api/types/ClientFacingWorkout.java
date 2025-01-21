@@ -69,7 +69,7 @@ public final class ClientFacingWorkout {
 
     private final Optional<Integer> steps;
 
-    private final Optional<Map<String, Object>> map;
+    private final Optional<ClientFacingWorkoutMap> map;
 
     private final String providerId;
 
@@ -102,7 +102,7 @@ public final class ClientFacingWorkout {
             Optional<Double> maxWatts,
             Optional<Double> weightedAverageWatts,
             Optional<Integer> steps,
-            Optional<Map<String, Object>> map,
+            Optional<ClientFacingWorkoutMap> map,
             String providerId,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
@@ -326,10 +326,10 @@ public final class ClientFacingWorkout {
     }
 
     /**
-     * @return Map of workouts encoded as polyline
+     * @return Map of the workout
      */
     @JsonProperty("map")
-    public Optional<Map<String, Object>> getMap() {
+    public Optional<ClientFacingWorkoutMap> getMap() {
         return map;
     }
 
@@ -540,9 +540,9 @@ public final class ClientFacingWorkout {
 
         _FinalStage steps(Integer steps);
 
-        _FinalStage map(Optional<Map<String, Object>> map);
+        _FinalStage map(Optional<ClientFacingWorkoutMap> map);
 
-        _FinalStage map(Map<String, Object> map);
+        _FinalStage map(ClientFacingWorkoutMap map);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -569,7 +569,7 @@ public final class ClientFacingWorkout {
 
         private ClientFacingSource source;
 
-        private Optional<Map<String, Object>> map = Optional.empty();
+        private Optional<ClientFacingWorkoutMap> map = Optional.empty();
 
         private Optional<Integer> steps = Optional.empty();
 
@@ -720,18 +720,18 @@ public final class ClientFacingWorkout {
         }
 
         /**
-         * <p>Map of workouts encoded as polyline</p>
+         * <p>Map of the workout</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage map(Map<String, Object> map) {
+        public _FinalStage map(ClientFacingWorkoutMap map) {
             this.map = Optional.of(map);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "map", nulls = Nulls.SKIP)
-        public _FinalStage map(Optional<Map<String, Object>> map) {
+        public _FinalStage map(Optional<ClientFacingWorkoutMap> map) {
             this.map = map;
             return this;
         }
