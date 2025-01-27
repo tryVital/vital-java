@@ -10,21 +10,99 @@ public enum Region {
 
     EU("eu"),
 
-    SG("sg"),
-
     DE("de"),
-
-    AU("au"),
-
-    BR("br"),
-
-    NL("nl"),
 
     FR("fr"),
 
     CA("ca"),
 
-    IN("in");
+    BR("br"),
+
+    AR("ar"),
+
+    CL("cl"),
+
+    CO("co"),
+
+    MX("mx"),
+
+    GB("gb"),
+
+    IE("ie"),
+
+    AU("au"),
+
+    NZ("nz"),
+
+    NL("nl"),
+
+    AT("at"),
+
+    BE("be"),
+
+    BH("bh"),
+
+    CH("ch"),
+
+    CZ("cz"),
+
+    DK("dk"),
+
+    EG("eg"),
+
+    ES("es"),
+
+    FI("fi"),
+
+    GR("gr"),
+
+    HR("hr"),
+
+    IL("il"),
+
+    IT("it"),
+
+    JO("jo"),
+
+    KW("kw"),
+
+    LB("lb"),
+
+    LU("lu"),
+
+    NO("no"),
+
+    OM("om"),
+
+    PL("pl"),
+
+    PT("pt"),
+
+    QA("qa"),
+
+    SA("sa"),
+
+    SE("se"),
+
+    SI("si"),
+
+    SK("sk"),
+
+    TR("tr"),
+
+    ZA("za"),
+
+    IN("in"),
+
+    SG("sg"),
+
+    HK("hk"),
+
+    KR("kr"),
+
+    PH("ph"),
+
+    TW("tw");
 
     private final String value;
 
