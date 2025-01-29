@@ -46,7 +46,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.tryvital'
             artifactId = 'vital-java'
-            version = '1.2.209'
+            version = '1.2.210'
             from components.java
             pom {
                 scm {

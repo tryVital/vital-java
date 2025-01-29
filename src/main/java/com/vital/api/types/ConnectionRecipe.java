@@ -52,6 +52,9 @@ public final class ConnectionRecipe {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Vital User ID. The user must be created ahead of the bulk import operation.
+     */
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
@@ -67,16 +70,34 @@ public final class ConnectionRecipe {
         return refreshToken;
     }
 
+    /**
+     * @return User ID of the data provider.
+     * <ul>
+     * <li>Fitbit: 6-character Fitbit User ID</li>
+     * <li>Garmin: 36-character Garmin User ID</li>
+     * </ul>
+     */
     @JsonProperty("provider_id")
     public String getProviderId() {
         return providerId;
     }
 
+    /**
+     * @return Access token expiry date, in terms of UNIX epoch seconds.
+     */
     @JsonProperty("expires_at")
     public int getExpiresAt() {
         return expiresAt;
     }
 
+    /**
+     * @return OAuth scopes of the data provider. Specify <code>null</code> if you do not
+     * have any scopes on record.
+     * <ul>
+     * <li>Fitbit: Has scopes</li>
+     * <li>Garmin: No scope</li>
+     * </ul>
+     */
     @JsonProperty("oauth_scopes")
     public Optional<List<String>> getOauthScopes() {
         return oauthScopes;
@@ -178,6 +199,10 @@ public final class ConnectionRecipe {
             return this;
         }
 
+        /**
+         * <p>Vital User ID. The user must be created ahead of the bulk import operation.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("user_id")
         public AccessTokenStage userId(String userId) {
@@ -199,6 +224,14 @@ public final class ConnectionRecipe {
             return this;
         }
 
+        /**
+         * <p>User ID of the data provider.</p>
+         * <ul>
+         * <li>Fitbit: 6-character Fitbit User ID</li>
+         * <li>Garmin: 36-character Garmin User ID</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider_id")
         public ExpiresAtStage providerId(String providerId) {
@@ -206,6 +239,10 @@ public final class ConnectionRecipe {
             return this;
         }
 
+        /**
+         * <p>Access token expiry date, in terms of UNIX epoch seconds.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("expires_at")
         public _FinalStage expiresAt(int expiresAt) {
@@ -213,6 +250,15 @@ public final class ConnectionRecipe {
             return this;
         }
 
+        /**
+         * <p>OAuth scopes of the data provider. Specify <code>null</code> if you do not
+         * have any scopes on record.</p>
+         * <ul>
+         * <li>Fitbit: Has scopes</li>
+         * <li>Garmin: No scope</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage oauthScopes(List<String> oauthScopes) {
             this.oauthScopes = Optional.of(oauthScopes);
