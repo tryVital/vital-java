@@ -14,6 +14,7 @@ import com.vital.api.core.VitalException;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.link.requests.BeginLinkTokenRequest;
 import com.vital.api.resources.link.requests.BulkImportConnectionsBody;
+import com.vital.api.resources.link.requests.BulkTriggerHistoricalPullBody;
 import com.vital.api.resources.link.requests.CompletePasswordProviderMfaBody;
 import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
 import com.vital.api.resources.link.requests.EmailAuthLink;
@@ -87,6 +88,55 @@ public class LinkClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), BulkImportConnectionsResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public Object bulkTriggerHistoricalPull(BulkTriggerHistoricalPullBody request) {
+        return bulkTriggerHistoricalPull(request, null);
+    }
+
+    public Object bulkTriggerHistoricalPull(BulkTriggerHistoricalPullBody request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/link/bulk_trigger_historical_pull")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
