@@ -91,18 +91,18 @@ public class AggregateClient {
         }
     }
 
-    public AggregationResult getResultTableForContinuousQuery(String userId, String queryId) {
-        return getResultTableForContinuousQuery(userId, queryId, null);
+    public AggregationResult getResultTableForContinuousQuery(String userId, String queryIdOrSlug) {
+        return getResultTableForContinuousQuery(userId, queryIdOrSlug, null);
     }
 
     public AggregationResult getResultTableForContinuousQuery(
-            String userId, String queryId, RequestOptions requestOptions) {
+            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("aggregate/v1/user")
                 .addPathSegment(userId)
                 .addPathSegments("continuous_query")
-                .addPathSegment(queryId)
+                .addPathSegment(queryIdOrSlug)
                 .addPathSegments("result_table")
                 .build();
         Request okhttpRequest = new Request.Builder()
