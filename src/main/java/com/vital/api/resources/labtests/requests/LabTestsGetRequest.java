@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.labtests.types.LabTestsGetRequestOrderDirection;
+import com.vital.api.resources.labtests.types.LabTestsGetRequestOrderKey;
 import com.vital.api.types.LabTestCollectionMethod;
 import com.vital.api.types.LabTestGenerationMethodFilter;
 import com.vital.api.types.LabTestStatus;
@@ -31,6 +33,16 @@ public final class LabTestsGetRequest {
 
     private final Optional<LabTestStatus> status;
 
+    private final Optional<Integer> markerIds;
+
+    private final Optional<String> providerIds;
+
+    private final Optional<String> name;
+
+    private final Optional<LabTestsGetRequestOrderKey> orderKey;
+
+    private final Optional<LabTestsGetRequestOrderDirection> orderDirection;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetRequest(
@@ -38,11 +50,21 @@ public final class LabTestsGetRequest {
             Optional<String> labSlug,
             Optional<LabTestCollectionMethod> collectionMethod,
             Optional<LabTestStatus> status,
+            Optional<Integer> markerIds,
+            Optional<String> providerIds,
+            Optional<String> name,
+            Optional<LabTestsGetRequestOrderKey> orderKey,
+            Optional<LabTestsGetRequestOrderDirection> orderDirection,
             Map<String, Object> additionalProperties) {
         this.generationMethod = generationMethod;
         this.labSlug = labSlug;
         this.collectionMethod = collectionMethod;
         this.status = status;
+        this.markerIds = markerIds;
+        this.providerIds = providerIds;
+        this.name = name;
+        this.orderKey = orderKey;
+        this.orderDirection = orderDirection;
         this.additionalProperties = additionalProperties;
     }
 
@@ -78,6 +100,40 @@ public final class LabTestsGetRequest {
         return status;
     }
 
+    /**
+     * @return Filter to only include lab tests containing these marker IDs.
+     */
+    @JsonProperty("marker_ids")
+    public Optional<Integer> getMarkerIds() {
+        return markerIds;
+    }
+
+    /**
+     * @return Filter to only include lab tests containing these provider IDs.
+     */
+    @JsonProperty("provider_ids")
+    public Optional<String> getProviderIds() {
+        return providerIds;
+    }
+
+    /**
+     * @return Filter by the name of the lab test (a case-insensitive substring search).
+     */
+    @JsonProperty("name")
+    public Optional<String> getName() {
+        return name;
+    }
+
+    @JsonProperty("order_key")
+    public Optional<LabTestsGetRequestOrderKey> getOrderKey() {
+        return orderKey;
+    }
+
+    @JsonProperty("order_direction")
+    public Optional<LabTestsGetRequestOrderDirection> getOrderDirection() {
+        return orderDirection;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -93,12 +149,26 @@ public final class LabTestsGetRequest {
         return generationMethod.equals(other.generationMethod)
                 && labSlug.equals(other.labSlug)
                 && collectionMethod.equals(other.collectionMethod)
-                && status.equals(other.status);
+                && status.equals(other.status)
+                && markerIds.equals(other.markerIds)
+                && providerIds.equals(other.providerIds)
+                && name.equals(other.name)
+                && orderKey.equals(other.orderKey)
+                && orderDirection.equals(other.orderDirection);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.generationMethod, this.labSlug, this.collectionMethod, this.status);
+        return Objects.hash(
+                this.generationMethod,
+                this.labSlug,
+                this.collectionMethod,
+                this.status,
+                this.markerIds,
+                this.providerIds,
+                this.name,
+                this.orderKey,
+                this.orderDirection);
     }
 
     @java.lang.Override
@@ -120,6 +190,16 @@ public final class LabTestsGetRequest {
 
         private Optional<LabTestStatus> status = Optional.empty();
 
+        private Optional<Integer> markerIds = Optional.empty();
+
+        private Optional<String> providerIds = Optional.empty();
+
+        private Optional<String> name = Optional.empty();
+
+        private Optional<LabTestsGetRequestOrderKey> orderKey = Optional.empty();
+
+        private Optional<LabTestsGetRequestOrderDirection> orderDirection = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -130,6 +210,11 @@ public final class LabTestsGetRequest {
             labSlug(other.getLabSlug());
             collectionMethod(other.getCollectionMethod());
             status(other.getStatus());
+            markerIds(other.getMarkerIds());
+            providerIds(other.getProviderIds());
+            name(other.getName());
+            orderKey(other.getOrderKey());
+            orderDirection(other.getOrderDirection());
             return this;
         }
 
@@ -177,8 +262,73 @@ public final class LabTestsGetRequest {
             return this;
         }
 
+        @JsonSetter(value = "marker_ids", nulls = Nulls.SKIP)
+        public Builder markerIds(Optional<Integer> markerIds) {
+            this.markerIds = markerIds;
+            return this;
+        }
+
+        public Builder markerIds(Integer markerIds) {
+            this.markerIds = Optional.of(markerIds);
+            return this;
+        }
+
+        @JsonSetter(value = "provider_ids", nulls = Nulls.SKIP)
+        public Builder providerIds(Optional<String> providerIds) {
+            this.providerIds = providerIds;
+            return this;
+        }
+
+        public Builder providerIds(String providerIds) {
+            this.providerIds = Optional.of(providerIds);
+            return this;
+        }
+
+        @JsonSetter(value = "name", nulls = Nulls.SKIP)
+        public Builder name(Optional<String> name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = Optional.of(name);
+            return this;
+        }
+
+        @JsonSetter(value = "order_key", nulls = Nulls.SKIP)
+        public Builder orderKey(Optional<LabTestsGetRequestOrderKey> orderKey) {
+            this.orderKey = orderKey;
+            return this;
+        }
+
+        public Builder orderKey(LabTestsGetRequestOrderKey orderKey) {
+            this.orderKey = Optional.of(orderKey);
+            return this;
+        }
+
+        @JsonSetter(value = "order_direction", nulls = Nulls.SKIP)
+        public Builder orderDirection(Optional<LabTestsGetRequestOrderDirection> orderDirection) {
+            this.orderDirection = orderDirection;
+            return this;
+        }
+
+        public Builder orderDirection(LabTestsGetRequestOrderDirection orderDirection) {
+            this.orderDirection = Optional.of(orderDirection);
+            return this;
+        }
+
         public LabTestsGetRequest build() {
-            return new LabTestsGetRequest(generationMethod, labSlug, collectionMethod, status, additionalProperties);
+            return new LabTestsGetRequest(
+                    generationMethod,
+                    labSlug,
+                    collectionMethod,
+                    status,
+                    markerIds,
+                    providerIds,
+                    name,
+                    orderKey,
+                    orderDirection,
+                    additionalProperties);
         }
     }
 }

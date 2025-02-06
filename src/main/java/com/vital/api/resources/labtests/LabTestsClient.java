@@ -100,6 +100,22 @@ public class LabTestsClient {
         if (request.getStatus().isPresent()) {
             httpUrl.addQueryParameter("status", request.getStatus().get().toString());
         }
+        if (request.getMarkerIds().isPresent()) {
+            httpUrl.addQueryParameter("marker_ids", request.getMarkerIds().get().toString());
+        }
+        if (request.getProviderIds().isPresent()) {
+            httpUrl.addQueryParameter("provider_ids", request.getProviderIds().get());
+        }
+        if (request.getName().isPresent()) {
+            httpUrl.addQueryParameter("name", request.getName().get());
+        }
+        if (request.getOrderKey().isPresent()) {
+            httpUrl.addQueryParameter("order_key", request.getOrderKey().get().toString());
+        }
+        if (request.getOrderDirection().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "order_direction", request.getOrderDirection().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
