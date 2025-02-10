@@ -9,29 +9,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GroupKeyColumnExpr.Builder.class)
 public final class GroupKeyColumnExpr {
-    private final Optional<GroupKeyColumnExprGroupKey> groupKey;
+    private final GroupKeyColumnExprGroupKey groupKey;
 
     private final Map<String, Object> additionalProperties;
 
-    private GroupKeyColumnExpr(
-            Optional<GroupKeyColumnExprGroupKey> groupKey, Map<String, Object> additionalProperties) {
+    private GroupKeyColumnExpr(GroupKeyColumnExprGroupKey groupKey, Map<String, Object> additionalProperties) {
         this.groupKey = groupKey;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("group_key")
-    public Optional<GroupKeyColumnExprGroupKey> getGroupKey() {
+    public GroupKeyColumnExprGroupKey getGroupKey() {
         return groupKey;
     }
 
@@ -60,35 +57,43 @@ public final class GroupKeyColumnExpr {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static GroupKeyStage builder() {
         return new Builder();
     }
 
+    public interface GroupKeyStage {
+        _FinalStage groupKey(GroupKeyColumnExprGroupKey groupKey);
+
+        Builder from(GroupKeyColumnExpr other);
+    }
+
+    public interface _FinalStage {
+        GroupKeyColumnExpr build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<GroupKeyColumnExprGroupKey> groupKey = Optional.empty();
+    public static final class Builder implements GroupKeyStage, _FinalStage {
+        private GroupKeyColumnExprGroupKey groupKey;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(GroupKeyColumnExpr other) {
             groupKey(other.getGroupKey());
             return this;
         }
 
-        @JsonSetter(value = "group_key", nulls = Nulls.SKIP)
-        public Builder groupKey(Optional<GroupKeyColumnExprGroupKey> groupKey) {
+        @java.lang.Override
+        @JsonSetter("group_key")
+        public _FinalStage groupKey(GroupKeyColumnExprGroupKey groupKey) {
             this.groupKey = groupKey;
             return this;
         }
 
-        public Builder groupKey(GroupKeyColumnExprGroupKey groupKey) {
-            this.groupKey = Optional.of(groupKey);
-            return this;
-        }
-
+        @java.lang.Override
         public GroupKeyColumnExpr build() {
             return new GroupKeyColumnExpr(groupKey, additionalProperties);
         }
