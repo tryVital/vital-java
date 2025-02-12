@@ -60,11 +60,23 @@ public final class ConnectionRecipe {
         return userId;
     }
 
+    /**
+     * @return <ul>
+     * <li>OAuth 2.0 providers (Fitbit, etc): The latest Access Token.</li>
+     * <li>OAuth 1.0 providers (Garmin): The Access Token.</li>
+     * </ul>
+     */
     @JsonProperty("access_token")
     public String getAccessToken() {
         return accessToken;
     }
 
+    /**
+     * @return <ul>
+     * <li>OAuth 2.0 providers (Fitbit, etc): The latest Refresh Token.</li>
+     * <li>OAuth 1.0 providers (Garmin): The Token Secret.</li>
+     * </ul>
+     */
     @JsonProperty("refresh_token")
     public String getRefreshToken() {
         return refreshToken;
@@ -84,6 +96,10 @@ public final class ConnectionRecipe {
 
     /**
      * @return Access token expiry date, in terms of UNIX epoch seconds.
+     * <ul>
+     * <li>OAuth 2.0 providers (Fitbit, etc): The latest expiry date on your record.</li>
+     * <li>OAuth 1.0 providers (Garmin): Use the constant value <code>2147483647</code>.</li>
+     * </ul>
      */
     @JsonProperty("expires_at")
     public int getExpiresAt() {
@@ -210,6 +226,13 @@ public final class ConnectionRecipe {
             return this;
         }
 
+        /**
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest Access Token.</li>
+         * <li>OAuth 1.0 providers (Garmin): The Access Token.</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("access_token")
         public RefreshTokenStage accessToken(String accessToken) {
@@ -217,6 +240,13 @@ public final class ConnectionRecipe {
             return this;
         }
 
+        /**
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest Refresh Token.</li>
+         * <li>OAuth 1.0 providers (Garmin): The Token Secret.</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("refresh_token")
         public ProviderIdStage refreshToken(String refreshToken) {
@@ -241,6 +271,10 @@ public final class ConnectionRecipe {
 
         /**
          * <p>Access token expiry date, in terms of UNIX epoch seconds.</p>
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest expiry date on your record.</li>
+         * <li>OAuth 1.0 providers (Garmin): Use the constant value <code>2147483647</code>.</li>
+         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
