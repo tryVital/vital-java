@@ -68,7 +68,11 @@ public enum WorkoutColumnExprWorkout {
 
     SOURCE_PROVIDER("source_provider"),
 
-    SOURCE_APP_ID("source_app_id");
+    SOURCE_APP_ID("source_app_id"),
+
+    SOURCE_WORKOUT_ID("source_workout_id"),
+
+    TIME_ZONE("time_zone");
 
     private final String value;
 

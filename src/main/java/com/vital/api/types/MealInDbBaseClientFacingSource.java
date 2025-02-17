@@ -97,16 +97,25 @@ public final class MealInDbBaseClientFacingSource {
         return userId;
     }
 
+    /**
+     * @return This value has no meaning.
+     */
     @JsonProperty("priority_id")
     public int getPriorityId() {
         return priorityId;
     }
 
+    /**
+     * @return This value has no meaning.
+     */
     @JsonProperty("source_id")
     public int getSourceId() {
         return sourceId;
     }
 
+    /**
+     * @return This value is identical to <code>id</code>.
+     */
     @JsonProperty("provider_id")
     public String getProviderId() {
         return providerId;
@@ -147,11 +156,17 @@ public final class MealInDbBaseClientFacingSource {
         return source;
     }
 
+    /**
+     * @return This value is identical to <code>timestamp</code>.
+     */
     @JsonProperty("created_at")
     public String getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * @return This value is identical to <code>timestamp</code>.
+     */
     @JsonProperty("updated_at")
     public String getUpdatedAt() {
         return updatedAt;
@@ -368,6 +383,10 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
+        /**
+         * <p>This value has no meaning.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("priority_id")
         public SourceIdStage priorityId(int priorityId) {
@@ -375,6 +394,10 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
+        /**
+         * <p>This value has no meaning.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("source_id")
         public ProviderIdStage sourceId(int sourceId) {
@@ -382,6 +405,10 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
+        /**
+         * <p>This value is identical to <code>id</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider_id")
         public TimestampStage providerId(String providerId) {
@@ -410,6 +437,10 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
+        /**
+         * <p>This value is identical to <code>timestamp</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("created_at")
         public UpdatedAtStage createdAt(String createdAt) {
@@ -417,6 +448,10 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
+        /**
+         * <p>This value is identical to <code>timestamp</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(String updatedAt) {

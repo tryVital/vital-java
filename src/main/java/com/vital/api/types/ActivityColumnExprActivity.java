@@ -40,7 +40,11 @@ public enum ActivityColumnExprActivity {
 
     SOURCE_PROVIDER("source_provider"),
 
-    SOURCE_APP_ID("source_app_id");
+    SOURCE_APP_ID("source_app_id"),
+
+    TIME_ZONE("time_zone"),
+
+    TIME_ZONE_OFFSET("time_zone_offset");
 
     private final String value;
 

@@ -44,6 +44,8 @@ public enum SleepColumnExprSleep {
 
     HRV_MEAN_SDNN("hrv_mean_sdnn"),
 
+    SKIN_TEMPERATURE("skin_temperature"),
+
     SKIN_TEMPERATURE_DELTA("skin_temperature_delta"),
 
     RESPIRATORY_RATE("respiratory_rate"),
@@ -54,7 +56,9 @@ public enum SleepColumnExprSleep {
 
     SOURCE_PROVIDER("source_provider"),
 
-    SOURCE_APP_ID("source_app_id");
+    SOURCE_APP_ID("source_app_id"),
+
+    TIME_ZONE("time_zone");
 
     private final String value;
 
