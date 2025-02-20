@@ -26,7 +26,7 @@ public final class ClientFacingInsurance {
 
     private final ResponsibleRelationship relationship;
 
-    private final PersonDetailsOutput insured;
+    private final VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured;
 
     private final CompanyDetails company;
 
@@ -40,7 +40,7 @@ public final class ClientFacingInsurance {
             String memberId,
             String payorCode,
             ResponsibleRelationship relationship,
-            PersonDetailsOutput insured,
+            VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured,
             CompanyDetails company,
             Optional<String> groupId,
             Optional<GuarantorDetails> guarantor,
@@ -71,7 +71,7 @@ public final class ClientFacingInsurance {
     }
 
     @JsonProperty("insured")
-    public PersonDetailsOutput getInsured() {
+    public VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails getInsured() {
         return insured;
     }
 
@@ -147,7 +147,7 @@ public final class ClientFacingInsurance {
     }
 
     public interface InsuredStage {
-        CompanyStage insured(PersonDetailsOutput insured);
+        CompanyStage insured(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured);
     }
 
     public interface CompanyStage {
@@ -175,7 +175,7 @@ public final class ClientFacingInsurance {
 
         private ResponsibleRelationship relationship;
 
-        private PersonDetailsOutput insured;
+        private VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured;
 
         private CompanyDetails company;
 
@@ -223,7 +223,7 @@ public final class ClientFacingInsurance {
 
         @java.lang.Override
         @JsonSetter("insured")
-        public CompanyStage insured(PersonDetailsOutput insured) {
+        public CompanyStage insured(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured) {
             this.insured = insured;
             return this;
         }

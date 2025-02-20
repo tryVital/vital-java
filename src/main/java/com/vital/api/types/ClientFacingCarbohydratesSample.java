@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,11 +30,13 @@ public final class ClientFacingCarbohydratesSample {
 
     private final String unit;
 
-    private final String timestamp;
+    private final Optional<List<Object>> grouping;
 
-    private final String start;
+    private final OffsetDateTime timestamp;
 
-    private final String end;
+    private final OffsetDateTime start;
+
+    private final OffsetDateTime end;
 
     private final double value;
 
@@ -43,15 +47,17 @@ public final class ClientFacingCarbohydratesSample {
             Optional<Integer> timezoneOffset,
             Optional<String> type,
             String unit,
-            String timestamp,
-            String start,
-            String end,
+            Optional<List<Object>> grouping,
+            OffsetDateTime timestamp,
+            OffsetDateTime start,
+            OffsetDateTime end,
             double value,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.timezoneOffset = timezoneOffset;
         this.type = type;
         this.unit = unit;
+        this.grouping = grouping;
         this.timestamp = timestamp;
         this.start = start;
         this.end = end;
@@ -91,11 +97,16 @@ public final class ClientFacingCarbohydratesSample {
         return unit;
     }
 
+    @JsonProperty("grouping")
+    public Optional<List<Object>> getGrouping() {
+        return grouping;
+    }
+
     /**
      * @return Depracated. The start time (inclusive) of the interval.
      */
     @JsonProperty("timestamp")
-    public String getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -103,7 +114,7 @@ public final class ClientFacingCarbohydratesSample {
      * @return The start time (inclusive) of the interval.
      */
     @JsonProperty("start")
-    public String getStart() {
+    public OffsetDateTime getStart() {
         return start;
     }
 
@@ -111,7 +122,7 @@ public final class ClientFacingCarbohydratesSample {
      * @return The end time (exclusive) of the interval.
      */
     @JsonProperty("end")
-    public String getEnd() {
+    public OffsetDateTime getEnd() {
         return end;
     }
 
@@ -139,6 +150,7 @@ public final class ClientFacingCarbohydratesSample {
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
+                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
@@ -148,7 +160,15 @@ public final class ClientFacingCarbohydratesSample {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.timezoneOffset, this.type, this.unit, this.timestamp, this.start, this.end, this.value);
+                this.id,
+                this.timezoneOffset,
+                this.type,
+                this.unit,
+                this.grouping,
+                this.timestamp,
+                this.start,
+                this.end,
+                this.value);
     }
 
     @java.lang.Override
@@ -167,15 +187,15 @@ public final class ClientFacingCarbohydratesSample {
     }
 
     public interface TimestampStage {
-        StartStage timestamp(String timestamp);
+        StartStage timestamp(OffsetDateTime timestamp);
     }
 
     public interface StartStage {
-        EndStage start(String start);
+        EndStage start(OffsetDateTime start);
     }
 
     public interface EndStage {
-        ValueStage end(String end);
+        ValueStage end(OffsetDateTime end);
     }
 
     public interface ValueStage {
@@ -196,6 +216,10 @@ public final class ClientFacingCarbohydratesSample {
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
+
+        _FinalStage grouping(Optional<List<Object>> grouping);
+
+        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -203,13 +227,15 @@ public final class ClientFacingCarbohydratesSample {
             implements UnitStage, TimestampStage, StartStage, EndStage, ValueStage, _FinalStage {
         private String unit;
 
-        private String timestamp;
+        private OffsetDateTime timestamp;
 
-        private String start;
+        private OffsetDateTime start;
 
-        private String end;
+        private OffsetDateTime end;
 
         private double value;
+
+        private Optional<List<Object>> grouping = Optional.empty();
 
         private Optional<String> type = Optional.empty();
 
@@ -228,6 +254,7 @@ public final class ClientFacingCarbohydratesSample {
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
             unit(other.getUnit());
+            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             start(other.getStart());
             end(other.getEnd());
@@ -252,7 +279,7 @@ public final class ClientFacingCarbohydratesSample {
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public StartStage timestamp(String timestamp) {
+        public StartStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -263,7 +290,7 @@ public final class ClientFacingCarbohydratesSample {
          */
         @java.lang.Override
         @JsonSetter("start")
-        public EndStage start(String start) {
+        public EndStage start(OffsetDateTime start) {
             this.start = start;
             return this;
         }
@@ -274,7 +301,7 @@ public final class ClientFacingCarbohydratesSample {
          */
         @java.lang.Override
         @JsonSetter("end")
-        public ValueStage end(String end) {
+        public ValueStage end(OffsetDateTime end) {
             this.end = end;
             return this;
         }
@@ -287,6 +314,19 @@ public final class ClientFacingCarbohydratesSample {
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage grouping(List<Object> grouping) {
+            this.grouping = Optional.of(grouping);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
+        public _FinalStage grouping(Optional<List<Object>> grouping) {
+            this.grouping = grouping;
             return this;
         }
 
@@ -344,7 +384,7 @@ public final class ClientFacingCarbohydratesSample {
         @java.lang.Override
         public ClientFacingCarbohydratesSample build() {
             return new ClientFacingCarbohydratesSample(
-                    id, timezoneOffset, type, unit, timestamp, start, end, value, additionalProperties);
+                    id, timezoneOffset, type, unit, grouping, timestamp, start, end, value, additionalProperties);
         }
     }
 }

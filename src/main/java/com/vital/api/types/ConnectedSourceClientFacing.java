@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,7 +21,7 @@ import java.util.Objects;
 public final class ConnectedSourceClientFacing {
     private final ClientFacingProvider provider;
 
-    private final String createdOn;
+    private final OffsetDateTime createdOn;
 
     private final ClientFacingProvider source;
 
@@ -28,7 +29,7 @@ public final class ConnectedSourceClientFacing {
 
     private ConnectedSourceClientFacing(
             ClientFacingProvider provider,
-            String createdOn,
+            OffsetDateTime createdOn,
             ClientFacingProvider source,
             Map<String, Object> additionalProperties) {
         this.provider = provider;
@@ -49,7 +50,7 @@ public final class ConnectedSourceClientFacing {
      * @return When your item is created
      */
     @JsonProperty("created_on")
-    public String getCreatedOn() {
+    public OffsetDateTime getCreatedOn() {
         return createdOn;
     }
 
@@ -97,7 +98,7 @@ public final class ConnectedSourceClientFacing {
     }
 
     public interface CreatedOnStage {
-        SourceStage createdOn(String createdOn);
+        SourceStage createdOn(OffsetDateTime createdOn);
     }
 
     public interface SourceStage {
@@ -112,7 +113,7 @@ public final class ConnectedSourceClientFacing {
     public static final class Builder implements ProviderStage, CreatedOnStage, SourceStage, _FinalStage {
         private ClientFacingProvider provider;
 
-        private String createdOn;
+        private OffsetDateTime createdOn;
 
         private ClientFacingProvider source;
 
@@ -146,7 +147,7 @@ public final class ConnectedSourceClientFacing {
          */
         @java.lang.Override
         @JsonSetter("created_on")
-        public SourceStage createdOn(String createdOn) {
+        public SourceStage createdOn(OffsetDateTime createdOn) {
             this.createdOn = createdOn;
             return this;
         }

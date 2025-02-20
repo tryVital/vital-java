@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,18 +21,18 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = HistoricalPullTimeline.Builder.class)
 public final class HistoricalPullTimeline {
-    private final String scheduledAt;
+    private final OffsetDateTime scheduledAt;
 
-    private final Optional<String> startedAt;
+    private final Optional<OffsetDateTime> startedAt;
 
-    private final Optional<String> endedAt;
+    private final Optional<OffsetDateTime> endedAt;
 
     private final Map<String, Object> additionalProperties;
 
     private HistoricalPullTimeline(
-            String scheduledAt,
-            Optional<String> startedAt,
-            Optional<String> endedAt,
+            OffsetDateTime scheduledAt,
+            Optional<OffsetDateTime> startedAt,
+            Optional<OffsetDateTime> endedAt,
             Map<String, Object> additionalProperties) {
         this.scheduledAt = scheduledAt;
         this.startedAt = startedAt;
@@ -40,17 +41,17 @@ public final class HistoricalPullTimeline {
     }
 
     @JsonProperty("scheduled_at")
-    public String getScheduledAt() {
+    public OffsetDateTime getScheduledAt() {
         return scheduledAt;
     }
 
     @JsonProperty("started_at")
-    public Optional<String> getStartedAt() {
+    public Optional<OffsetDateTime> getStartedAt() {
         return startedAt;
     }
 
     @JsonProperty("ended_at")
-    public Optional<String> getEndedAt() {
+    public Optional<OffsetDateTime> getEndedAt() {
         return endedAt;
     }
 
@@ -86,7 +87,7 @@ public final class HistoricalPullTimeline {
     }
 
     public interface ScheduledAtStage {
-        _FinalStage scheduledAt(String scheduledAt);
+        _FinalStage scheduledAt(OffsetDateTime scheduledAt);
 
         Builder from(HistoricalPullTimeline other);
     }
@@ -94,22 +95,22 @@ public final class HistoricalPullTimeline {
     public interface _FinalStage {
         HistoricalPullTimeline build();
 
-        _FinalStage startedAt(Optional<String> startedAt);
+        _FinalStage startedAt(Optional<OffsetDateTime> startedAt);
 
-        _FinalStage startedAt(String startedAt);
+        _FinalStage startedAt(OffsetDateTime startedAt);
 
-        _FinalStage endedAt(Optional<String> endedAt);
+        _FinalStage endedAt(Optional<OffsetDateTime> endedAt);
 
-        _FinalStage endedAt(String endedAt);
+        _FinalStage endedAt(OffsetDateTime endedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ScheduledAtStage, _FinalStage {
-        private String scheduledAt;
+        private OffsetDateTime scheduledAt;
 
-        private Optional<String> endedAt = Optional.empty();
+        private Optional<OffsetDateTime> endedAt = Optional.empty();
 
-        private Optional<String> startedAt = Optional.empty();
+        private Optional<OffsetDateTime> startedAt = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -126,33 +127,33 @@ public final class HistoricalPullTimeline {
 
         @java.lang.Override
         @JsonSetter("scheduled_at")
-        public _FinalStage scheduledAt(String scheduledAt) {
+        public _FinalStage scheduledAt(OffsetDateTime scheduledAt) {
             this.scheduledAt = scheduledAt;
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage endedAt(String endedAt) {
+        public _FinalStage endedAt(OffsetDateTime endedAt) {
             this.endedAt = Optional.of(endedAt);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "ended_at", nulls = Nulls.SKIP)
-        public _FinalStage endedAt(Optional<String> endedAt) {
+        public _FinalStage endedAt(Optional<OffsetDateTime> endedAt) {
             this.endedAt = endedAt;
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage startedAt(String startedAt) {
+        public _FinalStage startedAt(OffsetDateTime startedAt) {
             this.startedAt = Optional.of(startedAt);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "started_at", nulls = Nulls.SKIP)
-        public _FinalStage startedAt(Optional<String> startedAt) {
+        public _FinalStage startedAt(Optional<OffsetDateTime> startedAt) {
             this.startedAt = startedAt;
             return this;
         }

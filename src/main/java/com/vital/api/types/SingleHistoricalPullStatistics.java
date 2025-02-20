@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,9 +23,9 @@ import java.util.Optional;
 public final class SingleHistoricalPullStatistics {
     private final HistoricalPullStatus status;
 
-    private final Optional<String> rangeStart;
+    private final Optional<OffsetDateTime> rangeStart;
 
-    private final Optional<String> rangeEnd;
+    private final Optional<OffsetDateTime> rangeEnd;
 
     private final HistoricalPullTimeline timeline;
 
@@ -38,8 +39,8 @@ public final class SingleHistoricalPullStatistics {
 
     private SingleHistoricalPullStatistics(
             HistoricalPullStatus status,
-            Optional<String> rangeStart,
-            Optional<String> rangeEnd,
+            Optional<OffsetDateTime> rangeStart,
+            Optional<OffsetDateTime> rangeEnd,
             HistoricalPullTimeline timeline,
             Optional<Integer> daysWithData,
             String release,
@@ -61,12 +62,12 @@ public final class SingleHistoricalPullStatistics {
     }
 
     @JsonProperty("range_start")
-    public Optional<String> getRangeStart() {
+    public Optional<OffsetDateTime> getRangeStart() {
         return rangeStart;
     }
 
     @JsonProperty("range_end")
-    public Optional<String> getRangeEnd() {
+    public Optional<OffsetDateTime> getRangeEnd() {
         return rangeEnd;
     }
 
@@ -149,13 +150,13 @@ public final class SingleHistoricalPullStatistics {
     public interface _FinalStage {
         SingleHistoricalPullStatistics build();
 
-        _FinalStage rangeStart(Optional<String> rangeStart);
+        _FinalStage rangeStart(Optional<OffsetDateTime> rangeStart);
 
-        _FinalStage rangeStart(String rangeStart);
+        _FinalStage rangeStart(OffsetDateTime rangeStart);
 
-        _FinalStage rangeEnd(Optional<String> rangeEnd);
+        _FinalStage rangeEnd(Optional<OffsetDateTime> rangeEnd);
 
-        _FinalStage rangeEnd(String rangeEnd);
+        _FinalStage rangeEnd(OffsetDateTime rangeEnd);
 
         _FinalStage daysWithData(Optional<Integer> daysWithData);
 
@@ -178,9 +179,9 @@ public final class SingleHistoricalPullStatistics {
 
         private Optional<Integer> daysWithData = Optional.empty();
 
-        private Optional<String> rangeEnd = Optional.empty();
+        private Optional<OffsetDateTime> rangeEnd = Optional.empty();
 
-        private Optional<String> rangeStart = Optional.empty();
+        private Optional<OffsetDateTime> rangeStart = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -247,27 +248,27 @@ public final class SingleHistoricalPullStatistics {
         }
 
         @java.lang.Override
-        public _FinalStage rangeEnd(String rangeEnd) {
+        public _FinalStage rangeEnd(OffsetDateTime rangeEnd) {
             this.rangeEnd = Optional.of(rangeEnd);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "range_end", nulls = Nulls.SKIP)
-        public _FinalStage rangeEnd(Optional<String> rangeEnd) {
+        public _FinalStage rangeEnd(Optional<OffsetDateTime> rangeEnd) {
             this.rangeEnd = rangeEnd;
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage rangeStart(String rangeStart) {
+        public _FinalStage rangeStart(OffsetDateTime rangeStart) {
             this.rangeStart = Optional.of(rangeStart);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "range_start", nulls = Nulls.SKIP)
-        public _FinalStage rangeStart(Optional<String> rangeStart) {
+        public _FinalStage rangeStart(Optional<OffsetDateTime> rangeStart) {
             this.rangeStart = rangeStart;
             return this;
         }

@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,7 +28,9 @@ public final class ClientFacingCaloriesBasalTimeseries {
 
     private final Optional<String> type;
 
-    private final String timestamp;
+    private final Optional<List<Object>> grouping;
+
+    private final OffsetDateTime timestamp;
 
     private final double value;
 
@@ -36,12 +40,14 @@ public final class ClientFacingCaloriesBasalTimeseries {
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
             Optional<String> type,
-            String timestamp,
+            Optional<List<Object>> grouping,
+            OffsetDateTime timestamp,
             double value,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.timezoneOffset = timezoneOffset;
         this.type = type;
+        this.grouping = grouping;
         this.timestamp = timestamp;
         this.value = value;
         this.additionalProperties = additionalProperties;
@@ -79,11 +85,16 @@ public final class ClientFacingCaloriesBasalTimeseries {
         return "kcal";
     }
 
+    @JsonProperty("grouping")
+    public Optional<List<Object>> getGrouping() {
+        return grouping;
+    }
+
     /**
      * @return The timestamp of the measurement.
      */
     @JsonProperty("timestamp")
-    public String getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -111,13 +122,14 @@ public final class ClientFacingCaloriesBasalTimeseries {
         return id.equals(other.id)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
+                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && value == other.value;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.timezoneOffset, this.type, this.timestamp, this.value);
+        return Objects.hash(this.id, this.timezoneOffset, this.type, this.grouping, this.timestamp, this.value);
     }
 
     @java.lang.Override
@@ -130,7 +142,7 @@ public final class ClientFacingCaloriesBasalTimeseries {
     }
 
     public interface TimestampStage {
-        ValueStage timestamp(String timestamp);
+        ValueStage timestamp(OffsetDateTime timestamp);
 
         Builder from(ClientFacingCaloriesBasalTimeseries other);
     }
@@ -153,13 +165,19 @@ public final class ClientFacingCaloriesBasalTimeseries {
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
+
+        _FinalStage grouping(Optional<List<Object>> grouping);
+
+        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TimestampStage, ValueStage, _FinalStage {
-        private String timestamp;
+        private OffsetDateTime timestamp;
 
         private double value;
+
+        private Optional<List<Object>> grouping = Optional.empty();
 
         private Optional<String> type = Optional.empty();
 
@@ -177,6 +195,7 @@ public final class ClientFacingCaloriesBasalTimeseries {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
+            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             value(other.getValue());
             return this;
@@ -188,7 +207,7 @@ public final class ClientFacingCaloriesBasalTimeseries {
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public ValueStage timestamp(String timestamp) {
+        public ValueStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -201,6 +220,19 @@ public final class ClientFacingCaloriesBasalTimeseries {
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage grouping(List<Object> grouping) {
+            this.grouping = Optional.of(grouping);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
+        public _FinalStage grouping(Optional<List<Object>> grouping) {
+            this.grouping = grouping;
             return this;
         }
 
@@ -258,7 +290,7 @@ public final class ClientFacingCaloriesBasalTimeseries {
         @java.lang.Override
         public ClientFacingCaloriesBasalTimeseries build() {
             return new ClientFacingCaloriesBasalTimeseries(
-                    id, timezoneOffset, type, timestamp, value, additionalProperties);
+                    id, timezoneOffset, type, grouping, timestamp, value, additionalProperties);
         }
     }
 }

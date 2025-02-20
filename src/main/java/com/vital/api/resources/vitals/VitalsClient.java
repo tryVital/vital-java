@@ -81,14 +81,6 @@ import com.vital.api.types.ClientFacingDistanceTimeseries;
 import com.vital.api.types.ClientFacingElectrocardiogramVoltageTimeseries;
 import com.vital.api.types.ClientFacingFloorsClimbedTimeseries;
 import com.vital.api.types.ClientFacingGlucoseTimeseries;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingNoteSample;
-import com.vital.api.types.ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample;
 import com.vital.api.types.ClientFacingHeartRateTimeseries;
 import com.vital.api.types.ClientFacingHrvTimeseries;
 import com.vital.api.types.ClientFacingHypnogramTimeseries;
@@ -100,29 +92,37 @@ import com.vital.api.types.ClientFacingStepsTimeseries;
 import com.vital.api.types.ClientFacingStressLevelTimeseries;
 import com.vital.api.types.ClientFacingVo2MaxTimeseries;
 import com.vital.api.types.ClientFacingWaterTimeseries;
+import com.vital.api.types.GroupedAFibBurdenResponse;
 import com.vital.api.types.GroupedBloodOxygenResponse;
 import com.vital.api.types.GroupedBloodPressureResponse;
 import com.vital.api.types.GroupedBodyFatResponse;
+import com.vital.api.types.GroupedBodyTemperatureDeltaResponse;
+import com.vital.api.types.GroupedBodyTemperatureResponse;
 import com.vital.api.types.GroupedBodyWeightResponse;
 import com.vital.api.types.GroupedCaffeineResponse;
 import com.vital.api.types.GroupedCaloriesActiveResponse;
 import com.vital.api.types.GroupedCaloriesBasalResponse;
+import com.vital.api.types.GroupedCarbohydratesResponse;
 import com.vital.api.types.GroupedCholesterolResponse;
 import com.vital.api.types.GroupedDistanceResponse;
 import com.vital.api.types.GroupedElectrocardiogramVoltageResponse;
 import com.vital.api.types.GroupedFloorsClimbedResponse;
 import com.vital.api.types.GroupedGlucoseResponse;
+import com.vital.api.types.GroupedHeartRateAlertResponse;
 import com.vital.api.types.GroupedHeartRateResponse;
 import com.vital.api.types.GroupedHrvResponse;
 import com.vital.api.types.GroupedHypnogramResponse;
 import com.vital.api.types.GroupedIgeResponse;
 import com.vital.api.types.GroupedIggResponse;
+import com.vital.api.types.GroupedInsulinInjectionResponse;
 import com.vital.api.types.GroupedMindfulnessMinutesResponse;
+import com.vital.api.types.GroupedNoteResponse;
 import com.vital.api.types.GroupedRespiratoryRateResponse;
 import com.vital.api.types.GroupedStepsResponse;
 import com.vital.api.types.GroupedStressLevelResponse;
 import com.vital.api.types.GroupedVo2MaxResponse;
 import com.vital.api.types.GroupedWaterResponse;
+import com.vital.api.types.GroupedWorkoutDurationResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
 import java.util.List;
@@ -140,12 +140,12 @@ public class VitalsClient {
         this.clientOptions = clientOptions;
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample heartRateAlertGrouped(
+    public GroupedHeartRateAlertResponse heartRateAlertGrouped(
             String userId, VitalsHeartRateAlertGroupedRequest request) {
         return heartRateAlertGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample heartRateAlertGrouped(
+    public GroupedHeartRateAlertResponse heartRateAlertGrouped(
             String userId, VitalsHeartRateAlertGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -178,9 +178,7 @@ public class VitalsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        ClientFacingGroupedTimeseriesResponseClientFacingHeartRateAlertSample.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedHeartRateAlertResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -200,12 +198,11 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample afibBurdenGrouped(
-            String userId, VitalsAfibBurdenGroupedRequest request) {
+    public GroupedAFibBurdenResponse afibBurdenGrouped(String userId, VitalsAfibBurdenGroupedRequest request) {
         return afibBurdenGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample afibBurdenGrouped(
+    public GroupedAFibBurdenResponse afibBurdenGrouped(
             String userId, VitalsAfibBurdenGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -238,8 +235,7 @@ public class VitalsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), ClientFacingGroupedTimeseriesResponseClientFacingAFibBurdenSample.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedAFibBurdenResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -259,12 +255,12 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample workoutDurationGrouped(
+    public GroupedWorkoutDurationResponse workoutDurationGrouped(
             String userId, VitalsWorkoutDurationGroupedRequest request) {
         return workoutDurationGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample workoutDurationGrouped(
+    public GroupedWorkoutDurationResponse workoutDurationGrouped(
             String userId, VitalsWorkoutDurationGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -297,9 +293,7 @@ public class VitalsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        ClientFacingGroupedTimeseriesResponseClientFacingWorkoutDurationSample.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedWorkoutDurationResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -950,12 +944,11 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingNoteSample noteGrouped(
-            String userId, VitalsNoteGroupedRequest request) {
+    public GroupedNoteResponse noteGrouped(String userId, VitalsNoteGroupedRequest request) {
         return noteGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingNoteSample noteGrouped(
+    public GroupedNoteResponse noteGrouped(
             String userId, VitalsNoteGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -988,8 +981,7 @@ public class VitalsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), ClientFacingGroupedTimeseriesResponseClientFacingNoteSample.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedNoteResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -1009,12 +1001,12 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample insulinInjectionGrouped(
+    public GroupedInsulinInjectionResponse insulinInjectionGrouped(
             String userId, VitalsInsulinInjectionGroupedRequest request) {
         return insulinInjectionGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample insulinInjectionGrouped(
+    public GroupedInsulinInjectionResponse insulinInjectionGrouped(
             String userId, VitalsInsulinInjectionGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -1048,8 +1040,7 @@ public class VitalsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        ClientFacingGroupedTimeseriesResponseClientFacingInsulinInjectionSample.class);
+                        responseBody.string(), GroupedInsulinInjectionResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -1468,12 +1459,11 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample carbohydratesGrouped(
-            String userId, VitalsCarbohydratesGroupedRequest request) {
+    public GroupedCarbohydratesResponse carbohydratesGrouped(String userId, VitalsCarbohydratesGroupedRequest request) {
         return carbohydratesGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample carbohydratesGrouped(
+    public GroupedCarbohydratesResponse carbohydratesGrouped(
             String userId, VitalsCarbohydratesGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -1506,9 +1496,7 @@ public class VitalsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        ClientFacingGroupedTimeseriesResponseClientFacingCarbohydratesSample.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedCarbohydratesResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -1528,12 +1516,12 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample bodyTemperatureDeltaGrouped(
+    public GroupedBodyTemperatureDeltaResponse bodyTemperatureDeltaGrouped(
             String userId, VitalsBodyTemperatureDeltaGroupedRequest request) {
         return bodyTemperatureDeltaGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample bodyTemperatureDeltaGrouped(
+    public GroupedBodyTemperatureDeltaResponse bodyTemperatureDeltaGrouped(
             String userId, VitalsBodyTemperatureDeltaGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -1567,8 +1555,7 @@ public class VitalsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureDeltaSample.class);
+                        responseBody.string(), GroupedBodyTemperatureDeltaResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
@@ -1588,12 +1575,12 @@ public class VitalsClient {
         }
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample bodyTemperatureGrouped(
+    public GroupedBodyTemperatureResponse bodyTemperatureGrouped(
             String userId, VitalsBodyTemperatureGroupedRequest request) {
         return bodyTemperatureGrouped(userId, request, null);
     }
 
-    public ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample bodyTemperatureGrouped(
+    public GroupedBodyTemperatureResponse bodyTemperatureGrouped(
             String userId, VitalsBodyTemperatureGroupedRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -1626,9 +1613,7 @@ public class VitalsClient {
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        ClientFacingGroupedTimeseriesResponseClientFacingBodyTemperatureSample.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBodyTemperatureResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {

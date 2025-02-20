@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,11 +23,11 @@ import java.util.Optional;
 public final class TimeSlot {
     private final Optional<String> bookingKey;
 
-    private final String start;
+    private final OffsetDateTime start;
 
-    private final String end;
+    private final OffsetDateTime end;
 
-    private final Optional<String> expiresAt;
+    private final Optional<OffsetDateTime> expiresAt;
 
     private final double price;
 
@@ -38,9 +39,9 @@ public final class TimeSlot {
 
     private TimeSlot(
             Optional<String> bookingKey,
-            String start,
-            String end,
-            Optional<String> expiresAt,
+            OffsetDateTime start,
+            OffsetDateTime end,
+            Optional<OffsetDateTime> expiresAt,
             double price,
             boolean isPriority,
             int numAppointmentsAvailable,
@@ -64,7 +65,7 @@ public final class TimeSlot {
      * @return Time is in UTC
      */
     @JsonProperty("start")
-    public String getStart() {
+    public OffsetDateTime getStart() {
         return start;
     }
 
@@ -72,12 +73,12 @@ public final class TimeSlot {
      * @return Time is in UTC
      */
     @JsonProperty("end")
-    public String getEnd() {
+    public OffsetDateTime getEnd() {
         return end;
     }
 
     @JsonProperty("expires_at")
-    public Optional<String> getExpiresAt() {
+    public Optional<OffsetDateTime> getExpiresAt() {
         return expiresAt;
     }
 
@@ -139,13 +140,13 @@ public final class TimeSlot {
     }
 
     public interface StartStage {
-        EndStage start(String start);
+        EndStage start(OffsetDateTime start);
 
         Builder from(TimeSlot other);
     }
 
     public interface EndStage {
-        PriceStage end(String end);
+        PriceStage end(OffsetDateTime end);
     }
 
     public interface PriceStage {
@@ -167,17 +168,17 @@ public final class TimeSlot {
 
         _FinalStage bookingKey(String bookingKey);
 
-        _FinalStage expiresAt(Optional<String> expiresAt);
+        _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt);
 
-        _FinalStage expiresAt(String expiresAt);
+        _FinalStage expiresAt(OffsetDateTime expiresAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements StartStage, EndStage, PriceStage, IsPriorityStage, NumAppointmentsAvailableStage, _FinalStage {
-        private String start;
+        private OffsetDateTime start;
 
-        private String end;
+        private OffsetDateTime end;
 
         private double price;
 
@@ -185,7 +186,7 @@ public final class TimeSlot {
 
         private int numAppointmentsAvailable;
 
-        private Optional<String> expiresAt = Optional.empty();
+        private Optional<OffsetDateTime> expiresAt = Optional.empty();
 
         private Optional<String> bookingKey = Optional.empty();
 
@@ -212,7 +213,7 @@ public final class TimeSlot {
          */
         @java.lang.Override
         @JsonSetter("start")
-        public EndStage start(String start) {
+        public EndStage start(OffsetDateTime start) {
             this.start = start;
             return this;
         }
@@ -223,7 +224,7 @@ public final class TimeSlot {
          */
         @java.lang.Override
         @JsonSetter("end")
-        public PriceStage end(String end) {
+        public PriceStage end(OffsetDateTime end) {
             this.end = end;
             return this;
         }
@@ -250,14 +251,14 @@ public final class TimeSlot {
         }
 
         @java.lang.Override
-        public _FinalStage expiresAt(String expiresAt) {
+        public _FinalStage expiresAt(OffsetDateTime expiresAt) {
             this.expiresAt = Optional.of(expiresAt);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "expires_at", nulls = Nulls.SKIP)
-        public _FinalStage expiresAt(Optional<String> expiresAt) {
+        public _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt) {
             this.expiresAt = expiresAt;
             return this;
         }

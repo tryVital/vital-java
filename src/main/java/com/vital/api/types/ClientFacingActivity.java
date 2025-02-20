@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,7 +25,7 @@ public final class ClientFacingActivity {
 
     private final String id;
 
-    private final String date;
+    private final OffsetDateTime date;
 
     private final String calendarDate;
 
@@ -59,7 +60,7 @@ public final class ClientFacingActivity {
     private ClientFacingActivity(
             String userId,
             String id,
-            String date,
+            OffsetDateTime date,
             String calendarDate,
             Optional<Double> caloriesTotal,
             Optional<Double> caloriesActive,
@@ -112,7 +113,7 @@ public final class ClientFacingActivity {
      * @return Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
      */
     @JsonProperty("date")
-    public String getDate() {
+    public OffsetDateTime getDate() {
         return date;
     }
 
@@ -301,7 +302,7 @@ public final class ClientFacingActivity {
     }
 
     public interface DateStage {
-        CalendarDateStage date(String date);
+        CalendarDateStage date(OffsetDateTime date);
     }
 
     public interface CalendarDateStage {
@@ -371,7 +372,7 @@ public final class ClientFacingActivity {
 
         private String id;
 
-        private String date;
+        private OffsetDateTime date;
 
         private String calendarDate;
 
@@ -452,7 +453,7 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         @JsonSetter("date")
-        public CalendarDateStage date(String date) {
+        public CalendarDateStage date(OffsetDateTime date) {
             this.date = date;
             return this;
         }

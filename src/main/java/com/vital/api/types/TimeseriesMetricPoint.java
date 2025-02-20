@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TimeseriesMetricPoint.Builder.class)
 public final class TimeseriesMetricPoint {
-    private final String date;
+    private final OffsetDateTime date;
 
     private final double value;
 
@@ -26,7 +27,8 @@ public final class TimeseriesMetricPoint {
 
     private final Map<String, Object> additionalProperties;
 
-    private TimeseriesMetricPoint(String date, double value, double all, Map<String, Object> additionalProperties) {
+    private TimeseriesMetricPoint(
+            OffsetDateTime date, double value, double all, Map<String, Object> additionalProperties) {
         this.date = date;
         this.value = value;
         this.all = all;
@@ -34,7 +36,7 @@ public final class TimeseriesMetricPoint {
     }
 
     @JsonProperty("date")
-    public String getDate() {
+    public OffsetDateTime getDate() {
         return date;
     }
 
@@ -78,7 +80,7 @@ public final class TimeseriesMetricPoint {
     }
 
     public interface DateStage {
-        ValueStage date(String date);
+        ValueStage date(OffsetDateTime date);
 
         Builder from(TimeseriesMetricPoint other);
     }
@@ -97,7 +99,7 @@ public final class TimeseriesMetricPoint {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DateStage, ValueStage, AllStage, _FinalStage {
-        private String date;
+        private OffsetDateTime date;
 
         private double value;
 
@@ -118,7 +120,7 @@ public final class TimeseriesMetricPoint {
 
         @java.lang.Override
         @JsonSetter("date")
-        public ValueStage date(String date) {
+        public ValueStage date(OffsetDateTime date) {
             this.date = date;
             return this;
         }

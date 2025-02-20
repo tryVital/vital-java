@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public final class BiomarkerResult {
 
     private final Optional<String> unit;
 
-    private final Optional<String> timestamp;
+    private final Optional<OffsetDateTime> timestamp;
 
     private final Optional<String> notes;
 
@@ -64,7 +65,7 @@ public final class BiomarkerResult {
             String result,
             ResultType type,
             Optional<String> unit,
-            Optional<String> timestamp,
+            Optional<OffsetDateTime> timestamp,
             Optional<String> notes,
             Optional<Double> minRangeValue,
             Optional<Double> maxRangeValue,
@@ -127,7 +128,7 @@ public final class BiomarkerResult {
     }
 
     @JsonProperty("timestamp")
-    public Optional<String> getTimestamp() {
+    public Optional<OffsetDateTime> getTimestamp() {
         return timestamp;
     }
 
@@ -272,9 +273,9 @@ public final class BiomarkerResult {
 
         _FinalStage unit(String unit);
 
-        _FinalStage timestamp(Optional<String> timestamp);
+        _FinalStage timestamp(Optional<OffsetDateTime> timestamp);
 
-        _FinalStage timestamp(String timestamp);
+        _FinalStage timestamp(OffsetDateTime timestamp);
 
         _FinalStage notes(Optional<String> notes);
 
@@ -347,7 +348,7 @@ public final class BiomarkerResult {
 
         private Optional<String> notes = Optional.empty();
 
-        private Optional<String> timestamp = Optional.empty();
+        private Optional<OffsetDateTime> timestamp = Optional.empty();
 
         private Optional<String> unit = Optional.empty();
 
@@ -539,14 +540,14 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
-        public _FinalStage timestamp(String timestamp) {
+        public _FinalStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = Optional.of(timestamp);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "timestamp", nulls = Nulls.SKIP)
-        public _FinalStage timestamp(Optional<String> timestamp) {
+        public _FinalStage timestamp(Optional<OffsetDateTime> timestamp) {
             this.timestamp = timestamp;
             return this;
         }

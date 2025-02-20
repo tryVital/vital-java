@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,14 +23,14 @@ public final class ClientFacingConnectionErrorDetails {
 
     private final String errorMessage;
 
-    private final String erroredAt;
+    private final OffsetDateTime erroredAt;
 
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingConnectionErrorDetails(
             ClientFacingConnectionErrorDetailsErrorType errorType,
             String errorMessage,
-            String erroredAt,
+            OffsetDateTime erroredAt,
             Map<String, Object> additionalProperties) {
         this.errorType = errorType;
         this.errorMessage = errorMessage;
@@ -48,7 +49,7 @@ public final class ClientFacingConnectionErrorDetails {
     }
 
     @JsonProperty("errored_at")
-    public String getErroredAt() {
+    public OffsetDateTime getErroredAt() {
         return erroredAt;
     }
 
@@ -95,7 +96,7 @@ public final class ClientFacingConnectionErrorDetails {
     }
 
     public interface ErroredAtStage {
-        _FinalStage erroredAt(String erroredAt);
+        _FinalStage erroredAt(OffsetDateTime erroredAt);
     }
 
     public interface _FinalStage {
@@ -108,7 +109,7 @@ public final class ClientFacingConnectionErrorDetails {
 
         private String errorMessage;
 
-        private String erroredAt;
+        private OffsetDateTime erroredAt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -139,7 +140,7 @@ public final class ClientFacingConnectionErrorDetails {
 
         @java.lang.Override
         @JsonSetter("errored_at")
-        public _FinalStage erroredAt(String erroredAt) {
+        public _FinalStage erroredAt(OffsetDateTime erroredAt) {
             this.erroredAt = erroredAt;
             return this;
         }

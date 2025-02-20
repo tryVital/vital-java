@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public final class ClientFacingUser {
 
     private final String clientUserId;
 
-    private final String createdOn;
+    private final OffsetDateTime createdOn;
 
     private final List<ConnectedSourceClientFacing> connectedSources;
 
@@ -46,7 +47,7 @@ public final class ClientFacingUser {
             String userId,
             String teamId,
             String clientUserId,
-            String createdOn,
+            OffsetDateTime createdOn,
             List<ConnectedSourceClientFacing> connectedSources,
             Optional<FallbackTimeZone> fallbackTimeZone,
             Optional<FallbackBirthDate> fallbackBirthDate,
@@ -93,7 +94,7 @@ public final class ClientFacingUser {
      * @return When your item is created
      */
     @JsonProperty("created_on")
-    public String getCreatedOn() {
+    public OffsetDateTime getCreatedOn() {
         return createdOn;
     }
 
@@ -199,7 +200,7 @@ public final class ClientFacingUser {
     }
 
     public interface CreatedOnStage {
-        _FinalStage createdOn(String createdOn);
+        _FinalStage createdOn(OffsetDateTime createdOn);
     }
 
     public interface _FinalStage {
@@ -237,7 +238,7 @@ public final class ClientFacingUser {
 
         private String clientUserId;
 
-        private String createdOn;
+        private OffsetDateTime createdOn;
 
         private Optional<String> ingestionEnd = Optional.empty();
 
@@ -307,7 +308,7 @@ public final class ClientFacingUser {
          */
         @java.lang.Override
         @JsonSetter("created_on")
-        public _FinalStage createdOn(String createdOn) {
+        public _FinalStage createdOn(OffsetDateTime createdOn) {
             this.createdOn = createdOn;
             return this;
         }

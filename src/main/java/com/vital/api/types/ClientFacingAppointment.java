@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +33,9 @@ public final class ClientFacingAppointment {
 
     private final LngLat location;
 
-    private final Optional<String> startAt;
+    private final Optional<OffsetDateTime> startAt;
 
-    private final Optional<String> endAt;
+    private final Optional<OffsetDateTime> endAt;
 
     private final Optional<String> ianaTimezone;
 
@@ -62,8 +63,8 @@ public final class ClientFacingAppointment {
             String orderId,
             UsAddress address,
             LngLat location,
-            Optional<String> startAt,
-            Optional<String> endAt,
+            Optional<OffsetDateTime> startAt,
+            Optional<OffsetDateTime> endAt,
             Optional<String> ianaTimezone,
             AppointmentType type,
             AppointmentProvider provider,
@@ -122,7 +123,7 @@ public final class ClientFacingAppointment {
      * @return Time is in UTC
      */
     @JsonProperty("start_at")
-    public Optional<String> getStartAt() {
+    public Optional<OffsetDateTime> getStartAt() {
         return startAt;
     }
 
@@ -130,7 +131,7 @@ public final class ClientFacingAppointment {
      * @return Time is in UTC
      */
     @JsonProperty("end_at")
-    public Optional<String> getEndAt() {
+    public Optional<OffsetDateTime> getEndAt() {
         return endAt;
     }
 
@@ -288,13 +289,13 @@ public final class ClientFacingAppointment {
     public interface _FinalStage {
         ClientFacingAppointment build();
 
-        _FinalStage startAt(Optional<String> startAt);
+        _FinalStage startAt(Optional<OffsetDateTime> startAt);
 
-        _FinalStage startAt(String startAt);
+        _FinalStage startAt(OffsetDateTime startAt);
 
-        _FinalStage endAt(Optional<String> endAt);
+        _FinalStage endAt(Optional<OffsetDateTime> endAt);
 
-        _FinalStage endAt(String endAt);
+        _FinalStage endAt(OffsetDateTime endAt);
 
         _FinalStage ianaTimezone(Optional<String> ianaTimezone);
 
@@ -353,9 +354,9 @@ public final class ClientFacingAppointment {
 
         private Optional<String> ianaTimezone = Optional.empty();
 
-        private Optional<String> endAt = Optional.empty();
+        private Optional<OffsetDateTime> endAt = Optional.empty();
 
-        private Optional<String> startAt = Optional.empty();
+        private Optional<OffsetDateTime> startAt = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -511,14 +512,14 @@ public final class ClientFacingAppointment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage endAt(String endAt) {
+        public _FinalStage endAt(OffsetDateTime endAt) {
             this.endAt = Optional.of(endAt);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
-        public _FinalStage endAt(Optional<String> endAt) {
+        public _FinalStage endAt(Optional<OffsetDateTime> endAt) {
             this.endAt = endAt;
             return this;
         }
@@ -528,14 +529,14 @@ public final class ClientFacingAppointment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage startAt(String startAt) {
+        public _FinalStage startAt(OffsetDateTime startAt) {
             this.startAt = Optional.of(startAt);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "start_at", nulls = Nulls.SKIP)
-        public _FinalStage startAt(Optional<String> startAt) {
+        public _FinalStage startAt(Optional<OffsetDateTime> startAt) {
             this.startAt = startAt;
             return this;
         }

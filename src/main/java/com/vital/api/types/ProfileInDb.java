@@ -21,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProfileInDb.Builder.class)
 public final class ProfileInDb {
-    private final Object data;
+    private final String data;
 
     private final String userId;
 
@@ -38,7 +38,7 @@ public final class ProfileInDb {
     private final Map<String, Object> additionalProperties;
 
     private ProfileInDb(
-            Object data,
+            String data,
             String userId,
             int sourceId,
             Optional<Integer> priorityId,
@@ -57,7 +57,7 @@ public final class ProfileInDb {
     }
 
     @JsonProperty("data")
-    public Object getData() {
+    public String getData() {
         return data;
     }
 
@@ -128,7 +128,7 @@ public final class ProfileInDb {
     }
 
     public interface DataStage {
-        UserIdStage data(Object data);
+        UserIdStage data(String data);
 
         Builder from(ProfileInDb other);
     }
@@ -164,7 +164,7 @@ public final class ProfileInDb {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements DataStage, UserIdStage, SourceIdStage, IdStage, SourceStage, _FinalStage {
-        private Object data;
+        private String data;
 
         private String userId;
 
@@ -197,7 +197,7 @@ public final class ProfileInDb {
 
         @java.lang.Override
         @JsonSetter("data")
-        public UserIdStage data(Object data) {
+        public UserIdStage data(String data) {
             this.data = data;
             return this;
         }

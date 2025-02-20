@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,12 +23,12 @@ public final class FallbackBirthDate {
 
     private final String sourceSlug;
 
-    private final String updatedAt;
+    private final OffsetDateTime updatedAt;
 
     private final Map<String, Object> additionalProperties;
 
     private FallbackBirthDate(
-            String value, String sourceSlug, String updatedAt, Map<String, Object> additionalProperties) {
+            String value, String sourceSlug, OffsetDateTime updatedAt, Map<String, Object> additionalProperties) {
         this.value = value;
         this.sourceSlug = sourceSlug;
         this.updatedAt = updatedAt;
@@ -51,7 +52,7 @@ public final class FallbackBirthDate {
     }
 
     @JsonProperty("updated_at")
-    public String getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
@@ -95,7 +96,7 @@ public final class FallbackBirthDate {
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(String updatedAt);
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -108,7 +109,7 @@ public final class FallbackBirthDate {
 
         private String sourceSlug;
 
-        private String updatedAt;
+        private OffsetDateTime updatedAt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -147,7 +148,7 @@ public final class FallbackBirthDate {
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(String updatedAt) {
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

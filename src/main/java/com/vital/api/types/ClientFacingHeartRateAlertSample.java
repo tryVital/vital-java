@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,11 +28,13 @@ public final class ClientFacingHeartRateAlertSample {
 
     private final ClientFacingHeartRateAlertSampleType type;
 
-    private final String timestamp;
+    private final Optional<List<Object>> grouping;
 
-    private final String start;
+    private final OffsetDateTime timestamp;
 
-    private final String end;
+    private final OffsetDateTime start;
+
+    private final OffsetDateTime end;
 
     private final int value;
 
@@ -40,14 +44,16 @@ public final class ClientFacingHeartRateAlertSample {
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
             ClientFacingHeartRateAlertSampleType type,
-            String timestamp,
-            String start,
-            String end,
+            Optional<List<Object>> grouping,
+            OffsetDateTime timestamp,
+            OffsetDateTime start,
+            OffsetDateTime end,
             int value,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.timezoneOffset = timezoneOffset;
         this.type = type;
+        this.grouping = grouping;
         this.timestamp = timestamp;
         this.start = start;
         this.end = end;
@@ -81,11 +87,16 @@ public final class ClientFacingHeartRateAlertSample {
         return "count";
     }
 
+    @JsonProperty("grouping")
+    public Optional<List<Object>> getGrouping() {
+        return grouping;
+    }
+
     /**
      * @return Depracated. The start time (inclusive) of the interval.
      */
     @JsonProperty("timestamp")
-    public String getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -93,7 +104,7 @@ public final class ClientFacingHeartRateAlertSample {
      * @return The start time (inclusive) of the interval.
      */
     @JsonProperty("start")
-    public String getStart() {
+    public OffsetDateTime getStart() {
         return start;
     }
 
@@ -101,7 +112,7 @@ public final class ClientFacingHeartRateAlertSample {
      * @return The end time (exclusive) of the interval.
      */
     @JsonProperty("end")
-    public String getEnd() {
+    public OffsetDateTime getEnd() {
         return end;
     }
 
@@ -125,6 +136,7 @@ public final class ClientFacingHeartRateAlertSample {
         return id.equals(other.id)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
+                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
@@ -133,7 +145,15 @@ public final class ClientFacingHeartRateAlertSample {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.timezoneOffset, this.type, this.timestamp, this.start, this.end, this.value);
+        return Objects.hash(
+                this.id,
+                this.timezoneOffset,
+                this.type,
+                this.grouping,
+                this.timestamp,
+                this.start,
+                this.end,
+                this.value);
     }
 
     @java.lang.Override
@@ -152,15 +172,15 @@ public final class ClientFacingHeartRateAlertSample {
     }
 
     public interface TimestampStage {
-        StartStage timestamp(String timestamp);
+        StartStage timestamp(OffsetDateTime timestamp);
     }
 
     public interface StartStage {
-        EndStage start(String start);
+        EndStage start(OffsetDateTime start);
     }
 
     public interface EndStage {
-        ValueStage end(String end);
+        ValueStage end(OffsetDateTime end);
     }
 
     public interface ValueStage {
@@ -177,6 +197,10 @@ public final class ClientFacingHeartRateAlertSample {
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
+
+        _FinalStage grouping(Optional<List<Object>> grouping);
+
+        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -184,13 +208,15 @@ public final class ClientFacingHeartRateAlertSample {
             implements TypeStage, TimestampStage, StartStage, EndStage, ValueStage, _FinalStage {
         private ClientFacingHeartRateAlertSampleType type;
 
-        private String timestamp;
+        private OffsetDateTime timestamp;
 
-        private String start;
+        private OffsetDateTime start;
 
-        private String end;
+        private OffsetDateTime end;
 
         private int value;
+
+        private Optional<List<Object>> grouping = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -206,6 +232,7 @@ public final class ClientFacingHeartRateAlertSample {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
+            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             start(other.getStart());
             end(other.getEnd());
@@ -226,7 +253,7 @@ public final class ClientFacingHeartRateAlertSample {
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public StartStage timestamp(String timestamp) {
+        public StartStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -237,7 +264,7 @@ public final class ClientFacingHeartRateAlertSample {
          */
         @java.lang.Override
         @JsonSetter("start")
-        public EndStage start(String start) {
+        public EndStage start(OffsetDateTime start) {
             this.start = start;
             return this;
         }
@@ -248,7 +275,7 @@ public final class ClientFacingHeartRateAlertSample {
          */
         @java.lang.Override
         @JsonSetter("end")
-        public ValueStage end(String end) {
+        public ValueStage end(OffsetDateTime end) {
             this.end = end;
             return this;
         }
@@ -257,6 +284,19 @@ public final class ClientFacingHeartRateAlertSample {
         @JsonSetter("value")
         public _FinalStage value(int value) {
             this.value = value;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage grouping(List<Object> grouping) {
+            this.grouping = Optional.of(grouping);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
+        public _FinalStage grouping(Optional<List<Object>> grouping) {
+            this.grouping = grouping;
             return this;
         }
 
@@ -297,7 +337,7 @@ public final class ClientFacingHeartRateAlertSample {
         @java.lang.Override
         public ClientFacingHeartRateAlertSample build() {
             return new ClientFacingHeartRateAlertSample(
-                    id, timezoneOffset, type, timestamp, start, end, value, additionalProperties);
+                    id, timezoneOffset, type, grouping, timestamp, start, end, value, additionalProperties);
         }
     }
 }

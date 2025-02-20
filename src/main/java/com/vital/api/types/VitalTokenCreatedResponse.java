@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,12 +23,12 @@ public final class VitalTokenCreatedResponse {
 
     private final String exchangeUrl;
 
-    private final String expiresAt;
+    private final OffsetDateTime expiresAt;
 
     private final Map<String, Object> additionalProperties;
 
     private VitalTokenCreatedResponse(
-            String code, String exchangeUrl, String expiresAt, Map<String, Object> additionalProperties) {
+            String code, String exchangeUrl, OffsetDateTime expiresAt, Map<String, Object> additionalProperties) {
         this.code = code;
         this.exchangeUrl = exchangeUrl;
         this.expiresAt = expiresAt;
@@ -45,7 +46,7 @@ public final class VitalTokenCreatedResponse {
     }
 
     @JsonProperty("expires_at")
-    public String getExpiresAt() {
+    public OffsetDateTime getExpiresAt() {
         return expiresAt;
     }
 
@@ -89,7 +90,7 @@ public final class VitalTokenCreatedResponse {
     }
 
     public interface ExpiresAtStage {
-        _FinalStage expiresAt(String expiresAt);
+        _FinalStage expiresAt(OffsetDateTime expiresAt);
     }
 
     public interface _FinalStage {
@@ -102,7 +103,7 @@ public final class VitalTokenCreatedResponse {
 
         private String exchangeUrl;
 
-        private String expiresAt;
+        private OffsetDateTime expiresAt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -133,7 +134,7 @@ public final class VitalTokenCreatedResponse {
 
         @java.lang.Override
         @JsonSetter("expires_at")
-        public _FinalStage expiresAt(String expiresAt) {
+        public _FinalStage expiresAt(OffsetDateTime expiresAt) {
             this.expiresAt = expiresAt;
             return this;
         }

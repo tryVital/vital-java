@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public final class ClientFacingProviderWithStatus {
 
     private final String logo;
 
-    private final String createdOn;
+    private final OffsetDateTime createdOn;
 
     private final String status;
 
@@ -41,7 +42,7 @@ public final class ClientFacingProviderWithStatus {
             String name,
             String slug,
             String logo,
-            String createdOn,
+            OffsetDateTime createdOn,
             String status,
             Optional<ClientFacingConnectionErrorDetails> errorDetails,
             Map<String, ResourceAvailability> resourceAvailability,
@@ -81,7 +82,7 @@ public final class ClientFacingProviderWithStatus {
     }
 
     @JsonProperty("created_on")
-    public String getCreatedOn() {
+    public OffsetDateTime getCreatedOn() {
         return createdOn;
     }
 
@@ -163,7 +164,7 @@ public final class ClientFacingProviderWithStatus {
     }
 
     public interface CreatedOnStage {
-        StatusStage createdOn(String createdOn);
+        StatusStage createdOn(OffsetDateTime createdOn);
     }
 
     public interface StatusStage {
@@ -193,7 +194,7 @@ public final class ClientFacingProviderWithStatus {
 
         private String logo;
 
-        private String createdOn;
+        private OffsetDateTime createdOn;
 
         private String status;
 
@@ -253,7 +254,7 @@ public final class ClientFacingProviderWithStatus {
 
         @java.lang.Override
         @JsonSetter("created_on")
-        public StatusStage createdOn(String createdOn) {
+        public StatusStage createdOn(OffsetDateTime createdOn) {
             this.createdOn = createdOn;
             return this;
         }

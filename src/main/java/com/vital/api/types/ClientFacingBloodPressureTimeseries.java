@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,7 +30,9 @@ public final class ClientFacingBloodPressureTimeseries {
 
     private final String unit;
 
-    private final String timestamp;
+    private final Optional<List<Object>> grouping;
+
+    private final OffsetDateTime timestamp;
 
     private final double systolic;
 
@@ -41,7 +45,8 @@ public final class ClientFacingBloodPressureTimeseries {
             Optional<Integer> timezoneOffset,
             Optional<String> type,
             String unit,
-            String timestamp,
+            Optional<List<Object>> grouping,
+            OffsetDateTime timestamp,
             double systolic,
             double diastolic,
             Map<String, Object> additionalProperties) {
@@ -49,6 +54,7 @@ public final class ClientFacingBloodPressureTimeseries {
         this.timezoneOffset = timezoneOffset;
         this.type = type;
         this.unit = unit;
+        this.grouping = grouping;
         this.timestamp = timestamp;
         this.systolic = systolic;
         this.diastolic = diastolic;
@@ -87,8 +93,13 @@ public final class ClientFacingBloodPressureTimeseries {
         return unit;
     }
 
+    @JsonProperty("grouping")
+    public Optional<List<Object>> getGrouping() {
+        return grouping;
+    }
+
     @JsonProperty("timestamp")
-    public String getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -119,6 +130,7 @@ public final class ClientFacingBloodPressureTimeseries {
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
+                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && systolic == other.systolic
                 && diastolic == other.diastolic;
@@ -127,7 +139,14 @@ public final class ClientFacingBloodPressureTimeseries {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.timezoneOffset, this.type, this.unit, this.timestamp, this.systolic, this.diastolic);
+                this.id,
+                this.timezoneOffset,
+                this.type,
+                this.unit,
+                this.grouping,
+                this.timestamp,
+                this.systolic,
+                this.diastolic);
     }
 
     @java.lang.Override
@@ -146,7 +165,7 @@ public final class ClientFacingBloodPressureTimeseries {
     }
 
     public interface TimestampStage {
-        SystolicStage timestamp(String timestamp);
+        SystolicStage timestamp(OffsetDateTime timestamp);
     }
 
     public interface SystolicStage {
@@ -171,17 +190,23 @@ public final class ClientFacingBloodPressureTimeseries {
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
+
+        _FinalStage grouping(Optional<List<Object>> grouping);
+
+        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements UnitStage, TimestampStage, SystolicStage, DiastolicStage, _FinalStage {
         private String unit;
 
-        private String timestamp;
+        private OffsetDateTime timestamp;
 
         private double systolic;
 
         private double diastolic;
+
+        private Optional<List<Object>> grouping = Optional.empty();
 
         private Optional<String> type = Optional.empty();
 
@@ -200,6 +225,7 @@ public final class ClientFacingBloodPressureTimeseries {
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
             unit(other.getUnit());
+            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             systolic(other.getSystolic());
             diastolic(other.getDiastolic());
@@ -219,7 +245,7 @@ public final class ClientFacingBloodPressureTimeseries {
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public SystolicStage timestamp(String timestamp) {
+        public SystolicStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -235,6 +261,19 @@ public final class ClientFacingBloodPressureTimeseries {
         @JsonSetter("diastolic")
         public _FinalStage diastolic(double diastolic) {
             this.diastolic = diastolic;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage grouping(List<Object> grouping) {
+            this.grouping = Optional.of(grouping);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
+        public _FinalStage grouping(Optional<List<Object>> grouping) {
+            this.grouping = grouping;
             return this;
         }
 
@@ -292,7 +331,7 @@ public final class ClientFacingBloodPressureTimeseries {
         @java.lang.Override
         public ClientFacingBloodPressureTimeseries build() {
             return new ClientFacingBloodPressureTimeseries(
-                    id, timezoneOffset, type, unit, timestamp, systolic, diastolic, additionalProperties);
+                    id, timezoneOffset, type, unit, grouping, timestamp, systolic, diastolic, additionalProperties);
         }
     }
 }

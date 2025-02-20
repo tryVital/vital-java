@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +31,7 @@ public final class MealInDbBaseClientFacingSource {
 
     private final String providerId;
 
-    private final String timestamp;
+    private final OffsetDateTime timestamp;
 
     private final String name;
 
@@ -44,9 +45,9 @@ public final class MealInDbBaseClientFacingSource {
 
     private final ClientFacingSource source;
 
-    private final String createdAt;
+    private final OffsetDateTime createdAt;
 
-    private final String updatedAt;
+    private final OffsetDateTime updatedAt;
 
     private final Optional<String> sourceAppId;
 
@@ -58,15 +59,15 @@ public final class MealInDbBaseClientFacingSource {
             int priorityId,
             int sourceId,
             String providerId,
-            String timestamp,
+            OffsetDateTime timestamp,
             String name,
             Optional<Energy> energy,
             Optional<Macros> macros,
             Optional<Micros> micros,
             Optional<Map<String, ClientFacingFood>> data,
             ClientFacingSource source,
-            String createdAt,
-            String updatedAt,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
             Optional<String> sourceAppId,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -122,7 +123,7 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     @JsonProperty("timestamp")
-    public String getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -160,7 +161,7 @@ public final class MealInDbBaseClientFacingSource {
      * @return This value is identical to <code>timestamp</code>.
      */
     @JsonProperty("created_at")
-    public String getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -168,7 +169,7 @@ public final class MealInDbBaseClientFacingSource {
      * @return This value is identical to <code>timestamp</code>.
      */
     @JsonProperty("updated_at")
-    public String getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
@@ -258,7 +259,7 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     public interface TimestampStage {
-        NameStage timestamp(String timestamp);
+        NameStage timestamp(OffsetDateTime timestamp);
     }
 
     public interface NameStage {
@@ -270,11 +271,11 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(String createdAt);
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(String updatedAt);
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -324,15 +325,15 @@ public final class MealInDbBaseClientFacingSource {
 
         private String providerId;
 
-        private String timestamp;
+        private OffsetDateTime timestamp;
 
         private String name;
 
         private ClientFacingSource source;
 
-        private String createdAt;
+        private OffsetDateTime createdAt;
 
-        private String updatedAt;
+        private OffsetDateTime updatedAt;
 
         private Optional<String> sourceAppId = Optional.empty();
 
@@ -418,7 +419,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public NameStage timestamp(String timestamp) {
+        public NameStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
@@ -443,7 +444,7 @@ public final class MealInDbBaseClientFacingSource {
          */
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(String createdAt) {
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
@@ -454,7 +455,7 @@ public final class MealInDbBaseClientFacingSource {
          */
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(String updatedAt) {
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }

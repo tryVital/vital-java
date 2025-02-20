@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingAppointmentEvent.Builder.class)
 public final class ClientFacingAppointmentEvent {
-    private final String createdAt;
+    private final OffsetDateTime createdAt;
 
     private final AppointmentEventStatus status;
 
@@ -29,7 +30,7 @@ public final class ClientFacingAppointmentEvent {
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingAppointmentEvent(
-            String createdAt,
+            OffsetDateTime createdAt,
             AppointmentEventStatus status,
             Optional<Map<String, Object>> data,
             Map<String, Object> additionalProperties) {
@@ -40,7 +41,7 @@ public final class ClientFacingAppointmentEvent {
     }
 
     @JsonProperty("created_at")
-    public String getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -84,7 +85,7 @@ public final class ClientFacingAppointmentEvent {
     }
 
     public interface CreatedAtStage {
-        StatusStage createdAt(String createdAt);
+        StatusStage createdAt(OffsetDateTime createdAt);
 
         Builder from(ClientFacingAppointmentEvent other);
     }
@@ -103,7 +104,7 @@ public final class ClientFacingAppointmentEvent {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements CreatedAtStage, StatusStage, _FinalStage {
-        private String createdAt;
+        private OffsetDateTime createdAt;
 
         private AppointmentEventStatus status;
 
@@ -124,7 +125,7 @@ public final class ClientFacingAppointmentEvent {
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public StatusStage createdAt(String createdAt) {
+        public StatusStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }

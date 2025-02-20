@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,20 +19,20 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = LastAttempt.Builder.class)
 public final class LastAttempt {
-    private final String timestamp;
+    private final OffsetDateTime timestamp;
 
     private final AttemptStatus status;
 
     private final Map<String, Object> additionalProperties;
 
-    private LastAttempt(String timestamp, AttemptStatus status, Map<String, Object> additionalProperties) {
+    private LastAttempt(OffsetDateTime timestamp, AttemptStatus status, Map<String, Object> additionalProperties) {
         this.timestamp = timestamp;
         this.status = status;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("timestamp")
-    public String getTimestamp() {
+    public OffsetDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -70,7 +71,7 @@ public final class LastAttempt {
     }
 
     public interface TimestampStage {
-        StatusStage timestamp(String timestamp);
+        StatusStage timestamp(OffsetDateTime timestamp);
 
         Builder from(LastAttempt other);
     }
@@ -85,7 +86,7 @@ public final class LastAttempt {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements TimestampStage, StatusStage, _FinalStage {
-        private String timestamp;
+        private OffsetDateTime timestamp;
 
         private AttemptStatus status;
 
@@ -103,7 +104,7 @@ public final class LastAttempt {
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public StatusStage timestamp(String timestamp) {
+        public StatusStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = timestamp;
             return this;
         }
