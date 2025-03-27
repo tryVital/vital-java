@@ -26,6 +26,10 @@ public final class ClientFacingSource {
 
     private final Optional<String> appId;
 
+    private final Optional<String> sport;
+
+    private final Optional<String> workoutId;
+
     private final Optional<String> name;
 
     private final Optional<String> slug;
@@ -38,6 +42,8 @@ public final class ClientFacingSource {
             String provider,
             Optional<String> type,
             Optional<String> appId,
+            Optional<String> sport,
+            Optional<String> workoutId,
             Optional<String> name,
             Optional<String> slug,
             Optional<String> logo,
@@ -45,6 +51,8 @@ public final class ClientFacingSource {
         this.provider = provider;
         this.type = type;
         this.appId = appId;
+        this.sport = sport;
+        this.workoutId = workoutId;
         this.name = name;
         this.slug = slug;
         this.logo = logo;
@@ -73,6 +81,25 @@ public final class ClientFacingSource {
     @JsonProperty("app_id")
     public Optional<String> getAppId() {
         return appId;
+    }
+
+    /**
+     * @return For workout stream timeseries, this is the standard sport slug of the workout with which the timeseries data are associated.
+     * <p>For the <code>distance</code> timeseries, this is <code>wheelchair_pushing</code> if the user is a wheelchair user, or <code>null</code> otherwise.</p>
+     * <p>For all summary types and non-workout timeseries, this is always <code>null</code>.</p>
+     */
+    @JsonProperty("sport")
+    public Optional<String> getSport() {
+        return sport;
+    }
+
+    /**
+     * @return For workout stream timeseries, this is the workout ID with which the timeseries data are associated.
+     * <p>For all other types, this is always <code>null</code>.</p>
+     */
+    @JsonProperty("workout_id")
+    public Optional<String> getWorkoutId() {
+        return workoutId;
     }
 
     /**
@@ -114,6 +141,8 @@ public final class ClientFacingSource {
         return provider.equals(other.provider)
                 && type.equals(other.type)
                 && appId.equals(other.appId)
+                && sport.equals(other.sport)
+                && workoutId.equals(other.workoutId)
                 && name.equals(other.name)
                 && slug.equals(other.slug)
                 && logo.equals(other.logo);
@@ -121,7 +150,8 @@ public final class ClientFacingSource {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.provider, this.type, this.appId, this.name, this.slug, this.logo);
+        return Objects.hash(
+                this.provider, this.type, this.appId, this.sport, this.workoutId, this.name, this.slug, this.logo);
     }
 
     @java.lang.Override
@@ -150,6 +180,14 @@ public final class ClientFacingSource {
 
         _FinalStage appId(String appId);
 
+        _FinalStage sport(Optional<String> sport);
+
+        _FinalStage sport(String sport);
+
+        _FinalStage workoutId(Optional<String> workoutId);
+
+        _FinalStage workoutId(String workoutId);
+
         _FinalStage name(Optional<String> name);
 
         _FinalStage name(String name);
@@ -173,6 +211,10 @@ public final class ClientFacingSource {
 
         private Optional<String> name = Optional.empty();
 
+        private Optional<String> workoutId = Optional.empty();
+
+        private Optional<String> sport = Optional.empty();
+
         private Optional<String> appId = Optional.empty();
 
         private Optional<String> type = Optional.empty();
@@ -187,6 +229,8 @@ public final class ClientFacingSource {
             provider(other.getProvider());
             type(other.getType());
             appId(other.getAppId());
+            sport(other.getSport());
+            workoutId(other.getWorkoutId());
             name(other.getName());
             slug(other.getSlug());
             logo(other.getLogo());
@@ -256,6 +300,43 @@ public final class ClientFacingSource {
         }
 
         /**
+         * <p>For workout stream timeseries, this is the workout ID with which the timeseries data are associated.</p>
+         * <p>For all other types, this is always <code>null</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage workoutId(String workoutId) {
+            this.workoutId = Optional.of(workoutId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "workout_id", nulls = Nulls.SKIP)
+        public _FinalStage workoutId(Optional<String> workoutId) {
+            this.workoutId = workoutId;
+            return this;
+        }
+
+        /**
+         * <p>For workout stream timeseries, this is the standard sport slug of the workout with which the timeseries data are associated.</p>
+         * <p>For the <code>distance</code> timeseries, this is <code>wheelchair_pushing</code> if the user is a wheelchair user, or <code>null</code> otherwise.</p>
+         * <p>For all summary types and non-workout timeseries, this is always <code>null</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage sport(String sport) {
+            this.sport = Optional.of(sport);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sport", nulls = Nulls.SKIP)
+        public _FinalStage sport(Optional<String> sport) {
+            this.sport = sport;
+            return this;
+        }
+
+        /**
          * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -291,7 +372,8 @@ public final class ClientFacingSource {
 
         @java.lang.Override
         public ClientFacingSource build() {
-            return new ClientFacingSource(provider, type, appId, name, slug, logo, additionalProperties);
+            return new ClientFacingSource(
+                    provider, type, appId, sport, workoutId, name, slug, logo, additionalProperties);
         }
     }
 }

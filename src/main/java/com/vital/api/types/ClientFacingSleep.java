@@ -55,6 +55,8 @@ public final class ClientFacingSleep {
 
     private final Optional<Integer> hrAverage;
 
+    private final Optional<Integer> hrResting;
+
     private final Optional<Double> efficiency;
 
     private final Optional<Integer> latency;
@@ -95,6 +97,7 @@ public final class ClientFacingSleep {
             Optional<Integer> score,
             Optional<Integer> hrLowest,
             Optional<Integer> hrAverage,
+            Optional<Integer> hrResting,
             Optional<Double> efficiency,
             Optional<Integer> latency,
             Optional<Double> temperatureDelta,
@@ -123,6 +126,7 @@ public final class ClientFacingSleep {
         this.score = score;
         this.hrLowest = hrLowest;
         this.hrAverage = hrAverage;
+        this.hrResting = hrResting;
         this.efficiency = efficiency;
         this.latency = latency;
         this.temperatureDelta = temperatureDelta;
@@ -273,6 +277,14 @@ public final class ClientFacingSleep {
     }
 
     /**
+     * @return Resting heart rate recorded during a sleep session::bpm
+     */
+    @JsonProperty("hr_resting")
+    public Optional<Integer> getHrResting() {
+        return hrResting;
+    }
+
+    /**
      * @return Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc
      */
     @JsonProperty("efficiency")
@@ -378,6 +390,7 @@ public final class ClientFacingSleep {
                 && score.equals(other.score)
                 && hrLowest.equals(other.hrLowest)
                 && hrAverage.equals(other.hrAverage)
+                && hrResting.equals(other.hrResting)
                 && efficiency.equals(other.efficiency)
                 && latency.equals(other.latency)
                 && temperatureDelta.equals(other.temperatureDelta)
@@ -410,6 +423,7 @@ public final class ClientFacingSleep {
                 this.score,
                 this.hrLowest,
                 this.hrAverage,
+                this.hrResting,
                 this.efficiency,
                 this.latency,
                 this.temperatureDelta,
@@ -507,6 +521,10 @@ public final class ClientFacingSleep {
         _FinalStage hrAverage(Optional<Integer> hrAverage);
 
         _FinalStage hrAverage(Integer hrAverage);
+
+        _FinalStage hrResting(Optional<Integer> hrResting);
+
+        _FinalStage hrResting(Integer hrResting);
 
         _FinalStage efficiency(Optional<Double> efficiency);
 
@@ -608,6 +626,8 @@ public final class ClientFacingSleep {
 
         private Optional<Double> efficiency = Optional.empty();
 
+        private Optional<Integer> hrResting = Optional.empty();
+
         private Optional<Integer> hrAverage = Optional.empty();
 
         private Optional<Integer> hrLowest = Optional.empty();
@@ -640,6 +660,7 @@ public final class ClientFacingSleep {
             score(other.getScore());
             hrLowest(other.getHrLowest());
             hrAverage(other.getHrAverage());
+            hrResting(other.getHrResting());
             efficiency(other.getEfficiency());
             latency(other.getLatency());
             temperatureDelta(other.getTemperatureDelta());
@@ -956,6 +977,23 @@ public final class ClientFacingSleep {
         }
 
         /**
+         * <p>Resting heart rate recorded during a sleep session::bpm</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage hrResting(Integer hrResting) {
+            this.hrResting = Optional.of(hrResting);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "hr_resting", nulls = Nulls.SKIP)
+        public _FinalStage hrResting(Optional<Integer> hrResting) {
+            this.hrResting = hrResting;
+            return this;
+        }
+
+        /**
          * <p>The average heart rate registered during the sleep period::beats per minute</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1043,6 +1081,7 @@ public final class ClientFacingSleep {
                     score,
                     hrLowest,
                     hrAverage,
+                    hrResting,
                     efficiency,
                     latency,
                     temperatureDelta,

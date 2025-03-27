@@ -28,6 +28,8 @@ public final class ClientFacingHeartRate {
 
     private final Optional<Double> restingBpm;
 
+    private final Optional<Double> avgWalkingBpm;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingHeartRate(
@@ -35,11 +37,13 @@ public final class ClientFacingHeartRate {
             Optional<Double> minBpm,
             Optional<Double> maxBpm,
             Optional<Double> restingBpm,
+            Optional<Double> avgWalkingBpm,
             Map<String, Object> additionalProperties) {
         this.avgBpm = avgBpm;
         this.minBpm = minBpm;
         this.maxBpm = maxBpm;
         this.restingBpm = restingBpm;
+        this.avgWalkingBpm = avgWalkingBpm;
         this.additionalProperties = additionalProperties;
     }
 
@@ -75,6 +79,11 @@ public final class ClientFacingHeartRate {
         return restingBpm;
     }
 
+    @JsonProperty("avg_walking_bpm")
+    public Optional<Double> getAvgWalkingBpm() {
+        return avgWalkingBpm;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -90,12 +99,13 @@ public final class ClientFacingHeartRate {
         return avgBpm.equals(other.avgBpm)
                 && minBpm.equals(other.minBpm)
                 && maxBpm.equals(other.maxBpm)
-                && restingBpm.equals(other.restingBpm);
+                && restingBpm.equals(other.restingBpm)
+                && avgWalkingBpm.equals(other.avgWalkingBpm);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.avgBpm, this.minBpm, this.maxBpm, this.restingBpm);
+        return Objects.hash(this.avgBpm, this.minBpm, this.maxBpm, this.restingBpm, this.avgWalkingBpm);
     }
 
     @java.lang.Override
@@ -117,6 +127,8 @@ public final class ClientFacingHeartRate {
 
         private Optional<Double> restingBpm = Optional.empty();
 
+        private Optional<Double> avgWalkingBpm = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -127,6 +139,7 @@ public final class ClientFacingHeartRate {
             minBpm(other.getMinBpm());
             maxBpm(other.getMaxBpm());
             restingBpm(other.getRestingBpm());
+            avgWalkingBpm(other.getAvgWalkingBpm());
             return this;
         }
 
@@ -174,8 +187,19 @@ public final class ClientFacingHeartRate {
             return this;
         }
 
+        @JsonSetter(value = "avg_walking_bpm", nulls = Nulls.SKIP)
+        public Builder avgWalkingBpm(Optional<Double> avgWalkingBpm) {
+            this.avgWalkingBpm = avgWalkingBpm;
+            return this;
+        }
+
+        public Builder avgWalkingBpm(Double avgWalkingBpm) {
+            this.avgWalkingBpm = Optional.of(avgWalkingBpm);
+            return this;
+        }
+
         public ClientFacingHeartRate build() {
-            return new ClientFacingHeartRate(avgBpm, minBpm, maxBpm, restingBpm, additionalProperties);
+            return new ClientFacingHeartRate(avgBpm, minBpm, maxBpm, restingBpm, avgWalkingBpm, additionalProperties);
         }
     }
 }

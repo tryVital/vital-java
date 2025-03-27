@@ -23,13 +23,19 @@ import java.util.Objects;
 public final class ContinuousQueryResultTableChanges {
     private final String queryId;
 
+    private final String querySlug;
+
     private final Map<String, List<Object>> data;
 
     private final Map<String, Object> additionalProperties;
 
     private ContinuousQueryResultTableChanges(
-            String queryId, Map<String, List<Object>> data, Map<String, Object> additionalProperties) {
+            String queryId,
+            String querySlug,
+            Map<String, List<Object>> data,
+            Map<String, Object> additionalProperties) {
         this.queryId = queryId;
+        this.querySlug = querySlug;
         this.data = data;
         this.additionalProperties = additionalProperties;
     }
@@ -37,6 +43,11 @@ public final class ContinuousQueryResultTableChanges {
     @JsonProperty("query_id")
     public String getQueryId() {
         return queryId;
+    }
+
+    @JsonProperty("query_slug")
+    public String getQuerySlug() {
+        return querySlug;
     }
 
     @JsonProperty("data")
@@ -56,12 +67,12 @@ public final class ContinuousQueryResultTableChanges {
     }
 
     private boolean equalTo(ContinuousQueryResultTableChanges other) {
-        return queryId.equals(other.queryId) && data.equals(other.data);
+        return queryId.equals(other.queryId) && querySlug.equals(other.querySlug) && data.equals(other.data);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.queryId, this.data);
+        return Objects.hash(this.queryId, this.querySlug, this.data);
     }
 
     @java.lang.Override
@@ -74,9 +85,13 @@ public final class ContinuousQueryResultTableChanges {
     }
 
     public interface QueryIdStage {
-        _FinalStage queryId(String queryId);
+        QuerySlugStage queryId(String queryId);
 
         Builder from(ContinuousQueryResultTableChanges other);
+    }
+
+    public interface QuerySlugStage {
+        _FinalStage querySlug(String querySlug);
     }
 
     public interface _FinalStage {
@@ -90,8 +105,10 @@ public final class ContinuousQueryResultTableChanges {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements QueryIdStage, _FinalStage {
+    public static final class Builder implements QueryIdStage, QuerySlugStage, _FinalStage {
         private String queryId;
+
+        private String querySlug;
 
         private Map<String, List<Object>> data = new LinkedHashMap<>();
 
@@ -103,14 +120,22 @@ public final class ContinuousQueryResultTableChanges {
         @java.lang.Override
         public Builder from(ContinuousQueryResultTableChanges other) {
             queryId(other.getQueryId());
+            querySlug(other.getQuerySlug());
             data(other.getData());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("query_id")
-        public _FinalStage queryId(String queryId) {
+        public QuerySlugStage queryId(String queryId) {
             this.queryId = queryId;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("query_slug")
+        public _FinalStage querySlug(String querySlug) {
+            this.querySlug = querySlug;
             return this;
         }
 
@@ -136,7 +161,7 @@ public final class ContinuousQueryResultTableChanges {
 
         @java.lang.Override
         public ContinuousQueryResultTableChanges build() {
-            return new ContinuousQueryResultTableChanges(queryId, data, additionalProperties);
+            return new ContinuousQueryResultTableChanges(queryId, querySlug, data, additionalProperties);
         }
     }
 }

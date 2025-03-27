@@ -12,7 +12,9 @@ public enum HistoricalPullStatus {
 
     IN_PROGRESS("in_progress"),
 
-    SCHEDULED("scheduled");
+    SCHEDULED("scheduled"),
+
+    RETRYING("retrying");
 
     private final String value;
 

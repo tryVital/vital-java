@@ -26,6 +26,10 @@ public final class ClientFacingProfile {
 
     private final Optional<Integer> height;
 
+    private final Optional<String> birthDate;
+
+    private final Optional<Boolean> wheelchairUse;
+
     private final ClientFacingSource source;
 
     private final Map<String, Object> additionalProperties;
@@ -34,11 +38,15 @@ public final class ClientFacingProfile {
             String userId,
             String id,
             Optional<Integer> height,
+            Optional<String> birthDate,
+            Optional<Boolean> wheelchairUse,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
         this.height = height;
+        this.birthDate = birthDate;
+        this.wheelchairUse = wheelchairUse;
         this.source = source;
         this.additionalProperties = additionalProperties;
     }
@@ -61,6 +69,16 @@ public final class ClientFacingProfile {
         return height;
     }
 
+    @JsonProperty("birth_date")
+    public Optional<String> getBirthDate() {
+        return birthDate;
+    }
+
+    @JsonProperty("wheelchair_use")
+    public Optional<Boolean> getWheelchairUse() {
+        return wheelchairUse;
+    }
+
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
@@ -81,12 +99,14 @@ public final class ClientFacingProfile {
         return userId.equals(other.userId)
                 && id.equals(other.id)
                 && height.equals(other.height)
+                && birthDate.equals(other.birthDate)
+                && wheelchairUse.equals(other.wheelchairUse)
                 && source.equals(other.source);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.id, this.height, this.source);
+        return Objects.hash(this.userId, this.id, this.height, this.birthDate, this.wheelchairUse, this.source);
     }
 
     @java.lang.Override
@@ -118,6 +138,14 @@ public final class ClientFacingProfile {
         _FinalStage height(Optional<Integer> height);
 
         _FinalStage height(Integer height);
+
+        _FinalStage birthDate(Optional<String> birthDate);
+
+        _FinalStage birthDate(String birthDate);
+
+        _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse);
+
+        _FinalStage wheelchairUse(Boolean wheelchairUse);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -127,6 +155,10 @@ public final class ClientFacingProfile {
         private String id;
 
         private ClientFacingSource source;
+
+        private Optional<Boolean> wheelchairUse = Optional.empty();
+
+        private Optional<String> birthDate = Optional.empty();
 
         private Optional<Integer> height = Optional.empty();
 
@@ -140,6 +172,8 @@ public final class ClientFacingProfile {
             userId(other.getUserId());
             id(other.getId());
             height(other.getHeight());
+            birthDate(other.getBirthDate());
+            wheelchairUse(other.getWheelchairUse());
             source(other.getSource());
             return this;
         }
@@ -170,6 +204,32 @@ public final class ClientFacingProfile {
         }
 
         @java.lang.Override
+        public _FinalStage wheelchairUse(Boolean wheelchairUse) {
+            this.wheelchairUse = Optional.of(wheelchairUse);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "wheelchair_use", nulls = Nulls.SKIP)
+        public _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse) {
+            this.wheelchairUse = wheelchairUse;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage birthDate(String birthDate) {
+            this.birthDate = Optional.of(birthDate);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "birth_date", nulls = Nulls.SKIP)
+        public _FinalStage birthDate(Optional<String> birthDate) {
+            this.birthDate = birthDate;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage height(Integer height) {
             this.height = Optional.of(height);
             return this;
@@ -184,7 +244,7 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public ClientFacingProfile build() {
-            return new ClientFacingProfile(userId, id, height, source, additionalProperties);
+            return new ClientFacingProfile(userId, id, height, birthDate, wheelchairUse, source, additionalProperties);
         }
     }
 }

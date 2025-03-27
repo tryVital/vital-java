@@ -32,6 +32,8 @@ public final class LinkTokenExchange {
 
     private final Optional<String> onError;
 
+    private final Optional<String> onClose;
+
     private final Map<String, Object> additionalProperties;
 
     private LinkTokenExchange(
@@ -40,12 +42,14 @@ public final class LinkTokenExchange {
             Optional<String> redirectUrl,
             Optional<List<Providers>> filterOnProviders,
             Optional<String> onError,
+            Optional<String> onClose,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.provider = provider;
         this.redirectUrl = redirectUrl;
         this.filterOnProviders = filterOnProviders;
         this.onError = onError;
+        this.onClose = onClose;
         this.additionalProperties = additionalProperties;
     }
 
@@ -77,6 +81,11 @@ public final class LinkTokenExchange {
         return onError;
     }
 
+    @JsonProperty("on_close")
+    public Optional<String> getOnClose() {
+        return onClose;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -93,12 +102,14 @@ public final class LinkTokenExchange {
                 && provider.equals(other.provider)
                 && redirectUrl.equals(other.redirectUrl)
                 && filterOnProviders.equals(other.filterOnProviders)
-                && onError.equals(other.onError);
+                && onError.equals(other.onError)
+                && onClose.equals(other.onClose);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.provider, this.redirectUrl, this.filterOnProviders, this.onError);
+        return Objects.hash(
+                this.userId, this.provider, this.redirectUrl, this.filterOnProviders, this.onError, this.onClose);
     }
 
     @java.lang.Override
@@ -134,11 +145,17 @@ public final class LinkTokenExchange {
         _FinalStage onError(Optional<String> onError);
 
         _FinalStage onError(String onError);
+
+        _FinalStage onClose(Optional<String> onClose);
+
+        _FinalStage onClose(String onClose);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements UserIdStage, _FinalStage {
         private String userId;
+
+        private Optional<String> onClose = Optional.empty();
 
         private Optional<String> onError = Optional.empty();
 
@@ -160,6 +177,7 @@ public final class LinkTokenExchange {
             redirectUrl(other.getRedirectUrl());
             filterOnProviders(other.getFilterOnProviders());
             onError(other.getOnError());
+            onClose(other.getOnClose());
             return this;
         }
 
@@ -171,6 +189,19 @@ public final class LinkTokenExchange {
         @JsonSetter("user_id")
         public _FinalStage userId(String userId) {
             this.userId = userId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage onClose(String onClose) {
+            this.onClose = Optional.of(onClose);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "on_close", nulls = Nulls.SKIP)
+        public _FinalStage onClose(Optional<String> onClose) {
+            this.onClose = onClose;
             return this;
         }
 
@@ -229,7 +260,7 @@ public final class LinkTokenExchange {
         @java.lang.Override
         public LinkTokenExchange build() {
             return new LinkTokenExchange(
-                    userId, provider, redirectUrl, filterOnProviders, onError, additionalProperties);
+                    userId, provider, redirectUrl, filterOnProviders, onError, onClose, additionalProperties);
         }
     }
 }

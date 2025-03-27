@@ -41,6 +41,12 @@ public final class ClientFacingBody {
 
     private final Optional<Double> boneMassPercentage;
 
+    private final Optional<Double> bodyMassIndex;
+
+    private final Optional<Double> leanBodyMassKilogram;
+
+    private final Optional<Double> waistCircumferenceCentimeter;
+
     private final ClientFacingSource source;
 
     private final Map<String, Object> additionalProperties;
@@ -56,6 +62,9 @@ public final class ClientFacingBody {
             Optional<Double> muscleMassPercentage,
             Optional<Double> visceralFatIndex,
             Optional<Double> boneMassPercentage,
+            Optional<Double> bodyMassIndex,
+            Optional<Double> leanBodyMassKilogram,
+            Optional<Double> waistCircumferenceCentimeter,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -68,6 +77,9 @@ public final class ClientFacingBody {
         this.muscleMassPercentage = muscleMassPercentage;
         this.visceralFatIndex = visceralFatIndex;
         this.boneMassPercentage = boneMassPercentage;
+        this.bodyMassIndex = bodyMassIndex;
+        this.leanBodyMassKilogram = leanBodyMassKilogram;
+        this.waistCircumferenceCentimeter = waistCircumferenceCentimeter;
         this.source = source;
         this.additionalProperties = additionalProperties;
     }
@@ -149,6 +161,21 @@ public final class ClientFacingBody {
         return boneMassPercentage;
     }
 
+    @JsonProperty("body_mass_index")
+    public Optional<Double> getBodyMassIndex() {
+        return bodyMassIndex;
+    }
+
+    @JsonProperty("lean_body_mass_kilogram")
+    public Optional<Double> getLeanBodyMassKilogram() {
+        return leanBodyMassKilogram;
+    }
+
+    @JsonProperty("waist_circumference_centimeter")
+    public Optional<Double> getWaistCircumferenceCentimeter() {
+        return waistCircumferenceCentimeter;
+    }
+
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
@@ -176,6 +203,9 @@ public final class ClientFacingBody {
                 && muscleMassPercentage.equals(other.muscleMassPercentage)
                 && visceralFatIndex.equals(other.visceralFatIndex)
                 && boneMassPercentage.equals(other.boneMassPercentage)
+                && bodyMassIndex.equals(other.bodyMassIndex)
+                && leanBodyMassKilogram.equals(other.leanBodyMassKilogram)
+                && waistCircumferenceCentimeter.equals(other.waistCircumferenceCentimeter)
                 && source.equals(other.source);
     }
 
@@ -192,6 +222,9 @@ public final class ClientFacingBody {
                 this.muscleMassPercentage,
                 this.visceralFatIndex,
                 this.boneMassPercentage,
+                this.bodyMassIndex,
+                this.leanBodyMassKilogram,
+                this.waistCircumferenceCentimeter,
                 this.source);
     }
 
@@ -252,6 +285,18 @@ public final class ClientFacingBody {
         _FinalStage boneMassPercentage(Optional<Double> boneMassPercentage);
 
         _FinalStage boneMassPercentage(Double boneMassPercentage);
+
+        _FinalStage bodyMassIndex(Optional<Double> bodyMassIndex);
+
+        _FinalStage bodyMassIndex(Double bodyMassIndex);
+
+        _FinalStage leanBodyMassKilogram(Optional<Double> leanBodyMassKilogram);
+
+        _FinalStage leanBodyMassKilogram(Double leanBodyMassKilogram);
+
+        _FinalStage waistCircumferenceCentimeter(Optional<Double> waistCircumferenceCentimeter);
+
+        _FinalStage waistCircumferenceCentimeter(Double waistCircumferenceCentimeter);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -266,6 +311,12 @@ public final class ClientFacingBody {
         private String calendarDate;
 
         private ClientFacingSource source;
+
+        private Optional<Double> waistCircumferenceCentimeter = Optional.empty();
+
+        private Optional<Double> leanBodyMassKilogram = Optional.empty();
+
+        private Optional<Double> bodyMassIndex = Optional.empty();
 
         private Optional<Double> boneMassPercentage = Optional.empty();
 
@@ -296,6 +347,9 @@ public final class ClientFacingBody {
             muscleMassPercentage(other.getMuscleMassPercentage());
             visceralFatIndex(other.getVisceralFatIndex());
             boneMassPercentage(other.getBoneMassPercentage());
+            bodyMassIndex(other.getBodyMassIndex());
+            leanBodyMassKilogram(other.getLeanBodyMassKilogram());
+            waistCircumferenceCentimeter(other.getWaistCircumferenceCentimeter());
             source(other.getSource());
             return this;
         }
@@ -344,6 +398,45 @@ public final class ClientFacingBody {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage waistCircumferenceCentimeter(Double waistCircumferenceCentimeter) {
+            this.waistCircumferenceCentimeter = Optional.of(waistCircumferenceCentimeter);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "waist_circumference_centimeter", nulls = Nulls.SKIP)
+        public _FinalStage waistCircumferenceCentimeter(Optional<Double> waistCircumferenceCentimeter) {
+            this.waistCircumferenceCentimeter = waistCircumferenceCentimeter;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage leanBodyMassKilogram(Double leanBodyMassKilogram) {
+            this.leanBodyMassKilogram = Optional.of(leanBodyMassKilogram);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lean_body_mass_kilogram", nulls = Nulls.SKIP)
+        public _FinalStage leanBodyMassKilogram(Optional<Double> leanBodyMassKilogram) {
+            this.leanBodyMassKilogram = leanBodyMassKilogram;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage bodyMassIndex(Double bodyMassIndex) {
+            this.bodyMassIndex = Optional.of(bodyMassIndex);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "body_mass_index", nulls = Nulls.SKIP)
+        public _FinalStage bodyMassIndex(Optional<Double> bodyMassIndex) {
+            this.bodyMassIndex = bodyMassIndex;
             return this;
         }
 
@@ -462,6 +555,9 @@ public final class ClientFacingBody {
                     muscleMassPercentage,
                     visceralFatIndex,
                     boneMassPercentage,
+                    bodyMassIndex,
+                    leanBodyMassKilogram,
+                    waistCircumferenceCentimeter,
                     source,
                     additionalProperties);
         }

@@ -10,6 +10,8 @@ public enum OrderStatus {
 
     RECEIVED_WALK_IN_TEST_REQUISITION_CREATED("received.walk_in_test.requisition_created"),
 
+    RECEIVED_WALK_IN_TEST_REQUISITION_BYPASSED("received.walk_in_test.requisition_bypassed"),
+
     COMPLETED_WALK_IN_TEST_COMPLETED("completed.walk_in_test.completed"),
 
     SAMPLE_WITH_LAB_WALK_IN_TEST_PARTIAL_RESULTS("sample_with_lab.walk_in_test.partial_results"),
@@ -27,6 +29,8 @@ public enum OrderStatus {
     RECEIVED_AT_HOME_PHLEBOTOMY_ORDERED("received.at_home_phlebotomy.ordered"),
 
     RECEIVED_AT_HOME_PHLEBOTOMY_REQUISITION_CREATED("received.at_home_phlebotomy.requisition_created"),
+
+    RECEIVED_AT_HOME_PHLEBOTOMY_REQUISITION_BYPASSED("received.at_home_phlebotomy.requisition_bypassed"),
 
     COLLECTING_SAMPLE_AT_HOME_PHLEBOTOMY_APPOINTMENT_PENDING(
             "collecting_sample.at_home_phlebotomy.appointment_pending"),
@@ -53,6 +57,8 @@ public enum OrderStatus {
 
     RECEIVED_TESTKIT_REQUISITION_CREATED("received.testkit.requisition_created"),
 
+    RECEIVED_TESTKIT_REQUISITION_BYPASSED("received.testkit.requisition_bypassed"),
+
     RECEIVED_TESTKIT_REGISTERED("received.testkit.registered"),
 
     COLLECTING_SAMPLE_TESTKIT_TRANSIT_CUSTOMER("collecting_sample.testkit.transit_customer"),
@@ -77,7 +83,11 @@ public enum OrderStatus {
 
     CANCELLED_TESTKIT_CANCELLED("cancelled.testkit.cancelled"),
 
-    CANCELLED_TESTKIT_DO_NOT_PROCESS("cancelled.testkit.do_not_process");
+    CANCELLED_TESTKIT_DO_NOT_PROCESS("cancelled.testkit.do_not_process"),
+
+    COLLECTING_SAMPLE_TESTKIT_PROBLEM_IN_TRANSIT_CUSTOMER("collecting_sample.testkit.problem_in_transit_customer"),
+
+    COLLECTING_SAMPLE_TESTKIT_PROBLEM_IN_TRANSIT_LAB("collecting_sample.testkit.problem_in_transit_lab");
 
     private final String value;
 

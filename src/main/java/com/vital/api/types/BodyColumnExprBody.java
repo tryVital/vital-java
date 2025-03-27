@@ -20,6 +20,12 @@ public enum BodyColumnExprBody {
 
     BONE_MASS_PERCENTAGE("bone_mass_percentage"),
 
+    BODY_MASS_INDEX("body_mass_index"),
+
+    LEAN_BODY_MASS_KILOGRAM("lean_body_mass_kilogram"),
+
+    WAIST_CIRCUMFERENCE_CENTIMETER("waist_circumference_centimeter"),
+
     SOURCE_TYPE("source_type"),
 
     SOURCE_PROVIDER("source_provider"),

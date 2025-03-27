@@ -38,6 +38,8 @@ public enum SleepColumnExprSleep {
 
     HEART_RATE_DIP("heart_rate_dip"),
 
+    HEART_RATE_RESTING("heart_rate_resting"),
+
     EFFICIENCY("efficiency"),
 
     HRV_MEAN_RMSSD("hrv_mean_rmssd"),

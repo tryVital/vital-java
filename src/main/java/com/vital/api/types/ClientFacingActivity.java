@@ -55,6 +55,10 @@ public final class ClientFacingActivity {
 
     private final Optional<ClientFacingHeartRate> heartRate;
 
+    private final Optional<Boolean> wheelchairUse;
+
+    private final Optional<Integer> wheelchairPush;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingActivity(
@@ -75,6 +79,8 @@ public final class ClientFacingActivity {
             Optional<String> timeZone,
             Optional<Integer> timezoneOffset,
             Optional<ClientFacingHeartRate> heartRate,
+            Optional<Boolean> wheelchairUse,
+            Optional<Integer> wheelchairPush,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -93,6 +99,8 @@ public final class ClientFacingActivity {
         this.timeZone = timeZone;
         this.timezoneOffset = timezoneOffset;
         this.heartRate = heartRate;
+        this.wheelchairUse = wheelchairUse;
+        this.wheelchairPush = wheelchairPush;
         this.additionalProperties = additionalProperties;
     }
 
@@ -229,6 +237,16 @@ public final class ClientFacingActivity {
         return heartRate;
     }
 
+    @JsonProperty("wheelchair_use")
+    public Optional<Boolean> getWheelchairUse() {
+        return wheelchairUse;
+    }
+
+    @JsonProperty("wheelchair_push")
+    public Optional<Integer> getWheelchairPush() {
+        return wheelchairPush;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -257,7 +275,9 @@ public final class ClientFacingActivity {
                 && floorsClimbed.equals(other.floorsClimbed)
                 && timeZone.equals(other.timeZone)
                 && timezoneOffset.equals(other.timezoneOffset)
-                && heartRate.equals(other.heartRate);
+                && heartRate.equals(other.heartRate)
+                && wheelchairUse.equals(other.wheelchairUse)
+                && wheelchairPush.equals(other.wheelchairPush);
     }
 
     @java.lang.Override
@@ -279,7 +299,9 @@ public final class ClientFacingActivity {
                 this.floorsClimbed,
                 this.timeZone,
                 this.timezoneOffset,
-                this.heartRate);
+                this.heartRate,
+                this.wheelchairUse,
+                this.wheelchairPush);
     }
 
     @java.lang.Override
@@ -363,6 +385,14 @@ public final class ClientFacingActivity {
         _FinalStage heartRate(Optional<ClientFacingHeartRate> heartRate);
 
         _FinalStage heartRate(ClientFacingHeartRate heartRate);
+
+        _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse);
+
+        _FinalStage wheelchairUse(Boolean wheelchairUse);
+
+        _FinalStage wheelchairPush(Optional<Integer> wheelchairPush);
+
+        _FinalStage wheelchairPush(Integer wheelchairPush);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -377,6 +407,10 @@ public final class ClientFacingActivity {
         private String calendarDate;
 
         private ClientFacingSource source;
+
+        private Optional<Integer> wheelchairPush = Optional.empty();
+
+        private Optional<Boolean> wheelchairUse = Optional.empty();
 
         private Optional<ClientFacingHeartRate> heartRate = Optional.empty();
 
@@ -426,6 +460,8 @@ public final class ClientFacingActivity {
             timeZone(other.getTimeZone());
             timezoneOffset(other.getTimezoneOffset());
             heartRate(other.getHeartRate());
+            wheelchairUse(other.getWheelchairUse());
+            wheelchairPush(other.getWheelchairPush());
             return this;
         }
 
@@ -477,6 +513,32 @@ public final class ClientFacingActivity {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage wheelchairPush(Integer wheelchairPush) {
+            this.wheelchairPush = Optional.of(wheelchairPush);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "wheelchair_push", nulls = Nulls.SKIP)
+        public _FinalStage wheelchairPush(Optional<Integer> wheelchairPush) {
+            this.wheelchairPush = wheelchairPush;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage wheelchairUse(Boolean wheelchairUse) {
+            this.wheelchairUse = Optional.of(wheelchairUse);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "wheelchair_use", nulls = Nulls.SKIP)
+        public _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse) {
+            this.wheelchairUse = wheelchairUse;
             return this;
         }
 
@@ -704,6 +766,8 @@ public final class ClientFacingActivity {
                     timeZone,
                     timezoneOffset,
                     heartRate,
+                    wheelchairUse,
+                    wheelchairPush,
                     additionalProperties);
         }
     }

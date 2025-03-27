@@ -73,7 +73,7 @@ public final class UserCreateBody {
     }
 
     /**
-     * @return Starting bound for user data ingestion. Data older than this date will not be ingested.
+     * @return Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.
      */
     @JsonProperty("ingestion_start")
     public Optional<String> getIngestionStart() {
@@ -81,7 +81,7 @@ public final class UserCreateBody {
     }
 
     /**
-     * @return Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.
+     * @return Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.
      */
     @JsonProperty("ingestion_end")
     public Optional<String> getIngestionEnd() {
@@ -191,7 +191,7 @@ public final class UserCreateBody {
         }
 
         /**
-         * <p>Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.</p>
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -208,7 +208,7 @@ public final class UserCreateBody {
         }
 
         /**
-         * <p>Starting bound for user data ingestion. Data older than this date will not be ingested.</p>
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

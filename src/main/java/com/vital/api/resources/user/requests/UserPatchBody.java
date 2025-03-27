@@ -65,7 +65,7 @@ public final class UserPatchBody {
     }
 
     /**
-     * @return Starting bound for user data ingestion. Data older than this date will not be ingested.
+     * @return Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.
      */
     @JsonProperty("ingestion_start")
     public Optional<String> getIngestionStart() {
@@ -73,7 +73,7 @@ public final class UserPatchBody {
     }
 
     /**
-     * @return Ending bound for user data ingestion. Data from this date or later will not be ingested and the connection will be deregistered.
+     * @return Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.
      */
     @JsonProperty("ingestion_end")
     public Optional<String> getIngestionEnd() {

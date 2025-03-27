@@ -88,6 +88,34 @@ public enum ClientFacingResource {
 
     HEART_RATE_ALERT("heart_rate_alert"),
 
+    STAND_HOUR("stand_hour"),
+
+    STAND_DURATION("stand_duration"),
+
+    SLEEP_APNEA_ALERT("sleep_apnea_alert"),
+
+    SLEEP_BREATHING_DISTURBANCE("sleep_breathing_disturbance"),
+
+    WHEELCHAIR_PUSH("wheelchair_push"),
+
+    FORCED_EXPIRATORY_VOLUME_1("forced_expiratory_volume_1"),
+
+    FORCED_VITAL_CAPACITY("forced_vital_capacity"),
+
+    PEAK_EXPIRATORY_FLOW_RATE("peak_expiratory_flow_rate"),
+
+    INHALER_USAGE("inhaler_usage"),
+
+    FALL("fall"),
+
+    UV_EXPOSURE("uv_exposure"),
+
+    DAYLIGHT_EXPOSURE("daylight_exposure"),
+
+    HANDWASHING("handwashing"),
+
+    BASAL_BODY_TEMPERATURE("basal_body_temperature"),
+
     WORKOUT_DURATION("workout_duration"),
 
     INSULIN_INJECTION("insulin_injection"),

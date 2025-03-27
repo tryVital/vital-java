@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = AppointmentLocation.Builder.class)
@@ -26,14 +28,22 @@ public final class AppointmentLocation {
 
     private final String name;
 
+    private final Optional<String> ianaTimezone;
+
     private final Map<String, Object> additionalProperties;
 
     private AppointmentLocation(
-            LngLat location, UsAddress address, String code, String name, Map<String, Object> additionalProperties) {
+            LngLat location,
+            UsAddress address,
+            String code,
+            String name,
+            Optional<String> ianaTimezone,
+            Map<String, Object> additionalProperties) {
         this.location = location;
         this.address = address;
         this.code = code;
         this.name = name;
+        this.ianaTimezone = ianaTimezone;
         this.additionalProperties = additionalProperties;
     }
 
@@ -57,6 +67,11 @@ public final class AppointmentLocation {
         return name;
     }
 
+    @JsonProperty("iana_timezone")
+    public Optional<String> getIanaTimezone() {
+        return ianaTimezone;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -72,12 +87,13 @@ public final class AppointmentLocation {
         return location.equals(other.location)
                 && address.equals(other.address)
                 && code.equals(other.code)
-                && name.equals(other.name);
+                && name.equals(other.name)
+                && ianaTimezone.equals(other.ianaTimezone);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.location, this.address, this.code, this.name);
+        return Objects.hash(this.location, this.address, this.code, this.name, this.ianaTimezone);
     }
 
     @java.lang.Override
@@ -109,6 +125,10 @@ public final class AppointmentLocation {
 
     public interface _FinalStage {
         AppointmentLocation build();
+
+        _FinalStage ianaTimezone(Optional<String> ianaTimezone);
+
+        _FinalStage ianaTimezone(String ianaTimezone);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -121,6 +141,8 @@ public final class AppointmentLocation {
 
         private String name;
 
+        private Optional<String> ianaTimezone = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -132,6 +154,7 @@ public final class AppointmentLocation {
             address(other.getAddress());
             code(other.getCode());
             name(other.getName());
+            ianaTimezone(other.getIanaTimezone());
             return this;
         }
 
@@ -164,8 +187,21 @@ public final class AppointmentLocation {
         }
 
         @java.lang.Override
+        public _FinalStage ianaTimezone(String ianaTimezone) {
+            this.ianaTimezone = Optional.of(ianaTimezone);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "iana_timezone", nulls = Nulls.SKIP)
+        public _FinalStage ianaTimezone(Optional<String> ianaTimezone) {
+            this.ianaTimezone = ianaTimezone;
+            return this;
+        }
+
+        @java.lang.Override
         public AppointmentLocation build() {
-            return new AppointmentLocation(location, address, code, name, additionalProperties);
+            return new AppointmentLocation(location, address, code, name, ianaTimezone, additionalProperties);
         }
     }
 }

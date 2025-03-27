@@ -5,14 +5,14 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ClientFacingCreatedChangedEventType {
-    LABTEST_APPOINTMENT_CREATED("labtest.appointment.created"),
+public enum ClientFacingStandDurationChangedEventType {
+    DAILY_DATA_STAND_DURATION_CREATED("daily.data.stand_duration.created"),
 
-    LABTEST_APPOINTMENT_UPDATED("labtest.appointment.updated");
+    DAILY_DATA_STAND_DURATION_UPDATED("daily.data.stand_duration.updated");
 
     private final String value;
 
-    ClientFacingCreatedChangedEventType(String value) {
+    ClientFacingStandDurationChangedEventType(String value) {
         this.value = value;
     }
 

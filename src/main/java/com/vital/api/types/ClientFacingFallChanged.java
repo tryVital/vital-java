@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = ClientFacingCreatedChanged.Builder.class)
-public final class ClientFacingCreatedChanged {
-    private final ClientFacingCreatedChangedEventType eventType;
+@JsonDeserialize(builder = ClientFacingFallChanged.Builder.class)
+public final class ClientFacingFallChanged {
+    private final ClientFacingFallChangedEventType eventType;
 
     private final String userId;
 
@@ -26,16 +26,16 @@ public final class ClientFacingCreatedChanged {
 
     private final String teamId;
 
-    private final ClientFacingAppointment data;
+    private final GroupedFall data;
 
     private final Map<String, Object> additionalProperties;
 
-    private ClientFacingCreatedChanged(
-            ClientFacingCreatedChangedEventType eventType,
+    private ClientFacingFallChanged(
+            ClientFacingFallChangedEventType eventType,
             String userId,
             String clientUserId,
             String teamId,
-            ClientFacingAppointment data,
+            GroupedFall data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -46,7 +46,7 @@ public final class ClientFacingCreatedChanged {
     }
 
     @JsonProperty("event_type")
-    public ClientFacingCreatedChangedEventType getEventType() {
+    public ClientFacingFallChangedEventType getEventType() {
         return eventType;
     }
 
@@ -66,14 +66,14 @@ public final class ClientFacingCreatedChanged {
     }
 
     @JsonProperty("data")
-    public ClientFacingAppointment getData() {
+    public GroupedFall getData() {
         return data;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ClientFacingCreatedChanged && equalTo((ClientFacingCreatedChanged) other);
+        return other instanceof ClientFacingFallChanged && equalTo((ClientFacingFallChanged) other);
     }
 
     @JsonAnyGetter
@@ -81,7 +81,7 @@ public final class ClientFacingCreatedChanged {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ClientFacingCreatedChanged other) {
+    private boolean equalTo(ClientFacingFallChanged other) {
         return eventType.equals(other.eventType)
                 && userId.equals(other.userId)
                 && clientUserId.equals(other.clientUserId)
@@ -104,9 +104,9 @@ public final class ClientFacingCreatedChanged {
     }
 
     public interface EventTypeStage {
-        UserIdStage eventType(ClientFacingCreatedChangedEventType eventType);
+        UserIdStage eventType(ClientFacingFallChangedEventType eventType);
 
-        Builder from(ClientFacingCreatedChanged other);
+        Builder from(ClientFacingFallChanged other);
     }
 
     public interface UserIdStage {
@@ -122,17 +122,17 @@ public final class ClientFacingCreatedChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(ClientFacingAppointment data);
+        _FinalStage data(GroupedFall data);
     }
 
     public interface _FinalStage {
-        ClientFacingCreatedChanged build();
+        ClientFacingFallChanged build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements EventTypeStage, UserIdStage, ClientUserIdStage, TeamIdStage, DataStage, _FinalStage {
-        private ClientFacingCreatedChangedEventType eventType;
+        private ClientFacingFallChangedEventType eventType;
 
         private String userId;
 
@@ -140,7 +140,7 @@ public final class ClientFacingCreatedChanged {
 
         private String teamId;
 
-        private ClientFacingAppointment data;
+        private GroupedFall data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -148,7 +148,7 @@ public final class ClientFacingCreatedChanged {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ClientFacingCreatedChanged other) {
+        public Builder from(ClientFacingFallChanged other) {
             eventType(other.getEventType());
             userId(other.getUserId());
             clientUserId(other.getClientUserId());
@@ -159,7 +159,7 @@ public final class ClientFacingCreatedChanged {
 
         @java.lang.Override
         @JsonSetter("event_type")
-        public UserIdStage eventType(ClientFacingCreatedChangedEventType eventType) {
+        public UserIdStage eventType(ClientFacingFallChangedEventType eventType) {
             this.eventType = eventType;
             return this;
         }
@@ -187,14 +187,14 @@ public final class ClientFacingCreatedChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(ClientFacingAppointment data) {
+        public _FinalStage data(GroupedFall data) {
             this.data = data;
             return this;
         }
 
         @java.lang.Override
-        public ClientFacingCreatedChanged build() {
-            return new ClientFacingCreatedChanged(eventType, userId, clientUserId, teamId, data, additionalProperties);
+        public ClientFacingFallChanged build() {
+            return new ClientFacingFallChanged(eventType, userId, clientUserId, teamId, data, additionalProperties);
         }
     }
 }

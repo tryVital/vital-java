@@ -36,6 +36,12 @@ public enum ActivityColumnExprActivity {
 
     HEART_RATE_RESTING("heart_rate_resting"),
 
+    HEART_RATE_MEAN_WALKING("heart_rate_mean_walking"),
+
+    WHEELCHAIR_USE("wheelchair_use"),
+
+    WHEELCHAIR_PUSH("wheelchair_push"),
+
     SOURCE_TYPE("source_type"),
 
     SOURCE_PROVIDER("source_provider"),
