@@ -96,6 +96,12 @@ public enum TimeseriesResource {
 
     BASAL_BODY_TEMPERATURE("basal_body_temperature"),
 
+    BODY_MASS_INDEX("body_mass_index"),
+
+    LEAN_BODY_MASS("lean_body_mass"),
+
+    WAIST_CIRCUMFERENCE("waist_circumference"),
+
     WORKOUT_DURATION("workout_duration"),
 
     INSULIN_INJECTION("insulin_injection"),

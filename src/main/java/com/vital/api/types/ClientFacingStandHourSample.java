@@ -26,7 +26,7 @@ public final class ClientFacingStandHourSample {
 
     private final Optional<Integer> timezoneOffset;
 
-    private final Optional<String> type;
+    private final ClientFacingStandHourSampleType type;
 
     private final Optional<List<Object>> grouping;
 
@@ -43,7 +43,7 @@ public final class ClientFacingStandHourSample {
     private ClientFacingStandHourSample(
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
-            Optional<String> type,
+            ClientFacingStandHourSampleType type,
             Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             OffsetDateTime start,
@@ -77,11 +77,8 @@ public final class ClientFacingStandHourSample {
         return timezoneOffset;
     }
 
-    /**
-     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
-     */
     @JsonProperty("type")
-    public Optional<String> getType() {
+    public ClientFacingStandHourSampleType getType() {
         return type;
     }
 
@@ -167,14 +164,18 @@ public final class ClientFacingStandHourSample {
         return ObjectMappers.stringify(this);
     }
 
-    public static TimestampStage builder() {
+    public static TypeStage builder() {
         return new Builder();
+    }
+
+    public interface TypeStage {
+        TimestampStage type(ClientFacingStandHourSampleType type);
+
+        Builder from(ClientFacingStandHourSample other);
     }
 
     public interface TimestampStage {
         StartStage timestamp(OffsetDateTime timestamp);
-
-        Builder from(ClientFacingStandHourSample other);
     }
 
     public interface StartStage {
@@ -200,17 +201,16 @@ public final class ClientFacingStandHourSample {
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
-        _FinalStage type(Optional<String> type);
-
-        _FinalStage type(String type);
-
         _FinalStage grouping(Optional<List<Object>> grouping);
 
         _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TimestampStage, StartStage, EndStage, ValueStage, _FinalStage {
+    public static final class Builder
+            implements TypeStage, TimestampStage, StartStage, EndStage, ValueStage, _FinalStage {
+        private ClientFacingStandHourSampleType type;
+
         private OffsetDateTime timestamp;
 
         private OffsetDateTime start;
@@ -220,8 +220,6 @@ public final class ClientFacingStandHourSample {
         private double value;
 
         private Optional<List<Object>> grouping = Optional.empty();
-
-        private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -242,6 +240,13 @@ public final class ClientFacingStandHourSample {
             start(other.getStart());
             end(other.getEnd());
             value(other.getValue());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("type")
+        public TimestampStage type(ClientFacingStandHourSampleType type) {
+            this.type = type;
             return this;
         }
 
@@ -299,23 +304,6 @@ public final class ClientFacingStandHourSample {
         @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
         public _FinalStage grouping(Optional<List<Object>> grouping) {
             this.grouping = grouping;
-            return this;
-        }
-
-        /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage type(String type) {
-            this.type = Optional.of(type);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "type", nulls = Nulls.SKIP)
-        public _FinalStage type(Optional<String> type) {
-            this.type = type;
             return this;
         }
 

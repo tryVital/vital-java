@@ -20,13 +20,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = ClientFacingSleepBreathingDisturbanceSample.Builder.class)
-public final class ClientFacingSleepBreathingDisturbanceSample {
+@JsonDeserialize(builder = ClientFacingWaistCircumferenceSample.Builder.class)
+public final class ClientFacingWaistCircumferenceSample {
     private final Optional<Integer> id;
 
     private final Optional<Integer> timezoneOffset;
 
-    private final Optional<ClientFacingSleepBreathingDisturbanceSampleType> type;
+    private final Optional<String> type;
 
     private final Optional<List<Object>> grouping;
 
@@ -40,10 +40,10 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
 
     private final Map<String, Object> additionalProperties;
 
-    private ClientFacingSleepBreathingDisturbanceSample(
+    private ClientFacingWaistCircumferenceSample(
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
-            Optional<ClientFacingSleepBreathingDisturbanceSampleType> type,
+            Optional<String> type,
             Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             OffsetDateTime start,
@@ -77,14 +77,17 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         return timezoneOffset;
     }
 
+    /**
+     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+     */
     @JsonProperty("type")
-    public Optional<ClientFacingSleepBreathingDisturbanceSampleType> getType() {
+    public Optional<String> getType() {
         return type;
     }
 
     @JsonProperty("unit")
     public String getUnit() {
-        return "count";
+        return "cm";
     }
 
     @JsonProperty("grouping")
@@ -127,8 +130,8 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ClientFacingSleepBreathingDisturbanceSample
-                && equalTo((ClientFacingSleepBreathingDisturbanceSample) other);
+        return other instanceof ClientFacingWaistCircumferenceSample
+                && equalTo((ClientFacingWaistCircumferenceSample) other);
     }
 
     @JsonAnyGetter
@@ -136,7 +139,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ClientFacingSleepBreathingDisturbanceSample other) {
+    private boolean equalTo(ClientFacingWaistCircumferenceSample other) {
         return id.equals(other.id)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
@@ -172,7 +175,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
     public interface TimestampStage {
         StartStage timestamp(OffsetDateTime timestamp);
 
-        Builder from(ClientFacingSleepBreathingDisturbanceSample other);
+        Builder from(ClientFacingWaistCircumferenceSample other);
     }
 
     public interface StartStage {
@@ -188,7 +191,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
     }
 
     public interface _FinalStage {
-        ClientFacingSleepBreathingDisturbanceSample build();
+        ClientFacingWaistCircumferenceSample build();
 
         _FinalStage id(Optional<Integer> id);
 
@@ -198,9 +201,9 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
-        _FinalStage type(Optional<ClientFacingSleepBreathingDisturbanceSampleType> type);
+        _FinalStage type(Optional<String> type);
 
-        _FinalStage type(ClientFacingSleepBreathingDisturbanceSampleType type);
+        _FinalStage type(String type);
 
         _FinalStage grouping(Optional<List<Object>> grouping);
 
@@ -219,7 +222,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
 
         private Optional<List<Object>> grouping = Optional.empty();
 
-        private Optional<ClientFacingSleepBreathingDisturbanceSampleType> type = Optional.empty();
+        private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -231,7 +234,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ClientFacingSleepBreathingDisturbanceSample other) {
+        public Builder from(ClientFacingWaistCircumferenceSample other) {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
@@ -300,15 +303,19 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
             return this;
         }
 
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
-        public _FinalStage type(ClientFacingSleepBreathingDisturbanceSampleType type) {
+        public _FinalStage type(String type) {
             this.type = Optional.of(type);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
-        public _FinalStage type(Optional<ClientFacingSleepBreathingDisturbanceSampleType> type) {
+        public _FinalStage type(Optional<String> type) {
             this.type = type;
             return this;
         }
@@ -348,8 +355,8 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         }
 
         @java.lang.Override
-        public ClientFacingSleepBreathingDisturbanceSample build() {
-            return new ClientFacingSleepBreathingDisturbanceSample(
+        public ClientFacingWaistCircumferenceSample build() {
+            return new ClientFacingWaistCircumferenceSample(
                     id, timezoneOffset, type, grouping, timestamp, start, end, value, additionalProperties);
         }
     }
