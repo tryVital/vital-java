@@ -30,8 +30,6 @@ public final class ClientFacingNoteSample {
 
     private final String unit;
 
-    private final Optional<List<Object>> grouping;
-
     private final OffsetDateTime timestamp;
 
     private final OffsetDateTime start;
@@ -49,7 +47,6 @@ public final class ClientFacingNoteSample {
             Optional<Integer> timezoneOffset,
             Optional<String> type,
             String unit,
-            Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             OffsetDateTime start,
             OffsetDateTime end,
@@ -60,7 +57,6 @@ public final class ClientFacingNoteSample {
         this.timezoneOffset = timezoneOffset;
         this.type = type;
         this.unit = unit;
-        this.grouping = grouping;
         this.timestamp = timestamp;
         this.start = start;
         this.end = end;
@@ -99,11 +95,6 @@ public final class ClientFacingNoteSample {
     @JsonProperty("unit")
     public String getUnit() {
         return unit;
-    }
-
-    @JsonProperty("grouping")
-    public Optional<List<Object>> getGrouping() {
-        return grouping;
     }
 
     /**
@@ -162,7 +153,6 @@ public final class ClientFacingNoteSample {
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
-                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
@@ -177,7 +167,6 @@ public final class ClientFacingNoteSample {
                 this.timezoneOffset,
                 this.type,
                 this.unit,
-                this.grouping,
                 this.timestamp,
                 this.start,
                 this.end,
@@ -231,10 +220,6 @@ public final class ClientFacingNoteSample {
 
         _FinalStage type(String type);
 
-        _FinalStage grouping(Optional<List<Object>> grouping);
-
-        _FinalStage grouping(List<Object> grouping);
-
         _FinalStage tags(Optional<List<ClientFacingNoteSampleTagsItem>> tags);
 
         _FinalStage tags(List<ClientFacingNoteSampleTagsItem> tags);
@@ -255,8 +240,6 @@ public final class ClientFacingNoteSample {
 
         private Optional<List<ClientFacingNoteSampleTagsItem>> tags = Optional.empty();
 
-        private Optional<List<Object>> grouping = Optional.empty();
-
         private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
@@ -274,7 +257,6 @@ public final class ClientFacingNoteSample {
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
             unit(other.getUnit());
-            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             start(other.getStart());
             end(other.getEnd());
@@ -355,19 +337,6 @@ public final class ClientFacingNoteSample {
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage grouping(List<Object> grouping) {
-            this.grouping = Optional.of(grouping);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
-        public _FinalStage grouping(Optional<List<Object>> grouping) {
-            this.grouping = grouping;
-            return this;
-        }
-
         /**
          * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -422,7 +391,7 @@ public final class ClientFacingNoteSample {
         @java.lang.Override
         public ClientFacingNoteSample build() {
             return new ClientFacingNoteSample(
-                    id, timezoneOffset, type, unit, grouping, timestamp, start, end, value, tags, additionalProperties);
+                    id, timezoneOffset, type, unit, timestamp, start, end, value, tags, additionalProperties);
         }
     }
 }

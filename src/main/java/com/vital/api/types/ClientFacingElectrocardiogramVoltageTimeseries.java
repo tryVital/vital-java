@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,11 +25,9 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
 
     private final Optional<Integer> timezoneOffset;
 
-    private final Optional<String> type;
+    private final String type;
 
     private final String unit;
-
-    private final Optional<List<Object>> grouping;
 
     private final OffsetDateTime timestamp;
 
@@ -41,9 +38,8 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
     private ClientFacingElectrocardiogramVoltageTimeseries(
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
-            Optional<String> type,
+            String type,
             String unit,
-            Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             double value,
             Map<String, Object> additionalProperties) {
@@ -51,7 +47,6 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         this.timezoneOffset = timezoneOffset;
         this.type = type;
         this.unit = unit;
-        this.grouping = grouping;
         this.timestamp = timestamp;
         this.value = value;
         this.additionalProperties = additionalProperties;
@@ -77,7 +72,7 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
      * @return The lead of the measurement.
      */
     @JsonProperty("type")
-    public Optional<String> getType() {
+    public String getType() {
         return type;
     }
 
@@ -87,11 +82,6 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
     @JsonProperty("unit")
     public String getUnit() {
         return unit;
-    }
-
-    @JsonProperty("grouping")
-    public Optional<List<Object>> getGrouping() {
-        return grouping;
     }
 
     /**
@@ -127,15 +117,13 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
-                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && value == other.value;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.id, this.timezoneOffset, this.type, this.unit, this.grouping, this.timestamp, this.value);
+        return Objects.hash(this.id, this.timezoneOffset, this.type, this.unit, this.timestamp, this.value);
     }
 
     @java.lang.Override
@@ -143,14 +131,18 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         return ObjectMappers.stringify(this);
     }
 
-    public static UnitStage builder() {
+    public static TypeStage builder() {
         return new Builder();
+    }
+
+    public interface TypeStage {
+        UnitStage type(String type);
+
+        Builder from(ClientFacingElectrocardiogramVoltageTimeseries other);
     }
 
     public interface UnitStage {
         TimestampStage unit(String unit);
-
-        Builder from(ClientFacingElectrocardiogramVoltageTimeseries other);
     }
 
     public interface TimestampStage {
@@ -171,27 +163,17 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
-
-        _FinalStage type(Optional<String> type);
-
-        _FinalStage type(String type);
-
-        _FinalStage grouping(Optional<List<Object>> grouping);
-
-        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UnitStage, TimestampStage, ValueStage, _FinalStage {
+    public static final class Builder implements TypeStage, UnitStage, TimestampStage, ValueStage, _FinalStage {
+        private String type;
+
         private String unit;
 
         private OffsetDateTime timestamp;
 
         private double value;
-
-        private Optional<List<Object>> grouping = Optional.empty();
-
-        private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -208,9 +190,19 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
             unit(other.getUnit());
-            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             value(other.getValue());
+            return this;
+        }
+
+        /**
+         * <p>The lead of the measurement.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("type")
+        public UnitStage type(String type) {
+            this.type = type;
             return this;
         }
 
@@ -244,36 +236,6 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage grouping(List<Object> grouping) {
-            this.grouping = Optional.of(grouping);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
-        public _FinalStage grouping(Optional<List<Object>> grouping) {
-            this.grouping = grouping;
-            return this;
-        }
-
-        /**
-         * <p>The lead of the measurement.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage type(String type) {
-            this.type = Optional.of(type);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "type", nulls = Nulls.SKIP)
-        public _FinalStage type(Optional<String> type) {
-            this.type = type;
             return this;
         }
 
@@ -314,7 +276,7 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
         @java.lang.Override
         public ClientFacingElectrocardiogramVoltageTimeseries build() {
             return new ClientFacingElectrocardiogramVoltageTimeseries(
-                    id, timezoneOffset, type, unit, grouping, timestamp, value, additionalProperties);
+                    id, timezoneOffset, type, unit, timestamp, value, additionalProperties);
         }
     }
 }

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,8 +28,6 @@ public final class ClientFacingCaffeineTimeseries {
     private final Optional<String> type;
 
     private final String unit;
-
-    private final Optional<List<Object>> grouping;
 
     private final OffsetDateTime timestamp;
 
@@ -47,7 +44,6 @@ public final class ClientFacingCaffeineTimeseries {
             Optional<Integer> timezoneOffset,
             Optional<String> type,
             String unit,
-            Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             OffsetDateTime start,
             OffsetDateTime end,
@@ -57,7 +53,6 @@ public final class ClientFacingCaffeineTimeseries {
         this.timezoneOffset = timezoneOffset;
         this.type = type;
         this.unit = unit;
-        this.grouping = grouping;
         this.timestamp = timestamp;
         this.start = start;
         this.end = end;
@@ -95,11 +90,6 @@ public final class ClientFacingCaffeineTimeseries {
     @JsonProperty("unit")
     public String getUnit() {
         return unit;
-    }
-
-    @JsonProperty("grouping")
-    public Optional<List<Object>> getGrouping() {
-        return grouping;
     }
 
     /**
@@ -150,7 +140,6 @@ public final class ClientFacingCaffeineTimeseries {
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
-                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
@@ -160,15 +149,7 @@ public final class ClientFacingCaffeineTimeseries {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id,
-                this.timezoneOffset,
-                this.type,
-                this.unit,
-                this.grouping,
-                this.timestamp,
-                this.start,
-                this.end,
-                this.value);
+                this.id, this.timezoneOffset, this.type, this.unit, this.timestamp, this.start, this.end, this.value);
     }
 
     @java.lang.Override
@@ -216,10 +197,6 @@ public final class ClientFacingCaffeineTimeseries {
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
-
-        _FinalStage grouping(Optional<List<Object>> grouping);
-
-        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -234,8 +211,6 @@ public final class ClientFacingCaffeineTimeseries {
         private OffsetDateTime end;
 
         private double value;
-
-        private Optional<List<Object>> grouping = Optional.empty();
 
         private Optional<String> type = Optional.empty();
 
@@ -254,7 +229,6 @@ public final class ClientFacingCaffeineTimeseries {
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
             unit(other.getUnit());
-            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             start(other.getStart());
             end(other.getEnd());
@@ -317,19 +291,6 @@ public final class ClientFacingCaffeineTimeseries {
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage grouping(List<Object> grouping) {
-            this.grouping = Optional.of(grouping);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
-        public _FinalStage grouping(Optional<List<Object>> grouping) {
-            this.grouping = grouping;
-            return this;
-        }
-
         /**
          * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -384,7 +345,7 @@ public final class ClientFacingCaffeineTimeseries {
         @java.lang.Override
         public ClientFacingCaffeineTimeseries build() {
             return new ClientFacingCaffeineTimeseries(
-                    id, timezoneOffset, type, unit, grouping, timestamp, start, end, value, additionalProperties);
+                    id, timezoneOffset, type, unit, timestamp, start, end, value, additionalProperties);
         }
     }
 }

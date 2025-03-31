@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,8 +26,6 @@ public final class ClientFacingWaistCircumferenceSample {
     private final Optional<Integer> timezoneOffset;
 
     private final Optional<String> type;
-
-    private final Optional<List<Object>> grouping;
 
     private final OffsetDateTime timestamp;
 
@@ -44,7 +41,6 @@ public final class ClientFacingWaistCircumferenceSample {
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
             Optional<String> type,
-            Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             OffsetDateTime start,
             OffsetDateTime end,
@@ -53,7 +49,6 @@ public final class ClientFacingWaistCircumferenceSample {
         this.id = id;
         this.timezoneOffset = timezoneOffset;
         this.type = type;
-        this.grouping = grouping;
         this.timestamp = timestamp;
         this.start = start;
         this.end = end;
@@ -88,11 +83,6 @@ public final class ClientFacingWaistCircumferenceSample {
     @JsonProperty("unit")
     public String getUnit() {
         return "cm";
-    }
-
-    @JsonProperty("grouping")
-    public Optional<List<Object>> getGrouping() {
-        return grouping;
     }
 
     /**
@@ -143,7 +133,6 @@ public final class ClientFacingWaistCircumferenceSample {
         return id.equals(other.id)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
-                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
@@ -152,15 +141,7 @@ public final class ClientFacingWaistCircumferenceSample {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.id,
-                this.timezoneOffset,
-                this.type,
-                this.grouping,
-                this.timestamp,
-                this.start,
-                this.end,
-                this.value);
+        return Objects.hash(this.id, this.timezoneOffset, this.type, this.timestamp, this.start, this.end, this.value);
     }
 
     @java.lang.Override
@@ -204,10 +185,6 @@ public final class ClientFacingWaistCircumferenceSample {
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
-
-        _FinalStage grouping(Optional<List<Object>> grouping);
-
-        _FinalStage grouping(List<Object> grouping);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -219,8 +196,6 @@ public final class ClientFacingWaistCircumferenceSample {
         private OffsetDateTime end;
 
         private double value;
-
-        private Optional<List<Object>> grouping = Optional.empty();
 
         private Optional<String> type = Optional.empty();
 
@@ -238,7 +213,6 @@ public final class ClientFacingWaistCircumferenceSample {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
-            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             start(other.getStart());
             end(other.getEnd());
@@ -287,19 +261,6 @@ public final class ClientFacingWaistCircumferenceSample {
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage grouping(List<Object> grouping) {
-            this.grouping = Optional.of(grouping);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
-        public _FinalStage grouping(Optional<List<Object>> grouping) {
-            this.grouping = grouping;
             return this;
         }
 
@@ -357,7 +318,7 @@ public final class ClientFacingWaistCircumferenceSample {
         @java.lang.Override
         public ClientFacingWaistCircumferenceSample build() {
             return new ClientFacingWaistCircumferenceSample(
-                    id, timezoneOffset, type, grouping, timestamp, start, end, value, additionalProperties);
+                    id, timezoneOffset, type, timestamp, start, end, value, additionalProperties);
         }
     }
 }

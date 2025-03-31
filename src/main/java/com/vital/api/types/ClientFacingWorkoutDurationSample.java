@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,8 +26,6 @@ public final class ClientFacingWorkoutDurationSample {
     private final Optional<Integer> timezoneOffset;
 
     private final Optional<String> type;
-
-    private final Optional<List<Object>> grouping;
 
     private final OffsetDateTime timestamp;
 
@@ -46,7 +43,6 @@ public final class ClientFacingWorkoutDurationSample {
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
             Optional<String> type,
-            Optional<List<Object>> grouping,
             OffsetDateTime timestamp,
             OffsetDateTime start,
             OffsetDateTime end,
@@ -56,7 +52,6 @@ public final class ClientFacingWorkoutDurationSample {
         this.id = id;
         this.timezoneOffset = timezoneOffset;
         this.type = type;
-        this.grouping = grouping;
         this.timestamp = timestamp;
         this.start = start;
         this.end = end;
@@ -92,11 +87,6 @@ public final class ClientFacingWorkoutDurationSample {
     @JsonProperty("unit")
     public String getUnit() {
         return "min";
-    }
-
-    @JsonProperty("grouping")
-    public Optional<List<Object>> getGrouping() {
-        return grouping;
     }
 
     /**
@@ -154,7 +144,6 @@ public final class ClientFacingWorkoutDurationSample {
         return id.equals(other.id)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && type.equals(other.type)
-                && grouping.equals(other.grouping)
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
@@ -168,7 +157,6 @@ public final class ClientFacingWorkoutDurationSample {
                 this.id,
                 this.timezoneOffset,
                 this.type,
-                this.grouping,
                 this.timestamp,
                 this.start,
                 this.end,
@@ -218,10 +206,6 @@ public final class ClientFacingWorkoutDurationSample {
 
         _FinalStage type(String type);
 
-        _FinalStage grouping(Optional<List<Object>> grouping);
-
-        _FinalStage grouping(List<Object> grouping);
-
         _FinalStage intensity(Optional<ClientFacingWorkoutDurationSampleIntensity> intensity);
 
         _FinalStage intensity(ClientFacingWorkoutDurationSampleIntensity intensity);
@@ -239,8 +223,6 @@ public final class ClientFacingWorkoutDurationSample {
 
         private Optional<ClientFacingWorkoutDurationSampleIntensity> intensity = Optional.empty();
 
-        private Optional<List<Object>> grouping = Optional.empty();
-
         private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
@@ -257,7 +239,6 @@ public final class ClientFacingWorkoutDurationSample {
             id(other.getId());
             timezoneOffset(other.getTimezoneOffset());
             type(other.getType());
-            grouping(other.getGrouping());
             timestamp(other.getTimestamp());
             start(other.getStart());
             end(other.getEnd());
@@ -327,19 +308,6 @@ public final class ClientFacingWorkoutDurationSample {
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage grouping(List<Object> grouping) {
-            this.grouping = Optional.of(grouping);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "grouping", nulls = Nulls.SKIP)
-        public _FinalStage grouping(Optional<List<Object>> grouping) {
-            this.grouping = grouping;
-            return this;
-        }
-
         /**
          * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -394,7 +362,7 @@ public final class ClientFacingWorkoutDurationSample {
         @java.lang.Override
         public ClientFacingWorkoutDurationSample build() {
             return new ClientFacingWorkoutDurationSample(
-                    id, timezoneOffset, type, grouping, timestamp, start, end, value, intensity, additionalProperties);
+                    id, timezoneOffset, type, timestamp, start, end, value, intensity, additionalProperties);
         }
     }
 }
