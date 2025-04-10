@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BulkImportConnectionsBody.Builder.class)
@@ -27,12 +28,18 @@ public final class BulkImportConnectionsBody {
 
     private final List<ConnectionRecipe> connections;
 
+    private final Optional<Boolean> waitForCompletion;
+
     private final Map<String, Object> additionalProperties;
 
     private BulkImportConnectionsBody(
-            OAuthProviders provider, List<ConnectionRecipe> connections, Map<String, Object> additionalProperties) {
+            OAuthProviders provider,
+            List<ConnectionRecipe> connections,
+            Optional<Boolean> waitForCompletion,
+            Map<String, Object> additionalProperties) {
         this.provider = provider;
         this.connections = connections;
+        this.waitForCompletion = waitForCompletion;
         this.additionalProperties = additionalProperties;
     }
 
@@ -44,6 +51,17 @@ public final class BulkImportConnectionsBody {
     @JsonProperty("connections")
     public List<ConnectionRecipe> getConnections() {
         return connections;
+    }
+
+    /**
+     * @return Whether or not the endpoint should wait for the Bulk Op to complete before responding.
+     * <p>When <code>wait_for_completion</code> is enabled, the endpoint may respond 200 OK if the Bulk Op takes less than 20 seconds to complete.</p>
+     * <p>Otherwise, the endpoint always responds with 202 Created once the submitted data have been enqueued successfully. You can use
+     * the <a href="https://docs.tryvital.io/api-reference/link/list-bulk-ops">List Bulk Ops</a> endpoint to inspect the progress of the Bulk Op.</p>
+     */
+    @JsonProperty("wait_for_completion")
+    public Optional<Boolean> getWaitForCompletion() {
+        return waitForCompletion;
     }
 
     @java.lang.Override
@@ -58,12 +76,14 @@ public final class BulkImportConnectionsBody {
     }
 
     private boolean equalTo(BulkImportConnectionsBody other) {
-        return provider.equals(other.provider) && connections.equals(other.connections);
+        return provider.equals(other.provider)
+                && connections.equals(other.connections)
+                && waitForCompletion.equals(other.waitForCompletion);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.provider, this.connections);
+        return Objects.hash(this.provider, this.connections, this.waitForCompletion);
     }
 
     @java.lang.Override
@@ -89,11 +109,17 @@ public final class BulkImportConnectionsBody {
         _FinalStage addConnections(ConnectionRecipe connections);
 
         _FinalStage addAllConnections(List<ConnectionRecipe> connections);
+
+        _FinalStage waitForCompletion(Optional<Boolean> waitForCompletion);
+
+        _FinalStage waitForCompletion(Boolean waitForCompletion);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ProviderStage, _FinalStage {
         private OAuthProviders provider;
+
+        private Optional<Boolean> waitForCompletion = Optional.empty();
 
         private List<ConnectionRecipe> connections = new ArrayList<>();
 
@@ -106,6 +132,7 @@ public final class BulkImportConnectionsBody {
         public Builder from(BulkImportConnectionsBody other) {
             provider(other.getProvider());
             connections(other.getConnections());
+            waitForCompletion(other.getWaitForCompletion());
             return this;
         }
 
@@ -113,6 +140,26 @@ public final class BulkImportConnectionsBody {
         @JsonSetter("provider")
         public _FinalStage provider(OAuthProviders provider) {
             this.provider = provider;
+            return this;
+        }
+
+        /**
+         * <p>Whether or not the endpoint should wait for the Bulk Op to complete before responding.</p>
+         * <p>When <code>wait_for_completion</code> is enabled, the endpoint may respond 200 OK if the Bulk Op takes less than 20 seconds to complete.</p>
+         * <p>Otherwise, the endpoint always responds with 202 Created once the submitted data have been enqueued successfully. You can use
+         * the <a href="https://docs.tryvital.io/api-reference/link/list-bulk-ops">List Bulk Ops</a> endpoint to inspect the progress of the Bulk Op.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage waitForCompletion(Boolean waitForCompletion) {
+            this.waitForCompletion = Optional.of(waitForCompletion);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "wait_for_completion", nulls = Nulls.SKIP)
+        public _FinalStage waitForCompletion(Optional<Boolean> waitForCompletion) {
+            this.waitForCompletion = waitForCompletion;
             return this;
         }
 
@@ -138,7 +185,7 @@ public final class BulkImportConnectionsBody {
 
         @java.lang.Override
         public BulkImportConnectionsBody build() {
-            return new BulkImportConnectionsBody(provider, connections, additionalProperties);
+            return new BulkImportConnectionsBody(provider, connections, waitForCompletion, additionalProperties);
         }
     }
 }

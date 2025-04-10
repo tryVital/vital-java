@@ -28,6 +28,10 @@ public final class GuarantorDetails {
 
     private final String phoneNumber;
 
+    private final Optional<Integer> householdIncome;
+
+    private final Optional<Integer> householdSize;
+
     private final Optional<String> email;
 
     private final Map<String, Object> additionalProperties;
@@ -37,12 +41,16 @@ public final class GuarantorDetails {
             String lastName,
             Address address,
             String phoneNumber,
+            Optional<Integer> householdIncome,
+            Optional<Integer> householdSize,
             Optional<String> email,
             Map<String, Object> additionalProperties) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.householdIncome = householdIncome;
+        this.householdSize = householdSize;
         this.email = email;
         this.additionalProperties = additionalProperties;
     }
@@ -67,6 +75,16 @@ public final class GuarantorDetails {
         return phoneNumber;
     }
 
+    @JsonProperty("household_income")
+    public Optional<Integer> getHouseholdIncome() {
+        return householdIncome;
+    }
+
+    @JsonProperty("household_size")
+    public Optional<Integer> getHouseholdSize() {
+        return householdSize;
+    }
+
     @JsonProperty("email")
     public Optional<String> getEmail() {
         return email;
@@ -88,12 +106,21 @@ public final class GuarantorDetails {
                 && lastName.equals(other.lastName)
                 && address.equals(other.address)
                 && phoneNumber.equals(other.phoneNumber)
+                && householdIncome.equals(other.householdIncome)
+                && householdSize.equals(other.householdSize)
                 && email.equals(other.email);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.firstName, this.lastName, this.address, this.phoneNumber, this.email);
+        return Objects.hash(
+                this.firstName,
+                this.lastName,
+                this.address,
+                this.phoneNumber,
+                this.householdIncome,
+                this.householdSize,
+                this.email);
     }
 
     @java.lang.Override
@@ -126,6 +153,14 @@ public final class GuarantorDetails {
     public interface _FinalStage {
         GuarantorDetails build();
 
+        _FinalStage householdIncome(Optional<Integer> householdIncome);
+
+        _FinalStage householdIncome(Integer householdIncome);
+
+        _FinalStage householdSize(Optional<Integer> householdSize);
+
+        _FinalStage householdSize(Integer householdSize);
+
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
@@ -144,6 +179,10 @@ public final class GuarantorDetails {
 
         private Optional<String> email = Optional.empty();
 
+        private Optional<Integer> householdSize = Optional.empty();
+
+        private Optional<Integer> householdIncome = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -155,6 +194,8 @@ public final class GuarantorDetails {
             lastName(other.getLastName());
             address(other.getAddress());
             phoneNumber(other.getPhoneNumber());
+            householdIncome(other.getHouseholdIncome());
+            householdSize(other.getHouseholdSize());
             email(other.getEmail());
             return this;
         }
@@ -201,8 +242,42 @@ public final class GuarantorDetails {
         }
 
         @java.lang.Override
+        public _FinalStage householdSize(Integer householdSize) {
+            this.householdSize = Optional.of(householdSize);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "household_size", nulls = Nulls.SKIP)
+        public _FinalStage householdSize(Optional<Integer> householdSize) {
+            this.householdSize = householdSize;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage householdIncome(Integer householdIncome) {
+            this.householdIncome = Optional.of(householdIncome);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "household_income", nulls = Nulls.SKIP)
+        public _FinalStage householdIncome(Optional<Integer> householdIncome) {
+            this.householdIncome = householdIncome;
+            return this;
+        }
+
+        @java.lang.Override
         public GuarantorDetails build() {
-            return new GuarantorDetails(firstName, lastName, address, phoneNumber, email, additionalProperties);
+            return new GuarantorDetails(
+                    firstName,
+                    lastName,
+                    address,
+                    phoneNumber,
+                    householdIncome,
+                    householdSize,
+                    email,
+                    additionalProperties);
         }
     }
 }

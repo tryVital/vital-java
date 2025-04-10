@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = UserInfo.Builder.class)
@@ -32,6 +34,16 @@ public final class UserInfo {
 
     private final Address address;
 
+    private final Optional<GuarantorDetails> medicalProxy;
+
+    private final Optional<Race> race;
+
+    private final Optional<Ethnicity> ethnicity;
+
+    private final Optional<SexualOrientation> sexualOrientation;
+
+    private final Optional<GenderIdentity> genderIdentity;
+
     private final Map<String, Object> additionalProperties;
 
     private UserInfo(
@@ -42,6 +54,11 @@ public final class UserInfo {
             String gender,
             String dob,
             Address address,
+            Optional<GuarantorDetails> medicalProxy,
+            Optional<Race> race,
+            Optional<Ethnicity> ethnicity,
+            Optional<SexualOrientation> sexualOrientation,
+            Optional<GenderIdentity> genderIdentity,
             Map<String, Object> additionalProperties) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +67,11 @@ public final class UserInfo {
         this.gender = gender;
         this.dob = dob;
         this.address = address;
+        this.medicalProxy = medicalProxy;
+        this.race = race;
+        this.ethnicity = ethnicity;
+        this.sexualOrientation = sexualOrientation;
+        this.genderIdentity = genderIdentity;
         this.additionalProperties = additionalProperties;
     }
 
@@ -88,6 +110,31 @@ public final class UserInfo {
         return address;
     }
 
+    @JsonProperty("medical_proxy")
+    public Optional<GuarantorDetails> getMedicalProxy() {
+        return medicalProxy;
+    }
+
+    @JsonProperty("race")
+    public Optional<Race> getRace() {
+        return race;
+    }
+
+    @JsonProperty("ethnicity")
+    public Optional<Ethnicity> getEthnicity() {
+        return ethnicity;
+    }
+
+    @JsonProperty("sexual_orientation")
+    public Optional<SexualOrientation> getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    @JsonProperty("gender_identity")
+    public Optional<GenderIdentity> getGenderIdentity() {
+        return genderIdentity;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -106,13 +153,29 @@ public final class UserInfo {
                 && phoneNumber.equals(other.phoneNumber)
                 && gender.equals(other.gender)
                 && dob.equals(other.dob)
-                && address.equals(other.address);
+                && address.equals(other.address)
+                && medicalProxy.equals(other.medicalProxy)
+                && race.equals(other.race)
+                && ethnicity.equals(other.ethnicity)
+                && sexualOrientation.equals(other.sexualOrientation)
+                && genderIdentity.equals(other.genderIdentity);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.firstName, this.lastName, this.email, this.phoneNumber, this.gender, this.dob, this.address);
+                this.firstName,
+                this.lastName,
+                this.email,
+                this.phoneNumber,
+                this.gender,
+                this.dob,
+                this.address,
+                this.medicalProxy,
+                this.race,
+                this.ethnicity,
+                this.sexualOrientation,
+                this.genderIdentity);
     }
 
     @java.lang.Override
@@ -156,6 +219,26 @@ public final class UserInfo {
 
     public interface _FinalStage {
         UserInfo build();
+
+        _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
+
+        _FinalStage medicalProxy(GuarantorDetails medicalProxy);
+
+        _FinalStage race(Optional<Race> race);
+
+        _FinalStage race(Race race);
+
+        _FinalStage ethnicity(Optional<Ethnicity> ethnicity);
+
+        _FinalStage ethnicity(Ethnicity ethnicity);
+
+        _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
+
+        _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
+
+        _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
+
+        _FinalStage genderIdentity(GenderIdentity genderIdentity);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -182,6 +265,16 @@ public final class UserInfo {
 
         private Address address;
 
+        private Optional<GenderIdentity> genderIdentity = Optional.empty();
+
+        private Optional<SexualOrientation> sexualOrientation = Optional.empty();
+
+        private Optional<Ethnicity> ethnicity = Optional.empty();
+
+        private Optional<Race> race = Optional.empty();
+
+        private Optional<GuarantorDetails> medicalProxy = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -196,6 +289,11 @@ public final class UserInfo {
             gender(other.getGender());
             dob(other.getDob());
             address(other.getAddress());
+            medicalProxy(other.getMedicalProxy());
+            race(other.getRace());
+            ethnicity(other.getEthnicity());
+            sexualOrientation(other.getSexualOrientation());
+            genderIdentity(other.getGenderIdentity());
             return this;
         }
 
@@ -249,8 +347,86 @@ public final class UserInfo {
         }
 
         @java.lang.Override
+        public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
+            this.genderIdentity = Optional.of(genderIdentity);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
+        public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
+            this.genderIdentity = genderIdentity;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sexualOrientation(SexualOrientation sexualOrientation) {
+            this.sexualOrientation = Optional.of(sexualOrientation);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sexual_orientation", nulls = Nulls.SKIP)
+        public _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation) {
+            this.sexualOrientation = sexualOrientation;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage ethnicity(Ethnicity ethnicity) {
+            this.ethnicity = Optional.of(ethnicity);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
+        public _FinalStage ethnicity(Optional<Ethnicity> ethnicity) {
+            this.ethnicity = ethnicity;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage race(Race race) {
+            this.race = Optional.of(race);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "race", nulls = Nulls.SKIP)
+        public _FinalStage race(Optional<Race> race) {
+            this.race = race;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage medicalProxy(GuarantorDetails medicalProxy) {
+            this.medicalProxy = Optional.of(medicalProxy);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "medical_proxy", nulls = Nulls.SKIP)
+        public _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy) {
+            this.medicalProxy = medicalProxy;
+            return this;
+        }
+
+        @java.lang.Override
         public UserInfo build() {
-            return new UserInfo(firstName, lastName, email, phoneNumber, gender, dob, address, additionalProperties);
+            return new UserInfo(
+                    firstName,
+                    lastName,
+                    email,
+                    phoneNumber,
+                    gender,
+                    dob,
+                    address,
+                    medicalProxy,
+                    race,
+                    ethnicity,
+                    sexualOrientation,
+                    genderIdentity,
+                    additionalProperties);
         }
     }
 }

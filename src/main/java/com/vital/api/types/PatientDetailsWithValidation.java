@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PatientDetailsWithValidation.Builder.class)
@@ -31,6 +33,16 @@ public final class PatientDetailsWithValidation {
 
     private final String email;
 
+    private final Optional<GuarantorDetails> medicalProxy;
+
+    private final Optional<Race> race;
+
+    private final Optional<Ethnicity> ethnicity;
+
+    private final Optional<SexualOrientation> sexualOrientation;
+
+    private final Optional<GenderIdentity> genderIdentity;
+
     private final Map<String, Object> additionalProperties;
 
     private PatientDetailsWithValidation(
@@ -40,6 +52,11 @@ public final class PatientDetailsWithValidation {
             Gender gender,
             String phoneNumber,
             String email,
+            Optional<GuarantorDetails> medicalProxy,
+            Optional<Race> race,
+            Optional<Ethnicity> ethnicity,
+            Optional<SexualOrientation> sexualOrientation,
+            Optional<GenderIdentity> genderIdentity,
             Map<String, Object> additionalProperties) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,6 +64,11 @@ public final class PatientDetailsWithValidation {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.medicalProxy = medicalProxy;
+        this.race = race;
+        this.ethnicity = ethnicity;
+        this.sexualOrientation = sexualOrientation;
+        this.genderIdentity = genderIdentity;
         this.additionalProperties = additionalProperties;
     }
 
@@ -80,6 +102,46 @@ public final class PatientDetailsWithValidation {
         return email;
     }
 
+    /**
+     * @return Parent/medical_proxy details. Required if patient is a minor.
+     */
+    @JsonProperty("medical_proxy")
+    public Optional<GuarantorDetails> getMedicalProxy() {
+        return medicalProxy;
+    }
+
+    /**
+     * @return If not provided, will be set to 'Not Specified'
+     */
+    @JsonProperty("race")
+    public Optional<Race> getRace() {
+        return race;
+    }
+
+    /**
+     * @return If not provided, will be set to 'Not Specified'
+     */
+    @JsonProperty("ethnicity")
+    public Optional<Ethnicity> getEthnicity() {
+        return ethnicity;
+    }
+
+    /**
+     * @return If not provided, will be set to 'Not Specified'
+     */
+    @JsonProperty("sexual_orientation")
+    public Optional<SexualOrientation> getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    /**
+     * @return If not provided, will be set to 'Not Specified'
+     */
+    @JsonProperty("gender_identity")
+    public Optional<GenderIdentity> getGenderIdentity() {
+        return genderIdentity;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -97,12 +159,28 @@ public final class PatientDetailsWithValidation {
                 && dob.equals(other.dob)
                 && gender.equals(other.gender)
                 && phoneNumber.equals(other.phoneNumber)
-                && email.equals(other.email);
+                && email.equals(other.email)
+                && medicalProxy.equals(other.medicalProxy)
+                && race.equals(other.race)
+                && ethnicity.equals(other.ethnicity)
+                && sexualOrientation.equals(other.sexualOrientation)
+                && genderIdentity.equals(other.genderIdentity);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.firstName, this.lastName, this.dob, this.gender, this.phoneNumber, this.email);
+        return Objects.hash(
+                this.firstName,
+                this.lastName,
+                this.dob,
+                this.gender,
+                this.phoneNumber,
+                this.email,
+                this.medicalProxy,
+                this.race,
+                this.ethnicity,
+                this.sexualOrientation,
+                this.genderIdentity);
     }
 
     @java.lang.Override
@@ -142,6 +220,26 @@ public final class PatientDetailsWithValidation {
 
     public interface _FinalStage {
         PatientDetailsWithValidation build();
+
+        _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
+
+        _FinalStage medicalProxy(GuarantorDetails medicalProxy);
+
+        _FinalStage race(Optional<Race> race);
+
+        _FinalStage race(Race race);
+
+        _FinalStage ethnicity(Optional<Ethnicity> ethnicity);
+
+        _FinalStage ethnicity(Ethnicity ethnicity);
+
+        _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
+
+        _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
+
+        _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
+
+        _FinalStage genderIdentity(GenderIdentity genderIdentity);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -159,6 +257,16 @@ public final class PatientDetailsWithValidation {
 
         private String email;
 
+        private Optional<GenderIdentity> genderIdentity = Optional.empty();
+
+        private Optional<SexualOrientation> sexualOrientation = Optional.empty();
+
+        private Optional<Ethnicity> ethnicity = Optional.empty();
+
+        private Optional<Race> race = Optional.empty();
+
+        private Optional<GuarantorDetails> medicalProxy = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -172,6 +280,11 @@ public final class PatientDetailsWithValidation {
             gender(other.getGender());
             phoneNumber(other.getPhoneNumber());
             email(other.getEmail());
+            medicalProxy(other.getMedicalProxy());
+            race(other.getRace());
+            ethnicity(other.getEthnicity());
+            sexualOrientation(other.getSexualOrientation());
+            genderIdentity(other.getGenderIdentity());
             return this;
         }
 
@@ -217,10 +330,106 @@ public final class PatientDetailsWithValidation {
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
+            this.genderIdentity = Optional.of(genderIdentity);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
+        public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
+            this.genderIdentity = genderIdentity;
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage sexualOrientation(SexualOrientation sexualOrientation) {
+            this.sexualOrientation = Optional.of(sexualOrientation);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sexual_orientation", nulls = Nulls.SKIP)
+        public _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation) {
+            this.sexualOrientation = sexualOrientation;
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage ethnicity(Ethnicity ethnicity) {
+            this.ethnicity = Optional.of(ethnicity);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
+        public _FinalStage ethnicity(Optional<Ethnicity> ethnicity) {
+            this.ethnicity = ethnicity;
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage race(Race race) {
+            this.race = Optional.of(race);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "race", nulls = Nulls.SKIP)
+        public _FinalStage race(Optional<Race> race) {
+            this.race = race;
+            return this;
+        }
+
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage medicalProxy(GuarantorDetails medicalProxy) {
+            this.medicalProxy = Optional.of(medicalProxy);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "medical_proxy", nulls = Nulls.SKIP)
+        public _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy) {
+            this.medicalProxy = medicalProxy;
+            return this;
+        }
+
         @java.lang.Override
         public PatientDetailsWithValidation build() {
             return new PatientDetailsWithValidation(
-                    firstName, lastName, dob, gender, phoneNumber, email, additionalProperties);
+                    firstName,
+                    lastName,
+                    dob,
+                    gender,
+                    phoneNumber,
+                    email,
+                    medicalProxy,
+                    race,
+                    ethnicity,
+                    sexualOrientation,
+                    genderIdentity,
+                    additionalProperties);
         }
     }
 }
