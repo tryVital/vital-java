@@ -56,11 +56,17 @@ public final class BulkOp {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public BulkOpType getType() {
         return type;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public BulkOpStatus getStatus() {
         return status;
@@ -201,6 +207,10 @@ public final class BulkOp {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public StatusStage type(BulkOpType type) {
@@ -208,6 +218,10 @@ public final class BulkOp {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public ProviderStage status(BulkOpStatus status) {

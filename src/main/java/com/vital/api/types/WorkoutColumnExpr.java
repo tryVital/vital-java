@@ -27,6 +27,9 @@ public final class WorkoutColumnExpr {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("workout")
     public WorkoutColumnExprWorkout getWorkout() {
         return workout;
@@ -86,6 +89,10 @@ public final class WorkoutColumnExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("workout")
         public _FinalStage workout(WorkoutColumnExprWorkout workout) {

@@ -72,6 +72,9 @@ public final class ClientFacingHeartRateAlertSample {
         return timezoneOffset;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public ClientFacingHeartRateAlertSampleType getType() {
         return type;
@@ -214,6 +217,10 @@ public final class ClientFacingHeartRateAlertSample {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public TimestampStage type(ClientFacingHeartRateAlertSampleType type) {

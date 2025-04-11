@@ -27,6 +27,9 @@ public final class SleepColumnExpr {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("sleep")
     public SleepColumnExprSleep getSleep() {
         return sleep;
@@ -86,6 +89,10 @@ public final class SleepColumnExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("sleep")
         public _FinalStage sleep(SleepColumnExprSleep sleep) {

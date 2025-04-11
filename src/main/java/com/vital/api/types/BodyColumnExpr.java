@@ -27,6 +27,9 @@ public final class BodyColumnExpr {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("body")
     public BodyColumnExprBody getBody() {
         return body;
@@ -86,6 +89,10 @@ public final class BodyColumnExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("body")
         public _FinalStage body(BodyColumnExprBody body) {

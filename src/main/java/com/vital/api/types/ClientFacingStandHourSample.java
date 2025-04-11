@@ -72,6 +72,9 @@ public final class ClientFacingStandHourSample {
         return timezoneOffset;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public ClientFacingStandHourSampleType getType() {
         return type;
@@ -217,6 +220,10 @@ public final class ClientFacingStandHourSample {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public TimestampStage type(ClientFacingStandHourSampleType type) {

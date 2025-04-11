@@ -38,6 +38,9 @@ public final class ClientFacingConnectionErrorDetails {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("error_type")
     public ClientFacingConnectionErrorDetailsErrorType getErrorType() {
         return errorType;
@@ -124,6 +127,10 @@ public final class ClientFacingConnectionErrorDetails {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("error_type")
         public ErrorMessageStage errorType(ClientFacingConnectionErrorDetailsErrorType errorType) {

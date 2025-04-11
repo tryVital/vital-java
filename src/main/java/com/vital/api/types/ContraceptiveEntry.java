@@ -35,6 +35,9 @@ public final class ContraceptiveEntry {
         return date;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public ContraceptiveEntryType getType() {
         return type;
@@ -108,6 +111,10 @@ public final class ContraceptiveEntry {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(ContraceptiveEntryType type) {

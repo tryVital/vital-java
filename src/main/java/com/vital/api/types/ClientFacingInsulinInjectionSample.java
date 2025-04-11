@@ -73,7 +73,7 @@ public final class ClientFacingInsulinInjectionSample {
     }
 
     /**
-     * @return Insulin type: rapid vs long acting
+     * @return Insulin type: rapid vs long acting ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("type")
     public ClientFacingInsulinInjectionSampleType getType() {
@@ -222,7 +222,7 @@ public final class ClientFacingInsulinInjectionSample {
         }
 
         /**
-         * <p>Insulin type: rapid vs long acting</p>
+         * <p>Insulin type: rapid vs long acting ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

@@ -27,6 +27,9 @@ public final class ActivityColumnExpr {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("activity")
     public ActivityColumnExprActivity getActivity() {
         return activity;
@@ -86,6 +89,10 @@ public final class ActivityColumnExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("activity")
         public _FinalStage activity(ActivityColumnExprActivity activity) {

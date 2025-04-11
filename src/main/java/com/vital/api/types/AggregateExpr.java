@@ -35,6 +35,9 @@ public final class AggregateExpr {
         return arg;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("func")
     public AggregateExprFunc getFunc() {
         return func;
@@ -108,6 +111,10 @@ public final class AggregateExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("func")
         public _FinalStage func(AggregateExprFunc func) {

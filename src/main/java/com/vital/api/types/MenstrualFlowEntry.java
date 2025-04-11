@@ -35,6 +35,9 @@ public final class MenstrualFlowEntry {
         return date;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("flow")
     public MenstrualFlowEntryFlow getFlow() {
         return flow;
@@ -108,6 +111,10 @@ public final class MenstrualFlowEntry {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("flow")
         public _FinalStage flow(MenstrualFlowEntryFlow flow) {

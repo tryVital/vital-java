@@ -36,6 +36,9 @@ public final class DetectedDeviationEntry {
         return date;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("deviation")
     public DetectedDeviationEntryDeviation getDeviation() {
         return deviation;
@@ -109,6 +112,10 @@ public final class DetectedDeviationEntry {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("deviation")
         public _FinalStage deviation(DetectedDeviationEntryDeviation deviation) {

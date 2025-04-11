@@ -188,6 +188,9 @@ public final class ClientFacingMenstrualCycle {
         return sourceProvider;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("source_type")
     public ClientFacingMenstrualCycleSourceType getSourceType() {
         return sourceType;
@@ -462,6 +465,10 @@ public final class ClientFacingMenstrualCycle {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("source_type")
         public UserIdStage sourceType(ClientFacingMenstrualCycleSourceType sourceType) {

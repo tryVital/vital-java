@@ -37,6 +37,9 @@ public final class Period {
         return value;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("unit")
     public PeriodUnit getUnit() {
         return unit;
@@ -103,6 +106,10 @@ public final class Period {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("unit")
         public _FinalStage unit(PeriodUnit unit) {

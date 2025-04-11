@@ -36,6 +36,9 @@ public final class HomePregnancyTestEntry {
         return date;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("test_result")
     public HomePregnancyTestEntryTestResult getTestResult() {
         return testResult;
@@ -109,6 +112,10 @@ public final class HomePregnancyTestEntry {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("test_result")
         public _FinalStage testResult(HomePregnancyTestEntryTestResult testResult) {

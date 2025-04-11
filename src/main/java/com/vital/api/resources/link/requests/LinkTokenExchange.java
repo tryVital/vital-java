@@ -71,16 +71,34 @@ public final class LinkTokenExchange {
         return redirectUrl;
     }
 
+    /**
+     * @return An allowlist of providers dictating what Vital Link Widget should show to the end user.
+     * If unspecified, all linkable providers are shown.
+     * <p>This has no effect on programmatic Vital Link API usage.</p>
+     */
     @JsonProperty("filter_on_providers")
     public Optional<List<Providers>> getFilterOnProviders() {
         return filterOnProviders;
     }
 
+    /**
+     * @return By default, Vital Link Widget input forms for password and email providers have in-built error handling.
+     * <p>Specifying <code>on_error=redirect</code> disables this Vital Link Widget UI behaviour — it would
+     * instead redirect to your <code>redirect_url</code>, with Link Error parameters injected.</p>
+     * <p>This has no effect on OAuth providers — they always redirect to your <code>redirect_url</code>. This also has
+     * no effect on programmatic Vital Link API usage.</p>
+     */
     @JsonProperty("on_error")
     public Optional<String> getOnError() {
         return onError;
     }
 
+    /**
+     * @return By default, Vital Link Widget closes the window or tab when the user taps the Close button.
+     * <p>Specifying <code>on_close=redirect</code> would change the Close button behaviour to redirect to your <code>redirect_url</code>
+     * with the <code>user_cancelled</code> error specified.</p>
+     * <p>This has no effect on programmatic Vital Link API usage.</p>
+     */
     @JsonProperty("on_close")
     public Optional<String> getOnClose() {
         return onClose;
@@ -192,6 +210,13 @@ public final class LinkTokenExchange {
             return this;
         }
 
+        /**
+         * <p>By default, Vital Link Widget closes the window or tab when the user taps the Close button.</p>
+         * <p>Specifying <code>on_close=redirect</code> would change the Close button behaviour to redirect to your <code>redirect_url</code>
+         * with the <code>user_cancelled</code> error specified.</p>
+         * <p>This has no effect on programmatic Vital Link API usage.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage onClose(String onClose) {
             this.onClose = Optional.of(onClose);
@@ -205,6 +230,14 @@ public final class LinkTokenExchange {
             return this;
         }
 
+        /**
+         * <p>By default, Vital Link Widget input forms for password and email providers have in-built error handling.</p>
+         * <p>Specifying <code>on_error=redirect</code> disables this Vital Link Widget UI behaviour — it would
+         * instead redirect to your <code>redirect_url</code>, with Link Error parameters injected.</p>
+         * <p>This has no effect on OAuth providers — they always redirect to your <code>redirect_url</code>. This also has
+         * no effect on programmatic Vital Link API usage.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage onError(String onError) {
             this.onError = Optional.of(onError);
@@ -218,6 +251,12 @@ public final class LinkTokenExchange {
             return this;
         }
 
+        /**
+         * <p>An allowlist of providers dictating what Vital Link Widget should show to the end user.
+         * If unspecified, all linkable providers are shown.</p>
+         * <p>This has no effect on programmatic Vital Link API usage.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage filterOnProviders(List<Providers> filterOnProviders) {
             this.filterOnProviders = Optional.of(filterOnProviders);

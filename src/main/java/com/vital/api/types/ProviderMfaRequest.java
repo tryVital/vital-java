@@ -30,6 +30,9 @@ public final class ProviderMfaRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("method")
     public ProviderMfaRequestMethod getMethod() {
         return method;
@@ -101,6 +104,10 @@ public final class ProviderMfaRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("method")
         public HintStage method(ProviderMfaRequestMethod method) {

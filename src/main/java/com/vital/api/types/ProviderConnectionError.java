@@ -24,7 +24,7 @@ public final class ProviderConnectionError {
 
     private final String message;
 
-    private final String errorType;
+    private final ProviderConnectionErrorErrorType errorType;
 
     private final String errorDetails;
 
@@ -34,7 +34,7 @@ public final class ProviderConnectionError {
             String provider,
             String userId,
             String message,
-            String errorType,
+            ProviderConnectionErrorErrorType errorType,
             String errorDetails,
             Map<String, Object> additionalProperties) {
         this.provider = provider;
@@ -60,8 +60,11 @@ public final class ProviderConnectionError {
         return message;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("error_type")
-    public String getErrorType() {
+    public ProviderConnectionErrorErrorType getErrorType() {
         return errorType;
     }
 
@@ -118,7 +121,7 @@ public final class ProviderConnectionError {
     }
 
     public interface ErrorTypeStage {
-        ErrorDetailsStage errorType(String errorType);
+        ErrorDetailsStage errorType(ProviderConnectionErrorErrorType errorType);
     }
 
     public interface ErrorDetailsStage {
@@ -138,7 +141,7 @@ public final class ProviderConnectionError {
 
         private String message;
 
-        private String errorType;
+        private ProviderConnectionErrorErrorType errorType;
 
         private String errorDetails;
 
@@ -178,9 +181,13 @@ public final class ProviderConnectionError {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("error_type")
-        public ErrorDetailsStage errorType(String errorType) {
+        public ErrorDetailsStage errorType(ProviderConnectionErrorErrorType errorType) {
             this.errorType = errorType;
             return this;
         }

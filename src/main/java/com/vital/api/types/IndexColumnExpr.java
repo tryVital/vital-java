@@ -27,6 +27,9 @@ public final class IndexColumnExpr {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("index")
     public IndexColumnExprIndex getIndex() {
         return index;
@@ -86,6 +89,10 @@ public final class IndexColumnExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("index")
         public _FinalStage index(IndexColumnExprIndex index) {
