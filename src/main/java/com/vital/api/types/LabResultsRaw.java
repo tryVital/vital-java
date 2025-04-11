@@ -27,16 +27,20 @@ public final class LabResultsRaw {
 
     private final Optional<List<MissingBiomarkerResult>> missingResults;
 
+    private final Optional<Map<String, Optional<SampleData>>> sampleInformation;
+
     private final Map<String, Object> additionalProperties;
 
     private LabResultsRaw(
             LabResultsMetadata metadata,
             LabResultsRawResults results,
             Optional<List<MissingBiomarkerResult>> missingResults,
+            Optional<Map<String, Optional<SampleData>>> sampleInformation,
             Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.results = results;
         this.missingResults = missingResults;
+        this.sampleInformation = sampleInformation;
         this.additionalProperties = additionalProperties;
     }
 
@@ -55,6 +59,11 @@ public final class LabResultsRaw {
         return missingResults;
     }
 
+    @JsonProperty("sample_information")
+    public Optional<Map<String, Optional<SampleData>>> getSampleInformation() {
+        return sampleInformation;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -69,12 +78,13 @@ public final class LabResultsRaw {
     private boolean equalTo(LabResultsRaw other) {
         return metadata.equals(other.metadata)
                 && results.equals(other.results)
-                && missingResults.equals(other.missingResults);
+                && missingResults.equals(other.missingResults)
+                && sampleInformation.equals(other.sampleInformation);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.results, this.missingResults);
+        return Objects.hash(this.metadata, this.results, this.missingResults, this.sampleInformation);
     }
 
     @java.lang.Override
@@ -102,6 +112,10 @@ public final class LabResultsRaw {
         _FinalStage missingResults(Optional<List<MissingBiomarkerResult>> missingResults);
 
         _FinalStage missingResults(List<MissingBiomarkerResult> missingResults);
+
+        _FinalStage sampleInformation(Optional<Map<String, Optional<SampleData>>> sampleInformation);
+
+        _FinalStage sampleInformation(Map<String, Optional<SampleData>> sampleInformation);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -109,6 +123,8 @@ public final class LabResultsRaw {
         private LabResultsMetadata metadata;
 
         private LabResultsRawResults results;
+
+        private Optional<Map<String, Optional<SampleData>>> sampleInformation = Optional.empty();
 
         private Optional<List<MissingBiomarkerResult>> missingResults = Optional.empty();
 
@@ -122,6 +138,7 @@ public final class LabResultsRaw {
             metadata(other.getMetadata());
             results(other.getResults());
             missingResults(other.getMissingResults());
+            sampleInformation(other.getSampleInformation());
             return this;
         }
 
@@ -140,6 +157,19 @@ public final class LabResultsRaw {
         }
 
         @java.lang.Override
+        public _FinalStage sampleInformation(Map<String, Optional<SampleData>> sampleInformation) {
+            this.sampleInformation = Optional.of(sampleInformation);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sample_information", nulls = Nulls.SKIP)
+        public _FinalStage sampleInformation(Optional<Map<String, Optional<SampleData>>> sampleInformation) {
+            this.sampleInformation = sampleInformation;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage missingResults(List<MissingBiomarkerResult> missingResults) {
             this.missingResults = Optional.of(missingResults);
             return this;
@@ -154,7 +184,7 @@ public final class LabResultsRaw {
 
         @java.lang.Override
         public LabResultsRaw build() {
-            return new LabResultsRaw(metadata, results, missingResults, additionalProperties);
+            return new LabResultsRaw(metadata, results, missingResults, sampleInformation, additionalProperties);
         }
     }
 }

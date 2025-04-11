@@ -56,6 +56,10 @@ public final class BiomarkerResult {
 
     private final Optional<List<ParentBiomarkerData>> sourceMarkers;
 
+    private final Optional<String> performingLaboratory;
+
+    private final Optional<String> sourceSampleId;
+
     private final Map<String, Object> additionalProperties;
 
     private BiomarkerResult(
@@ -76,6 +80,8 @@ public final class BiomarkerResult {
             Optional<String> loincSlug,
             Optional<String> providerId,
             Optional<List<ParentBiomarkerData>> sourceMarkers,
+            Optional<String> performingLaboratory,
+            Optional<String> sourceSampleId,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
@@ -94,6 +100,8 @@ public final class BiomarkerResult {
         this.loincSlug = loincSlug;
         this.providerId = providerId;
         this.sourceMarkers = sourceMarkers;
+        this.performingLaboratory = performingLaboratory;
+        this.sourceSampleId = sourceSampleId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -182,6 +190,16 @@ public final class BiomarkerResult {
         return sourceMarkers;
     }
 
+    @JsonProperty("performing_laboratory")
+    public Optional<String> getPerformingLaboratory() {
+        return performingLaboratory;
+    }
+
+    @JsonProperty("source_sample_id")
+    public Optional<String> getSourceSampleId() {
+        return sourceSampleId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -210,7 +228,9 @@ public final class BiomarkerResult {
                 && loinc.equals(other.loinc)
                 && loincSlug.equals(other.loincSlug)
                 && providerId.equals(other.providerId)
-                && sourceMarkers.equals(other.sourceMarkers);
+                && sourceMarkers.equals(other.sourceMarkers)
+                && performingLaboratory.equals(other.performingLaboratory)
+                && sourceSampleId.equals(other.sourceSampleId);
     }
 
     @java.lang.Override
@@ -232,7 +252,9 @@ public final class BiomarkerResult {
                 this.loinc,
                 this.loincSlug,
                 this.providerId,
-                this.sourceMarkers);
+                this.sourceMarkers,
+                this.performingLaboratory,
+                this.sourceSampleId);
     }
 
     @java.lang.Override
@@ -316,6 +338,14 @@ public final class BiomarkerResult {
         _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers);
 
         _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers);
+
+        _FinalStage performingLaboratory(Optional<String> performingLaboratory);
+
+        _FinalStage performingLaboratory(String performingLaboratory);
+
+        _FinalStage sourceSampleId(Optional<String> sourceSampleId);
+
+        _FinalStage sourceSampleId(String sourceSampleId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -327,6 +357,10 @@ public final class BiomarkerResult {
         private String result;
 
         private ResultType type;
+
+        private Optional<String> sourceSampleId = Optional.empty();
+
+        private Optional<String> performingLaboratory = Optional.empty();
 
         private Optional<List<ParentBiomarkerData>> sourceMarkers = Optional.empty();
 
@@ -378,6 +412,8 @@ public final class BiomarkerResult {
             loincSlug(other.getLoincSlug());
             providerId(other.getProviderId());
             sourceMarkers(other.getSourceMarkers());
+            performingLaboratory(other.getPerformingLaboratory());
+            sourceSampleId(other.getSourceSampleId());
             return this;
         }
 
@@ -406,6 +442,32 @@ public final class BiomarkerResult {
         @JsonSetter("type")
         public _FinalStage type(ResultType type) {
             this.type = type;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceSampleId(String sourceSampleId) {
+            this.sourceSampleId = Optional.of(sourceSampleId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_sample_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceSampleId(Optional<String> sourceSampleId) {
+            this.sourceSampleId = sourceSampleId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage performingLaboratory(String performingLaboratory) {
+            this.performingLaboratory = Optional.of(performingLaboratory);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "performing_laboratory", nulls = Nulls.SKIP)
+        public _FinalStage performingLaboratory(Optional<String> performingLaboratory) {
+            this.performingLaboratory = performingLaboratory;
             return this;
         }
 
@@ -598,6 +660,8 @@ public final class BiomarkerResult {
                     loincSlug,
                     providerId,
                     sourceMarkers,
+                    performingLaboratory,
+                    sourceSampleId,
                     additionalProperties);
         }
     }
