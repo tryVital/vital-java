@@ -1879,6 +1879,56 @@ public class LabTestsClient {
     }
 
     /**
+     * GET requisition pdf for an order
+     */
+    public InputStream getOrderAbnPdf(String orderId) {
+        return getOrderAbnPdf(orderId, null);
+    }
+
+    /**
+     * GET requisition pdf for an order
+     */
+    public InputStream getOrderAbnPdf(String orderId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("abn_pdf")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return responseBody.byteStream();
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * GET individual order by ID.
      */
     public ClientFacingOrder getOrder(String orderId) {

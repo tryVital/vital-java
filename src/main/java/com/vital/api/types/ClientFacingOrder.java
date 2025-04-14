@@ -67,6 +67,8 @@ public final class ClientFacingOrder {
 
     private final Optional<List<String>> icdCodes;
 
+    private final boolean hasAbn;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -92,6 +94,7 @@ public final class ClientFacingOrder {
             Optional<String> passthrough,
             Optional<Billing> billingType,
             Optional<List<String>> icdCodes,
+            boolean hasAbn,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -115,6 +118,7 @@ public final class ClientFacingOrder {
         this.passthrough = passthrough;
         this.billingType = billingType;
         this.icdCodes = icdCodes;
+        this.hasAbn = hasAbn;
         this.additionalProperties = additionalProperties;
     }
 
@@ -273,6 +277,14 @@ public final class ClientFacingOrder {
         return icdCodes;
     }
 
+    /**
+     * @return Defines whether the order has an Advanced Beneficiary Notice (ABN) form or not.
+     */
+    @JsonProperty("has_abn")
+    public boolean getHasAbn() {
+        return hasAbn;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -306,7 +318,8 @@ public final class ClientFacingOrder {
                 && activateBy.equals(other.activateBy)
                 && passthrough.equals(other.passthrough)
                 && billingType.equals(other.billingType)
-                && icdCodes.equals(other.icdCodes);
+                && icdCodes.equals(other.icdCodes)
+                && hasAbn == other.hasAbn;
     }
 
     @java.lang.Override
@@ -333,7 +346,8 @@ public final class ClientFacingOrder {
                 this.activateBy,
                 this.passthrough,
                 this.billingType,
-                this.icdCodes);
+                this.icdCodes,
+                this.hasAbn);
     }
 
     @java.lang.Override
@@ -372,7 +386,11 @@ public final class ClientFacingOrder {
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        HasAbnStage updatedAt(OffsetDateTime updatedAt);
+    }
+
+    public interface HasAbnStage {
+        _FinalStage hasAbn(boolean hasAbn);
     }
 
     public interface _FinalStage {
@@ -450,6 +468,7 @@ public final class ClientFacingOrder {
                     DetailsStage,
                     CreatedAtStage,
                     UpdatedAtStage,
+                    HasAbnStage,
                     _FinalStage {
         private String userId;
 
@@ -464,6 +483,8 @@ public final class ClientFacingOrder {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
+
+        private boolean hasAbn;
 
         private Optional<List<String>> icdCodes = Optional.empty();
 
@@ -524,6 +545,7 @@ public final class ClientFacingOrder {
             passthrough(other.getPassthrough());
             billingType(other.getBillingType());
             icdCodes(other.getIcdCodes());
+            hasAbn(other.getHasAbn());
             return this;
         }
 
@@ -595,8 +617,19 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+        public HasAbnStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        /**
+         * <p>Defines whether the order has an Advanced Beneficiary Notice (ABN) form or not.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("has_abn")
+        public _FinalStage hasAbn(boolean hasAbn) {
+            this.hasAbn = hasAbn;
             return this;
         }
 
@@ -863,6 +896,7 @@ public final class ClientFacingOrder {
                     passthrough,
                     billingType,
                     icdCodes,
+                    hasAbn,
                     additionalProperties);
         }
     }
