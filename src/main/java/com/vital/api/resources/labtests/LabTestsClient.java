@@ -2234,12 +2234,23 @@ public class LabTestsClient {
             httpUrl.addQueryParameter(
                     "updated_end_date", request.getUpdatedEndDate().get().toString());
         }
+        if (request.getStatus().isPresent()) {
+            httpUrl.addQueryParameter("status", request.getStatus().get().toString());
+        }
         if (request.getOrderKey().isPresent()) {
             httpUrl.addQueryParameter("order_key", request.getOrderKey().get().toString());
         }
         if (request.getOrderDirection().isPresent()) {
             httpUrl.addQueryParameter(
                     "order_direction", request.getOrderDirection().get().toString());
+        }
+        if (request.getOrderType().isPresent()) {
+            httpUrl.addQueryParameter("order_type", request.getOrderType().get().toString());
+        }
+        if (request.getOrderActivationTypes().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "order_activation_types",
+                    request.getOrderActivationTypes().get().toString());
         }
         if (request.getUserId().isPresent()) {
             httpUrl.addQueryParameter("user_id", request.getUserId().get());

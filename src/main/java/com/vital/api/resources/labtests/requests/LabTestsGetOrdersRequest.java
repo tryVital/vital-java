@@ -14,6 +14,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.resources.labtests.types.LabTestsGetOrdersRequestOrderDirection;
 import com.vital.api.resources.labtests.types.LabTestsGetOrdersRequestOrderKey;
+import com.vital.api.types.LabTestCollectionMethod;
+import com.vital.api.types.OrderActivationType;
+import com.vital.api.types.OrderLowLevelStatus;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +36,15 @@ public final class LabTestsGetOrdersRequest {
 
     private final Optional<OffsetDateTime> updatedEndDate;
 
+    private final Optional<OrderLowLevelStatus> status;
+
     private final Optional<LabTestsGetOrdersRequestOrderKey> orderKey;
 
     private final Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection;
+
+    private final Optional<LabTestCollectionMethod> orderType;
+
+    private final Optional<OrderActivationType> orderActivationTypes;
 
     private final Optional<String> userId;
 
@@ -57,8 +66,11 @@ public final class LabTestsGetOrdersRequest {
             Optional<OffsetDateTime> endDate,
             Optional<OffsetDateTime> updatedStartDate,
             Optional<OffsetDateTime> updatedEndDate,
+            Optional<OrderLowLevelStatus> status,
             Optional<LabTestsGetOrdersRequestOrderKey> orderKey,
             Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection,
+            Optional<LabTestCollectionMethod> orderType,
+            Optional<OrderActivationType> orderActivationTypes,
             Optional<String> userId,
             Optional<String> patientName,
             Optional<String> shippingRecipientName,
@@ -71,8 +83,11 @@ public final class LabTestsGetOrdersRequest {
         this.endDate = endDate;
         this.updatedStartDate = updatedStartDate;
         this.updatedEndDate = updatedEndDate;
+        this.status = status;
         this.orderKey = orderKey;
         this.orderDirection = orderDirection;
+        this.orderType = orderType;
+        this.orderActivationTypes = orderActivationTypes;
         this.userId = userId;
         this.patientName = patientName;
         this.shippingRecipientName = shippingRecipientName;
@@ -122,14 +137,44 @@ public final class LabTestsGetOrdersRequest {
         return updatedEndDate;
     }
 
+    /**
+     * @return Filter by low level status.
+     */
+    @JsonProperty("status")
+    public Optional<OrderLowLevelStatus> getStatus() {
+        return status;
+    }
+
+    /**
+     * @return Order key to sort by.
+     */
     @JsonProperty("order_key")
     public Optional<LabTestsGetOrdersRequestOrderKey> getOrderKey() {
         return orderKey;
     }
 
+    /**
+     * @return Order direction to sort by.
+     */
     @JsonProperty("order_direction")
     public Optional<LabTestsGetOrdersRequestOrderDirection> getOrderDirection() {
         return orderDirection;
+    }
+
+    /**
+     * @return Filter by method used to perform the lab test.
+     */
+    @JsonProperty("order_type")
+    public Optional<LabTestCollectionMethod> getOrderType() {
+        return orderType;
+    }
+
+    /**
+     * @return Filter by activation type.
+     */
+    @JsonProperty("order_activation_types")
+    public Optional<OrderActivationType> getOrderActivationTypes() {
+        return orderActivationTypes;
     }
 
     /**
@@ -191,8 +236,11 @@ public final class LabTestsGetOrdersRequest {
                 && endDate.equals(other.endDate)
                 && updatedStartDate.equals(other.updatedStartDate)
                 && updatedEndDate.equals(other.updatedEndDate)
+                && status.equals(other.status)
                 && orderKey.equals(other.orderKey)
                 && orderDirection.equals(other.orderDirection)
+                && orderType.equals(other.orderType)
+                && orderActivationTypes.equals(other.orderActivationTypes)
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
                 && shippingRecipientName.equals(other.shippingRecipientName)
@@ -209,8 +257,11 @@ public final class LabTestsGetOrdersRequest {
                 this.endDate,
                 this.updatedStartDate,
                 this.updatedEndDate,
+                this.status,
                 this.orderKey,
                 this.orderDirection,
+                this.orderType,
+                this.orderActivationTypes,
                 this.userId,
                 this.patientName,
                 this.shippingRecipientName,
@@ -240,9 +291,15 @@ public final class LabTestsGetOrdersRequest {
 
         private Optional<OffsetDateTime> updatedEndDate = Optional.empty();
 
+        private Optional<OrderLowLevelStatus> status = Optional.empty();
+
         private Optional<LabTestsGetOrdersRequestOrderKey> orderKey = Optional.empty();
 
         private Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection = Optional.empty();
+
+        private Optional<LabTestCollectionMethod> orderType = Optional.empty();
+
+        private Optional<OrderActivationType> orderActivationTypes = Optional.empty();
 
         private Optional<String> userId = Optional.empty();
 
@@ -267,8 +324,11 @@ public final class LabTestsGetOrdersRequest {
             endDate(other.getEndDate());
             updatedStartDate(other.getUpdatedStartDate());
             updatedEndDate(other.getUpdatedEndDate());
+            status(other.getStatus());
             orderKey(other.getOrderKey());
             orderDirection(other.getOrderDirection());
+            orderType(other.getOrderType());
+            orderActivationTypes(other.getOrderActivationTypes());
             userId(other.getUserId());
             patientName(other.getPatientName());
             shippingRecipientName(other.getShippingRecipientName());
@@ -333,6 +393,17 @@ public final class LabTestsGetOrdersRequest {
             return this;
         }
 
+        @JsonSetter(value = "status", nulls = Nulls.SKIP)
+        public Builder status(Optional<OrderLowLevelStatus> status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder status(OrderLowLevelStatus status) {
+            this.status = Optional.of(status);
+            return this;
+        }
+
         @JsonSetter(value = "order_key", nulls = Nulls.SKIP)
         public Builder orderKey(Optional<LabTestsGetOrdersRequestOrderKey> orderKey) {
             this.orderKey = orderKey;
@@ -352,6 +423,28 @@ public final class LabTestsGetOrdersRequest {
 
         public Builder orderDirection(LabTestsGetOrdersRequestOrderDirection orderDirection) {
             this.orderDirection = Optional.of(orderDirection);
+            return this;
+        }
+
+        @JsonSetter(value = "order_type", nulls = Nulls.SKIP)
+        public Builder orderType(Optional<LabTestCollectionMethod> orderType) {
+            this.orderType = orderType;
+            return this;
+        }
+
+        public Builder orderType(LabTestCollectionMethod orderType) {
+            this.orderType = Optional.of(orderType);
+            return this;
+        }
+
+        @JsonSetter(value = "order_activation_types", nulls = Nulls.SKIP)
+        public Builder orderActivationTypes(Optional<OrderActivationType> orderActivationTypes) {
+            this.orderActivationTypes = orderActivationTypes;
+            return this;
+        }
+
+        public Builder orderActivationTypes(OrderActivationType orderActivationTypes) {
+            this.orderActivationTypes = Optional.of(orderActivationTypes);
             return this;
         }
 
@@ -428,8 +521,11 @@ public final class LabTestsGetOrdersRequest {
                     endDate,
                     updatedStartDate,
                     updatedEndDate,
+                    status,
                     orderKey,
                     orderDirection,
+                    orderType,
+                    orderActivationTypes,
                     userId,
                     patientName,
                     shippingRecipientName,
