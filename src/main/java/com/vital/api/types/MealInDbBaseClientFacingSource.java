@@ -157,17 +157,11 @@ public final class MealInDbBaseClientFacingSource {
         return source;
     }
 
-    /**
-     * @return This value is identical to <code>timestamp</code>.
-     */
     @JsonProperty("created_at")
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    /**
-     * @return This value is identical to <code>timestamp</code>.
-     */
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
@@ -438,10 +432,6 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
-        /**
-         * <p>This value is identical to <code>timestamp</code>.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @java.lang.Override
         @JsonSetter("created_at")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
@@ -449,10 +439,6 @@ public final class MealInDbBaseClientFacingSource {
             return this;
         }
 
-        /**
-         * <p>This value is identical to <code>timestamp</code>.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
         @java.lang.Override
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {

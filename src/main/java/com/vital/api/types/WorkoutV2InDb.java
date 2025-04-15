@@ -42,6 +42,10 @@ public final class WorkoutV2InDb {
 
     private final ClientFacingSport sport;
 
+    private final Optional<OffsetDateTime> createdAt;
+
+    private final Optional<OffsetDateTime> updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private WorkoutV2InDb(
@@ -55,6 +59,8 @@ public final class WorkoutV2InDb {
             int sportId,
             ClientFacingProvider source,
             ClientFacingSport sport,
+            Optional<OffsetDateTime> createdAt,
+            Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
         this.timestamp = timestamp;
         this.data = data;
@@ -66,6 +72,8 @@ public final class WorkoutV2InDb {
         this.sportId = sportId;
         this.source = source;
         this.sport = sport;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -119,6 +127,16 @@ public final class WorkoutV2InDb {
         return sport;
     }
 
+    @JsonProperty("created_at")
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public Optional<OffsetDateTime> getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -140,7 +158,9 @@ public final class WorkoutV2InDb {
                 && id.equals(other.id)
                 && sportId == other.sportId
                 && source.equals(other.source)
-                && sport.equals(other.sport);
+                && sport.equals(other.sport)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
@@ -155,7 +175,9 @@ public final class WorkoutV2InDb {
                 this.id,
                 this.sportId,
                 this.source,
-                this.sport);
+                this.sport,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -213,6 +235,14 @@ public final class WorkoutV2InDb {
         _FinalStage priorityId(Optional<Integer> priorityId);
 
         _FinalStage priorityId(Integer priorityId);
+
+        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
+
+        _FinalStage createdAt(OffsetDateTime createdAt);
+
+        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
+
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -242,6 +272,10 @@ public final class WorkoutV2InDb {
 
         private ClientFacingSport sport;
 
+        private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
+
         private Optional<Integer> priorityId = Optional.empty();
 
         private Map<String, Object> data = new LinkedHashMap<>();
@@ -263,6 +297,8 @@ public final class WorkoutV2InDb {
             sportId(other.getSportId());
             source(other.getSource());
             sport(other.getSport());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
             return this;
         }
 
@@ -323,6 +359,32 @@ public final class WorkoutV2InDb {
         }
 
         @java.lang.Override
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = Optional.of(updatedAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
+        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.of(createdAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
             this.priorityId = Optional.of(priorityId);
             return this;
@@ -368,6 +430,8 @@ public final class WorkoutV2InDb {
                     sportId,
                     source,
                     sport,
+                    createdAt,
+                    updatedAt,
                     additionalProperties);
         }
     }

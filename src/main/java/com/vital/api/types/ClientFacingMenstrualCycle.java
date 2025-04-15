@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,10 @@ public final class ClientFacingMenstrualCycle {
 
     private final Optional<String> sourceAppId;
 
+    private final Optional<OffsetDateTime> createdAt;
+
+    private final Optional<OffsetDateTime> updatedAt;
+
     private final String userId;
 
     private final ClientFacingSource source;
@@ -82,6 +87,8 @@ public final class ClientFacingMenstrualCycle {
             ClientFacingMenstrualCycleSourceProvider sourceProvider,
             ClientFacingMenstrualCycleSourceType sourceType,
             Optional<String> sourceAppId,
+            Optional<OffsetDateTime> createdAt,
+            Optional<OffsetDateTime> updatedAt,
             String userId,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
@@ -103,6 +110,8 @@ public final class ClientFacingMenstrualCycle {
         this.sourceProvider = sourceProvider;
         this.sourceType = sourceType;
         this.sourceAppId = sourceAppId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.userId = userId;
         this.source = source;
         this.additionalProperties = additionalProperties;
@@ -201,6 +210,16 @@ public final class ClientFacingMenstrualCycle {
         return sourceAppId;
     }
 
+    @JsonProperty("created_at")
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public Optional<OffsetDateTime> getUpdatedAt() {
+        return updatedAt;
+    }
+
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
@@ -241,6 +260,8 @@ public final class ClientFacingMenstrualCycle {
                 && sourceProvider.equals(other.sourceProvider)
                 && sourceType.equals(other.sourceType)
                 && sourceAppId.equals(other.sourceAppId)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt)
                 && userId.equals(other.userId)
                 && source.equals(other.source);
     }
@@ -266,6 +287,8 @@ public final class ClientFacingMenstrualCycle {
                 this.sourceProvider,
                 this.sourceType,
                 this.sourceAppId,
+                this.createdAt,
+                this.updatedAt,
                 this.userId,
                 this.source);
     }
@@ -363,6 +386,14 @@ public final class ClientFacingMenstrualCycle {
         _FinalStage sourceAppId(Optional<String> sourceAppId);
 
         _FinalStage sourceAppId(String sourceAppId);
+
+        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
+
+        _FinalStage createdAt(OffsetDateTime createdAt);
+
+        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
+
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -385,6 +416,10 @@ public final class ClientFacingMenstrualCycle {
         private String userId;
 
         private ClientFacingSource source;
+
+        private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
 
         private Optional<String> sourceAppId = Optional.empty();
 
@@ -439,6 +474,8 @@ public final class ClientFacingMenstrualCycle {
             sourceProvider(other.getSourceProvider());
             sourceType(other.getSourceType());
             sourceAppId(other.getSourceAppId());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
             userId(other.getUserId());
             source(other.getSource());
             return this;
@@ -487,6 +524,32 @@ public final class ClientFacingMenstrualCycle {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = Optional.of(updatedAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
+        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.of(createdAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
             return this;
         }
 
@@ -693,6 +756,8 @@ public final class ClientFacingMenstrualCycle {
                     sourceProvider,
                     sourceType,
                     sourceAppId,
+                    createdAt,
+                    updatedAt,
                     userId,
                     source,
                     additionalProperties);

@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ActivityV2InDb.Builder.class)
@@ -37,6 +38,10 @@ public final class ActivityV2InDb {
 
     private final ClientFacingProvider source;
 
+    private final Optional<OffsetDateTime> createdAt;
+
+    private final Optional<OffsetDateTime> updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private ActivityV2InDb(
@@ -48,6 +53,8 @@ public final class ActivityV2InDb {
             int priorityId,
             String id,
             ClientFacingProvider source,
+            Optional<OffsetDateTime> createdAt,
+            Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
         this.timestamp = timestamp;
         this.data = data;
@@ -57,6 +64,8 @@ public final class ActivityV2InDb {
         this.priorityId = priorityId;
         this.id = id;
         this.source = source;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -100,6 +109,16 @@ public final class ActivityV2InDb {
         return source;
     }
 
+    @JsonProperty("created_at")
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public Optional<OffsetDateTime> getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -119,7 +138,9 @@ public final class ActivityV2InDb {
                 && sourceId == other.sourceId
                 && priorityId == other.priorityId
                 && id.equals(other.id)
-                && source.equals(other.source);
+                && source.equals(other.source)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
@@ -132,7 +153,9 @@ public final class ActivityV2InDb {
                 this.sourceId,
                 this.priorityId,
                 this.id,
-                this.source);
+                this.source,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -182,6 +205,14 @@ public final class ActivityV2InDb {
         _FinalStage putAllData(Map<String, Object> data);
 
         _FinalStage data(String key, Object value);
+
+        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
+
+        _FinalStage createdAt(OffsetDateTime createdAt);
+
+        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
+
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -208,6 +239,10 @@ public final class ActivityV2InDb {
 
         private ClientFacingProvider source;
 
+        private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
+
         private Map<String, Object> data = new LinkedHashMap<>();
 
         @JsonAnySetter
@@ -225,6 +260,8 @@ public final class ActivityV2InDb {
             priorityId(other.getPriorityId());
             id(other.getId());
             source(other.getSource());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
             return this;
         }
 
@@ -278,6 +315,32 @@ public final class ActivityV2InDb {
         }
 
         @java.lang.Override
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = Optional.of(updatedAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
+        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.of(createdAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage data(String key, Object value) {
             this.data.put(key, value);
             return this;
@@ -300,7 +363,17 @@ public final class ActivityV2InDb {
         @java.lang.Override
         public ActivityV2InDb build() {
             return new ActivityV2InDb(
-                    timestamp, data, providerId, userId, sourceId, priorityId, id, source, additionalProperties);
+                    timestamp,
+                    data,
+                    providerId,
+                    userId,
+                    sourceId,
+                    priorityId,
+                    id,
+                    source,
+                    createdAt,
+                    updatedAt,
+                    additionalProperties);
         }
     }
 }

@@ -40,6 +40,10 @@ public final class BodyV2InDb {
 
     private final Optional<Integer> priority;
 
+    private final Optional<OffsetDateTime> createdAt;
+
+    private final Optional<OffsetDateTime> updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private BodyV2InDb(
@@ -52,6 +56,8 @@ public final class BodyV2InDb {
             String id,
             Optional<ClientFacingProvider> source,
             Optional<Integer> priority,
+            Optional<OffsetDateTime> createdAt,
+            Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
         this.timestamp = timestamp;
         this.data = data;
@@ -62,6 +68,8 @@ public final class BodyV2InDb {
         this.id = id;
         this.source = source;
         this.priority = priority;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -110,6 +118,16 @@ public final class BodyV2InDb {
         return priority;
     }
 
+    @JsonProperty("created_at")
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public Optional<OffsetDateTime> getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -130,7 +148,9 @@ public final class BodyV2InDb {
                 && priorityId.equals(other.priorityId)
                 && id.equals(other.id)
                 && source.equals(other.source)
-                && priority.equals(other.priority);
+                && priority.equals(other.priority)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
@@ -144,7 +164,9 @@ public final class BodyV2InDb {
                 this.priorityId,
                 this.id,
                 this.source,
-                this.priority);
+                this.priority,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -198,6 +220,14 @@ public final class BodyV2InDb {
         _FinalStage priority(Optional<Integer> priority);
 
         _FinalStage priority(Integer priority);
+
+        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
+
+        _FinalStage createdAt(OffsetDateTime createdAt);
+
+        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
+
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -212,6 +242,10 @@ public final class BodyV2InDb {
         private int sourceId;
 
         private String id;
+
+        private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
 
         private Optional<Integer> priority = Optional.empty();
 
@@ -237,6 +271,8 @@ public final class BodyV2InDb {
             id(other.getId());
             source(other.getSource());
             priority(other.getPriority());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
             return this;
         }
 
@@ -272,6 +308,32 @@ public final class BodyV2InDb {
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = Optional.of(updatedAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
+        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.of(createdAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
             return this;
         }
 
@@ -346,6 +408,8 @@ public final class BodyV2InDb {
                     id,
                     source,
                     priority,
+                    createdAt,
+                    updatedAt,
                     additionalProperties);
         }
     }
