@@ -22,9 +22,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingWorkout.Builder.class)
 public final class ClientFacingWorkout {
-    private final String userId;
-
     private final String id;
+
+    private final String userId;
 
     private final Optional<String> title;
 
@@ -76,11 +76,15 @@ public final class ClientFacingWorkout {
 
     private final ClientFacingSource source;
 
+    private final OffsetDateTime createdAt;
+
+    private final OffsetDateTime updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingWorkout(
-            String userId,
             String id,
+            String userId,
             Optional<String> title,
             Optional<Integer> timezoneOffset,
             Optional<Integer> averageHr,
@@ -106,9 +110,11 @@ public final class ClientFacingWorkout {
             Optional<ClientFacingWorkoutMap> map,
             String providerId,
             ClientFacingSource source,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
             Map<String, Object> additionalProperties) {
-        this.userId = userId;
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.timezoneOffset = timezoneOffset;
         this.averageHr = averageHr;
@@ -134,7 +140,14 @@ public final class ClientFacingWorkout {
         this.map = map;
         this.providerId = providerId;
         this.source = source;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     /**
@@ -143,11 +156,6 @@ public final class ClientFacingWorkout {
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
-    }
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
     }
 
     /**
@@ -350,6 +358,16 @@ public final class ClientFacingWorkout {
         return source;
     }
 
+    @JsonProperty("created_at")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -362,8 +380,8 @@ public final class ClientFacingWorkout {
     }
 
     private boolean equalTo(ClientFacingWorkout other) {
-        return userId.equals(other.userId)
-                && id.equals(other.id)
+        return id.equals(other.id)
+                && userId.equals(other.userId)
                 && title.equals(other.title)
                 && timezoneOffset.equals(other.timezoneOffset)
                 && averageHr.equals(other.averageHr)
@@ -388,14 +406,16 @@ public final class ClientFacingWorkout {
                 && steps.equals(other.steps)
                 && map.equals(other.map)
                 && providerId.equals(other.providerId)
-                && source.equals(other.source);
+                && source.equals(other.source)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.userId,
                 this.id,
+                this.userId,
                 this.title,
                 this.timezoneOffset,
                 this.averageHr,
@@ -420,7 +440,9 @@ public final class ClientFacingWorkout {
                 this.steps,
                 this.map,
                 this.providerId,
-                this.source);
+                this.source,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -428,18 +450,18 @@ public final class ClientFacingWorkout {
         return ObjectMappers.stringify(this);
     }
 
-    public static UserIdStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface UserIdStage {
-        IdStage userId(String userId);
+    public interface IdStage {
+        UserIdStage id(String id);
 
         Builder from(ClientFacingWorkout other);
     }
 
-    public interface IdStage {
-        CalendarDateStage id(String id);
+    public interface UserIdStage {
+        CalendarDateStage userId(String userId);
     }
 
     public interface CalendarDateStage {
@@ -459,7 +481,15 @@ public final class ClientFacingWorkout {
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        CreatedAtStage source(ClientFacingSource source);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -548,17 +578,19 @@ public final class ClientFacingWorkout {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements UserIdStage,
-                    IdStage,
+            implements IdStage,
+                    UserIdStage,
                     CalendarDateStage,
                     TimeStartStage,
                     TimeEndStage,
                     ProviderIdStage,
                     SourceStage,
+                    CreatedAtStage,
+                    UpdatedAtStage,
                     _FinalStage {
-        private String userId;
-
         private String id;
+
+        private String userId;
 
         private String calendarDate;
 
@@ -569,6 +601,10 @@ public final class ClientFacingWorkout {
         private String providerId;
 
         private ClientFacingSource source;
+
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
 
         private Optional<ClientFacingWorkoutMap> map = Optional.empty();
 
@@ -617,8 +653,8 @@ public final class ClientFacingWorkout {
 
         @java.lang.Override
         public Builder from(ClientFacingWorkout other) {
-            userId(other.getUserId());
             id(other.getId());
+            userId(other.getUserId());
             title(other.getTitle());
             timezoneOffset(other.getTimezoneOffset());
             averageHr(other.getAverageHr());
@@ -644,6 +680,15 @@ public final class ClientFacingWorkout {
             map(other.getMap());
             providerId(other.getProviderId());
             source(other.getSource());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public UserIdStage id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -653,15 +698,8 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public IdStage userId(String userId) {
+        public CalendarDateStage userId(String userId) {
             this.userId = userId;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("id")
-        public CalendarDateStage id(String id) {
-            this.id = id;
             return this;
         }
 
@@ -715,8 +753,22 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
+        public CreatedAtStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("created_at")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("updated_at")
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -1063,8 +1115,8 @@ public final class ClientFacingWorkout {
         @java.lang.Override
         public ClientFacingWorkout build() {
             return new ClientFacingWorkout(
-                    userId,
                     id,
+                    userId,
                     title,
                     timezoneOffset,
                     averageHr,
@@ -1090,6 +1142,8 @@ public final class ClientFacingWorkout {
                     map,
                     providerId,
                     source,
+                    createdAt,
+                    updatedAt,
                     additionalProperties);
         }
     }

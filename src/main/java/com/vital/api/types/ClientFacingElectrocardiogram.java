@@ -49,9 +49,9 @@ public final class ClientFacingElectrocardiogram {
 
     private final Optional<String> sourceDeviceModel;
 
-    private final Optional<OffsetDateTime> createdAt;
+    private final OffsetDateTime createdAt;
 
-    private final Optional<OffsetDateTime> updatedAt;
+    private final OffsetDateTime updatedAt;
 
     private final String userId;
 
@@ -74,8 +74,8 @@ public final class ClientFacingElectrocardiogram {
             ClientFacingElectrocardiogramSourceType sourceType,
             Optional<String> sourceAppId,
             Optional<String> sourceDeviceModel,
-            Optional<OffsetDateTime> createdAt,
-            Optional<OffsetDateTime> updatedAt,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
             String userId,
             ClientFacingSource source,
             Map<String, Object> additionalProperties) {
@@ -174,12 +174,12 @@ public final class ClientFacingElectrocardiogram {
     }
 
     @JsonProperty("created_at")
-    public Optional<OffsetDateTime> getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
     @JsonProperty("updated_at")
-    public Optional<OffsetDateTime> getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
@@ -280,7 +280,15 @@ public final class ClientFacingElectrocardiogram {
     }
 
     public interface SourceTypeStage {
-        UserIdStage sourceType(ClientFacingElectrocardiogramSourceType sourceType);
+        CreatedAtStage sourceType(ClientFacingElectrocardiogramSourceType sourceType);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        UserIdStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface UserIdStage {
@@ -325,14 +333,6 @@ public final class ClientFacingElectrocardiogram {
         _FinalStage sourceDeviceModel(Optional<String> sourceDeviceModel);
 
         _FinalStage sourceDeviceModel(String sourceDeviceModel);
-
-        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
-
-        _FinalStage createdAt(OffsetDateTime createdAt);
-
-        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
-
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -343,6 +343,8 @@ public final class ClientFacingElectrocardiogram {
                     VoltageSampleCountStage,
                     SourceProviderStage,
                     SourceTypeStage,
+                    CreatedAtStage,
+                    UpdatedAtStage,
                     UserIdStage,
                     SourceStage,
                     _FinalStage {
@@ -358,13 +360,13 @@ public final class ClientFacingElectrocardiogram {
 
         private ClientFacingElectrocardiogramSourceType sourceType;
 
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
+
         private String userId;
 
         private ClientFacingSource source;
-
-        private Optional<OffsetDateTime> updatedAt = Optional.empty();
-
-        private Optional<OffsetDateTime> createdAt = Optional.empty();
 
         private Optional<String> sourceDeviceModel = Optional.empty();
 
@@ -451,8 +453,22 @@ public final class ClientFacingElectrocardiogram {
          */
         @java.lang.Override
         @JsonSetter("source_type")
-        public UserIdStage sourceType(ClientFacingElectrocardiogramSourceType sourceType) {
+        public CreatedAtStage sourceType(ClientFacingElectrocardiogramSourceType sourceType) {
             this.sourceType = sourceType;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("created_at")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("updated_at")
+        public UserIdStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -467,32 +483,6 @@ public final class ClientFacingElectrocardiogram {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
-        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.of(createdAt);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
-        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
-            this.createdAt = createdAt;
             return this;
         }
 

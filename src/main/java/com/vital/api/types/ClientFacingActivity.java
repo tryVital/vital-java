@@ -21,9 +21,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingActivity.Builder.class)
 public final class ClientFacingActivity {
-    private final String userId;
-
     private final String id;
+
+    private final String userId;
 
     private final OffsetDateTime date;
 
@@ -59,11 +59,15 @@ public final class ClientFacingActivity {
 
     private final Optional<Integer> wheelchairPush;
 
+    private final OffsetDateTime createdAt;
+
+    private final OffsetDateTime updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingActivity(
-            String userId,
             String id,
+            String userId,
             OffsetDateTime date,
             String calendarDate,
             Optional<Double> caloriesTotal,
@@ -81,9 +85,11 @@ public final class ClientFacingActivity {
             Optional<ClientFacingHeartRate> heartRate,
             Optional<Boolean> wheelchairUse,
             Optional<Integer> wheelchairPush,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
             Map<String, Object> additionalProperties) {
-        this.userId = userId;
         this.id = id;
+        this.userId = userId;
         this.date = date;
         this.calendarDate = calendarDate;
         this.caloriesTotal = caloriesTotal;
@@ -101,7 +107,14 @@ public final class ClientFacingActivity {
         this.heartRate = heartRate;
         this.wheelchairUse = wheelchairUse;
         this.wheelchairPush = wheelchairPush;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     /**
@@ -110,11 +123,6 @@ public final class ClientFacingActivity {
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
-    }
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
     }
 
     /**
@@ -247,6 +255,16 @@ public final class ClientFacingActivity {
         return wheelchairPush;
     }
 
+    @JsonProperty("created_at")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -259,8 +277,8 @@ public final class ClientFacingActivity {
     }
 
     private boolean equalTo(ClientFacingActivity other) {
-        return userId.equals(other.userId)
-                && id.equals(other.id)
+        return id.equals(other.id)
+                && userId.equals(other.userId)
                 && date.equals(other.date)
                 && calendarDate.equals(other.calendarDate)
                 && caloriesTotal.equals(other.caloriesTotal)
@@ -277,14 +295,16 @@ public final class ClientFacingActivity {
                 && timezoneOffset.equals(other.timezoneOffset)
                 && heartRate.equals(other.heartRate)
                 && wheelchairUse.equals(other.wheelchairUse)
-                && wheelchairPush.equals(other.wheelchairPush);
+                && wheelchairPush.equals(other.wheelchairPush)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.userId,
                 this.id,
+                this.userId,
                 this.date,
                 this.calendarDate,
                 this.caloriesTotal,
@@ -301,7 +321,9 @@ public final class ClientFacingActivity {
                 this.timezoneOffset,
                 this.heartRate,
                 this.wheelchairUse,
-                this.wheelchairPush);
+                this.wheelchairPush,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -309,18 +331,18 @@ public final class ClientFacingActivity {
         return ObjectMappers.stringify(this);
     }
 
-    public static UserIdStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface UserIdStage {
-        IdStage userId(String userId);
+    public interface IdStage {
+        UserIdStage id(String id);
 
         Builder from(ClientFacingActivity other);
     }
 
-    public interface IdStage {
-        DateStage id(String id);
+    public interface UserIdStage {
+        DateStage userId(String userId);
     }
 
     public interface DateStage {
@@ -332,7 +354,15 @@ public final class ClientFacingActivity {
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        CreatedAtStage source(ClientFacingSource source);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -397,16 +427,27 @@ public final class ClientFacingActivity {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements UserIdStage, IdStage, DateStage, CalendarDateStage, SourceStage, _FinalStage {
-        private String userId;
-
+            implements IdStage,
+                    UserIdStage,
+                    DateStage,
+                    CalendarDateStage,
+                    SourceStage,
+                    CreatedAtStage,
+                    UpdatedAtStage,
+                    _FinalStage {
         private String id;
+
+        private String userId;
 
         private OffsetDateTime date;
 
         private String calendarDate;
 
         private ClientFacingSource source;
+
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
 
         private Optional<Integer> wheelchairPush = Optional.empty();
 
@@ -443,8 +484,8 @@ public final class ClientFacingActivity {
 
         @java.lang.Override
         public Builder from(ClientFacingActivity other) {
-            userId(other.getUserId());
             id(other.getId());
+            userId(other.getUserId());
             date(other.getDate());
             calendarDate(other.getCalendarDate());
             caloriesTotal(other.getCaloriesTotal());
@@ -462,6 +503,15 @@ public final class ClientFacingActivity {
             heartRate(other.getHeartRate());
             wheelchairUse(other.getWheelchairUse());
             wheelchairPush(other.getWheelchairPush());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public UserIdStage id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -471,15 +521,8 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public IdStage userId(String userId) {
+        public DateStage userId(String userId) {
             this.userId = userId;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("id")
-        public DateStage id(String id) {
-            this.id = id;
             return this;
         }
 
@@ -511,8 +554,22 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
+        public CreatedAtStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("created_at")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("updated_at")
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -749,8 +806,8 @@ public final class ClientFacingActivity {
         @java.lang.Override
         public ClientFacingActivity build() {
             return new ClientFacingActivity(
-                    userId,
                     id,
+                    userId,
                     date,
                     calendarDate,
                     caloriesTotal,
@@ -768,6 +825,8 @@ public final class ClientFacingActivity {
                     heartRate,
                     wheelchairUse,
                     wheelchairPush,
+                    createdAt,
+                    updatedAt,
                     additionalProperties);
         }
     }

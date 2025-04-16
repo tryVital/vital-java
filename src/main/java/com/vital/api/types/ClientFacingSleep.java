@@ -21,9 +21,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingSleep.Builder.class)
 public final class ClientFacingSleep {
-    private final String userId;
-
     private final String id;
+
+    private final String userId;
 
     private final OffsetDateTime date;
 
@@ -77,11 +77,15 @@ public final class ClientFacingSleep {
 
     private final Optional<ClientFacingSleepStream> sleepStream;
 
+    private final OffsetDateTime createdAt;
+
+    private final OffsetDateTime updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingSleep(
-            String userId,
             String id,
+            String userId,
             OffsetDateTime date,
             String calendarDate,
             OffsetDateTime bedtimeStart,
@@ -108,9 +112,11 @@ public final class ClientFacingSleep {
             Optional<Double> respiratoryRate,
             ClientFacingSource source,
             Optional<ClientFacingSleepStream> sleepStream,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
             Map<String, Object> additionalProperties) {
-        this.userId = userId;
         this.id = id;
+        this.userId = userId;
         this.date = date;
         this.calendarDate = calendarDate;
         this.bedtimeStart = bedtimeStart;
@@ -137,7 +143,14 @@ public final class ClientFacingSleep {
         this.respiratoryRate = respiratoryRate;
         this.source = source;
         this.sleepStream = sleepStream;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     /**
@@ -146,11 +159,6 @@ public final class ClientFacingSleep {
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
-    }
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
     }
 
     /**
@@ -361,6 +369,16 @@ public final class ClientFacingSleep {
         return sleepStream;
     }
 
+    @JsonProperty("created_at")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -373,8 +391,8 @@ public final class ClientFacingSleep {
     }
 
     private boolean equalTo(ClientFacingSleep other) {
-        return userId.equals(other.userId)
-                && id.equals(other.id)
+        return id.equals(other.id)
+                && userId.equals(other.userId)
                 && date.equals(other.date)
                 && calendarDate.equals(other.calendarDate)
                 && bedtimeStart.equals(other.bedtimeStart)
@@ -400,14 +418,16 @@ public final class ClientFacingSleep {
                 && averageHrv.equals(other.averageHrv)
                 && respiratoryRate.equals(other.respiratoryRate)
                 && source.equals(other.source)
-                && sleepStream.equals(other.sleepStream);
+                && sleepStream.equals(other.sleepStream)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.userId,
                 this.id,
+                this.userId,
                 this.date,
                 this.calendarDate,
                 this.bedtimeStart,
@@ -433,7 +453,9 @@ public final class ClientFacingSleep {
                 this.averageHrv,
                 this.respiratoryRate,
                 this.source,
-                this.sleepStream);
+                this.sleepStream,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -441,18 +463,18 @@ public final class ClientFacingSleep {
         return ObjectMappers.stringify(this);
     }
 
-    public static UserIdStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface UserIdStage {
-        IdStage userId(String userId);
+    public interface IdStage {
+        UserIdStage id(String id);
 
         Builder from(ClientFacingSleep other);
     }
 
-    public interface IdStage {
-        DateStage id(String id);
+    public interface UserIdStage {
+        DateStage userId(String userId);
     }
 
     public interface DateStage {
@@ -500,7 +522,15 @@ public final class ClientFacingSleep {
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        CreatedAtStage source(ClientFacingSource source);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -565,8 +595,8 @@ public final class ClientFacingSleep {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements UserIdStage,
-                    IdStage,
+            implements IdStage,
+                    UserIdStage,
                     DateStage,
                     CalendarDateStage,
                     BedtimeStartStage,
@@ -579,10 +609,12 @@ public final class ClientFacingSleep {
                     RemStage,
                     DeepStage,
                     SourceStage,
+                    CreatedAtStage,
+                    UpdatedAtStage,
                     _FinalStage {
-        private String userId;
-
         private String id;
+
+        private String userId;
 
         private OffsetDateTime date;
 
@@ -607,6 +639,10 @@ public final class ClientFacingSleep {
         private int deep;
 
         private ClientFacingSource source;
+
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
 
         private Optional<ClientFacingSleepStream> sleepStream = Optional.empty();
 
@@ -643,8 +679,8 @@ public final class ClientFacingSleep {
 
         @java.lang.Override
         public Builder from(ClientFacingSleep other) {
-            userId(other.getUserId());
             id(other.getId());
+            userId(other.getUserId());
             date(other.getDate());
             calendarDate(other.getCalendarDate());
             bedtimeStart(other.getBedtimeStart());
@@ -671,6 +707,15 @@ public final class ClientFacingSleep {
             respiratoryRate(other.getRespiratoryRate());
             source(other.getSource());
             sleepStream(other.getSleepStream());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public UserIdStage id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -680,15 +725,8 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public IdStage userId(String userId) {
+        public DateStage userId(String userId) {
             this.userId = userId;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("id")
-        public DateStage id(String id) {
-            this.id = id;
             return this;
         }
 
@@ -822,8 +860,22 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
+        public CreatedAtStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("created_at")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("updated_at")
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -1064,8 +1116,8 @@ public final class ClientFacingSleep {
         @java.lang.Override
         public ClientFacingSleep build() {
             return new ClientFacingSleep(
-                    userId,
                     id,
+                    userId,
                     date,
                     calendarDate,
                     bedtimeStart,
@@ -1092,6 +1144,8 @@ public final class ClientFacingSleep {
                     respiratoryRate,
                     source,
                     sleepStream,
+                    createdAt,
+                    updatedAt,
                     additionalProperties);
         }
     }
