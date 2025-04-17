@@ -22,16 +22,25 @@ import java.util.Optional;
 public final class LinkListBulkOpsRequest {
     private final Optional<String> nextCursor;
 
+    private final Optional<Integer> pageSize;
+
     private final Map<String, Object> additionalProperties;
 
-    private LinkListBulkOpsRequest(Optional<String> nextCursor, Map<String, Object> additionalProperties) {
+    private LinkListBulkOpsRequest(
+            Optional<String> nextCursor, Optional<Integer> pageSize, Map<String, Object> additionalProperties) {
         this.nextCursor = nextCursor;
+        this.pageSize = pageSize;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("next_cursor")
     public Optional<String> getNextCursor() {
         return nextCursor;
+    }
+
+    @JsonProperty("page_size")
+    public Optional<Integer> getPageSize() {
+        return pageSize;
     }
 
     @java.lang.Override
@@ -46,12 +55,12 @@ public final class LinkListBulkOpsRequest {
     }
 
     private boolean equalTo(LinkListBulkOpsRequest other) {
-        return nextCursor.equals(other.nextCursor);
+        return nextCursor.equals(other.nextCursor) && pageSize.equals(other.pageSize);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.nextCursor);
+        return Objects.hash(this.nextCursor, this.pageSize);
     }
 
     @java.lang.Override
@@ -67,6 +76,8 @@ public final class LinkListBulkOpsRequest {
     public static final class Builder {
         private Optional<String> nextCursor = Optional.empty();
 
+        private Optional<Integer> pageSize = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -74,6 +85,7 @@ public final class LinkListBulkOpsRequest {
 
         public Builder from(LinkListBulkOpsRequest other) {
             nextCursor(other.getNextCursor());
+            pageSize(other.getPageSize());
             return this;
         }
 
@@ -88,8 +100,19 @@ public final class LinkListBulkOpsRequest {
             return this;
         }
 
+        @JsonSetter(value = "page_size", nulls = Nulls.SKIP)
+        public Builder pageSize(Optional<Integer> pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
+        public Builder pageSize(Integer pageSize) {
+            this.pageSize = Optional.of(pageSize);
+            return this;
+        }
+
         public LinkListBulkOpsRequest build() {
-            return new LinkListBulkOpsRequest(nextCursor, additionalProperties);
+            return new LinkListBulkOpsRequest(nextCursor, pageSize, additionalProperties);
         }
     }
 }

@@ -78,6 +78,9 @@ public class LinkClient {
         if (request.getNextCursor().isPresent()) {
             httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
         }
+        if (request.getPageSize().isPresent()) {
+            httpUrl.addQueryParameter("page_size", request.getPageSize().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
