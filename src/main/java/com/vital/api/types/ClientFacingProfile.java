@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,9 +21,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ClientFacingProfile.Builder.class)
 public final class ClientFacingProfile {
-    private final String userId;
-
     private final String id;
+
+    private final String userId;
 
     private final Optional<Integer> height;
 
@@ -32,23 +33,36 @@ public final class ClientFacingProfile {
 
     private final ClientFacingSource source;
 
+    private final OffsetDateTime createdAt;
+
+    private final OffsetDateTime updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingProfile(
-            String userId,
             String id,
+            String userId,
             Optional<Integer> height,
             Optional<String> birthDate,
             Optional<Boolean> wheelchairUse,
             ClientFacingSource source,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
             Map<String, Object> additionalProperties) {
-        this.userId = userId;
         this.id = id;
+        this.userId = userId;
         this.height = height;
         this.birthDate = birthDate;
         this.wheelchairUse = wheelchairUse;
         this.source = source;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
     }
 
     /**
@@ -57,11 +71,6 @@ public final class ClientFacingProfile {
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
-    }
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
     }
 
     @JsonProperty("height")
@@ -84,6 +93,16 @@ public final class ClientFacingProfile {
         return source;
     }
 
+    @JsonProperty("created_at")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -96,17 +115,27 @@ public final class ClientFacingProfile {
     }
 
     private boolean equalTo(ClientFacingProfile other) {
-        return userId.equals(other.userId)
-                && id.equals(other.id)
+        return id.equals(other.id)
+                && userId.equals(other.userId)
                 && height.equals(other.height)
                 && birthDate.equals(other.birthDate)
                 && wheelchairUse.equals(other.wheelchairUse)
-                && source.equals(other.source);
+                && source.equals(other.source)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.id, this.height, this.birthDate, this.wheelchairUse, this.source);
+        return Objects.hash(
+                this.id,
+                this.userId,
+                this.height,
+                this.birthDate,
+                this.wheelchairUse,
+                this.source,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -114,22 +143,30 @@ public final class ClientFacingProfile {
         return ObjectMappers.stringify(this);
     }
 
-    public static UserIdStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface UserIdStage {
-        IdStage userId(String userId);
+    public interface IdStage {
+        UserIdStage id(String id);
 
         Builder from(ClientFacingProfile other);
     }
 
-    public interface IdStage {
-        SourceStage id(String id);
+    public interface UserIdStage {
+        SourceStage userId(String userId);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        CreatedAtStage source(ClientFacingSource source);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -149,12 +186,17 @@ public final class ClientFacingProfile {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UserIdStage, IdStage, SourceStage, _FinalStage {
-        private String userId;
-
+    public static final class Builder
+            implements IdStage, UserIdStage, SourceStage, CreatedAtStage, UpdatedAtStage, _FinalStage {
         private String id;
 
+        private String userId;
+
         private ClientFacingSource source;
+
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
 
         private Optional<Boolean> wheelchairUse = Optional.empty();
 
@@ -169,12 +211,21 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public Builder from(ClientFacingProfile other) {
-            userId(other.getUserId());
             id(other.getId());
+            userId(other.getUserId());
             height(other.getHeight());
             birthDate(other.getBirthDate());
             wheelchairUse(other.getWheelchairUse());
             source(other.getSource());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public UserIdStage id(String id) {
+            this.id = id;
             return this;
         }
 
@@ -184,22 +235,29 @@ public final class ClientFacingProfile {
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public IdStage userId(String userId) {
+        public SourceStage userId(String userId) {
             this.userId = userId;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("id")
-        public SourceStage id(String id) {
-            this.id = id;
+        @JsonSetter("source")
+        public CreatedAtStage source(ClientFacingSource source) {
+            this.source = source;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
-            this.source = source;
+        @JsonSetter("created_at")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("updated_at")
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -244,7 +302,8 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public ClientFacingProfile build() {
-            return new ClientFacingProfile(userId, id, height, birthDate, wheelchairUse, source, additionalProperties);
+            return new ClientFacingProfile(
+                    id, userId, height, birthDate, wheelchairUse, source, createdAt, updatedAt, additionalProperties);
         }
     }
 }

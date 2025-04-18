@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public final class PatientDetailsWithValidation {
 
     private final String lastName;
 
-    private final OffsetDateTime dob;
+    private final String dob;
 
     private final Gender gender;
 
@@ -48,7 +47,7 @@ public final class PatientDetailsWithValidation {
     private PatientDetailsWithValidation(
             String firstName,
             String lastName,
-            OffsetDateTime dob,
+            String dob,
             Gender gender,
             String phoneNumber,
             String email,
@@ -83,7 +82,7 @@ public final class PatientDetailsWithValidation {
     }
 
     @JsonProperty("dob")
-    public OffsetDateTime getDob() {
+    public String getDob() {
         return dob;
     }
 
@@ -203,7 +202,7 @@ public final class PatientDetailsWithValidation {
     }
 
     public interface DobStage {
-        GenderStage dob(OffsetDateTime dob);
+        GenderStage dob(String dob);
     }
 
     public interface GenderStage {
@@ -249,7 +248,7 @@ public final class PatientDetailsWithValidation {
 
         private String lastName;
 
-        private OffsetDateTime dob;
+        private String dob;
 
         private Gender gender;
 
@@ -304,7 +303,7 @@ public final class PatientDetailsWithValidation {
 
         @java.lang.Override
         @JsonSetter("dob")
-        public GenderStage dob(OffsetDateTime dob) {
+        public GenderStage dob(String dob) {
             this.dob = dob;
             return this;
         }

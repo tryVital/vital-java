@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
     private final Optional<String> lastName;
 
-    private final OffsetDateTime dob;
+    private final String dob;
 
     private final String gender;
 
@@ -48,7 +47,7 @@ public final class ClientFacingPatientDetailsCompatible {
     private ClientFacingPatientDetailsCompatible(
             Optional<String> firstName,
             Optional<String> lastName,
-            OffsetDateTime dob,
+            String dob,
             String gender,
             Optional<String> phoneNumber,
             Optional<String> email,
@@ -83,7 +82,7 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     @JsonProperty("dob")
-    public OffsetDateTime getDob() {
+    public String getDob() {
         return dob;
     }
 
@@ -194,7 +193,7 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     public interface DobStage {
-        GenderStage dob(OffsetDateTime dob);
+        GenderStage dob(String dob);
 
         Builder from(ClientFacingPatientDetailsCompatible other);
     }
@@ -245,7 +244,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DobStage, GenderStage, _FinalStage {
-        private OffsetDateTime dob;
+        private String dob;
 
         private String gender;
 
@@ -290,7 +289,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
         @java.lang.Override
         @JsonSetter("dob")
-        public GenderStage dob(OffsetDateTime dob) {
+        public GenderStage dob(String dob) {
             this.dob = dob;
             return this;
         }

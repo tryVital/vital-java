@@ -21,7 +21,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProfileInDb.Builder.class)
 public final class ProfileInDb {
-    private final String data;
+    private final String id;
+
+    private final Object data;
 
     private final String userId;
 
@@ -29,35 +31,42 @@ public final class ProfileInDb {
 
     private final Optional<Integer> priorityId;
 
-    private final String id;
-
     private final ClientFacingProvider source;
+
+    private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> updatedAt;
 
     private final Map<String, Object> additionalProperties;
 
     private ProfileInDb(
-            String data,
+            String id,
+            Object data,
             String userId,
             int sourceId,
             Optional<Integer> priorityId,
-            String id,
             ClientFacingProvider source,
+            Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
+        this.id = id;
         this.data = data;
         this.userId = userId;
         this.sourceId = sourceId;
         this.priorityId = priorityId;
-        this.id = id;
         this.source = source;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
     }
 
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
+
     @JsonProperty("data")
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
@@ -76,14 +85,14 @@ public final class ProfileInDb {
         return priorityId;
     }
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
-    }
-
     @JsonProperty("source")
     public ClientFacingProvider getSource() {
         return source;
+    }
+
+    @JsonProperty("created_at")
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
     }
 
     @JsonProperty("updated_at")
@@ -103,19 +112,27 @@ public final class ProfileInDb {
     }
 
     private boolean equalTo(ProfileInDb other) {
-        return data.equals(other.data)
+        return id.equals(other.id)
+                && data.equals(other.data)
                 && userId.equals(other.userId)
                 && sourceId == other.sourceId
                 && priorityId.equals(other.priorityId)
-                && id.equals(other.id)
                 && source.equals(other.source)
+                && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.data, this.userId, this.sourceId, this.priorityId, this.id, this.source, this.updatedAt);
+                this.id,
+                this.data,
+                this.userId,
+                this.sourceId,
+                this.priorityId,
+                this.source,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -123,14 +140,18 @@ public final class ProfileInDb {
         return ObjectMappers.stringify(this);
     }
 
-    public static DataStage builder() {
+    public static IdStage builder() {
         return new Builder();
     }
 
-    public interface DataStage {
-        UserIdStage data(String data);
+    public interface IdStage {
+        DataStage id(String id);
 
         Builder from(ProfileInDb other);
+    }
+
+    public interface DataStage {
+        UserIdStage data(Object data);
     }
 
     public interface UserIdStage {
@@ -138,11 +159,7 @@ public final class ProfileInDb {
     }
 
     public interface SourceIdStage {
-        IdStage sourceId(int sourceId);
-    }
-
-    public interface IdStage {
-        SourceStage id(String id);
+        SourceStage sourceId(int sourceId);
     }
 
     public interface SourceStage {
@@ -156,6 +173,10 @@ public final class ProfileInDb {
 
         _FinalStage priorityId(Integer priorityId);
 
+        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
+
+        _FinalStage createdAt(OffsetDateTime createdAt);
+
         _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
 
         _FinalStage updatedAt(OffsetDateTime updatedAt);
@@ -163,18 +184,20 @@ public final class ProfileInDb {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements DataStage, UserIdStage, SourceIdStage, IdStage, SourceStage, _FinalStage {
-        private String data;
+            implements IdStage, DataStage, UserIdStage, SourceIdStage, SourceStage, _FinalStage {
+        private String id;
+
+        private Object data;
 
         private String userId;
 
         private int sourceId;
 
-        private String id;
-
         private ClientFacingProvider source;
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
 
         private Optional<Integer> priorityId = Optional.empty();
 
@@ -185,19 +208,27 @@ public final class ProfileInDb {
 
         @java.lang.Override
         public Builder from(ProfileInDb other) {
+            id(other.getId());
             data(other.getData());
             userId(other.getUserId());
             sourceId(other.getSourceId());
             priorityId(other.getPriorityId());
-            id(other.getId());
             source(other.getSource());
+            createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("id")
+        public DataStage id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        @java.lang.Override
         @JsonSetter("data")
-        public UserIdStage data(String data) {
+        public UserIdStage data(Object data) {
             this.data = data;
             return this;
         }
@@ -211,15 +242,8 @@ public final class ProfileInDb {
 
         @java.lang.Override
         @JsonSetter("source_id")
-        public IdStage sourceId(int sourceId) {
+        public SourceStage sourceId(int sourceId) {
             this.sourceId = sourceId;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("id")
-        public SourceStage id(String id) {
-            this.id = id;
             return this;
         }
 
@@ -244,6 +268,19 @@ public final class ProfileInDb {
         }
 
         @java.lang.Override
+        public _FinalStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.of(createdAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
             this.priorityId = Optional.of(priorityId);
             return this;
@@ -258,7 +295,8 @@ public final class ProfileInDb {
 
         @java.lang.Override
         public ProfileInDb build() {
-            return new ProfileInDb(data, userId, sourceId, priorityId, id, source, updatedAt, additionalProperties);
+            return new ProfileInDb(
+                    id, data, userId, sourceId, priorityId, source, createdAt, updatedAt, additionalProperties);
         }
     }
 }
