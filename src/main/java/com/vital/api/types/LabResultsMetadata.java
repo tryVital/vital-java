@@ -44,6 +44,10 @@ public final class LabResultsMetadata {
 
     private final Optional<String> interpretation;
 
+    private final Optional<String> patientId;
+
+    private final Optional<String> accountId;
+
     private final Map<String, Object> additionalProperties;
 
     private LabResultsMetadata(
@@ -59,6 +63,8 @@ public final class LabResultsMetadata {
             Optional<String> dateReceived,
             Optional<String> status,
             Optional<String> interpretation,
+            Optional<String> patientId,
+            Optional<String> accountId,
             Map<String, Object> additionalProperties) {
         this.age = age;
         this.dob = dob;
@@ -72,6 +78,8 @@ public final class LabResultsMetadata {
         this.dateReceived = dateReceived;
         this.status = status;
         this.interpretation = interpretation;
+        this.patientId = patientId;
+        this.accountId = accountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -135,6 +143,16 @@ public final class LabResultsMetadata {
         return interpretation;
     }
 
+    @JsonProperty("patient_id")
+    public Optional<String> getPatientId() {
+        return patientId;
+    }
+
+    @JsonProperty("account_id")
+    public Optional<String> getAccountId() {
+        return accountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -158,7 +176,9 @@ public final class LabResultsMetadata {
                 && specimenNumber.equals(other.specimenNumber)
                 && dateReceived.equals(other.dateReceived)
                 && status.equals(other.status)
-                && interpretation.equals(other.interpretation);
+                && interpretation.equals(other.interpretation)
+                && patientId.equals(other.patientId)
+                && accountId.equals(other.accountId);
     }
 
     @java.lang.Override
@@ -175,7 +195,9 @@ public final class LabResultsMetadata {
                 this.specimenNumber,
                 this.dateReceived,
                 this.status,
-                this.interpretation);
+                this.interpretation,
+                this.patientId,
+                this.accountId);
     }
 
     @java.lang.Override
@@ -239,6 +261,14 @@ public final class LabResultsMetadata {
         _FinalStage interpretation(Optional<String> interpretation);
 
         _FinalStage interpretation(String interpretation);
+
+        _FinalStage patientId(Optional<String> patientId);
+
+        _FinalStage patientId(String patientId);
+
+        _FinalStage accountId(Optional<String> accountId);
+
+        _FinalStage accountId(String accountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -253,6 +283,10 @@ public final class LabResultsMetadata {
         private String dateReported;
 
         private String specimenNumber;
+
+        private Optional<String> accountId = Optional.empty();
+
+        private Optional<String> patientId = Optional.empty();
 
         private Optional<String> interpretation = Optional.empty();
 
@@ -287,6 +321,8 @@ public final class LabResultsMetadata {
             dateReceived(other.getDateReceived());
             status(other.getStatus());
             interpretation(other.getInterpretation());
+            patientId(other.getPatientId());
+            accountId(other.getAccountId());
             return this;
         }
 
@@ -322,6 +358,32 @@ public final class LabResultsMetadata {
         @JsonSetter("specimen_number")
         public _FinalStage specimenNumber(String specimenNumber) {
             this.specimenNumber = specimenNumber;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage accountId(String accountId) {
+            this.accountId = Optional.of(accountId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "account_id", nulls = Nulls.SKIP)
+        public _FinalStage accountId(Optional<String> accountId) {
+            this.accountId = accountId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage patientId(String patientId) {
+            this.patientId = Optional.of(patientId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "patient_id", nulls = Nulls.SKIP)
+        public _FinalStage patientId(Optional<String> patientId) {
+            this.patientId = patientId;
             return this;
         }
 
@@ -431,6 +493,8 @@ public final class LabResultsMetadata {
                     dateReceived,
                     status,
                     interpretation,
+                    patientId,
+                    accountId,
                     additionalProperties);
         }
     }

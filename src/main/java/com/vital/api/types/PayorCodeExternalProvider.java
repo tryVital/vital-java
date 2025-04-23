@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum PayorCodeExternalProvider {
     CHANGE_HEALTHCARE("change_healthcare"),
 
-    AVAILITY("availity");
+    AVAILITY("availity"),
+
+    STEDI("stedi");
 
     private final String value;
 
