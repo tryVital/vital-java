@@ -116,11 +116,17 @@ public enum ClientFacingResource {
 
     BASAL_BODY_TEMPERATURE("basal_body_temperature"),
 
+    HEART_RATE_RECOVERY_ONE_MINUTE("heart_rate_recovery_one_minute"),
+
     BODY_MASS_INDEX("body_mass_index"),
 
     LEAN_BODY_MASS("lean_body_mass"),
 
     WAIST_CIRCUMFERENCE("waist_circumference"),
+
+    WORKOUT_DISTANCE("workout_distance"),
+
+    WORKOUT_SWIMMING_STROKE("workout_swimming_stroke"),
 
     WORKOUT_DURATION("workout_duration"),
 

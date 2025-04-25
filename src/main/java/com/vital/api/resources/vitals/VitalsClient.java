@@ -51,6 +51,7 @@ import com.vital.api.resources.vitals.requests.VitalsGlucoseGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsGlucoseRequest;
 import com.vital.api.resources.vitals.requests.VitalsHandwashingGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartRateAlertGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsHeartRateRecoveryOneMinuteGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartrateGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsHeartrateRequest;
 import com.vital.api.resources.vitals.requests.VitalsHrvGroupedRequest;
@@ -85,7 +86,9 @@ import com.vital.api.resources.vitals.requests.VitalsWaistCircumferenceGroupedRe
 import com.vital.api.resources.vitals.requests.VitalsWaterGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsWaterRequest;
 import com.vital.api.resources.vitals.requests.VitalsWheelchairPushGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsWorkoutDistanceGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsWorkoutDurationGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsWorkoutSwimmingStrokeGroupedRequest;
 import com.vital.api.types.ClientFacingBloodOxygenTimeseries;
 import com.vital.api.types.ClientFacingBloodPressureTimeseries;
 import com.vital.api.types.ClientFacingBodyFatTimeseries;
@@ -133,6 +136,7 @@ import com.vital.api.types.GroupedForcedVitalCapacityResponse;
 import com.vital.api.types.GroupedGlucoseResponse;
 import com.vital.api.types.GroupedHandwashingResponse;
 import com.vital.api.types.GroupedHeartRateAlertResponse;
+import com.vital.api.types.GroupedHeartRateRecoveryOneMinuteResponse;
 import com.vital.api.types.GroupedHeartRateResponse;
 import com.vital.api.types.GroupedHrvResponse;
 import com.vital.api.types.GroupedHypnogramResponse;
@@ -156,7 +160,9 @@ import com.vital.api.types.GroupedVo2MaxResponse;
 import com.vital.api.types.GroupedWaistCircumferenceResponse;
 import com.vital.api.types.GroupedWaterResponse;
 import com.vital.api.types.GroupedWheelchairPushResponse;
+import com.vital.api.types.GroupedWorkoutDistanceResponse;
 import com.vital.api.types.GroupedWorkoutDurationResponse;
+import com.vital.api.types.GroupedWorkoutSwimmingStrokeResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
 import java.util.List;
@@ -172,6 +178,182 @@ public class VitalsClient {
 
     public VitalsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    public GroupedWorkoutSwimmingStrokeResponse workoutSwimmingStrokeGrouped(
+            String userId, VitalsWorkoutSwimmingStrokeGroupedRequest request) {
+        return workoutSwimmingStrokeGrouped(userId, request, null);
+    }
+
+    public GroupedWorkoutSwimmingStrokeResponse workoutSwimmingStrokeGrouped(
+            String userId, VitalsWorkoutSwimmingStrokeGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("workout_swimming_stroke/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), GroupedWorkoutSwimmingStrokeResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public GroupedWorkoutDistanceResponse workoutDistanceGrouped(
+            String userId, VitalsWorkoutDistanceGroupedRequest request) {
+        return workoutDistanceGrouped(userId, request, null);
+    }
+
+    public GroupedWorkoutDistanceResponse workoutDistanceGrouped(
+            String userId, VitalsWorkoutDistanceGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("workout_distance/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedWorkoutDistanceResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public GroupedHeartRateRecoveryOneMinuteResponse heartRateRecoveryOneMinuteGrouped(
+            String userId, VitalsHeartRateRecoveryOneMinuteGroupedRequest request) {
+        return heartRateRecoveryOneMinuteGrouped(userId, request, null);
+    }
+
+    public GroupedHeartRateRecoveryOneMinuteResponse heartRateRecoveryOneMinuteGrouped(
+            String userId, VitalsHeartRateRecoveryOneMinuteGroupedRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v2/timeseries")
+                .addPathSegment(userId)
+                .addPathSegments("heart_rate_recovery_one_minute/grouped");
+        if (request.getCursor().isPresent()) {
+            httpUrl.addQueryParameter("cursor", request.getCursor().get());
+        }
+        if (request.getNextCursor().isPresent()) {
+            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
+        }
+        if (request.getProvider().isPresent()) {
+            httpUrl.addQueryParameter("provider", request.getProvider().get());
+        }
+        httpUrl.addQueryParameter("start_date", request.getStartDate());
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), GroupedHeartRateRecoveryOneMinuteResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
     }
 
     public GroupedWaistCircumferenceResponse waistCircumferenceGrouped(
