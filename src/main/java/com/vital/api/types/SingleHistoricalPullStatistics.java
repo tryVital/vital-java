@@ -35,6 +35,8 @@ public final class SingleHistoricalPullStatistics {
 
     private final Optional<String> traceId;
 
+    private final Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails;
+
     private final Map<String, Object> additionalProperties;
 
     private SingleHistoricalPullStatistics(
@@ -45,6 +47,7 @@ public final class SingleHistoricalPullStatistics {
             Optional<Integer> daysWithData,
             String release,
             Optional<String> traceId,
+            Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails,
             Map<String, Object> additionalProperties) {
         this.status = status;
         this.rangeStart = rangeStart;
@@ -53,6 +56,7 @@ public final class SingleHistoricalPullStatistics {
         this.daysWithData = daysWithData;
         this.release = release;
         this.traceId = traceId;
+        this.errorDetails = errorDetails;
         this.additionalProperties = additionalProperties;
     }
 
@@ -91,6 +95,11 @@ public final class SingleHistoricalPullStatistics {
         return traceId;
     }
 
+    @JsonProperty("error_details")
+    public Optional<SingleHistoricalPullStatisticsErrorDetails> getErrorDetails() {
+        return errorDetails;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -109,7 +118,8 @@ public final class SingleHistoricalPullStatistics {
                 && timeline.equals(other.timeline)
                 && daysWithData.equals(other.daysWithData)
                 && release.equals(other.release)
-                && traceId.equals(other.traceId);
+                && traceId.equals(other.traceId)
+                && errorDetails.equals(other.errorDetails);
     }
 
     @java.lang.Override
@@ -121,7 +131,8 @@ public final class SingleHistoricalPullStatistics {
                 this.timeline,
                 this.daysWithData,
                 this.release,
-                this.traceId);
+                this.traceId,
+                this.errorDetails);
     }
 
     @java.lang.Override
@@ -165,6 +176,10 @@ public final class SingleHistoricalPullStatistics {
         _FinalStage traceId(Optional<String> traceId);
 
         _FinalStage traceId(String traceId);
+
+        _FinalStage errorDetails(Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails);
+
+        _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -174,6 +189,8 @@ public final class SingleHistoricalPullStatistics {
         private HistoricalPullTimeline timeline;
 
         private String release;
+
+        private Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails = Optional.empty();
 
         private Optional<String> traceId = Optional.empty();
 
@@ -197,6 +214,7 @@ public final class SingleHistoricalPullStatistics {
             daysWithData(other.getDaysWithData());
             release(other.getRelease());
             traceId(other.getTraceId());
+            errorDetails(other.getErrorDetails());
             return this;
         }
 
@@ -218,6 +236,19 @@ public final class SingleHistoricalPullStatistics {
         @JsonSetter("release")
         public _FinalStage release(String release) {
             this.release = release;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails) {
+            this.errorDetails = Optional.of(errorDetails);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "error_details", nulls = Nulls.SKIP)
+        public _FinalStage errorDetails(Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails) {
+            this.errorDetails = errorDetails;
             return this;
         }
 
@@ -276,7 +307,15 @@ public final class SingleHistoricalPullStatistics {
         @java.lang.Override
         public SingleHistoricalPullStatistics build() {
             return new SingleHistoricalPullStatistics(
-                    status, rangeStart, rangeEnd, timeline, daysWithData, release, traceId, additionalProperties);
+                    status,
+                    rangeStart,
+                    rangeEnd,
+                    timeline,
+                    daysWithData,
+                    release,
+                    traceId,
+                    errorDetails,
+                    additionalProperties);
         }
     }
 }

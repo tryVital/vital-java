@@ -32,6 +32,8 @@ public final class ClientFacingProviderWithStatus {
 
     private final String status;
 
+    private final Optional<String> externalUserId;
+
     private final Optional<ClientFacingConnectionErrorDetails> errorDetails;
 
     private final Map<String, ResourceAvailability> resourceAvailability;
@@ -44,6 +46,7 @@ public final class ClientFacingProviderWithStatus {
             String logo,
             OffsetDateTime createdOn,
             String status,
+            Optional<String> externalUserId,
             Optional<ClientFacingConnectionErrorDetails> errorDetails,
             Map<String, ResourceAvailability> resourceAvailability,
             Map<String, Object> additionalProperties) {
@@ -52,6 +55,7 @@ public final class ClientFacingProviderWithStatus {
         this.logo = logo;
         this.createdOn = createdOn;
         this.status = status;
+        this.externalUserId = externalUserId;
         this.errorDetails = errorDetails;
         this.resourceAvailability = resourceAvailability;
         this.additionalProperties = additionalProperties;
@@ -95,6 +99,20 @@ public final class ClientFacingProviderWithStatus {
     }
 
     /**
+     * @return The unique identifier of the associated external data provider user.
+     * <ul>
+     * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+     * <li>Password Providers: Username</li>
+     * <li>Email Providers: Email</li>
+     * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+     * </ul>
+     */
+    @JsonProperty("external_user_id")
+    public Optional<String> getExternalUserId() {
+        return externalUserId;
+    }
+
+    /**
      * @return Details of the terminal connection error — populated only when the status is <code>error</code>.
      */
     @JsonProperty("error_details")
@@ -124,6 +142,7 @@ public final class ClientFacingProviderWithStatus {
                 && logo.equals(other.logo)
                 && createdOn.equals(other.createdOn)
                 && status.equals(other.status)
+                && externalUserId.equals(other.externalUserId)
                 && errorDetails.equals(other.errorDetails)
                 && resourceAvailability.equals(other.resourceAvailability);
     }
@@ -136,6 +155,7 @@ public final class ClientFacingProviderWithStatus {
                 this.logo,
                 this.createdOn,
                 this.status,
+                this.externalUserId,
                 this.errorDetails,
                 this.resourceAvailability);
     }
@@ -174,6 +194,10 @@ public final class ClientFacingProviderWithStatus {
     public interface _FinalStage {
         ClientFacingProviderWithStatus build();
 
+        _FinalStage externalUserId(Optional<String> externalUserId);
+
+        _FinalStage externalUserId(String externalUserId);
+
         _FinalStage errorDetails(Optional<ClientFacingConnectionErrorDetails> errorDetails);
 
         _FinalStage errorDetails(ClientFacingConnectionErrorDetails errorDetails);
@@ -202,6 +226,8 @@ public final class ClientFacingProviderWithStatus {
 
         private Optional<ClientFacingConnectionErrorDetails> errorDetails = Optional.empty();
 
+        private Optional<String> externalUserId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -214,6 +240,7 @@ public final class ClientFacingProviderWithStatus {
             logo(other.getLogo());
             createdOn(other.getCreatedOn());
             status(other.getStatus());
+            externalUserId(other.getExternalUserId());
             errorDetails(other.getErrorDetails());
             resourceAvailability(other.getResourceAvailability());
             return this;
@@ -307,10 +334,41 @@ public final class ClientFacingProviderWithStatus {
             return this;
         }
 
+        /**
+         * <p>The unique identifier of the associated external data provider user.</p>
+         * <ul>
+         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+         * <li>Password Providers: Username</li>
+         * <li>Email Providers: Email</li>
+         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage externalUserId(String externalUserId) {
+            this.externalUserId = Optional.of(externalUserId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "external_user_id", nulls = Nulls.SKIP)
+        public _FinalStage externalUserId(Optional<String> externalUserId) {
+            this.externalUserId = externalUserId;
+            return this;
+        }
+
         @java.lang.Override
         public ClientFacingProviderWithStatus build() {
             return new ClientFacingProviderWithStatus(
-                    name, slug, logo, createdOn, status, errorDetails, resourceAvailability, additionalProperties);
+                    name,
+                    slug,
+                    logo,
+                    createdOn,
+                    status,
+                    externalUserId,
+                    errorDetails,
+                    resourceAvailability,
+                    additionalProperties);
         }
     }
 }

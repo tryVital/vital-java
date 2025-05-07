@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProviderConnectionCreated.Builder.class)
@@ -26,6 +27,8 @@ public final class ProviderConnectionCreated {
 
     private final ClientFacingProvider provider;
 
+    private final Optional<String> externalUserId;
+
     private final Map<String, ResourceAvailability> resourceAvailability;
 
     private final Map<String, Object> additionalProperties;
@@ -34,11 +37,13 @@ public final class ProviderConnectionCreated {
             String userId,
             ClientFacingProvider source,
             ClientFacingProvider provider,
+            Optional<String> externalUserId,
             Map<String, ResourceAvailability> resourceAvailability,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.source = source;
         this.provider = provider;
+        this.externalUserId = externalUserId;
         this.resourceAvailability = resourceAvailability;
         this.additionalProperties = additionalProperties;
     }
@@ -61,6 +66,20 @@ public final class ProviderConnectionCreated {
         return provider;
     }
 
+    /**
+     * @return The unique identifier of the associated external data provider user.
+     * <ul>
+     * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+     * <li>Password Providers: Username</li>
+     * <li>Email Providers: Email</li>
+     * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+     * </ul>
+     */
+    @JsonProperty("external_user_id")
+    public Optional<String> getExternalUserId() {
+        return externalUserId;
+    }
+
     @JsonProperty("resource_availability")
     public Map<String, ResourceAvailability> getResourceAvailability() {
         return resourceAvailability;
@@ -81,12 +100,13 @@ public final class ProviderConnectionCreated {
         return userId.equals(other.userId)
                 && source.equals(other.source)
                 && provider.equals(other.provider)
+                && externalUserId.equals(other.externalUserId)
                 && resourceAvailability.equals(other.resourceAvailability);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.source, this.provider, this.resourceAvailability);
+        return Objects.hash(this.userId, this.source, this.provider, this.externalUserId, this.resourceAvailability);
     }
 
     @java.lang.Override
@@ -115,6 +135,10 @@ public final class ProviderConnectionCreated {
     public interface _FinalStage {
         ProviderConnectionCreated build();
 
+        _FinalStage externalUserId(Optional<String> externalUserId);
+
+        _FinalStage externalUserId(String externalUserId);
+
         _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
 
         _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
@@ -132,6 +156,8 @@ public final class ProviderConnectionCreated {
 
         private Map<String, ResourceAvailability> resourceAvailability = new LinkedHashMap<>();
 
+        private Optional<String> externalUserId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -142,6 +168,7 @@ public final class ProviderConnectionCreated {
             userId(other.getUserId());
             source(other.getSource());
             provider(other.getProvider());
+            externalUserId(other.getExternalUserId());
             resourceAvailability(other.getResourceAvailability());
             return this;
         }
@@ -191,9 +218,33 @@ public final class ProviderConnectionCreated {
             return this;
         }
 
+        /**
+         * <p>The unique identifier of the associated external data provider user.</p>
+         * <ul>
+         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+         * <li>Password Providers: Username</li>
+         * <li>Email Providers: Email</li>
+         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage externalUserId(String externalUserId) {
+            this.externalUserId = Optional.of(externalUserId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "external_user_id", nulls = Nulls.SKIP)
+        public _FinalStage externalUserId(Optional<String> externalUserId) {
+            this.externalUserId = externalUserId;
+            return this;
+        }
+
         @java.lang.Override
         public ProviderConnectionCreated build() {
-            return new ProviderConnectionCreated(userId, source, provider, resourceAvailability, additionalProperties);
+            return new ProviderConnectionCreated(
+                    userId, source, provider, externalUserId, resourceAvailability, additionalProperties);
         }
     }
 }

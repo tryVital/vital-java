@@ -2247,6 +2247,10 @@ public class LabTestsClient {
         if (request.getOrderType().isPresent()) {
             httpUrl.addQueryParameter("order_type", request.getOrderType().get().toString());
         }
+        if (request.getIsCritical().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "is_critical", request.getIsCritical().get().toString());
+        }
         if (request.getOrderActivationTypes().isPresent()) {
             httpUrl.addQueryParameter(
                     "order_activation_types",

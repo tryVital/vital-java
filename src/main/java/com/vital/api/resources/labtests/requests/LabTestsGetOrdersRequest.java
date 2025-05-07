@@ -44,6 +44,8 @@ public final class LabTestsGetOrdersRequest {
 
     private final Optional<LabTestCollectionMethod> orderType;
 
+    private final Optional<Boolean> isCritical;
+
     private final Optional<OrderActivationType> orderActivationTypes;
 
     private final Optional<String> userId;
@@ -70,6 +72,7 @@ public final class LabTestsGetOrdersRequest {
             Optional<LabTestsGetOrdersRequestOrderKey> orderKey,
             Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection,
             Optional<LabTestCollectionMethod> orderType,
+            Optional<Boolean> isCritical,
             Optional<OrderActivationType> orderActivationTypes,
             Optional<String> userId,
             Optional<String> patientName,
@@ -87,6 +90,7 @@ public final class LabTestsGetOrdersRequest {
         this.orderKey = orderKey;
         this.orderDirection = orderDirection;
         this.orderType = orderType;
+        this.isCritical = isCritical;
         this.orderActivationTypes = orderActivationTypes;
         this.userId = userId;
         this.patientName = patientName;
@@ -170,6 +174,14 @@ public final class LabTestsGetOrdersRequest {
     }
 
     /**
+     * @return Filter by critical order status.
+     */
+    @JsonProperty("is_critical")
+    public Optional<Boolean> getIsCritical() {
+        return isCritical;
+    }
+
+    /**
      * @return Filter by activation type.
      */
     @JsonProperty("order_activation_types")
@@ -240,6 +252,7 @@ public final class LabTestsGetOrdersRequest {
                 && orderKey.equals(other.orderKey)
                 && orderDirection.equals(other.orderDirection)
                 && orderType.equals(other.orderType)
+                && isCritical.equals(other.isCritical)
                 && orderActivationTypes.equals(other.orderActivationTypes)
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
@@ -261,6 +274,7 @@ public final class LabTestsGetOrdersRequest {
                 this.orderKey,
                 this.orderDirection,
                 this.orderType,
+                this.isCritical,
                 this.orderActivationTypes,
                 this.userId,
                 this.patientName,
@@ -299,6 +313,8 @@ public final class LabTestsGetOrdersRequest {
 
         private Optional<LabTestCollectionMethod> orderType = Optional.empty();
 
+        private Optional<Boolean> isCritical = Optional.empty();
+
         private Optional<OrderActivationType> orderActivationTypes = Optional.empty();
 
         private Optional<String> userId = Optional.empty();
@@ -328,6 +344,7 @@ public final class LabTestsGetOrdersRequest {
             orderKey(other.getOrderKey());
             orderDirection(other.getOrderDirection());
             orderType(other.getOrderType());
+            isCritical(other.getIsCritical());
             orderActivationTypes(other.getOrderActivationTypes());
             userId(other.getUserId());
             patientName(other.getPatientName());
@@ -437,6 +454,17 @@ public final class LabTestsGetOrdersRequest {
             return this;
         }
 
+        @JsonSetter(value = "is_critical", nulls = Nulls.SKIP)
+        public Builder isCritical(Optional<Boolean> isCritical) {
+            this.isCritical = isCritical;
+            return this;
+        }
+
+        public Builder isCritical(Boolean isCritical) {
+            this.isCritical = Optional.of(isCritical);
+            return this;
+        }
+
         @JsonSetter(value = "order_activation_types", nulls = Nulls.SKIP)
         public Builder orderActivationTypes(Optional<OrderActivationType> orderActivationTypes) {
             this.orderActivationTypes = orderActivationTypes;
@@ -525,6 +553,7 @@ public final class LabTestsGetOrdersRequest {
                     orderKey,
                     orderDirection,
                     orderType,
+                    isCritical,
                     orderActivationTypes,
                     userId,
                     patientName,
