@@ -24,7 +24,9 @@ public enum Labs {
 
     SANOCARDIO("sanocardio"),
 
-    IHD("ihd");
+    IHD("ihd"),
+
+    NEXUS("nexus");
 
     private final String value;
 
