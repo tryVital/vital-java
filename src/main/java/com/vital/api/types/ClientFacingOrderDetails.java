@@ -38,6 +38,10 @@ public final class ClientFacingOrderDetails {
         return new ClientFacingOrderDetails(new AtHomePhlebotomyValue(value));
     }
 
+    public static ClientFacingOrderDetails onSiteCollection(ClientFacingOnSiteCollectionOrderDetails value) {
+        return new ClientFacingOrderDetails(new OnSiteCollectionValue(value));
+    }
+
     public boolean isWalkInTest() {
         return value instanceof WalkInTestValue;
     }
@@ -48,6 +52,10 @@ public final class ClientFacingOrderDetails {
 
     public boolean isAtHomePhlebotomy() {
         return value instanceof AtHomePhlebotomyValue;
+    }
+
+    public boolean isOnSiteCollection() {
+        return value instanceof OnSiteCollectionValue;
     }
 
     public boolean _isUnknown() {
@@ -75,6 +83,13 @@ public final class ClientFacingOrderDetails {
         return Optional.empty();
     }
 
+    public Optional<ClientFacingOnSiteCollectionOrderDetails> getOnSiteCollection() {
+        if (isOnSiteCollection()) {
+            return Optional.of(((OnSiteCollectionValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -94,6 +109,8 @@ public final class ClientFacingOrderDetails {
 
         T visitAtHomePhlebotomy(ClientFacingAtHomePhlebotomyOrderDetails atHomePhlebotomy);
 
+        T visitOnSiteCollection(ClientFacingOnSiteCollectionOrderDetails onSiteCollection);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -101,7 +118,8 @@ public final class ClientFacingOrderDetails {
     @JsonSubTypes({
         @JsonSubTypes.Type(WalkInTestValue.class),
         @JsonSubTypes.Type(TestkitValue.class),
-        @JsonSubTypes.Type(AtHomePhlebotomyValue.class)
+        @JsonSubTypes.Type(AtHomePhlebotomyValue.class),
+        @JsonSubTypes.Type(OnSiteCollectionValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -208,6 +226,44 @@ public final class ClientFacingOrderDetails {
         }
 
         private boolean equalTo(AtHomePhlebotomyValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "ClientFacingOrderDetails{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("on_site_collection")
+    private static final class OnSiteCollectionValue implements Value {
+        @JsonUnwrapped
+        private ClientFacingOnSiteCollectionOrderDetails value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private OnSiteCollectionValue() {}
+
+        private OnSiteCollectionValue(ClientFacingOnSiteCollectionOrderDetails value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitOnSiteCollection(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof OnSiteCollectionValue && equalTo((OnSiteCollectionValue) other);
+        }
+
+        private boolean equalTo(OnSiteCollectionValue other) {
             return value.equals(other.value);
         }
 

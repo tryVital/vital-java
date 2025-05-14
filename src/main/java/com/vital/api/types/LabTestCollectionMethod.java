@@ -10,7 +10,9 @@ public enum LabTestCollectionMethod {
 
     WALK_IN_TEST("walk_in_test"),
 
-    AT_HOME_PHLEBOTOMY("at_home_phlebotomy");
+    AT_HOME_PHLEBOTOMY("at_home_phlebotomy"),
+
+    ON_SITE_COLLECTION("on_site_collection");
 
     private final String value;
 

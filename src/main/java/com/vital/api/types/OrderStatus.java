@@ -87,7 +87,23 @@ public enum OrderStatus {
 
     COLLECTING_SAMPLE_TESTKIT_PROBLEM_IN_TRANSIT_CUSTOMER("collecting_sample.testkit.problem_in_transit_customer"),
 
-    COLLECTING_SAMPLE_TESTKIT_PROBLEM_IN_TRANSIT_LAB("collecting_sample.testkit.problem_in_transit_lab");
+    COLLECTING_SAMPLE_TESTKIT_PROBLEM_IN_TRANSIT_LAB("collecting_sample.testkit.problem_in_transit_lab"),
+
+    RECEIVED_ON_SITE_COLLECTION_ORDERED("received.on_site_collection.ordered"),
+
+    RECEIVED_ON_SITE_COLLECTION_REQUISITION_CREATED("received.on_site_collection.requisition_created"),
+
+    RECEIVED_ON_SITE_COLLECTION_REQUISITION_BYPASSED("received.on_site_collection.requisition_bypassed"),
+
+    SAMPLE_WITH_LAB_ON_SITE_COLLECTION_DRAW_COMPLETED("sample_with_lab.on_site_collection.draw_completed"),
+
+    COMPLETED_ON_SITE_COLLECTION_COMPLETED("completed.on_site_collection.completed"),
+
+    CANCELLED_ON_SITE_COLLECTION_CANCELLED("cancelled.on_site_collection.cancelled"),
+
+    SAMPLE_WITH_LAB_ON_SITE_COLLECTION_PARTIAL_RESULTS("sample_with_lab.on_site_collection.partial_results"),
+
+    FAILED_ON_SITE_COLLECTION_SAMPLE_ERROR("failed.on_site_collection.sample_error");
 
     private final String value;
 
