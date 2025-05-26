@@ -42,6 +42,10 @@ public final class PatientDetailsWithValidation {
 
     private final Optional<GenderIdentity> genderIdentity;
 
+    private final Optional<Integer> householdIncome;
+
+    private final Optional<Integer> householdSize;
+
     private final Map<String, Object> additionalProperties;
 
     private PatientDetailsWithValidation(
@@ -56,6 +60,8 @@ public final class PatientDetailsWithValidation {
             Optional<Ethnicity> ethnicity,
             Optional<SexualOrientation> sexualOrientation,
             Optional<GenderIdentity> genderIdentity,
+            Optional<Integer> householdIncome,
+            Optional<Integer> householdSize,
             Map<String, Object> additionalProperties) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -68,6 +74,8 @@ public final class PatientDetailsWithValidation {
         this.ethnicity = ethnicity;
         this.sexualOrientation = sexualOrientation;
         this.genderIdentity = genderIdentity;
+        this.householdIncome = householdIncome;
+        this.householdSize = householdSize;
         this.additionalProperties = additionalProperties;
     }
 
@@ -141,6 +149,22 @@ public final class PatientDetailsWithValidation {
         return genderIdentity;
     }
 
+    /**
+     * @return Household income in USD. If not provided, will be set to None
+     */
+    @JsonProperty("household_income")
+    public Optional<Integer> getHouseholdIncome() {
+        return householdIncome;
+    }
+
+    /**
+     * @return Household size. If not provided, will be set to None
+     */
+    @JsonProperty("household_size")
+    public Optional<Integer> getHouseholdSize() {
+        return householdSize;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -163,7 +187,9 @@ public final class PatientDetailsWithValidation {
                 && race.equals(other.race)
                 && ethnicity.equals(other.ethnicity)
                 && sexualOrientation.equals(other.sexualOrientation)
-                && genderIdentity.equals(other.genderIdentity);
+                && genderIdentity.equals(other.genderIdentity)
+                && householdIncome.equals(other.householdIncome)
+                && householdSize.equals(other.householdSize);
     }
 
     @java.lang.Override
@@ -179,7 +205,9 @@ public final class PatientDetailsWithValidation {
                 this.race,
                 this.ethnicity,
                 this.sexualOrientation,
-                this.genderIdentity);
+                this.genderIdentity,
+                this.householdIncome,
+                this.householdSize);
     }
 
     @java.lang.Override
@@ -239,6 +267,14 @@ public final class PatientDetailsWithValidation {
         _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
 
         _FinalStage genderIdentity(GenderIdentity genderIdentity);
+
+        _FinalStage householdIncome(Optional<Integer> householdIncome);
+
+        _FinalStage householdIncome(Integer householdIncome);
+
+        _FinalStage householdSize(Optional<Integer> householdSize);
+
+        _FinalStage householdSize(Integer householdSize);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -255,6 +291,10 @@ public final class PatientDetailsWithValidation {
         private String phoneNumber;
 
         private String email;
+
+        private Optional<Integer> householdSize = Optional.empty();
+
+        private Optional<Integer> householdIncome = Optional.empty();
 
         private Optional<GenderIdentity> genderIdentity = Optional.empty();
 
@@ -284,6 +324,8 @@ public final class PatientDetailsWithValidation {
             ethnicity(other.getEthnicity());
             sexualOrientation(other.getSexualOrientation());
             genderIdentity(other.getGenderIdentity());
+            householdIncome(other.getHouseholdIncome());
+            householdSize(other.getHouseholdSize());
             return this;
         }
 
@@ -326,6 +368,40 @@ public final class PatientDetailsWithValidation {
         @JsonSetter("email")
         public _FinalStage email(String email) {
             this.email = email;
+            return this;
+        }
+
+        /**
+         * <p>Household size. If not provided, will be set to None</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage householdSize(Integer householdSize) {
+            this.householdSize = Optional.of(householdSize);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "household_size", nulls = Nulls.SKIP)
+        public _FinalStage householdSize(Optional<Integer> householdSize) {
+            this.householdSize = householdSize;
+            return this;
+        }
+
+        /**
+         * <p>Household income in USD. If not provided, will be set to None</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage householdIncome(Integer householdIncome) {
+            this.householdIncome = Optional.of(householdIncome);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "household_income", nulls = Nulls.SKIP)
+        public _FinalStage householdIncome(Optional<Integer> householdIncome) {
+            this.householdIncome = householdIncome;
             return this;
         }
 
@@ -428,6 +504,8 @@ public final class PatientDetailsWithValidation {
                     ethnicity,
                     sexualOrientation,
                     genderIdentity,
+                    householdIncome,
+                    householdSize,
                     additionalProperties);
         }
     }

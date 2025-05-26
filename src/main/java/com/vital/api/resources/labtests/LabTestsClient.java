@@ -2197,6 +2197,56 @@ public class LabTestsClient {
     }
 
     /**
+     * PATCH update on site collection order when draw is completed
+     */
+    public PostOrderResponse updateOnSiteCollectionOrderDrawCompleted(String orderId) {
+        return updateOnSiteCollectionOrderDrawCompleted(orderId, null);
+    }
+
+    /**
+     * PATCH update on site collection order when draw is completed
+     */
+    public PostOrderResponse updateOnSiteCollectionOrderDrawCompleted(String orderId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/order")
+                .addPathSegment(orderId)
+                .addPathSegments("draw_completed")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PostOrderResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * GET many orders with filters.
      */
     public GetOrdersResponse getOrders() {
@@ -2250,6 +2300,10 @@ public class LabTestsClient {
         if (request.getIsCritical().isPresent()) {
             httpUrl.addQueryParameter(
                     "is_critical", request.getIsCritical().get().toString());
+        }
+        if (request.getInterpretation().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "interpretation", request.getInterpretation().get().toString());
         }
         if (request.getOrderActivationTypes().isPresent()) {
             httpUrl.addQueryParameter(

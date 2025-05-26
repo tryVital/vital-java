@@ -69,6 +69,8 @@ public final class ClientFacingOrder {
 
     private final boolean hasAbn;
 
+    private final Optional<Interpretation> interpretation;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -95,6 +97,7 @@ public final class ClientFacingOrder {
             Optional<Billing> billingType,
             Optional<List<String>> icdCodes,
             boolean hasAbn,
+            Optional<Interpretation> interpretation,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -119,6 +122,7 @@ public final class ClientFacingOrder {
         this.billingType = billingType;
         this.icdCodes = icdCodes;
         this.hasAbn = hasAbn;
+        this.interpretation = interpretation;
         this.additionalProperties = additionalProperties;
     }
 
@@ -285,6 +289,14 @@ public final class ClientFacingOrder {
         return hasAbn;
     }
 
+    /**
+     * @return Interpretation of the order result. Can be one of (normal, abnormal, critical).
+     */
+    @JsonProperty("interpretation")
+    public Optional<Interpretation> getInterpretation() {
+        return interpretation;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -319,7 +331,8 @@ public final class ClientFacingOrder {
                 && passthrough.equals(other.passthrough)
                 && billingType.equals(other.billingType)
                 && icdCodes.equals(other.icdCodes)
-                && hasAbn == other.hasAbn;
+                && hasAbn == other.hasAbn
+                && interpretation.equals(other.interpretation);
     }
 
     @java.lang.Override
@@ -347,7 +360,8 @@ public final class ClientFacingOrder {
                 this.passthrough,
                 this.billingType,
                 this.icdCodes,
-                this.hasAbn);
+                this.hasAbn,
+                this.interpretation);
     }
 
     @java.lang.Override
@@ -457,6 +471,10 @@ public final class ClientFacingOrder {
         _FinalStage icdCodes(Optional<List<String>> icdCodes);
 
         _FinalStage icdCodes(List<String> icdCodes);
+
+        _FinalStage interpretation(Optional<Interpretation> interpretation);
+
+        _FinalStage interpretation(Interpretation interpretation);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -485,6 +503,8 @@ public final class ClientFacingOrder {
         private OffsetDateTime updatedAt;
 
         private boolean hasAbn;
+
+        private Optional<Interpretation> interpretation = Optional.empty();
 
         private Optional<List<String>> icdCodes = Optional.empty();
 
@@ -546,6 +566,7 @@ public final class ClientFacingOrder {
             billingType(other.getBillingType());
             icdCodes(other.getIcdCodes());
             hasAbn(other.getHasAbn());
+            interpretation(other.getInterpretation());
             return this;
         }
 
@@ -630,6 +651,23 @@ public final class ClientFacingOrder {
         @JsonSetter("has_abn")
         public _FinalStage hasAbn(boolean hasAbn) {
             this.hasAbn = hasAbn;
+            return this;
+        }
+
+        /**
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage interpretation(Interpretation interpretation) {
+            this.interpretation = Optional.of(interpretation);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
+        public _FinalStage interpretation(Optional<Interpretation> interpretation) {
+            this.interpretation = interpretation;
             return this;
         }
 
@@ -897,6 +935,7 @@ public final class ClientFacingOrder {
                     billingType,
                     icdCodes,
                     hasAbn,
+                    interpretation,
                     additionalProperties);
         }
     }

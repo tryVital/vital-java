@@ -21,8 +21,6 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ContinuousQueryTaskHistoryEntry.Builder.class)
 public final class ContinuousQueryTaskHistoryEntry {
-    private final int taskerTodoId;
-
     private final String queryId;
 
     private final String userId;
@@ -40,7 +38,6 @@ public final class ContinuousQueryTaskHistoryEntry {
     private final Map<String, Object> additionalProperties;
 
     private ContinuousQueryTaskHistoryEntry(
-            int taskerTodoId,
             String queryId,
             String userId,
             ContinuousQueryTaskStatus status,
@@ -49,7 +46,6 @@ public final class ContinuousQueryTaskHistoryEntry {
             Optional<OffsetDateTime> endedAt,
             Optional<String> errorDetails,
             Map<String, Object> additionalProperties) {
-        this.taskerTodoId = taskerTodoId;
         this.queryId = queryId;
         this.userId = userId;
         this.status = status;
@@ -58,11 +54,6 @@ public final class ContinuousQueryTaskHistoryEntry {
         this.endedAt = endedAt;
         this.errorDetails = errorDetails;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("tasker_todo_id")
-    public int getTaskerTodoId() {
-        return taskerTodoId;
     }
 
     @JsonProperty("query_id")
@@ -112,8 +103,7 @@ public final class ContinuousQueryTaskHistoryEntry {
     }
 
     private boolean equalTo(ContinuousQueryTaskHistoryEntry other) {
-        return taskerTodoId == other.taskerTodoId
-                && queryId.equals(other.queryId)
+        return queryId.equals(other.queryId)
                 && userId.equals(other.userId)
                 && status.equals(other.status)
                 && scheduledAt.equals(other.scheduledAt)
@@ -125,7 +115,6 @@ public final class ContinuousQueryTaskHistoryEntry {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.taskerTodoId,
                 this.queryId,
                 this.userId,
                 this.status,
@@ -140,18 +129,14 @@ public final class ContinuousQueryTaskHistoryEntry {
         return ObjectMappers.stringify(this);
     }
 
-    public static TaskerTodoIdStage builder() {
+    public static QueryIdStage builder() {
         return new Builder();
-    }
-
-    public interface TaskerTodoIdStage {
-        QueryIdStage taskerTodoId(int taskerTodoId);
-
-        Builder from(ContinuousQueryTaskHistoryEntry other);
     }
 
     public interface QueryIdStage {
         UserIdStage queryId(String queryId);
+
+        Builder from(ContinuousQueryTaskHistoryEntry other);
     }
 
     public interface UserIdStage {
@@ -183,10 +168,7 @@ public final class ContinuousQueryTaskHistoryEntry {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements TaskerTodoIdStage, QueryIdStage, UserIdStage, StatusStage, ScheduledAtStage, _FinalStage {
-        private int taskerTodoId;
-
+    public static final class Builder implements QueryIdStage, UserIdStage, StatusStage, ScheduledAtStage, _FinalStage {
         private String queryId;
 
         private String userId;
@@ -208,7 +190,6 @@ public final class ContinuousQueryTaskHistoryEntry {
 
         @java.lang.Override
         public Builder from(ContinuousQueryTaskHistoryEntry other) {
-            taskerTodoId(other.getTaskerTodoId());
             queryId(other.getQueryId());
             userId(other.getUserId());
             status(other.getStatus());
@@ -216,13 +197,6 @@ public final class ContinuousQueryTaskHistoryEntry {
             startedAt(other.getStartedAt());
             endedAt(other.getEndedAt());
             errorDetails(other.getErrorDetails());
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("tasker_todo_id")
-        public QueryIdStage taskerTodoId(int taskerTodoId) {
-            this.taskerTodoId = taskerTodoId;
             return this;
         }
 
@@ -296,15 +270,7 @@ public final class ContinuousQueryTaskHistoryEntry {
         @java.lang.Override
         public ContinuousQueryTaskHistoryEntry build() {
             return new ContinuousQueryTaskHistoryEntry(
-                    taskerTodoId,
-                    queryId,
-                    userId,
-                    status,
-                    scheduledAt,
-                    startedAt,
-                    endedAt,
-                    errorDetails,
-                    additionalProperties);
+                    queryId, userId, status, scheduledAt, startedAt, endedAt, errorDetails, additionalProperties);
         }
     }
 }

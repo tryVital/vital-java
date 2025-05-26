@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.resources.labtests.types.LabTestsGetOrdersRequestOrderDirection;
 import com.vital.api.resources.labtests.types.LabTestsGetOrdersRequestOrderKey;
+import com.vital.api.types.Interpretation;
 import com.vital.api.types.LabTestCollectionMethod;
 import com.vital.api.types.OrderActivationType;
 import com.vital.api.types.OrderLowLevelStatus;
@@ -46,6 +47,8 @@ public final class LabTestsGetOrdersRequest {
 
     private final Optional<Boolean> isCritical;
 
+    private final Optional<Interpretation> interpretation;
+
     private final Optional<OrderActivationType> orderActivationTypes;
 
     private final Optional<String> userId;
@@ -73,6 +76,7 @@ public final class LabTestsGetOrdersRequest {
             Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection,
             Optional<LabTestCollectionMethod> orderType,
             Optional<Boolean> isCritical,
+            Optional<Interpretation> interpretation,
             Optional<OrderActivationType> orderActivationTypes,
             Optional<String> userId,
             Optional<String> patientName,
@@ -91,6 +95,7 @@ public final class LabTestsGetOrdersRequest {
         this.orderDirection = orderDirection;
         this.orderType = orderType;
         this.isCritical = isCritical;
+        this.interpretation = interpretation;
         this.orderActivationTypes = orderActivationTypes;
         this.userId = userId;
         this.patientName = patientName;
@@ -182,6 +187,14 @@ public final class LabTestsGetOrdersRequest {
     }
 
     /**
+     * @return Filter by result interpretation of the lab test.
+     */
+    @JsonProperty("interpretation")
+    public Optional<Interpretation> getInterpretation() {
+        return interpretation;
+    }
+
+    /**
      * @return Filter by activation type.
      */
     @JsonProperty("order_activation_types")
@@ -253,6 +266,7 @@ public final class LabTestsGetOrdersRequest {
                 && orderDirection.equals(other.orderDirection)
                 && orderType.equals(other.orderType)
                 && isCritical.equals(other.isCritical)
+                && interpretation.equals(other.interpretation)
                 && orderActivationTypes.equals(other.orderActivationTypes)
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
@@ -275,6 +289,7 @@ public final class LabTestsGetOrdersRequest {
                 this.orderDirection,
                 this.orderType,
                 this.isCritical,
+                this.interpretation,
                 this.orderActivationTypes,
                 this.userId,
                 this.patientName,
@@ -315,6 +330,8 @@ public final class LabTestsGetOrdersRequest {
 
         private Optional<Boolean> isCritical = Optional.empty();
 
+        private Optional<Interpretation> interpretation = Optional.empty();
+
         private Optional<OrderActivationType> orderActivationTypes = Optional.empty();
 
         private Optional<String> userId = Optional.empty();
@@ -345,6 +362,7 @@ public final class LabTestsGetOrdersRequest {
             orderDirection(other.getOrderDirection());
             orderType(other.getOrderType());
             isCritical(other.getIsCritical());
+            interpretation(other.getInterpretation());
             orderActivationTypes(other.getOrderActivationTypes());
             userId(other.getUserId());
             patientName(other.getPatientName());
@@ -465,6 +483,17 @@ public final class LabTestsGetOrdersRequest {
             return this;
         }
 
+        @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
+        public Builder interpretation(Optional<Interpretation> interpretation) {
+            this.interpretation = interpretation;
+            return this;
+        }
+
+        public Builder interpretation(Interpretation interpretation) {
+            this.interpretation = Optional.of(interpretation);
+            return this;
+        }
+
         @JsonSetter(value = "order_activation_types", nulls = Nulls.SKIP)
         public Builder orderActivationTypes(Optional<OrderActivationType> orderActivationTypes) {
             this.orderActivationTypes = orderActivationTypes;
@@ -554,6 +583,7 @@ public final class LabTestsGetOrdersRequest {
                     orderDirection,
                     orderType,
                     isCritical,
+                    interpretation,
                     orderActivationTypes,
                     userId,
                     patientName,

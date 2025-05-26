@@ -83,7 +83,7 @@ public final class ClientFacingCriticalResult {
     }
 
     /**
-     * @return The results interpretation, can be either (normal, abnormal, critical).
+     * @return The results interpretation, can be one of (normal, abnormal, critical).
      */
     @JsonProperty("interpretation")
     public String getInterpretation() {
@@ -280,7 +280,7 @@ public final class ClientFacingCriticalResult {
         }
 
         /**
-         * <p>The results interpretation, can be either (normal, abnormal, critical).</p>
+         * <p>The results interpretation, can be one of (normal, abnormal, critical).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
