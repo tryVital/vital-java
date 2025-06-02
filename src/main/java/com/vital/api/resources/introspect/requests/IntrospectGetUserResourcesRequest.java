@@ -48,6 +48,9 @@ public final class IntrospectGetUserResourcesRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Filter by user ID.
+     */
     @JsonProperty("user_id")
     public Optional<String> getUserId() {
         return userId;
