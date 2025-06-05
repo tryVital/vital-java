@@ -42,6 +42,10 @@ public final class ClientFacingMarker {
 
     private final Optional<Boolean> aLaCarteEnabled;
 
+    private final Optional<Integer> commonTatDays;
+
+    private final Optional<Integer> worstCaseTatDays;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingMarker(
@@ -56,6 +60,8 @@ public final class ClientFacingMarker {
             Optional<String> price,
             Optional<AoE> aoe,
             Optional<Boolean> aLaCarteEnabled,
+            Optional<Integer> commonTatDays,
+            Optional<Integer> worstCaseTatDays,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -68,6 +74,8 @@ public final class ClientFacingMarker {
         this.price = price;
         this.aoe = aoe;
         this.aLaCarteEnabled = aLaCarteEnabled;
+        this.commonTatDays = commonTatDays;
+        this.worstCaseTatDays = worstCaseTatDays;
         this.additionalProperties = additionalProperties;
     }
 
@@ -126,6 +134,16 @@ public final class ClientFacingMarker {
         return aLaCarteEnabled;
     }
 
+    @JsonProperty("common_tat_days")
+    public Optional<Integer> getCommonTatDays() {
+        return commonTatDays;
+    }
+
+    @JsonProperty("worst_case_tat_days")
+    public Optional<Integer> getWorstCaseTatDays() {
+        return worstCaseTatDays;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -148,7 +166,9 @@ public final class ClientFacingMarker {
                 && unit.equals(other.unit)
                 && price.equals(other.price)
                 && aoe.equals(other.aoe)
-                && aLaCarteEnabled.equals(other.aLaCarteEnabled);
+                && aLaCarteEnabled.equals(other.aLaCarteEnabled)
+                && commonTatDays.equals(other.commonTatDays)
+                && worstCaseTatDays.equals(other.worstCaseTatDays);
     }
 
     @java.lang.Override
@@ -164,7 +184,9 @@ public final class ClientFacingMarker {
                 this.unit,
                 this.price,
                 this.aoe,
-                this.aLaCarteEnabled);
+                this.aLaCarteEnabled,
+                this.commonTatDays,
+                this.worstCaseTatDays);
     }
 
     @java.lang.Override
@@ -224,6 +246,14 @@ public final class ClientFacingMarker {
         _FinalStage aLaCarteEnabled(Optional<Boolean> aLaCarteEnabled);
 
         _FinalStage aLaCarteEnabled(Boolean aLaCarteEnabled);
+
+        _FinalStage commonTatDays(Optional<Integer> commonTatDays);
+
+        _FinalStage commonTatDays(Integer commonTatDays);
+
+        _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays);
+
+        _FinalStage worstCaseTatDays(Integer worstCaseTatDays);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -233,6 +263,10 @@ public final class ClientFacingMarker {
         private String name;
 
         private String slug;
+
+        private Optional<Integer> worstCaseTatDays = Optional.empty();
+
+        private Optional<Integer> commonTatDays = Optional.empty();
 
         private Optional<Boolean> aLaCarteEnabled = Optional.empty();
 
@@ -268,6 +302,8 @@ public final class ClientFacingMarker {
             price(other.getPrice());
             aoe(other.getAoe());
             aLaCarteEnabled(other.getALaCarteEnabled());
+            commonTatDays(other.getCommonTatDays());
+            worstCaseTatDays(other.getWorstCaseTatDays());
             return this;
         }
 
@@ -289,6 +325,32 @@ public final class ClientFacingMarker {
         @JsonSetter("slug")
         public _FinalStage slug(String slug) {
             this.slug = slug;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage worstCaseTatDays(Integer worstCaseTatDays) {
+            this.worstCaseTatDays = Optional.of(worstCaseTatDays);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "worst_case_tat_days", nulls = Nulls.SKIP)
+        public _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays) {
+            this.worstCaseTatDays = worstCaseTatDays;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage commonTatDays(Integer commonTatDays) {
+            this.commonTatDays = Optional.of(commonTatDays);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "common_tat_days", nulls = Nulls.SKIP)
+        public _FinalStage commonTatDays(Optional<Integer> commonTatDays) {
+            this.commonTatDays = commonTatDays;
             return this;
         }
 
@@ -410,6 +472,8 @@ public final class ClientFacingMarker {
                     price,
                     aoe,
                     aLaCarteEnabled,
+                    commonTatDays,
+                    worstCaseTatDays,
                     additionalProperties);
         }
     }

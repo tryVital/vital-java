@@ -71,6 +71,10 @@ public final class ClientFacingOrder {
 
     private final Optional<Interpretation> interpretation;
 
+    private final Optional<String> expectedResultByDate;
+
+    private final Optional<String> worstCaseResultByDate;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -98,6 +102,8 @@ public final class ClientFacingOrder {
             Optional<List<String>> icdCodes,
             boolean hasAbn,
             Optional<Interpretation> interpretation,
+            Optional<String> expectedResultByDate,
+            Optional<String> worstCaseResultByDate,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -123,6 +129,8 @@ public final class ClientFacingOrder {
         this.icdCodes = icdCodes;
         this.hasAbn = hasAbn;
         this.interpretation = interpretation;
+        this.expectedResultByDate = expectedResultByDate;
+        this.worstCaseResultByDate = worstCaseResultByDate;
         this.additionalProperties = additionalProperties;
     }
 
@@ -297,6 +305,22 @@ public final class ClientFacingOrder {
         return interpretation;
     }
 
+    /**
+     * @return The common-case date by which the order result is expected to be available.
+     */
+    @JsonProperty("expected_result_by_date")
+    public Optional<String> getExpectedResultByDate() {
+        return expectedResultByDate;
+    }
+
+    /**
+     * @return The latest date by which the order result is expected to be available.
+     */
+    @JsonProperty("worst_case_result_by_date")
+    public Optional<String> getWorstCaseResultByDate() {
+        return worstCaseResultByDate;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -332,7 +356,9 @@ public final class ClientFacingOrder {
                 && billingType.equals(other.billingType)
                 && icdCodes.equals(other.icdCodes)
                 && hasAbn == other.hasAbn
-                && interpretation.equals(other.interpretation);
+                && interpretation.equals(other.interpretation)
+                && expectedResultByDate.equals(other.expectedResultByDate)
+                && worstCaseResultByDate.equals(other.worstCaseResultByDate);
     }
 
     @java.lang.Override
@@ -361,7 +387,9 @@ public final class ClientFacingOrder {
                 this.billingType,
                 this.icdCodes,
                 this.hasAbn,
-                this.interpretation);
+                this.interpretation,
+                this.expectedResultByDate,
+                this.worstCaseResultByDate);
     }
 
     @java.lang.Override
@@ -475,6 +503,14 @@ public final class ClientFacingOrder {
         _FinalStage interpretation(Optional<Interpretation> interpretation);
 
         _FinalStage interpretation(Interpretation interpretation);
+
+        _FinalStage expectedResultByDate(Optional<String> expectedResultByDate);
+
+        _FinalStage expectedResultByDate(String expectedResultByDate);
+
+        _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate);
+
+        _FinalStage worstCaseResultByDate(String worstCaseResultByDate);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -503,6 +539,10 @@ public final class ClientFacingOrder {
         private OffsetDateTime updatedAt;
 
         private boolean hasAbn;
+
+        private Optional<String> worstCaseResultByDate = Optional.empty();
+
+        private Optional<String> expectedResultByDate = Optional.empty();
 
         private Optional<Interpretation> interpretation = Optional.empty();
 
@@ -567,6 +607,8 @@ public final class ClientFacingOrder {
             icdCodes(other.getIcdCodes());
             hasAbn(other.getHasAbn());
             interpretation(other.getInterpretation());
+            expectedResultByDate(other.getExpectedResultByDate());
+            worstCaseResultByDate(other.getWorstCaseResultByDate());
             return this;
         }
 
@@ -651,6 +693,40 @@ public final class ClientFacingOrder {
         @JsonSetter("has_abn")
         public _FinalStage hasAbn(boolean hasAbn) {
             this.hasAbn = hasAbn;
+            return this;
+        }
+
+        /**
+         * <p>The latest date by which the order result is expected to be available.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage worstCaseResultByDate(String worstCaseResultByDate) {
+            this.worstCaseResultByDate = Optional.of(worstCaseResultByDate);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "worst_case_result_by_date", nulls = Nulls.SKIP)
+        public _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate) {
+            this.worstCaseResultByDate = worstCaseResultByDate;
+            return this;
+        }
+
+        /**
+         * <p>The common-case date by which the order result is expected to be available.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage expectedResultByDate(String expectedResultByDate) {
+            this.expectedResultByDate = Optional.of(expectedResultByDate);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "expected_result_by_date", nulls = Nulls.SKIP)
+        public _FinalStage expectedResultByDate(Optional<String> expectedResultByDate) {
+            this.expectedResultByDate = expectedResultByDate;
             return this;
         }
 
@@ -936,6 +1012,8 @@ public final class ClientFacingOrder {
                     icdCodes,
                     hasAbn,
                     interpretation,
+                    expectedResultByDate,
+                    worstCaseResultByDate,
                     additionalProperties);
         }
     }

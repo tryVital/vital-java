@@ -44,6 +44,10 @@ public final class ClientFacingMarkerComplete {
 
     private final Optional<Boolean> aLaCarteEnabled;
 
+    private final Optional<Integer> commonTatDays;
+
+    private final Optional<Integer> worstCaseTatDays;
+
     private final List<ClientFacingResult> expectedResults;
 
     private final Map<String, Object> additionalProperties;
@@ -60,6 +64,8 @@ public final class ClientFacingMarkerComplete {
             Optional<String> price,
             Optional<AoE> aoe,
             Optional<Boolean> aLaCarteEnabled,
+            Optional<Integer> commonTatDays,
+            Optional<Integer> worstCaseTatDays,
             List<ClientFacingResult> expectedResults,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -73,6 +79,8 @@ public final class ClientFacingMarkerComplete {
         this.price = price;
         this.aoe = aoe;
         this.aLaCarteEnabled = aLaCarteEnabled;
+        this.commonTatDays = commonTatDays;
+        this.worstCaseTatDays = worstCaseTatDays;
         this.expectedResults = expectedResults;
         this.additionalProperties = additionalProperties;
     }
@@ -132,6 +140,16 @@ public final class ClientFacingMarkerComplete {
         return aLaCarteEnabled;
     }
 
+    @JsonProperty("common_tat_days")
+    public Optional<Integer> getCommonTatDays() {
+        return commonTatDays;
+    }
+
+    @JsonProperty("worst_case_tat_days")
+    public Optional<Integer> getWorstCaseTatDays() {
+        return worstCaseTatDays;
+    }
+
     @JsonProperty("expected_results")
     public List<ClientFacingResult> getExpectedResults() {
         return expectedResults;
@@ -160,6 +178,8 @@ public final class ClientFacingMarkerComplete {
                 && price.equals(other.price)
                 && aoe.equals(other.aoe)
                 && aLaCarteEnabled.equals(other.aLaCarteEnabled)
+                && commonTatDays.equals(other.commonTatDays)
+                && worstCaseTatDays.equals(other.worstCaseTatDays)
                 && expectedResults.equals(other.expectedResults);
     }
 
@@ -177,6 +197,8 @@ public final class ClientFacingMarkerComplete {
                 this.price,
                 this.aoe,
                 this.aLaCarteEnabled,
+                this.commonTatDays,
+                this.worstCaseTatDays,
                 this.expectedResults);
     }
 
@@ -238,6 +260,14 @@ public final class ClientFacingMarkerComplete {
 
         _FinalStage aLaCarteEnabled(Boolean aLaCarteEnabled);
 
+        _FinalStage commonTatDays(Optional<Integer> commonTatDays);
+
+        _FinalStage commonTatDays(Integer commonTatDays);
+
+        _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays);
+
+        _FinalStage worstCaseTatDays(Integer worstCaseTatDays);
+
         _FinalStage expectedResults(List<ClientFacingResult> expectedResults);
 
         _FinalStage addExpectedResults(ClientFacingResult expectedResults);
@@ -254,6 +284,10 @@ public final class ClientFacingMarkerComplete {
         private String slug;
 
         private List<ClientFacingResult> expectedResults = new ArrayList<>();
+
+        private Optional<Integer> worstCaseTatDays = Optional.empty();
+
+        private Optional<Integer> commonTatDays = Optional.empty();
 
         private Optional<Boolean> aLaCarteEnabled = Optional.empty();
 
@@ -289,6 +323,8 @@ public final class ClientFacingMarkerComplete {
             price(other.getPrice());
             aoe(other.getAoe());
             aLaCarteEnabled(other.getALaCarteEnabled());
+            commonTatDays(other.getCommonTatDays());
+            worstCaseTatDays(other.getWorstCaseTatDays());
             expectedResults(other.getExpectedResults());
             return this;
         }
@@ -331,6 +367,32 @@ public final class ClientFacingMarkerComplete {
         public _FinalStage expectedResults(List<ClientFacingResult> expectedResults) {
             this.expectedResults.clear();
             this.expectedResults.addAll(expectedResults);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage worstCaseTatDays(Integer worstCaseTatDays) {
+            this.worstCaseTatDays = Optional.of(worstCaseTatDays);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "worst_case_tat_days", nulls = Nulls.SKIP)
+        public _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays) {
+            this.worstCaseTatDays = worstCaseTatDays;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage commonTatDays(Integer commonTatDays) {
+            this.commonTatDays = Optional.of(commonTatDays);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "common_tat_days", nulls = Nulls.SKIP)
+        public _FinalStage commonTatDays(Optional<Integer> commonTatDays) {
+            this.commonTatDays = commonTatDays;
             return this;
         }
 
@@ -452,6 +514,8 @@ public final class ClientFacingMarkerComplete {
                     price,
                     aoe,
                     aLaCarteEnabled,
+                    commonTatDays,
+                    worstCaseTatDays,
                     expectedResults,
                     additionalProperties);
         }
