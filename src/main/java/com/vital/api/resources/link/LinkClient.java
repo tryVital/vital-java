@@ -81,6 +81,9 @@ public class LinkClient {
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("page_size", request.getPageSize().get().toString());
         }
+        if (request.getTeamId().isPresent()) {
+            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -119,23 +122,31 @@ public class LinkClient {
     }
 
     public BulkImportConnectionsResponse bulkImport(BulkImportConnectionsBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/bulk_import")
-                .build();
+                .addPathSegments("v2/link/bulk_import");
+        if (request.getTeamId().isPresent()) {
+            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
+        }
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("provider", request.getProvider());
+        properties.put("connections", request.getConnections());
+        if (request.getWaitForCompletion().isPresent()) {
+            properties.put("wait_for_completion", request.getWaitForCompletion());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -168,23 +179,31 @@ public class LinkClient {
     }
 
     public Object bulkTriggerHistoricalPull(BulkTriggerHistoricalPullBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/bulk_trigger_historical_pull")
-                .build();
+                .addPathSegments("v2/link/bulk_trigger_historical_pull");
+        if (request.getTeamId().isPresent()) {
+            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
+        }
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("user_ids", request.getUserIds());
+        properties.put("provider", request.getProvider());
+        if (request.getWaitForCompletion().isPresent()) {
+            properties.put("wait_for_completion", request.getWaitForCompletion());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -217,23 +236,33 @@ public class LinkClient {
     }
 
     public BulkExportConnectionsResponse bulkExport(BulkExportConnectionsBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/bulk_export")
-                .build();
+                .addPathSegments("v2/link/bulk_export");
+        if (request.getTeamId().isPresent()) {
+            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
+        }
+        Map<String, Object> properties = new HashMap<>();
+        if (request.getUserIds().isPresent()) {
+            properties.put("user_ids", request.getUserIds());
+        }
+        properties.put("provider", request.getProvider());
+        if (request.getNextToken().isPresent()) {
+            properties.put("next_token", request.getNextToken());
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -266,23 +295,28 @@ public class LinkClient {
     }
 
     public Object bulkPause(BulkPauseConnectionsBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/bulk_pause")
-                .build();
+                .addPathSegments("v2/link/bulk_pause");
+        if (request.getTeamId().isPresent()) {
+            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
+        }
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("user_ids", request.getUserIds());
+        properties.put("provider", request.getProvider());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

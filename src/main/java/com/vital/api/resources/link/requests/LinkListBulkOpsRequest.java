@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.link.types.LinkListBulkOpsRequestTeamId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,12 +25,18 @@ public final class LinkListBulkOpsRequest {
 
     private final Optional<Integer> pageSize;
 
+    private final Optional<LinkListBulkOpsRequestTeamId> teamId;
+
     private final Map<String, Object> additionalProperties;
 
     private LinkListBulkOpsRequest(
-            Optional<String> nextCursor, Optional<Integer> pageSize, Map<String, Object> additionalProperties) {
+            Optional<String> nextCursor,
+            Optional<Integer> pageSize,
+            Optional<LinkListBulkOpsRequestTeamId> teamId,
+            Map<String, Object> additionalProperties) {
         this.nextCursor = nextCursor;
         this.pageSize = pageSize;
+        this.teamId = teamId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -41,6 +48,11 @@ public final class LinkListBulkOpsRequest {
     @JsonProperty("page_size")
     public Optional<Integer> getPageSize() {
         return pageSize;
+    }
+
+    @JsonProperty("team_id")
+    public Optional<LinkListBulkOpsRequestTeamId> getTeamId() {
+        return teamId;
     }
 
     @java.lang.Override
@@ -55,12 +67,12 @@ public final class LinkListBulkOpsRequest {
     }
 
     private boolean equalTo(LinkListBulkOpsRequest other) {
-        return nextCursor.equals(other.nextCursor) && pageSize.equals(other.pageSize);
+        return nextCursor.equals(other.nextCursor) && pageSize.equals(other.pageSize) && teamId.equals(other.teamId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.nextCursor, this.pageSize);
+        return Objects.hash(this.nextCursor, this.pageSize, this.teamId);
     }
 
     @java.lang.Override
@@ -78,6 +90,8 @@ public final class LinkListBulkOpsRequest {
 
         private Optional<Integer> pageSize = Optional.empty();
 
+        private Optional<LinkListBulkOpsRequestTeamId> teamId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -86,6 +100,7 @@ public final class LinkListBulkOpsRequest {
         public Builder from(LinkListBulkOpsRequest other) {
             nextCursor(other.getNextCursor());
             pageSize(other.getPageSize());
+            teamId(other.getTeamId());
             return this;
         }
 
@@ -111,8 +126,19 @@ public final class LinkListBulkOpsRequest {
             return this;
         }
 
+        @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
+        public Builder teamId(Optional<LinkListBulkOpsRequestTeamId> teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        public Builder teamId(LinkListBulkOpsRequestTeamId teamId) {
+            this.teamId = Optional.of(teamId);
+            return this;
+        }
+
         public LinkListBulkOpsRequest build() {
-            return new LinkListBulkOpsRequest(nextCursor, pageSize, additionalProperties);
+            return new LinkListBulkOpsRequest(nextCursor, pageSize, teamId, additionalProperties);
         }
     }
 }

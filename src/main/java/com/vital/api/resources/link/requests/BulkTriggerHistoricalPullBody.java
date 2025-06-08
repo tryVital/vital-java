@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.link.types.LinkBulkTriggerHistoricalPullRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,8 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BulkTriggerHistoricalPullBody.Builder.class)
 public final class BulkTriggerHistoricalPullBody {
+    private final Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId;
+
     private final List<String> userIds;
 
     private final OAuthProviders provider;
@@ -32,14 +35,21 @@ public final class BulkTriggerHistoricalPullBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkTriggerHistoricalPullBody(
+            Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId,
             List<String> userIds,
             OAuthProviders provider,
             Optional<Boolean> waitForCompletion,
             Map<String, Object> additionalProperties) {
+        this.teamId = teamId;
         this.userIds = userIds;
         this.provider = provider;
         this.waitForCompletion = waitForCompletion;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("team_id")
+    public Optional<LinkBulkTriggerHistoricalPullRequestTeamId> getTeamId() {
+        return teamId;
     }
 
     @JsonProperty("user_ids")
@@ -75,14 +85,15 @@ public final class BulkTriggerHistoricalPullBody {
     }
 
     private boolean equalTo(BulkTriggerHistoricalPullBody other) {
-        return userIds.equals(other.userIds)
+        return teamId.equals(other.teamId)
+                && userIds.equals(other.userIds)
                 && provider.equals(other.provider)
                 && waitForCompletion.equals(other.waitForCompletion);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userIds, this.provider, this.waitForCompletion);
+        return Objects.hash(this.teamId, this.userIds, this.provider, this.waitForCompletion);
     }
 
     @java.lang.Override
@@ -103,6 +114,10 @@ public final class BulkTriggerHistoricalPullBody {
     public interface _FinalStage {
         BulkTriggerHistoricalPullBody build();
 
+        _FinalStage teamId(Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId);
+
+        _FinalStage teamId(LinkBulkTriggerHistoricalPullRequestTeamId teamId);
+
         _FinalStage userIds(List<String> userIds);
 
         _FinalStage addUserIds(String userIds);
@@ -122,6 +137,8 @@ public final class BulkTriggerHistoricalPullBody {
 
         private List<String> userIds = new ArrayList<>();
 
+        private Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -129,6 +146,7 @@ public final class BulkTriggerHistoricalPullBody {
 
         @java.lang.Override
         public Builder from(BulkTriggerHistoricalPullBody other) {
+            teamId(other.getTeamId());
             userIds(other.getUserIds());
             provider(other.getProvider());
             waitForCompletion(other.getWaitForCompletion());
@@ -183,8 +201,22 @@ public final class BulkTriggerHistoricalPullBody {
         }
 
         @java.lang.Override
+        public _FinalStage teamId(LinkBulkTriggerHistoricalPullRequestTeamId teamId) {
+            this.teamId = Optional.of(teamId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
+        public _FinalStage teamId(Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        @java.lang.Override
         public BulkTriggerHistoricalPullBody build() {
-            return new BulkTriggerHistoricalPullBody(userIds, provider, waitForCompletion, additionalProperties);
+            return new BulkTriggerHistoricalPullBody(
+                    teamId, userIds, provider, waitForCompletion, additionalProperties);
         }
     }
 }

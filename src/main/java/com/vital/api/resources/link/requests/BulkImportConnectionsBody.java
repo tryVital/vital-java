@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.link.types.LinkBulkImportRequestTeamId;
 import com.vital.api.types.ConnectionRecipe;
 import com.vital.api.types.OAuthProviders;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BulkImportConnectionsBody.Builder.class)
 public final class BulkImportConnectionsBody {
+    private final Optional<LinkBulkImportRequestTeamId> teamId;
+
     private final OAuthProviders provider;
 
     private final List<ConnectionRecipe> connections;
@@ -33,14 +36,21 @@ public final class BulkImportConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkImportConnectionsBody(
+            Optional<LinkBulkImportRequestTeamId> teamId,
             OAuthProviders provider,
             List<ConnectionRecipe> connections,
             Optional<Boolean> waitForCompletion,
             Map<String, Object> additionalProperties) {
+        this.teamId = teamId;
         this.provider = provider;
         this.connections = connections;
         this.waitForCompletion = waitForCompletion;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("team_id")
+    public Optional<LinkBulkImportRequestTeamId> getTeamId() {
+        return teamId;
     }
 
     @JsonProperty("provider")
@@ -76,14 +86,15 @@ public final class BulkImportConnectionsBody {
     }
 
     private boolean equalTo(BulkImportConnectionsBody other) {
-        return provider.equals(other.provider)
+        return teamId.equals(other.teamId)
+                && provider.equals(other.provider)
                 && connections.equals(other.connections)
                 && waitForCompletion.equals(other.waitForCompletion);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.provider, this.connections, this.waitForCompletion);
+        return Objects.hash(this.teamId, this.provider, this.connections, this.waitForCompletion);
     }
 
     @java.lang.Override
@@ -104,6 +115,10 @@ public final class BulkImportConnectionsBody {
     public interface _FinalStage {
         BulkImportConnectionsBody build();
 
+        _FinalStage teamId(Optional<LinkBulkImportRequestTeamId> teamId);
+
+        _FinalStage teamId(LinkBulkImportRequestTeamId teamId);
+
         _FinalStage connections(List<ConnectionRecipe> connections);
 
         _FinalStage addConnections(ConnectionRecipe connections);
@@ -123,6 +138,8 @@ public final class BulkImportConnectionsBody {
 
         private List<ConnectionRecipe> connections = new ArrayList<>();
 
+        private Optional<LinkBulkImportRequestTeamId> teamId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -130,6 +147,7 @@ public final class BulkImportConnectionsBody {
 
         @java.lang.Override
         public Builder from(BulkImportConnectionsBody other) {
+            teamId(other.getTeamId());
             provider(other.getProvider());
             connections(other.getConnections());
             waitForCompletion(other.getWaitForCompletion());
@@ -184,8 +202,22 @@ public final class BulkImportConnectionsBody {
         }
 
         @java.lang.Override
+        public _FinalStage teamId(LinkBulkImportRequestTeamId teamId) {
+            this.teamId = Optional.of(teamId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
+        public _FinalStage teamId(Optional<LinkBulkImportRequestTeamId> teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        @java.lang.Override
         public BulkImportConnectionsBody build() {
-            return new BulkImportConnectionsBody(provider, connections, waitForCompletion, additionalProperties);
+            return new BulkImportConnectionsBody(
+                    teamId, provider, connections, waitForCompletion, additionalProperties);
         }
     }
 }

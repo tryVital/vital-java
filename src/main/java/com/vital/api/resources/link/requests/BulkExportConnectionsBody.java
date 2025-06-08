@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.resources.link.types.LinkBulkExportRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BulkExportConnectionsBody.Builder.class)
 public final class BulkExportConnectionsBody {
+    private final Optional<LinkBulkExportRequestTeamId> teamId;
+
     private final Optional<List<String>> userIds;
 
     private final OAuthProviders provider;
@@ -31,14 +34,21 @@ public final class BulkExportConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkExportConnectionsBody(
+            Optional<LinkBulkExportRequestTeamId> teamId,
             Optional<List<String>> userIds,
             OAuthProviders provider,
             Optional<String> nextToken,
             Map<String, Object> additionalProperties) {
+        this.teamId = teamId;
         this.userIds = userIds;
         this.provider = provider;
         this.nextToken = nextToken;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("team_id")
+    public Optional<LinkBulkExportRequestTeamId> getTeamId() {
+        return teamId;
     }
 
     @JsonProperty("user_ids")
@@ -68,12 +78,15 @@ public final class BulkExportConnectionsBody {
     }
 
     private boolean equalTo(BulkExportConnectionsBody other) {
-        return userIds.equals(other.userIds) && provider.equals(other.provider) && nextToken.equals(other.nextToken);
+        return teamId.equals(other.teamId)
+                && userIds.equals(other.userIds)
+                && provider.equals(other.provider)
+                && nextToken.equals(other.nextToken);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userIds, this.provider, this.nextToken);
+        return Objects.hash(this.teamId, this.userIds, this.provider, this.nextToken);
     }
 
     @java.lang.Override
@@ -94,6 +107,10 @@ public final class BulkExportConnectionsBody {
     public interface _FinalStage {
         BulkExportConnectionsBody build();
 
+        _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId);
+
+        _FinalStage teamId(LinkBulkExportRequestTeamId teamId);
+
         _FinalStage userIds(Optional<List<String>> userIds);
 
         _FinalStage userIds(List<String> userIds);
@@ -111,6 +128,8 @@ public final class BulkExportConnectionsBody {
 
         private Optional<List<String>> userIds = Optional.empty();
 
+        private Optional<LinkBulkExportRequestTeamId> teamId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -118,6 +137,7 @@ public final class BulkExportConnectionsBody {
 
         @java.lang.Override
         public Builder from(BulkExportConnectionsBody other) {
+            teamId(other.getTeamId());
             userIds(other.getUserIds());
             provider(other.getProvider());
             nextToken(other.getNextToken());
@@ -158,8 +178,21 @@ public final class BulkExportConnectionsBody {
         }
 
         @java.lang.Override
+        public _FinalStage teamId(LinkBulkExportRequestTeamId teamId) {
+            this.teamId = Optional.of(teamId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
+        public _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId) {
+            this.teamId = teamId;
+            return this;
+        }
+
+        @java.lang.Override
         public BulkExportConnectionsBody build() {
-            return new BulkExportConnectionsBody(userIds, provider, nextToken, additionalProperties);
+            return new BulkExportConnectionsBody(teamId, userIds, provider, nextToken, additionalProperties);
         }
     }
 }
