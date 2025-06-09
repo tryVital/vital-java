@@ -22,7 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Question.Builder.class)
 public final class Question {
-    private final int id;
+    private final long id;
 
     private final boolean required;
 
@@ -43,7 +43,7 @@ public final class Question {
     private final Map<String, Object> additionalProperties;
 
     private Question(
-            int id,
+            long id,
             boolean required,
             String code,
             String value,
@@ -66,7 +66,7 @@ public final class Question {
     }
 
     @JsonProperty("id")
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -157,7 +157,7 @@ public final class Question {
     }
 
     public interface IdStage {
-        RequiredStage id(int id);
+        RequiredStage id(long id);
 
         Builder from(Question other);
     }
@@ -203,7 +203,7 @@ public final class Question {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements IdStage, RequiredStage, CodeStage, ValueStage, TypeStage, SequenceStage, _FinalStage {
-        private int id;
+        private long id;
 
         private boolean required;
 
@@ -242,7 +242,7 @@ public final class Question {
 
         @java.lang.Override
         @JsonSetter("id")
-        public RequiredStage id(int id) {
+        public RequiredStage id(long id) {
             this.id = id;
             return this;
         }
