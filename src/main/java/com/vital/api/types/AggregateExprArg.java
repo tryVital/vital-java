@@ -46,6 +46,18 @@ public final class AggregateExprArg {
             return visitor.visit((ChronotypeValueMacroExpr) this.value);
         } else if (this.type == 7) {
             return visitor.visit((UnrecognizedValueMacroExpr) this.value);
+        } else if (this.type == 8) {
+            return visitor.visit((DiscreteTimeseriesExpr) this.value);
+        } else if (this.type == 9) {
+            return visitor.visit((IntervalTimeseriesExpr) this.value);
+        } else if (this.type == 10) {
+            return visitor.visit((BloodPressureTimeseriesExpr) this.value);
+        } else if (this.type == 11) {
+            return visitor.visit((TemperatureTimeseriesExpr) this.value);
+        } else if (this.type == 12) {
+            return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
+        } else if (this.type == 13) {
+            return visitor.visit((NoteTimeseriesExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -102,6 +114,30 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 7);
     }
 
+    public static AggregateExprArg of(DiscreteTimeseriesExpr value) {
+        return new AggregateExprArg(value, 8);
+    }
+
+    public static AggregateExprArg of(IntervalTimeseriesExpr value) {
+        return new AggregateExprArg(value, 9);
+    }
+
+    public static AggregateExprArg of(BloodPressureTimeseriesExpr value) {
+        return new AggregateExprArg(value, 10);
+    }
+
+    public static AggregateExprArg of(TemperatureTimeseriesExpr value) {
+        return new AggregateExprArg(value, 11);
+    }
+
+    public static AggregateExprArg of(WorkoutDurationTimeseriesExpr value) {
+        return new AggregateExprArg(value, 12);
+    }
+
+    public static AggregateExprArg of(NoteTimeseriesExpr value) {
+        return new AggregateExprArg(value, 13);
+    }
+
     public interface Visitor<T> {
         T visit(SleepColumnExpr value);
 
@@ -118,6 +154,18 @@ public final class AggregateExprArg {
         T visit(ChronotypeValueMacroExpr value);
 
         T visit(UnrecognizedValueMacroExpr value);
+
+        T visit(DiscreteTimeseriesExpr value);
+
+        T visit(IntervalTimeseriesExpr value);
+
+        T visit(BloodPressureTimeseriesExpr value);
+
+        T visit(TemperatureTimeseriesExpr value);
+
+        T visit(WorkoutDurationTimeseriesExpr value);
+
+        T visit(NoteTimeseriesExpr value);
     }
 
     static final class Deserializer extends StdDeserializer<AggregateExprArg> {
@@ -158,6 +206,30 @@ public final class AggregateExprArg {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, UnrecognizedValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, DiscreteTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IntervalTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, BloodPressureTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, TemperatureTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, WorkoutDurationTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, NoteTimeseriesExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

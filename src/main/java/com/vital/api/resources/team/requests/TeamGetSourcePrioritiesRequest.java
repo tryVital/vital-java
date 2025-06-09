@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.PriorityResource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,17 +21,18 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TeamGetSourcePrioritiesRequest.Builder.class)
 public final class TeamGetSourcePrioritiesRequest {
-    private final Optional<String> dataType;
+    private final Optional<PriorityResource> dataType;
 
     private final Map<String, Object> additionalProperties;
 
-    private TeamGetSourcePrioritiesRequest(Optional<String> dataType, Map<String, Object> additionalProperties) {
+    private TeamGetSourcePrioritiesRequest(
+            Optional<PriorityResource> dataType, Map<String, Object> additionalProperties) {
         this.dataType = dataType;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data_type")
-    public Optional<String> getDataType() {
+    public Optional<PriorityResource> getDataType() {
         return dataType;
     }
 
@@ -65,7 +67,7 @@ public final class TeamGetSourcePrioritiesRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> dataType = Optional.empty();
+        private Optional<PriorityResource> dataType = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -78,12 +80,12 @@ public final class TeamGetSourcePrioritiesRequest {
         }
 
         @JsonSetter(value = "data_type", nulls = Nulls.SKIP)
-        public Builder dataType(Optional<String> dataType) {
+        public Builder dataType(Optional<PriorityResource> dataType) {
             this.dataType = dataType;
             return this;
         }
 
-        public Builder dataType(String dataType) {
+        public Builder dataType(PriorityResource dataType) {
             this.dataType = Optional.of(dataType);
             return this;
         }

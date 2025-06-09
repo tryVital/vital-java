@@ -260,7 +260,7 @@ public class TeamClient {
                 .newBuilder()
                 .addPathSegments("v2/team/source/priorities");
         if (request.getDataType().isPresent()) {
-            httpUrl.addQueryParameter("data_type", request.getDataType().get());
+            httpUrl.addQueryParameter("data_type", request.getDataType().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

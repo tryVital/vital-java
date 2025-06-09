@@ -5,22 +5,20 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum IndexColumnExprIndex {
-    SLEEP("sleep"),
+public enum PriorityResource {
+    WORKOUTS("workouts"),
 
     ACTIVITY("activity"),
 
-    WORKOUT("workout"),
+    SLEEP("sleep"),
 
     BODY("body"),
-
-    MEAL("meal"),
 
     TIMESERIES("timeseries");
 
     private final String value;
 
-    IndexColumnExprIndex(String value) {
+    PriorityResource(String value) {
         this.value = value;
     }
 
