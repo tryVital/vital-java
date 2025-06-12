@@ -1977,16 +1977,10 @@ public class LabTestsClient {
         }
     }
 
-    /**
-     * POST create new order
-     */
     public PostOrderResponse createOrder(CreateOrderRequestCompatible request) {
         return createOrder(request, null);
     }
 
-    /**
-     * POST create new order
-     */
     public PostOrderResponse createOrder(CreateOrderRequestCompatible request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
