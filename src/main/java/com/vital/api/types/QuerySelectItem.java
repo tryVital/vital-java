@@ -43,7 +43,7 @@ public final class QuerySelectItem {
         } else if (this.type == 5) {
             return visitor.visit((BodyColumnExpr) this.value);
         } else if (this.type == 6) {
-            return visitor.visit((IndexColumnExpr) this.value);
+            return visitor.visit((MealColumnExpr) this.value);
         } else if (this.type == 7) {
             return visitor.visit((SleepScoreValueMacroExpr) this.value);
         } else if (this.type == 8) {
@@ -62,6 +62,10 @@ public final class QuerySelectItem {
             return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
         } else if (this.type == 15) {
             return visitor.visit((NoteTimeseriesExpr) this.value);
+        } else if (this.type == 16) {
+            return visitor.visit((IndexColumnExpr) this.value);
+        } else if (this.type == 17) {
+            return visitor.visit((SourceColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -110,7 +114,7 @@ public final class QuerySelectItem {
         return new QuerySelectItem(value, 5);
     }
 
-    public static QuerySelectItem of(IndexColumnExpr value) {
+    public static QuerySelectItem of(MealColumnExpr value) {
         return new QuerySelectItem(value, 6);
     }
 
@@ -150,6 +154,14 @@ public final class QuerySelectItem {
         return new QuerySelectItem(value, 15);
     }
 
+    public static QuerySelectItem of(IndexColumnExpr value) {
+        return new QuerySelectItem(value, 16);
+    }
+
+    public static QuerySelectItem of(SourceColumnExpr value) {
+        return new QuerySelectItem(value, 17);
+    }
+
     public interface Visitor<T> {
         T visit(AggregateExpr value);
 
@@ -163,7 +175,7 @@ public final class QuerySelectItem {
 
         T visit(BodyColumnExpr value);
 
-        T visit(IndexColumnExpr value);
+        T visit(MealColumnExpr value);
 
         T visit(SleepScoreValueMacroExpr value);
 
@@ -182,6 +194,10 @@ public final class QuerySelectItem {
         T visit(WorkoutDurationTimeseriesExpr value);
 
         T visit(NoteTimeseriesExpr value);
+
+        T visit(IndexColumnExpr value);
+
+        T visit(SourceColumnExpr value);
     }
 
     static final class Deserializer extends StdDeserializer<QuerySelectItem> {
@@ -217,7 +233,7 @@ public final class QuerySelectItem {
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IndexColumnExpr.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, MealColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {
@@ -254,6 +270,14 @@ public final class QuerySelectItem {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, NoteTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IndexColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SourceColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

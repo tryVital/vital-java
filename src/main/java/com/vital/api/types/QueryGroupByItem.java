@@ -34,6 +34,36 @@ public final class QueryGroupByItem {
             return visitor.visit((DateTruncExpr) this.value);
         } else if (this.type == 1) {
             return visitor.visit((DatePartExpr) this.value);
+        } else if (this.type == 2) {
+            return visitor.visit((SleepColumnExpr) this.value);
+        } else if (this.type == 3) {
+            return visitor.visit((ActivityColumnExpr) this.value);
+        } else if (this.type == 4) {
+            return visitor.visit((WorkoutColumnExpr) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((BodyColumnExpr) this.value);
+        } else if (this.type == 6) {
+            return visitor.visit((MealColumnExpr) this.value);
+        } else if (this.type == 7) {
+            return visitor.visit((SleepScoreValueMacroExpr) this.value);
+        } else if (this.type == 8) {
+            return visitor.visit((ChronotypeValueMacroExpr) this.value);
+        } else if (this.type == 9) {
+            return visitor.visit((UnrecognizedValueMacroExpr) this.value);
+        } else if (this.type == 10) {
+            return visitor.visit((DiscreteTimeseriesExpr) this.value);
+        } else if (this.type == 11) {
+            return visitor.visit((IntervalTimeseriesExpr) this.value);
+        } else if (this.type == 12) {
+            return visitor.visit((BloodPressureTimeseriesExpr) this.value);
+        } else if (this.type == 13) {
+            return visitor.visit((TemperatureTimeseriesExpr) this.value);
+        } else if (this.type == 14) {
+            return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
+        } else if (this.type == 15) {
+            return visitor.visit((NoteTimeseriesExpr) this.value);
+        } else if (this.type == 16) {
+            return visitor.visit((SourceColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -66,10 +96,100 @@ public final class QueryGroupByItem {
         return new QueryGroupByItem(value, 1);
     }
 
+    public static QueryGroupByItem of(SleepColumnExpr value) {
+        return new QueryGroupByItem(value, 2);
+    }
+
+    public static QueryGroupByItem of(ActivityColumnExpr value) {
+        return new QueryGroupByItem(value, 3);
+    }
+
+    public static QueryGroupByItem of(WorkoutColumnExpr value) {
+        return new QueryGroupByItem(value, 4);
+    }
+
+    public static QueryGroupByItem of(BodyColumnExpr value) {
+        return new QueryGroupByItem(value, 5);
+    }
+
+    public static QueryGroupByItem of(MealColumnExpr value) {
+        return new QueryGroupByItem(value, 6);
+    }
+
+    public static QueryGroupByItem of(SleepScoreValueMacroExpr value) {
+        return new QueryGroupByItem(value, 7);
+    }
+
+    public static QueryGroupByItem of(ChronotypeValueMacroExpr value) {
+        return new QueryGroupByItem(value, 8);
+    }
+
+    public static QueryGroupByItem of(UnrecognizedValueMacroExpr value) {
+        return new QueryGroupByItem(value, 9);
+    }
+
+    public static QueryGroupByItem of(DiscreteTimeseriesExpr value) {
+        return new QueryGroupByItem(value, 10);
+    }
+
+    public static QueryGroupByItem of(IntervalTimeseriesExpr value) {
+        return new QueryGroupByItem(value, 11);
+    }
+
+    public static QueryGroupByItem of(BloodPressureTimeseriesExpr value) {
+        return new QueryGroupByItem(value, 12);
+    }
+
+    public static QueryGroupByItem of(TemperatureTimeseriesExpr value) {
+        return new QueryGroupByItem(value, 13);
+    }
+
+    public static QueryGroupByItem of(WorkoutDurationTimeseriesExpr value) {
+        return new QueryGroupByItem(value, 14);
+    }
+
+    public static QueryGroupByItem of(NoteTimeseriesExpr value) {
+        return new QueryGroupByItem(value, 15);
+    }
+
+    public static QueryGroupByItem of(SourceColumnExpr value) {
+        return new QueryGroupByItem(value, 16);
+    }
+
     public interface Visitor<T> {
         T visit(DateTruncExpr value);
 
         T visit(DatePartExpr value);
+
+        T visit(SleepColumnExpr value);
+
+        T visit(ActivityColumnExpr value);
+
+        T visit(WorkoutColumnExpr value);
+
+        T visit(BodyColumnExpr value);
+
+        T visit(MealColumnExpr value);
+
+        T visit(SleepScoreValueMacroExpr value);
+
+        T visit(ChronotypeValueMacroExpr value);
+
+        T visit(UnrecognizedValueMacroExpr value);
+
+        T visit(DiscreteTimeseriesExpr value);
+
+        T visit(IntervalTimeseriesExpr value);
+
+        T visit(BloodPressureTimeseriesExpr value);
+
+        T visit(TemperatureTimeseriesExpr value);
+
+        T visit(WorkoutDurationTimeseriesExpr value);
+
+        T visit(NoteTimeseriesExpr value);
+
+        T visit(SourceColumnExpr value);
     }
 
     static final class Deserializer extends StdDeserializer<QueryGroupByItem> {
@@ -86,6 +206,66 @@ public final class QueryGroupByItem {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, DatePartExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ActivityColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, WorkoutColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, BodyColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, MealColumnExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SleepScoreValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ChronotypeValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UnrecognizedValueMacroExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, DiscreteTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IntervalTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, BloodPressureTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, TemperatureTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, WorkoutDurationTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, NoteTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SourceColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

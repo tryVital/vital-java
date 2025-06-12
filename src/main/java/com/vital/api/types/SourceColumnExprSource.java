@@ -5,7 +5,7 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum TemperatureTimeseriesExprField {
+public enum SourceColumnExprSource {
     SOURCE_PROVIDER("source_provider"),
 
     SOURCE_TYPE("source_type"),
@@ -14,21 +14,11 @@ public enum TemperatureTimeseriesExprField {
 
     SOURCE_WORKOUT_ID("source_workout_id"),
 
-    SOURCE_SPORT("source_sport"),
-
-    TIMEZONE_OFFSET("timezone_offset"),
-
-    TYPE("type"),
-
-    DURATION("duration"),
-
-    VALUE("value"),
-
-    SENSOR_LOCATION("sensor_location");
+    SOURCE_SPORT("source_sport");
 
     private final String value;
 
-    TemperatureTimeseriesExprField(String value) {
+    SourceColumnExprSource(String value) {
         this.value = value;
     }
 

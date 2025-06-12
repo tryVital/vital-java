@@ -39,7 +39,7 @@ public final class AggregateExprArg {
         } else if (this.type == 3) {
             return visitor.visit((BodyColumnExpr) this.value);
         } else if (this.type == 4) {
-            return visitor.visit((IndexColumnExpr) this.value);
+            return visitor.visit((MealColumnExpr) this.value);
         } else if (this.type == 5) {
             return visitor.visit((SleepScoreValueMacroExpr) this.value);
         } else if (this.type == 6) {
@@ -58,6 +58,8 @@ public final class AggregateExprArg {
             return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
         } else if (this.type == 13) {
             return visitor.visit((NoteTimeseriesExpr) this.value);
+        } else if (this.type == 14) {
+            return visitor.visit((IndexColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -98,7 +100,7 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 3);
     }
 
-    public static AggregateExprArg of(IndexColumnExpr value) {
+    public static AggregateExprArg of(MealColumnExpr value) {
         return new AggregateExprArg(value, 4);
     }
 
@@ -138,6 +140,10 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 13);
     }
 
+    public static AggregateExprArg of(IndexColumnExpr value) {
+        return new AggregateExprArg(value, 14);
+    }
+
     public interface Visitor<T> {
         T visit(SleepColumnExpr value);
 
@@ -147,7 +153,7 @@ public final class AggregateExprArg {
 
         T visit(BodyColumnExpr value);
 
-        T visit(IndexColumnExpr value);
+        T visit(MealColumnExpr value);
 
         T visit(SleepScoreValueMacroExpr value);
 
@@ -166,6 +172,8 @@ public final class AggregateExprArg {
         T visit(WorkoutDurationTimeseriesExpr value);
 
         T visit(NoteTimeseriesExpr value);
+
+        T visit(IndexColumnExpr value);
     }
 
     static final class Deserializer extends StdDeserializer<AggregateExprArg> {
@@ -193,7 +201,7 @@ public final class AggregateExprArg {
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IndexColumnExpr.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, MealColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             try {
@@ -230,6 +238,10 @@ public final class AggregateExprArg {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, NoteTimeseriesExpr.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, IndexColumnExpr.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

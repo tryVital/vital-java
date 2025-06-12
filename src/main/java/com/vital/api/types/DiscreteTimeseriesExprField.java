@@ -10,6 +10,8 @@ public enum DiscreteTimeseriesExprField {
 
     SOURCE_TYPE("source_type"),
 
+    SOURCE_APP_ID("source_app_id"),
+
     SOURCE_WORKOUT_ID("source_workout_id"),
 
     SOURCE_SPORT("source_sport"),

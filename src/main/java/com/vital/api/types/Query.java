@@ -26,18 +26,14 @@ public final class Query {
 
     private final Optional<List<QueryGroupByItem>> groupBy;
 
-    private final Optional<Boolean> splitBySource;
-
     private final Map<String, Object> additionalProperties;
 
     private Query(
             List<QuerySelectItem> select,
             Optional<List<QueryGroupByItem>> groupBy,
-            Optional<Boolean> splitBySource,
             Map<String, Object> additionalProperties) {
         this.select = select;
         this.groupBy = groupBy;
-        this.splitBySource = splitBySource;
         this.additionalProperties = additionalProperties;
     }
 
@@ -49,11 +45,6 @@ public final class Query {
     @JsonProperty("group_by")
     public Optional<List<QueryGroupByItem>> getGroupBy() {
         return groupBy;
-    }
-
-    @JsonProperty("split_by_source")
-    public Optional<Boolean> getSplitBySource() {
-        return splitBySource;
     }
 
     @java.lang.Override
@@ -68,14 +59,12 @@ public final class Query {
     }
 
     private boolean equalTo(Query other) {
-        return select.equals(other.select)
-                && groupBy.equals(other.groupBy)
-                && splitBySource.equals(other.splitBySource);
+        return select.equals(other.select) && groupBy.equals(other.groupBy);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.select, this.groupBy, this.splitBySource);
+        return Objects.hash(this.select, this.groupBy);
     }
 
     @java.lang.Override
@@ -93,8 +82,6 @@ public final class Query {
 
         private Optional<List<QueryGroupByItem>> groupBy = Optional.empty();
 
-        private Optional<Boolean> splitBySource = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -103,7 +90,6 @@ public final class Query {
         public Builder from(Query other) {
             select(other.getSelect());
             groupBy(other.getGroupBy());
-            splitBySource(other.getSplitBySource());
             return this;
         }
 
@@ -135,19 +121,8 @@ public final class Query {
             return this;
         }
 
-        @JsonSetter(value = "split_by_source", nulls = Nulls.SKIP)
-        public Builder splitBySource(Optional<Boolean> splitBySource) {
-            this.splitBySource = splitBySource;
-            return this;
-        }
-
-        public Builder splitBySource(Boolean splitBySource) {
-            this.splitBySource = Optional.of(splitBySource);
-            return this;
-        }
-
         public Query build() {
-            return new Query(select, groupBy, splitBySource, additionalProperties);
+            return new Query(select, groupBy, additionalProperties);
         }
     }
 }
