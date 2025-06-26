@@ -2157,9 +2157,19 @@ public class LabTestsClient {
         if (request.getDelay().isPresent()) {
             httpUrl.addQueryParameter("delay", request.getDelay().get().toString());
         }
+        RequestBody body;
+        try {
+            body = RequestBody.create("", null);
+            if (request.getBody().isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();

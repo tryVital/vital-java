@@ -30,7 +30,9 @@ public enum ClientFacingElectrocardiogramSourceType {
 
     RING("ring"),
 
-    LAB("lab");
+    LAB("lab"),
+
+    EXERCISE_MACHINE("exercise_machine");
 
     private final String value;
 

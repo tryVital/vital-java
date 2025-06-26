@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.OrderStatus;
+import com.vital.api.types.SimulationFlags;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,12 +26,18 @@ public final class LabTestsSimulateOrderProcessRequest {
 
     private final Optional<Integer> delay;
 
+    private final Optional<SimulationFlags> body;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsSimulateOrderProcessRequest(
-            Optional<OrderStatus> finalStatus, Optional<Integer> delay, Map<String, Object> additionalProperties) {
+            Optional<OrderStatus> finalStatus,
+            Optional<Integer> delay,
+            Optional<SimulationFlags> body,
+            Map<String, Object> additionalProperties) {
         this.finalStatus = finalStatus;
         this.delay = delay;
+        this.body = body;
         this.additionalProperties = additionalProperties;
     }
 
@@ -42,6 +49,11 @@ public final class LabTestsSimulateOrderProcessRequest {
     @JsonProperty("delay")
     public Optional<Integer> getDelay() {
         return delay;
+    }
+
+    @JsonProperty("body")
+    public Optional<SimulationFlags> getBody() {
+        return body;
     }
 
     @java.lang.Override
@@ -57,12 +69,12 @@ public final class LabTestsSimulateOrderProcessRequest {
     }
 
     private boolean equalTo(LabTestsSimulateOrderProcessRequest other) {
-        return finalStatus.equals(other.finalStatus) && delay.equals(other.delay);
+        return finalStatus.equals(other.finalStatus) && delay.equals(other.delay) && body.equals(other.body);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.finalStatus, this.delay);
+        return Objects.hash(this.finalStatus, this.delay, this.body);
     }
 
     @java.lang.Override
@@ -80,6 +92,8 @@ public final class LabTestsSimulateOrderProcessRequest {
 
         private Optional<Integer> delay = Optional.empty();
 
+        private Optional<SimulationFlags> body = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -88,6 +102,7 @@ public final class LabTestsSimulateOrderProcessRequest {
         public Builder from(LabTestsSimulateOrderProcessRequest other) {
             finalStatus(other.getFinalStatus());
             delay(other.getDelay());
+            body(other.getBody());
             return this;
         }
 
@@ -113,8 +128,19 @@ public final class LabTestsSimulateOrderProcessRequest {
             return this;
         }
 
+        @JsonSetter(value = "body", nulls = Nulls.SKIP)
+        public Builder body(Optional<SimulationFlags> body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder body(SimulationFlags body) {
+            this.body = Optional.of(body);
+            return this;
+        }
+
         public LabTestsSimulateOrderProcessRequest build() {
-            return new LabTestsSimulateOrderProcessRequest(finalStatus, delay, additionalProperties);
+            return new LabTestsSimulateOrderProcessRequest(finalStatus, delay, body, additionalProperties);
         }
     }
 }

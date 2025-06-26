@@ -47,6 +47,8 @@ public final class ClientFacingAppointment {
 
     private final String providerId;
 
+    private final Optional<String> externalId;
+
     private final boolean canReschedule;
 
     private final AppointmentEventStatus eventStatus;
@@ -70,6 +72,7 @@ public final class ClientFacingAppointment {
             AppointmentProvider provider,
             AppointmentStatus status,
             String providerId,
+            Optional<String> externalId,
             boolean canReschedule,
             AppointmentEventStatus eventStatus,
             Optional<Map<String, Object>> eventData,
@@ -87,6 +90,7 @@ public final class ClientFacingAppointment {
         this.provider = provider;
         this.status = status;
         this.providerId = providerId;
+        this.externalId = externalId;
         this.canReschedule = canReschedule;
         this.eventStatus = eventStatus;
         this.eventData = eventData;
@@ -160,6 +164,11 @@ public final class ClientFacingAppointment {
         return providerId;
     }
 
+    @JsonProperty("external_id")
+    public Optional<String> getExternalId() {
+        return externalId;
+    }
+
     @JsonProperty("can_reschedule")
     public boolean getCanReschedule() {
         return canReschedule;
@@ -204,6 +213,7 @@ public final class ClientFacingAppointment {
                 && provider.equals(other.provider)
                 && status.equals(other.status)
                 && providerId.equals(other.providerId)
+                && externalId.equals(other.externalId)
                 && canReschedule == other.canReschedule
                 && eventStatus.equals(other.eventStatus)
                 && eventData.equals(other.eventData)
@@ -225,6 +235,7 @@ public final class ClientFacingAppointment {
                 this.provider,
                 this.status,
                 this.providerId,
+                this.externalId,
                 this.canReschedule,
                 this.eventStatus,
                 this.eventData,
@@ -301,6 +312,10 @@ public final class ClientFacingAppointment {
 
         _FinalStage ianaTimezone(String ianaTimezone);
 
+        _FinalStage externalId(Optional<String> externalId);
+
+        _FinalStage externalId(String externalId);
+
         _FinalStage eventData(Optional<Map<String, Object>> eventData);
 
         _FinalStage eventData(Map<String, Object> eventData);
@@ -352,6 +367,8 @@ public final class ClientFacingAppointment {
 
         private Optional<Map<String, Object>> eventData = Optional.empty();
 
+        private Optional<String> externalId = Optional.empty();
+
         private Optional<String> ianaTimezone = Optional.empty();
 
         private Optional<OffsetDateTime> endAt = Optional.empty();
@@ -377,6 +394,7 @@ public final class ClientFacingAppointment {
             provider(other.getProvider());
             status(other.getStatus());
             providerId(other.getProviderId());
+            externalId(other.getExternalId());
             canReschedule(other.getCanReschedule());
             eventStatus(other.getEventStatus());
             eventData(other.getEventData());
@@ -495,6 +513,19 @@ public final class ClientFacingAppointment {
         }
 
         @java.lang.Override
+        public _FinalStage externalId(String externalId) {
+            this.externalId = Optional.of(externalId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "external_id", nulls = Nulls.SKIP)
+        public _FinalStage externalId(Optional<String> externalId) {
+            this.externalId = externalId;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage ianaTimezone(String ianaTimezone) {
             this.ianaTimezone = Optional.of(ianaTimezone);
             return this;
@@ -556,6 +587,7 @@ public final class ClientFacingAppointment {
                     provider,
                     status,
                     providerId,
+                    externalId,
                     canReschedule,
                     eventStatus,
                     eventData,
