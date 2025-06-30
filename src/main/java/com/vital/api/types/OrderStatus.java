@@ -26,6 +26,8 @@ public enum OrderStatus {
 
     COLLECTING_SAMPLE_WALK_IN_TEST_APPOINTMENT_CANCELLED("collecting_sample.walk_in_test.appointment_cancelled"),
 
+    COLLECTING_SAMPLE_WALK_IN_TEST_REDRAW_AVAILABLE("collecting_sample.walk_in_test.redraw_available"),
+
     RECEIVED_AT_HOME_PHLEBOTOMY_ORDERED("received.at_home_phlebotomy.ordered"),
 
     RECEIVED_AT_HOME_PHLEBOTOMY_REQUISITION_CREATED("received.at_home_phlebotomy.requisition_created"),

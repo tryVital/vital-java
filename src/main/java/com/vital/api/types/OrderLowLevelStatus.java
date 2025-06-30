@@ -52,7 +52,9 @@ public enum OrderLowLevelStatus {
 
     AWAITING_REGISTRATION("awaiting_registration"),
 
-    REGISTERED("registered");
+    REGISTERED("registered"),
+
+    REDRAW_AVAILABLE("redraw_available");
 
     private final String value;
 
