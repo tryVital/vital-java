@@ -70,6 +70,8 @@ public enum WorkoutColumnExprWorkout {
 
     SOURCE_APP_ID("source_app_id"),
 
+    SOURCE_DEVICE_ID("source_device_id"),
+
     EXTERNAL_ID("external_id"),
 
     TIME_ZONE("time_zone");

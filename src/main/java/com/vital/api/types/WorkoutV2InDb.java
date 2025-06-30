@@ -42,6 +42,8 @@ public final class WorkoutV2InDb {
 
     private final ClientFacingSport sport;
 
+    private final Optional<String> sourceDeviceId;
+
     private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> updatedAt;
@@ -59,6 +61,7 @@ public final class WorkoutV2InDb {
             int sportId,
             ClientFacingProvider source,
             ClientFacingSport sport,
+            Optional<String> sourceDeviceId,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
@@ -72,6 +75,7 @@ public final class WorkoutV2InDb {
         this.sportId = sportId;
         this.source = source;
         this.sport = sport;
+        this.sourceDeviceId = sourceDeviceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
@@ -127,6 +131,11 @@ public final class WorkoutV2InDb {
         return sport;
     }
 
+    @JsonProperty("source_device_id")
+    public Optional<String> getSourceDeviceId() {
+        return sourceDeviceId;
+    }
+
     @JsonProperty("created_at")
     public Optional<OffsetDateTime> getCreatedAt() {
         return createdAt;
@@ -159,6 +168,7 @@ public final class WorkoutV2InDb {
                 && sportId == other.sportId
                 && source.equals(other.source)
                 && sport.equals(other.sport)
+                && sourceDeviceId.equals(other.sourceDeviceId)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt);
     }
@@ -176,6 +186,7 @@ public final class WorkoutV2InDb {
                 this.sportId,
                 this.source,
                 this.sport,
+                this.sourceDeviceId,
                 this.createdAt,
                 this.updatedAt);
     }
@@ -236,6 +247,10 @@ public final class WorkoutV2InDb {
 
         _FinalStage priorityId(Integer priorityId);
 
+        _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
+
+        _FinalStage sourceDeviceId(String sourceDeviceId);
+
         _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
 
         _FinalStage createdAt(OffsetDateTime createdAt);
@@ -276,6 +291,8 @@ public final class WorkoutV2InDb {
 
         private Optional<OffsetDateTime> createdAt = Optional.empty();
 
+        private Optional<String> sourceDeviceId = Optional.empty();
+
         private Optional<Integer> priorityId = Optional.empty();
 
         private Map<String, Object> data = new LinkedHashMap<>();
@@ -297,6 +314,7 @@ public final class WorkoutV2InDb {
             sportId(other.getSportId());
             source(other.getSource());
             sport(other.getSport());
+            sourceDeviceId(other.getSourceDeviceId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             return this;
@@ -385,6 +403,19 @@ public final class WorkoutV2InDb {
         }
 
         @java.lang.Override
+        public _FinalStage sourceDeviceId(String sourceDeviceId) {
+            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
+            this.sourceDeviceId = sourceDeviceId;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
             this.priorityId = Optional.of(priorityId);
             return this;
@@ -430,6 +461,7 @@ public final class WorkoutV2InDb {
                     sportId,
                     source,
                     sport,
+                    sourceDeviceId,
                     createdAt,
                     updatedAt,
                     additionalProperties);
