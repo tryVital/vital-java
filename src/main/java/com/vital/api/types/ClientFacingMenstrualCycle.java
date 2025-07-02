@@ -58,6 +58,8 @@ public final class ClientFacingMenstrualCycle {
 
     private final Optional<String> sourceAppId;
 
+    private final Optional<String> sourceDeviceId;
+
     private final OffsetDateTime createdAt;
 
     private final OffsetDateTime updatedAt;
@@ -87,6 +89,7 @@ public final class ClientFacingMenstrualCycle {
             ClientFacingMenstrualCycleSourceProvider sourceProvider,
             ClientFacingMenstrualCycleSourceType sourceType,
             Optional<String> sourceAppId,
+            Optional<String> sourceDeviceId,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             String userId,
@@ -110,6 +113,7 @@ public final class ClientFacingMenstrualCycle {
         this.sourceProvider = sourceProvider;
         this.sourceType = sourceType;
         this.sourceAppId = sourceAppId;
+        this.sourceDeviceId = sourceDeviceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.userId = userId;
@@ -210,6 +214,11 @@ public final class ClientFacingMenstrualCycle {
         return sourceAppId;
     }
 
+    @JsonProperty("source_device_id")
+    public Optional<String> getSourceDeviceId() {
+        return sourceDeviceId;
+    }
+
     @JsonProperty("created_at")
     public OffsetDateTime getCreatedAt() {
         return createdAt;
@@ -260,6 +269,7 @@ public final class ClientFacingMenstrualCycle {
                 && sourceProvider.equals(other.sourceProvider)
                 && sourceType.equals(other.sourceType)
                 && sourceAppId.equals(other.sourceAppId)
+                && sourceDeviceId.equals(other.sourceDeviceId)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
                 && userId.equals(other.userId)
@@ -287,6 +297,7 @@ public final class ClientFacingMenstrualCycle {
                 this.sourceProvider,
                 this.sourceType,
                 this.sourceAppId,
+                this.sourceDeviceId,
                 this.createdAt,
                 this.updatedAt,
                 this.userId,
@@ -394,6 +405,10 @@ public final class ClientFacingMenstrualCycle {
         _FinalStage sourceAppId(Optional<String> sourceAppId);
 
         _FinalStage sourceAppId(String sourceAppId);
+
+        _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
+
+        _FinalStage sourceDeviceId(String sourceDeviceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -422,6 +437,8 @@ public final class ClientFacingMenstrualCycle {
         private String userId;
 
         private ClientFacingSource source;
+
+        private Optional<String> sourceDeviceId = Optional.empty();
 
         private Optional<String> sourceAppId = Optional.empty();
 
@@ -476,6 +493,7 @@ public final class ClientFacingMenstrualCycle {
             sourceProvider(other.getSourceProvider());
             sourceType(other.getSourceType());
             sourceAppId(other.getSourceAppId());
+            sourceDeviceId(other.getSourceDeviceId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             userId(other.getUserId());
@@ -540,6 +558,19 @@ public final class ClientFacingMenstrualCycle {
         @JsonSetter("source")
         public _FinalStage source(ClientFacingSource source) {
             this.source = source;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceDeviceId(String sourceDeviceId) {
+            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
+            this.sourceDeviceId = sourceDeviceId;
             return this;
         }
 
@@ -746,6 +777,7 @@ public final class ClientFacingMenstrualCycle {
                     sourceProvider,
                     sourceType,
                     sourceAppId,
+                    sourceDeviceId,
                     createdAt,
                     updatedAt,
                     userId,

@@ -38,6 +38,8 @@ public final class ActivityV2InDb {
 
     private final ClientFacingProvider source;
 
+    private final Optional<String> sourceDeviceId;
+
     private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> updatedAt;
@@ -53,6 +55,7 @@ public final class ActivityV2InDb {
             int priorityId,
             String id,
             ClientFacingProvider source,
+            Optional<String> sourceDeviceId,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
@@ -64,6 +67,7 @@ public final class ActivityV2InDb {
         this.priorityId = priorityId;
         this.id = id;
         this.source = source;
+        this.sourceDeviceId = sourceDeviceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
@@ -109,6 +113,11 @@ public final class ActivityV2InDb {
         return source;
     }
 
+    @JsonProperty("source_device_id")
+    public Optional<String> getSourceDeviceId() {
+        return sourceDeviceId;
+    }
+
     @JsonProperty("created_at")
     public Optional<OffsetDateTime> getCreatedAt() {
         return createdAt;
@@ -139,6 +148,7 @@ public final class ActivityV2InDb {
                 && priorityId == other.priorityId
                 && id.equals(other.id)
                 && source.equals(other.source)
+                && sourceDeviceId.equals(other.sourceDeviceId)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt);
     }
@@ -154,6 +164,7 @@ public final class ActivityV2InDb {
                 this.priorityId,
                 this.id,
                 this.source,
+                this.sourceDeviceId,
                 this.createdAt,
                 this.updatedAt);
     }
@@ -206,6 +217,10 @@ public final class ActivityV2InDb {
 
         _FinalStage data(String key, Object value);
 
+        _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
+
+        _FinalStage sourceDeviceId(String sourceDeviceId);
+
         _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
 
         _FinalStage createdAt(OffsetDateTime createdAt);
@@ -243,6 +258,8 @@ public final class ActivityV2InDb {
 
         private Optional<OffsetDateTime> createdAt = Optional.empty();
 
+        private Optional<String> sourceDeviceId = Optional.empty();
+
         private Map<String, Object> data = new LinkedHashMap<>();
 
         @JsonAnySetter
@@ -260,6 +277,7 @@ public final class ActivityV2InDb {
             priorityId(other.getPriorityId());
             id(other.getId());
             source(other.getSource());
+            sourceDeviceId(other.getSourceDeviceId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             return this;
@@ -341,6 +359,19 @@ public final class ActivityV2InDb {
         }
 
         @java.lang.Override
+        public _FinalStage sourceDeviceId(String sourceDeviceId) {
+            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
+            this.sourceDeviceId = sourceDeviceId;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage data(String key, Object value) {
             this.data.put(key, value);
             return this;
@@ -371,6 +402,7 @@ public final class ActivityV2InDb {
                     priorityId,
                     id,
                     source,
+                    sourceDeviceId,
                     createdAt,
                     updatedAt,
                     additionalProperties);

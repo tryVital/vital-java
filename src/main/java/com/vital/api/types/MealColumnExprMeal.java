@@ -98,7 +98,9 @@ public enum MealColumnExprMeal {
 
     SOURCE_PROVIDER("source_provider"),
 
-    SOURCE_APP_ID("source_app_id");
+    SOURCE_APP_ID("source_app_id"),
+
+    SOURCE_DEVICE_ID("source_device_id");
 
     private final String value;
 

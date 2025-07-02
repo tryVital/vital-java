@@ -48,6 +48,8 @@ public enum ActivityColumnExprActivity {
 
     SOURCE_APP_ID("source_app_id"),
 
+    SOURCE_DEVICE_ID("source_device_id"),
+
     TIME_ZONE("time_zone"),
 
     TIME_ZONE_OFFSET("time_zone_offset");

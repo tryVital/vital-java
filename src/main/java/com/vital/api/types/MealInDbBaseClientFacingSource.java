@@ -51,6 +51,8 @@ public final class MealInDbBaseClientFacingSource {
 
     private final Optional<String> sourceAppId;
 
+    private final Optional<String> sourceDeviceId;
+
     private final Map<String, Object> additionalProperties;
 
     private MealInDbBaseClientFacingSource(
@@ -69,6 +71,7 @@ public final class MealInDbBaseClientFacingSource {
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<String> sourceAppId,
+            Optional<String> sourceDeviceId,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.userId = userId;
@@ -85,6 +88,7 @@ public final class MealInDbBaseClientFacingSource {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.sourceAppId = sourceAppId;
+        this.sourceDeviceId = sourceDeviceId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -172,6 +176,11 @@ public final class MealInDbBaseClientFacingSource {
         return sourceAppId;
     }
 
+    @JsonProperty("source_device_id")
+    public Optional<String> getSourceDeviceId() {
+        return sourceDeviceId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -198,7 +207,8 @@ public final class MealInDbBaseClientFacingSource {
                 && source.equals(other.source)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
-                && sourceAppId.equals(other.sourceAppId);
+                && sourceAppId.equals(other.sourceAppId)
+                && sourceDeviceId.equals(other.sourceDeviceId);
     }
 
     @java.lang.Override
@@ -218,7 +228,8 @@ public final class MealInDbBaseClientFacingSource {
                 this.source,
                 this.createdAt,
                 this.updatedAt,
-                this.sourceAppId);
+                this.sourceAppId,
+                this.sourceDeviceId);
     }
 
     @java.lang.Override
@@ -294,6 +305,10 @@ public final class MealInDbBaseClientFacingSource {
         _FinalStage sourceAppId(Optional<String> sourceAppId);
 
         _FinalStage sourceAppId(String sourceAppId);
+
+        _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
+
+        _FinalStage sourceDeviceId(String sourceDeviceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -329,6 +344,8 @@ public final class MealInDbBaseClientFacingSource {
 
         private OffsetDateTime updatedAt;
 
+        private Optional<String> sourceDeviceId = Optional.empty();
+
         private Optional<String> sourceAppId = Optional.empty();
 
         private Optional<Map<String, ClientFacingFood>> data = Optional.empty();
@@ -361,6 +378,7 @@ public final class MealInDbBaseClientFacingSource {
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             sourceAppId(other.getSourceAppId());
+            sourceDeviceId(other.getSourceDeviceId());
             return this;
         }
 
@@ -447,6 +465,19 @@ public final class MealInDbBaseClientFacingSource {
         }
 
         @java.lang.Override
+        public _FinalStage sourceDeviceId(String sourceDeviceId) {
+            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
+            this.sourceDeviceId = sourceDeviceId;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
             this.sourceAppId = Optional.of(sourceAppId);
             return this;
@@ -529,6 +560,7 @@ public final class MealInDbBaseClientFacingSource {
                     createdAt,
                     updatedAt,
                     sourceAppId,
+                    sourceDeviceId,
                     additionalProperties);
         }
     }

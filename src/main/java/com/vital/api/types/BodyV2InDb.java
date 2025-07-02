@@ -40,6 +40,8 @@ public final class BodyV2InDb {
 
     private final Optional<Integer> priority;
 
+    private final Optional<String> sourceDeviceId;
+
     private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> updatedAt;
@@ -56,6 +58,7 @@ public final class BodyV2InDb {
             String id,
             Optional<ClientFacingProvider> source,
             Optional<Integer> priority,
+            Optional<String> sourceDeviceId,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
             Map<String, Object> additionalProperties) {
@@ -68,6 +71,7 @@ public final class BodyV2InDb {
         this.id = id;
         this.source = source;
         this.priority = priority;
+        this.sourceDeviceId = sourceDeviceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
@@ -118,6 +122,11 @@ public final class BodyV2InDb {
         return priority;
     }
 
+    @JsonProperty("source_device_id")
+    public Optional<String> getSourceDeviceId() {
+        return sourceDeviceId;
+    }
+
     @JsonProperty("created_at")
     public Optional<OffsetDateTime> getCreatedAt() {
         return createdAt;
@@ -149,6 +158,7 @@ public final class BodyV2InDb {
                 && id.equals(other.id)
                 && source.equals(other.source)
                 && priority.equals(other.priority)
+                && sourceDeviceId.equals(other.sourceDeviceId)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt);
     }
@@ -165,6 +175,7 @@ public final class BodyV2InDb {
                 this.id,
                 this.source,
                 this.priority,
+                this.sourceDeviceId,
                 this.createdAt,
                 this.updatedAt);
     }
@@ -221,6 +232,10 @@ public final class BodyV2InDb {
 
         _FinalStage priority(Integer priority);
 
+        _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
+
+        _FinalStage sourceDeviceId(String sourceDeviceId);
+
         _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
 
         _FinalStage createdAt(OffsetDateTime createdAt);
@@ -247,6 +262,8 @@ public final class BodyV2InDb {
 
         private Optional<OffsetDateTime> createdAt = Optional.empty();
 
+        private Optional<String> sourceDeviceId = Optional.empty();
+
         private Optional<Integer> priority = Optional.empty();
 
         private Optional<ClientFacingProvider> source = Optional.empty();
@@ -271,6 +288,7 @@ public final class BodyV2InDb {
             id(other.getId());
             source(other.getSource());
             priority(other.getPriority());
+            sourceDeviceId(other.getSourceDeviceId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             return this;
@@ -334,6 +352,19 @@ public final class BodyV2InDb {
         @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
         public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
             this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceDeviceId(String sourceDeviceId) {
+            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
+            this.sourceDeviceId = sourceDeviceId;
             return this;
         }
 
@@ -408,6 +439,7 @@ public final class BodyV2InDb {
                     id,
                     source,
                     priority,
+                    sourceDeviceId,
                     createdAt,
                     updatedAt,
                     additionalProperties);
