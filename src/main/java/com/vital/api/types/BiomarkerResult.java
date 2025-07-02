@@ -38,6 +38,8 @@ public final class BiomarkerResult {
 
     private final Optional<String> notes;
 
+    private final Optional<String> referenceRange;
+
     private final Optional<Double> minRangeValue;
 
     private final Optional<Double> maxRangeValue;
@@ -71,6 +73,7 @@ public final class BiomarkerResult {
             Optional<String> unit,
             Optional<OffsetDateTime> timestamp,
             Optional<String> notes,
+            Optional<String> referenceRange,
             Optional<Double> minRangeValue,
             Optional<Double> maxRangeValue,
             Optional<Boolean> isAboveMaxRange,
@@ -91,6 +94,7 @@ public final class BiomarkerResult {
         this.unit = unit;
         this.timestamp = timestamp;
         this.notes = notes;
+        this.referenceRange = referenceRange;
         this.minRangeValue = minRangeValue;
         this.maxRangeValue = maxRangeValue;
         this.isAboveMaxRange = isAboveMaxRange;
@@ -143,6 +147,11 @@ public final class BiomarkerResult {
     @JsonProperty("notes")
     public Optional<String> getNotes() {
         return notes;
+    }
+
+    @JsonProperty("reference_range")
+    public Optional<String> getReferenceRange() {
+        return referenceRange;
     }
 
     @JsonProperty("min_range_value")
@@ -220,6 +229,7 @@ public final class BiomarkerResult {
                 && unit.equals(other.unit)
                 && timestamp.equals(other.timestamp)
                 && notes.equals(other.notes)
+                && referenceRange.equals(other.referenceRange)
                 && minRangeValue.equals(other.minRangeValue)
                 && maxRangeValue.equals(other.maxRangeValue)
                 && isAboveMaxRange.equals(other.isAboveMaxRange)
@@ -244,6 +254,7 @@ public final class BiomarkerResult {
                 this.unit,
                 this.timestamp,
                 this.notes,
+                this.referenceRange,
                 this.minRangeValue,
                 this.maxRangeValue,
                 this.isAboveMaxRange,
@@ -302,6 +313,10 @@ public final class BiomarkerResult {
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
+
+        _FinalStage referenceRange(Optional<String> referenceRange);
+
+        _FinalStage referenceRange(String referenceRange);
 
         _FinalStage minRangeValue(Optional<Double> minRangeValue);
 
@@ -380,6 +395,8 @@ public final class BiomarkerResult {
 
         private Optional<Double> minRangeValue = Optional.empty();
 
+        private Optional<String> referenceRange = Optional.empty();
+
         private Optional<String> notes = Optional.empty();
 
         private Optional<OffsetDateTime> timestamp = Optional.empty();
@@ -403,6 +420,7 @@ public final class BiomarkerResult {
             unit(other.getUnit());
             timestamp(other.getTimestamp());
             notes(other.getNotes());
+            referenceRange(other.getReferenceRange());
             minRangeValue(other.getMinRangeValue());
             maxRangeValue(other.getMaxRangeValue());
             isAboveMaxRange(other.getIsAboveMaxRange());
@@ -589,6 +607,19 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage referenceRange(String referenceRange) {
+            this.referenceRange = Optional.of(referenceRange);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "reference_range", nulls = Nulls.SKIP)
+        public _FinalStage referenceRange(Optional<String> referenceRange) {
+            this.referenceRange = referenceRange;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.of(notes);
             return this;
@@ -651,6 +682,7 @@ public final class BiomarkerResult {
                     unit,
                     timestamp,
                     notes,
+                    referenceRange,
                     minRangeValue,
                     maxRangeValue,
                     isAboveMaxRange,
