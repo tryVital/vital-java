@@ -31,13 +31,16 @@ public final class ProviderMfaRequest {
     }
 
     /**
-     * @return ℹ️ This enum is non-exhaustive.
+     * @return The MFA method requested by the password provider to complete authentication. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("method")
     public ProviderMfaRequestMethod getMethod() {
         return method;
     }
 
+    /**
+     * @return The MFA hint provided by the password provider, e.g., the redacted phone number.
+     */
     @JsonProperty("hint")
     public String getHint() {
         return hint;
@@ -105,7 +108,7 @@ public final class ProviderMfaRequest {
         }
 
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The MFA method requested by the password provider to complete authentication. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -115,6 +118,10 @@ public final class ProviderMfaRequest {
             return this;
         }
 
+        /**
+         * <p>The MFA hint provided by the password provider, e.g., the redacted phone number.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("hint")
         public _FinalStage hint(String hint) {

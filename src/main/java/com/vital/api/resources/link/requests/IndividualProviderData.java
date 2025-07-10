@@ -65,6 +65,9 @@ public final class IndividualProviderData {
         return password;
     }
 
+    /**
+     * @return Provider region to authenticate against. Only applicable to specific providers.
+     */
     @JsonProperty("region")
     public Optional<Region> getRegion() {
         return region;
@@ -170,6 +173,10 @@ public final class IndividualProviderData {
             return this;
         }
 
+        /**
+         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage region(Region region) {
             this.region = Optional.of(region);

@@ -18,6 +18,8 @@ public enum ClientFacingConnectionErrorDetailsErrorType {
 
     PROVIDER_CREDENTIAL_ERROR("provider_credential_error"),
 
+    PROVIDER_PASSWORD_EXPIRED("provider_password_expired"),
+
     UNKNOWN("unknown");
 
     private final String value;

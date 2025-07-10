@@ -1879,14 +1879,14 @@ public class LabTestsClient {
     }
 
     /**
-     * GET requisition pdf for an order
+     * GET ABN pdf for an order
      */
     public InputStream getOrderAbnPdf(String orderId) {
         return getOrderAbnPdf(orderId, null);
     }
 
     /**
-     * GET requisition pdf for an order
+     * GET ABN pdf for an order
      */
     public InputStream getOrderAbnPdf(String orderId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

@@ -24,7 +24,7 @@ public final class ProviderLinkResponse {
 
     private final Optional<String> redirectUrl;
 
-    private final Optional<String> errorType;
+    private final Optional<ProviderLinkResponseErrorType> errorType;
 
     private final Optional<String> error;
 
@@ -41,7 +41,7 @@ public final class ProviderLinkResponse {
     private ProviderLinkResponse(
             ProviderLinkResponseState state,
             Optional<String> redirectUrl,
-            Optional<String> errorType,
+            Optional<ProviderLinkResponseErrorType> errorType,
             Optional<String> error,
             Optional<ProviderMfaRequest> providerMfa,
             PasswordProviders provider,
@@ -67,21 +67,33 @@ public final class ProviderLinkResponse {
         return state;
     }
 
+    /**
+     * @return The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).
+     */
     @JsonProperty("redirect_url")
     public Optional<String> getRedirectUrl() {
         return redirectUrl;
     }
 
+    /**
+     * @return The Link Error Type. This field is populated only when state is <code>error</code>.
+     */
     @JsonProperty("error_type")
-    public Optional<String> getErrorType() {
+    public Optional<ProviderLinkResponseErrorType> getErrorType() {
         return errorType;
     }
 
+    /**
+     * @return A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.
+     */
     @JsonProperty("error")
     public Optional<String> getError() {
         return error;
     }
 
+    /**
+     * @return The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.
+     */
     @JsonProperty("provider_mfa")
     public Optional<ProviderMfaRequest> getProviderMfa() {
         return providerMfa;
@@ -167,9 +179,9 @@ public final class ProviderLinkResponse {
 
         _FinalStage redirectUrl(String redirectUrl);
 
-        _FinalStage errorType(Optional<String> errorType);
+        _FinalStage errorType(Optional<ProviderLinkResponseErrorType> errorType);
 
-        _FinalStage errorType(String errorType);
+        _FinalStage errorType(ProviderLinkResponseErrorType errorType);
 
         _FinalStage error(Optional<String> error);
 
@@ -198,7 +210,7 @@ public final class ProviderLinkResponse {
 
         private Optional<String> error = Optional.empty();
 
-        private Optional<String> errorType = Optional.empty();
+        private Optional<ProviderLinkResponseErrorType> errorType = Optional.empty();
 
         private Optional<String> redirectUrl = Optional.empty();
 
@@ -258,6 +270,10 @@ public final class ProviderLinkResponse {
             return this;
         }
 
+        /**
+         * <p>The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage providerMfa(ProviderMfaRequest providerMfa) {
             this.providerMfa = Optional.of(providerMfa);
@@ -271,6 +287,10 @@ public final class ProviderLinkResponse {
             return this;
         }
 
+        /**
+         * <p>A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage error(String error) {
             this.error = Optional.of(error);
@@ -284,19 +304,27 @@ public final class ProviderLinkResponse {
             return this;
         }
 
+        /**
+         * <p>The Link Error Type. This field is populated only when state is <code>error</code>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
-        public _FinalStage errorType(String errorType) {
+        public _FinalStage errorType(ProviderLinkResponseErrorType errorType) {
             this.errorType = Optional.of(errorType);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
-        public _FinalStage errorType(Optional<String> errorType) {
+        public _FinalStage errorType(Optional<ProviderLinkResponseErrorType> errorType) {
             this.errorType = errorType;
             return this;
         }
 
+        /**
+         * <p>The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage redirectUrl(String redirectUrl) {
             this.redirectUrl = Optional.of(redirectUrl);
