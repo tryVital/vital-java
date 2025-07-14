@@ -31,6 +31,10 @@ public final class ClientFacingProfile {
 
     private final Optional<Boolean> wheelchairUse;
 
+    private final Optional<Gender> gender;
+
+    private final Optional<Sex> sex;
+
     private final ClientFacingSource source;
 
     private final OffsetDateTime createdAt;
@@ -45,6 +49,8 @@ public final class ClientFacingProfile {
             Optional<Integer> height,
             Optional<String> birthDate,
             Optional<Boolean> wheelchairUse,
+            Optional<Gender> gender,
+            Optional<Sex> sex,
             ClientFacingSource source,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -54,6 +60,8 @@ public final class ClientFacingProfile {
         this.height = height;
         this.birthDate = birthDate;
         this.wheelchairUse = wheelchairUse;
+        this.gender = gender;
+        this.sex = sex;
         this.source = source;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -88,6 +96,16 @@ public final class ClientFacingProfile {
         return wheelchairUse;
     }
 
+    @JsonProperty("gender")
+    public Optional<Gender> getGender() {
+        return gender;
+    }
+
+    @JsonProperty("sex")
+    public Optional<Sex> getSex() {
+        return sex;
+    }
+
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
@@ -120,6 +138,8 @@ public final class ClientFacingProfile {
                 && height.equals(other.height)
                 && birthDate.equals(other.birthDate)
                 && wheelchairUse.equals(other.wheelchairUse)
+                && gender.equals(other.gender)
+                && sex.equals(other.sex)
                 && source.equals(other.source)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt);
@@ -133,6 +153,8 @@ public final class ClientFacingProfile {
                 this.height,
                 this.birthDate,
                 this.wheelchairUse,
+                this.gender,
+                this.sex,
                 this.source,
                 this.createdAt,
                 this.updatedAt);
@@ -183,6 +205,14 @@ public final class ClientFacingProfile {
         _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse);
 
         _FinalStage wheelchairUse(Boolean wheelchairUse);
+
+        _FinalStage gender(Optional<Gender> gender);
+
+        _FinalStage gender(Gender gender);
+
+        _FinalStage sex(Optional<Sex> sex);
+
+        _FinalStage sex(Sex sex);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -197,6 +227,10 @@ public final class ClientFacingProfile {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
+
+        private Optional<Sex> sex = Optional.empty();
+
+        private Optional<Gender> gender = Optional.empty();
 
         private Optional<Boolean> wheelchairUse = Optional.empty();
 
@@ -216,6 +250,8 @@ public final class ClientFacingProfile {
             height(other.getHeight());
             birthDate(other.getBirthDate());
             wheelchairUse(other.getWheelchairUse());
+            gender(other.getGender());
+            sex(other.getSex());
             source(other.getSource());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
@@ -262,6 +298,32 @@ public final class ClientFacingProfile {
         }
 
         @java.lang.Override
+        public _FinalStage sex(Sex sex) {
+            this.sex = Optional.of(sex);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sex", nulls = Nulls.SKIP)
+        public _FinalStage sex(Optional<Sex> sex) {
+            this.sex = sex;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage gender(Gender gender) {
+            this.gender = Optional.of(gender);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "gender", nulls = Nulls.SKIP)
+        public _FinalStage gender(Optional<Gender> gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage wheelchairUse(Boolean wheelchairUse) {
             this.wheelchairUse = Optional.of(wheelchairUse);
             return this;
@@ -303,7 +365,17 @@ public final class ClientFacingProfile {
         @java.lang.Override
         public ClientFacingProfile build() {
             return new ClientFacingProfile(
-                    id, userId, height, birthDate, wheelchairUse, source, createdAt, updatedAt, additionalProperties);
+                    id,
+                    userId,
+                    height,
+                    birthDate,
+                    wheelchairUse,
+                    gender,
+                    sex,
+                    source,
+                    createdAt,
+                    updatedAt,
+                    additionalProperties);
         }
     }
 }

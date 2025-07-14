@@ -72,6 +72,9 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         return timezoneOffset;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public Optional<ClientFacingSleepBreathingDisturbanceSampleType> getType() {
         return type;
@@ -261,6 +264,10 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage type(ClientFacingSleepBreathingDisturbanceSampleType type) {
             this.type = Optional.of(type);

@@ -76,7 +76,7 @@ public final class ProviderLinkResponse {
     }
 
     /**
-     * @return The Link Error Type. This field is populated only when state is <code>error</code>.
+     * @return The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("error_type")
     public Optional<ProviderLinkResponseErrorType> getErrorType() {
@@ -305,7 +305,7 @@ public final class ProviderLinkResponse {
         }
 
         /**
-         * <p>The Link Error Type. This field is populated only when state is <code>error</code>.</p>
+         * <p>The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

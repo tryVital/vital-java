@@ -33,6 +33,9 @@ public final class WorkoutDurationTimeseriesExpr {
         return "workout_duration";
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("field")
     public WorkoutDurationTimeseriesExprField getField() {
         return field;
@@ -92,6 +95,10 @@ public final class WorkoutDurationTimeseriesExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("field")
         public _FinalStage field(WorkoutDurationTimeseriesExprField field) {

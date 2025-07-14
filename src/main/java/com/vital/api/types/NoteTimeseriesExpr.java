@@ -32,6 +32,9 @@ public final class NoteTimeseriesExpr {
         return "note";
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("field")
     public NoteTimeseriesExprField getField() {
         return field;
@@ -91,6 +94,10 @@ public final class NoteTimeseriesExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("field")
         public _FinalStage field(NoteTimeseriesExprField field) {

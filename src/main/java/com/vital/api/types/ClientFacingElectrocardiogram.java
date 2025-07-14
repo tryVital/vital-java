@@ -130,11 +130,17 @@ public final class ClientFacingElectrocardiogram {
         return samplingFrequencyHz;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("classification")
     public Optional<ClientFacingElectrocardiogramClassification> getClassification() {
         return classification;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("inconclusive_cause")
     public Optional<ClientFacingElectrocardiogramInconclusiveCause> getInconclusiveCause() {
         return inconclusiveCause;
@@ -538,6 +544,10 @@ public final class ClientFacingElectrocardiogram {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage inconclusiveCause(ClientFacingElectrocardiogramInconclusiveCause inconclusiveCause) {
             this.inconclusiveCause = Optional.of(inconclusiveCause);
@@ -552,6 +562,10 @@ public final class ClientFacingElectrocardiogram {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage classification(ClientFacingElectrocardiogramClassification classification) {
             this.classification = Optional.of(classification);

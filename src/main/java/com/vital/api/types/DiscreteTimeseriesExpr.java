@@ -41,6 +41,9 @@ public final class DiscreteTimeseriesExpr {
         return timeseries;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("field")
     public DiscreteTimeseriesExprField getField() {
         return field;
@@ -118,6 +121,10 @@ public final class DiscreteTimeseriesExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("field")
         public _FinalStage field(DiscreteTimeseriesExprField field) {

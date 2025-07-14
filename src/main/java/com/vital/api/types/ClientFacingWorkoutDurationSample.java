@@ -122,7 +122,7 @@ public final class ClientFacingWorkoutDurationSample {
     }
 
     /**
-     * @return Workout intensity.
+     * @return Workout intensity. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("intensity")
     public Optional<ClientFacingWorkoutDurationSampleIntensity> getIntensity() {
@@ -292,7 +292,7 @@ public final class ClientFacingWorkoutDurationSample {
         }
 
         /**
-         * <p>Workout intensity.</p>
+         * <p>Workout intensity. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

@@ -35,6 +35,9 @@ public final class DatePartExpr {
         return arg;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("date_part")
     public DatePartExprDatePart getDatePart() {
         return datePart;
@@ -108,6 +111,10 @@ public final class DatePartExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("date_part")
         public _FinalStage datePart(DatePartExprDatePart datePart) {

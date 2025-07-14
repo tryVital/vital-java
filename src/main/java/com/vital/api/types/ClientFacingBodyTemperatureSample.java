@@ -122,7 +122,7 @@ public final class ClientFacingBodyTemperatureSample {
     }
 
     /**
-     * @return Location of the temperature sensor.
+     * @return Location of the temperature sensor. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("sensor_location")
     public Optional<ClientFacingBodyTemperatureSampleSensorLocation> getSensorLocation() {
@@ -292,7 +292,7 @@ public final class ClientFacingBodyTemperatureSample {
         }
 
         /**
-         * <p>Location of the temperature sensor.</p>
+         * <p>Location of the temperature sensor. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

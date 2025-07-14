@@ -27,6 +27,9 @@ public final class SourceColumnExpr {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("source")
     public SourceColumnExprSource getSource() {
         return source;
@@ -86,6 +89,10 @@ public final class SourceColumnExpr {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(SourceColumnExprSource source) {
