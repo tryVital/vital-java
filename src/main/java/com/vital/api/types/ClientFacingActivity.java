@@ -222,7 +222,7 @@ public final class ClientFacingActivity {
     }
 
     /**
-     * @return [DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.
+     * @return The IANA time zone identifier. Example: 'Europe/London'.
      */
     @JsonProperty("time_zone")
     public Optional<String> getTimeZone() {
@@ -634,7 +634,7 @@ public final class ClientFacingActivity {
         }
 
         /**
-         * <p>[DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.</p>
+         * <p>The IANA time zone identifier. Example: 'Europe/London'.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
