@@ -71,6 +71,8 @@ public final class ClientFacingOrder {
 
     private final Optional<Interpretation> interpretation;
 
+    private final Optional<Boolean> hasMissingResults;
+
     private final Optional<String> expectedResultByDate;
 
     private final Optional<String> worstCaseResultByDate;
@@ -102,6 +104,7 @@ public final class ClientFacingOrder {
             Optional<List<String>> icdCodes,
             boolean hasAbn,
             Optional<Interpretation> interpretation,
+            Optional<Boolean> hasMissingResults,
             Optional<String> expectedResultByDate,
             Optional<String> worstCaseResultByDate,
             Map<String, Object> additionalProperties) {
@@ -129,6 +132,7 @@ public final class ClientFacingOrder {
         this.icdCodes = icdCodes;
         this.hasAbn = hasAbn;
         this.interpretation = interpretation;
+        this.hasMissingResults = hasMissingResults;
         this.expectedResultByDate = expectedResultByDate;
         this.worstCaseResultByDate = worstCaseResultByDate;
         this.additionalProperties = additionalProperties;
@@ -306,6 +310,14 @@ public final class ClientFacingOrder {
     }
 
     /**
+     * @return Defines whether the order result has missing biomarkers.
+     */
+    @JsonProperty("has_missing_results")
+    public Optional<Boolean> getHasMissingResults() {
+        return hasMissingResults;
+    }
+
+    /**
      * @return The common-case date by which the order result is expected to be available.
      */
     @JsonProperty("expected_result_by_date")
@@ -357,6 +369,7 @@ public final class ClientFacingOrder {
                 && icdCodes.equals(other.icdCodes)
                 && hasAbn == other.hasAbn
                 && interpretation.equals(other.interpretation)
+                && hasMissingResults.equals(other.hasMissingResults)
                 && expectedResultByDate.equals(other.expectedResultByDate)
                 && worstCaseResultByDate.equals(other.worstCaseResultByDate);
     }
@@ -388,6 +401,7 @@ public final class ClientFacingOrder {
                 this.icdCodes,
                 this.hasAbn,
                 this.interpretation,
+                this.hasMissingResults,
                 this.expectedResultByDate,
                 this.worstCaseResultByDate);
     }
@@ -504,6 +518,10 @@ public final class ClientFacingOrder {
 
         _FinalStage interpretation(Interpretation interpretation);
 
+        _FinalStage hasMissingResults(Optional<Boolean> hasMissingResults);
+
+        _FinalStage hasMissingResults(Boolean hasMissingResults);
+
         _FinalStage expectedResultByDate(Optional<String> expectedResultByDate);
 
         _FinalStage expectedResultByDate(String expectedResultByDate);
@@ -543,6 +561,8 @@ public final class ClientFacingOrder {
         private Optional<String> worstCaseResultByDate = Optional.empty();
 
         private Optional<String> expectedResultByDate = Optional.empty();
+
+        private Optional<Boolean> hasMissingResults = Optional.empty();
 
         private Optional<Interpretation> interpretation = Optional.empty();
 
@@ -607,6 +627,7 @@ public final class ClientFacingOrder {
             icdCodes(other.getIcdCodes());
             hasAbn(other.getHasAbn());
             interpretation(other.getInterpretation());
+            hasMissingResults(other.getHasMissingResults());
             expectedResultByDate(other.getExpectedResultByDate());
             worstCaseResultByDate(other.getWorstCaseResultByDate());
             return this;
@@ -727,6 +748,23 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "expected_result_by_date", nulls = Nulls.SKIP)
         public _FinalStage expectedResultByDate(Optional<String> expectedResultByDate) {
             this.expectedResultByDate = expectedResultByDate;
+            return this;
+        }
+
+        /**
+         * <p>Defines whether the order result has missing biomarkers.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage hasMissingResults(Boolean hasMissingResults) {
+            this.hasMissingResults = Optional.of(hasMissingResults);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "has_missing_results", nulls = Nulls.SKIP)
+        public _FinalStage hasMissingResults(Optional<Boolean> hasMissingResults) {
+            this.hasMissingResults = hasMissingResults;
             return this;
         }
 
@@ -1012,6 +1050,7 @@ public final class ClientFacingOrder {
                     icdCodes,
                     hasAbn,
                     interpretation,
+                    hasMissingResults,
                     expectedResultByDate,
                     worstCaseResultByDate,
                     additionalProperties);

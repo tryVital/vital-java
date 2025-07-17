@@ -29,6 +29,8 @@ public final class ClientFacingPayor {
 
     private final Address orgAddress;
 
+    private final ClientFacingPayorCodeSource source;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingPayor(
@@ -36,11 +38,13 @@ public final class ClientFacingPayor {
             String name,
             List<String> aliases,
             Address orgAddress,
+            ClientFacingPayorCodeSource source,
             Map<String, Object> additionalProperties) {
         this.payorCode = payorCode;
         this.name = name;
         this.aliases = aliases;
         this.orgAddress = orgAddress;
+        this.source = source;
         this.additionalProperties = additionalProperties;
     }
 
@@ -76,6 +80,14 @@ public final class ClientFacingPayor {
         return orgAddress;
     }
 
+    /**
+     * @return The source of the payor, can be one of (platform, team).
+     */
+    @JsonProperty("source")
+    public ClientFacingPayorCodeSource getSource() {
+        return source;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -91,12 +103,13 @@ public final class ClientFacingPayor {
         return payorCode.equals(other.payorCode)
                 && name.equals(other.name)
                 && aliases.equals(other.aliases)
-                && orgAddress.equals(other.orgAddress);
+                && orgAddress.equals(other.orgAddress)
+                && source.equals(other.source);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.payorCode, this.name, this.aliases, this.orgAddress);
+        return Objects.hash(this.payorCode, this.name, this.aliases, this.orgAddress, this.source);
     }
 
     @java.lang.Override
@@ -119,7 +132,11 @@ public final class ClientFacingPayor {
     }
 
     public interface OrgAddressStage {
-        _FinalStage orgAddress(Address orgAddress);
+        SourceStage orgAddress(Address orgAddress);
+    }
+
+    public interface SourceStage {
+        _FinalStage source(ClientFacingPayorCodeSource source);
     }
 
     public interface _FinalStage {
@@ -133,12 +150,14 @@ public final class ClientFacingPayor {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PayorCodeStage, NameStage, OrgAddressStage, _FinalStage {
+    public static final class Builder implements PayorCodeStage, NameStage, OrgAddressStage, SourceStage, _FinalStage {
         private String payorCode;
 
         private String name;
 
         private Address orgAddress;
+
+        private ClientFacingPayorCodeSource source;
 
         private List<String> aliases = new ArrayList<>();
 
@@ -153,6 +172,7 @@ public final class ClientFacingPayor {
             name(other.getName());
             aliases(other.getAliases());
             orgAddress(other.getOrgAddress());
+            source(other.getSource());
             return this;
         }
 
@@ -184,8 +204,19 @@ public final class ClientFacingPayor {
          */
         @java.lang.Override
         @JsonSetter("org_address")
-        public _FinalStage orgAddress(Address orgAddress) {
+        public SourceStage orgAddress(Address orgAddress) {
             this.orgAddress = orgAddress;
+            return this;
+        }
+
+        /**
+         * <p>The source of the payor, can be one of (platform, team).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("source")
+        public _FinalStage source(ClientFacingPayorCodeSource source) {
+            this.source = source;
             return this;
         }
 
@@ -219,7 +250,7 @@ public final class ClientFacingPayor {
 
         @java.lang.Override
         public ClientFacingPayor build() {
-            return new ClientFacingPayor(payorCode, name, aliases, orgAddress, additionalProperties);
+            return new ClientFacingPayor(payorCode, name, aliases, orgAddress, source, additionalProperties);
         }
     }
 }

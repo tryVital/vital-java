@@ -29,6 +29,8 @@ public final class ClientFacingPayorSearchResponseDeprecated {
 
     private final Address orgAddress;
 
+    private final ClientFacingPayorCodeSource source;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingPayorSearchResponseDeprecated(
@@ -36,11 +38,13 @@ public final class ClientFacingPayorSearchResponseDeprecated {
             String name,
             List<String> aliases,
             Address orgAddress,
+            ClientFacingPayorCodeSource source,
             Map<String, Object> additionalProperties) {
         this.code = code;
         this.name = name;
         this.aliases = aliases;
         this.orgAddress = orgAddress;
+        this.source = source;
         this.additionalProperties = additionalProperties;
     }
 
@@ -76,6 +80,14 @@ public final class ClientFacingPayorSearchResponseDeprecated {
         return orgAddress;
     }
 
+    /**
+     * @return The source of the payor, can be one of (platform, team).
+     */
+    @JsonProperty("source")
+    public ClientFacingPayorCodeSource getSource() {
+        return source;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -92,12 +104,13 @@ public final class ClientFacingPayorSearchResponseDeprecated {
         return code.equals(other.code)
                 && name.equals(other.name)
                 && aliases.equals(other.aliases)
-                && orgAddress.equals(other.orgAddress);
+                && orgAddress.equals(other.orgAddress)
+                && source.equals(other.source);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.code, this.name, this.aliases, this.orgAddress);
+        return Objects.hash(this.code, this.name, this.aliases, this.orgAddress, this.source);
     }
 
     @java.lang.Override
@@ -120,7 +133,11 @@ public final class ClientFacingPayorSearchResponseDeprecated {
     }
 
     public interface OrgAddressStage {
-        _FinalStage orgAddress(Address orgAddress);
+        SourceStage orgAddress(Address orgAddress);
+    }
+
+    public interface SourceStage {
+        _FinalStage source(ClientFacingPayorCodeSource source);
     }
 
     public interface _FinalStage {
@@ -134,12 +151,14 @@ public final class ClientFacingPayorSearchResponseDeprecated {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements CodeStage, NameStage, OrgAddressStage, _FinalStage {
+    public static final class Builder implements CodeStage, NameStage, OrgAddressStage, SourceStage, _FinalStage {
         private String code;
 
         private String name;
 
         private Address orgAddress;
+
+        private ClientFacingPayorCodeSource source;
 
         private List<String> aliases = new ArrayList<>();
 
@@ -154,6 +173,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
             name(other.getName());
             aliases(other.getAliases());
             orgAddress(other.getOrgAddress());
+            source(other.getSource());
             return this;
         }
 
@@ -185,8 +205,19 @@ public final class ClientFacingPayorSearchResponseDeprecated {
          */
         @java.lang.Override
         @JsonSetter("org_address")
-        public _FinalStage orgAddress(Address orgAddress) {
+        public SourceStage orgAddress(Address orgAddress) {
             this.orgAddress = orgAddress;
+            return this;
+        }
+
+        /**
+         * <p>The source of the payor, can be one of (platform, team).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("source")
+        public _FinalStage source(ClientFacingPayorCodeSource source) {
+            this.source = source;
             return this;
         }
 
@@ -220,7 +251,8 @@ public final class ClientFacingPayorSearchResponseDeprecated {
 
         @java.lang.Override
         public ClientFacingPayorSearchResponseDeprecated build() {
-            return new ClientFacingPayorSearchResponseDeprecated(code, name, aliases, orgAddress, additionalProperties);
+            return new ClientFacingPayorSearchResponseDeprecated(
+                    code, name, aliases, orgAddress, source, additionalProperties);
         }
     }
 }
