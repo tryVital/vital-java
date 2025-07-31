@@ -12,7 +12,6 @@ import com.vital.api.core.VitalException;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
 import com.vital.api.resources.sleep.requests.SleepGetRequest;
-import com.vital.api.resources.sleep.requests.SleepGetStreamRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.HttpValidationError;
@@ -47,62 +46,6 @@ public class SleepClient {
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep")
                 .addPathSegment(userId);
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientSleepResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
-    }
-
-    /**
-     * Get sleep stream for user_id
-     */
-    public ClientSleepResponse getStream(String userId, SleepGetStreamRequest request) {
-        return getStream(userId, request, null);
-    }
-
-    /**
-     * Get sleep stream for user_id
-     */
-    public ClientSleepResponse getStream(String userId, SleepGetStreamRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/summary/sleep")
-                .addPathSegment(userId)
-                .addPathSegments("stream");
         if (request.getProvider().isPresent()) {
             httpUrl.addQueryParameter("provider", request.getProvider().get());
         }

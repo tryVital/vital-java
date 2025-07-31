@@ -26,6 +26,8 @@ public final class ClientFacingSource {
 
     private final Optional<String> appId;
 
+    private final Optional<String> deviceId;
+
     private final Optional<String> sport;
 
     private final Optional<String> workoutId;
@@ -42,6 +44,7 @@ public final class ClientFacingSource {
             String provider,
             Optional<String> type,
             Optional<String> appId,
+            Optional<String> deviceId,
             Optional<String> sport,
             Optional<String> workoutId,
             Optional<String> name,
@@ -51,6 +54,7 @@ public final class ClientFacingSource {
         this.provider = provider;
         this.type = type;
         this.appId = appId;
+        this.deviceId = deviceId;
         this.sport = sport;
         this.workoutId = workoutId;
         this.name = name;
@@ -81,6 +85,14 @@ public final class ClientFacingSource {
     @JsonProperty("app_id")
     public Optional<String> getAppId() {
         return appId;
+    }
+
+    /**
+     * @return The identifier of the device which recorded this summary.
+     */
+    @JsonProperty("device_id")
+    public Optional<String> getDeviceId() {
+        return deviceId;
     }
 
     /**
@@ -141,6 +153,7 @@ public final class ClientFacingSource {
         return provider.equals(other.provider)
                 && type.equals(other.type)
                 && appId.equals(other.appId)
+                && deviceId.equals(other.deviceId)
                 && sport.equals(other.sport)
                 && workoutId.equals(other.workoutId)
                 && name.equals(other.name)
@@ -151,7 +164,15 @@ public final class ClientFacingSource {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.provider, this.type, this.appId, this.sport, this.workoutId, this.name, this.slug, this.logo);
+                this.provider,
+                this.type,
+                this.appId,
+                this.deviceId,
+                this.sport,
+                this.workoutId,
+                this.name,
+                this.slug,
+                this.logo);
     }
 
     @java.lang.Override
@@ -179,6 +200,10 @@ public final class ClientFacingSource {
         _FinalStage appId(Optional<String> appId);
 
         _FinalStage appId(String appId);
+
+        _FinalStage deviceId(Optional<String> deviceId);
+
+        _FinalStage deviceId(String deviceId);
 
         _FinalStage sport(Optional<String> sport);
 
@@ -215,6 +240,8 @@ public final class ClientFacingSource {
 
         private Optional<String> sport = Optional.empty();
 
+        private Optional<String> deviceId = Optional.empty();
+
         private Optional<String> appId = Optional.empty();
 
         private Optional<String> type = Optional.empty();
@@ -229,6 +256,7 @@ public final class ClientFacingSource {
             provider(other.getProvider());
             type(other.getType());
             appId(other.getAppId());
+            deviceId(other.getDeviceId());
             sport(other.getSport());
             workoutId(other.getWorkoutId());
             name(other.getName());
@@ -337,6 +365,23 @@ public final class ClientFacingSource {
         }
 
         /**
+         * <p>The identifier of the device which recorded this summary.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage deviceId(String deviceId) {
+            this.deviceId = Optional.of(deviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "device_id", nulls = Nulls.SKIP)
+        public _FinalStage deviceId(Optional<String> deviceId) {
+            this.deviceId = deviceId;
+            return this;
+        }
+
+        /**
          * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -373,7 +418,7 @@ public final class ClientFacingSource {
         @java.lang.Override
         public ClientFacingSource build() {
             return new ClientFacingSource(
-                    provider, type, appId, sport, workoutId, name, slug, logo, additionalProperties);
+                    provider, type, appId, deviceId, sport, workoutId, name, slug, logo, additionalProperties);
         }
     }
 }

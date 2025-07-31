@@ -25,14 +25,18 @@ public final class SimulationFlags {
 
     private final Optional<List<ResultType>> resultTypes;
 
+    private final Optional<Boolean> hasMissingResults;
+
     private final Map<String, Object> additionalProperties;
 
     private SimulationFlags(
             Optional<Interpretation> interpretation,
             Optional<List<ResultType>> resultTypes,
+            Optional<Boolean> hasMissingResults,
             Map<String, Object> additionalProperties) {
         this.interpretation = interpretation;
         this.resultTypes = resultTypes;
+        this.hasMissingResults = hasMissingResults;
         this.additionalProperties = additionalProperties;
     }
 
@@ -44,6 +48,11 @@ public final class SimulationFlags {
     @JsonProperty("result_types")
     public Optional<List<ResultType>> getResultTypes() {
         return resultTypes;
+    }
+
+    @JsonProperty("has_missing_results")
+    public Optional<Boolean> getHasMissingResults() {
+        return hasMissingResults;
     }
 
     @java.lang.Override
@@ -58,12 +67,14 @@ public final class SimulationFlags {
     }
 
     private boolean equalTo(SimulationFlags other) {
-        return interpretation.equals(other.interpretation) && resultTypes.equals(other.resultTypes);
+        return interpretation.equals(other.interpretation)
+                && resultTypes.equals(other.resultTypes)
+                && hasMissingResults.equals(other.hasMissingResults);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.interpretation, this.resultTypes);
+        return Objects.hash(this.interpretation, this.resultTypes, this.hasMissingResults);
     }
 
     @java.lang.Override
@@ -81,6 +92,8 @@ public final class SimulationFlags {
 
         private Optional<List<ResultType>> resultTypes = Optional.empty();
 
+        private Optional<Boolean> hasMissingResults = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -89,6 +102,7 @@ public final class SimulationFlags {
         public Builder from(SimulationFlags other) {
             interpretation(other.getInterpretation());
             resultTypes(other.getResultTypes());
+            hasMissingResults(other.getHasMissingResults());
             return this;
         }
 
@@ -114,8 +128,19 @@ public final class SimulationFlags {
             return this;
         }
 
+        @JsonSetter(value = "has_missing_results", nulls = Nulls.SKIP)
+        public Builder hasMissingResults(Optional<Boolean> hasMissingResults) {
+            this.hasMissingResults = hasMissingResults;
+            return this;
+        }
+
+        public Builder hasMissingResults(Boolean hasMissingResults) {
+            this.hasMissingResults = Optional.of(hasMissingResults);
+            return this;
+        }
+
         public SimulationFlags build() {
-            return new SimulationFlags(interpretation, resultTypes, additionalProperties);
+            return new SimulationFlags(interpretation, resultTypes, hasMissingResults, additionalProperties);
         }
     }
 }
