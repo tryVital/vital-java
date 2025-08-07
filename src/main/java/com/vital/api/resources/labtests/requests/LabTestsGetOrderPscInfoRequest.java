@@ -23,10 +23,14 @@ import java.util.Optional;
 public final class LabTestsGetOrderPscInfoRequest {
     private final Optional<AllowedRadius> radius;
 
+    private final Optional<String> capabilities;
+
     private final Map<String, Object> additionalProperties;
 
-    private LabTestsGetOrderPscInfoRequest(Optional<AllowedRadius> radius, Map<String, Object> additionalProperties) {
+    private LabTestsGetOrderPscInfoRequest(
+            Optional<AllowedRadius> radius, Optional<String> capabilities, Map<String, Object> additionalProperties) {
         this.radius = radius;
+        this.capabilities = capabilities;
         this.additionalProperties = additionalProperties;
     }
 
@@ -36,6 +40,14 @@ public final class LabTestsGetOrderPscInfoRequest {
     @JsonProperty("radius")
     public Optional<AllowedRadius> getRadius() {
         return radius;
+    }
+
+    /**
+     * @return Filter for only locations with certain capabilities
+     */
+    @JsonProperty("capabilities")
+    public Optional<String> getCapabilities() {
+        return capabilities;
     }
 
     @java.lang.Override
@@ -50,12 +62,12 @@ public final class LabTestsGetOrderPscInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetOrderPscInfoRequest other) {
-        return radius.equals(other.radius);
+        return radius.equals(other.radius) && capabilities.equals(other.capabilities);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.radius);
+        return Objects.hash(this.radius, this.capabilities);
     }
 
     @java.lang.Override
@@ -71,6 +83,8 @@ public final class LabTestsGetOrderPscInfoRequest {
     public static final class Builder {
         private Optional<AllowedRadius> radius = Optional.empty();
 
+        private Optional<String> capabilities = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -78,6 +92,7 @@ public final class LabTestsGetOrderPscInfoRequest {
 
         public Builder from(LabTestsGetOrderPscInfoRequest other) {
             radius(other.getRadius());
+            capabilities(other.getCapabilities());
             return this;
         }
 
@@ -92,8 +107,19 @@ public final class LabTestsGetOrderPscInfoRequest {
             return this;
         }
 
+        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
+        public Builder capabilities(Optional<String> capabilities) {
+            this.capabilities = capabilities;
+            return this;
+        }
+
+        public Builder capabilities(String capabilities) {
+            this.capabilities = Optional.of(capabilities);
+            return this;
+        }
+
         public LabTestsGetOrderPscInfoRequest build() {
-            return new LabTestsGetOrderPscInfoRequest(radius, additionalProperties);
+            return new LabTestsGetOrderPscInfoRequest(radius, capabilities, additionalProperties);
         }
     }
 }

@@ -9,11 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PscAreaInfoDetails.Builder.class)
@@ -24,13 +27,20 @@ public final class PscAreaInfoDetails {
 
     private final String radius;
 
+    private final Optional<List<String>> capabilities;
+
     private final Map<String, Object> additionalProperties;
 
     private PscAreaInfoDetails(
-            boolean appointmentWithVital, int withinRadius, String radius, Map<String, Object> additionalProperties) {
+            boolean appointmentWithVital,
+            int withinRadius,
+            String radius,
+            Optional<List<String>> capabilities,
+            Map<String, Object> additionalProperties) {
         this.appointmentWithVital = appointmentWithVital;
         this.withinRadius = withinRadius;
         this.radius = radius;
+        this.capabilities = capabilities;
         this.additionalProperties = additionalProperties;
     }
 
@@ -49,6 +59,11 @@ public final class PscAreaInfoDetails {
         return radius;
     }
 
+    @JsonProperty("capabilities")
+    public Optional<List<String>> getCapabilities() {
+        return capabilities;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -63,12 +78,13 @@ public final class PscAreaInfoDetails {
     private boolean equalTo(PscAreaInfoDetails other) {
         return appointmentWithVital == other.appointmentWithVital
                 && withinRadius == other.withinRadius
-                && radius.equals(other.radius);
+                && radius.equals(other.radius)
+                && capabilities.equals(other.capabilities);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.appointmentWithVital, this.withinRadius, this.radius);
+        return Objects.hash(this.appointmentWithVital, this.withinRadius, this.radius, this.capabilities);
     }
 
     @java.lang.Override
@@ -96,6 +112,10 @@ public final class PscAreaInfoDetails {
 
     public interface _FinalStage {
         PscAreaInfoDetails build();
+
+        _FinalStage capabilities(Optional<List<String>> capabilities);
+
+        _FinalStage capabilities(List<String> capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -107,6 +127,8 @@ public final class PscAreaInfoDetails {
 
         private String radius;
 
+        private Optional<List<String>> capabilities = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -117,6 +139,7 @@ public final class PscAreaInfoDetails {
             appointmentWithVital(other.getAppointmentWithVital());
             withinRadius(other.getWithinRadius());
             radius(other.getRadius());
+            capabilities(other.getCapabilities());
             return this;
         }
 
@@ -142,8 +165,22 @@ public final class PscAreaInfoDetails {
         }
 
         @java.lang.Override
+        public _FinalStage capabilities(List<String> capabilities) {
+            this.capabilities = Optional.of(capabilities);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
+        public _FinalStage capabilities(Optional<List<String>> capabilities) {
+            this.capabilities = capabilities;
+            return this;
+        }
+
+        @java.lang.Override
         public PscAreaInfoDetails build() {
-            return new PscAreaInfoDetails(appointmentWithVital, withinRadius, radius, additionalProperties);
+            return new PscAreaInfoDetails(
+                    appointmentWithVital, withinRadius, radius, capabilities, additionalProperties);
         }
     }
 }

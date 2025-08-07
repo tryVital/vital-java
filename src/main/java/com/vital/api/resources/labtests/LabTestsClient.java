@@ -1186,6 +1186,9 @@ public class LabTestsClient {
         if (request.getRadius().isPresent()) {
             httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
         }
+        if (request.getCapabilities().isPresent()) {
+            httpUrl.addQueryParameter("capabilities", request.getCapabilities().get());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -1236,6 +1239,9 @@ public class LabTestsClient {
                 .addPathSegments("psc/info");
         if (request.getRadius().isPresent()) {
             httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
+        }
+        if (request.getCapabilities().isPresent()) {
+            httpUrl.addQueryParameter("capabilities", request.getCapabilities().get());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

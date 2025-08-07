@@ -27,13 +27,20 @@ public final class LabTestsGetPscInfoRequest {
 
     private final Optional<AllowedRadius> radius;
 
+    private final Optional<String> capabilities;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetPscInfoRequest(
-            String zipCode, int labId, Optional<AllowedRadius> radius, Map<String, Object> additionalProperties) {
+            String zipCode,
+            int labId,
+            Optional<AllowedRadius> radius,
+            Optional<String> capabilities,
+            Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.labId = labId;
         this.radius = radius;
+        this.capabilities = capabilities;
         this.additionalProperties = additionalProperties;
     }
 
@@ -61,6 +68,14 @@ public final class LabTestsGetPscInfoRequest {
         return radius;
     }
 
+    /**
+     * @return Filter for only locations with certain capabilities
+     */
+    @JsonProperty("capabilities")
+    public Optional<String> getCapabilities() {
+        return capabilities;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -73,12 +88,15 @@ public final class LabTestsGetPscInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetPscInfoRequest other) {
-        return zipCode.equals(other.zipCode) && labId == other.labId && radius.equals(other.radius);
+        return zipCode.equals(other.zipCode)
+                && labId == other.labId
+                && radius.equals(other.radius)
+                && capabilities.equals(other.capabilities);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.labId, this.radius);
+        return Objects.hash(this.zipCode, this.labId, this.radius, this.capabilities);
     }
 
     @java.lang.Override
@@ -106,6 +124,10 @@ public final class LabTestsGetPscInfoRequest {
         _FinalStage radius(Optional<AllowedRadius> radius);
 
         _FinalStage radius(AllowedRadius radius);
+
+        _FinalStage capabilities(Optional<String> capabilities);
+
+        _FinalStage capabilities(String capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -113,6 +135,8 @@ public final class LabTestsGetPscInfoRequest {
         private String zipCode;
 
         private int labId;
+
+        private Optional<String> capabilities = Optional.empty();
 
         private Optional<AllowedRadius> radius = Optional.empty();
 
@@ -126,6 +150,7 @@ public final class LabTestsGetPscInfoRequest {
             zipCode(other.getZipCode());
             labId(other.getLabId());
             radius(other.getRadius());
+            capabilities(other.getCapabilities());
             return this;
         }
 
@@ -152,6 +177,23 @@ public final class LabTestsGetPscInfoRequest {
         }
 
         /**
+         * <p>Filter for only locations with certain capabilities</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage capabilities(String capabilities) {
+            this.capabilities = Optional.of(capabilities);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
+        public _FinalStage capabilities(Optional<String> capabilities) {
+            this.capabilities = capabilities;
+            return this;
+        }
+
+        /**
          * <p>Radius in which to search in miles</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -170,7 +212,7 @@ public final class LabTestsGetPscInfoRequest {
 
         @java.lang.Override
         public LabTestsGetPscInfoRequest build() {
-            return new LabTestsGetPscInfoRequest(zipCode, labId, radius, additionalProperties);
+            return new LabTestsGetPscInfoRequest(zipCode, labId, radius, capabilities, additionalProperties);
         }
     }
 }

@@ -31,6 +31,8 @@ public final class ClientFacingLabLocation {
 
     private final LngLat location;
 
+    private final List<String> capabilities;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingLabLocation(
@@ -39,12 +41,14 @@ public final class ClientFacingLabLocation {
             String siteCode,
             List<Billing> supportedBillTypes,
             LngLat location,
+            List<String> capabilities,
             Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.distance = distance;
         this.siteCode = siteCode;
         this.supportedBillTypes = supportedBillTypes;
         this.location = location;
+        this.capabilities = capabilities;
         this.additionalProperties = additionalProperties;
     }
 
@@ -73,6 +77,11 @@ public final class ClientFacingLabLocation {
         return location;
     }
 
+    @JsonProperty("capabilities")
+    public List<String> getCapabilities() {
+        return capabilities;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -89,12 +98,14 @@ public final class ClientFacingLabLocation {
                 && distance == other.distance
                 && siteCode.equals(other.siteCode)
                 && supportedBillTypes.equals(other.supportedBillTypes)
-                && location.equals(other.location);
+                && location.equals(other.location)
+                && capabilities.equals(other.capabilities);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.distance, this.siteCode, this.supportedBillTypes, this.location);
+        return Objects.hash(
+                this.metadata, this.distance, this.siteCode, this.supportedBillTypes, this.location, this.capabilities);
     }
 
     @java.lang.Override
@@ -132,6 +143,12 @@ public final class ClientFacingLabLocation {
         _FinalStage addSupportedBillTypes(Billing supportedBillTypes);
 
         _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes);
+
+        _FinalStage capabilities(List<String> capabilities);
+
+        _FinalStage addCapabilities(String capabilities);
+
+        _FinalStage addAllCapabilities(List<String> capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -144,6 +161,8 @@ public final class ClientFacingLabLocation {
         private String siteCode;
 
         private LngLat location;
+
+        private List<String> capabilities = new ArrayList<>();
 
         private List<Billing> supportedBillTypes = new ArrayList<>();
 
@@ -159,6 +178,7 @@ public final class ClientFacingLabLocation {
             siteCode(other.getSiteCode());
             supportedBillTypes(other.getSupportedBillTypes());
             location(other.getLocation());
+            capabilities(other.getCapabilities());
             return this;
         }
 
@@ -191,6 +211,26 @@ public final class ClientFacingLabLocation {
         }
 
         @java.lang.Override
+        public _FinalStage addAllCapabilities(List<String> capabilities) {
+            this.capabilities.addAll(capabilities);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addCapabilities(String capabilities) {
+            this.capabilities.add(capabilities);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
+        public _FinalStage capabilities(List<String> capabilities) {
+            this.capabilities.clear();
+            this.capabilities.addAll(capabilities);
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes) {
             this.supportedBillTypes.addAll(supportedBillTypes);
             return this;
@@ -213,7 +253,7 @@ public final class ClientFacingLabLocation {
         @java.lang.Override
         public ClientFacingLabLocation build() {
             return new ClientFacingLabLocation(
-                    metadata, distance, siteCode, supportedBillTypes, location, additionalProperties);
+                    metadata, distance, siteCode, supportedBillTypes, location, capabilities, additionalProperties);
         }
     }
 }
