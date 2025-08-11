@@ -1140,6 +1140,9 @@ public class LabTestsClient {
         if (request.getLab().isPresent()) {
             httpUrl.addQueryParameter("lab", request.getLab().get().toString());
         }
+        if (request.getLabs().isPresent()) {
+            httpUrl.addQueryParameter("labs", request.getLabs().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

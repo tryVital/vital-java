@@ -28,16 +28,20 @@ public final class LabTestsGetAreaInfoRequest {
 
     private final Optional<ClientFacingLabs> lab;
 
+    private final Optional<ClientFacingLabs> labs;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetAreaInfoRequest(
             String zipCode,
             Optional<AllowedRadius> radius,
             Optional<ClientFacingLabs> lab,
+            Optional<ClientFacingLabs> labs,
             Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.radius = radius;
         this.lab = lab;
+        this.labs = labs;
         this.additionalProperties = additionalProperties;
     }
 
@@ -65,6 +69,14 @@ public final class LabTestsGetAreaInfoRequest {
         return lab;
     }
 
+    /**
+     * @return List of labs to check for PSCs
+     */
+    @JsonProperty("labs")
+    public Optional<ClientFacingLabs> getLabs() {
+        return labs;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -77,12 +89,15 @@ public final class LabTestsGetAreaInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetAreaInfoRequest other) {
-        return zipCode.equals(other.zipCode) && radius.equals(other.radius) && lab.equals(other.lab);
+        return zipCode.equals(other.zipCode)
+                && radius.equals(other.radius)
+                && lab.equals(other.lab)
+                && labs.equals(other.labs);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.radius, this.lab);
+        return Objects.hash(this.zipCode, this.radius, this.lab, this.labs);
     }
 
     @java.lang.Override
@@ -110,11 +125,17 @@ public final class LabTestsGetAreaInfoRequest {
         _FinalStage lab(Optional<ClientFacingLabs> lab);
 
         _FinalStage lab(ClientFacingLabs lab);
+
+        _FinalStage labs(Optional<ClientFacingLabs> labs);
+
+        _FinalStage labs(ClientFacingLabs labs);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ZipCodeStage, _FinalStage {
         private String zipCode;
+
+        private Optional<ClientFacingLabs> labs = Optional.empty();
 
         private Optional<ClientFacingLabs> lab = Optional.empty();
 
@@ -130,6 +151,7 @@ public final class LabTestsGetAreaInfoRequest {
             zipCode(other.getZipCode());
             radius(other.getRadius());
             lab(other.getLab());
+            labs(other.getLabs());
             return this;
         }
 
@@ -141,6 +163,23 @@ public final class LabTestsGetAreaInfoRequest {
         @JsonSetter("zip_code")
         public _FinalStage zipCode(String zipCode) {
             this.zipCode = zipCode;
+            return this;
+        }
+
+        /**
+         * <p>List of labs to check for PSCs</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage labs(ClientFacingLabs labs) {
+            this.labs = Optional.of(labs);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "labs", nulls = Nulls.SKIP)
+        public _FinalStage labs(Optional<ClientFacingLabs> labs) {
+            this.labs = labs;
             return this;
         }
 
@@ -180,7 +219,7 @@ public final class LabTestsGetAreaInfoRequest {
 
         @java.lang.Override
         public LabTestsGetAreaInfoRequest build() {
-            return new LabTestsGetAreaInfoRequest(zipCode, radius, lab, additionalProperties);
+            return new LabTestsGetAreaInfoRequest(zipCode, radius, lab, labs, additionalProperties);
         }
     }
 }
