@@ -40,7 +40,7 @@ public final class Micros {
     }
 
     /**
-     * @return Amount of each mineral in grams (g)
+     * @return Amount of each mineral in their respective units. Most minerals are measured in mg (milligrams), while sodium and potassium are in g (grams).
      */
     @JsonProperty("minerals")
     public Optional<Map<String, Optional<Double>>> getMinerals() {
@@ -48,7 +48,7 @@ public final class Micros {
     }
 
     /**
-     * @return Amount of each trace element in grams (g)
+     * @return Amount of each trace element in their respective units, most measured in μg (micrograms), while copper and manganese are in mg (milligrams).
      */
     @JsonProperty("trace_elements")
     public Optional<Map<String, Optional<Double>>> getTraceElements() {
@@ -56,7 +56,7 @@ public final class Micros {
     }
 
     /**
-     * @return Amount of each vitamin in grams (g)
+     * @return Amount of each vitamin in their respective units. A, B12, D and K in μg (micrograms), while B1, B2, B3, B5, B6, C and folic acid are in mg (milligrams).
      */
     @JsonProperty("vitamins")
     public Optional<Map<String, Optional<Double>>> getVitamins() {
