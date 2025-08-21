@@ -10,7 +10,11 @@ public enum PayorCodeExternalProvider {
 
     AVAILITY("availity"),
 
-    STEDI("stedi");
+    STEDI("stedi"),
+
+    WAYSTAR("waystar"),
+
+    CLAIM_MD("claim_md");
 
     private final String value;
 
