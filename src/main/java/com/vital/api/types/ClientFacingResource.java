@@ -44,6 +44,8 @@ public enum ClientFacingResource {
 
     DEVICE("device"),
 
+    DEVICE_LEGACY("device_legacy"),
+
     WEIGHT("weight"),
 
     FAT("fat"),
