@@ -46,6 +46,8 @@ public final class ClientFacingMarker {
 
     private final Optional<Integer> worstCaseTatDays;
 
+    private final Optional<Boolean> isOrderable;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingMarker(
@@ -62,6 +64,7 @@ public final class ClientFacingMarker {
             Optional<Boolean> aLaCarteEnabled,
             Optional<Integer> commonTatDays,
             Optional<Integer> worstCaseTatDays,
+            Optional<Boolean> isOrderable,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -76,6 +79,7 @@ public final class ClientFacingMarker {
         this.aLaCarteEnabled = aLaCarteEnabled;
         this.commonTatDays = commonTatDays;
         this.worstCaseTatDays = worstCaseTatDays;
+        this.isOrderable = isOrderable;
         this.additionalProperties = additionalProperties;
     }
 
@@ -144,6 +148,11 @@ public final class ClientFacingMarker {
         return worstCaseTatDays;
     }
 
+    @JsonProperty("is_orderable")
+    public Optional<Boolean> getIsOrderable() {
+        return isOrderable;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -168,7 +177,8 @@ public final class ClientFacingMarker {
                 && aoe.equals(other.aoe)
                 && aLaCarteEnabled.equals(other.aLaCarteEnabled)
                 && commonTatDays.equals(other.commonTatDays)
-                && worstCaseTatDays.equals(other.worstCaseTatDays);
+                && worstCaseTatDays.equals(other.worstCaseTatDays)
+                && isOrderable.equals(other.isOrderable);
     }
 
     @java.lang.Override
@@ -186,7 +196,8 @@ public final class ClientFacingMarker {
                 this.aoe,
                 this.aLaCarteEnabled,
                 this.commonTatDays,
-                this.worstCaseTatDays);
+                this.worstCaseTatDays,
+                this.isOrderable);
     }
 
     @java.lang.Override
@@ -254,6 +265,10 @@ public final class ClientFacingMarker {
         _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays);
 
         _FinalStage worstCaseTatDays(Integer worstCaseTatDays);
+
+        _FinalStage isOrderable(Optional<Boolean> isOrderable);
+
+        _FinalStage isOrderable(Boolean isOrderable);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -263,6 +278,8 @@ public final class ClientFacingMarker {
         private String name;
 
         private String slug;
+
+        private Optional<Boolean> isOrderable = Optional.empty();
 
         private Optional<Integer> worstCaseTatDays = Optional.empty();
 
@@ -304,6 +321,7 @@ public final class ClientFacingMarker {
             aLaCarteEnabled(other.getALaCarteEnabled());
             commonTatDays(other.getCommonTatDays());
             worstCaseTatDays(other.getWorstCaseTatDays());
+            isOrderable(other.getIsOrderable());
             return this;
         }
 
@@ -325,6 +343,19 @@ public final class ClientFacingMarker {
         @JsonSetter("slug")
         public _FinalStage slug(String slug) {
             this.slug = slug;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage isOrderable(Boolean isOrderable) {
+            this.isOrderable = Optional.of(isOrderable);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "is_orderable", nulls = Nulls.SKIP)
+        public _FinalStage isOrderable(Optional<Boolean> isOrderable) {
+            this.isOrderable = isOrderable;
             return this;
         }
 
@@ -474,6 +505,7 @@ public final class ClientFacingMarker {
                     aLaCarteEnabled,
                     commonTatDays,
                     worstCaseTatDays,
+                    isOrderable,
                     additionalProperties);
         }
     }

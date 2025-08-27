@@ -48,6 +48,8 @@ public final class ClientFacingMarkerComplete {
 
     private final Optional<Integer> worstCaseTatDays;
 
+    private final Optional<Boolean> isOrderable;
+
     private final List<ClientFacingResult> expectedResults;
 
     private final Map<String, Object> additionalProperties;
@@ -66,6 +68,7 @@ public final class ClientFacingMarkerComplete {
             Optional<Boolean> aLaCarteEnabled,
             Optional<Integer> commonTatDays,
             Optional<Integer> worstCaseTatDays,
+            Optional<Boolean> isOrderable,
             List<ClientFacingResult> expectedResults,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -81,6 +84,7 @@ public final class ClientFacingMarkerComplete {
         this.aLaCarteEnabled = aLaCarteEnabled;
         this.commonTatDays = commonTatDays;
         this.worstCaseTatDays = worstCaseTatDays;
+        this.isOrderable = isOrderable;
         this.expectedResults = expectedResults;
         this.additionalProperties = additionalProperties;
     }
@@ -150,6 +154,11 @@ public final class ClientFacingMarkerComplete {
         return worstCaseTatDays;
     }
 
+    @JsonProperty("is_orderable")
+    public Optional<Boolean> getIsOrderable() {
+        return isOrderable;
+    }
+
     @JsonProperty("expected_results")
     public List<ClientFacingResult> getExpectedResults() {
         return expectedResults;
@@ -180,6 +189,7 @@ public final class ClientFacingMarkerComplete {
                 && aLaCarteEnabled.equals(other.aLaCarteEnabled)
                 && commonTatDays.equals(other.commonTatDays)
                 && worstCaseTatDays.equals(other.worstCaseTatDays)
+                && isOrderable.equals(other.isOrderable)
                 && expectedResults.equals(other.expectedResults);
     }
 
@@ -199,6 +209,7 @@ public final class ClientFacingMarkerComplete {
                 this.aLaCarteEnabled,
                 this.commonTatDays,
                 this.worstCaseTatDays,
+                this.isOrderable,
                 this.expectedResults);
     }
 
@@ -268,6 +279,10 @@ public final class ClientFacingMarkerComplete {
 
         _FinalStage worstCaseTatDays(Integer worstCaseTatDays);
 
+        _FinalStage isOrderable(Optional<Boolean> isOrderable);
+
+        _FinalStage isOrderable(Boolean isOrderable);
+
         _FinalStage expectedResults(List<ClientFacingResult> expectedResults);
 
         _FinalStage addExpectedResults(ClientFacingResult expectedResults);
@@ -284,6 +299,8 @@ public final class ClientFacingMarkerComplete {
         private String slug;
 
         private List<ClientFacingResult> expectedResults = new ArrayList<>();
+
+        private Optional<Boolean> isOrderable = Optional.empty();
 
         private Optional<Integer> worstCaseTatDays = Optional.empty();
 
@@ -325,6 +342,7 @@ public final class ClientFacingMarkerComplete {
             aLaCarteEnabled(other.getALaCarteEnabled());
             commonTatDays(other.getCommonTatDays());
             worstCaseTatDays(other.getWorstCaseTatDays());
+            isOrderable(other.getIsOrderable());
             expectedResults(other.getExpectedResults());
             return this;
         }
@@ -367,6 +385,19 @@ public final class ClientFacingMarkerComplete {
         public _FinalStage expectedResults(List<ClientFacingResult> expectedResults) {
             this.expectedResults.clear();
             this.expectedResults.addAll(expectedResults);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage isOrderable(Boolean isOrderable) {
+            this.isOrderable = Optional.of(isOrderable);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "is_orderable", nulls = Nulls.SKIP)
+        public _FinalStage isOrderable(Optional<Boolean> isOrderable) {
+            this.isOrderable = isOrderable;
             return this;
         }
 
@@ -516,6 +547,7 @@ public final class ClientFacingMarkerComplete {
                     aLaCarteEnabled,
                     commonTatDays,
                     worstCaseTatDays,
+                    isOrderable,
                     expectedResults,
                     additionalProperties);
         }
