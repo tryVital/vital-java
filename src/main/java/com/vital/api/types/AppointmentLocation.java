@@ -22,6 +22,8 @@ import java.util.Optional;
 public final class AppointmentLocation {
     private final LngLat location;
 
+    private final Optional<Integer> distance;
+
     private final UsAddress address;
 
     private final String code;
@@ -34,12 +36,14 @@ public final class AppointmentLocation {
 
     private AppointmentLocation(
             LngLat location,
+            Optional<Integer> distance,
             UsAddress address,
             String code,
             String name,
             Optional<String> ianaTimezone,
             Map<String, Object> additionalProperties) {
         this.location = location;
+        this.distance = distance;
         this.address = address;
         this.code = code;
         this.name = name;
@@ -50,6 +54,11 @@ public final class AppointmentLocation {
     @JsonProperty("location")
     public LngLat getLocation() {
         return location;
+    }
+
+    @JsonProperty("distance")
+    public Optional<Integer> getDistance() {
+        return distance;
     }
 
     @JsonProperty("address")
@@ -85,6 +94,7 @@ public final class AppointmentLocation {
 
     private boolean equalTo(AppointmentLocation other) {
         return location.equals(other.location)
+                && distance.equals(other.distance)
                 && address.equals(other.address)
                 && code.equals(other.code)
                 && name.equals(other.name)
@@ -93,7 +103,7 @@ public final class AppointmentLocation {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.location, this.address, this.code, this.name, this.ianaTimezone);
+        return Objects.hash(this.location, this.distance, this.address, this.code, this.name, this.ianaTimezone);
     }
 
     @java.lang.Override
@@ -126,6 +136,10 @@ public final class AppointmentLocation {
     public interface _FinalStage {
         AppointmentLocation build();
 
+        _FinalStage distance(Optional<Integer> distance);
+
+        _FinalStage distance(Integer distance);
+
         _FinalStage ianaTimezone(Optional<String> ianaTimezone);
 
         _FinalStage ianaTimezone(String ianaTimezone);
@@ -143,6 +157,8 @@ public final class AppointmentLocation {
 
         private Optional<String> ianaTimezone = Optional.empty();
 
+        private Optional<Integer> distance = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -151,6 +167,7 @@ public final class AppointmentLocation {
         @java.lang.Override
         public Builder from(AppointmentLocation other) {
             location(other.getLocation());
+            distance(other.getDistance());
             address(other.getAddress());
             code(other.getCode());
             name(other.getName());
@@ -200,8 +217,21 @@ public final class AppointmentLocation {
         }
 
         @java.lang.Override
+        public _FinalStage distance(Integer distance) {
+            this.distance = Optional.of(distance);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "distance", nulls = Nulls.SKIP)
+        public _FinalStage distance(Optional<Integer> distance) {
+            this.distance = distance;
+            return this;
+        }
+
+        @java.lang.Override
         public AppointmentLocation build() {
-            return new AppointmentLocation(location, address, code, name, ianaTimezone, additionalProperties);
+            return new AppointmentLocation(location, distance, address, code, name, ianaTimezone, additionalProperties);
         }
     }
 }

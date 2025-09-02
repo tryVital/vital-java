@@ -119,6 +119,9 @@ public final class BiomarkerResult {
         return slug;
     }
 
+    /**
+     * @return Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.
+     */
     @JsonProperty("value")
     public double getValue() {
         return value;
@@ -442,6 +445,10 @@ public final class BiomarkerResult {
             return this;
         }
 
+        /**
+         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("value")
         public ResultStage value(double value) {
