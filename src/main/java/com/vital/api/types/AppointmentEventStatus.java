@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum AppointmentEventStatus {
     PENDING("pending"),
 
+    RESERVED("reserved"),
+
     SCHEDULED("scheduled"),
 
     COMPLETED("completed"),

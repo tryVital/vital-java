@@ -10,6 +10,8 @@ public enum AppointmentStatus {
 
     PENDING("pending"),
 
+    RESERVED("reserved"),
+
     IN_PROGRESS("in_progress"),
 
     COMPLETED("completed"),
