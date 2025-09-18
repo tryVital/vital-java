@@ -26,7 +26,7 @@ public final class BiomarkerResult {
 
     private final Optional<String> slug;
 
-    private final double value;
+    private final Optional<Double> value;
 
     private final String result;
 
@@ -67,7 +67,7 @@ public final class BiomarkerResult {
     private BiomarkerResult(
             String name,
             Optional<String> slug,
-            double value,
+            Optional<Double> value,
             String result,
             ResultType type,
             Optional<String> unit,
@@ -123,7 +123,7 @@ public final class BiomarkerResult {
      * @return Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.
      */
     @JsonProperty("value")
-    public double getValue() {
+    public Optional<Double> getValue() {
         return value;
     }
 
@@ -226,7 +226,7 @@ public final class BiomarkerResult {
     private boolean equalTo(BiomarkerResult other) {
         return name.equals(other.name)
                 && slug.equals(other.slug)
-                && value == other.value
+                && value.equals(other.value)
                 && result.equals(other.result)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
@@ -281,13 +281,9 @@ public final class BiomarkerResult {
     }
 
     public interface NameStage {
-        ValueStage name(String name);
+        ResultStage name(String name);
 
         Builder from(BiomarkerResult other);
-    }
-
-    public interface ValueStage {
-        ResultStage value(double value);
     }
 
     public interface ResultStage {
@@ -304,6 +300,10 @@ public final class BiomarkerResult {
         _FinalStage slug(Optional<String> slug);
 
         _FinalStage slug(String slug);
+
+        _FinalStage value(Optional<Double> value);
+
+        _FinalStage value(Double value);
 
         _FinalStage unit(Optional<String> unit);
 
@@ -367,10 +367,8 @@ public final class BiomarkerResult {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, ValueStage, ResultStage, TypeStage, _FinalStage {
+    public static final class Builder implements NameStage, ResultStage, TypeStage, _FinalStage {
         private String name;
-
-        private double value;
 
         private String result;
 
@@ -406,6 +404,8 @@ public final class BiomarkerResult {
 
         private Optional<String> unit = Optional.empty();
 
+        private Optional<Double> value = Optional.empty();
+
         private Optional<String> slug = Optional.empty();
 
         @JsonAnySetter
@@ -440,19 +440,8 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         @JsonSetter("name")
-        public ValueStage name(String name) {
+        public ResultStage name(String name) {
             this.name = name;
-            return this;
-        }
-
-        /**
-         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("value")
-        public ResultStage value(double value) {
-            this.value = value;
             return this;
         }
 
@@ -662,6 +651,23 @@ public final class BiomarkerResult {
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
+            return this;
+        }
+
+        /**
+         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage value(Double value) {
+            this.value = Optional.of(value);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "value", nulls = Nulls.SKIP)
+        public _FinalStage value(Optional<Double> value) {
+            this.value = value;
             return this;
         }
 
