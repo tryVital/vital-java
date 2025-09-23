@@ -6,6 +6,8 @@ package com.vital.api.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum SleepColumnExprSleep {
+    ID("id"),
+
     SESSION_START("session_start"),
 
     SESSION_END("session_end"),

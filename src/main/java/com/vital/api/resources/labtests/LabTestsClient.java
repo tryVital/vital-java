@@ -2326,16 +2326,10 @@ public class LabTestsClient {
         }
     }
 
-    /**
-     * GET collection instructions for a lab test
-     */
     public InputStream getLabTestCollectionInstructionPdf(String labTestId) {
         return getLabTestCollectionInstructionPdf(labTestId, null);
     }
 
-    /**
-     * GET collection instructions for a lab test
-     */
     public InputStream getLabTestCollectionInstructionPdf(String labTestId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
