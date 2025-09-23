@@ -69,6 +69,123 @@ public class LabTestsClient {
     }
 
     /**
+     * GET many orders with filters.
+     */
+    public GetOrdersResponse getOrders() {
+        return getOrders(LabTestsGetOrdersRequest.builder().build());
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request) {
+        return getOrders(request, null);
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/orders");
+        if (request.getSearchInput().isPresent()) {
+            httpUrl.addQueryParameter("search_input", request.getSearchInput().get());
+        }
+        if (request.getStartDate().isPresent()) {
+            httpUrl.addQueryParameter("start_date", request.getStartDate().get().toString());
+        }
+        if (request.getEndDate().isPresent()) {
+            httpUrl.addQueryParameter("end_date", request.getEndDate().get().toString());
+        }
+        if (request.getUpdatedStartDate().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "updated_start_date", request.getUpdatedStartDate().get().toString());
+        }
+        if (request.getUpdatedEndDate().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "updated_end_date", request.getUpdatedEndDate().get().toString());
+        }
+        if (request.getStatus().isPresent()) {
+            httpUrl.addQueryParameter("status", request.getStatus().get().toString());
+        }
+        if (request.getOrderKey().isPresent()) {
+            httpUrl.addQueryParameter("order_key", request.getOrderKey().get().toString());
+        }
+        if (request.getOrderDirection().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "order_direction", request.getOrderDirection().get().toString());
+        }
+        if (request.getOrderType().isPresent()) {
+            httpUrl.addQueryParameter("order_type", request.getOrderType().get().toString());
+        }
+        if (request.getIsCritical().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "is_critical", request.getIsCritical().get().toString());
+        }
+        if (request.getInterpretation().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "interpretation", request.getInterpretation().get().toString());
+        }
+        if (request.getOrderActivationTypes().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "order_activation_types",
+                    request.getOrderActivationTypes().get().toString());
+        }
+        if (request.getUserId().isPresent()) {
+            httpUrl.addQueryParameter("user_id", request.getUserId().get());
+        }
+        if (request.getPatientName().isPresent()) {
+            httpUrl.addQueryParameter("patient_name", request.getPatientName().get());
+        }
+        if (request.getShippingRecipientName().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "shipping_recipient_name",
+                    request.getShippingRecipientName().get());
+        }
+        if (request.getOrderIds().isPresent()) {
+            httpUrl.addQueryParameter("order_ids", request.getOrderIds().get());
+        }
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
+        if (request.getSize().isPresent()) {
+            httpUrl.addQueryParameter("size", request.getSize().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetOrdersResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * Return the available time slots to book an appointment with a phlebotomist
      * for the given address and order.
      */
@@ -1588,123 +1705,6 @@ public class LabTestsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PostOrderResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
-    }
-
-    /**
-     * GET many orders with filters.
-     */
-    public GetOrdersResponse getOrders() {
-        return getOrders(LabTestsGetOrdersRequest.builder().build());
-    }
-
-    /**
-     * GET many orders with filters.
-     */
-    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request) {
-        return getOrders(request, null);
-    }
-
-    /**
-     * GET many orders with filters.
-     */
-    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v3/orders");
-        if (request.getSearchInput().isPresent()) {
-            httpUrl.addQueryParameter("search_input", request.getSearchInput().get());
-        }
-        if (request.getStartDate().isPresent()) {
-            httpUrl.addQueryParameter("start_date", request.getStartDate().get().toString());
-        }
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get().toString());
-        }
-        if (request.getUpdatedStartDate().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "updated_start_date", request.getUpdatedStartDate().get().toString());
-        }
-        if (request.getUpdatedEndDate().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "updated_end_date", request.getUpdatedEndDate().get().toString());
-        }
-        if (request.getStatus().isPresent()) {
-            httpUrl.addQueryParameter("status", request.getStatus().get().toString());
-        }
-        if (request.getOrderKey().isPresent()) {
-            httpUrl.addQueryParameter("order_key", request.getOrderKey().get().toString());
-        }
-        if (request.getOrderDirection().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "order_direction", request.getOrderDirection().get().toString());
-        }
-        if (request.getOrderType().isPresent()) {
-            httpUrl.addQueryParameter("order_type", request.getOrderType().get().toString());
-        }
-        if (request.getIsCritical().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "is_critical", request.getIsCritical().get().toString());
-        }
-        if (request.getInterpretation().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "interpretation", request.getInterpretation().get().toString());
-        }
-        if (request.getOrderActivationTypes().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "order_activation_types",
-                    request.getOrderActivationTypes().get().toString());
-        }
-        if (request.getUserId().isPresent()) {
-            httpUrl.addQueryParameter("user_id", request.getUserId().get());
-        }
-        if (request.getPatientName().isPresent()) {
-            httpUrl.addQueryParameter("patient_name", request.getPatientName().get());
-        }
-        if (request.getShippingRecipientName().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "shipping_recipient_name",
-                    request.getShippingRecipientName().get());
-        }
-        if (request.getOrderIds().isPresent()) {
-            httpUrl.addQueryParameter("order_ids", request.getOrderIds().get());
-        }
-        if (request.getPage().isPresent()) {
-            httpUrl.addQueryParameter("page", request.getPage().get().toString());
-        }
-        if (request.getSize().isPresent()) {
-            httpUrl.addQueryParameter("size", request.getSize().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetOrdersResponse.class);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
