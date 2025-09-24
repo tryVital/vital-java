@@ -26,14 +26,18 @@ public final class Query {
 
     private final Optional<List<QueryGroupByItem>> groupBy;
 
+    private final Optional<String> where;
+
     private final Map<String, Object> additionalProperties;
 
     private Query(
             List<QuerySelectItem> select,
             Optional<List<QueryGroupByItem>> groupBy,
+            Optional<String> where,
             Map<String, Object> additionalProperties) {
         this.select = select;
         this.groupBy = groupBy;
+        this.where = where;
         this.additionalProperties = additionalProperties;
     }
 
@@ -45,6 +49,19 @@ public final class Query {
     @JsonProperty("group_by")
     public Optional<List<QueryGroupByItem>> getGroupBy() {
         return groupBy;
+    }
+
+    /**
+     * @return A WHERE clause filtering the input data. If a GROUP BY clause is present, filtering happens prior to GROUP BY evaluation.
+     * <p>WHERE clause uses SQL Expression syntax to describe the filtering criteria:</p>
+     * <ul>
+     * <li>Available operators: <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>!=</code>, <code>NOT</code>, <code>AND</code> and <code>OR</code>.</li>
+     * <li>Parentheses is supported.</li>
+     * </ul>
+     */
+    @JsonProperty("where")
+    public Optional<String> getWhere() {
+        return where;
     }
 
     @java.lang.Override
@@ -59,12 +76,12 @@ public final class Query {
     }
 
     private boolean equalTo(Query other) {
-        return select.equals(other.select) && groupBy.equals(other.groupBy);
+        return select.equals(other.select) && groupBy.equals(other.groupBy) && where.equals(other.where);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.select, this.groupBy);
+        return Objects.hash(this.select, this.groupBy, this.where);
     }
 
     @java.lang.Override
@@ -82,6 +99,8 @@ public final class Query {
 
         private Optional<List<QueryGroupByItem>> groupBy = Optional.empty();
 
+        private Optional<String> where = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -90,6 +109,7 @@ public final class Query {
         public Builder from(Query other) {
             select(other.getSelect());
             groupBy(other.getGroupBy());
+            where(other.getWhere());
             return this;
         }
 
@@ -121,8 +141,19 @@ public final class Query {
             return this;
         }
 
+        @JsonSetter(value = "where", nulls = Nulls.SKIP)
+        public Builder where(Optional<String> where) {
+            this.where = where;
+            return this;
+        }
+
+        public Builder where(String where) {
+            this.where = Optional.of(where);
+            return this;
+        }
+
         public Query build() {
-            return new Query(select, groupBy, additionalProperties);
+            return new Query(select, groupBy, where, additionalProperties);
         }
     }
 }
