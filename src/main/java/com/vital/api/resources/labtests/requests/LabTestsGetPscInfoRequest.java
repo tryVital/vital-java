@@ -61,7 +61,7 @@ public final class LabTestsGetPscInfoRequest {
     }
 
     /**
-     * @return Radius in which to search in miles
+     * @return Radius in which to search in miles. Note that we limit to 30 PSCs.
      */
     @JsonProperty("radius")
     public Optional<AllowedRadius> getRadius() {
@@ -194,7 +194,7 @@ public final class LabTestsGetPscInfoRequest {
         }
 
         /**
-         * <p>Radius in which to search in miles</p>
+         * <p>Radius in which to search in miles. Note that we limit to 30 PSCs.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

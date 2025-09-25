@@ -32,6 +32,10 @@ import java.util.function.Supplier;
 public class Vital {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<LinkClient> linkClient;
+
+    protected final Supplier<UserClient> userClient;
+
     protected final Supplier<ElectrocardiogramClient> electrocardiogramClient;
 
     protected final Supplier<SleepCycleClient> sleepCycleClient;
@@ -52,19 +56,15 @@ public class Vital {
 
     protected final Supplier<MenstrualCycleClient> menstrualCycleClient;
 
-    protected final Supplier<UserClient> userClient;
-
-    protected final Supplier<LinkClient> linkClient;
-
     protected final Supplier<ProvidersClient> providersClient;
+
+    protected final Supplier<VitalsClient> vitalsClient;
 
     protected final Supplier<TestkitClient> testkitClient;
 
     protected final Supplier<LabTestsClient> labTestsClient;
 
     protected final Supplier<OrderClient> orderClient;
-
-    protected final Supplier<VitalsClient> vitalsClient;
 
     protected final Supplier<TeamClient> teamClient;
 
@@ -78,6 +78,8 @@ public class Vital {
 
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
+        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
@@ -88,18 +90,24 @@ public class Vital {
         this.bodyClient = Suppliers.memoize(() -> new BodyClient(clientOptions));
         this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
         this.menstrualCycleClient = Suppliers.memoize(() -> new MenstrualCycleClient(clientOptions));
-        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
-        this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
+        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
-        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
         this.payorClient = Suppliers.memoize(() -> new PayorClient(clientOptions));
         this.aggregateClient = Suppliers.memoize(() -> new AggregateClient(clientOptions));
+    }
+
+    public LinkClient link() {
+        return this.linkClient.get();
+    }
+
+    public UserClient user() {
+        return this.userClient.get();
     }
 
     public ElectrocardiogramClient electrocardiogram() {
@@ -142,16 +150,12 @@ public class Vital {
         return this.menstrualCycleClient.get();
     }
 
-    public UserClient user() {
-        return this.userClient.get();
-    }
-
-    public LinkClient link() {
-        return this.linkClient.get();
-    }
-
     public ProvidersClient providers() {
         return this.providersClient.get();
+    }
+
+    public VitalsClient vitals() {
+        return this.vitalsClient.get();
     }
 
     public TestkitClient testkit() {
@@ -164,10 +168,6 @@ public class Vital {
 
     public OrderClient order() {
         return this.orderClient.get();
-    }
-
-    public VitalsClient vitals() {
-        return this.vitalsClient.get();
     }
 
     public TeamClient team() {

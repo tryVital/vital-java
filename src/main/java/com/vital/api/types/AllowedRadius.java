@@ -12,7 +12,9 @@ public enum AllowedRadius {
 
     TWENTY_FIVE("25"),
 
-    FIFTY("50");
+    FIFTY("50"),
+
+    ONE_HUNDRED("100");
 
     private final String value;
 
