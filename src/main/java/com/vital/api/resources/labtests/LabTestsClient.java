@@ -52,7 +52,9 @@ import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -1343,19 +1345,63 @@ public class LabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .build();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("user_id", request.getUserId());
+        if (request.getLabTestId().isPresent()) {
+            properties.put("lab_test_id", request.getLabTestId());
+        }
+        if (request.getOrderSet().isPresent()) {
+            properties.put("order_set", request.getOrderSet());
+        }
+        if (request.getCollectionMethod().isPresent()) {
+            properties.put("collection_method", request.getCollectionMethod());
+        }
+        if (request.getPhysician().isPresent()) {
+            properties.put("physician", request.getPhysician());
+        }
+        if (request.getHealthInsurance().isPresent()) {
+            properties.put("health_insurance", request.getHealthInsurance());
+        }
+        if (request.getPriority().isPresent()) {
+            properties.put("priority", request.getPriority());
+        }
+        if (request.getBillingType().isPresent()) {
+            properties.put("billing_type", request.getBillingType());
+        }
+        if (request.getIcdCodes().isPresent()) {
+            properties.put("icd_codes", request.getIcdCodes());
+        }
+        if (request.getConsents().isPresent()) {
+            properties.put("consents", request.getConsents());
+        }
+        if (request.getActivateBy().isPresent()) {
+            properties.put("activate_by", request.getActivateBy());
+        }
+        if (request.getAoeAnswers().isPresent()) {
+            properties.put("aoe_answers", request.getAoeAnswers());
+        }
+        if (request.getPassthrough().isPresent()) {
+            properties.put("passthrough", request.getPassthrough());
+        }
+        properties.put("patient_details", request.getPatientDetails());
+        properties.put("patient_address", request.getPatientAddress());
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/json");
+        if (request.getIdempotencyKey().isPresent()) {
+            _requestBuilder.addHeader(
+                    "X-Idempotency-Key", request.getIdempotencyKey().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

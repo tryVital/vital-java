@@ -30,6 +30,8 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateOrderRequestCompatible.Builder.class)
 public final class CreateOrderRequestCompatible {
+    private final Optional<String> idempotencyKey;
+
     private final String userId;
 
     private final Optional<String> labTestId;
@@ -63,6 +65,7 @@ public final class CreateOrderRequestCompatible {
     private final Map<String, Object> additionalProperties;
 
     private CreateOrderRequestCompatible(
+            Optional<String> idempotencyKey,
             String userId,
             Optional<String> labTestId,
             Optional<OrderSetRequest> orderSet,
@@ -79,6 +82,7 @@ public final class CreateOrderRequestCompatible {
             PatientDetailsWithValidation patientDetails,
             PatientAddressWithValidation patientAddress,
             Map<String, Object> additionalProperties) {
+        this.idempotencyKey = idempotencyKey;
         this.userId = userId;
         this.labTestId = labTestId;
         this.orderSet = orderSet;
@@ -95,6 +99,11 @@ public final class CreateOrderRequestCompatible {
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("X-Idempotency-Key")
+    public Optional<String> getIdempotencyKey() {
+        return idempotencyKey;
     }
 
     @JsonProperty("user_id")
@@ -190,7 +199,8 @@ public final class CreateOrderRequestCompatible {
     }
 
     private boolean equalTo(CreateOrderRequestCompatible other) {
-        return userId.equals(other.userId)
+        return idempotencyKey.equals(other.idempotencyKey)
+                && userId.equals(other.userId)
                 && labTestId.equals(other.labTestId)
                 && orderSet.equals(other.orderSet)
                 && collectionMethod.equals(other.collectionMethod)
@@ -210,6 +220,7 @@ public final class CreateOrderRequestCompatible {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.idempotencyKey,
                 this.userId,
                 this.labTestId,
                 this.orderSet,
@@ -252,6 +263,10 @@ public final class CreateOrderRequestCompatible {
 
     public interface _FinalStage {
         CreateOrderRequestCompatible build();
+
+        _FinalStage idempotencyKey(Optional<String> idempotencyKey);
+
+        _FinalStage idempotencyKey(String idempotencyKey);
 
         _FinalStage labTestId(Optional<String> labTestId);
 
@@ -334,6 +349,8 @@ public final class CreateOrderRequestCompatible {
 
         private Optional<String> labTestId = Optional.empty();
 
+        private Optional<String> idempotencyKey = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -341,6 +358,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public Builder from(CreateOrderRequestCompatible other) {
+            idempotencyKey(other.getIdempotencyKey());
             userId(other.getUserId());
             labTestId(other.getLabTestId());
             orderSet(other.getOrderSet());
@@ -545,8 +563,22 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage idempotencyKey(String idempotencyKey) {
+            this.idempotencyKey = Optional.of(idempotencyKey);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "X-Idempotency-Key", nulls = Nulls.SKIP)
+        public _FinalStage idempotencyKey(Optional<String> idempotencyKey) {
+            this.idempotencyKey = idempotencyKey;
+            return this;
+        }
+
+        @java.lang.Override
         public CreateOrderRequestCompatible build() {
             return new CreateOrderRequestCompatible(
+                    idempotencyKey,
                     userId,
                     labTestId,
                     orderSet,
