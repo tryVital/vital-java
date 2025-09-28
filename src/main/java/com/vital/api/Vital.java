@@ -34,6 +34,12 @@ public class Vital {
 
     protected final Supplier<UserClient> userClient;
 
+    protected final Supplier<LabTestsClient> labTestsClient;
+
+    protected final Supplier<LinkClient> linkClient;
+
+    protected final Supplier<ProvidersClient> providersClient;
+
     protected final Supplier<ElectrocardiogramClient> electrocardiogramClient;
 
     protected final Supplier<SleepCycleClient> sleepCycleClient;
@@ -54,17 +60,11 @@ public class Vital {
 
     protected final Supplier<MenstrualCycleClient> menstrualCycleClient;
 
-    protected final Supplier<LinkClient> linkClient;
-
-    protected final Supplier<VitalsClient> vitalsClient;
-
     protected final Supplier<TestkitClient> testkitClient;
-
-    protected final Supplier<LabTestsClient> labTestsClient;
 
     protected final Supplier<OrderClient> orderClient;
 
-    protected final Supplier<ProvidersClient> providersClient;
+    protected final Supplier<VitalsClient> vitalsClient;
 
     protected final Supplier<TeamClient> teamClient;
 
@@ -79,6 +79,9 @@ public class Vital {
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
+        this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
+        this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
+        this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
@@ -89,12 +92,9 @@ public class Vital {
         this.bodyClient = Suppliers.memoize(() -> new BodyClient(clientOptions));
         this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
         this.menstrualCycleClient = Suppliers.memoize(() -> new MenstrualCycleClient(clientOptions));
-        this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
-        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
-        this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
-        this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
+        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
@@ -104,6 +104,18 @@ public class Vital {
 
     public UserClient user() {
         return this.userClient.get();
+    }
+
+    public LabTestsClient labTests() {
+        return this.labTestsClient.get();
+    }
+
+    public LinkClient link() {
+        return this.linkClient.get();
+    }
+
+    public ProvidersClient providers() {
+        return this.providersClient.get();
     }
 
     public ElectrocardiogramClient electrocardiogram() {
@@ -146,28 +158,16 @@ public class Vital {
         return this.menstrualCycleClient.get();
     }
 
-    public LinkClient link() {
-        return this.linkClient.get();
-    }
-
-    public VitalsClient vitals() {
-        return this.vitalsClient.get();
-    }
-
     public TestkitClient testkit() {
         return this.testkitClient.get();
-    }
-
-    public LabTestsClient labTests() {
-        return this.labTestsClient.get();
     }
 
     public OrderClient order() {
         return this.orderClient.get();
     }
 
-    public ProvidersClient providers() {
-        return this.providersClient.get();
+    public VitalsClient vitals() {
+        return this.vitalsClient.get();
     }
 
     public TeamClient team() {
