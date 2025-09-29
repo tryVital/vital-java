@@ -34,11 +34,11 @@ public class Vital {
 
     protected final Supplier<UserClient> userClient;
 
-    protected final Supplier<TeamClient> teamClient;
-
     protected final Supplier<LinkClient> linkClient;
 
     protected final Supplier<ProvidersClient> providersClient;
+
+    protected final Supplier<TeamClient> teamClient;
 
     protected final Supplier<ElectrocardiogramClient> electrocardiogramClient;
 
@@ -79,9 +79,9 @@ public class Vital {
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
-        this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
+        this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
@@ -106,16 +106,16 @@ public class Vital {
         return this.userClient.get();
     }
 
-    public TeamClient team() {
-        return this.teamClient.get();
-    }
-
     public LinkClient link() {
         return this.linkClient.get();
     }
 
     public ProvidersClient providers() {
         return this.providersClient.get();
+    }
+
+    public TeamClient team() {
+        return this.teamClient.get();
     }
 
     public ElectrocardiogramClient electrocardiogram() {
