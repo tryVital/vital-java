@@ -32,13 +32,17 @@ import java.util.function.Supplier;
 public class Vital {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<UserClient> userClient;
-
-    protected final Supplier<LabTestsClient> labTestsClient;
-
     protected final Supplier<LinkClient> linkClient;
 
     protected final Supplier<ProvidersClient> providersClient;
+
+    protected final Supplier<UserClient> userClient;
+
+    protected final Supplier<SleepClient> sleepClient;
+
+    protected final Supplier<WorkoutsClient> workoutsClient;
+
+    protected final Supplier<VitalsClient> vitalsClient;
 
     protected final Supplier<ElectrocardiogramClient> electrocardiogramClient;
 
@@ -50,25 +54,21 @@ public class Vital {
 
     protected final Supplier<ActivityClient> activityClient;
 
-    protected final Supplier<WorkoutsClient> workoutsClient;
-
-    protected final Supplier<SleepClient> sleepClient;
-
     protected final Supplier<BodyClient> bodyClient;
 
     protected final Supplier<MealClient> mealClient;
 
     protected final Supplier<MenstrualCycleClient> menstrualCycleClient;
 
-    protected final Supplier<TestkitClient> testkitClient;
-
-    protected final Supplier<OrderClient> orderClient;
-
-    protected final Supplier<VitalsClient> vitalsClient;
-
     protected final Supplier<TeamClient> teamClient;
 
     protected final Supplier<IntrospectClient> introspectClient;
+
+    protected final Supplier<LabTestsClient> labTestsClient;
+
+    protected final Supplier<TestkitClient> testkitClient;
+
+    protected final Supplier<OrderClient> orderClient;
 
     protected final Supplier<InsuranceClient> insuranceClient;
 
@@ -78,36 +78,28 @@ public class Vital {
 
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
-        this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
+        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
+        this.sleepClient = Suppliers.memoize(() -> new SleepClient(clientOptions));
+        this.workoutsClient = Suppliers.memoize(() -> new WorkoutsClient(clientOptions));
+        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
         this.profileClient = Suppliers.memoize(() -> new ProfileClient(clientOptions));
         this.devicesClient = Suppliers.memoize(() -> new DevicesClient(clientOptions));
         this.activityClient = Suppliers.memoize(() -> new ActivityClient(clientOptions));
-        this.workoutsClient = Suppliers.memoize(() -> new WorkoutsClient(clientOptions));
-        this.sleepClient = Suppliers.memoize(() -> new SleepClient(clientOptions));
         this.bodyClient = Suppliers.memoize(() -> new BodyClient(clientOptions));
         this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
         this.menstrualCycleClient = Suppliers.memoize(() -> new MenstrualCycleClient(clientOptions));
-        this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
-        this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
-        this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
+        this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
+        this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
+        this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
         this.payorClient = Suppliers.memoize(() -> new PayorClient(clientOptions));
         this.aggregateClient = Suppliers.memoize(() -> new AggregateClient(clientOptions));
-    }
-
-    public UserClient user() {
-        return this.userClient.get();
-    }
-
-    public LabTestsClient labTests() {
-        return this.labTestsClient.get();
     }
 
     public LinkClient link() {
@@ -116,6 +108,22 @@ public class Vital {
 
     public ProvidersClient providers() {
         return this.providersClient.get();
+    }
+
+    public UserClient user() {
+        return this.userClient.get();
+    }
+
+    public SleepClient sleep() {
+        return this.sleepClient.get();
+    }
+
+    public WorkoutsClient workouts() {
+        return this.workoutsClient.get();
+    }
+
+    public VitalsClient vitals() {
+        return this.vitalsClient.get();
     }
 
     public ElectrocardiogramClient electrocardiogram() {
@@ -138,14 +146,6 @@ public class Vital {
         return this.activityClient.get();
     }
 
-    public WorkoutsClient workouts() {
-        return this.workoutsClient.get();
-    }
-
-    public SleepClient sleep() {
-        return this.sleepClient.get();
-    }
-
     public BodyClient body() {
         return this.bodyClient.get();
     }
@@ -158,24 +158,24 @@ public class Vital {
         return this.menstrualCycleClient.get();
     }
 
-    public TestkitClient testkit() {
-        return this.testkitClient.get();
-    }
-
-    public OrderClient order() {
-        return this.orderClient.get();
-    }
-
-    public VitalsClient vitals() {
-        return this.vitalsClient.get();
-    }
-
     public TeamClient team() {
         return this.teamClient.get();
     }
 
     public IntrospectClient introspect() {
         return this.introspectClient.get();
+    }
+
+    public LabTestsClient labTests() {
+        return this.labTestsClient.get();
+    }
+
+    public TestkitClient testkit() {
+        return this.testkitClient.get();
+    }
+
+    public OrderClient order() {
+        return this.orderClient.get();
     }
 
     public InsuranceClient insurance() {
