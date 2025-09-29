@@ -32,7 +32,9 @@ public enum ClientFacingDeviceSourceType {
 
     LAB("lab"),
 
-    EXERCISE_MACHINE("exercise_machine");
+    EXERCISE_MACHINE("exercise_machine"),
+
+    EARPHONE("earphone");
 
     private final String value;
 
