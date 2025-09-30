@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
+import com.vital.api.types.LabLocationCapability;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -23,12 +24,14 @@ import java.util.Optional;
 public final class LabTestsGetOrderPscInfoRequest {
     private final Optional<AllowedRadius> radius;
 
-    private final Optional<String> capabilities;
+    private final Optional<LabLocationCapability> capabilities;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetOrderPscInfoRequest(
-            Optional<AllowedRadius> radius, Optional<String> capabilities, Map<String, Object> additionalProperties) {
+            Optional<AllowedRadius> radius,
+            Optional<LabLocationCapability> capabilities,
+            Map<String, Object> additionalProperties) {
         this.radius = radius;
         this.capabilities = capabilities;
         this.additionalProperties = additionalProperties;
@@ -46,7 +49,7 @@ public final class LabTestsGetOrderPscInfoRequest {
      * @return Filter for only locations with certain capabilities
      */
     @JsonProperty("capabilities")
-    public Optional<String> getCapabilities() {
+    public Optional<LabLocationCapability> getCapabilities() {
         return capabilities;
     }
 
@@ -83,7 +86,7 @@ public final class LabTestsGetOrderPscInfoRequest {
     public static final class Builder {
         private Optional<AllowedRadius> radius = Optional.empty();
 
-        private Optional<String> capabilities = Optional.empty();
+        private Optional<LabLocationCapability> capabilities = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -108,12 +111,12 @@ public final class LabTestsGetOrderPscInfoRequest {
         }
 
         @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
-        public Builder capabilities(Optional<String> capabilities) {
+        public Builder capabilities(Optional<LabLocationCapability> capabilities) {
             this.capabilities = capabilities;
             return this;
         }
 
-        public Builder capabilities(String capabilities) {
+        public Builder capabilities(LabLocationCapability capabilities) {
             this.capabilities = Optional.of(capabilities);
             return this;
         }

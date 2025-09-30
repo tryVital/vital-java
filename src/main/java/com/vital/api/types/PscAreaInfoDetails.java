@@ -27,7 +27,7 @@ public final class PscAreaInfoDetails {
 
     private final String radius;
 
-    private final Optional<List<String>> capabilities;
+    private final Optional<List<LabLocationCapability>> capabilities;
 
     private final Map<String, Object> additionalProperties;
 
@@ -35,7 +35,7 @@ public final class PscAreaInfoDetails {
             boolean appointmentWithVital,
             int withinRadius,
             String radius,
-            Optional<List<String>> capabilities,
+            Optional<List<LabLocationCapability>> capabilities,
             Map<String, Object> additionalProperties) {
         this.appointmentWithVital = appointmentWithVital;
         this.withinRadius = withinRadius;
@@ -60,7 +60,7 @@ public final class PscAreaInfoDetails {
     }
 
     @JsonProperty("capabilities")
-    public Optional<List<String>> getCapabilities() {
+    public Optional<List<LabLocationCapability>> getCapabilities() {
         return capabilities;
     }
 
@@ -113,9 +113,9 @@ public final class PscAreaInfoDetails {
     public interface _FinalStage {
         PscAreaInfoDetails build();
 
-        _FinalStage capabilities(Optional<List<String>> capabilities);
+        _FinalStage capabilities(Optional<List<LabLocationCapability>> capabilities);
 
-        _FinalStage capabilities(List<String> capabilities);
+        _FinalStage capabilities(List<LabLocationCapability> capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -127,7 +127,7 @@ public final class PscAreaInfoDetails {
 
         private String radius;
 
-        private Optional<List<String>> capabilities = Optional.empty();
+        private Optional<List<LabLocationCapability>> capabilities = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -165,14 +165,14 @@ public final class PscAreaInfoDetails {
         }
 
         @java.lang.Override
-        public _FinalStage capabilities(List<String> capabilities) {
+        public _FinalStage capabilities(List<LabLocationCapability> capabilities) {
             this.capabilities = Optional.of(capabilities);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
-        public _FinalStage capabilities(Optional<List<String>> capabilities) {
+        public _FinalStage capabilities(Optional<List<LabLocationCapability>> capabilities) {
             this.capabilities = capabilities;
             return this;
         }

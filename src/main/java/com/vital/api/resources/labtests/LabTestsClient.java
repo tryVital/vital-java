@@ -1303,7 +1303,8 @@ public class LabTestsClient {
             httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
         }
         if (request.getCapabilities().isPresent()) {
-            httpUrl.addQueryParameter("capabilities", request.getCapabilities().get());
+            httpUrl.addQueryParameter(
+                    "capabilities", request.getCapabilities().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -1357,7 +1358,8 @@ public class LabTestsClient {
             httpUrl.addQueryParameter("radius", request.getRadius().get().toString());
         }
         if (request.getCapabilities().isPresent()) {
-            httpUrl.addQueryParameter("capabilities", request.getCapabilities().get());
+            httpUrl.addQueryParameter(
+                    "capabilities", request.getCapabilities().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

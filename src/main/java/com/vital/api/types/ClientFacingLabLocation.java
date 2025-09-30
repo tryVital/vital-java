@@ -31,7 +31,7 @@ public final class ClientFacingLabLocation {
 
     private final LngLat location;
 
-    private final List<String> capabilities;
+    private final List<LabLocationCapability> capabilities;
 
     private final Map<String, Object> additionalProperties;
 
@@ -41,7 +41,7 @@ public final class ClientFacingLabLocation {
             String siteCode,
             List<Billing> supportedBillTypes,
             LngLat location,
-            List<String> capabilities,
+            List<LabLocationCapability> capabilities,
             Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.distance = distance;
@@ -78,7 +78,7 @@ public final class ClientFacingLabLocation {
     }
 
     @JsonProperty("capabilities")
-    public List<String> getCapabilities() {
+    public List<LabLocationCapability> getCapabilities() {
         return capabilities;
     }
 
@@ -144,11 +144,11 @@ public final class ClientFacingLabLocation {
 
         _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes);
 
-        _FinalStage capabilities(List<String> capabilities);
+        _FinalStage capabilities(List<LabLocationCapability> capabilities);
 
-        _FinalStage addCapabilities(String capabilities);
+        _FinalStage addCapabilities(LabLocationCapability capabilities);
 
-        _FinalStage addAllCapabilities(List<String> capabilities);
+        _FinalStage addAllCapabilities(List<LabLocationCapability> capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -162,7 +162,7 @@ public final class ClientFacingLabLocation {
 
         private LngLat location;
 
-        private List<String> capabilities = new ArrayList<>();
+        private List<LabLocationCapability> capabilities = new ArrayList<>();
 
         private List<Billing> supportedBillTypes = new ArrayList<>();
 
@@ -211,20 +211,20 @@ public final class ClientFacingLabLocation {
         }
 
         @java.lang.Override
-        public _FinalStage addAllCapabilities(List<String> capabilities) {
+        public _FinalStage addAllCapabilities(List<LabLocationCapability> capabilities) {
             this.capabilities.addAll(capabilities);
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage addCapabilities(String capabilities) {
+        public _FinalStage addCapabilities(LabLocationCapability capabilities) {
             this.capabilities.add(capabilities);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
-        public _FinalStage capabilities(List<String> capabilities) {
+        public _FinalStage capabilities(List<LabLocationCapability> capabilities) {
             this.capabilities.clear();
             this.capabilities.addAll(capabilities);
             return this;

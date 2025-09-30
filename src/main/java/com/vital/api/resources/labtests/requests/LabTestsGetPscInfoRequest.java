@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
+import com.vital.api.types.LabLocationCapability;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public final class LabTestsGetPscInfoRequest {
 
     private final Optional<AllowedRadius> radius;
 
-    private final Optional<String> capabilities;
+    private final Optional<LabLocationCapability> capabilities;
 
     private final Map<String, Object> additionalProperties;
 
@@ -35,7 +36,7 @@ public final class LabTestsGetPscInfoRequest {
             String zipCode,
             int labId,
             Optional<AllowedRadius> radius,
-            Optional<String> capabilities,
+            Optional<LabLocationCapability> capabilities,
             Map<String, Object> additionalProperties) {
         this.zipCode = zipCode;
         this.labId = labId;
@@ -72,7 +73,7 @@ public final class LabTestsGetPscInfoRequest {
      * @return Filter for only locations with certain capabilities
      */
     @JsonProperty("capabilities")
-    public Optional<String> getCapabilities() {
+    public Optional<LabLocationCapability> getCapabilities() {
         return capabilities;
     }
 
@@ -125,9 +126,9 @@ public final class LabTestsGetPscInfoRequest {
 
         _FinalStage radius(AllowedRadius radius);
 
-        _FinalStage capabilities(Optional<String> capabilities);
+        _FinalStage capabilities(Optional<LabLocationCapability> capabilities);
 
-        _FinalStage capabilities(String capabilities);
+        _FinalStage capabilities(LabLocationCapability capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -136,7 +137,7 @@ public final class LabTestsGetPscInfoRequest {
 
         private int labId;
 
-        private Optional<String> capabilities = Optional.empty();
+        private Optional<LabLocationCapability> capabilities = Optional.empty();
 
         private Optional<AllowedRadius> radius = Optional.empty();
 
@@ -181,14 +182,14 @@ public final class LabTestsGetPscInfoRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage capabilities(String capabilities) {
+        public _FinalStage capabilities(LabLocationCapability capabilities) {
             this.capabilities = Optional.of(capabilities);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
-        public _FinalStage capabilities(Optional<String> capabilities) {
+        public _FinalStage capabilities(Optional<LabLocationCapability> capabilities) {
             this.capabilities = capabilities;
             return this;
         }
