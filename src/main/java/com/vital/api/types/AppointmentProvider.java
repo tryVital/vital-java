@@ -8,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum AppointmentProvider {
     GETLABS("getlabs"),
 
-    AXLEHEALTH("axlehealth"),
-
     PHLEBFINDERS("phlebfinders"),
 
     QUEST("quest");

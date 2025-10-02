@@ -32,6 +32,8 @@ import java.util.function.Supplier;
 public class Vital {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<UserClient> userClient;
+
     protected final Supplier<ProvidersClient> providersClient;
 
     protected final Supplier<LinkClient> linkClient;
@@ -58,8 +60,6 @@ public class Vital {
 
     protected final Supplier<VitalsClient> vitalsClient;
 
-    protected final Supplier<UserClient> userClient;
-
     protected final Supplier<TeamClient> teamClient;
 
     protected final Supplier<IntrospectClient> introspectClient;
@@ -78,6 +78,7 @@ public class Vital {
 
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
@@ -91,7 +92,6 @@ public class Vital {
         this.mealClient = Suppliers.memoize(() -> new MealClient(clientOptions));
         this.menstrualCycleClient = Suppliers.memoize(() -> new MenstrualCycleClient(clientOptions));
         this.vitalsClient = Suppliers.memoize(() -> new VitalsClient(clientOptions));
-        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new TeamClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
@@ -100,6 +100,10 @@ public class Vital {
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
         this.payorClient = Suppliers.memoize(() -> new PayorClient(clientOptions));
         this.aggregateClient = Suppliers.memoize(() -> new AggregateClient(clientOptions));
+    }
+
+    public UserClient user() {
+        return this.userClient.get();
     }
 
     public ProvidersClient providers() {
@@ -152,10 +156,6 @@ public class Vital {
 
     public VitalsClient vitals() {
         return this.vitalsClient.get();
-    }
-
-    public UserClient user() {
-        return this.userClient.get();
     }
 
     public TeamClient team() {
