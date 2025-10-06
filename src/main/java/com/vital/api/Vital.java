@@ -32,9 +32,9 @@ import java.util.function.Supplier;
 public class Vital {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<ProvidersClient> providersClient;
-
     protected final Supplier<UserClient> userClient;
+
+    protected final Supplier<ProvidersClient> providersClient;
 
     protected final Supplier<LinkClient> linkClient;
 
@@ -78,8 +78,8 @@ public class Vital {
 
     public Vital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
+        this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.linkClient = Suppliers.memoize(() -> new LinkClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new ElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new SleepCycleClient(clientOptions));
@@ -102,12 +102,12 @@ public class Vital {
         this.aggregateClient = Suppliers.memoize(() -> new AggregateClient(clientOptions));
     }
 
-    public ProvidersClient providers() {
-        return this.providersClient.get();
-    }
-
     public UserClient user() {
         return this.userClient.get();
+    }
+
+    public ProvidersClient providers() {
+        return this.providersClient.get();
     }
 
     public LinkClient link() {
