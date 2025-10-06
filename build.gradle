@@ -2,12 +2,13 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'com.diffplug.spotless' version '6.11.0'
+    id 'signing'
 }
 
 repositories {
     mavenCentral()
     maven {
-        url 'https://s01.oss.sonatype.org/content/repositories/releases/'
+        url 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
     }
 }
 
@@ -35,6 +36,9 @@ java {
     withJavadocJar()
 }
 
+signing {
+    sign(publishing.publications)
+}
 test {
     useJUnitPlatform()
     testLogging {
@@ -46,9 +50,18 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.tryvital'
             artifactId = 'vital-java'
-            version = '1.2.433'
+            version = '1.2.436'
             from components.java
             pom {
+                name = 'vital'
+                description = 'The official SDK of vital'
+                url = 'https://buildwithfern.com'
+                developers {
+                    developer {
+                        name = 'vital'
+                        email = 'developers@vital.com'
+                    }
+                }
                 scm {
                     connection = 'scm:git:git://github.com/tryVital/vital-java.git'
                     developerConnection = 'scm:git:git://github.com/tryVital/vital-java.git'
