@@ -59,6 +59,8 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<String> passthrough;
 
+    private final Optional<String> labAccountId;
+
     private final PatientDetailsWithValidation patientDetails;
 
     private final PatientAddressWithValidation patientAddress;
@@ -80,6 +82,7 @@ public final class CreateOrderRequestCompatible {
             Optional<String> activateBy,
             Optional<List<AoEAnswer>> aoeAnswers,
             Optional<String> passthrough,
+            Optional<String> labAccountId,
             PatientDetailsWithValidation patientDetails,
             PatientAddressWithValidation patientAddress,
             Map<String, Object> additionalProperties) {
@@ -97,6 +100,7 @@ public final class CreateOrderRequestCompatible {
         this.activateBy = activateBy;
         this.aoeAnswers = aoeAnswers;
         this.passthrough = passthrough;
+        this.labAccountId = labAccountId;
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.additionalProperties = additionalProperties;
@@ -178,6 +182,11 @@ public final class CreateOrderRequestCompatible {
         return passthrough;
     }
 
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
     @JsonProperty("patient_details")
     public PatientDetailsWithValidation getPatientDetails() {
         return patientDetails;
@@ -214,6 +223,7 @@ public final class CreateOrderRequestCompatible {
                 && activateBy.equals(other.activateBy)
                 && aoeAnswers.equals(other.aoeAnswers)
                 && passthrough.equals(other.passthrough)
+                && labAccountId.equals(other.labAccountId)
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress);
     }
@@ -235,6 +245,7 @@ public final class CreateOrderRequestCompatible {
                 this.activateBy,
                 this.aoeAnswers,
                 this.passthrough,
+                this.labAccountId,
                 this.patientDetails,
                 this.patientAddress);
     }
@@ -322,6 +333,10 @@ public final class CreateOrderRequestCompatible {
         _FinalStage passthrough(Optional<String> passthrough);
 
         _FinalStage passthrough(String passthrough);
+
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -331,6 +346,8 @@ public final class CreateOrderRequestCompatible {
         private PatientDetailsWithValidation patientDetails;
 
         private PatientAddressWithValidation patientAddress;
+
+        private Optional<String> labAccountId = Optional.empty();
 
         private Optional<String> passthrough = Optional.empty();
 
@@ -379,6 +396,7 @@ public final class CreateOrderRequestCompatible {
             activateBy(other.getActivateBy());
             aoeAnswers(other.getAoeAnswers());
             passthrough(other.getPassthrough());
+            labAccountId(other.getLabAccountId());
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             return this;
@@ -402,6 +420,19 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(@NotNull PatientAddressWithValidation patientAddress) {
             this.patientAddress = Objects.requireNonNull(patientAddress, "patientAddress must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
             return this;
         }
 
@@ -605,6 +636,7 @@ public final class CreateOrderRequestCompatible {
                     activateBy,
                     aoeAnswers,
                     passthrough,
+                    labAccountId,
                     patientDetails,
                     patientAddress,
                     additionalProperties);

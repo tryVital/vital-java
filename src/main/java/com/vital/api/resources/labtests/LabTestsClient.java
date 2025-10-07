@@ -10,7 +10,9 @@ import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersByLabAndProviderIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForOrderSetRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
@@ -101,8 +103,16 @@ public class LabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
-    public ClientFacingLabTest getById(String labTestId, RequestOptions requestOptions) {
-        return this.rawClient.getById(labTestId, requestOptions).body();
+    public ClientFacingLabTest getById(String labTestId, LabTestsGetByIdRequest request) {
+        return this.rawClient.getById(labTestId, request).body();
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public ClientFacingLabTest getById(
+            String labTestId, LabTestsGetByIdRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getById(labTestId, request, requestOptions).body();
     }
 
     public ClientFacingLabTest updateLabTest(String labTestId) {
@@ -174,9 +184,22 @@ public class LabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public ClientFacingMarker getMarkersByLabAndProviderId(
-            String providerId, int labId, RequestOptions requestOptions) {
+            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
         return this.rawClient
-                .getMarkersByLabAndProviderId(providerId, labId, requestOptions)
+                .getMarkersByLabAndProviderId(providerId, labId, request)
+                .body();
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public ClientFacingMarker getMarkersByLabAndProviderId(
+            String providerId,
+            int labId,
+            LabTestsGetMarkersByLabAndProviderIdRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .getMarkersByLabAndProviderId(providerId, labId, request, requestOptions)
                 .body();
     }
 

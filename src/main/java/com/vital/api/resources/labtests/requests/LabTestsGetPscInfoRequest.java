@@ -33,6 +33,8 @@ public final class LabTestsGetPscInfoRequest {
 
     private final Optional<AllowedRadius> radius;
 
+    private final Optional<String> labAccountId;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetPscInfoRequest(
@@ -40,11 +42,13 @@ public final class LabTestsGetPscInfoRequest {
             String zipCode,
             int labId,
             Optional<AllowedRadius> radius,
+            Optional<String> labAccountId,
             Map<String, Object> additionalProperties) {
         this.capabilities = capabilities;
         this.zipCode = zipCode;
         this.labId = labId;
         this.radius = radius;
+        this.labAccountId = labAccountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -80,6 +84,14 @@ public final class LabTestsGetPscInfoRequest {
         return radius;
     }
 
+    /**
+     * @return Lab Account ID to use for availability checks
+     */
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -95,12 +107,13 @@ public final class LabTestsGetPscInfoRequest {
         return capabilities.equals(other.capabilities)
                 && zipCode.equals(other.zipCode)
                 && labId == other.labId
-                && radius.equals(other.radius);
+                && radius.equals(other.radius)
+                && labAccountId.equals(other.labAccountId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.capabilities, this.zipCode, this.labId, this.radius);
+        return Objects.hash(this.capabilities, this.zipCode, this.labId, this.radius, this.labAccountId);
     }
 
     @java.lang.Override
@@ -146,6 +159,13 @@ public final class LabTestsGetPscInfoRequest {
         _FinalStage radius(Optional<AllowedRadius> radius);
 
         _FinalStage radius(AllowedRadius radius);
+
+        /**
+         * <p>Lab Account ID to use for availability checks</p>
+         */
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -153,6 +173,8 @@ public final class LabTestsGetPscInfoRequest {
         private String zipCode;
 
         private int labId;
+
+        private Optional<String> labAccountId = Optional.empty();
 
         private Optional<AllowedRadius> radius = Optional.empty();
 
@@ -169,6 +191,7 @@ public final class LabTestsGetPscInfoRequest {
             zipCode(other.getZipCode());
             labId(other.getLabId());
             radius(other.getRadius());
+            labAccountId(other.getLabAccountId());
             return this;
         }
 
@@ -193,6 +216,26 @@ public final class LabTestsGetPscInfoRequest {
         @JsonSetter("lab_id")
         public _FinalStage labId(int labId) {
             this.labId = labId;
+            return this;
+        }
+
+        /**
+         * <p>Lab Account ID to use for availability checks</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        /**
+         * <p>Lab Account ID to use for availability checks</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
             return this;
         }
 
@@ -244,7 +287,8 @@ public final class LabTestsGetPscInfoRequest {
 
         @java.lang.Override
         public LabTestsGetPscInfoRequest build() {
-            return new LabTestsGetPscInfoRequest(capabilities, zipCode, labId, radius, additionalProperties);
+            return new LabTestsGetPscInfoRequest(
+                    capabilities, zipCode, labId, radius, labAccountId, additionalProperties);
         }
     }
 }

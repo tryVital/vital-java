@@ -20,7 +20,9 @@ import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersByLabAndProviderIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForOrderSetRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
@@ -260,25 +262,36 @@ public class AsyncRawLabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> getById(String labTestId) {
-        return getById(labTestId, null);
+        return getById(labTestId, LabTestsGetByIdRequest.builder().build());
     }
 
     /**
      * GET all the lab tests the team has access to.
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> getById(
-            String labTestId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+            String labTestId, LabTestsGetByIdRequest request) {
+        return getById(labTestId, request, null);
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> getById(
+            String labTestId, LabTestsGetByIdRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests")
-                .addPathSegment(labTestId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .addPathSegment(labTestId);
+        if (request.getLabAccountId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -428,6 +441,10 @@ public class AsyncRawLabTestsClient {
         if (request.getALaCarteEnabled().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "a_la_carte_enabled", request.getALaCarteEnabled().get(), false);
+        }
+        if (request.getLabAccountId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
         }
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -586,6 +603,10 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("v3/lab_tests")
                 .addPathSegment(labTestId)
                 .addPathSegments("markers");
+        if (request.getLabAccountId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
+        }
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -650,27 +671,44 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
             String providerId, int labId) {
-        return getMarkersByLabAndProviderId(providerId, labId, null);
+        return getMarkersByLabAndProviderId(
+                providerId,
+                labId,
+                LabTestsGetMarkersByLabAndProviderIdRequest.builder().build());
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
-            String providerId, int labId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+        return getMarkersByLabAndProviderId(providerId, labId, request, null);
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
+            String providerId,
+            int labId,
+            LabTestsGetMarkersByLabAndProviderIdRequest request,
+            RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests")
                 .addPathSegment(Integer.toString(labId))
                 .addPathSegments("markers")
-                .addPathSegment(providerId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .addPathSegment(providerId);
+        if (request.getLabAccountId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1669,6 +1707,10 @@ public class AsyncRawLabTestsClient {
         if (request.getLab().isPresent()) {
             QueryStringMapper.addQueryParameter(httpUrl, "lab", request.getLab().get(), false);
         }
+        if (request.getLabAccountId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
+        }
         if (request.getLabs().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "labs", request.getLabs().get(), true);
@@ -1737,6 +1779,10 @@ public class AsyncRawLabTestsClient {
         if (request.getRadius().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "radius", request.getRadius().get(), false);
+        }
+        if (request.getLabAccountId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
         }
         if (request.getCapabilities().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -2891,6 +2937,9 @@ public class AsyncRawLabTestsClient {
         }
         if (request.getPassthrough().isPresent()) {
             properties.put("passthrough", request.getPassthrough());
+        }
+        if (request.getLabAccountId().isPresent()) {
+            properties.put("lab_account_id", request.getLabAccountId());
         }
         properties.put("patient_details", request.getPatientDetails());
         properties.put("patient_address", request.getPatientAddress());

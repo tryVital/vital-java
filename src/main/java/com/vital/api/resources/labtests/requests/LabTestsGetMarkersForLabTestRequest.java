@@ -20,6 +20,8 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetMarkersForLabTestRequest.Builder.class)
 public final class LabTestsGetMarkersForLabTestRequest {
+    private final Optional<String> labAccountId;
+
     private final Optional<Integer> page;
 
     private final Optional<Integer> size;
@@ -27,10 +29,22 @@ public final class LabTestsGetMarkersForLabTestRequest {
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetMarkersForLabTestRequest(
-            Optional<Integer> page, Optional<Integer> size, Map<String, Object> additionalProperties) {
+            Optional<String> labAccountId,
+            Optional<Integer> page,
+            Optional<Integer> size,
+            Map<String, Object> additionalProperties) {
+        this.labAccountId = labAccountId;
         this.page = page;
         this.size = size;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return The lab account ID. This lab account is used to determine the availability of markers and lab tests.
+     */
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
     }
 
     @JsonProperty("page")
@@ -56,12 +70,12 @@ public final class LabTestsGetMarkersForLabTestRequest {
     }
 
     private boolean equalTo(LabTestsGetMarkersForLabTestRequest other) {
-        return page.equals(other.page) && size.equals(other.size);
+        return labAccountId.equals(other.labAccountId) && page.equals(other.page) && size.equals(other.size);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.page, this.size);
+        return Objects.hash(this.labAccountId, this.page, this.size);
     }
 
     @java.lang.Override
@@ -75,6 +89,8 @@ public final class LabTestsGetMarkersForLabTestRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<String> labAccountId = Optional.empty();
+
         private Optional<Integer> page = Optional.empty();
 
         private Optional<Integer> size = Optional.empty();
@@ -85,8 +101,23 @@ public final class LabTestsGetMarkersForLabTestRequest {
         private Builder() {}
 
         public Builder from(LabTestsGetMarkersForLabTestRequest other) {
+            labAccountId(other.getLabAccountId());
             page(other.getPage());
             size(other.getSize());
+            return this;
+        }
+
+        /**
+         * <p>The lab account ID. This lab account is used to determine the availability of markers and lab tests.</p>
+         */
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public Builder labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
+            return this;
+        }
+
+        public Builder labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
             return this;
         }
 
@@ -113,7 +144,7 @@ public final class LabTestsGetMarkersForLabTestRequest {
         }
 
         public LabTestsGetMarkersForLabTestRequest build() {
-            return new LabTestsGetMarkersForLabTestRequest(page, size, additionalProperties);
+            return new LabTestsGetMarkersForLabTestRequest(labAccountId, page, size, additionalProperties);
         }
     }
 }

@@ -30,6 +30,8 @@ public final class CreateRegistrableTestkitOrderRequest {
 
     private final Optional<String> passthrough;
 
+    private final Optional<String> labAccountId;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateRegistrableTestkitOrderRequest(
@@ -37,11 +39,13 @@ public final class CreateRegistrableTestkitOrderRequest {
             String labTestId,
             ShippingAddressWithValidation shippingDetails,
             Optional<String> passthrough,
+            Optional<String> labAccountId,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.labTestId = labTestId;
         this.shippingDetails = shippingDetails;
         this.passthrough = passthrough;
+        this.labAccountId = labAccountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -65,6 +69,11 @@ public final class CreateRegistrableTestkitOrderRequest {
         return passthrough;
     }
 
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -81,12 +90,13 @@ public final class CreateRegistrableTestkitOrderRequest {
         return userId.equals(other.userId)
                 && labTestId.equals(other.labTestId)
                 && shippingDetails.equals(other.shippingDetails)
-                && passthrough.equals(other.passthrough);
+                && passthrough.equals(other.passthrough)
+                && labAccountId.equals(other.labAccountId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.labTestId, this.shippingDetails, this.passthrough);
+        return Objects.hash(this.userId, this.labTestId, this.shippingDetails, this.passthrough, this.labAccountId);
     }
 
     @java.lang.Override
@@ -118,6 +128,10 @@ public final class CreateRegistrableTestkitOrderRequest {
         _FinalStage passthrough(Optional<String> passthrough);
 
         _FinalStage passthrough(String passthrough);
+
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -127,6 +141,8 @@ public final class CreateRegistrableTestkitOrderRequest {
         private String labTestId;
 
         private ShippingAddressWithValidation shippingDetails;
+
+        private Optional<String> labAccountId = Optional.empty();
 
         private Optional<String> passthrough = Optional.empty();
 
@@ -141,6 +157,7 @@ public final class CreateRegistrableTestkitOrderRequest {
             labTestId(other.getLabTestId());
             shippingDetails(other.getShippingDetails());
             passthrough(other.getPassthrough());
+            labAccountId(other.getLabAccountId());
             return this;
         }
 
@@ -166,6 +183,19 @@ public final class CreateRegistrableTestkitOrderRequest {
         }
 
         @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
             this.passthrough = Optional.ofNullable(passthrough);
             return this;
@@ -181,7 +211,7 @@ public final class CreateRegistrableTestkitOrderRequest {
         @java.lang.Override
         public CreateRegistrableTestkitOrderRequest build() {
             return new CreateRegistrableTestkitOrderRequest(
-                    userId, labTestId, shippingDetails, passthrough, additionalProperties);
+                    userId, labTestId, shippingDetails, passthrough, labAccountId, additionalProperties);
         }
     }
 }

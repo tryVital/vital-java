@@ -33,6 +33,8 @@ public final class LabTestsGetAreaInfoRequest {
 
     private final Optional<ClientFacingLabs> lab;
 
+    private final Optional<String> labAccountId;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetAreaInfoRequest(
@@ -40,11 +42,13 @@ public final class LabTestsGetAreaInfoRequest {
             String zipCode,
             Optional<AllowedRadius> radius,
             Optional<ClientFacingLabs> lab,
+            Optional<String> labAccountId,
             Map<String, Object> additionalProperties) {
         this.labs = labs;
         this.zipCode = zipCode;
         this.radius = radius;
         this.lab = lab;
+        this.labAccountId = labAccountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -80,6 +84,14 @@ public final class LabTestsGetAreaInfoRequest {
         return lab;
     }
 
+    /**
+     * @return Lab Account ID to use for availability checks
+     */
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -95,12 +107,13 @@ public final class LabTestsGetAreaInfoRequest {
         return labs.equals(other.labs)
                 && zipCode.equals(other.zipCode)
                 && radius.equals(other.radius)
-                && lab.equals(other.lab);
+                && lab.equals(other.lab)
+                && labAccountId.equals(other.labAccountId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.labs, this.zipCode, this.radius, this.lab);
+        return Objects.hash(this.labs, this.zipCode, this.radius, this.lab, this.labAccountId);
     }
 
     @java.lang.Override
@@ -146,11 +159,20 @@ public final class LabTestsGetAreaInfoRequest {
         _FinalStage lab(Optional<ClientFacingLabs> lab);
 
         _FinalStage lab(ClientFacingLabs lab);
+
+        /**
+         * <p>Lab Account ID to use for availability checks</p>
+         */
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ZipCodeStage, _FinalStage {
         private String zipCode;
+
+        private Optional<String> labAccountId = Optional.empty();
 
         private Optional<ClientFacingLabs> lab = Optional.empty();
 
@@ -169,6 +191,7 @@ public final class LabTestsGetAreaInfoRequest {
             zipCode(other.getZipCode());
             radius(other.getRadius());
             lab(other.getLab());
+            labAccountId(other.getLabAccountId());
             return this;
         }
 
@@ -181,6 +204,26 @@ public final class LabTestsGetAreaInfoRequest {
         @JsonSetter("zip_code")
         public _FinalStage zipCode(@NotNull String zipCode) {
             this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Lab Account ID to use for availability checks</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        /**
+         * <p>Lab Account ID to use for availability checks</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
             return this;
         }
 
@@ -252,7 +295,7 @@ public final class LabTestsGetAreaInfoRequest {
 
         @java.lang.Override
         public LabTestsGetAreaInfoRequest build() {
-            return new LabTestsGetAreaInfoRequest(labs, zipCode, radius, lab, additionalProperties);
+            return new LabTestsGetAreaInfoRequest(labs, zipCode, radius, lab, labAccountId, additionalProperties);
         }
     }
 }

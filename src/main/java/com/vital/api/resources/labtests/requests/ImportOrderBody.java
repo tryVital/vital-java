@@ -43,6 +43,8 @@ public final class ImportOrderBody {
 
     private final String sampleId;
 
+    private final Optional<String> labAccountId;
+
     private final Map<String, Object> additionalProperties;
 
     private ImportOrderBody(
@@ -54,6 +56,7 @@ public final class ImportOrderBody {
             PatientDetailsWithValidation patientDetails,
             PatientAddress patientAddress,
             String sampleId,
+            Optional<String> labAccountId,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.billingType = billingType;
@@ -63,6 +66,7 @@ public final class ImportOrderBody {
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.sampleId = sampleId;
+        this.labAccountId = labAccountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -106,6 +110,11 @@ public final class ImportOrderBody {
         return sampleId;
     }
 
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -125,7 +134,8 @@ public final class ImportOrderBody {
                 && physician.equals(other.physician)
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress)
-                && sampleId.equals(other.sampleId);
+                && sampleId.equals(other.sampleId)
+                && labAccountId.equals(other.labAccountId);
     }
 
     @java.lang.Override
@@ -138,7 +148,8 @@ public final class ImportOrderBody {
                 this.physician,
                 this.patientDetails,
                 this.patientAddress,
-                this.sampleId);
+                this.sampleId,
+                this.labAccountId);
     }
 
     @java.lang.Override
@@ -186,6 +197,10 @@ public final class ImportOrderBody {
         _FinalStage physician(Optional<PhysicianCreateRequest> physician);
 
         _FinalStage physician(PhysicianCreateRequest physician);
+
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -212,6 +227,8 @@ public final class ImportOrderBody {
 
         private String sampleId;
 
+        private Optional<String> labAccountId = Optional.empty();
+
         private Optional<PhysicianCreateRequest> physician = Optional.empty();
 
         @JsonAnySetter
@@ -229,6 +246,7 @@ public final class ImportOrderBody {
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             sampleId(other.getSampleId());
+            labAccountId(other.getLabAccountId());
             return this;
         }
 
@@ -282,6 +300,19 @@ public final class ImportOrderBody {
         }
 
         @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequest physician) {
             this.physician = Optional.ofNullable(physician);
             return this;
@@ -305,6 +336,7 @@ public final class ImportOrderBody {
                     patientDetails,
                     patientAddress,
                     sampleId,
+                    labAccountId,
                     additionalProperties);
         }
     }

@@ -28,6 +28,8 @@ public final class LabTestsGetMarkersRequest {
 
     private final Optional<Boolean> aLaCarteEnabled;
 
+    private final Optional<String> labAccountId;
+
     private final Optional<Integer> page;
 
     private final Optional<Integer> size;
@@ -38,12 +40,14 @@ public final class LabTestsGetMarkersRequest {
             Optional<List<Integer>> labId,
             Optional<String> name,
             Optional<Boolean> aLaCarteEnabled,
+            Optional<String> labAccountId,
             Optional<Integer> page,
             Optional<Integer> size,
             Map<String, Object> additionalProperties) {
         this.labId = labId;
         this.name = name;
         this.aLaCarteEnabled = aLaCarteEnabled;
+        this.labAccountId = labAccountId;
         this.page = page;
         this.size = size;
         this.additionalProperties = additionalProperties;
@@ -68,6 +72,14 @@ public final class LabTestsGetMarkersRequest {
     @JsonProperty("a_la_carte_enabled")
     public Optional<Boolean> getALaCarteEnabled() {
         return aLaCarteEnabled;
+    }
+
+    /**
+     * @return The lab account ID. This lab account is used to determine the availability of markers and lab tests.
+     */
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
     }
 
     @JsonProperty("page")
@@ -95,13 +107,14 @@ public final class LabTestsGetMarkersRequest {
         return labId.equals(other.labId)
                 && name.equals(other.name)
                 && aLaCarteEnabled.equals(other.aLaCarteEnabled)
+                && labAccountId.equals(other.labAccountId)
                 && page.equals(other.page)
                 && size.equals(other.size);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.labId, this.name, this.aLaCarteEnabled, this.page, this.size);
+        return Objects.hash(this.labId, this.name, this.aLaCarteEnabled, this.labAccountId, this.page, this.size);
     }
 
     @java.lang.Override
@@ -121,6 +134,8 @@ public final class LabTestsGetMarkersRequest {
 
         private Optional<Boolean> aLaCarteEnabled = Optional.empty();
 
+        private Optional<String> labAccountId = Optional.empty();
+
         private Optional<Integer> page = Optional.empty();
 
         private Optional<Integer> size = Optional.empty();
@@ -134,6 +149,7 @@ public final class LabTestsGetMarkersRequest {
             labId(other.getLabId());
             name(other.getName());
             aLaCarteEnabled(other.getALaCarteEnabled());
+            labAccountId(other.getLabAccountId());
             page(other.getPage());
             size(other.getSize());
             return this;
@@ -183,6 +199,20 @@ public final class LabTestsGetMarkersRequest {
             return this;
         }
 
+        /**
+         * <p>The lab account ID. This lab account is used to determine the availability of markers and lab tests.</p>
+         */
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public Builder labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
+            return this;
+        }
+
+        public Builder labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -206,7 +236,8 @@ public final class LabTestsGetMarkersRequest {
         }
 
         public LabTestsGetMarkersRequest build() {
-            return new LabTestsGetMarkersRequest(labId, name, aLaCarteEnabled, page, size, additionalProperties);
+            return new LabTestsGetMarkersRequest(
+                    labId, name, aLaCarteEnabled, labAccountId, page, size, additionalProperties);
         }
     }
 }
