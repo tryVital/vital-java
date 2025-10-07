@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LinkTokenExchangeResponse.Builder.class)
 public final class LinkTokenExchangeResponse {
     private final String linkToken;
@@ -76,13 +77,19 @@ public final class LinkTokenExchangeResponse {
     }
 
     public interface LinkTokenStage {
-        LinkWebUrlStage linkToken(String linkToken);
+        /**
+         * <p>A short-lived Vital Link token for your Custom Link Widget to communicate with the Vital API.</p>
+         */
+        LinkWebUrlStage linkToken(@NotNull String linkToken);
 
         Builder from(LinkTokenExchangeResponse other);
     }
 
     public interface LinkWebUrlStage {
-        _FinalStage linkWebUrl(String linkWebUrl);
+        /**
+         * <p>The web browser link to launch the default Vital Link experience. If you requested the token for one specific provider, the link would redirect directly to the provider authentication flow. Otherwise, the user would be presented with a list of providers based on your team and token configurations.</p>
+         */
+        _FinalStage linkWebUrl(@NotNull String linkWebUrl);
     }
 
     public interface _FinalStage {
@@ -109,23 +116,25 @@ public final class LinkTokenExchangeResponse {
 
         /**
          * <p>A short-lived Vital Link token for your Custom Link Widget to communicate with the Vital API.</p>
+         * <p>A short-lived Vital Link token for your Custom Link Widget to communicate with the Vital API.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("link_token")
-        public LinkWebUrlStage linkToken(String linkToken) {
-            this.linkToken = linkToken;
+        public LinkWebUrlStage linkToken(@NotNull String linkToken) {
+            this.linkToken = Objects.requireNonNull(linkToken, "linkToken must not be null");
             return this;
         }
 
         /**
          * <p>The web browser link to launch the default Vital Link experience. If you requested the token for one specific provider, the link would redirect directly to the provider authentication flow. Otherwise, the user would be presented with a list of providers based on your team and token configurations.</p>
+         * <p>The web browser link to launch the default Vital Link experience. If you requested the token for one specific provider, the link would redirect directly to the provider authentication flow. Otherwise, the user would be presented with a list of providers based on your team and token configurations.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("link_web_url")
-        public _FinalStage linkWebUrl(String linkWebUrl) {
-            this.linkWebUrl = linkWebUrl;
+        public _FinalStage linkWebUrl(@NotNull String linkWebUrl) {
+            this.linkWebUrl = Objects.requireNonNull(linkWebUrl, "linkWebUrl must not be null");
             return this;
         }
 

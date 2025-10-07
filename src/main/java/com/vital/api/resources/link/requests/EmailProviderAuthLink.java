@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EmailProviderAuthLink.Builder.class)
 public final class EmailProviderAuthLink {
     private final Optional<String> vitalLinkToken;
@@ -98,7 +99,7 @@ public final class EmailProviderAuthLink {
     }
 
     public interface EmailStage {
-        _FinalStage email(String email);
+        _FinalStage email(@NotNull String email);
 
         Builder from(EmailProviderAuthLink other);
     }
@@ -145,14 +146,14 @@ public final class EmailProviderAuthLink {
 
         @java.lang.Override
         @JsonSetter("email")
-        public _FinalStage email(String email) {
-            this.email = email;
+        public _FinalStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage region(Region region) {
-            this.region = Optional.of(region);
+            this.region = Optional.ofNullable(region);
             return this;
         }
 
@@ -165,7 +166,7 @@ public final class EmailProviderAuthLink {
 
         @java.lang.Override
         public _FinalStage emailProviderAuthLinkProvider(Providers emailProviderAuthLinkProvider) {
-            this.emailProviderAuthLinkProvider = Optional.of(emailProviderAuthLinkProvider);
+            this.emailProviderAuthLinkProvider = Optional.ofNullable(emailProviderAuthLinkProvider);
             return this;
         }
 
@@ -178,7 +179,7 @@ public final class EmailProviderAuthLink {
 
         @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

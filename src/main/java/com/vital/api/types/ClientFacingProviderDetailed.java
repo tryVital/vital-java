@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingProviderDetailed.Builder.class)
 public final class ClientFacingProviderDetailed {
     private final String name;
@@ -129,22 +130,34 @@ public final class ClientFacingProviderDetailed {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        /**
+         * <p>Name of source of information</p>
+         */
+        SlugStage name(@NotNull String name);
 
         Builder from(ClientFacingProviderDetailed other);
     }
 
     public interface SlugStage {
-        DescriptionStage slug(String slug);
+        /**
+         * <p>Slug for designated source</p>
+         */
+        DescriptionStage slug(@NotNull String slug);
     }
 
     public interface DescriptionStage {
-        _FinalStage description(String description);
+        /**
+         * <p>Description of source of information</p>
+         */
+        _FinalStage description(@NotNull String description);
     }
 
     public interface _FinalStage {
         ClientFacingProviderDetailed build();
 
+        /**
+         * <p>URL for source logo</p>
+         */
         _FinalStage logo(Optional<String> logo);
 
         _FinalStage logo(String logo);
@@ -190,40 +203,43 @@ public final class ClientFacingProviderDetailed {
 
         /**
          * <p>Name of source of information</p>
+         * <p>Name of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         /**
          * <p>Slug for designated source</p>
+         * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("slug")
-        public DescriptionStage slug(String slug) {
-            this.slug = slug;
+        public DescriptionStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         /**
          * <p>Description of source of information</p>
+         * <p>Description of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("description")
-        public _FinalStage description(String description) {
-            this.description = description;
+        public _FinalStage description(@NotNull String description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage supportedResources(List<ClientFacingResource> supportedResources) {
-            this.supportedResources = Optional.of(supportedResources);
+            this.supportedResources = Optional.ofNullable(supportedResources);
             return this;
         }
 
@@ -236,7 +252,7 @@ public final class ClientFacingProviderDetailed {
 
         @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
-            this.authType = Optional.of(authType);
+            this.authType = Optional.ofNullable(authType);
             return this;
         }
 
@@ -253,10 +269,13 @@ public final class ClientFacingProviderDetailed {
          */
         @java.lang.Override
         public _FinalStage logo(String logo) {
-            this.logo = Optional.of(logo);
+            this.logo = Optional.ofNullable(logo);
             return this;
         }
 
+        /**
+         * <p>URL for source logo</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "logo", nulls = Nulls.SKIP)
         public _FinalStage logo(Optional<String> logo) {

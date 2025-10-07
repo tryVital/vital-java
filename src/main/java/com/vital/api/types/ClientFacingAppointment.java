@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingAppointment.Builder.class)
 public final class ClientFacingAppointment {
     private final String id;
@@ -252,41 +253,41 @@ public final class ClientFacingAppointment {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingAppointment other);
     }
 
     public interface UserIdStage {
-        OrderIdStage userId(String userId);
+        OrderIdStage userId(@NotNull String userId);
     }
 
     public interface OrderIdStage {
-        AddressStage orderId(String orderId);
+        AddressStage orderId(@NotNull String orderId);
     }
 
     public interface AddressStage {
-        LocationStage address(UsAddress address);
+        LocationStage address(@NotNull UsAddress address);
     }
 
     public interface LocationStage {
-        TypeStage location(LngLat location);
+        TypeStage location(@NotNull LngLat location);
     }
 
     public interface TypeStage {
-        ProviderStage type(AppointmentType type);
+        ProviderStage type(@NotNull AppointmentType type);
     }
 
     public interface ProviderStage {
-        StatusStage provider(AppointmentProvider provider);
+        StatusStage provider(@NotNull AppointmentProvider provider);
     }
 
     public interface StatusStage {
-        ProviderIdStage status(AppointmentStatus status);
+        ProviderIdStage status(@NotNull AppointmentStatus status);
     }
 
     public interface ProviderIdStage {
-        CanRescheduleStage providerId(String providerId);
+        CanRescheduleStage providerId(@NotNull String providerId);
     }
 
     public interface CanRescheduleStage {
@@ -294,16 +295,22 @@ public final class ClientFacingAppointment {
     }
 
     public interface EventStatusStage {
-        _FinalStage eventStatus(AppointmentEventStatus eventStatus);
+        _FinalStage eventStatus(@NotNull AppointmentEventStatus eventStatus);
     }
 
     public interface _FinalStage {
         ClientFacingAppointment build();
 
+        /**
+         * <p>Time is in UTC</p>
+         */
         _FinalStage startAt(Optional<OffsetDateTime> startAt);
 
         _FinalStage startAt(OffsetDateTime startAt);
 
+        /**
+         * <p>Time is in UTC</p>
+         */
         _FinalStage endAt(Optional<OffsetDateTime> endAt);
 
         _FinalStage endAt(OffsetDateTime endAt);
@@ -404,64 +411,64 @@ public final class ClientFacingAppointment {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public OrderIdStage userId(String userId) {
-            this.userId = userId;
+        public OrderIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("order_id")
-        public AddressStage orderId(String orderId) {
-            this.orderId = orderId;
+        public AddressStage orderId(@NotNull String orderId) {
+            this.orderId = Objects.requireNonNull(orderId, "orderId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("address")
-        public LocationStage address(UsAddress address) {
-            this.address = address;
+        public LocationStage address(@NotNull UsAddress address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("location")
-        public TypeStage location(LngLat location) {
-            this.location = location;
+        public TypeStage location(@NotNull LngLat location) {
+            this.location = Objects.requireNonNull(location, "location must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public ProviderStage type(AppointmentType type) {
-            this.type = type;
+        public ProviderStage type(@NotNull AppointmentType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public StatusStage provider(AppointmentProvider provider) {
-            this.provider = provider;
+        public StatusStage provider(@NotNull AppointmentProvider provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public ProviderIdStage status(AppointmentStatus status) {
-            this.status = status;
+        public ProviderIdStage status(@NotNull AppointmentStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider_id")
-        public CanRescheduleStage providerId(String providerId) {
-            this.providerId = providerId;
+        public CanRescheduleStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
@@ -474,14 +481,16 @@ public final class ClientFacingAppointment {
 
         @java.lang.Override
         @JsonSetter("event_status")
-        public _FinalStage eventStatus(AppointmentEventStatus eventStatus) {
-            this.eventStatus = eventStatus;
+        public _FinalStage eventStatus(@NotNull AppointmentEventStatus eventStatus) {
+            this.eventStatus = Objects.requireNonNull(eventStatus, "eventStatus must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllEvents(List<ClientFacingAppointmentEvent> events) {
-            this.events.addAll(events);
+            if (events != null) {
+                this.events.addAll(events);
+            }
             return this;
         }
 
@@ -501,7 +510,7 @@ public final class ClientFacingAppointment {
 
         @java.lang.Override
         public _FinalStage eventData(Map<String, Object> eventData) {
-            this.eventData = Optional.of(eventData);
+            this.eventData = Optional.ofNullable(eventData);
             return this;
         }
 
@@ -514,7 +523,7 @@ public final class ClientFacingAppointment {
 
         @java.lang.Override
         public _FinalStage externalId(String externalId) {
-            this.externalId = Optional.of(externalId);
+            this.externalId = Optional.ofNullable(externalId);
             return this;
         }
 
@@ -527,7 +536,7 @@ public final class ClientFacingAppointment {
 
         @java.lang.Override
         public _FinalStage ianaTimezone(String ianaTimezone) {
-            this.ianaTimezone = Optional.of(ianaTimezone);
+            this.ianaTimezone = Optional.ofNullable(ianaTimezone);
             return this;
         }
 
@@ -544,10 +553,13 @@ public final class ClientFacingAppointment {
          */
         @java.lang.Override
         public _FinalStage endAt(OffsetDateTime endAt) {
-            this.endAt = Optional.of(endAt);
+            this.endAt = Optional.ofNullable(endAt);
             return this;
         }
 
+        /**
+         * <p>Time is in UTC</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
         public _FinalStage endAt(Optional<OffsetDateTime> endAt) {
@@ -561,10 +573,13 @@ public final class ClientFacingAppointment {
          */
         @java.lang.Override
         public _FinalStage startAt(OffsetDateTime startAt) {
-            this.startAt = Optional.of(startAt);
+            this.startAt = Optional.ofNullable(startAt);
             return this;
         }
 
+        /**
+         * <p>Time is in UTC</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "start_at", nulls = Nulls.SKIP)
         public _FinalStage startAt(Optional<OffsetDateTime> startAt) {

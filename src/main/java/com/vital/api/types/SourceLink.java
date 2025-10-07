@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SourceLink.Builder.class)
 public final class SourceLink {
     private final int id;
@@ -150,19 +151,19 @@ public final class SourceLink {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
     }
 
     public interface SlugStage {
-        DescriptionStage slug(String slug);
+        DescriptionStage slug(@NotNull String slug);
     }
 
     public interface DescriptionStage {
-        LogoStage description(String description);
+        LogoStage description(@NotNull String description);
     }
 
     public interface LogoStage {
-        _FinalStage logo(String logo);
+        _FinalStage logo(@NotNull String logo);
     }
 
     public interface _FinalStage {
@@ -227,35 +228,35 @@ public final class SourceLink {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public DescriptionStage slug(String slug) {
-            this.slug = slug;
+        public DescriptionStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("description")
-        public LogoStage description(String description) {
-            this.description = description;
+        public LogoStage description(@NotNull String description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("logo")
-        public _FinalStage logo(String logo) {
-            this.logo = logo;
+        public _FinalStage logo(@NotNull String logo) {
+            this.logo = Objects.requireNonNull(logo, "logo must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage formComponents(Map<String, Object> formComponents) {
-            this.formComponents = Optional.of(formComponents);
+            this.formComponents = Optional.ofNullable(formComponents);
             return this;
         }
 
@@ -268,7 +269,7 @@ public final class SourceLink {
 
         @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
-            this.authType = Optional.of(authType);
+            this.authType = Optional.ofNullable(authType);
             return this;
         }
 
@@ -281,7 +282,7 @@ public final class SourceLink {
 
         @java.lang.Override
         public _FinalStage oauthUrl(String oauthUrl) {
-            this.oauthUrl = Optional.of(oauthUrl);
+            this.oauthUrl = Optional.ofNullable(oauthUrl);
             return this;
         }
 

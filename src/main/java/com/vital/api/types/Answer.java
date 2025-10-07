@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Answer.Builder.class)
 public final class Answer {
     private final int id;
@@ -84,11 +85,11 @@ public final class Answer {
     }
 
     public interface CodeStage {
-        ValueStage code(String code);
+        ValueStage code(@NotNull String code);
     }
 
     public interface ValueStage {
-        _FinalStage value(String value);
+        _FinalStage value(@NotNull String value);
     }
 
     public interface _FinalStage {
@@ -125,15 +126,15 @@ public final class Answer {
 
         @java.lang.Override
         @JsonSetter("code")
-        public ValueStage code(String code) {
-            this.code = code;
+        public ValueStage code(@NotNull String code) {
+            this.code = Objects.requireNonNull(code, "code must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public _FinalStage value(String value) {
-            this.value = value;
+        public _FinalStage value(@NotNull String value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 

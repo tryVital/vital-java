@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LastAttempt.Builder.class)
 public final class LastAttempt {
     private final OffsetDateTime timestamp;
@@ -71,13 +72,13 @@ public final class LastAttempt {
     }
 
     public interface TimestampStage {
-        StatusStage timestamp(OffsetDateTime timestamp);
+        StatusStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(LastAttempt other);
     }
 
     public interface StatusStage {
-        _FinalStage status(AttemptStatus status);
+        _FinalStage status(@NotNull AttemptStatus status);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class LastAttempt {
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public StatusStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public StatusStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(AttemptStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull AttemptStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

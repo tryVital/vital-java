@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingConnectionErrorDetails.Builder.class)
 public final class ClientFacingConnectionErrorDetails {
     private final ClientFacingConnectionErrorDetailsErrorType errorType;
@@ -89,17 +90,20 @@ public final class ClientFacingConnectionErrorDetails {
     }
 
     public interface ErrorTypeStage {
-        ErrorMessageStage errorType(ClientFacingConnectionErrorDetailsErrorType errorType);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        ErrorMessageStage errorType(@NotNull ClientFacingConnectionErrorDetailsErrorType errorType);
 
         Builder from(ClientFacingConnectionErrorDetails other);
     }
 
     public interface ErrorMessageStage {
-        ErroredAtStage errorMessage(String errorMessage);
+        ErroredAtStage errorMessage(@NotNull String errorMessage);
     }
 
     public interface ErroredAtStage {
-        _FinalStage erroredAt(OffsetDateTime erroredAt);
+        _FinalStage erroredAt(@NotNull OffsetDateTime erroredAt);
     }
 
     public interface _FinalStage {
@@ -129,26 +133,27 @@ public final class ClientFacingConnectionErrorDetails {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("error_type")
-        public ErrorMessageStage errorType(ClientFacingConnectionErrorDetailsErrorType errorType) {
-            this.errorType = errorType;
+        public ErrorMessageStage errorType(@NotNull ClientFacingConnectionErrorDetailsErrorType errorType) {
+            this.errorType = Objects.requireNonNull(errorType, "errorType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("error_message")
-        public ErroredAtStage errorMessage(String errorMessage) {
-            this.errorMessage = errorMessage;
+        public ErroredAtStage errorMessage(@NotNull String errorMessage) {
+            this.errorMessage = Objects.requireNonNull(errorMessage, "errorMessage must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("errored_at")
-        public _FinalStage erroredAt(OffsetDateTime erroredAt) {
-            this.erroredAt = erroredAt;
+        public _FinalStage erroredAt(@NotNull OffsetDateTime erroredAt) {
+            this.erroredAt = Objects.requireNonNull(erroredAt, "erroredAt must not be null");
             return this;
         }
 

@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PasswordAuthLink.Builder.class)
 public final class PasswordAuthLink {
     private final Optional<String> vitalLinkToken;
@@ -108,21 +109,21 @@ public final class PasswordAuthLink {
     }
 
     public interface UsernameStage {
-        PasswordStage username(String username);
+        PasswordStage username(@NotNull String username);
 
         Builder from(PasswordAuthLink other);
     }
 
     public interface PasswordStage {
-        ProviderStage password(String password);
+        ProviderStage password(@NotNull String password);
     }
 
     public interface ProviderStage {
-        AuthTypeStage provider(Providers provider);
+        AuthTypeStage provider(@NotNull Providers provider);
     }
 
     public interface AuthTypeStage {
-        _FinalStage authType(AuthType authType);
+        _FinalStage authType(@NotNull AuthType authType);
     }
 
     public interface _FinalStage {
@@ -163,35 +164,35 @@ public final class PasswordAuthLink {
 
         @java.lang.Override
         @JsonSetter("username")
-        public PasswordStage username(String username) {
-            this.username = username;
+        public PasswordStage username(@NotNull String username) {
+            this.username = Objects.requireNonNull(username, "username must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("password")
-        public ProviderStage password(String password) {
-            this.password = password;
+        public ProviderStage password(@NotNull String password) {
+            this.password = Objects.requireNonNull(password, "password must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public AuthTypeStage provider(Providers provider) {
-            this.provider = provider;
+        public AuthTypeStage provider(@NotNull Providers provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("auth_type")
-        public _FinalStage authType(AuthType authType) {
-            this.authType = authType;
+        public _FinalStage authType(@NotNull AuthType authType) {
+            this.authType = Objects.requireNonNull(authType, "authType must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ResendWebhookBody.Builder.class)
 public final class ResendWebhookBody {
     private final Optional<List<String>> orderIds;
@@ -112,7 +112,7 @@ public final class ResendWebhookBody {
         }
 
         public Builder orderIds(List<String> orderIds) {
-            this.orderIds = Optional.of(orderIds);
+            this.orderIds = Optional.ofNullable(orderIds);
             return this;
         }
 
@@ -123,7 +123,7 @@ public final class ResendWebhookBody {
         }
 
         public Builder startAt(OffsetDateTime startAt) {
-            this.startAt = Optional.of(startAt);
+            this.startAt = Optional.ofNullable(startAt);
             return this;
         }
 
@@ -134,7 +134,7 @@ public final class ResendWebhookBody {
         }
 
         public Builder endAt(OffsetDateTime endAt) {
-            this.endAt = Optional.of(endAt);
+            this.endAt = Optional.ofNullable(endAt);
             return this;
         }
 

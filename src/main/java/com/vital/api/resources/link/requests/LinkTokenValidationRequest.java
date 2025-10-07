@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LinkTokenValidationRequest.Builder.class)
 public final class LinkTokenValidationRequest {
     private final String token;
@@ -62,7 +63,7 @@ public final class LinkTokenValidationRequest {
     }
 
     public interface TokenStage {
-        _FinalStage token(String token);
+        _FinalStage token(@NotNull String token);
 
         Builder from(LinkTokenValidationRequest other);
     }
@@ -88,8 +89,8 @@ public final class LinkTokenValidationRequest {
 
         @java.lang.Override
         @JsonSetter("token")
-        public _FinalStage token(String token) {
-            this.token = token;
+        public _FinalStage token(@NotNull String token) {
+            this.token = Objects.requireNonNull(token, "token must not be null");
             return this;
         }
 

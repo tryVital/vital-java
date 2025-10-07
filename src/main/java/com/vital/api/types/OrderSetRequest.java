@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = OrderSetRequest.Builder.class)
 public final class OrderSetRequest {
     private final Optional<List<String>> labTestIds;
@@ -97,7 +97,7 @@ public final class OrderSetRequest {
         }
 
         public Builder labTestIds(List<String> labTestIds) {
-            this.labTestIds = Optional.of(labTestIds);
+            this.labTestIds = Optional.ofNullable(labTestIds);
             return this;
         }
 
@@ -108,7 +108,7 @@ public final class OrderSetRequest {
         }
 
         public Builder addOn(AddOnOrder addOn) {
-            this.addOn = Optional.of(addOn);
+            this.addOn = Optional.ofNullable(addOn);
             return this;
         }
 

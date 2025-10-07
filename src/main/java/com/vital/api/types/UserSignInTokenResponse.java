@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserSignInTokenResponse.Builder.class)
 public final class UserSignInTokenResponse {
     private final String userId;
@@ -70,13 +71,13 @@ public final class UserSignInTokenResponse {
     }
 
     public interface UserIdStage {
-        SignInTokenStage userId(String userId);
+        SignInTokenStage userId(@NotNull String userId);
 
         Builder from(UserSignInTokenResponse other);
     }
 
     public interface SignInTokenStage {
-        _FinalStage signInToken(String signInToken);
+        _FinalStage signInToken(@NotNull String signInToken);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class UserSignInTokenResponse {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SignInTokenStage userId(String userId) {
-            this.userId = userId;
+        public SignInTokenStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sign_in_token")
-        public _FinalStage signInToken(String signInToken) {
-            this.signInToken = signInToken;
+        public _FinalStage signInToken(@NotNull String signInToken) {
+            this.signInToken = Objects.requireNonNull(signInToken, "signInToken must not be null");
             return this;
         }
 

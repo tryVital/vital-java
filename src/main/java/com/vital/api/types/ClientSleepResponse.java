@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientSleepResponse.Builder.class)
 public final class ClientSleepResponse {
     private final List<ClientFacingSleep> sleep;
@@ -91,7 +91,9 @@ public final class ClientSleepResponse {
         }
 
         public Builder addAllSleep(List<ClientFacingSleep> sleep) {
-            this.sleep.addAll(sleep);
+            if (sleep != null) {
+                this.sleep.addAll(sleep);
+            }
             return this;
         }
 

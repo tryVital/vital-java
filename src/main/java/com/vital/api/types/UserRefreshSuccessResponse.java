@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserRefreshSuccessResponse.Builder.class)
 public final class UserRefreshSuccessResponse {
     private final boolean success;
@@ -114,13 +115,19 @@ public final class UserRefreshSuccessResponse {
     }
 
     public interface SuccessStage {
+        /**
+         * <p>Whether operation was successful or not</p>
+         */
         UserIdStage success(boolean success);
 
         Builder from(UserRefreshSuccessResponse other);
     }
 
     public interface UserIdStage {
-        _FinalStage userId(String userId);
+        /**
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         */
+        _FinalStage userId(@NotNull String userId);
     }
 
     public interface _FinalStage {
@@ -174,6 +181,7 @@ public final class UserRefreshSuccessResponse {
 
         /**
          * <p>Whether operation was successful or not</p>
+         * <p>Whether operation was successful or not</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -185,18 +193,21 @@ public final class UserRefreshSuccessResponse {
 
         /**
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public _FinalStage userId(String userId) {
-            this.userId = userId;
+        public _FinalStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllFailedSources(List<String> failedSources) {
-            this.failedSources.addAll(failedSources);
+            if (failedSources != null) {
+                this.failedSources.addAll(failedSources);
+            }
             return this;
         }
 
@@ -216,7 +227,9 @@ public final class UserRefreshSuccessResponse {
 
         @java.lang.Override
         public _FinalStage addAllInProgressSources(List<String> inProgressSources) {
-            this.inProgressSources.addAll(inProgressSources);
+            if (inProgressSources != null) {
+                this.inProgressSources.addAll(inProgressSources);
+            }
             return this;
         }
 
@@ -236,7 +249,9 @@ public final class UserRefreshSuccessResponse {
 
         @java.lang.Override
         public _FinalStage addAllRefreshedSources(List<String> refreshedSources) {
-            this.refreshedSources.addAll(refreshedSources);
+            if (refreshedSources != null) {
+                this.refreshedSources.addAll(refreshedSources);
+            }
             return this;
         }
 

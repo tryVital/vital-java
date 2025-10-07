@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreatePayorBody.Builder.class)
 public final class CreatePayorBody {
     private final String name;
@@ -98,13 +99,13 @@ public final class CreatePayorBody {
     }
 
     public interface NameStage {
-        AddressStage name(String name);
+        AddressStage name(@NotNull String name);
 
         Builder from(CreatePayorBody other);
     }
 
     public interface AddressStage {
-        _FinalStage address(Address address);
+        _FinalStage address(@NotNull Address address);
     }
 
     public interface _FinalStage {
@@ -145,21 +146,21 @@ public final class CreatePayorBody {
 
         @java.lang.Override
         @JsonSetter("name")
-        public AddressStage name(String name) {
-            this.name = name;
+        public AddressStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(Address address) {
-            this.address = address;
+        public _FinalStage address(@NotNull Address address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage providerPayorId(String providerPayorId) {
-            this.providerPayorId = Optional.of(providerPayorId);
+            this.providerPayorId = Optional.ofNullable(providerPayorId);
             return this;
         }
 
@@ -172,7 +173,7 @@ public final class CreatePayorBody {
 
         @java.lang.Override
         public _FinalStage provider(PayorCodeExternalProvider provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingDevice.Builder.class)
 public final class ClientFacingDevice {
     private final String id;
@@ -158,21 +159,24 @@ public final class ClientFacingDevice {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingDevice other);
     }
 
     public interface UserIdStage {
-        ProviderStage userId(String userId);
+        ProviderStage userId(@NotNull String userId);
     }
 
     public interface ProviderStage {
-        SourceTypeStage provider(String provider);
+        SourceTypeStage provider(@NotNull String provider);
     }
 
     public interface SourceTypeStage {
-        _FinalStage sourceType(ClientFacingDeviceSourceType sourceType);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage sourceType(@NotNull ClientFacingDeviceSourceType sourceType);
     }
 
     public interface _FinalStage {
@@ -240,39 +244,40 @@ public final class ClientFacingDevice {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public ProviderStage userId(String userId) {
-            this.userId = userId;
+        public ProviderStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public SourceTypeStage provider(String provider) {
-            this.provider = provider;
+        public SourceTypeStage provider(@NotNull String provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source_type")
-        public _FinalStage sourceType(ClientFacingDeviceSourceType sourceType) {
-            this.sourceType = sourceType;
+        public _FinalStage sourceType(@NotNull ClientFacingDeviceSourceType sourceType) {
+            this.sourceType = Objects.requireNonNull(sourceType, "sourceType must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage deviceId(String deviceId) {
-            this.deviceId = Optional.of(deviceId);
+            this.deviceId = Optional.ofNullable(deviceId);
             return this;
         }
 
@@ -285,7 +290,7 @@ public final class ClientFacingDevice {
 
         @java.lang.Override
         public _FinalStage deviceVersion(String deviceVersion) {
-            this.deviceVersion = Optional.of(deviceVersion);
+            this.deviceVersion = Optional.ofNullable(deviceVersion);
             return this;
         }
 
@@ -298,7 +303,7 @@ public final class ClientFacingDevice {
 
         @java.lang.Override
         public _FinalStage deviceModel(String deviceModel) {
-            this.deviceModel = Optional.of(deviceModel);
+            this.deviceModel = Optional.ofNullable(deviceModel);
             return this;
         }
 
@@ -311,7 +316,7 @@ public final class ClientFacingDevice {
 
         @java.lang.Override
         public _FinalStage deviceManufacturer(String deviceManufacturer) {
-            this.deviceManufacturer = Optional.of(deviceManufacturer);
+            this.deviceManufacturer = Optional.ofNullable(deviceManufacturer);
             return this;
         }
 
@@ -324,7 +329,7 @@ public final class ClientFacingDevice {
 
         @java.lang.Override
         public _FinalStage appId(String appId) {
-            this.appId = Optional.of(appId);
+            this.appId = Optional.ofNullable(appId);
             return this;
         }
 

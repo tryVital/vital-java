@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProvidersGetAllRequest.Builder.class)
 public final class ProvidersGetAllRequest {
     private final Optional<String> sourceType;
@@ -84,7 +84,7 @@ public final class ProvidersGetAllRequest {
         }
 
         public Builder sourceType(String sourceType) {
-            this.sourceType = Optional.of(sourceType);
+            this.sourceType = Optional.ofNullable(sourceType);
             return this;
         }
 

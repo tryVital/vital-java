@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsSimulateOrderProcessRequest.Builder.class)
 public final class LabTestsSimulateOrderProcessRequest {
     private final Optional<OrderStatus> finalStatus;
@@ -113,7 +113,7 @@ public final class LabTestsSimulateOrderProcessRequest {
         }
 
         public Builder finalStatus(OrderStatus finalStatus) {
-            this.finalStatus = Optional.of(finalStatus);
+            this.finalStatus = Optional.ofNullable(finalStatus);
             return this;
         }
 
@@ -124,7 +124,7 @@ public final class LabTestsSimulateOrderProcessRequest {
         }
 
         public Builder delay(Integer delay) {
-            this.delay = Optional.of(delay);
+            this.delay = Optional.ofNullable(delay);
             return this;
         }
 
@@ -135,7 +135,7 @@ public final class LabTestsSimulateOrderProcessRequest {
         }
 
         public Builder body(SimulationFlags body) {
-            this.body = Optional.of(body);
+            this.body = Optional.ofNullable(body);
             return this;
         }
 

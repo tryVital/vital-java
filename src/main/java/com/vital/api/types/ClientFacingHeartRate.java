@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingHeartRate.Builder.class)
 public final class ClientFacingHeartRate {
     private final Optional<Double> avgBpm;
@@ -143,6 +143,9 @@ public final class ClientFacingHeartRate {
             return this;
         }
 
+        /**
+         * <p>Average heart rate::bpm</p>
+         */
         @JsonSetter(value = "avg_bpm", nulls = Nulls.SKIP)
         public Builder avgBpm(Optional<Double> avgBpm) {
             this.avgBpm = avgBpm;
@@ -150,10 +153,13 @@ public final class ClientFacingHeartRate {
         }
 
         public Builder avgBpm(Double avgBpm) {
-            this.avgBpm = Optional.of(avgBpm);
+            this.avgBpm = Optional.ofNullable(avgBpm);
             return this;
         }
 
+        /**
+         * <p>Minimum heart rate::bpm</p>
+         */
         @JsonSetter(value = "min_bpm", nulls = Nulls.SKIP)
         public Builder minBpm(Optional<Double> minBpm) {
             this.minBpm = minBpm;
@@ -161,10 +167,13 @@ public final class ClientFacingHeartRate {
         }
 
         public Builder minBpm(Double minBpm) {
-            this.minBpm = Optional.of(minBpm);
+            this.minBpm = Optional.ofNullable(minBpm);
             return this;
         }
 
+        /**
+         * <p>Maximum heart rate::bpm</p>
+         */
         @JsonSetter(value = "max_bpm", nulls = Nulls.SKIP)
         public Builder maxBpm(Optional<Double> maxBpm) {
             this.maxBpm = maxBpm;
@@ -172,10 +181,13 @@ public final class ClientFacingHeartRate {
         }
 
         public Builder maxBpm(Double maxBpm) {
-            this.maxBpm = Optional.of(maxBpm);
+            this.maxBpm = Optional.ofNullable(maxBpm);
             return this;
         }
 
+        /**
+         * <p>Resting heart rate::bpm</p>
+         */
         @JsonSetter(value = "resting_bpm", nulls = Nulls.SKIP)
         public Builder restingBpm(Optional<Double> restingBpm) {
             this.restingBpm = restingBpm;
@@ -183,7 +195,7 @@ public final class ClientFacingHeartRate {
         }
 
         public Builder restingBpm(Double restingBpm) {
-            this.restingBpm = Optional.of(restingBpm);
+            this.restingBpm = Optional.ofNullable(restingBpm);
             return this;
         }
 
@@ -194,7 +206,7 @@ public final class ClientFacingHeartRate {
         }
 
         public Builder avgWalkingBpm(Double avgWalkingBpm) {
-            this.avgWalkingBpm = Optional.of(avgWalkingBpm);
+            this.avgWalkingBpm = Optional.ofNullable(avgWalkingBpm);
             return this;
         }
 

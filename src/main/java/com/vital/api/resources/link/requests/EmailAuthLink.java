@@ -19,8 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EmailAuthLink.Builder.class)
 public final class EmailAuthLink {
     private final Optional<String> vitalLinkToken;
@@ -109,17 +110,17 @@ public final class EmailAuthLink {
     }
 
     public interface EmailStage {
-        ProviderStage email(String email);
+        ProviderStage email(@NotNull String email);
 
         Builder from(EmailAuthLink other);
     }
 
     public interface ProviderStage {
-        AuthTypeStage provider(Providers provider);
+        AuthTypeStage provider(@NotNull Providers provider);
     }
 
     public interface AuthTypeStage {
-        _FinalStage authType(AuthType authType);
+        _FinalStage authType(@NotNull AuthType authType);
     }
 
     public interface _FinalStage {
@@ -163,28 +164,28 @@ public final class EmailAuthLink {
 
         @java.lang.Override
         @JsonSetter("email")
-        public ProviderStage email(String email) {
-            this.email = email;
+        public ProviderStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public AuthTypeStage provider(Providers provider) {
-            this.provider = provider;
+        public AuthTypeStage provider(@NotNull Providers provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("auth_type")
-        public _FinalStage authType(AuthType authType) {
-            this.authType = authType;
+        public _FinalStage authType(@NotNull AuthType authType) {
+            this.authType = Objects.requireNonNull(authType, "authType must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage region(Region region) {
-            this.region = Optional.of(region);
+            this.region = Optional.ofNullable(region);
             return this;
         }
 
@@ -197,7 +198,7 @@ public final class EmailAuthLink {
 
         @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

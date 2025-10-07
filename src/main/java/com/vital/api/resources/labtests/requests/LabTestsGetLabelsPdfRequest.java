@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetLabelsPdfRequest.Builder.class)
 public final class LabTestsGetLabelsPdfRequest {
     private final Optional<Integer> numberOfLabels;
@@ -80,7 +81,10 @@ public final class LabTestsGetLabelsPdfRequest {
     }
 
     public interface CollectionDateStage {
-        _FinalStage collectionDate(OffsetDateTime collectionDate);
+        /**
+         * <p>Collection date</p>
+         */
+        _FinalStage collectionDate(@NotNull OffsetDateTime collectionDate);
 
         Builder from(LabTestsGetLabelsPdfRequest other);
     }
@@ -88,6 +92,9 @@ public final class LabTestsGetLabelsPdfRequest {
     public interface _FinalStage {
         LabTestsGetLabelsPdfRequest build();
 
+        /**
+         * <p>Number of labels to generate</p>
+         */
         _FinalStage numberOfLabels(Optional<Integer> numberOfLabels);
 
         _FinalStage numberOfLabels(Integer numberOfLabels);
@@ -113,12 +120,13 @@ public final class LabTestsGetLabelsPdfRequest {
 
         /**
          * <p>Collection date</p>
+         * <p>Collection date</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("collection_date")
-        public _FinalStage collectionDate(OffsetDateTime collectionDate) {
-            this.collectionDate = collectionDate;
+        public _FinalStage collectionDate(@NotNull OffsetDateTime collectionDate) {
+            this.collectionDate = Objects.requireNonNull(collectionDate, "collectionDate must not be null");
             return this;
         }
 
@@ -128,10 +136,13 @@ public final class LabTestsGetLabelsPdfRequest {
          */
         @java.lang.Override
         public _FinalStage numberOfLabels(Integer numberOfLabels) {
-            this.numberOfLabels = Optional.of(numberOfLabels);
+            this.numberOfLabels = Optional.ofNullable(numberOfLabels);
             return this;
         }
 
+        /**
+         * <p>Number of labels to generate</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "number_of_labels", nulls = Nulls.SKIP)
         public _FinalStage numberOfLabels(Optional<Integer> numberOfLabels) {

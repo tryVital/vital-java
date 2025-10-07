@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RawDevices.Builder.class)
 public final class RawDevices {
     private final List<DeviceV2InDb> devices;
@@ -91,7 +91,9 @@ public final class RawDevices {
         }
 
         public Builder addAllDevices(List<DeviceV2InDb> devices) {
-            this.devices.addAll(devices);
+            if (devices != null) {
+                this.devices.addAll(devices);
+            }
             return this;
         }
 

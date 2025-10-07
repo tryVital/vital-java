@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = QueryBatch.Builder.class)
 public final class QueryBatch {
     private final QueryBatchTimeframe timeframe;
@@ -94,7 +95,7 @@ public final class QueryBatch {
     }
 
     public interface TimeframeStage {
-        _FinalStage timeframe(QueryBatchTimeframe timeframe);
+        _FinalStage timeframe(@NotNull QueryBatchTimeframe timeframe);
 
         Builder from(QueryBatch other);
     }
@@ -136,14 +137,14 @@ public final class QueryBatch {
 
         @java.lang.Override
         @JsonSetter("timeframe")
-        public _FinalStage timeframe(QueryBatchTimeframe timeframe) {
-            this.timeframe = timeframe;
+        public _FinalStage timeframe(@NotNull QueryBatchTimeframe timeframe) {
+            this.timeframe = Objects.requireNonNull(timeframe, "timeframe must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage config(QueryConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -156,7 +157,9 @@ public final class QueryBatch {
 
         @java.lang.Override
         public _FinalStage addAllQueries(List<Query> queries) {
-            this.queries.addAll(queries);
+            if (queries != null) {
+                this.queries.addAll(queries);
+            }
             return this;
         }
 

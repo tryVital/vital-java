@@ -15,8 +15,9 @@ import com.vital.api.types.Providers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BeginLinkTokenRequest.Builder.class)
 public final class BeginLinkTokenRequest {
     private final String linkToken;
@@ -71,13 +72,13 @@ public final class BeginLinkTokenRequest {
     }
 
     public interface LinkTokenStage {
-        ProviderStage linkToken(String linkToken);
+        ProviderStage linkToken(@NotNull String linkToken);
 
         Builder from(BeginLinkTokenRequest other);
     }
 
     public interface ProviderStage {
-        _FinalStage provider(Providers provider);
+        _FinalStage provider(@NotNull Providers provider);
     }
 
     public interface _FinalStage {
@@ -104,15 +105,15 @@ public final class BeginLinkTokenRequest {
 
         @java.lang.Override
         @JsonSetter("link_token")
-        public ProviderStage linkToken(String linkToken) {
-            this.linkToken = linkToken;
+        public ProviderStage linkToken(@NotNull String linkToken) {
+            this.linkToken = Objects.requireNonNull(linkToken, "linkToken must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(Providers provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull Providers provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 

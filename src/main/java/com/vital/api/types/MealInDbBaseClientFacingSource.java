@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MealInDbBaseClientFacingSource.Builder.class)
 public final class MealInDbBaseClientFacingSource {
     private final String id;
@@ -242,45 +243,54 @@ public final class MealInDbBaseClientFacingSource {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(MealInDbBaseClientFacingSource other);
     }
 
     public interface UserIdStage {
-        PriorityIdStage userId(String userId);
+        PriorityIdStage userId(@NotNull String userId);
     }
 
     public interface PriorityIdStage {
+        /**
+         * <p>This value has no meaning.</p>
+         */
         SourceIdStage priorityId(int priorityId);
     }
 
     public interface SourceIdStage {
+        /**
+         * <p>This value has no meaning.</p>
+         */
         ProviderIdStage sourceId(int sourceId);
     }
 
     public interface ProviderIdStage {
-        TimestampStage providerId(String providerId);
+        /**
+         * <p>This value is identical to <code>id</code>.</p>
+         */
+        TimestampStage providerId(@NotNull String providerId);
     }
 
     public interface TimestampStage {
-        NameStage timestamp(OffsetDateTime timestamp);
+        NameStage timestamp(@NotNull OffsetDateTime timestamp);
     }
 
     public interface NameStage {
-        SourceStage name(String name);
+        SourceStage name(@NotNull String name);
     }
 
     public interface SourceStage {
-        CreatedAtStage source(ClientFacingSource source);
+        CreatedAtStage source(@NotNull ClientFacingSource source);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -384,19 +394,20 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public PriorityIdStage userId(String userId) {
-            this.userId = userId;
+        public PriorityIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
+         * <p>This value has no meaning.</p>
          * <p>This value has no meaning.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -409,6 +420,7 @@ public final class MealInDbBaseClientFacingSource {
 
         /**
          * <p>This value has no meaning.</p>
+         * <p>This value has no meaning.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -420,53 +432,54 @@ public final class MealInDbBaseClientFacingSource {
 
         /**
          * <p>This value is identical to <code>id</code>.</p>
+         * <p>This value is identical to <code>id</code>.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("provider_id")
-        public TimestampStage providerId(String providerId) {
-            this.providerId = providerId;
+        public TimestampStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public NameStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public NameStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public SourceStage name(String name) {
-            this.name = name;
+        public SourceStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public CreatedAtStage source(ClientFacingSource source) {
-            this.source = source;
+        public CreatedAtStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
-            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
         }
 
@@ -479,7 +492,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
-            this.sourceAppId = Optional.of(sourceAppId);
+            this.sourceAppId = Optional.ofNullable(sourceAppId);
             return this;
         }
 
@@ -492,7 +505,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         public _FinalStage data(Map<String, ClientFacingFood> data) {
-            this.data = Optional.of(data);
+            this.data = Optional.ofNullable(data);
             return this;
         }
 
@@ -505,7 +518,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         public _FinalStage micros(Micros micros) {
-            this.micros = Optional.of(micros);
+            this.micros = Optional.ofNullable(micros);
             return this;
         }
 
@@ -518,7 +531,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         public _FinalStage macros(Macros macros) {
-            this.macros = Optional.of(macros);
+            this.macros = Optional.ofNullable(macros);
             return this;
         }
 
@@ -531,7 +544,7 @@ public final class MealInDbBaseClientFacingSource {
 
         @java.lang.Override
         public _FinalStage energy(Energy energy) {
-            this.energy = Optional.of(energy);
+            this.energy = Optional.ofNullable(energy);
             return this;
         }
 

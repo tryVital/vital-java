@@ -19,8 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateInsuranceRequest.Builder.class)
 public final class CreateInsuranceRequest {
     private final String payorCode;
@@ -120,21 +121,21 @@ public final class CreateInsuranceRequest {
     }
 
     public interface PayorCodeStage {
-        MemberIdStage payorCode(String payorCode);
+        MemberIdStage payorCode(@NotNull String payorCode);
 
         Builder from(CreateInsuranceRequest other);
     }
 
     public interface MemberIdStage {
-        RelationshipStage memberId(String memberId);
+        RelationshipStage memberId(@NotNull String memberId);
     }
 
     public interface RelationshipStage {
-        InsuredStage relationship(ResponsibleRelationship relationship);
+        InsuredStage relationship(@NotNull ResponsibleRelationship relationship);
     }
 
     public interface InsuredStage {
-        _FinalStage insured(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured);
+        _FinalStage insured(@NotNull VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured);
     }
 
     public interface _FinalStage {
@@ -182,35 +183,35 @@ public final class CreateInsuranceRequest {
 
         @java.lang.Override
         @JsonSetter("payor_code")
-        public MemberIdStage payorCode(String payorCode) {
-            this.payorCode = payorCode;
+        public MemberIdStage payorCode(@NotNull String payorCode) {
+            this.payorCode = Objects.requireNonNull(payorCode, "payorCode must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("member_id")
-        public RelationshipStage memberId(String memberId) {
-            this.memberId = memberId;
+        public RelationshipStage memberId(@NotNull String memberId) {
+            this.memberId = Objects.requireNonNull(memberId, "memberId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("relationship")
-        public InsuredStage relationship(ResponsibleRelationship relationship) {
-            this.relationship = relationship;
+        public InsuredStage relationship(@NotNull ResponsibleRelationship relationship) {
+            this.relationship = Objects.requireNonNull(relationship, "relationship must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("insured")
-        public _FinalStage insured(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured) {
-            this.insured = insured;
+        public _FinalStage insured(@NotNull VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured) {
+            this.insured = Objects.requireNonNull(insured, "insured must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage guarantor(GuarantorDetails guarantor) {
-            this.guarantor = Optional.of(guarantor);
+            this.guarantor = Optional.ofNullable(guarantor);
             return this;
         }
 
@@ -223,7 +224,7 @@ public final class CreateInsuranceRequest {
 
         @java.lang.Override
         public _FinalStage groupId(String groupId) {
-            this.groupId = Optional.of(groupId);
+            this.groupId = Optional.ofNullable(groupId);
             return this;
         }
 

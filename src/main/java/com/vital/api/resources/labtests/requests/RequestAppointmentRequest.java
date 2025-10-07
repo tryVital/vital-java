@@ -16,8 +16,9 @@ import com.vital.api.types.UsAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RequestAppointmentRequest.Builder.class)
 public final class RequestAppointmentRequest {
     private final UsAddress address;
@@ -76,13 +77,16 @@ public final class RequestAppointmentRequest {
     }
 
     public interface AddressStage {
-        ProviderStage address(UsAddress address);
+        /**
+         * <p>At-home phlebotomy appointment address.</p>
+         */
+        ProviderStage address(@NotNull UsAddress address);
 
         Builder from(RequestAppointmentRequest other);
     }
 
     public interface ProviderStage {
-        _FinalStage provider(AppointmentProvider provider);
+        _FinalStage provider(@NotNull AppointmentProvider provider);
     }
 
     public interface _FinalStage {
@@ -109,19 +113,20 @@ public final class RequestAppointmentRequest {
 
         /**
          * <p>At-home phlebotomy appointment address.</p>
+         * <p>At-home phlebotomy appointment address.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("address")
-        public ProviderStage address(UsAddress address) {
-            this.address = address;
+        public ProviderStage address(@NotNull UsAddress address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(AppointmentProvider provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull AppointmentProvider provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 

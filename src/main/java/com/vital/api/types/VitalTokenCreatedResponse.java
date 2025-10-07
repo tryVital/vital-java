@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VitalTokenCreatedResponse.Builder.class)
 public final class VitalTokenCreatedResponse {
     private final String code;
@@ -80,17 +81,17 @@ public final class VitalTokenCreatedResponse {
     }
 
     public interface CodeStage {
-        ExchangeUrlStage code(String code);
+        ExchangeUrlStage code(@NotNull String code);
 
         Builder from(VitalTokenCreatedResponse other);
     }
 
     public interface ExchangeUrlStage {
-        ExpiresAtStage exchangeUrl(String exchangeUrl);
+        ExpiresAtStage exchangeUrl(@NotNull String exchangeUrl);
     }
 
     public interface ExpiresAtStage {
-        _FinalStage expiresAt(OffsetDateTime expiresAt);
+        _FinalStage expiresAt(@NotNull OffsetDateTime expiresAt);
     }
 
     public interface _FinalStage {
@@ -120,22 +121,22 @@ public final class VitalTokenCreatedResponse {
 
         @java.lang.Override
         @JsonSetter("code")
-        public ExchangeUrlStage code(String code) {
-            this.code = code;
+        public ExchangeUrlStage code(@NotNull String code) {
+            this.code = Objects.requireNonNull(code, "code must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("exchange_url")
-        public ExpiresAtStage exchangeUrl(String exchangeUrl) {
-            this.exchangeUrl = exchangeUrl;
+        public ExpiresAtStage exchangeUrl(@NotNull String exchangeUrl) {
+            this.exchangeUrl = Objects.requireNonNull(exchangeUrl, "exchangeUrl must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("expires_at")
-        public _FinalStage expiresAt(OffsetDateTime expiresAt) {
-            this.expiresAt = expiresAt;
+        public _FinalStage expiresAt(@NotNull OffsetDateTime expiresAt) {
+            this.expiresAt = Objects.requireNonNull(expiresAt, "expiresAt must not be null");
             return this;
         }
 

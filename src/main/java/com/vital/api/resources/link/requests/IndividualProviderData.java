@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IndividualProviderData.Builder.class)
 public final class IndividualProviderData {
     private final Optional<String> vitalLinkToken;
@@ -106,13 +107,19 @@ public final class IndividualProviderData {
     }
 
     public interface UsernameStage {
-        PasswordStage username(String username);
+        /**
+         * <p>Username for provider</p>
+         */
+        PasswordStage username(@NotNull String username);
 
         Builder from(IndividualProviderData other);
     }
 
     public interface PasswordStage {
-        _FinalStage password(String password);
+        /**
+         * <p>Password for provider</p>
+         */
+        _FinalStage password(@NotNull String password);
     }
 
     public interface _FinalStage {
@@ -122,6 +129,9 @@ public final class IndividualProviderData {
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
 
+        /**
+         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         */
         _FinalStage region(Optional<Region> region);
 
         _FinalStage region(Region region);
@@ -153,23 +163,25 @@ public final class IndividualProviderData {
 
         /**
          * <p>Username for provider</p>
+         * <p>Username for provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("username")
-        public PasswordStage username(String username) {
-            this.username = username;
+        public PasswordStage username(@NotNull String username) {
+            this.username = Objects.requireNonNull(username, "username must not be null");
             return this;
         }
 
         /**
          * <p>Password for provider</p>
+         * <p>Password for provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("password")
-        public _FinalStage password(String password) {
-            this.password = password;
+        public _FinalStage password(@NotNull String password) {
+            this.password = Objects.requireNonNull(password, "password must not be null");
             return this;
         }
 
@@ -179,10 +191,13 @@ public final class IndividualProviderData {
          */
         @java.lang.Override
         public _FinalStage region(Region region) {
-            this.region = Optional.of(region);
+            this.region = Optional.ofNullable(region);
             return this;
         }
 
+        /**
+         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
         public _FinalStage region(Optional<Region> region) {
@@ -192,7 +207,7 @@ public final class IndividualProviderData {
 
         @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

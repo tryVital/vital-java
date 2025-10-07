@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AoEAnswer.Builder.class)
 public final class AoEAnswer {
     private final int markerId;
@@ -88,7 +89,7 @@ public final class AoEAnswer {
     }
 
     public interface AnswerStage {
-        _FinalStage answer(String answer);
+        _FinalStage answer(@NotNull String answer);
     }
 
     public interface _FinalStage {
@@ -132,8 +133,8 @@ public final class AoEAnswer {
 
         @java.lang.Override
         @JsonSetter("answer")
-        public _FinalStage answer(String answer) {
-            this.answer = answer;
+        public _FinalStage answer(@NotNull String answer) {
+            this.answer = Objects.requireNonNull(answer, "answer must not be null");
             return this;
         }
 

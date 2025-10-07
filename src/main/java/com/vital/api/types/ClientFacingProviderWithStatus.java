@@ -18,8 +18,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingProviderWithStatus.Builder.class)
 public final class ClientFacingProviderWithStatus {
     private final String name;
@@ -170,34 +171,58 @@ public final class ClientFacingProviderWithStatus {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        /**
+         * <p>Name of source of information</p>
+         */
+        SlugStage name(@NotNull String name);
 
         Builder from(ClientFacingProviderWithStatus other);
     }
 
     public interface SlugStage {
-        LogoStage slug(String slug);
+        /**
+         * <p>Slug for designated source</p>
+         */
+        LogoStage slug(@NotNull String slug);
     }
 
     public interface LogoStage {
-        CreatedOnStage logo(String logo);
+        /**
+         * <p>URL for source logo</p>
+         */
+        CreatedOnStage logo(@NotNull String logo);
     }
 
     public interface CreatedOnStage {
-        StatusStage createdOn(OffsetDateTime createdOn);
+        StatusStage createdOn(@NotNull OffsetDateTime createdOn);
     }
 
     public interface StatusStage {
-        _FinalStage status(String status);
+        /**
+         * <p>Status of source, either error or connected</p>
+         */
+        _FinalStage status(@NotNull String status);
     }
 
     public interface _FinalStage {
         ClientFacingProviderWithStatus build();
 
+        /**
+         * <p>The unique identifier of the associated external data provider user.</p>
+         * <ul>
+         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+         * <li>Password Providers: Username</li>
+         * <li>Email Providers: Email</li>
+         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+         * </ul>
+         */
         _FinalStage externalUserId(Optional<String> externalUserId);
 
         _FinalStage externalUserId(String externalUserId);
 
+        /**
+         * <p>Details of the terminal connection error — populated only when the status is <code>error</code>.</p>
+         */
         _FinalStage errorDetails(Optional<ClientFacingConnectionErrorDetails> errorDetails);
 
         _FinalStage errorDetails(ClientFacingConnectionErrorDetails errorDetails);
@@ -248,52 +273,56 @@ public final class ClientFacingProviderWithStatus {
 
         /**
          * <p>Name of source of information</p>
+         * <p>Name of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         /**
          * <p>Slug for designated source</p>
+         * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("slug")
-        public LogoStage slug(String slug) {
-            this.slug = slug;
+        public LogoStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         /**
          * <p>URL for source logo</p>
+         * <p>URL for source logo</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("logo")
-        public CreatedOnStage logo(String logo) {
-            this.logo = logo;
+        public CreatedOnStage logo(@NotNull String logo) {
+            this.logo = Objects.requireNonNull(logo, "logo must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_on")
-        public StatusStage createdOn(OffsetDateTime createdOn) {
-            this.createdOn = createdOn;
+        public StatusStage createdOn(@NotNull OffsetDateTime createdOn) {
+            this.createdOn = Objects.requireNonNull(createdOn, "createdOn must not be null");
             return this;
         }
 
         /**
          * <p>Status of source, either error or connected</p>
+         * <p>Status of source, either error or connected</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(String status) {
-            this.status = status;
+        public _FinalStage status(@NotNull String status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -305,7 +334,9 @@ public final class ClientFacingProviderWithStatus {
 
         @java.lang.Override
         public _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
-            this.resourceAvailability.putAll(resourceAvailability);
+            if (resourceAvailability != null) {
+                this.resourceAvailability.putAll(resourceAvailability);
+            }
             return this;
         }
 
@@ -323,10 +354,13 @@ public final class ClientFacingProviderWithStatus {
          */
         @java.lang.Override
         public _FinalStage errorDetails(ClientFacingConnectionErrorDetails errorDetails) {
-            this.errorDetails = Optional.of(errorDetails);
+            this.errorDetails = Optional.ofNullable(errorDetails);
             return this;
         }
 
+        /**
+         * <p>Details of the terminal connection error — populated only when the status is <code>error</code>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "error_details", nulls = Nulls.SKIP)
         public _FinalStage errorDetails(Optional<ClientFacingConnectionErrorDetails> errorDetails) {
@@ -346,10 +380,19 @@ public final class ClientFacingProviderWithStatus {
          */
         @java.lang.Override
         public _FinalStage externalUserId(String externalUserId) {
-            this.externalUserId = Optional.of(externalUserId);
+            this.externalUserId = Optional.ofNullable(externalUserId);
             return this;
         }
 
+        /**
+         * <p>The unique identifier of the associated external data provider user.</p>
+         * <ul>
+         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+         * <li>Password Providers: Username</li>
+         * <li>Email Providers: Email</li>
+         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+         * </ul>
+         */
         @java.lang.Override
         @JsonSetter(value = "external_user_id", nulls = Nulls.SKIP)
         public _FinalStage externalUserId(Optional<String> externalUserId) {

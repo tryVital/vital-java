@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PscAreaInfoDetails.Builder.class)
 public final class PscAreaInfoDetails {
     private final boolean appointmentWithVital;
@@ -107,7 +108,7 @@ public final class PscAreaInfoDetails {
     }
 
     public interface RadiusStage {
-        _FinalStage radius(String radius);
+        _FinalStage radius(@NotNull String radius);
     }
 
     public interface _FinalStage {
@@ -159,14 +160,14 @@ public final class PscAreaInfoDetails {
 
         @java.lang.Override
         @JsonSetter("radius")
-        public _FinalStage radius(String radius) {
-            this.radius = radius;
+        public _FinalStage radius(@NotNull String radius) {
+            this.radius = Objects.requireNonNull(radius, "radius must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage capabilities(List<LabLocationCapability> capabilities) {
-            this.capabilities = Optional.of(capabilities);
+            this.capabilities = Optional.ofNullable(capabilities);
             return this;
         }
 

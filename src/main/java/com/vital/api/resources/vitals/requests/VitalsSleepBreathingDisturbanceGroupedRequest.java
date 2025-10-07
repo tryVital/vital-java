@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VitalsSleepBreathingDisturbanceGroupedRequest.Builder.class)
 public final class VitalsSleepBreathingDisturbanceGroupedRequest {
     private final Optional<String> cursor;
@@ -122,7 +123,10 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
     }
 
     public interface StartDateStage {
-        _FinalStage startDate(String startDate);
+        /**
+         * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         */
+        _FinalStage startDate(@NotNull String startDate);
 
         Builder from(VitalsSleepBreathingDisturbanceGroupedRequest other);
     }
@@ -130,18 +134,30 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
     public interface _FinalStage {
         VitalsSleepBreathingDisturbanceGroupedRequest build();
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         */
         _FinalStage cursor(Optional<String> cursor);
 
         _FinalStage cursor(String cursor);
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         */
         _FinalStage nextCursor(Optional<String> nextCursor);
 
         _FinalStage nextCursor(String nextCursor);
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         _FinalStage provider(Optional<String> provider);
 
         _FinalStage provider(String provider);
 
+        /**
+         * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59</p>
+         */
         _FinalStage endDate(Optional<String> endDate);
 
         _FinalStage endDate(String endDate);
@@ -176,12 +192,13 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
 
         /**
          * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("start_date")
-        public _FinalStage startDate(String startDate) {
-            this.startDate = startDate;
+        public _FinalStage startDate(@NotNull String startDate) {
+            this.startDate = Objects.requireNonNull(startDate, "startDate must not be null");
             return this;
         }
 
@@ -191,10 +208,13 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
          */
         @java.lang.Override
         public _FinalStage endDate(String endDate) {
-            this.endDate = Optional.of(endDate);
+            this.endDate = Optional.ofNullable(endDate);
             return this;
         }
 
+        /**
+         * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "end_date", nulls = Nulls.SKIP)
         public _FinalStage endDate(Optional<String> endDate) {
@@ -208,10 +228,13 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
          */
         @java.lang.Override
         public _FinalStage provider(String provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<String> provider) {
@@ -225,10 +248,13 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
          */
         @java.lang.Override
         public _FinalStage nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
         public _FinalStage nextCursor(Optional<String> nextCursor) {
@@ -242,10 +268,13 @@ public final class VitalsSleepBreathingDisturbanceGroupedRequest {
          */
         @java.lang.Override
         public _FinalStage cursor(String cursor) {
-            this.cursor = Optional.of(cursor);
+            this.cursor = Optional.ofNullable(cursor);
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "cursor", nulls = Nulls.SKIP)
         public _FinalStage cursor(Optional<String> cursor) {

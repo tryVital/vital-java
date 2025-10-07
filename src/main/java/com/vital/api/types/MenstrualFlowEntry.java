@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MenstrualFlowEntry.Builder.class)
 public final class MenstrualFlowEntry {
     private final String date;
@@ -73,13 +74,16 @@ public final class MenstrualFlowEntry {
     }
 
     public interface DateStage {
-        FlowStage date(String date);
+        FlowStage date(@NotNull String date);
 
         Builder from(MenstrualFlowEntry other);
     }
 
     public interface FlowStage {
-        _FinalStage flow(MenstrualFlowEntryFlow flow);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage flow(@NotNull MenstrualFlowEntryFlow flow);
     }
 
     public interface _FinalStage {
@@ -106,19 +110,20 @@ public final class MenstrualFlowEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public FlowStage date(String date) {
-            this.date = date;
+        public FlowStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("flow")
-        public _FinalStage flow(MenstrualFlowEntryFlow flow) {
-            this.flow = flow;
+        public _FinalStage flow(@NotNull MenstrualFlowEntryFlow flow) {
+            this.flow = Objects.requireNonNull(flow, "flow must not be null");
             return this;
         }
 

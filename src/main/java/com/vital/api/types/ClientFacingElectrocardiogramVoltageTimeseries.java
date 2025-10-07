@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingElectrocardiogramVoltageTimeseries.Builder.class)
 public final class ClientFacingElectrocardiogramVoltageTimeseries {
     private final Optional<Integer> id;
@@ -136,30 +137,48 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
     }
 
     public interface TypeStage {
-        UnitStage type(String type);
+        /**
+         * <p>The lead of the measurement.</p>
+         */
+        UnitStage type(@NotNull String type);
 
         Builder from(ClientFacingElectrocardiogramVoltageTimeseries other);
     }
 
     public interface UnitStage {
-        TimestampStage unit(String unit);
+        /**
+         * <p>Measured in mV.</p>
+         */
+        TimestampStage unit(@NotNull String unit);
     }
 
     public interface TimestampStage {
-        ValueStage timestamp(OffsetDateTime timestamp);
+        /**
+         * <p>The timestamp of the measurement.</p>
+         */
+        ValueStage timestamp(@NotNull OffsetDateTime timestamp);
     }
 
     public interface ValueStage {
+        /**
+         * <p>The value of the measurement.</p>
+         */
         _FinalStage value(double value);
     }
 
     public interface _FinalStage {
         ClientFacingElectrocardiogramVoltageTimeseries build();
 
+        /**
+         * <p>Deprecated</p>
+         */
         _FinalStage id(Optional<Integer> id);
 
         _FinalStage id(Integer id);
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
@@ -197,38 +216,42 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
 
         /**
          * <p>The lead of the measurement.</p>
+         * <p>The lead of the measurement.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("type")
-        public UnitStage type(String type) {
-            this.type = type;
+        public UnitStage type(@NotNull String type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         /**
          * <p>Measured in mV.</p>
+         * <p>Measured in mV.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("unit")
-        public TimestampStage unit(String unit) {
-            this.unit = unit;
+        public TimestampStage unit(@NotNull String unit) {
+            this.unit = Objects.requireNonNull(unit, "unit must not be null");
             return this;
         }
 
         /**
          * <p>The timestamp of the measurement.</p>
+         * <p>The timestamp of the measurement.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public ValueStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public ValueStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         /**
+         * <p>The value of the measurement.</p>
          * <p>The value of the measurement.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -245,10 +268,13 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -262,10 +288,13 @@ public final class ClientFacingElectrocardiogramVoltageTimeseries {
          */
         @java.lang.Override
         public _FinalStage id(Integer id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
+        /**
+         * <p>Deprecated</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {

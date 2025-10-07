@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Macros.Builder.class)
 public final class Macros {
     private final Optional<Double> carbs;
@@ -202,6 +202,9 @@ public final class Macros {
             return this;
         }
 
+        /**
+         * <p>Amount of carbohydrates in grams (g)</p>
+         */
         @JsonSetter(value = "carbs", nulls = Nulls.SKIP)
         public Builder carbs(Optional<Double> carbs) {
             this.carbs = carbs;
@@ -209,10 +212,13 @@ public final class Macros {
         }
 
         public Builder carbs(Double carbs) {
-            this.carbs = Optional.of(carbs);
+            this.carbs = Optional.ofNullable(carbs);
             return this;
         }
 
+        /**
+         * <p>Amount of protein in grams (g)</p>
+         */
         @JsonSetter(value = "protein", nulls = Nulls.SKIP)
         public Builder protein(Optional<Double> protein) {
             this.protein = protein;
@@ -220,10 +226,13 @@ public final class Macros {
         }
 
         public Builder protein(Double protein) {
-            this.protein = Optional.of(protein);
+            this.protein = Optional.ofNullable(protein);
             return this;
         }
 
+        /**
+         * <p>Details of fat content</p>
+         */
         @JsonSetter(value = "fats", nulls = Nulls.SKIP)
         public Builder fats(Optional<Fats> fats) {
             this.fats = fats;
@@ -231,10 +240,13 @@ public final class Macros {
         }
 
         public Builder fats(Fats fats) {
-            this.fats = Optional.of(fats);
+            this.fats = Optional.ofNullable(fats);
             return this;
         }
 
+        /**
+         * <p>Amount of alcohol in grams (g)</p>
+         */
         @JsonSetter(value = "alcohol", nulls = Nulls.SKIP)
         public Builder alcohol(Optional<Double> alcohol) {
             this.alcohol = alcohol;
@@ -242,10 +254,13 @@ public final class Macros {
         }
 
         public Builder alcohol(Double alcohol) {
-            this.alcohol = Optional.of(alcohol);
+            this.alcohol = Optional.ofNullable(alcohol);
             return this;
         }
 
+        /**
+         * <p>Amount of water in grams (g)</p>
+         */
         @JsonSetter(value = "water", nulls = Nulls.SKIP)
         public Builder water(Optional<Double> water) {
             this.water = water;
@@ -253,10 +268,13 @@ public final class Macros {
         }
 
         public Builder water(Double water) {
-            this.water = Optional.of(water);
+            this.water = Optional.ofNullable(water);
             return this;
         }
 
+        /**
+         * <p>Amount of dietary fiber in grams (g)</p>
+         */
         @JsonSetter(value = "fibre", nulls = Nulls.SKIP)
         public Builder fibre(Optional<Double> fibre) {
             this.fibre = fibre;
@@ -264,10 +282,13 @@ public final class Macros {
         }
 
         public Builder fibre(Double fibre) {
-            this.fibre = Optional.of(fibre);
+            this.fibre = Optional.ofNullable(fibre);
             return this;
         }
 
+        /**
+         * <p>Amount of sugar in grams (g)</p>
+         */
         @JsonSetter(value = "sugar", nulls = Nulls.SKIP)
         public Builder sugar(Optional<Double> sugar) {
             this.sugar = sugar;
@@ -275,10 +296,13 @@ public final class Macros {
         }
 
         public Builder sugar(Double sugar) {
-            this.sugar = Optional.of(sugar);
+            this.sugar = Optional.ofNullable(sugar);
             return this;
         }
 
+        /**
+         * <p>Amount of cholesterol in grams (g)</p>
+         */
         @JsonSetter(value = "cholesterol", nulls = Nulls.SKIP)
         public Builder cholesterol(Optional<Double> cholesterol) {
             this.cholesterol = cholesterol;
@@ -286,7 +310,7 @@ public final class Macros {
         }
 
         public Builder cholesterol(Double cholesterol) {
-            this.cholesterol = Optional.of(cholesterol);
+            this.cholesterol = Optional.ofNullable(cholesterol);
             return this;
         }
 

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkImportConnectionsResponse.Builder.class)
 public final class BulkImportConnectionsResponse {
     private final List<String> userIdsImported;
@@ -103,7 +103,9 @@ public final class BulkImportConnectionsResponse {
         }
 
         public Builder addAllUserIdsImported(List<String> userIdsImported) {
-            this.userIdsImported.addAll(userIdsImported);
+            if (userIdsImported != null) {
+                this.userIdsImported.addAll(userIdsImported);
+            }
             return this;
         }
 
@@ -120,7 +122,9 @@ public final class BulkImportConnectionsResponse {
         }
 
         public Builder addAllUserIdsFailed(List<String> userIdsFailed) {
-            this.userIdsFailed.addAll(userIdsFailed);
+            if (userIdsFailed != null) {
+                this.userIdsFailed.addAll(userIdsFailed);
+            }
             return this;
         }
 

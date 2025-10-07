@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LinkListBulkOpsRequest.Builder.class)
 public final class LinkListBulkOpsRequest {
     private final Optional<String> nextCursor;
@@ -111,7 +111,7 @@ public final class LinkListBulkOpsRequest {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 
@@ -122,7 +122,7 @@ public final class LinkListBulkOpsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -133,7 +133,7 @@ public final class LinkListBulkOpsRequest {
         }
 
         public Builder teamId(LinkListBulkOpsRequestTeamId teamId) {
-            this.teamId = Optional.of(teamId);
+            this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 

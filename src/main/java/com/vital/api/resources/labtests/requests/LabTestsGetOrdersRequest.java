@@ -19,14 +19,24 @@ import com.vital.api.types.LabTestCollectionMethod;
 import com.vital.api.types.OrderActivationType;
 import com.vital.api.types.OrderLowLevelStatus;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetOrdersRequest.Builder.class)
 public final class LabTestsGetOrdersRequest {
+    private final Optional<List<OrderLowLevelStatus>> status;
+
+    private final Optional<List<LabTestCollectionMethod>> orderType;
+
+    private final Optional<List<OrderActivationType>> orderActivationTypes;
+
+    private final Optional<List<String>> orderIds;
+
     private final Optional<String> searchInput;
 
     private final Optional<OffsetDateTime> startDate;
@@ -37,27 +47,19 @@ public final class LabTestsGetOrdersRequest {
 
     private final Optional<OffsetDateTime> updatedEndDate;
 
-    private final Optional<OrderLowLevelStatus> status;
-
     private final Optional<LabTestsGetOrdersRequestOrderKey> orderKey;
 
     private final Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection;
 
-    private final Optional<LabTestCollectionMethod> orderType;
-
     private final Optional<Boolean> isCritical;
 
     private final Optional<Interpretation> interpretation;
-
-    private final Optional<OrderActivationType> orderActivationTypes;
 
     private final Optional<String> userId;
 
     private final Optional<String> patientName;
 
     private final Optional<String> shippingRecipientName;
-
-    private final Optional<String> orderIds;
 
     private final Optional<Integer> page;
 
@@ -66,44 +68,76 @@ public final class LabTestsGetOrdersRequest {
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetOrdersRequest(
+            Optional<List<OrderLowLevelStatus>> status,
+            Optional<List<LabTestCollectionMethod>> orderType,
+            Optional<List<OrderActivationType>> orderActivationTypes,
+            Optional<List<String>> orderIds,
             Optional<String> searchInput,
             Optional<OffsetDateTime> startDate,
             Optional<OffsetDateTime> endDate,
             Optional<OffsetDateTime> updatedStartDate,
             Optional<OffsetDateTime> updatedEndDate,
-            Optional<OrderLowLevelStatus> status,
             Optional<LabTestsGetOrdersRequestOrderKey> orderKey,
             Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection,
-            Optional<LabTestCollectionMethod> orderType,
             Optional<Boolean> isCritical,
             Optional<Interpretation> interpretation,
-            Optional<OrderActivationType> orderActivationTypes,
             Optional<String> userId,
             Optional<String> patientName,
             Optional<String> shippingRecipientName,
-            Optional<String> orderIds,
             Optional<Integer> page,
             Optional<Integer> size,
             Map<String, Object> additionalProperties) {
+        this.status = status;
+        this.orderType = orderType;
+        this.orderActivationTypes = orderActivationTypes;
+        this.orderIds = orderIds;
         this.searchInput = searchInput;
         this.startDate = startDate;
         this.endDate = endDate;
         this.updatedStartDate = updatedStartDate;
         this.updatedEndDate = updatedEndDate;
-        this.status = status;
         this.orderKey = orderKey;
         this.orderDirection = orderDirection;
-        this.orderType = orderType;
         this.isCritical = isCritical;
         this.interpretation = interpretation;
-        this.orderActivationTypes = orderActivationTypes;
         this.userId = userId;
         this.patientName = patientName;
         this.shippingRecipientName = shippingRecipientName;
-        this.orderIds = orderIds;
         this.page = page;
         this.size = size;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Filter by low level status.
+     */
+    @JsonProperty("status")
+    public Optional<List<OrderLowLevelStatus>> getStatus() {
+        return status;
+    }
+
+    /**
+     * @return Filter by method used to perform the lab test.
+     */
+    @JsonProperty("order_type")
+    public Optional<List<LabTestCollectionMethod>> getOrderType() {
+        return orderType;
+    }
+
+    /**
+     * @return Filter by activation type.
+     */
+    @JsonProperty("order_activation_types")
+    public Optional<List<OrderActivationType>> getOrderActivationTypes() {
+        return orderActivationTypes;
+    }
+
+    /**
+     * @return Filter by order ids.
+     */
+    @JsonProperty("order_ids")
+    public Optional<List<String>> getOrderIds() {
+        return orderIds;
     }
 
     /**
@@ -147,14 +181,6 @@ public final class LabTestsGetOrdersRequest {
     }
 
     /**
-     * @return Filter by low level status.
-     */
-    @JsonProperty("status")
-    public Optional<OrderLowLevelStatus> getStatus() {
-        return status;
-    }
-
-    /**
      * @return Order key to sort by.
      */
     @JsonProperty("order_key")
@@ -171,14 +197,6 @@ public final class LabTestsGetOrdersRequest {
     }
 
     /**
-     * @return Filter by method used to perform the lab test.
-     */
-    @JsonProperty("order_type")
-    public Optional<LabTestCollectionMethod> getOrderType() {
-        return orderType;
-    }
-
-    /**
      * @return Filter by critical order status.
      */
     @JsonProperty("is_critical")
@@ -192,14 +210,6 @@ public final class LabTestsGetOrdersRequest {
     @JsonProperty("interpretation")
     public Optional<Interpretation> getInterpretation() {
         return interpretation;
-    }
-
-    /**
-     * @return Filter by activation type.
-     */
-    @JsonProperty("order_activation_types")
-    public Optional<OrderActivationType> getOrderActivationTypes() {
-        return orderActivationTypes;
     }
 
     /**
@@ -226,14 +236,6 @@ public final class LabTestsGetOrdersRequest {
         return shippingRecipientName;
     }
 
-    /**
-     * @return Filter by order ids.
-     */
-    @JsonProperty("order_ids")
-    public Optional<String> getOrderIds() {
-        return orderIds;
-    }
-
     @JsonProperty("page")
     public Optional<Integer> getPage() {
         return page;
@@ -256,22 +258,22 @@ public final class LabTestsGetOrdersRequest {
     }
 
     private boolean equalTo(LabTestsGetOrdersRequest other) {
-        return searchInput.equals(other.searchInput)
+        return status.equals(other.status)
+                && orderType.equals(other.orderType)
+                && orderActivationTypes.equals(other.orderActivationTypes)
+                && orderIds.equals(other.orderIds)
+                && searchInput.equals(other.searchInput)
                 && startDate.equals(other.startDate)
                 && endDate.equals(other.endDate)
                 && updatedStartDate.equals(other.updatedStartDate)
                 && updatedEndDate.equals(other.updatedEndDate)
-                && status.equals(other.status)
                 && orderKey.equals(other.orderKey)
                 && orderDirection.equals(other.orderDirection)
-                && orderType.equals(other.orderType)
                 && isCritical.equals(other.isCritical)
                 && interpretation.equals(other.interpretation)
-                && orderActivationTypes.equals(other.orderActivationTypes)
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
                 && shippingRecipientName.equals(other.shippingRecipientName)
-                && orderIds.equals(other.orderIds)
                 && page.equals(other.page)
                 && size.equals(other.size);
     }
@@ -279,22 +281,22 @@ public final class LabTestsGetOrdersRequest {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.status,
+                this.orderType,
+                this.orderActivationTypes,
+                this.orderIds,
                 this.searchInput,
                 this.startDate,
                 this.endDate,
                 this.updatedStartDate,
                 this.updatedEndDate,
-                this.status,
                 this.orderKey,
                 this.orderDirection,
-                this.orderType,
                 this.isCritical,
                 this.interpretation,
-                this.orderActivationTypes,
                 this.userId,
                 this.patientName,
                 this.shippingRecipientName,
-                this.orderIds,
                 this.page,
                 this.size);
     }
@@ -310,6 +312,14 @@ public final class LabTestsGetOrdersRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<List<OrderLowLevelStatus>> status = Optional.empty();
+
+        private Optional<List<LabTestCollectionMethod>> orderType = Optional.empty();
+
+        private Optional<List<OrderActivationType>> orderActivationTypes = Optional.empty();
+
+        private Optional<List<String>> orderIds = Optional.empty();
+
         private Optional<String> searchInput = Optional.empty();
 
         private Optional<OffsetDateTime> startDate = Optional.empty();
@@ -320,27 +330,19 @@ public final class LabTestsGetOrdersRequest {
 
         private Optional<OffsetDateTime> updatedEndDate = Optional.empty();
 
-        private Optional<OrderLowLevelStatus> status = Optional.empty();
-
         private Optional<LabTestsGetOrdersRequestOrderKey> orderKey = Optional.empty();
 
         private Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection = Optional.empty();
 
-        private Optional<LabTestCollectionMethod> orderType = Optional.empty();
-
         private Optional<Boolean> isCritical = Optional.empty();
 
         private Optional<Interpretation> interpretation = Optional.empty();
-
-        private Optional<OrderActivationType> orderActivationTypes = Optional.empty();
 
         private Optional<String> userId = Optional.empty();
 
         private Optional<String> patientName = Optional.empty();
 
         private Optional<String> shippingRecipientName = Optional.empty();
-
-        private Optional<String> orderIds = Optional.empty();
 
         private Optional<Integer> page = Optional.empty();
 
@@ -352,27 +354,106 @@ public final class LabTestsGetOrdersRequest {
         private Builder() {}
 
         public Builder from(LabTestsGetOrdersRequest other) {
+            status(other.getStatus());
+            orderType(other.getOrderType());
+            orderActivationTypes(other.getOrderActivationTypes());
+            orderIds(other.getOrderIds());
             searchInput(other.getSearchInput());
             startDate(other.getStartDate());
             endDate(other.getEndDate());
             updatedStartDate(other.getUpdatedStartDate());
             updatedEndDate(other.getUpdatedEndDate());
-            status(other.getStatus());
             orderKey(other.getOrderKey());
             orderDirection(other.getOrderDirection());
-            orderType(other.getOrderType());
             isCritical(other.getIsCritical());
             interpretation(other.getInterpretation());
-            orderActivationTypes(other.getOrderActivationTypes());
             userId(other.getUserId());
             patientName(other.getPatientName());
             shippingRecipientName(other.getShippingRecipientName());
-            orderIds(other.getOrderIds());
             page(other.getPage());
             size(other.getSize());
             return this;
         }
 
+        /**
+         * <p>Filter by low level status.</p>
+         */
+        @JsonSetter(value = "status", nulls = Nulls.SKIP)
+        public Builder status(Optional<List<OrderLowLevelStatus>> status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder status(List<OrderLowLevelStatus> status) {
+            this.status = Optional.ofNullable(status);
+            return this;
+        }
+
+        public Builder status(OrderLowLevelStatus status) {
+            this.status = Optional.of(Collections.singletonList(status));
+            return this;
+        }
+
+        /**
+         * <p>Filter by method used to perform the lab test.</p>
+         */
+        @JsonSetter(value = "order_type", nulls = Nulls.SKIP)
+        public Builder orderType(Optional<List<LabTestCollectionMethod>> orderType) {
+            this.orderType = orderType;
+            return this;
+        }
+
+        public Builder orderType(List<LabTestCollectionMethod> orderType) {
+            this.orderType = Optional.ofNullable(orderType);
+            return this;
+        }
+
+        public Builder orderType(LabTestCollectionMethod orderType) {
+            this.orderType = Optional.of(Collections.singletonList(orderType));
+            return this;
+        }
+
+        /**
+         * <p>Filter by activation type.</p>
+         */
+        @JsonSetter(value = "order_activation_types", nulls = Nulls.SKIP)
+        public Builder orderActivationTypes(Optional<List<OrderActivationType>> orderActivationTypes) {
+            this.orderActivationTypes = orderActivationTypes;
+            return this;
+        }
+
+        public Builder orderActivationTypes(List<OrderActivationType> orderActivationTypes) {
+            this.orderActivationTypes = Optional.ofNullable(orderActivationTypes);
+            return this;
+        }
+
+        public Builder orderActivationTypes(OrderActivationType orderActivationTypes) {
+            this.orderActivationTypes = Optional.of(Collections.singletonList(orderActivationTypes));
+            return this;
+        }
+
+        /**
+         * <p>Filter by order ids.</p>
+         */
+        @JsonSetter(value = "order_ids", nulls = Nulls.SKIP)
+        public Builder orderIds(Optional<List<String>> orderIds) {
+            this.orderIds = orderIds;
+            return this;
+        }
+
+        public Builder orderIds(List<String> orderIds) {
+            this.orderIds = Optional.ofNullable(orderIds);
+            return this;
+        }
+
+        public Builder orderIds(String orderIds) {
+            this.orderIds = Optional.of(Collections.singletonList(orderIds));
+            return this;
+        }
+
+        /**
+         * <p>Search by order id, user id, patient name, shipping dob, or shipping recipient name.</p>
+         */
         @JsonSetter(value = "search_input", nulls = Nulls.SKIP)
         public Builder searchInput(Optional<String> searchInput) {
             this.searchInput = searchInput;
@@ -380,10 +461,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder searchInput(String searchInput) {
-            this.searchInput = Optional.of(searchInput);
+            this.searchInput = Optional.ofNullable(searchInput);
             return this;
         }
 
+        /**
+         * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         */
         @JsonSetter(value = "start_date", nulls = Nulls.SKIP)
         public Builder startDate(Optional<OffsetDateTime> startDate) {
             this.startDate = startDate;
@@ -391,10 +475,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder startDate(OffsetDateTime startDate) {
-            this.startDate = Optional.of(startDate);
+            this.startDate = Optional.ofNullable(startDate);
             return this;
         }
 
+        /**
+         * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59</p>
+         */
         @JsonSetter(value = "end_date", nulls = Nulls.SKIP)
         public Builder endDate(Optional<OffsetDateTime> endDate) {
             this.endDate = endDate;
@@ -402,10 +489,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder endDate(OffsetDateTime endDate) {
-            this.endDate = Optional.of(endDate);
+            this.endDate = Optional.ofNullable(endDate);
             return this;
         }
 
+        /**
+         * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         */
         @JsonSetter(value = "updated_start_date", nulls = Nulls.SKIP)
         public Builder updatedStartDate(Optional<OffsetDateTime> updatedStartDate) {
             this.updatedStartDate = updatedStartDate;
@@ -413,10 +503,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder updatedStartDate(OffsetDateTime updatedStartDate) {
-            this.updatedStartDate = Optional.of(updatedStartDate);
+            this.updatedStartDate = Optional.ofNullable(updatedStartDate);
             return this;
         }
 
+        /**
+         * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         */
         @JsonSetter(value = "updated_end_date", nulls = Nulls.SKIP)
         public Builder updatedEndDate(Optional<OffsetDateTime> updatedEndDate) {
             this.updatedEndDate = updatedEndDate;
@@ -424,21 +517,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder updatedEndDate(OffsetDateTime updatedEndDate) {
-            this.updatedEndDate = Optional.of(updatedEndDate);
+            this.updatedEndDate = Optional.ofNullable(updatedEndDate);
             return this;
         }
 
-        @JsonSetter(value = "status", nulls = Nulls.SKIP)
-        public Builder status(Optional<OrderLowLevelStatus> status) {
-            this.status = status;
-            return this;
-        }
-
-        public Builder status(OrderLowLevelStatus status) {
-            this.status = Optional.of(status);
-            return this;
-        }
-
+        /**
+         * <p>Order key to sort by.</p>
+         */
         @JsonSetter(value = "order_key", nulls = Nulls.SKIP)
         public Builder orderKey(Optional<LabTestsGetOrdersRequestOrderKey> orderKey) {
             this.orderKey = orderKey;
@@ -446,10 +531,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder orderKey(LabTestsGetOrdersRequestOrderKey orderKey) {
-            this.orderKey = Optional.of(orderKey);
+            this.orderKey = Optional.ofNullable(orderKey);
             return this;
         }
 
+        /**
+         * <p>Order direction to sort by.</p>
+         */
         @JsonSetter(value = "order_direction", nulls = Nulls.SKIP)
         public Builder orderDirection(Optional<LabTestsGetOrdersRequestOrderDirection> orderDirection) {
             this.orderDirection = orderDirection;
@@ -457,21 +545,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder orderDirection(LabTestsGetOrdersRequestOrderDirection orderDirection) {
-            this.orderDirection = Optional.of(orderDirection);
+            this.orderDirection = Optional.ofNullable(orderDirection);
             return this;
         }
 
-        @JsonSetter(value = "order_type", nulls = Nulls.SKIP)
-        public Builder orderType(Optional<LabTestCollectionMethod> orderType) {
-            this.orderType = orderType;
-            return this;
-        }
-
-        public Builder orderType(LabTestCollectionMethod orderType) {
-            this.orderType = Optional.of(orderType);
-            return this;
-        }
-
+        /**
+         * <p>Filter by critical order status.</p>
+         */
         @JsonSetter(value = "is_critical", nulls = Nulls.SKIP)
         public Builder isCritical(Optional<Boolean> isCritical) {
             this.isCritical = isCritical;
@@ -479,10 +559,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder isCritical(Boolean isCritical) {
-            this.isCritical = Optional.of(isCritical);
+            this.isCritical = Optional.ofNullable(isCritical);
             return this;
         }
 
+        /**
+         * <p>Filter by result interpretation of the lab test.</p>
+         */
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public Builder interpretation(Optional<Interpretation> interpretation) {
             this.interpretation = interpretation;
@@ -490,21 +573,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder interpretation(Interpretation interpretation) {
-            this.interpretation = Optional.of(interpretation);
+            this.interpretation = Optional.ofNullable(interpretation);
             return this;
         }
 
-        @JsonSetter(value = "order_activation_types", nulls = Nulls.SKIP)
-        public Builder orderActivationTypes(Optional<OrderActivationType> orderActivationTypes) {
-            this.orderActivationTypes = orderActivationTypes;
-            return this;
-        }
-
-        public Builder orderActivationTypes(OrderActivationType orderActivationTypes) {
-            this.orderActivationTypes = Optional.of(orderActivationTypes);
-            return this;
-        }
-
+        /**
+         * <p>Filter by user ID.</p>
+         */
         @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
         public Builder userId(Optional<String> userId) {
             this.userId = userId;
@@ -512,10 +587,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder userId(String userId) {
-            this.userId = Optional.of(userId);
+            this.userId = Optional.ofNullable(userId);
             return this;
         }
 
+        /**
+         * <p>Filter by patient name.</p>
+         */
         @JsonSetter(value = "patient_name", nulls = Nulls.SKIP)
         public Builder patientName(Optional<String> patientName) {
             this.patientName = patientName;
@@ -523,10 +601,13 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder patientName(String patientName) {
-            this.patientName = Optional.of(patientName);
+            this.patientName = Optional.ofNullable(patientName);
             return this;
         }
 
+        /**
+         * <p>Filter by shipping recipient name.</p>
+         */
         @JsonSetter(value = "shipping_recipient_name", nulls = Nulls.SKIP)
         public Builder shippingRecipientName(Optional<String> shippingRecipientName) {
             this.shippingRecipientName = shippingRecipientName;
@@ -534,18 +615,7 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder shippingRecipientName(String shippingRecipientName) {
-            this.shippingRecipientName = Optional.of(shippingRecipientName);
-            return this;
-        }
-
-        @JsonSetter(value = "order_ids", nulls = Nulls.SKIP)
-        public Builder orderIds(Optional<String> orderIds) {
-            this.orderIds = orderIds;
-            return this;
-        }
-
-        public Builder orderIds(String orderIds) {
-            this.orderIds = Optional.of(orderIds);
+            this.shippingRecipientName = Optional.ofNullable(shippingRecipientName);
             return this;
         }
 
@@ -556,7 +626,7 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 
@@ -567,28 +637,28 @@ public final class LabTestsGetOrdersRequest {
         }
 
         public Builder size(Integer size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 
         public LabTestsGetOrdersRequest build() {
             return new LabTestsGetOrdersRequest(
+                    status,
+                    orderType,
+                    orderActivationTypes,
+                    orderIds,
                     searchInput,
                     startDate,
                     endDate,
                     updatedStartDate,
                     updatedEndDate,
-                    status,
                     orderKey,
                     orderDirection,
-                    orderType,
                     isCritical,
                     interpretation,
-                    orderActivationTypes,
                     userId,
                     patientName,
                     shippingRecipientName,
-                    orderIds,
                     page,
                     size,
                     additionalProperties);

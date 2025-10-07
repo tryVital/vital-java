@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkPauseConnectionsBody.Builder.class)
 public final class BulkPauseConnectionsBody {
     private final Optional<LinkBulkPauseRequestTeamId> teamId;
@@ -88,7 +89,7 @@ public final class BulkPauseConnectionsBody {
     }
 
     public interface ProviderStage {
-        _FinalStage provider(OAuthProviders provider);
+        _FinalStage provider(@NotNull OAuthProviders provider);
 
         Builder from(BulkPauseConnectionsBody other);
     }
@@ -130,14 +131,16 @@ public final class BulkPauseConnectionsBody {
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(OAuthProviders provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull OAuthProviders provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllUserIds(List<String> userIds) {
-            this.userIds.addAll(userIds);
+            if (userIds != null) {
+                this.userIds.addAll(userIds);
+            }
             return this;
         }
 
@@ -157,7 +160,7 @@ public final class BulkPauseConnectionsBody {
 
         @java.lang.Override
         public _FinalStage teamId(LinkBulkPauseRequestTeamId teamId) {
-            this.teamId = Optional.of(teamId);
+            this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 

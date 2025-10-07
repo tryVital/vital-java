@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingHeartRateAlertSample.Builder.class)
 public final class ClientFacingHeartRateAlertSample {
     private final Optional<Integer> id;
@@ -150,21 +151,33 @@ public final class ClientFacingHeartRateAlertSample {
     }
 
     public interface TypeStage {
-        TimestampStage type(ClientFacingHeartRateAlertSampleType type);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        TimestampStage type(@NotNull ClientFacingHeartRateAlertSampleType type);
 
         Builder from(ClientFacingHeartRateAlertSample other);
     }
 
     public interface TimestampStage {
-        StartStage timestamp(OffsetDateTime timestamp);
+        /**
+         * <p>Depracated. The start time (inclusive) of the interval.</p>
+         */
+        StartStage timestamp(@NotNull OffsetDateTime timestamp);
     }
 
     public interface StartStage {
-        EndStage start(OffsetDateTime start);
+        /**
+         * <p>The start time (inclusive) of the interval.</p>
+         */
+        EndStage start(@NotNull OffsetDateTime start);
     }
 
     public interface EndStage {
-        ValueStage end(OffsetDateTime end);
+        /**
+         * <p>The end time (exclusive) of the interval.</p>
+         */
+        ValueStage end(@NotNull OffsetDateTime end);
     }
 
     public interface ValueStage {
@@ -174,10 +187,16 @@ public final class ClientFacingHeartRateAlertSample {
     public interface _FinalStage {
         ClientFacingHeartRateAlertSample build();
 
+        /**
+         * <p>Deprecated</p>
+         */
         _FinalStage id(Optional<Integer> id);
 
         _FinalStage id(Integer id);
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
@@ -219,45 +238,49 @@ public final class ClientFacingHeartRateAlertSample {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("type")
-        public TimestampStage type(ClientFacingHeartRateAlertSampleType type) {
-            this.type = type;
+        public TimestampStage type(@NotNull ClientFacingHeartRateAlertSampleType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         /**
          * <p>Depracated. The start time (inclusive) of the interval.</p>
+         * <p>Depracated. The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public StartStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public StartStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         /**
          * <p>The start time (inclusive) of the interval.</p>
+         * <p>The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("start")
-        public EndStage start(OffsetDateTime start) {
-            this.start = start;
+        public EndStage start(@NotNull OffsetDateTime start) {
+            this.start = Objects.requireNonNull(start, "start must not be null");
             return this;
         }
 
         /**
          * <p>The end time (exclusive) of the interval.</p>
+         * <p>The end time (exclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("end")
-        public ValueStage end(OffsetDateTime end) {
-            this.end = end;
+        public ValueStage end(@NotNull OffsetDateTime end) {
+            this.end = Objects.requireNonNull(end, "end must not be null");
             return this;
         }
 
@@ -274,10 +297,13 @@ public final class ClientFacingHeartRateAlertSample {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -291,10 +317,13 @@ public final class ClientFacingHeartRateAlertSample {
          */
         @java.lang.Override
         public _FinalStage id(Integer id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
+        /**
+         * <p>Deprecated</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {

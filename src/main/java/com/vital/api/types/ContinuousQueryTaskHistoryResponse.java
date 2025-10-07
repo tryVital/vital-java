@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContinuousQueryTaskHistoryResponse.Builder.class)
 public final class ContinuousQueryTaskHistoryResponse {
     private final List<ContinuousQueryTaskHistoryEntry> data;
@@ -107,7 +107,9 @@ public final class ContinuousQueryTaskHistoryResponse {
         }
 
         public Builder addAllData(List<ContinuousQueryTaskHistoryEntry> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
@@ -118,7 +120,7 @@ public final class ContinuousQueryTaskHistoryResponse {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 

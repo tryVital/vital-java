@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BodyColumnExpr.Builder.class)
 public final class BodyColumnExpr {
     private final BodyColumnExprBody body;
@@ -65,7 +66,10 @@ public final class BodyColumnExpr {
     }
 
     public interface BodyStage {
-        _FinalStage body(BodyColumnExprBody body);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage body(@NotNull BodyColumnExprBody body);
 
         Builder from(BodyColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class BodyColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(BodyColumnExprBody body) {
-            this.body = body;
+        public _FinalStage body(@NotNull BodyColumnExprBody body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 

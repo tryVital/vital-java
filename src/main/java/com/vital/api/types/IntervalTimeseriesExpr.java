@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IntervalTimeseriesExpr.Builder.class)
 public final class IntervalTimeseriesExpr {
     private final IntervalTimeseriesExprTimeseries timeseries;
@@ -79,13 +80,19 @@ public final class IntervalTimeseriesExpr {
     }
 
     public interface TimeseriesStage {
-        FieldStage timeseries(IntervalTimeseriesExprTimeseries timeseries);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        FieldStage timeseries(@NotNull IntervalTimeseriesExprTimeseries timeseries);
 
         Builder from(IntervalTimeseriesExpr other);
     }
 
     public interface FieldStage {
-        _FinalStage field(IntervalTimeseriesExprField field);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage field(@NotNull IntervalTimeseriesExprField field);
     }
 
     public interface _FinalStage {
@@ -112,23 +119,25 @@ public final class IntervalTimeseriesExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("timeseries")
-        public FieldStage timeseries(IntervalTimeseriesExprTimeseries timeseries) {
-            this.timeseries = timeseries;
+        public FieldStage timeseries(@NotNull IntervalTimeseriesExprTimeseries timeseries) {
+            this.timeseries = Objects.requireNonNull(timeseries, "timeseries must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("field")
-        public _FinalStage field(IntervalTimeseriesExprField field) {
-            this.field = field;
+        public _FinalStage field(@NotNull IntervalTimeseriesExprField field) {
+            this.field = Objects.requireNonNull(field, "field must not be null");
             return this;
         }
 

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingLoinc.Builder.class)
 public final class ClientFacingLoinc {
     private final int id;
@@ -112,15 +113,15 @@ public final class ClientFacingLoinc {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
     }
 
     public interface SlugStage {
-        CodeStage slug(String slug);
+        CodeStage slug(@NotNull String slug);
     }
 
     public interface CodeStage {
-        _FinalStage code(String code);
+        _FinalStage code(@NotNull String code);
     }
 
     public interface _FinalStage {
@@ -167,28 +168,28 @@ public final class ClientFacingLoinc {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public CodeStage slug(String slug) {
-            this.slug = slug;
+        public CodeStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("code")
-        public _FinalStage code(String code) {
-            this.code = code;
+        public _FinalStage code(@NotNull String code) {
+            this.code = Objects.requireNonNull(code, "code must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage unit(String unit) {
-            this.unit = Optional.of(unit);
+            this.unit = Optional.ofNullable(unit);
             return this;
         }
 

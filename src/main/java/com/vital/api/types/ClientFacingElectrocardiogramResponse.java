@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingElectrocardiogramResponse.Builder.class)
 public final class ClientFacingElectrocardiogramResponse {
     private final List<ClientFacingElectrocardiogram> electrocardiogram;
@@ -93,7 +93,9 @@ public final class ClientFacingElectrocardiogramResponse {
         }
 
         public Builder addAllElectrocardiogram(List<ClientFacingElectrocardiogram> electrocardiogram) {
-            this.electrocardiogram.addAll(electrocardiogram);
+            if (electrocardiogram != null) {
+                this.electrocardiogram.addAll(electrocardiogram);
+            }
             return this;
         }
 

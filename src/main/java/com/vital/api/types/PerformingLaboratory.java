@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PerformingLaboratory.Builder.class)
 public final class PerformingLaboratory {
     private final String name;
@@ -96,7 +97,7 @@ public final class PerformingLaboratory {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(PerformingLaboratory other);
     }
@@ -143,14 +144,14 @@ public final class PerformingLaboratory {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage address(Address address) {
-            this.address = Optional.of(address);
+            this.address = Optional.ofNullable(address);
             return this;
         }
 
@@ -163,7 +164,7 @@ public final class PerformingLaboratory {
 
         @java.lang.Override
         public _FinalStage medicalDirector(String medicalDirector) {
-            this.medicalDirector = Optional.of(medicalDirector);
+            this.medicalDirector = Optional.ofNullable(medicalDirector);
             return this;
         }
 
@@ -176,7 +177,7 @@ public final class PerformingLaboratory {
 
         @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = Optional.of(phoneNumber);
+            this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
         }
 

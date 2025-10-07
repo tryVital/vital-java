@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ShippingAddress.Builder.class)
 public final class ShippingAddress {
     private final String receiverName;
@@ -144,33 +145,33 @@ public final class ShippingAddress {
     }
 
     public interface ReceiverNameStage {
-        FirstLineStage receiverName(String receiverName);
+        FirstLineStage receiverName(@NotNull String receiverName);
 
         Builder from(ShippingAddress other);
     }
 
     public interface FirstLineStage {
-        CityStage firstLine(String firstLine);
+        CityStage firstLine(@NotNull String firstLine);
     }
 
     public interface CityStage {
-        StateStage city(String city);
+        StateStage city(@NotNull String city);
     }
 
     public interface StateStage {
-        ZipStage state(String state);
+        ZipStage state(@NotNull String state);
     }
 
     public interface ZipStage {
-        CountryStage zip(String zip);
+        CountryStage zip(@NotNull String zip);
     }
 
     public interface CountryStage {
-        PhoneNumberStage country(String country);
+        PhoneNumberStage country(@NotNull String country);
     }
 
     public interface PhoneNumberStage {
-        _FinalStage phoneNumber(String phoneNumber);
+        _FinalStage phoneNumber(@NotNull String phoneNumber);
     }
 
     public interface _FinalStage {
@@ -227,56 +228,56 @@ public final class ShippingAddress {
 
         @java.lang.Override
         @JsonSetter("receiver_name")
-        public FirstLineStage receiverName(String receiverName) {
-            this.receiverName = receiverName;
+        public FirstLineStage receiverName(@NotNull String receiverName) {
+            this.receiverName = Objects.requireNonNull(receiverName, "receiverName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("first_line")
-        public CityStage firstLine(String firstLine) {
-            this.firstLine = firstLine;
+        public CityStage firstLine(@NotNull String firstLine) {
+            this.firstLine = Objects.requireNonNull(firstLine, "firstLine must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("city")
-        public StateStage city(String city) {
-            this.city = city;
+        public StateStage city(@NotNull String city) {
+            this.city = Objects.requireNonNull(city, "city must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("state")
-        public ZipStage state(String state) {
-            this.state = state;
+        public ZipStage state(@NotNull String state) {
+            this.state = Objects.requireNonNull(state, "state must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("zip")
-        public CountryStage zip(String zip) {
-            this.zip = zip;
+        public CountryStage zip(@NotNull String zip) {
+            this.zip = Objects.requireNonNull(zip, "zip must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("country")
-        public PhoneNumberStage country(String country) {
-            this.country = country;
+        public PhoneNumberStage country(@NotNull String country) {
+            this.country = Objects.requireNonNull(country, "country must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("phone_number")
-        public _FinalStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public _FinalStage phoneNumber(@NotNull String phoneNumber) {
+            this.phoneNumber = Objects.requireNonNull(phoneNumber, "phoneNumber must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
-            this.secondLine = Optional.of(secondLine);
+            this.secondLine = Optional.ofNullable(secondLine);
             return this;
         }
 

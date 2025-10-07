@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CompanyDetails.Builder.class)
 public final class CompanyDetails {
     private final String name;
@@ -70,13 +71,13 @@ public final class CompanyDetails {
     }
 
     public interface NameStage {
-        AddressStage name(String name);
+        AddressStage name(@NotNull String name);
 
         Builder from(CompanyDetails other);
     }
 
     public interface AddressStage {
-        _FinalStage address(Address address);
+        _FinalStage address(@NotNull Address address);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class CompanyDetails {
 
         @java.lang.Override
         @JsonSetter("name")
-        public AddressStage name(String name) {
-            this.name = name;
+        public AddressStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(Address address) {
-            this.address = address;
+        public _FinalStage address(@NotNull Address address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 

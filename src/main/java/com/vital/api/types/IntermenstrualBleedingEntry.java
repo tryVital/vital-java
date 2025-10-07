@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IntermenstrualBleedingEntry.Builder.class)
 public final class IntermenstrualBleedingEntry {
     private final String date;
@@ -62,7 +63,7 @@ public final class IntermenstrualBleedingEntry {
     }
 
     public interface DateStage {
-        _FinalStage date(String date);
+        _FinalStage date(@NotNull String date);
 
         Builder from(IntermenstrualBleedingEntry other);
     }
@@ -88,8 +89,8 @@ public final class IntermenstrualBleedingEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public _FinalStage date(String date) {
-            this.date = date;
+        public _FinalStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 

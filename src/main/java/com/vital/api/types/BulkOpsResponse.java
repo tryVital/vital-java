@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkOpsResponse.Builder.class)
 public final class BulkOpsResponse {
     private final List<BulkOp> data;
@@ -103,7 +103,9 @@ public final class BulkOpsResponse {
         }
 
         public Builder addAllData(List<BulkOp> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
@@ -114,7 +116,7 @@ public final class BulkOpsResponse {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 

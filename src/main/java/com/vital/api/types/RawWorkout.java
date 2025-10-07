@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RawWorkout.Builder.class)
 public final class RawWorkout {
     private final List<WorkoutV2InDb> workouts;
@@ -91,7 +91,9 @@ public final class RawWorkout {
         }
 
         public Builder addAllWorkouts(List<WorkoutV2InDb> workouts) {
-            this.workouts.addAll(workouts);
+            if (workouts != null) {
+                this.workouts.addAll(workouts);
+            }
             return this;
         }
 

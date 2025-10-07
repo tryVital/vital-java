@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EventDestinationPreferences.Builder.class)
 public final class EventDestinationPreferences {
     private final EventDestinationPreferencesPreferred preferred;
@@ -79,7 +80,10 @@ public final class EventDestinationPreferences {
     }
 
     public interface PreferredStage {
-        _FinalStage preferred(EventDestinationPreferencesPreferred preferred);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage preferred(@NotNull EventDestinationPreferencesPreferred preferred);
 
         Builder from(EventDestinationPreferences other);
     }
@@ -114,18 +118,21 @@ public final class EventDestinationPreferences {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("preferred")
-        public _FinalStage preferred(EventDestinationPreferencesPreferred preferred) {
-            this.preferred = preferred;
+        public _FinalStage preferred(@NotNull EventDestinationPreferencesPreferred preferred) {
+            this.preferred = Objects.requireNonNull(preferred, "preferred must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllEnabled(List<EventDestinationPreferencesEnabledItem> enabled) {
-            this.enabled.addAll(enabled);
+            if (enabled != null) {
+                this.enabled.addAll(enabled);
+            }
             return this;
         }
 

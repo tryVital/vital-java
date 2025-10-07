@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = QueryConfig.Builder.class)
 public final class QueryConfig {
     private final Optional<List<QueryConfigProviderPriorityOverridesItem>> providerPriorityOverrides;
@@ -89,7 +89,7 @@ public final class QueryConfig {
 
         public Builder providerPriorityOverrides(
                 List<QueryConfigProviderPriorityOverridesItem> providerPriorityOverrides) {
-            this.providerPriorityOverrides = Optional.of(providerPriorityOverrides);
+            this.providerPriorityOverrides = Optional.ofNullable(providerPriorityOverrides);
             return this;
         }
 

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UsAddress.Builder.class)
 public final class UsAddress {
     private final String firstLine;
@@ -119,21 +120,21 @@ public final class UsAddress {
     }
 
     public interface FirstLineStage {
-        CityStage firstLine(String firstLine);
+        CityStage firstLine(@NotNull String firstLine);
 
         Builder from(UsAddress other);
     }
 
     public interface CityStage {
-        StateStage city(String city);
+        StateStage city(@NotNull String city);
     }
 
     public interface StateStage {
-        ZipCodeStage state(String state);
+        ZipCodeStage state(@NotNull String state);
     }
 
     public interface ZipCodeStage {
-        _FinalStage zipCode(String zipCode);
+        _FinalStage zipCode(@NotNull String zipCode);
     }
 
     public interface _FinalStage {
@@ -143,6 +144,9 @@ public final class UsAddress {
 
         _FinalStage secondLine(String secondLine);
 
+        /**
+         * <p>Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.</p>
+         */
         _FinalStage unit(Optional<String> unit);
 
         _FinalStage unit(String unit);
@@ -180,29 +184,29 @@ public final class UsAddress {
 
         @java.lang.Override
         @JsonSetter("first_line")
-        public CityStage firstLine(String firstLine) {
-            this.firstLine = firstLine;
+        public CityStage firstLine(@NotNull String firstLine) {
+            this.firstLine = Objects.requireNonNull(firstLine, "firstLine must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("city")
-        public StateStage city(String city) {
-            this.city = city;
+        public StateStage city(@NotNull String city) {
+            this.city = Objects.requireNonNull(city, "city must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("state")
-        public ZipCodeStage state(String state) {
-            this.state = state;
+        public ZipCodeStage state(@NotNull String state) {
+            this.state = Objects.requireNonNull(state, "state must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("zip_code")
-        public _FinalStage zipCode(String zipCode) {
-            this.zipCode = zipCode;
+        public _FinalStage zipCode(@NotNull String zipCode) {
+            this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
             return this;
         }
 
@@ -212,10 +216,13 @@ public final class UsAddress {
          */
         @java.lang.Override
         public _FinalStage unit(String unit) {
-            this.unit = Optional.of(unit);
+            this.unit = Optional.ofNullable(unit);
             return this;
         }
 
+        /**
+         * <p>Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
@@ -225,7 +232,7 @@ public final class UsAddress {
 
         @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
-            this.secondLine = Optional.of(secondLine);
+            this.secondLine = Optional.ofNullable(secondLine);
             return this;
         }
 

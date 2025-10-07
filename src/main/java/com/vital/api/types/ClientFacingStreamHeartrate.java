@@ -32,6 +32,7 @@ public final class ClientFacingStreamHeartrate {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visitListOfOptionalInteger((List<Optional<Integer>>) this.value);
@@ -81,17 +82,18 @@ public final class ClientFacingStreamHeartrate {
         }
 
         @java.lang.Override
-        public ClientFacingStreamHeartrate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public ClientFacingStreamHeartrate deserialize(JsonParser p, DeserializationContext context)
+                throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return ofListOfOptionalInteger(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Integer>>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return ofListOfInteger(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

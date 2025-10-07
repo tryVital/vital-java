@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingStream.Builder.class)
 public final class ClientFacingStream {
     private final Optional<ClientFacingStreamCadence> cadence;
@@ -254,6 +254,9 @@ public final class ClientFacingStream {
             return this;
         }
 
+        /**
+         * <p>RPM for cycling, Steps per minute for running</p>
+         */
         @JsonSetter(value = "cadence", nulls = Nulls.SKIP)
         public Builder cadence(Optional<ClientFacingStreamCadence> cadence) {
             this.cadence = cadence;
@@ -261,10 +264,13 @@ public final class ClientFacingStream {
         }
 
         public Builder cadence(ClientFacingStreamCadence cadence) {
-            this.cadence = Optional.of(cadence);
+            this.cadence = Optional.ofNullable(cadence);
             return this;
         }
 
+        /**
+         * <p>Corresponding time stamp in unix time for datapoint</p>
+         */
         @JsonSetter(value = "time", nulls = Nulls.SKIP)
         public Builder time(Optional<List<Integer>> time) {
             this.time = time;
@@ -272,10 +278,13 @@ public final class ClientFacingStream {
         }
 
         public Builder time(List<Integer> time) {
-            this.time = Optional.of(time);
+            this.time = Optional.ofNullable(time);
             return this;
         }
 
+        /**
+         * <p>Data points for altitude</p>
+         */
         @JsonSetter(value = "altitude", nulls = Nulls.SKIP)
         public Builder altitude(Optional<ClientFacingStreamAltitude> altitude) {
             this.altitude = altitude;
@@ -283,10 +292,13 @@ public final class ClientFacingStream {
         }
 
         public Builder altitude(ClientFacingStreamAltitude altitude) {
-            this.altitude = Optional.of(altitude);
+            this.altitude = Optional.ofNullable(altitude);
             return this;
         }
 
+        /**
+         * <p>Velocity in m/s</p>
+         */
         @JsonSetter(value = "velocity_smooth", nulls = Nulls.SKIP)
         public Builder velocitySmooth(Optional<ClientFacingStreamVelocitySmooth> velocitySmooth) {
             this.velocitySmooth = velocitySmooth;
@@ -294,10 +306,13 @@ public final class ClientFacingStream {
         }
 
         public Builder velocitySmooth(ClientFacingStreamVelocitySmooth velocitySmooth) {
-            this.velocitySmooth = Optional.of(velocitySmooth);
+            this.velocitySmooth = Optional.ofNullable(velocitySmooth);
             return this;
         }
 
+        /**
+         * <p>Heart rate in bpm</p>
+         */
         @JsonSetter(value = "heartrate", nulls = Nulls.SKIP)
         public Builder heartrate(Optional<ClientFacingStreamHeartrate> heartrate) {
             this.heartrate = heartrate;
@@ -305,10 +320,13 @@ public final class ClientFacingStream {
         }
 
         public Builder heartrate(ClientFacingStreamHeartrate heartrate) {
-            this.heartrate = Optional.of(heartrate);
+            this.heartrate = Optional.ofNullable(heartrate);
             return this;
         }
 
+        /**
+         * <p>Latitude for data point</p>
+         */
         @JsonSetter(value = "lat", nulls = Nulls.SKIP)
         public Builder lat(Optional<ClientFacingStreamLat> lat) {
             this.lat = lat;
@@ -316,10 +334,13 @@ public final class ClientFacingStream {
         }
 
         public Builder lat(ClientFacingStreamLat lat) {
-            this.lat = Optional.of(lat);
+            this.lat = Optional.ofNullable(lat);
             return this;
         }
 
+        /**
+         * <p>Longitude for data point</p>
+         */
         @JsonSetter(value = "lng", nulls = Nulls.SKIP)
         public Builder lng(Optional<ClientFacingStreamLng> lng) {
             this.lng = lng;
@@ -327,10 +348,13 @@ public final class ClientFacingStream {
         }
 
         public Builder lng(ClientFacingStreamLng lng) {
-            this.lng = Optional.of(lng);
+            this.lng = Optional.ofNullable(lng);
             return this;
         }
 
+        /**
+         * <p>Cumulated distance for exercise</p>
+         */
         @JsonSetter(value = "distance", nulls = Nulls.SKIP)
         public Builder distance(Optional<ClientFacingStreamDistance> distance) {
             this.distance = distance;
@@ -338,10 +362,13 @@ public final class ClientFacingStream {
         }
 
         public Builder distance(ClientFacingStreamDistance distance) {
-            this.distance = Optional.of(distance);
+            this.distance = Optional.ofNullable(distance);
             return this;
         }
 
+        /**
+         * <p>Power in watts</p>
+         */
         @JsonSetter(value = "power", nulls = Nulls.SKIP)
         public Builder power(Optional<ClientFacingStreamPower> power) {
             this.power = power;
@@ -349,10 +376,13 @@ public final class ClientFacingStream {
         }
 
         public Builder power(ClientFacingStreamPower power) {
-            this.power = Optional.of(power);
+            this.power = Optional.ofNullable(power);
             return this;
         }
 
+        /**
+         * <p>Resistance on bike</p>
+         */
         @JsonSetter(value = "resistance", nulls = Nulls.SKIP)
         public Builder resistance(Optional<ClientFacingStreamResistance> resistance) {
             this.resistance = resistance;
@@ -360,10 +390,13 @@ public final class ClientFacingStream {
         }
 
         public Builder resistance(ClientFacingStreamResistance resistance) {
-            this.resistance = Optional.of(resistance);
+            this.resistance = Optional.ofNullable(resistance);
             return this;
         }
 
+        /**
+         * <p>Temperature stream measured by device in Celsius</p>
+         */
         @JsonSetter(value = "temperature", nulls = Nulls.SKIP)
         public Builder temperature(Optional<ClientFacingStreamTemperature> temperature) {
             this.temperature = temperature;
@@ -371,7 +404,7 @@ public final class ClientFacingStream {
         }
 
         public Builder temperature(ClientFacingStreamTemperature temperature) {
-            this.temperature = Optional.of(temperature);
+            this.temperature = Optional.ofNullable(temperature);
             return this;
         }
 

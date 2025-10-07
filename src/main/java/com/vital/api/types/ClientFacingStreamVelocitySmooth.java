@@ -32,6 +32,7 @@ public final class ClientFacingStreamVelocitySmooth {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visitListOfOptionalDouble((List<Optional<Double>>) this.value);
@@ -81,18 +82,18 @@ public final class ClientFacingStreamVelocitySmooth {
         }
 
         @java.lang.Override
-        public ClientFacingStreamVelocitySmooth deserialize(JsonParser p, DeserializationContext ctxt)
+        public ClientFacingStreamVelocitySmooth deserialize(JsonParser p, DeserializationContext context)
                 throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return ofListOfOptionalDouble(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Double>>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return ofListOfDouble(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Double>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

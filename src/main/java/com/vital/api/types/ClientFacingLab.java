@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingLab.Builder.class)
 public final class ClientFacingLab {
     private final int id;
@@ -151,23 +152,23 @@ public final class ClientFacingLab {
     }
 
     public interface SlugStage {
-        NameStage slug(String slug);
+        NameStage slug(@NotNull String slug);
     }
 
     public interface NameStage {
-        FirstLineAddressStage name(String name);
+        FirstLineAddressStage name(@NotNull String name);
     }
 
     public interface FirstLineAddressStage {
-        CityStage firstLineAddress(String firstLineAddress);
+        CityStage firstLineAddress(@NotNull String firstLineAddress);
     }
 
     public interface CityStage {
-        ZipcodeStage city(String city);
+        ZipcodeStage city(@NotNull String city);
     }
 
     public interface ZipcodeStage {
-        _FinalStage zipcode(String zipcode);
+        _FinalStage zipcode(@NotNull String zipcode);
     }
 
     public interface _FinalStage {
@@ -232,42 +233,44 @@ public final class ClientFacingLab {
 
         @java.lang.Override
         @JsonSetter("slug")
-        public NameStage slug(String slug) {
-            this.slug = slug;
+        public NameStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public FirstLineAddressStage name(String name) {
-            this.name = name;
+        public FirstLineAddressStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("first_line_address")
-        public CityStage firstLineAddress(String firstLineAddress) {
-            this.firstLineAddress = firstLineAddress;
+        public CityStage firstLineAddress(@NotNull String firstLineAddress) {
+            this.firstLineAddress = Objects.requireNonNull(firstLineAddress, "firstLineAddress must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("city")
-        public ZipcodeStage city(String city) {
-            this.city = city;
+        public ZipcodeStage city(@NotNull String city) {
+            this.city = Objects.requireNonNull(city, "city must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("zipcode")
-        public _FinalStage zipcode(String zipcode) {
-            this.zipcode = zipcode;
+        public _FinalStage zipcode(@NotNull String zipcode) {
+            this.zipcode = Objects.requireNonNull(zipcode, "zipcode must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllSampleTypes(List<LabTestSampleType> sampleTypes) {
-            this.sampleTypes.addAll(sampleTypes);
+            if (sampleTypes != null) {
+                this.sampleTypes.addAll(sampleTypes);
+            }
             return this;
         }
 
@@ -287,7 +290,9 @@ public final class ClientFacingLab {
 
         @java.lang.Override
         public _FinalStage addAllCollectionMethods(List<LabTestCollectionMethod> collectionMethods) {
-            this.collectionMethods.addAll(collectionMethods);
+            if (collectionMethods != null) {
+                this.collectionMethods.addAll(collectionMethods);
+            }
             return this;
         }
 

@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = HistoricalPullCompleted.Builder.class)
 public final class HistoricalPullCompleted {
     private final String userId;
@@ -105,17 +106,17 @@ public final class HistoricalPullCompleted {
     }
 
     public interface UserIdStage {
-        StartDateStage userId(String userId);
+        StartDateStage userId(@NotNull String userId);
 
         Builder from(HistoricalPullCompleted other);
     }
 
     public interface StartDateStage {
-        EndDateStage startDate(OffsetDateTime startDate);
+        EndDateStage startDate(@NotNull OffsetDateTime startDate);
     }
 
     public interface EndDateStage {
-        IsFinalStage endDate(OffsetDateTime endDate);
+        IsFinalStage endDate(@NotNull OffsetDateTime endDate);
     }
 
     public interface IsFinalStage {
@@ -123,7 +124,7 @@ public final class HistoricalPullCompleted {
     }
 
     public interface ProviderStage {
-        _FinalStage provider(String provider);
+        _FinalStage provider(@NotNull String provider);
     }
 
     public interface _FinalStage {
@@ -160,22 +161,22 @@ public final class HistoricalPullCompleted {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public StartDateStage userId(String userId) {
-            this.userId = userId;
+        public StartDateStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("start_date")
-        public EndDateStage startDate(OffsetDateTime startDate) {
-            this.startDate = startDate;
+        public EndDateStage startDate(@NotNull OffsetDateTime startDate) {
+            this.startDate = Objects.requireNonNull(startDate, "startDate must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("end_date")
-        public IsFinalStage endDate(OffsetDateTime endDate) {
-            this.endDate = endDate;
+        public IsFinalStage endDate(@NotNull OffsetDateTime endDate) {
+            this.endDate = Objects.requireNonNull(endDate, "endDate must not be null");
             return this;
         }
 
@@ -188,8 +189,8 @@ public final class HistoricalPullCompleted {
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(String provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull String provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 

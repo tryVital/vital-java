@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AddOnOrder.Builder.class)
 public final class AddOnOrder {
     private final Optional<List<Integer>> markerIds;
@@ -99,7 +99,7 @@ public final class AddOnOrder {
         }
 
         public Builder markerIds(List<Integer> markerIds) {
-            this.markerIds = Optional.of(markerIds);
+            this.markerIds = Optional.ofNullable(markerIds);
             return this;
         }
 
@@ -110,7 +110,7 @@ public final class AddOnOrder {
         }
 
         public Builder providerIds(List<String> providerIds) {
-            this.providerIds = Optional.of(providerIds);
+            this.providerIds = Optional.ofNullable(providerIds);
             return this;
         }
 

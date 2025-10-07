@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingApiKey.Builder.class)
 public final class ClientFacingApiKey {
     private final String label;
@@ -117,21 +118,21 @@ public final class ClientFacingApiKey {
     }
 
     public interface LabelStage {
-        ValueStage label(String label);
+        ValueStage label(@NotNull String label);
 
         Builder from(ClientFacingApiKey other);
     }
 
     public interface ValueStage {
-        IdStage value(String value);
+        IdStage value(@NotNull String value);
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(@NotNull String id);
     }
 
     public interface CreatedAtStage {
-        _FinalStage createdAt(OffsetDateTime createdAt);
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
@@ -178,35 +179,35 @@ public final class ClientFacingApiKey {
 
         @java.lang.Override
         @JsonSetter("label")
-        public ValueStage label(String label) {
-            this.label = label;
+        public ValueStage label(@NotNull String label) {
+            this.label = Objects.requireNonNull(label, "label must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public IdStage value(String value) {
-            this.value = value;
+        public IdStage value(@NotNull String value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
-            this.deletedAt = Optional.of(deletedAt);
+            this.deletedAt = Optional.ofNullable(deletedAt);
             return this;
         }
 
@@ -219,7 +220,7 @@ public final class ClientFacingApiKey {
 
         @java.lang.Override
         public _FinalStage teamId(String teamId) {
-            this.teamId = Optional.of(teamId);
+            this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 

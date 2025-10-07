@@ -127,6 +127,7 @@ public final class ClientFacingOrderDetails {
     }
 
     @JsonTypeName("walk_in_test")
+    @JsonIgnoreProperties("type")
     private static final class WalkInTestValue implements Value {
         @JsonUnwrapped
         private ClientFacingWalkInOrderDetails value;
@@ -165,6 +166,7 @@ public final class ClientFacingOrderDetails {
     }
 
     @JsonTypeName("testkit")
+    @JsonIgnoreProperties("type")
     private static final class TestkitValue implements Value {
         @JsonUnwrapped
         private ClientFacingTestKitOrderDetails value;
@@ -203,6 +205,7 @@ public final class ClientFacingOrderDetails {
     }
 
     @JsonTypeName("at_home_phlebotomy")
+    @JsonIgnoreProperties("type")
     private static final class AtHomePhlebotomyValue implements Value {
         @JsonUnwrapped
         private ClientFacingAtHomePhlebotomyOrderDetails value;
@@ -241,6 +244,7 @@ public final class ClientFacingOrderDetails {
     }
 
     @JsonTypeName("on_site_collection")
+    @JsonIgnoreProperties("type")
     private static final class OnSiteCollectionValue implements Value {
         @JsonUnwrapped
         private ClientFacingOnSiteCollectionOrderDetails value;
@@ -278,6 +282,7 @@ public final class ClientFacingOrderDetails {
         }
     }
 
+    @JsonIgnoreProperties("type")
     private static final class _UnknownValue implements Value {
         private String type;
 

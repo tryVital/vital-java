@@ -32,6 +32,7 @@ public final class LabResultsRawResults {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((List<BiomarkerResult>) this.value);
@@ -81,15 +82,15 @@ public final class LabResultsRawResults {
         }
 
         @java.lang.Override
-        public LabResultsRawResults deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public LabResultsRawResults deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<BiomarkerResult>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Map<String, Object>>() {}));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

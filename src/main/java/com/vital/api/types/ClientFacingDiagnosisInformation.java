@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingDiagnosisInformation.Builder.class)
 public final class ClientFacingDiagnosisInformation {
     private final String diagnosisCode;
@@ -77,13 +78,19 @@ public final class ClientFacingDiagnosisInformation {
     }
 
     public interface DiagnosisCodeStage {
-        DescriptionStage diagnosisCode(String diagnosisCode);
+        /**
+         * <p>Diagnosis code for insurance information.</p>
+         */
+        DescriptionStage diagnosisCode(@NotNull String diagnosisCode);
 
         Builder from(ClientFacingDiagnosisInformation other);
     }
 
     public interface DescriptionStage {
-        _FinalStage description(String description);
+        /**
+         * <p>Diagnosis description insurance information.</p>
+         */
+        _FinalStage description(@NotNull String description);
     }
 
     public interface _FinalStage {
@@ -110,23 +117,25 @@ public final class ClientFacingDiagnosisInformation {
 
         /**
          * <p>Diagnosis code for insurance information.</p>
+         * <p>Diagnosis code for insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("diagnosis_code")
-        public DescriptionStage diagnosisCode(String diagnosisCode) {
-            this.diagnosisCode = diagnosisCode;
+        public DescriptionStage diagnosisCode(@NotNull String diagnosisCode) {
+            this.diagnosisCode = Objects.requireNonNull(diagnosisCode, "diagnosisCode must not be null");
             return this;
         }
 
         /**
          * <p>Diagnosis description insurance information.</p>
+         * <p>Diagnosis description insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("description")
-        public _FinalStage description(String description) {
-            this.description = description;
+        public _FinalStage description(@NotNull String description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 

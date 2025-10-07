@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProfileInDb.Builder.class)
 public final class ProfileInDb {
     private final String id;
@@ -145,7 +146,7 @@ public final class ProfileInDb {
     }
 
     public interface IdStage {
-        DataStage id(String id);
+        DataStage id(@NotNull String id);
 
         Builder from(ProfileInDb other);
     }
@@ -155,7 +156,7 @@ public final class ProfileInDb {
     }
 
     public interface UserIdStage {
-        SourceIdStage userId(String userId);
+        SourceIdStage userId(@NotNull String userId);
     }
 
     public interface SourceIdStage {
@@ -163,7 +164,7 @@ public final class ProfileInDb {
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingProvider source);
+        _FinalStage source(@NotNull ClientFacingProvider source);
     }
 
     public interface _FinalStage {
@@ -221,8 +222,8 @@ public final class ProfileInDb {
 
         @java.lang.Override
         @JsonSetter("id")
-        public DataStage id(String id) {
-            this.id = id;
+        public DataStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -235,8 +236,8 @@ public final class ProfileInDb {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceIdStage userId(String userId) {
-            this.userId = userId;
+        public SourceIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
@@ -249,14 +250,14 @@ public final class ProfileInDb {
 
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingProvider source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingProvider source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
+            this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 
@@ -269,7 +270,7 @@ public final class ProfileInDb {
 
         @java.lang.Override
         public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.of(createdAt);
+            this.createdAt = Optional.ofNullable(createdAt);
             return this;
         }
 
@@ -282,7 +283,7 @@ public final class ProfileInDb {
 
         @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
-            this.priorityId = Optional.of(priorityId);
+            this.priorityId = Optional.ofNullable(priorityId);
             return this;
         }
 

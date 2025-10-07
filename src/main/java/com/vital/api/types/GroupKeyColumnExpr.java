@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupKeyColumnExpr.Builder.class)
 public final class GroupKeyColumnExpr {
     private final GroupKeyColumnExprGroupKey groupKey;
@@ -62,7 +63,7 @@ public final class GroupKeyColumnExpr {
     }
 
     public interface GroupKeyStage {
-        _FinalStage groupKey(GroupKeyColumnExprGroupKey groupKey);
+        _FinalStage groupKey(@NotNull GroupKeyColumnExprGroupKey groupKey);
 
         Builder from(GroupKeyColumnExpr other);
     }
@@ -88,8 +89,8 @@ public final class GroupKeyColumnExpr {
 
         @java.lang.Override
         @JsonSetter("group_key")
-        public _FinalStage groupKey(GroupKeyColumnExprGroupKey groupKey) {
-            this.groupKey = groupKey;
+        public _FinalStage groupKey(@NotNull GroupKeyColumnExprGroupKey groupKey) {
+            this.groupKey = Objects.requireNonNull(groupKey, "groupKey must not be null");
             return this;
         }
 

@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SimulationFlags.Builder.class)
 public final class SimulationFlags {
     private final Optional<Interpretation> interpretation;
@@ -113,7 +113,7 @@ public final class SimulationFlags {
         }
 
         public Builder interpretation(Interpretation interpretation) {
-            this.interpretation = Optional.of(interpretation);
+            this.interpretation = Optional.ofNullable(interpretation);
             return this;
         }
 
@@ -124,7 +124,7 @@ public final class SimulationFlags {
         }
 
         public Builder resultTypes(List<ResultType> resultTypes) {
-            this.resultTypes = Optional.of(resultTypes);
+            this.resultTypes = Optional.ofNullable(resultTypes);
             return this;
         }
 
@@ -135,7 +135,7 @@ public final class SimulationFlags {
         }
 
         public Builder hasMissingResults(Boolean hasMissingResults) {
-            this.hasMissingResults = Optional.of(hasMissingResults);
+            this.hasMissingResults = Optional.ofNullable(hasMissingResults);
             return this;
         }
 

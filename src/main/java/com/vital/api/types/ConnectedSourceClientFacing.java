@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ConnectedSourceClientFacing.Builder.class)
 public final class ConnectedSourceClientFacing {
     private final ClientFacingProvider provider;
@@ -92,17 +93,26 @@ public final class ConnectedSourceClientFacing {
     }
 
     public interface ProviderStage {
-        CreatedOnStage provider(ClientFacingProvider provider);
+        /**
+         * <p>The provider of this connected source.</p>
+         */
+        CreatedOnStage provider(@NotNull ClientFacingProvider provider);
 
         Builder from(ConnectedSourceClientFacing other);
     }
 
     public interface CreatedOnStage {
-        SourceStage createdOn(OffsetDateTime createdOn);
+        /**
+         * <p>When your item is created</p>
+         */
+        SourceStage createdOn(@NotNull OffsetDateTime createdOn);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingProvider source);
+        /**
+         * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
+         */
+        _FinalStage source(@NotNull ClientFacingProvider source);
     }
 
     public interface _FinalStage {
@@ -132,34 +142,37 @@ public final class ConnectedSourceClientFacing {
 
         /**
          * <p>The provider of this connected source.</p>
+         * <p>The provider of this connected source.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("provider")
-        public CreatedOnStage provider(ClientFacingProvider provider) {
-            this.provider = provider;
+        public CreatedOnStage provider(@NotNull ClientFacingProvider provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         /**
          * <p>When your item is created</p>
+         * <p>When your item is created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("created_on")
-        public SourceStage createdOn(OffsetDateTime createdOn) {
-            this.createdOn = createdOn;
+        public SourceStage createdOn(@NotNull OffsetDateTime createdOn) {
+            this.createdOn = Objects.requireNonNull(createdOn, "createdOn must not be null");
             return this;
         }
 
         /**
          * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
+         * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingProvider source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingProvider source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 

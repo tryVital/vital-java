@@ -22,8 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RegisterTestkitRequest.Builder.class)
 public final class RegisterTestkitRequest {
     private final Optional<String> userId;
@@ -142,22 +143,25 @@ public final class RegisterTestkitRequest {
     }
 
     public interface SampleIdStage {
-        PatientDetailsStage sampleId(String sampleId);
+        PatientDetailsStage sampleId(@NotNull String sampleId);
 
         Builder from(RegisterTestkitRequest other);
     }
 
     public interface PatientDetailsStage {
-        PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails);
+        PatientAddressStage patientDetails(@NotNull PatientDetailsWithValidation patientDetails);
     }
 
     public interface PatientAddressStage {
-        _FinalStage patientAddress(PatientAddressWithValidation patientAddress);
+        _FinalStage patientAddress(@NotNull PatientAddressWithValidation patientAddress);
     }
 
     public interface _FinalStage {
         RegisterTestkitRequest build();
 
+        /**
+         * <p>The user ID of the patient.</p>
+         */
         _FinalStage userId(Optional<String> userId);
 
         _FinalStage userId(String userId);
@@ -210,28 +214,28 @@ public final class RegisterTestkitRequest {
 
         @java.lang.Override
         @JsonSetter("sample_id")
-        public PatientDetailsStage sampleId(String sampleId) {
-            this.sampleId = sampleId;
+        public PatientDetailsStage sampleId(@NotNull String sampleId) {
+            this.sampleId = Objects.requireNonNull(sampleId, "sampleId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_details")
-        public PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails) {
-            this.patientDetails = patientDetails;
+        public PatientAddressStage patientDetails(@NotNull PatientDetailsWithValidation patientDetails) {
+            this.patientDetails = Objects.requireNonNull(patientDetails, "patientDetails must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_address")
-        public _FinalStage patientAddress(PatientAddressWithValidation patientAddress) {
-            this.patientAddress = patientAddress;
+        public _FinalStage patientAddress(@NotNull PatientAddressWithValidation patientAddress) {
+            this.patientAddress = Objects.requireNonNull(patientAddress, "patientAddress must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage consents(List<Consent> consents) {
-            this.consents = Optional.of(consents);
+            this.consents = Optional.ofNullable(consents);
             return this;
         }
 
@@ -244,7 +248,7 @@ public final class RegisterTestkitRequest {
 
         @java.lang.Override
         public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
-            this.healthInsurance = Optional.of(healthInsurance);
+            this.healthInsurance = Optional.ofNullable(healthInsurance);
             return this;
         }
 
@@ -257,7 +261,7 @@ public final class RegisterTestkitRequest {
 
         @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequestBase physician) {
-            this.physician = Optional.of(physician);
+            this.physician = Optional.ofNullable(physician);
             return this;
         }
 
@@ -274,10 +278,13 @@ public final class RegisterTestkitRequest {
          */
         @java.lang.Override
         public _FinalStage userId(String userId) {
-            this.userId = Optional.of(userId);
+            this.userId = Optional.ofNullable(userId);
             return this;
         }
 
+        /**
+         * <p>The user ID of the patient.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
         public _FinalStage userId(Optional<String> userId) {

@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingElectrocardiogram.Builder.class)
 public final class ClientFacingElectrocardiogram {
     private final String id;
@@ -275,17 +276,17 @@ public final class ClientFacingElectrocardiogram {
     }
 
     public interface IdStage {
-        SessionStartStage id(String id);
+        SessionStartStage id(@NotNull String id);
 
         Builder from(ClientFacingElectrocardiogram other);
     }
 
     public interface SessionStartStage {
-        SessionEndStage sessionStart(OffsetDateTime sessionStart);
+        SessionEndStage sessionStart(@NotNull OffsetDateTime sessionStart);
     }
 
     public interface SessionEndStage {
-        VoltageSampleCountStage sessionEnd(OffsetDateTime sessionEnd);
+        VoltageSampleCountStage sessionEnd(@NotNull OffsetDateTime sessionEnd);
     }
 
     public interface VoltageSampleCountStage {
@@ -293,27 +294,30 @@ public final class ClientFacingElectrocardiogram {
     }
 
     public interface SourceProviderStage {
-        SourceTypeStage sourceProvider(ClientFacingElectrocardiogramSourceProvider sourceProvider);
+        SourceTypeStage sourceProvider(@NotNull ClientFacingElectrocardiogramSourceProvider sourceProvider);
     }
 
     public interface SourceTypeStage {
-        CreatedAtStage sourceType(ClientFacingElectrocardiogramSourceType sourceType);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        CreatedAtStage sourceType(@NotNull ClientFacingElectrocardiogramSourceType sourceType);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        UserIdStage updatedAt(OffsetDateTime updatedAt);
+        UserIdStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface UserIdStage {
-        SourceStage userId(String userId);
+        SourceStage userId(@NotNull String userId);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        _FinalStage source(@NotNull ClientFacingSource source);
     }
 
     public interface _FinalStage {
@@ -327,10 +331,16 @@ public final class ClientFacingElectrocardiogram {
 
         _FinalStage samplingFrequencyHz(Double samplingFrequencyHz);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage classification(Optional<ClientFacingElectrocardiogramClassification> classification);
 
         _FinalStage classification(ClientFacingElectrocardiogramClassification classification);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage inconclusiveCause(Optional<ClientFacingElectrocardiogramInconclusiveCause> inconclusiveCause);
 
         _FinalStage inconclusiveCause(ClientFacingElectrocardiogramInconclusiveCause inconclusiveCause);
@@ -438,22 +448,22 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         @JsonSetter("id")
-        public SessionStartStage id(String id) {
-            this.id = id;
+        public SessionStartStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("session_start")
-        public SessionEndStage sessionStart(OffsetDateTime sessionStart) {
-            this.sessionStart = sessionStart;
+        public SessionEndStage sessionStart(@NotNull OffsetDateTime sessionStart) {
+            this.sessionStart = Objects.requireNonNull(sessionStart, "sessionStart must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("session_end")
-        public VoltageSampleCountStage sessionEnd(OffsetDateTime sessionEnd) {
-            this.sessionEnd = sessionEnd;
+        public VoltageSampleCountStage sessionEnd(@NotNull OffsetDateTime sessionEnd) {
+            this.sessionEnd = Objects.requireNonNull(sessionEnd, "sessionEnd must not be null");
             return this;
         }
 
@@ -466,53 +476,54 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         @JsonSetter("source_provider")
-        public SourceTypeStage sourceProvider(ClientFacingElectrocardiogramSourceProvider sourceProvider) {
-            this.sourceProvider = sourceProvider;
+        public SourceTypeStage sourceProvider(@NotNull ClientFacingElectrocardiogramSourceProvider sourceProvider) {
+            this.sourceProvider = Objects.requireNonNull(sourceProvider, "sourceProvider must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source_type")
-        public CreatedAtStage sourceType(ClientFacingElectrocardiogramSourceType sourceType) {
-            this.sourceType = sourceType;
+        public CreatedAtStage sourceType(@NotNull ClientFacingElectrocardiogramSourceType sourceType) {
+            this.sourceType = Objects.requireNonNull(sourceType, "sourceType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public UserIdStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public UserIdStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceStage userId(String userId) {
-            this.userId = userId;
+        public SourceStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
-            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
         }
 
@@ -525,7 +536,7 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         public _FinalStage sourceDeviceModel(String sourceDeviceModel) {
-            this.sourceDeviceModel = Optional.of(sourceDeviceModel);
+            this.sourceDeviceModel = Optional.ofNullable(sourceDeviceModel);
             return this;
         }
 
@@ -538,7 +549,7 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
-            this.sourceAppId = Optional.of(sourceAppId);
+            this.sourceAppId = Optional.ofNullable(sourceAppId);
             return this;
         }
 
@@ -551,7 +562,7 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         public _FinalStage timeZone(String timeZone) {
-            this.timeZone = Optional.of(timeZone);
+            this.timeZone = Optional.ofNullable(timeZone);
             return this;
         }
 
@@ -564,7 +575,7 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         public _FinalStage algorithmVersion(String algorithmVersion) {
-            this.algorithmVersion = Optional.of(algorithmVersion);
+            this.algorithmVersion = Optional.ofNullable(algorithmVersion);
             return this;
         }
 
@@ -581,10 +592,13 @@ public final class ClientFacingElectrocardiogram {
          */
         @java.lang.Override
         public _FinalStage inconclusiveCause(ClientFacingElectrocardiogramInconclusiveCause inconclusiveCause) {
-            this.inconclusiveCause = Optional.of(inconclusiveCause);
+            this.inconclusiveCause = Optional.ofNullable(inconclusiveCause);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "inconclusive_cause", nulls = Nulls.SKIP)
         public _FinalStage inconclusiveCause(
@@ -599,10 +613,13 @@ public final class ClientFacingElectrocardiogram {
          */
         @java.lang.Override
         public _FinalStage classification(ClientFacingElectrocardiogramClassification classification) {
-            this.classification = Optional.of(classification);
+            this.classification = Optional.ofNullable(classification);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "classification", nulls = Nulls.SKIP)
         public _FinalStage classification(Optional<ClientFacingElectrocardiogramClassification> classification) {
@@ -612,7 +629,7 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         public _FinalStage samplingFrequencyHz(Double samplingFrequencyHz) {
-            this.samplingFrequencyHz = Optional.of(samplingFrequencyHz);
+            this.samplingFrequencyHz = Optional.ofNullable(samplingFrequencyHz);
             return this;
         }
 
@@ -625,7 +642,7 @@ public final class ClientFacingElectrocardiogram {
 
         @java.lang.Override
         public _FinalStage heartRateMean(Integer heartRateMean) {
-            this.heartRateMean = Optional.of(heartRateMean);
+            this.heartRateMean = Optional.ofNullable(heartRateMean);
             return this;
         }
 

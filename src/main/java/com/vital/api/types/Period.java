@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Period.Builder.class)
 public final class Period {
     private final Optional<Integer> value;
@@ -75,7 +76,10 @@ public final class Period {
     }
 
     public interface UnitStage {
-        _FinalStage unit(PeriodUnit unit);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage unit(@NotNull PeriodUnit unit);
 
         Builder from(Period other);
     }
@@ -108,18 +112,19 @@ public final class Period {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("unit")
-        public _FinalStage unit(PeriodUnit unit) {
-            this.unit = unit;
+        public _FinalStage unit(@NotNull PeriodUnit unit) {
+            this.unit = Objects.requireNonNull(unit, "unit must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage value(Integer value) {
-            this.value = Optional.of(value);
+            this.value = Optional.ofNullable(value);
             return this;
         }
 

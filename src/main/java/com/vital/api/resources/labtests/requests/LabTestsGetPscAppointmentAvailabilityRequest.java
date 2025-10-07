@@ -13,19 +13,22 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetPscAppointmentAvailabilityRequest.Builder.class)
 public final class LabTestsGetPscAppointmentAvailabilityRequest {
+    private final Optional<List<String>> siteCodes;
+
     private final String lab;
 
     private final Optional<String> startDate;
-
-    private final Optional<String> siteCodes;
 
     private final Optional<String> zipCode;
 
@@ -34,18 +37,26 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetPscAppointmentAvailabilityRequest(
+            Optional<List<String>> siteCodes,
             String lab,
             Optional<String> startDate,
-            Optional<String> siteCodes,
             Optional<String> zipCode,
             Optional<AllowedRadius> radius,
             Map<String, Object> additionalProperties) {
+        this.siteCodes = siteCodes;
         this.lab = lab;
         this.startDate = startDate;
-        this.siteCodes = siteCodes;
         this.zipCode = zipCode;
         this.radius = radius;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return List of site codes to fetch availability for
+     */
+    @JsonProperty("site_codes")
+    public Optional<List<String>> getSiteCodes() {
+        return siteCodes;
     }
 
     /**
@@ -62,14 +73,6 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     @JsonProperty("start_date")
     public Optional<String> getStartDate() {
         return startDate;
-    }
-
-    /**
-     * @return List of site codes to fetch availability for
-     */
-    @JsonProperty("site_codes")
-    public Optional<String> getSiteCodes() {
-        return siteCodes;
     }
 
     /**
@@ -101,16 +104,16 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     }
 
     private boolean equalTo(LabTestsGetPscAppointmentAvailabilityRequest other) {
-        return lab.equals(other.lab)
+        return siteCodes.equals(other.siteCodes)
+                && lab.equals(other.lab)
                 && startDate.equals(other.startDate)
-                && siteCodes.equals(other.siteCodes)
                 && zipCode.equals(other.zipCode)
                 && radius.equals(other.radius);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.lab, this.startDate, this.siteCodes, this.zipCode, this.radius);
+        return Objects.hash(this.siteCodes, this.lab, this.startDate, this.zipCode, this.radius);
     }
 
     @java.lang.Override
@@ -123,7 +126,10 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     }
 
     public interface LabStage {
-        _FinalStage lab(String lab);
+        /**
+         * <p>Lab to check for availability</p>
+         */
+        _FinalStage lab(@NotNull String lab);
 
         Builder from(LabTestsGetPscAppointmentAvailabilityRequest other);
     }
@@ -131,18 +137,32 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     public interface _FinalStage {
         LabTestsGetPscAppointmentAvailabilityRequest build();
 
+        /**
+         * <p>List of site codes to fetch availability for</p>
+         */
+        _FinalStage siteCodes(Optional<List<String>> siteCodes);
+
+        _FinalStage siteCodes(List<String> siteCodes);
+
+        _FinalStage siteCodes(String siteCodes);
+
+        /**
+         * <p>Start date for appointment availability</p>
+         */
         _FinalStage startDate(Optional<String> startDate);
 
         _FinalStage startDate(String startDate);
 
-        _FinalStage siteCodes(Optional<String> siteCodes);
-
-        _FinalStage siteCodes(String siteCodes);
-
+        /**
+         * <p>Zip code of the area to check</p>
+         */
         _FinalStage zipCode(Optional<String> zipCode);
 
         _FinalStage zipCode(String zipCode);
 
+        /**
+         * <p>Radius in which to search. (meters)</p>
+         */
         _FinalStage radius(Optional<AllowedRadius> radius);
 
         _FinalStage radius(AllowedRadius radius);
@@ -156,9 +176,9 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
 
         private Optional<String> zipCode = Optional.empty();
 
-        private Optional<String> siteCodes = Optional.empty();
-
         private Optional<String> startDate = Optional.empty();
+
+        private Optional<List<String>> siteCodes = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -167,9 +187,9 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
 
         @java.lang.Override
         public Builder from(LabTestsGetPscAppointmentAvailabilityRequest other) {
+            siteCodes(other.getSiteCodes());
             lab(other.getLab());
             startDate(other.getStartDate());
-            siteCodes(other.getSiteCodes());
             zipCode(other.getZipCode());
             radius(other.getRadius());
             return this;
@@ -177,12 +197,13 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
 
         /**
          * <p>Lab to check for availability</p>
+         * <p>Lab to check for availability</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("lab")
-        public _FinalStage lab(String lab) {
-            this.lab = lab;
+        public _FinalStage lab(@NotNull String lab) {
+            this.lab = Objects.requireNonNull(lab, "lab must not be null");
             return this;
         }
 
@@ -192,10 +213,13 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
          */
         @java.lang.Override
         public _FinalStage radius(AllowedRadius radius) {
-            this.radius = Optional.of(radius);
+            this.radius = Optional.ofNullable(radius);
             return this;
         }
 
+        /**
+         * <p>Radius in which to search. (meters)</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
         public _FinalStage radius(Optional<AllowedRadius> radius) {
@@ -209,31 +233,17 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
          */
         @java.lang.Override
         public _FinalStage zipCode(String zipCode) {
-            this.zipCode = Optional.of(zipCode);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "zip_code", nulls = Nulls.SKIP)
-        public _FinalStage zipCode(Optional<String> zipCode) {
-            this.zipCode = zipCode;
+            this.zipCode = Optional.ofNullable(zipCode);
             return this;
         }
 
         /**
-         * <p>List of site codes to fetch availability for</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
+         * <p>Zip code of the area to check</p>
          */
         @java.lang.Override
-        public _FinalStage siteCodes(String siteCodes) {
-            this.siteCodes = Optional.of(siteCodes);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "site_codes", nulls = Nulls.SKIP)
-        public _FinalStage siteCodes(Optional<String> siteCodes) {
-            this.siteCodes = siteCodes;
+        @JsonSetter(value = "zip_code", nulls = Nulls.SKIP)
+        public _FinalStage zipCode(Optional<String> zipCode) {
+            this.zipCode = zipCode;
             return this;
         }
 
@@ -243,10 +253,13 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
          */
         @java.lang.Override
         public _FinalStage startDate(String startDate) {
-            this.startDate = Optional.of(startDate);
+            this.startDate = Optional.ofNullable(startDate);
             return this;
         }
 
+        /**
+         * <p>Start date for appointment availability</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "start_date", nulls = Nulls.SKIP)
         public _FinalStage startDate(Optional<String> startDate) {
@@ -255,9 +268,35 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         }
 
         @java.lang.Override
+        public _FinalStage siteCodes(String siteCodes) {
+            this.siteCodes = Optional.of(Collections.singletonList(siteCodes));
+            return this;
+        }
+
+        /**
+         * <p>List of site codes to fetch availability for</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage siteCodes(List<String> siteCodes) {
+            this.siteCodes = Optional.ofNullable(siteCodes);
+            return this;
+        }
+
+        /**
+         * <p>List of site codes to fetch availability for</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "site_codes", nulls = Nulls.SKIP)
+        public _FinalStage siteCodes(Optional<List<String>> siteCodes) {
+            this.siteCodes = siteCodes;
+            return this;
+        }
+
+        @java.lang.Override
         public LabTestsGetPscAppointmentAvailabilityRequest build() {
             return new LabTestsGetPscAppointmentAvailabilityRequest(
-                    lab, startDate, siteCodes, zipCode, radius, additionalProperties);
+                    siteCodes, lab, startDate, zipCode, radius, additionalProperties);
         }
     }
 }

@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SourceColumnExpr.Builder.class)
 public final class SourceColumnExpr {
     private final SourceColumnExprSource source;
@@ -65,7 +66,10 @@ public final class SourceColumnExpr {
     }
 
     public interface SourceStage {
-        _FinalStage source(SourceColumnExprSource source);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage source(@NotNull SourceColumnExprSource source);
 
         Builder from(SourceColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class SourceColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(SourceColumnExprSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull SourceColumnExprSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 

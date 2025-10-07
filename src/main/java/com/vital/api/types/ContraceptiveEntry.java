@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContraceptiveEntry.Builder.class)
 public final class ContraceptiveEntry {
     private final String date;
@@ -73,13 +74,16 @@ public final class ContraceptiveEntry {
     }
 
     public interface DateStage {
-        TypeStage date(String date);
+        TypeStage date(@NotNull String date);
 
         Builder from(ContraceptiveEntry other);
     }
 
     public interface TypeStage {
-        _FinalStage type(ContraceptiveEntryType type);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage type(@NotNull ContraceptiveEntryType type);
     }
 
     public interface _FinalStage {
@@ -106,19 +110,20 @@ public final class ContraceptiveEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public TypeStage date(String date) {
-            this.date = date;
+        public TypeStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(ContraceptiveEntryType type) {
-            this.type = type;
+        public _FinalStage type(@NotNull ContraceptiveEntryType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 

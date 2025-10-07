@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PscInfo.Builder.class)
 public final class PscInfo {
     private final int labId;
@@ -93,7 +94,7 @@ public final class PscInfo {
     }
 
     public interface SlugStage {
-        _FinalStage slug(Labs slug);
+        _FinalStage slug(@NotNull Labs slug);
     }
 
     public interface _FinalStage {
@@ -136,14 +137,16 @@ public final class PscInfo {
 
         @java.lang.Override
         @JsonSetter("slug")
-        public _FinalStage slug(Labs slug) {
-            this.slug = slug;
+        public _FinalStage slug(@NotNull Labs slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllPatientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters) {
-            this.patientServiceCenters.addAll(patientServiceCenters);
+            if (patientServiceCenters != null) {
+                this.patientServiceCenters.addAll(patientServiceCenters);
+            }
             return this;
         }
 

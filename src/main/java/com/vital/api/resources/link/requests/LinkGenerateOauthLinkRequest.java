@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LinkGenerateOauthLinkRequest.Builder.class)
 public final class LinkGenerateOauthLinkRequest {
     private final Optional<String> vitalLinkToken;
@@ -84,7 +84,7 @@ public final class LinkGenerateOauthLinkRequest {
         }
 
         public Builder vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

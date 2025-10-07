@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Address.Builder.class)
 public final class Address {
     private final String firstLine;
@@ -116,25 +117,25 @@ public final class Address {
     }
 
     public interface FirstLineStage {
-        CountryStage firstLine(String firstLine);
+        CountryStage firstLine(@NotNull String firstLine);
 
         Builder from(Address other);
     }
 
     public interface CountryStage {
-        ZipStage country(String country);
+        ZipStage country(@NotNull String country);
     }
 
     public interface ZipStage {
-        CityStage zip(String zip);
+        CityStage zip(@NotNull String zip);
     }
 
     public interface CityStage {
-        StateStage city(String city);
+        StateStage city(@NotNull String city);
     }
 
     public interface StateStage {
-        _FinalStage state(String state);
+        _FinalStage state(@NotNull String state);
     }
 
     public interface _FinalStage {
@@ -178,42 +179,42 @@ public final class Address {
 
         @java.lang.Override
         @JsonSetter("first_line")
-        public CountryStage firstLine(String firstLine) {
-            this.firstLine = firstLine;
+        public CountryStage firstLine(@NotNull String firstLine) {
+            this.firstLine = Objects.requireNonNull(firstLine, "firstLine must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("country")
-        public ZipStage country(String country) {
-            this.country = country;
+        public ZipStage country(@NotNull String country) {
+            this.country = Objects.requireNonNull(country, "country must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("zip")
-        public CityStage zip(String zip) {
-            this.zip = zip;
+        public CityStage zip(@NotNull String zip) {
+            this.zip = Objects.requireNonNull(zip, "zip must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("city")
-        public StateStage city(String city) {
-            this.city = city;
+        public StateStage city(@NotNull String city) {
+            this.city = Objects.requireNonNull(city, "city must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("state")
-        public _FinalStage state(String state) {
-            this.state = state;
+        public _FinalStage state(@NotNull String state) {
+            this.state = Objects.requireNonNull(state, "state must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
-            this.secondLine = Optional.of(secondLine);
+            this.secondLine = Optional.ofNullable(secondLine);
             return this;
         }
 

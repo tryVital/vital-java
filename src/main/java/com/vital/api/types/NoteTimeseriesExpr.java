@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NoteTimeseriesExpr.Builder.class)
 public final class NoteTimeseriesExpr {
     private final NoteTimeseriesExprField field;
@@ -70,7 +71,10 @@ public final class NoteTimeseriesExpr {
     }
 
     public interface FieldStage {
-        _FinalStage field(NoteTimeseriesExprField field);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage field(@NotNull NoteTimeseriesExprField field);
 
         Builder from(NoteTimeseriesExpr other);
     }
@@ -96,12 +100,13 @@ public final class NoteTimeseriesExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("field")
-        public _FinalStage field(NoteTimeseriesExprField field) {
-            this.field = field;
+        public _FinalStage field(@NotNull NoteTimeseriesExprField field) {
+            this.field = Objects.requireNonNull(field, "field must not be null");
             return this;
         }
 

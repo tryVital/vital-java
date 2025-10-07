@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DiscreteTimeseriesExpr.Builder.class)
 public final class DiscreteTimeseriesExpr {
     private final DiscreteTimeseriesExprTimeseries timeseries;
@@ -79,13 +80,19 @@ public final class DiscreteTimeseriesExpr {
     }
 
     public interface TimeseriesStage {
-        FieldStage timeseries(DiscreteTimeseriesExprTimeseries timeseries);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        FieldStage timeseries(@NotNull DiscreteTimeseriesExprTimeseries timeseries);
 
         Builder from(DiscreteTimeseriesExpr other);
     }
 
     public interface FieldStage {
-        _FinalStage field(DiscreteTimeseriesExprField field);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage field(@NotNull DiscreteTimeseriesExprField field);
     }
 
     public interface _FinalStage {
@@ -112,23 +119,25 @@ public final class DiscreteTimeseriesExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("timeseries")
-        public FieldStage timeseries(DiscreteTimeseriesExprTimeseries timeseries) {
-            this.timeseries = timeseries;
+        public FieldStage timeseries(@NotNull DiscreteTimeseriesExprTimeseries timeseries) {
+            this.timeseries = Objects.requireNonNull(timeseries, "timeseries must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("field")
-        public _FinalStage field(DiscreteTimeseriesExprField field) {
-            this.field = field;
+        public _FinalStage field(@NotNull DiscreteTimeseriesExprField field) {
+            this.field = Objects.requireNonNull(field, "field must not be null");
             return this;
         }
 

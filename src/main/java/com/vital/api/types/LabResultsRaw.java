@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabResultsRaw.Builder.class)
 public final class LabResultsRaw {
     private final LabResultsMetadata metadata;
@@ -97,13 +98,13 @@ public final class LabResultsRaw {
     }
 
     public interface MetadataStage {
-        ResultsStage metadata(LabResultsMetadata metadata);
+        ResultsStage metadata(@NotNull LabResultsMetadata metadata);
 
         Builder from(LabResultsRaw other);
     }
 
     public interface ResultsStage {
-        _FinalStage results(LabResultsRawResults results);
+        _FinalStage results(@NotNull LabResultsRawResults results);
     }
 
     public interface _FinalStage {
@@ -144,21 +145,21 @@ public final class LabResultsRaw {
 
         @java.lang.Override
         @JsonSetter("metadata")
-        public ResultsStage metadata(LabResultsMetadata metadata) {
-            this.metadata = metadata;
+        public ResultsStage metadata(@NotNull LabResultsMetadata metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("results")
-        public _FinalStage results(LabResultsRawResults results) {
-            this.results = results;
+        public _FinalStage results(@NotNull LabResultsRawResults results) {
+            this.results = Objects.requireNonNull(results, "results must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sampleInformation(Map<String, Optional<SampleData>> sampleInformation) {
-            this.sampleInformation = Optional.of(sampleInformation);
+            this.sampleInformation = Optional.ofNullable(sampleInformation);
             return this;
         }
 
@@ -171,7 +172,7 @@ public final class LabResultsRaw {
 
         @java.lang.Override
         public _FinalStage missingResults(List<MissingBiomarkerResult> missingResults) {
-            this.missingResults = Optional.of(missingResults);
+            this.missingResults = Optional.ofNullable(missingResults);
             return this;
         }
 

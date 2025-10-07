@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingCarbohydratesChanged.Builder.class)
 public final class ClientFacingCarbohydratesChanged {
     private final ClientFacingCarbohydratesChangedEventType eventType;
@@ -104,25 +105,25 @@ public final class ClientFacingCarbohydratesChanged {
     }
 
     public interface EventTypeStage {
-        UserIdStage eventType(ClientFacingCarbohydratesChangedEventType eventType);
+        UserIdStage eventType(@NotNull ClientFacingCarbohydratesChangedEventType eventType);
 
         Builder from(ClientFacingCarbohydratesChanged other);
     }
 
     public interface UserIdStage {
-        ClientUserIdStage userId(String userId);
+        ClientUserIdStage userId(@NotNull String userId);
     }
 
     public interface ClientUserIdStage {
-        TeamIdStage clientUserId(String clientUserId);
+        TeamIdStage clientUserId(@NotNull String clientUserId);
     }
 
     public interface TeamIdStage {
-        DataStage teamId(String teamId);
+        DataStage teamId(@NotNull String teamId);
     }
 
     public interface DataStage {
-        _FinalStage data(GroupedCarbohydrates data);
+        _FinalStage data(@NotNull GroupedCarbohydrates data);
     }
 
     public interface _FinalStage {
@@ -159,36 +160,36 @@ public final class ClientFacingCarbohydratesChanged {
 
         @java.lang.Override
         @JsonSetter("event_type")
-        public UserIdStage eventType(ClientFacingCarbohydratesChangedEventType eventType) {
-            this.eventType = eventType;
+        public UserIdStage eventType(@NotNull ClientFacingCarbohydratesChangedEventType eventType) {
+            this.eventType = Objects.requireNonNull(eventType, "eventType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public ClientUserIdStage userId(String userId) {
-            this.userId = userId;
+        public ClientUserIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("client_user_id")
-        public TeamIdStage clientUserId(String clientUserId) {
-            this.clientUserId = clientUserId;
+        public TeamIdStage clientUserId(@NotNull String clientUserId) {
+            this.clientUserId = Objects.requireNonNull(clientUserId, "clientUserId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("team_id")
-        public DataStage teamId(String teamId) {
-            this.teamId = teamId;
+        public DataStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(GroupedCarbohydrates data) {
-            this.data = data;
+        public _FinalStage data(@NotNull GroupedCarbohydrates data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = HttpValidationError.Builder.class)
 public final class HttpValidationError {
     private final Optional<Object> detail;
@@ -84,7 +84,7 @@ public final class HttpValidationError {
         }
 
         public Builder detail(Object detail) {
-            this.detail = Optional.of(detail);
+            this.detail = Optional.ofNullable(detail);
             return this;
         }
 

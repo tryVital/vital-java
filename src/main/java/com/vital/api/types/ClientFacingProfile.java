@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingProfile.Builder.class)
 public final class ClientFacingProfile {
     private final String id;
@@ -170,25 +171,28 @@ public final class ClientFacingProfile {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingProfile other);
     }
 
     public interface UserIdStage {
-        SourceStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        SourceStage userId(@NotNull String userId);
     }
 
     public interface SourceStage {
-        CreatedAtStage source(ClientFacingSource source);
+        CreatedAtStage source(@NotNull ClientFacingSource source);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -260,46 +264,47 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceStage userId(String userId) {
-            this.userId = userId;
+        public SourceStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public CreatedAtStage source(ClientFacingSource source) {
-            this.source = source;
+        public CreatedAtStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sex(Sex sex) {
-            this.sex = Optional.of(sex);
+            this.sex = Optional.ofNullable(sex);
             return this;
         }
 
@@ -312,7 +317,7 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public _FinalStage gender(Gender gender) {
-            this.gender = Optional.of(gender);
+            this.gender = Optional.ofNullable(gender);
             return this;
         }
 
@@ -325,7 +330,7 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public _FinalStage wheelchairUse(Boolean wheelchairUse) {
-            this.wheelchairUse = Optional.of(wheelchairUse);
+            this.wheelchairUse = Optional.ofNullable(wheelchairUse);
             return this;
         }
 
@@ -338,7 +343,7 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public _FinalStage birthDate(String birthDate) {
-            this.birthDate = Optional.of(birthDate);
+            this.birthDate = Optional.ofNullable(birthDate);
             return this;
         }
 
@@ -351,7 +356,7 @@ public final class ClientFacingProfile {
 
         @java.lang.Override
         public _FinalStage height(Integer height) {
-            this.height = Optional.of(height);
+            this.height = Optional.ofNullable(height);
             return this;
         }
 

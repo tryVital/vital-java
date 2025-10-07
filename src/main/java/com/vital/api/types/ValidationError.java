@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ValidationError.Builder.class)
 public final class ValidationError {
     private final List<ValidationErrorLocItem> loc;
@@ -82,13 +83,13 @@ public final class ValidationError {
     }
 
     public interface MsgStage {
-        TypeStage msg(String msg);
+        TypeStage msg(@NotNull String msg);
 
         Builder from(ValidationError other);
     }
 
     public interface TypeStage {
-        _FinalStage type(String type);
+        _FinalStage type(@NotNull String type);
     }
 
     public interface _FinalStage {
@@ -124,21 +125,23 @@ public final class ValidationError {
 
         @java.lang.Override
         @JsonSetter("msg")
-        public TypeStage msg(String msg) {
-            this.msg = msg;
+        public TypeStage msg(@NotNull String msg) {
+            this.msg = Objects.requireNonNull(msg, "msg must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(String type) {
-            this.type = type;
+        public _FinalStage type(@NotNull String type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllLoc(List<ValidationErrorLocItem> loc) {
-            this.loc.addAll(loc);
+            if (loc != null) {
+                this.loc.addAll(loc);
+            }
             return this;
         }
 

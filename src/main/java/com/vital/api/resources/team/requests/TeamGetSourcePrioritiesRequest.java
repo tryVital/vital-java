@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TeamGetSourcePrioritiesRequest.Builder.class)
 public final class TeamGetSourcePrioritiesRequest {
     private final Optional<PriorityResource> dataType;
@@ -86,7 +86,7 @@ public final class TeamGetSourcePrioritiesRequest {
         }
 
         public Builder dataType(PriorityResource dataType) {
-            this.dataType = Optional.of(dataType);
+            this.dataType = Optional.ofNullable(dataType);
             return this;
         }
 

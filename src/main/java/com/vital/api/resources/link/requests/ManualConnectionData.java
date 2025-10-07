@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ManualConnectionData.Builder.class)
 public final class ManualConnectionData {
     private final String userId;
@@ -72,7 +73,7 @@ public final class ManualConnectionData {
     }
 
     public interface UserIdStage {
-        _FinalStage userId(String userId);
+        _FinalStage userId(@NotNull String userId);
 
         Builder from(ManualConnectionData other);
     }
@@ -105,14 +106,14 @@ public final class ManualConnectionData {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public _FinalStage userId(String userId) {
-            this.userId = userId;
+        public _FinalStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 

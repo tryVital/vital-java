@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProviderConnectionError.Builder.class)
 public final class ProviderConnectionError {
     private final String provider;
@@ -107,25 +108,28 @@ public final class ProviderConnectionError {
     }
 
     public interface ProviderStage {
-        UserIdStage provider(String provider);
+        UserIdStage provider(@NotNull String provider);
 
         Builder from(ProviderConnectionError other);
     }
 
     public interface UserIdStage {
-        MessageStage userId(String userId);
+        MessageStage userId(@NotNull String userId);
     }
 
     public interface MessageStage {
-        ErrorTypeStage message(String message);
+        ErrorTypeStage message(@NotNull String message);
     }
 
     public interface ErrorTypeStage {
-        ErrorDetailsStage errorType(ProviderConnectionErrorErrorType errorType);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        ErrorDetailsStage errorType(@NotNull ProviderConnectionErrorErrorType errorType);
     }
 
     public interface ErrorDetailsStage {
-        _FinalStage errorDetails(String errorDetails);
+        _FinalStage errorDetails(@NotNull String errorDetails);
     }
 
     public interface _FinalStage {
@@ -162,40 +166,41 @@ public final class ProviderConnectionError {
 
         @java.lang.Override
         @JsonSetter("provider")
-        public UserIdStage provider(String provider) {
-            this.provider = provider;
+        public UserIdStage provider(@NotNull String provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public MessageStage userId(String userId) {
-            this.userId = userId;
+        public MessageStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("message")
-        public ErrorTypeStage message(String message) {
-            this.message = message;
+        public ErrorTypeStage message(@NotNull String message) {
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("error_type")
-        public ErrorDetailsStage errorType(ProviderConnectionErrorErrorType errorType) {
-            this.errorType = errorType;
+        public ErrorDetailsStage errorType(@NotNull ProviderConnectionErrorErrorType errorType) {
+            this.errorType = Objects.requireNonNull(errorType, "errorType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("error_details")
-        public _FinalStage errorDetails(String errorDetails) {
-            this.errorDetails = errorDetails;
+        public _FinalStage errorDetails(@NotNull String errorDetails) {
+            this.errorDetails = Objects.requireNonNull(errorDetails, "errorDetails must not be null");
             return this;
         }
 

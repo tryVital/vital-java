@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingAppointmentEvent.Builder.class)
 public final class ClientFacingAppointmentEvent {
     private final OffsetDateTime createdAt;
@@ -85,13 +86,13 @@ public final class ClientFacingAppointmentEvent {
     }
 
     public interface CreatedAtStage {
-        StatusStage createdAt(OffsetDateTime createdAt);
+        StatusStage createdAt(@NotNull OffsetDateTime createdAt);
 
         Builder from(ClientFacingAppointmentEvent other);
     }
 
     public interface StatusStage {
-        _FinalStage status(AppointmentEventStatus status);
+        _FinalStage status(@NotNull AppointmentEventStatus status);
     }
 
     public interface _FinalStage {
@@ -125,21 +126,21 @@ public final class ClientFacingAppointmentEvent {
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public StatusStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public StatusStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(AppointmentEventStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull AppointmentEventStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage data(Map<String, Object> data) {
-            this.data = Optional.of(data);
+            this.data = Optional.ofNullable(data);
             return this;
         }
 

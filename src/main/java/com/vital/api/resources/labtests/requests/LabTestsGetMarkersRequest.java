@@ -12,15 +12,17 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetMarkersRequest.Builder.class)
 public final class LabTestsGetMarkersRequest {
-    private final Optional<Integer> labId;
+    private final Optional<List<Integer>> labId;
 
     private final Optional<String> name;
 
@@ -33,7 +35,7 @@ public final class LabTestsGetMarkersRequest {
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetMarkersRequest(
-            Optional<Integer> labId,
+            Optional<List<Integer>> labId,
             Optional<String> name,
             Optional<Boolean> aLaCarteEnabled,
             Optional<Integer> page,
@@ -51,7 +53,7 @@ public final class LabTestsGetMarkersRequest {
      * @return The identifier Vital assigned to a lab partner.
      */
     @JsonProperty("lab_id")
-    public Optional<Integer> getLabId() {
+    public Optional<List<Integer>> getLabId() {
         return labId;
     }
 
@@ -113,7 +115,7 @@ public final class LabTestsGetMarkersRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<Integer> labId = Optional.empty();
+        private Optional<List<Integer>> labId = Optional.empty();
 
         private Optional<String> name = Optional.empty();
 
@@ -137,17 +139,28 @@ public final class LabTestsGetMarkersRequest {
             return this;
         }
 
+        /**
+         * <p>The identifier Vital assigned to a lab partner.</p>
+         */
         @JsonSetter(value = "lab_id", nulls = Nulls.SKIP)
-        public Builder labId(Optional<Integer> labId) {
+        public Builder labId(Optional<List<Integer>> labId) {
             this.labId = labId;
             return this;
         }
 
-        public Builder labId(Integer labId) {
-            this.labId = Optional.of(labId);
+        public Builder labId(List<Integer> labId) {
+            this.labId = Optional.ofNullable(labId);
             return this;
         }
 
+        public Builder labId(Integer labId) {
+            this.labId = Optional.of(Collections.singletonList(labId));
+            return this;
+        }
+
+        /**
+         * <p>The name or test code of an individual biomarker or a panel.</p>
+         */
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public Builder name(Optional<String> name) {
             this.name = name;
@@ -155,7 +168,7 @@ public final class LabTestsGetMarkersRequest {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -166,7 +179,7 @@ public final class LabTestsGetMarkersRequest {
         }
 
         public Builder aLaCarteEnabled(Boolean aLaCarteEnabled) {
-            this.aLaCarteEnabled = Optional.of(aLaCarteEnabled);
+            this.aLaCarteEnabled = Optional.ofNullable(aLaCarteEnabled);
             return this;
         }
 
@@ -177,7 +190,7 @@ public final class LabTestsGetMarkersRequest {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 
@@ -188,7 +201,7 @@ public final class LabTestsGetMarkersRequest {
         }
 
         public Builder size(Integer size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 

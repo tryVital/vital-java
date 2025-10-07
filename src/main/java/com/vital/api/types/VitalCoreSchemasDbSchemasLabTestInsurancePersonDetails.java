@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails.Builder.class)
 public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
     private final String firstName;
@@ -126,33 +127,33 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
     }
 
     public interface FirstNameStage {
-        LastNameStage firstName(String firstName);
+        LastNameStage firstName(@NotNull String firstName);
 
         Builder from(VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails other);
     }
 
     public interface LastNameStage {
-        GenderStage lastName(String lastName);
+        GenderStage lastName(@NotNull String lastName);
     }
 
     public interface GenderStage {
-        AddressStage gender(Gender gender);
+        AddressStage gender(@NotNull Gender gender);
     }
 
     public interface AddressStage {
-        DobStage address(Address address);
+        DobStage address(@NotNull Address address);
     }
 
     public interface DobStage {
-        EmailStage dob(String dob);
+        EmailStage dob(@NotNull String dob);
     }
 
     public interface EmailStage {
-        PhoneNumberStage email(String email);
+        PhoneNumberStage email(@NotNull String email);
     }
 
     public interface PhoneNumberStage {
-        _FinalStage phoneNumber(String phoneNumber);
+        _FinalStage phoneNumber(@NotNull String phoneNumber);
     }
 
     public interface _FinalStage {
@@ -202,50 +203,50 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
 
         @java.lang.Override
         @JsonSetter("first_name")
-        public LastNameStage firstName(String firstName) {
-            this.firstName = firstName;
+        public LastNameStage firstName(@NotNull String firstName) {
+            this.firstName = Objects.requireNonNull(firstName, "firstName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("last_name")
-        public GenderStage lastName(String lastName) {
-            this.lastName = lastName;
+        public GenderStage lastName(@NotNull String lastName) {
+            this.lastName = Objects.requireNonNull(lastName, "lastName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("gender")
-        public AddressStage gender(Gender gender) {
-            this.gender = gender;
+        public AddressStage gender(@NotNull Gender gender) {
+            this.gender = Objects.requireNonNull(gender, "gender must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("address")
-        public DobStage address(Address address) {
-            this.address = address;
+        public DobStage address(@NotNull Address address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("dob")
-        public EmailStage dob(String dob) {
-            this.dob = dob;
+        public EmailStage dob(@NotNull String dob) {
+            this.dob = Objects.requireNonNull(dob, "dob must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("email")
-        public PhoneNumberStage email(String email) {
-            this.email = email;
+        public PhoneNumberStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("phone_number")
-        public _FinalStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public _FinalStage phoneNumber(@NotNull String phoneNumber) {
+            this.phoneNumber = Objects.requireNonNull(phoneNumber, "phoneNumber must not be null");
             return this;
         }
 

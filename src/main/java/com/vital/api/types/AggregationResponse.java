@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AggregationResponse.Builder.class)
 public final class AggregationResponse {
     private final List<AggregationResult> results;
@@ -91,7 +91,9 @@ public final class AggregationResponse {
         }
 
         public Builder addAllResults(List<AggregationResult> results) {
-            this.results.addAll(results);
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

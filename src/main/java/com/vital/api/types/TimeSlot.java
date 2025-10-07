@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TimeSlot.Builder.class)
 public final class TimeSlot {
     private final Optional<String> bookingKey;
@@ -140,13 +141,19 @@ public final class TimeSlot {
     }
 
     public interface StartStage {
-        EndStage start(OffsetDateTime start);
+        /**
+         * <p>Time is in UTC</p>
+         */
+        EndStage start(@NotNull OffsetDateTime start);
 
         Builder from(TimeSlot other);
     }
 
     public interface EndStage {
-        PriceStage end(OffsetDateTime end);
+        /**
+         * <p>Time is in UTC</p>
+         */
+        PriceStage end(@NotNull OffsetDateTime end);
     }
 
     public interface PriceStage {
@@ -209,23 +216,25 @@ public final class TimeSlot {
 
         /**
          * <p>Time is in UTC</p>
+         * <p>Time is in UTC</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("start")
-        public EndStage start(OffsetDateTime start) {
-            this.start = start;
+        public EndStage start(@NotNull OffsetDateTime start) {
+            this.start = Objects.requireNonNull(start, "start must not be null");
             return this;
         }
 
         /**
          * <p>Time is in UTC</p>
+         * <p>Time is in UTC</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("end")
-        public PriceStage end(OffsetDateTime end) {
-            this.end = end;
+        public PriceStage end(@NotNull OffsetDateTime end) {
+            this.end = Objects.requireNonNull(end, "end must not be null");
             return this;
         }
 
@@ -252,7 +261,7 @@ public final class TimeSlot {
 
         @java.lang.Override
         public _FinalStage expiresAt(OffsetDateTime expiresAt) {
-            this.expiresAt = Optional.of(expiresAt);
+            this.expiresAt = Optional.ofNullable(expiresAt);
             return this;
         }
 
@@ -265,7 +274,7 @@ public final class TimeSlot {
 
         @java.lang.Override
         public _FinalStage bookingKey(String bookingKey) {
-            this.bookingKey = Optional.of(bookingKey);
+            this.bookingKey = Optional.ofNullable(bookingKey);
             return this;
         }
 

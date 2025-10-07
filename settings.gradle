@@ -1,1 +1,3 @@
+rootProject.name = 'vital-java'
+
 include 'sample-app'

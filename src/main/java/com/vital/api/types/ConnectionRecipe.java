@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ConnectionRecipe.Builder.class)
 public final class ConnectionRecipe {
     private final String userId;
@@ -155,30 +156,67 @@ public final class ConnectionRecipe {
     }
 
     public interface UserIdStage {
-        AccessTokenStage userId(String userId);
+        /**
+         * <p>Vital User ID. The user must be created ahead of the bulk import operation.</p>
+         */
+        AccessTokenStage userId(@NotNull String userId);
 
         Builder from(ConnectionRecipe other);
     }
 
     public interface AccessTokenStage {
-        RefreshTokenStage accessToken(String accessToken);
+        /**
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest Access Token.</li>
+         * <li>OAuth 1.0 providers (Garmin): The Access Token.</li>
+         * </ul>
+         */
+        RefreshTokenStage accessToken(@NotNull String accessToken);
     }
 
     public interface RefreshTokenStage {
-        ProviderIdStage refreshToken(String refreshToken);
+        /**
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest Refresh Token.</li>
+         * <li>OAuth 1.0 providers (Garmin): The Token Secret.</li>
+         * </ul>
+         */
+        ProviderIdStage refreshToken(@NotNull String refreshToken);
     }
 
     public interface ProviderIdStage {
-        ExpiresAtStage providerId(String providerId);
+        /**
+         * <p>User ID of the data provider.</p>
+         * <ul>
+         * <li>Fitbit: 6-character Fitbit User ID</li>
+         * <li>Garmin: 36-character Garmin User ID</li>
+         * </ul>
+         */
+        ExpiresAtStage providerId(@NotNull String providerId);
     }
 
     public interface ExpiresAtStage {
+        /**
+         * <p>Access token expiry date, in terms of UNIX epoch seconds.</p>
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest expiry date on your record.</li>
+         * <li>OAuth 1.0 providers (Garmin): Use the constant value <code>2147483647</code>.</li>
+         * </ul>
+         */
         _FinalStage expiresAt(int expiresAt);
     }
 
     public interface _FinalStage {
         ConnectionRecipe build();
 
+        /**
+         * <p>OAuth scopes of the data provider. Specify <code>null</code> if you do not
+         * have any scopes on record.</p>
+         * <ul>
+         * <li>Fitbit: Has scopes</li>
+         * <li>Garmin: No scope</li>
+         * </ul>
+         */
         _FinalStage oauthScopes(Optional<List<String>> oauthScopes);
 
         _FinalStage oauthScopes(List<String> oauthScopes);
@@ -217,12 +255,13 @@ public final class ConnectionRecipe {
 
         /**
          * <p>Vital User ID. The user must be created ahead of the bulk import operation.</p>
+         * <p>Vital User ID. The user must be created ahead of the bulk import operation.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public AccessTokenStage userId(String userId) {
-            this.userId = userId;
+        public AccessTokenStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
@@ -231,12 +270,16 @@ public final class ConnectionRecipe {
          * <li>OAuth 2.0 providers (Fitbit, etc): The latest Access Token.</li>
          * <li>OAuth 1.0 providers (Garmin): The Access Token.</li>
          * </ul>
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest Access Token.</li>
+         * <li>OAuth 1.0 providers (Garmin): The Access Token.</li>
+         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("access_token")
-        public RefreshTokenStage accessToken(String accessToken) {
-            this.accessToken = accessToken;
+        public RefreshTokenStage accessToken(@NotNull String accessToken) {
+            this.accessToken = Objects.requireNonNull(accessToken, "accessToken must not be null");
             return this;
         }
 
@@ -245,12 +288,16 @@ public final class ConnectionRecipe {
          * <li>OAuth 2.0 providers (Fitbit, etc): The latest Refresh Token.</li>
          * <li>OAuth 1.0 providers (Garmin): The Token Secret.</li>
          * </ul>
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest Refresh Token.</li>
+         * <li>OAuth 1.0 providers (Garmin): The Token Secret.</li>
+         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("refresh_token")
-        public ProviderIdStage refreshToken(String refreshToken) {
-            this.refreshToken = refreshToken;
+        public ProviderIdStage refreshToken(@NotNull String refreshToken) {
+            this.refreshToken = Objects.requireNonNull(refreshToken, "refreshToken must not be null");
             return this;
         }
 
@@ -260,16 +307,26 @@ public final class ConnectionRecipe {
          * <li>Fitbit: 6-character Fitbit User ID</li>
          * <li>Garmin: 36-character Garmin User ID</li>
          * </ul>
+         * <p>User ID of the data provider.</p>
+         * <ul>
+         * <li>Fitbit: 6-character Fitbit User ID</li>
+         * <li>Garmin: 36-character Garmin User ID</li>
+         * </ul>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("provider_id")
-        public ExpiresAtStage providerId(String providerId) {
-            this.providerId = providerId;
+        public ExpiresAtStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
         /**
+         * <p>Access token expiry date, in terms of UNIX epoch seconds.</p>
+         * <ul>
+         * <li>OAuth 2.0 providers (Fitbit, etc): The latest expiry date on your record.</li>
+         * <li>OAuth 1.0 providers (Garmin): Use the constant value <code>2147483647</code>.</li>
+         * </ul>
          * <p>Access token expiry date, in terms of UNIX epoch seconds.</p>
          * <ul>
          * <li>OAuth 2.0 providers (Fitbit, etc): The latest expiry date on your record.</li>
@@ -295,10 +352,18 @@ public final class ConnectionRecipe {
          */
         @java.lang.Override
         public _FinalStage oauthScopes(List<String> oauthScopes) {
-            this.oauthScopes = Optional.of(oauthScopes);
+            this.oauthScopes = Optional.ofNullable(oauthScopes);
             return this;
         }
 
+        /**
+         * <p>OAuth scopes of the data provider. Specify <code>null</code> if you do not
+         * have any scopes on record.</p>
+         * <ul>
+         * <li>Fitbit: Has scopes</li>
+         * <li>Garmin: No scope</li>
+         * </ul>
+         */
         @java.lang.Override
         @JsonSetter(value = "oauth_scopes", nulls = Nulls.SKIP)
         public _FinalStage oauthScopes(Optional<List<String>> oauthScopes) {

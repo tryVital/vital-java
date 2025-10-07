@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InsuranceSearchGetPayorInfoRequest.Builder.class)
 public final class InsuranceSearchGetPayorInfoRequest {
     private final Optional<String> insuranceName;
@@ -114,7 +114,7 @@ public final class InsuranceSearchGetPayorInfoRequest {
         }
 
         public Builder insuranceName(String insuranceName) {
-            this.insuranceName = Optional.of(insuranceName);
+            this.insuranceName = Optional.ofNullable(insuranceName);
             return this;
         }
 
@@ -125,7 +125,7 @@ public final class InsuranceSearchGetPayorInfoRequest {
         }
 
         public Builder provider(PayorCodeExternalProvider provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 
@@ -136,7 +136,7 @@ public final class InsuranceSearchGetPayorInfoRequest {
         }
 
         public Builder providerPayorId(String providerPayorId) {
-            this.providerPayorId = Optional.of(providerPayorId);
+            this.providerPayorId = Optional.ofNullable(providerPayorId);
             return this;
         }
 

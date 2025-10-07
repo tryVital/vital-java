@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetPhlebotomyAppointmentAvailabilityRequest.Builder.class)
 public final class LabTestsGetPhlebotomyAppointmentAvailabilityRequest {
     private final Optional<String> startDate;
@@ -81,7 +82,10 @@ public final class LabTestsGetPhlebotomyAppointmentAvailabilityRequest {
     }
 
     public interface BodyStage {
-        _FinalStage body(UsAddress body);
+        /**
+         * <p>At-home phlebotomy appointment address.</p>
+         */
+        _FinalStage body(@NotNull UsAddress body);
 
         Builder from(LabTestsGetPhlebotomyAppointmentAvailabilityRequest other);
     }
@@ -89,6 +93,9 @@ public final class LabTestsGetPhlebotomyAppointmentAvailabilityRequest {
     public interface _FinalStage {
         LabTestsGetPhlebotomyAppointmentAvailabilityRequest build();
 
+        /**
+         * <p>Start date for appointment availability</p>
+         */
         _FinalStage startDate(Optional<String> startDate);
 
         _FinalStage startDate(String startDate);
@@ -114,12 +121,13 @@ public final class LabTestsGetPhlebotomyAppointmentAvailabilityRequest {
 
         /**
          * <p>At-home phlebotomy appointment address.</p>
+         * <p>At-home phlebotomy appointment address.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(UsAddress body) {
-            this.body = body;
+        public _FinalStage body(@NotNull UsAddress body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 
@@ -129,10 +137,13 @@ public final class LabTestsGetPhlebotomyAppointmentAvailabilityRequest {
          */
         @java.lang.Override
         public _FinalStage startDate(String startDate) {
-            this.startDate = Optional.of(startDate);
+            this.startDate = Optional.ofNullable(startDate);
             return this;
         }
 
+        /**
+         * <p>Start date for appointment availability</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "start_date", nulls = Nulls.SKIP)
         public _FinalStage startDate(Optional<String> startDate) {

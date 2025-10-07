@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ElectrocardiogramGetRequest.Builder.class)
 public final class ElectrocardiogramGetRequest {
     private final String startDate;
@@ -87,7 +88,7 @@ public final class ElectrocardiogramGetRequest {
     }
 
     public interface StartDateStage {
-        _FinalStage startDate(String startDate);
+        _FinalStage startDate(@NotNull String startDate);
 
         Builder from(ElectrocardiogramGetRequest other);
     }
@@ -99,6 +100,9 @@ public final class ElectrocardiogramGetRequest {
 
         _FinalStage endDate(String endDate);
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         _FinalStage provider(Optional<String> provider);
 
         _FinalStage provider(String provider);
@@ -127,8 +131,8 @@ public final class ElectrocardiogramGetRequest {
 
         @java.lang.Override
         @JsonSetter("start_date")
-        public _FinalStage startDate(String startDate) {
-            this.startDate = startDate;
+        public _FinalStage startDate(@NotNull String startDate) {
+            this.startDate = Objects.requireNonNull(startDate, "startDate must not be null");
             return this;
         }
 
@@ -138,10 +142,13 @@ public final class ElectrocardiogramGetRequest {
          */
         @java.lang.Override
         public _FinalStage provider(String provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<String> provider) {
@@ -151,7 +158,7 @@ public final class ElectrocardiogramGetRequest {
 
         @java.lang.Override
         public _FinalStage endDate(String endDate) {
-            this.endDate = Optional.of(endDate);
+            this.endDate = Optional.ofNullable(endDate);
             return this;
         }
 

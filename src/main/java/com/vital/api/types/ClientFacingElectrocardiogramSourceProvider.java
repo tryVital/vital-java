@@ -29,6 +29,7 @@ public final class ClientFacingElectrocardiogramSourceProvider {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((Providers) this.value);
@@ -79,16 +80,16 @@ public final class ClientFacingElectrocardiogramSourceProvider {
         }
 
         @java.lang.Override
-        public ClientFacingElectrocardiogramSourceProvider deserialize(JsonParser p, DeserializationContext ctxt)
+        public ClientFacingElectrocardiogramSourceProvider deserialize(JsonParser p, DeserializationContext context)
                 throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Providers.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Labs.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

@@ -14,27 +14,37 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
 import com.vital.api.types.LabLocationCapability;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetOrderPscInfoRequest.Builder.class)
 public final class LabTestsGetOrderPscInfoRequest {
-    private final Optional<AllowedRadius> radius;
+    private final Optional<List<LabLocationCapability>> capabilities;
 
-    private final Optional<LabLocationCapability> capabilities;
+    private final Optional<AllowedRadius> radius;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetOrderPscInfoRequest(
+            Optional<List<LabLocationCapability>> capabilities,
             Optional<AllowedRadius> radius,
-            Optional<LabLocationCapability> capabilities,
             Map<String, Object> additionalProperties) {
-        this.radius = radius;
         this.capabilities = capabilities;
+        this.radius = radius;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Filter for only locations with certain capabilities
+     */
+    @JsonProperty("capabilities")
+    public Optional<List<LabLocationCapability>> getCapabilities() {
+        return capabilities;
     }
 
     /**
@@ -43,14 +53,6 @@ public final class LabTestsGetOrderPscInfoRequest {
     @JsonProperty("radius")
     public Optional<AllowedRadius> getRadius() {
         return radius;
-    }
-
-    /**
-     * @return Filter for only locations with certain capabilities
-     */
-    @JsonProperty("capabilities")
-    public Optional<LabLocationCapability> getCapabilities() {
-        return capabilities;
     }
 
     @java.lang.Override
@@ -65,12 +67,12 @@ public final class LabTestsGetOrderPscInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetOrderPscInfoRequest other) {
-        return radius.equals(other.radius) && capabilities.equals(other.capabilities);
+        return capabilities.equals(other.capabilities) && radius.equals(other.radius);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.radius, this.capabilities);
+        return Objects.hash(this.capabilities, this.radius);
     }
 
     @java.lang.Override
@@ -84,9 +86,9 @@ public final class LabTestsGetOrderPscInfoRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<AllowedRadius> radius = Optional.empty();
+        private Optional<List<LabLocationCapability>> capabilities = Optional.empty();
 
-        private Optional<LabLocationCapability> capabilities = Optional.empty();
+        private Optional<AllowedRadius> radius = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -94,11 +96,33 @@ public final class LabTestsGetOrderPscInfoRequest {
         private Builder() {}
 
         public Builder from(LabTestsGetOrderPscInfoRequest other) {
-            radius(other.getRadius());
             capabilities(other.getCapabilities());
+            radius(other.getRadius());
             return this;
         }
 
+        /**
+         * <p>Filter for only locations with certain capabilities</p>
+         */
+        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
+        public Builder capabilities(Optional<List<LabLocationCapability>> capabilities) {
+            this.capabilities = capabilities;
+            return this;
+        }
+
+        public Builder capabilities(List<LabLocationCapability> capabilities) {
+            this.capabilities = Optional.ofNullable(capabilities);
+            return this;
+        }
+
+        public Builder capabilities(LabLocationCapability capabilities) {
+            this.capabilities = Optional.of(Collections.singletonList(capabilities));
+            return this;
+        }
+
+        /**
+         * <p>Radius in which to search in miles</p>
+         */
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
         public Builder radius(Optional<AllowedRadius> radius) {
             this.radius = radius;
@@ -106,23 +130,12 @@ public final class LabTestsGetOrderPscInfoRequest {
         }
 
         public Builder radius(AllowedRadius radius) {
-            this.radius = Optional.of(radius);
-            return this;
-        }
-
-        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
-        public Builder capabilities(Optional<LabLocationCapability> capabilities) {
-            this.capabilities = capabilities;
-            return this;
-        }
-
-        public Builder capabilities(LabLocationCapability capabilities) {
-            this.capabilities = Optional.of(capabilities);
+            this.radius = Optional.ofNullable(radius);
             return this;
         }
 
         public LabTestsGetOrderPscInfoRequest build() {
-            return new LabTestsGetOrderPscInfoRequest(radius, capabilities, additionalProperties);
+            return new LabTestsGetOrderPscInfoRequest(capabilities, radius, additionalProperties);
         }
     }
 }

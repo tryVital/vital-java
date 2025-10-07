@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TeamConfig.Builder.class)
 public final class TeamConfig {
     private final LibreConfig libreview;
@@ -145,7 +146,7 @@ public final class TeamConfig {
     }
 
     public interface LibreviewStage {
-        _FinalStage libreview(LibreConfig libreview);
+        _FinalStage libreview(@NotNull LibreConfig libreview);
 
         Builder from(TeamConfig other);
     }
@@ -220,14 +221,14 @@ public final class TeamConfig {
 
         @java.lang.Override
         @JsonSetter("libreview")
-        public _FinalStage libreview(LibreConfig libreview) {
-            this.libreview = libreview;
+        public _FinalStage libreview(@NotNull LibreConfig libreview) {
+            this.libreview = Objects.requireNonNull(libreview, "libreview must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage eventTypePrefixes(List<String> eventTypePrefixes) {
-            this.eventTypePrefixes = Optional.of(eventTypePrefixes);
+            this.eventTypePrefixes = Optional.ofNullable(eventTypePrefixes);
             return this;
         }
 
@@ -240,7 +241,7 @@ public final class TeamConfig {
 
         @java.lang.Override
         public _FinalStage edsPreferences(EventDestinationPreferences edsPreferences) {
-            this.edsPreferences = Optional.of(edsPreferences);
+            this.edsPreferences = Optional.ofNullable(edsPreferences);
             return this;
         }
 
@@ -253,7 +254,7 @@ public final class TeamConfig {
 
         @java.lang.Override
         public _FinalStage sdkPerDeviceActivityTimeseries(Boolean sdkPerDeviceActivityTimeseries) {
-            this.sdkPerDeviceActivityTimeseries = Optional.of(sdkPerDeviceActivityTimeseries);
+            this.sdkPerDeviceActivityTimeseries = Optional.ofNullable(sdkPerDeviceActivityTimeseries);
             return this;
         }
 
@@ -266,7 +267,7 @@ public final class TeamConfig {
 
         @java.lang.Override
         public _FinalStage rejectDuplicateConnection(Boolean rejectDuplicateConnection) {
-            this.rejectDuplicateConnection = Optional.of(rejectDuplicateConnection);
+            this.rejectDuplicateConnection = Optional.ofNullable(rejectDuplicateConnection);
             return this;
         }
 
@@ -279,7 +280,7 @@ public final class TeamConfig {
 
         @java.lang.Override
         public _FinalStage providerRawData(Boolean providerRawData) {
-            this.providerRawData = Optional.of(providerRawData);
+            this.providerRawData = Optional.ofNullable(providerRawData);
             return this;
         }
 
@@ -292,7 +293,7 @@ public final class TeamConfig {
 
         @java.lang.Override
         public _FinalStage pushHistoricalData(Boolean pushHistoricalData) {
-            this.pushHistoricalData = Optional.of(pushHistoricalData);
+            this.pushHistoricalData = Optional.ofNullable(pushHistoricalData);
             return this;
         }
 
@@ -305,7 +306,7 @@ public final class TeamConfig {
 
         @java.lang.Override
         public _FinalStage textsEnabled(Boolean textsEnabled) {
-            this.textsEnabled = Optional.of(textsEnabled);
+            this.textsEnabled = Optional.ofNullable(textsEnabled);
             return this;
         }
 

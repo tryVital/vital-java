@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingAtHomePhlebotomyOrderDetails.Builder.class)
 public final class ClientFacingAtHomePhlebotomyOrderDetails {
     private final Optional<ClientFacingAtHomePhlebotomyOrder> data;
@@ -86,7 +86,7 @@ public final class ClientFacingAtHomePhlebotomyOrderDetails {
         }
 
         public Builder data(ClientFacingAtHomePhlebotomyOrder data) {
-            this.data = Optional.of(data);
+            this.data = Optional.ofNullable(data);
             return this;
         }
 

@@ -14,35 +14,46 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
 import com.vital.api.types.ClientFacingLabs;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetAreaInfoRequest.Builder.class)
 public final class LabTestsGetAreaInfoRequest {
+    private final Optional<List<ClientFacingLabs>> labs;
+
     private final String zipCode;
 
     private final Optional<AllowedRadius> radius;
 
     private final Optional<ClientFacingLabs> lab;
 
-    private final Optional<ClientFacingLabs> labs;
-
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetAreaInfoRequest(
+            Optional<List<ClientFacingLabs>> labs,
             String zipCode,
             Optional<AllowedRadius> radius,
             Optional<ClientFacingLabs> lab,
-            Optional<ClientFacingLabs> labs,
             Map<String, Object> additionalProperties) {
+        this.labs = labs;
         this.zipCode = zipCode;
         this.radius = radius;
         this.lab = lab;
-        this.labs = labs;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return List of labs to check for PSCs
+     */
+    @JsonProperty("labs")
+    public Optional<List<ClientFacingLabs>> getLabs() {
+        return labs;
     }
 
     /**
@@ -69,14 +80,6 @@ public final class LabTestsGetAreaInfoRequest {
         return lab;
     }
 
-    /**
-     * @return List of labs to check for PSCs
-     */
-    @JsonProperty("labs")
-    public Optional<ClientFacingLabs> getLabs() {
-        return labs;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -89,15 +92,15 @@ public final class LabTestsGetAreaInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetAreaInfoRequest other) {
-        return zipCode.equals(other.zipCode)
+        return labs.equals(other.labs)
+                && zipCode.equals(other.zipCode)
                 && radius.equals(other.radius)
-                && lab.equals(other.lab)
-                && labs.equals(other.labs);
+                && lab.equals(other.lab);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.radius, this.lab, this.labs);
+        return Objects.hash(this.labs, this.zipCode, this.radius, this.lab);
     }
 
     @java.lang.Override
@@ -110,7 +113,10 @@ public final class LabTestsGetAreaInfoRequest {
     }
 
     public interface ZipCodeStage {
-        _FinalStage zipCode(String zipCode);
+        /**
+         * <p>Zip code of the area to check</p>
+         */
+        _FinalStage zipCode(@NotNull String zipCode);
 
         Builder from(LabTestsGetAreaInfoRequest other);
     }
@@ -118,28 +124,39 @@ public final class LabTestsGetAreaInfoRequest {
     public interface _FinalStage {
         LabTestsGetAreaInfoRequest build();
 
+        /**
+         * <p>List of labs to check for PSCs</p>
+         */
+        _FinalStage labs(Optional<List<ClientFacingLabs>> labs);
+
+        _FinalStage labs(List<ClientFacingLabs> labs);
+
+        _FinalStage labs(ClientFacingLabs labs);
+
+        /**
+         * <p>Radius in which to search in miles</p>
+         */
         _FinalStage radius(Optional<AllowedRadius> radius);
 
         _FinalStage radius(AllowedRadius radius);
 
+        /**
+         * <p>Lab to check for PSCs</p>
+         */
         _FinalStage lab(Optional<ClientFacingLabs> lab);
 
         _FinalStage lab(ClientFacingLabs lab);
-
-        _FinalStage labs(Optional<ClientFacingLabs> labs);
-
-        _FinalStage labs(ClientFacingLabs labs);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ZipCodeStage, _FinalStage {
         private String zipCode;
 
-        private Optional<ClientFacingLabs> labs = Optional.empty();
-
         private Optional<ClientFacingLabs> lab = Optional.empty();
 
         private Optional<AllowedRadius> radius = Optional.empty();
+
+        private Optional<List<ClientFacingLabs>> labs = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -148,38 +165,22 @@ public final class LabTestsGetAreaInfoRequest {
 
         @java.lang.Override
         public Builder from(LabTestsGetAreaInfoRequest other) {
+            labs(other.getLabs());
             zipCode(other.getZipCode());
             radius(other.getRadius());
             lab(other.getLab());
-            labs(other.getLabs());
             return this;
         }
 
         /**
          * <p>Zip code of the area to check</p>
+         * <p>Zip code of the area to check</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("zip_code")
-        public _FinalStage zipCode(String zipCode) {
-            this.zipCode = zipCode;
-            return this;
-        }
-
-        /**
-         * <p>List of labs to check for PSCs</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage labs(ClientFacingLabs labs) {
-            this.labs = Optional.of(labs);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "labs", nulls = Nulls.SKIP)
-        public _FinalStage labs(Optional<ClientFacingLabs> labs) {
-            this.labs = labs;
+        public _FinalStage zipCode(@NotNull String zipCode) {
+            this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
             return this;
         }
 
@@ -189,10 +190,13 @@ public final class LabTestsGetAreaInfoRequest {
          */
         @java.lang.Override
         public _FinalStage lab(ClientFacingLabs lab) {
-            this.lab = Optional.of(lab);
+            this.lab = Optional.ofNullable(lab);
             return this;
         }
 
+        /**
+         * <p>Lab to check for PSCs</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "lab", nulls = Nulls.SKIP)
         public _FinalStage lab(Optional<ClientFacingLabs> lab) {
@@ -206,10 +210,13 @@ public final class LabTestsGetAreaInfoRequest {
          */
         @java.lang.Override
         public _FinalStage radius(AllowedRadius radius) {
-            this.radius = Optional.of(radius);
+            this.radius = Optional.ofNullable(radius);
             return this;
         }
 
+        /**
+         * <p>Radius in which to search in miles</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
         public _FinalStage radius(Optional<AllowedRadius> radius) {
@@ -218,8 +225,34 @@ public final class LabTestsGetAreaInfoRequest {
         }
 
         @java.lang.Override
+        public _FinalStage labs(ClientFacingLabs labs) {
+            this.labs = Optional.of(Collections.singletonList(labs));
+            return this;
+        }
+
+        /**
+         * <p>List of labs to check for PSCs</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage labs(List<ClientFacingLabs> labs) {
+            this.labs = Optional.ofNullable(labs);
+            return this;
+        }
+
+        /**
+         * <p>List of labs to check for PSCs</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "labs", nulls = Nulls.SKIP)
+        public _FinalStage labs(Optional<List<ClientFacingLabs>> labs) {
+            this.labs = labs;
+            return this;
+        }
+
+        @java.lang.Override
         public LabTestsGetAreaInfoRequest build() {
-            return new LabTestsGetAreaInfoRequest(zipCode, radius, lab, labs, additionalProperties);
+            return new LabTestsGetAreaInfoRequest(labs, zipCode, radius, lab, additionalProperties);
         }
     }
 }

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SingleUserResourceResponse.Builder.class)
 public final class SingleUserResourceResponse {
     private final String userId;
@@ -75,7 +76,7 @@ public final class SingleUserResourceResponse {
     }
 
     public interface UserIdStage {
-        _FinalStage userId(String userId);
+        _FinalStage userId(@NotNull String userId);
 
         Builder from(SingleUserResourceResponse other);
     }
@@ -110,8 +111,8 @@ public final class SingleUserResourceResponse {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public _FinalStage userId(String userId) {
-            this.userId = userId;
+        public _FinalStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
@@ -123,7 +124,9 @@ public final class SingleUserResourceResponse {
 
         @java.lang.Override
         public _FinalStage putAllProvider(Map<String, Map<String, SingleResourceStatistics>> provider) {
-            this.provider.putAll(provider);
+            if (provider != null) {
+                this.provider.putAll(provider);
+            }
             return this;
         }
 

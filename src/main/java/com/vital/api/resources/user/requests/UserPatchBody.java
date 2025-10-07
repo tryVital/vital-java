@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserPatchBody.Builder.class)
 public final class UserPatchBody {
     private final Optional<String> fallbackTimeZone;
@@ -152,6 +152,10 @@ public final class UserPatchBody {
             return this;
         }
 
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         */
         @JsonSetter(value = "fallback_time_zone", nulls = Nulls.SKIP)
         public Builder fallbackTimeZone(Optional<String> fallbackTimeZone) {
             this.fallbackTimeZone = fallbackTimeZone;
@@ -159,10 +163,13 @@ public final class UserPatchBody {
         }
 
         public Builder fallbackTimeZone(String fallbackTimeZone) {
-            this.fallbackTimeZone = Optional.of(fallbackTimeZone);
+            this.fallbackTimeZone = Optional.ofNullable(fallbackTimeZone);
             return this;
         }
 
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         */
         @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
         public Builder fallbackBirthDate(Optional<String> fallbackBirthDate) {
             this.fallbackBirthDate = fallbackBirthDate;
@@ -170,10 +177,13 @@ public final class UserPatchBody {
         }
 
         public Builder fallbackBirthDate(String fallbackBirthDate) {
-            this.fallbackBirthDate = Optional.of(fallbackBirthDate);
+            this.fallbackBirthDate = Optional.ofNullable(fallbackBirthDate);
             return this;
         }
 
+        /**
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         @JsonSetter(value = "ingestion_start", nulls = Nulls.SKIP)
         public Builder ingestionStart(Optional<String> ingestionStart) {
             this.ingestionStart = ingestionStart;
@@ -181,10 +191,13 @@ public final class UserPatchBody {
         }
 
         public Builder ingestionStart(String ingestionStart) {
-            this.ingestionStart = Optional.of(ingestionStart);
+            this.ingestionStart = Optional.ofNullable(ingestionStart);
             return this;
         }
 
+        /**
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
         public Builder ingestionEnd(Optional<String> ingestionEnd) {
             this.ingestionEnd = ingestionEnd;
@@ -192,10 +205,13 @@ public final class UserPatchBody {
         }
 
         public Builder ingestionEnd(String ingestionEnd) {
-            this.ingestionEnd = Optional.of(ingestionEnd);
+            this.ingestionEnd = Optional.ofNullable(ingestionEnd);
             return this;
         }
 
+        /**
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         */
         @JsonSetter(value = "client_user_id", nulls = Nulls.SKIP)
         public Builder clientUserId(Optional<String> clientUserId) {
             this.clientUserId = clientUserId;
@@ -203,7 +219,7 @@ public final class UserPatchBody {
         }
 
         public Builder clientUserId(String clientUserId) {
-            this.clientUserId = Optional.of(clientUserId);
+            this.clientUserId = Optional.ofNullable(clientUserId);
             return this;
         }
 

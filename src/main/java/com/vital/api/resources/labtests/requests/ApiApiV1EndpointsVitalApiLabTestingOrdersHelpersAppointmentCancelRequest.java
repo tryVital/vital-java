@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest.Builder.class)
 public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest {
     private final String cancellationReasonId;
@@ -74,7 +75,7 @@ public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCa
     }
 
     public interface CancellationReasonIdStage {
-        _FinalStage cancellationReasonId(String cancellationReasonId);
+        _FinalStage cancellationReasonId(@NotNull String cancellationReasonId);
 
         Builder from(ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest other);
     }
@@ -107,14 +108,15 @@ public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCa
 
         @java.lang.Override
         @JsonSetter("cancellation_reason_id")
-        public _FinalStage cancellationReasonId(String cancellationReasonId) {
-            this.cancellationReasonId = cancellationReasonId;
+        public _FinalStage cancellationReasonId(@NotNull String cancellationReasonId) {
+            this.cancellationReasonId =
+                    Objects.requireNonNull(cancellationReasonId, "cancellationReasonId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage notes(String notes) {
-            this.notes = Optional.of(notes);
+            this.notes = Optional.ofNullable(notes);
             return this;
         }
 

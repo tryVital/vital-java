@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingFloorsClimbedTimeseries.Builder.class)
 public final class ClientFacingFloorsClimbedTimeseries {
     private final Optional<Integer> id;
@@ -131,26 +132,41 @@ public final class ClientFacingFloorsClimbedTimeseries {
     }
 
     public interface TimestampStage {
-        ValueStage timestamp(OffsetDateTime timestamp);
+        /**
+         * <p>The timestamp of the measurement.</p>
+         */
+        ValueStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(ClientFacingFloorsClimbedTimeseries other);
     }
 
     public interface ValueStage {
+        /**
+         * <p>Number of floors climbed at the time or interval::count</p>
+         */
         _FinalStage value(double value);
     }
 
     public interface _FinalStage {
         ClientFacingFloorsClimbedTimeseries build();
 
+        /**
+         * <p>Deprecated</p>
+         */
         _FinalStage id(Optional<Integer> id);
 
         _FinalStage id(Integer id);
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         */
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
@@ -185,16 +201,18 @@ public final class ClientFacingFloorsClimbedTimeseries {
 
         /**
          * <p>The timestamp of the measurement.</p>
+         * <p>The timestamp of the measurement.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public ValueStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public ValueStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         /**
+         * <p>Number of floors climbed at the time or interval::count</p>
          * <p>Number of floors climbed at the time or interval::count</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -211,10 +229,13 @@ public final class ClientFacingFloorsClimbedTimeseries {
          */
         @java.lang.Override
         public _FinalStage type(String type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
@@ -228,10 +249,13 @@ public final class ClientFacingFloorsClimbedTimeseries {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -245,10 +269,13 @@ public final class ClientFacingFloorsClimbedTimeseries {
          */
         @java.lang.Override
         public _FinalStage id(Integer id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
+        /**
+         * <p>Deprecated</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {

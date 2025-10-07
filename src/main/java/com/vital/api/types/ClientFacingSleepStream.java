@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingSleepStream.Builder.class)
 public final class ClientFacingSleepStream {
     private final Optional<List<ClientFacingHrvTimeseries>> hrv;
@@ -126,7 +126,7 @@ public final class ClientFacingSleepStream {
         }
 
         public Builder hrv(List<ClientFacingHrvTimeseries> hrv) {
-            this.hrv = Optional.of(hrv);
+            this.hrv = Optional.ofNullable(hrv);
             return this;
         }
 
@@ -137,7 +137,7 @@ public final class ClientFacingSleepStream {
         }
 
         public Builder heartrate(List<ClientFacingHeartRateTimeseries> heartrate) {
-            this.heartrate = Optional.of(heartrate);
+            this.heartrate = Optional.ofNullable(heartrate);
             return this;
         }
 
@@ -148,7 +148,7 @@ public final class ClientFacingSleepStream {
         }
 
         public Builder hypnogram(List<ClientFacingHypnogramTimeseries> hypnogram) {
-            this.hypnogram = Optional.of(hypnogram);
+            this.hypnogram = Optional.ofNullable(hypnogram);
             return this;
         }
 
@@ -159,7 +159,7 @@ public final class ClientFacingSleepStream {
         }
 
         public Builder respiratoryRate(List<ClientFacingRespiratoryRateTimeseries> respiratoryRate) {
-            this.respiratoryRate = Optional.of(respiratoryRate);
+            this.respiratoryRate = Optional.ofNullable(respiratoryRate);
             return this;
         }
 

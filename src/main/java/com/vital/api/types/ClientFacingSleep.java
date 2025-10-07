@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingSleep.Builder.class)
 public final class ClientFacingSleep {
     private final String id;
@@ -468,122 +469,203 @@ public final class ClientFacingSleep {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingSleep other);
     }
 
     public interface UserIdStage {
-        DateStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        DateStage userId(@NotNull String userId);
     }
 
     public interface DateStage {
-        CalendarDateStage date(OffsetDateTime date);
+        /**
+         * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
+         */
+        CalendarDateStage date(@NotNull OffsetDateTime date);
     }
 
     public interface CalendarDateStage {
-        BedtimeStartStage calendarDate(String calendarDate);
+        /**
+         * <p>Date of the sleep summary in the YYYY-mm-dd format. This generally matches the sleep end date.</p>
+         */
+        BedtimeStartStage calendarDate(@NotNull String calendarDate);
     }
 
     public interface BedtimeStartStage {
-        BedtimeStopStage bedtimeStart(OffsetDateTime bedtimeStart);
+        /**
+         * <p>UTC Time when the sleep period started</p>
+         */
+        BedtimeStopStage bedtimeStart(@NotNull OffsetDateTime bedtimeStart);
     }
 
     public interface BedtimeStopStage {
-        TypeStage bedtimeStop(OffsetDateTime bedtimeStop);
+        /**
+         * <p>UTC Time when the sleep period ended</p>
+         */
+        TypeStage bedtimeStop(@NotNull OffsetDateTime bedtimeStop);
     }
 
     public interface TypeStage {
-        DurationStage type(SleepType type);
+        /**
+         * <p><code>long_sleep</code>: &gt;=3 hours of sleep;
+         * <code>short_sleep</code>: &lt;3 hours of sleep;
+         * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
+         * <code>unknown</code>: The sleep session recording is ongoing.</p>
+         */
+        DurationStage type(@NotNull SleepType type);
     }
 
     public interface DurationStage {
+        /**
+         * <p>Total duration of the sleep period (sleep.duration = sleep.bedtime_end - sleep.bedtime_start)::seconds</p>
+         */
         TotalStage duration(int duration);
     }
 
     public interface TotalStage {
+        /**
+         * <p>Total amount of sleep registered during the sleep period (sleep.total = sleep.rem + sleep.light + sleep.deep)::seconds</p>
+         */
         AwakeStage total(int total);
     }
 
     public interface AwakeStage {
+        /**
+         * <p>Total amount of awake time registered during the sleep period::seconds</p>
+         */
         LightStage awake(int awake);
     }
 
     public interface LightStage {
+        /**
+         * <p>Total amount of light sleep registered during the sleep period::seconds</p>
+         */
         RemStage light(int light);
     }
 
     public interface RemStage {
+        /**
+         * <p>Total amount of REM sleep registered during the sleep period, minutes::seconds</p>
+         */
         DeepStage rem(int rem);
     }
 
     public interface DeepStage {
+        /**
+         * <p>Total amount of deep (N3) sleep registered during the sleep period::seconds</p>
+         */
         SourceStage deep(int deep);
     }
 
     public interface SourceStage {
-        CreatedAtStage source(ClientFacingSource source);
+        /**
+         * <p>Source the data has come from.</p>
+         */
+        CreatedAtStage source(@NotNull ClientFacingSource source);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
         ClientFacingSleep build();
 
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        /**
+         * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
+         */
         _FinalStage score(Optional<Integer> score);
 
         _FinalStage score(Integer score);
 
+        /**
+         * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
+         */
         _FinalStage hrLowest(Optional<Integer> hrLowest);
 
         _FinalStage hrLowest(Integer hrLowest);
 
+        /**
+         * <p>The average heart rate registered during the sleep period::beats per minute</p>
+         */
         _FinalStage hrAverage(Optional<Integer> hrAverage);
 
         _FinalStage hrAverage(Integer hrAverage);
 
+        /**
+         * <p>Resting heart rate recorded during a sleep session::bpm</p>
+         */
         _FinalStage hrResting(Optional<Integer> hrResting);
 
         _FinalStage hrResting(Integer hrResting);
 
+        /**
+         * <p>Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc</p>
+         */
         _FinalStage efficiency(Optional<Double> efficiency);
 
         _FinalStage efficiency(Double efficiency);
 
+        /**
+         * <p>Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds</p>
+         */
         _FinalStage latency(Optional<Integer> latency);
 
         _FinalStage latency(Integer latency);
 
+        /**
+         * <p>Skin temperature deviation from the long-term temperature average::celcius</p>
+         */
         _FinalStage temperatureDelta(Optional<Double> temperatureDelta);
 
         _FinalStage temperatureDelta(Double temperatureDelta);
 
+        /**
+         * <p>The skin temperature::celcius</p>
+         */
         _FinalStage skinTemperature(Optional<Double> skinTemperature);
 
         _FinalStage skinTemperature(Double skinTemperature);
 
+        /**
+         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
+         */
         _FinalStage hrDip(Optional<Double> hrDip);
 
         _FinalStage hrDip(Double hrDip);
 
+        /**
+         * <p>Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str</p>
+         */
         _FinalStage state(Optional<SleepSummaryState> state);
 
         _FinalStage state(SleepSummaryState state);
 
+        /**
+         * <p>The average heart rate variability registered during the sleep period::rmssd</p>
+         */
         _FinalStage averageHrv(Optional<Double> averageHrv);
 
         _FinalStage averageHrv(Double averageHrv);
 
+        /**
+         * <p>Average respiratory rate::breaths per minute</p>
+         */
         _FinalStage respiratoryRate(Optional<Double> respiratoryRate);
 
         _FinalStage respiratoryRate(Double respiratoryRate);
@@ -714,63 +796,68 @@ public final class ClientFacingSleep {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public DateStage userId(String userId) {
-            this.userId = userId;
+        public DateStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
+         * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("date")
-        public CalendarDateStage date(OffsetDateTime date) {
-            this.date = date;
+        public CalendarDateStage date(@NotNull OffsetDateTime date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>Date of the sleep summary in the YYYY-mm-dd format. This generally matches the sleep end date.</p>
+         * <p>Date of the sleep summary in the YYYY-mm-dd format. This generally matches the sleep end date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("calendar_date")
-        public BedtimeStartStage calendarDate(String calendarDate) {
-            this.calendarDate = calendarDate;
+        public BedtimeStartStage calendarDate(@NotNull String calendarDate) {
+            this.calendarDate = Objects.requireNonNull(calendarDate, "calendarDate must not be null");
             return this;
         }
 
         /**
          * <p>UTC Time when the sleep period started</p>
+         * <p>UTC Time when the sleep period started</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("bedtime_start")
-        public BedtimeStopStage bedtimeStart(OffsetDateTime bedtimeStart) {
-            this.bedtimeStart = bedtimeStart;
+        public BedtimeStopStage bedtimeStart(@NotNull OffsetDateTime bedtimeStart) {
+            this.bedtimeStart = Objects.requireNonNull(bedtimeStart, "bedtimeStart must not be null");
             return this;
         }
 
         /**
          * <p>UTC Time when the sleep period ended</p>
+         * <p>UTC Time when the sleep period ended</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("bedtime_stop")
-        public TypeStage bedtimeStop(OffsetDateTime bedtimeStop) {
-            this.bedtimeStop = bedtimeStop;
+        public TypeStage bedtimeStop(@NotNull OffsetDateTime bedtimeStop) {
+            this.bedtimeStop = Objects.requireNonNull(bedtimeStop, "bedtimeStop must not be null");
             return this;
         }
 
@@ -779,16 +866,21 @@ public final class ClientFacingSleep {
          * <code>short_sleep</code>: &lt;3 hours of sleep;
          * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
          * <code>unknown</code>: The sleep session recording is ongoing.</p>
+         * <p><code>long_sleep</code>: &gt;=3 hours of sleep;
+         * <code>short_sleep</code>: &lt;3 hours of sleep;
+         * <code>acknowledged_nap</code>: User-acknowledged naps, typically under 3 hours of sleep;
+         * <code>unknown</code>: The sleep session recording is ongoing.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("type")
-        public DurationStage type(SleepType type) {
-            this.type = type;
+        public DurationStage type(@NotNull SleepType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         /**
+         * <p>Total duration of the sleep period (sleep.duration = sleep.bedtime_end - sleep.bedtime_start)::seconds</p>
          * <p>Total duration of the sleep period (sleep.duration = sleep.bedtime_end - sleep.bedtime_start)::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -801,6 +893,7 @@ public final class ClientFacingSleep {
 
         /**
          * <p>Total amount of sleep registered during the sleep period (sleep.total = sleep.rem + sleep.light + sleep.deep)::seconds</p>
+         * <p>Total amount of sleep registered during the sleep period (sleep.total = sleep.rem + sleep.light + sleep.deep)::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -811,6 +904,7 @@ public final class ClientFacingSleep {
         }
 
         /**
+         * <p>Total amount of awake time registered during the sleep period::seconds</p>
          * <p>Total amount of awake time registered during the sleep period::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -823,6 +917,7 @@ public final class ClientFacingSleep {
 
         /**
          * <p>Total amount of light sleep registered during the sleep period::seconds</p>
+         * <p>Total amount of light sleep registered during the sleep period::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -833,6 +928,7 @@ public final class ClientFacingSleep {
         }
 
         /**
+         * <p>Total amount of REM sleep registered during the sleep period, minutes::seconds</p>
          * <p>Total amount of REM sleep registered during the sleep period, minutes::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -845,6 +941,7 @@ public final class ClientFacingSleep {
 
         /**
          * <p>Total amount of deep (N3) sleep registered during the sleep period::seconds</p>
+         * <p>Total amount of deep (N3) sleep registered during the sleep period::seconds</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -856,32 +953,33 @@ public final class ClientFacingSleep {
 
         /**
          * <p>Source the data has come from.</p>
+         * <p>Source the data has come from.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public CreatedAtStage source(ClientFacingSource source) {
-            this.source = source;
+        public CreatedAtStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sleepStream(ClientFacingSleepStream sleepStream) {
-            this.sleepStream = Optional.of(sleepStream);
+            this.sleepStream = Optional.ofNullable(sleepStream);
             return this;
         }
 
@@ -898,10 +996,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage respiratoryRate(Double respiratoryRate) {
-            this.respiratoryRate = Optional.of(respiratoryRate);
+            this.respiratoryRate = Optional.ofNullable(respiratoryRate);
             return this;
         }
 
+        /**
+         * <p>Average respiratory rate::breaths per minute</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "respiratory_rate", nulls = Nulls.SKIP)
         public _FinalStage respiratoryRate(Optional<Double> respiratoryRate) {
@@ -915,10 +1016,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage averageHrv(Double averageHrv) {
-            this.averageHrv = Optional.of(averageHrv);
+            this.averageHrv = Optional.ofNullable(averageHrv);
             return this;
         }
 
+        /**
+         * <p>The average heart rate variability registered during the sleep period::rmssd</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "average_hrv", nulls = Nulls.SKIP)
         public _FinalStage averageHrv(Optional<Double> averageHrv) {
@@ -932,10 +1036,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage state(SleepSummaryState state) {
-            this.state = Optional.of(state);
+            this.state = Optional.ofNullable(state);
             return this;
         }
 
+        /**
+         * <p>Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "state", nulls = Nulls.SKIP)
         public _FinalStage state(Optional<SleepSummaryState> state) {
@@ -949,10 +1056,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage hrDip(Double hrDip) {
-            this.hrDip = Optional.of(hrDip);
+            this.hrDip = Optional.ofNullable(hrDip);
             return this;
         }
 
+        /**
+         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "hr_dip", nulls = Nulls.SKIP)
         public _FinalStage hrDip(Optional<Double> hrDip) {
@@ -966,10 +1076,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage skinTemperature(Double skinTemperature) {
-            this.skinTemperature = Optional.of(skinTemperature);
+            this.skinTemperature = Optional.ofNullable(skinTemperature);
             return this;
         }
 
+        /**
+         * <p>The skin temperature::celcius</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "skin_temperature", nulls = Nulls.SKIP)
         public _FinalStage skinTemperature(Optional<Double> skinTemperature) {
@@ -983,10 +1096,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage temperatureDelta(Double temperatureDelta) {
-            this.temperatureDelta = Optional.of(temperatureDelta);
+            this.temperatureDelta = Optional.ofNullable(temperatureDelta);
             return this;
         }
 
+        /**
+         * <p>Skin temperature deviation from the long-term temperature average::celcius</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "temperature_delta", nulls = Nulls.SKIP)
         public _FinalStage temperatureDelta(Optional<Double> temperatureDelta) {
@@ -1000,10 +1116,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage latency(Integer latency) {
-            this.latency = Optional.of(latency);
+            this.latency = Optional.ofNullable(latency);
             return this;
         }
 
+        /**
+         * <p>Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "latency", nulls = Nulls.SKIP)
         public _FinalStage latency(Optional<Integer> latency) {
@@ -1017,10 +1136,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage efficiency(Double efficiency) {
-            this.efficiency = Optional.of(efficiency);
+            this.efficiency = Optional.ofNullable(efficiency);
             return this;
         }
 
+        /**
+         * <p>Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "efficiency", nulls = Nulls.SKIP)
         public _FinalStage efficiency(Optional<Double> efficiency) {
@@ -1034,10 +1156,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage hrResting(Integer hrResting) {
-            this.hrResting = Optional.of(hrResting);
+            this.hrResting = Optional.ofNullable(hrResting);
             return this;
         }
 
+        /**
+         * <p>Resting heart rate recorded during a sleep session::bpm</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "hr_resting", nulls = Nulls.SKIP)
         public _FinalStage hrResting(Optional<Integer> hrResting) {
@@ -1051,10 +1176,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage hrAverage(Integer hrAverage) {
-            this.hrAverage = Optional.of(hrAverage);
+            this.hrAverage = Optional.ofNullable(hrAverage);
             return this;
         }
 
+        /**
+         * <p>The average heart rate registered during the sleep period::beats per minute</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "hr_average", nulls = Nulls.SKIP)
         public _FinalStage hrAverage(Optional<Integer> hrAverage) {
@@ -1068,10 +1196,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage hrLowest(Integer hrLowest) {
-            this.hrLowest = Optional.of(hrLowest);
+            this.hrLowest = Optional.ofNullable(hrLowest);
             return this;
         }
 
+        /**
+         * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "hr_lowest", nulls = Nulls.SKIP)
         public _FinalStage hrLowest(Optional<Integer> hrLowest) {
@@ -1085,10 +1216,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage score(Integer score) {
-            this.score = Optional.of(score);
+            this.score = Optional.ofNullable(score);
             return this;
         }
 
+        /**
+         * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "score", nulls = Nulls.SKIP)
         public _FinalStage score(Optional<Integer> score) {
@@ -1102,10 +1236,13 @@ public final class ClientFacingSleep {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {

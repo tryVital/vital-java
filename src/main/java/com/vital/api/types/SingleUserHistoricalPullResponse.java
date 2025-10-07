@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SingleUserHistoricalPullResponse.Builder.class)
 public final class SingleUserHistoricalPullResponse {
     private final String userId;
@@ -75,7 +76,7 @@ public final class SingleUserHistoricalPullResponse {
     }
 
     public interface UserIdStage {
-        _FinalStage userId(String userId);
+        _FinalStage userId(@NotNull String userId);
 
         Builder from(SingleUserHistoricalPullResponse other);
     }
@@ -110,8 +111,8 @@ public final class SingleUserHistoricalPullResponse {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public _FinalStage userId(String userId) {
-            this.userId = userId;
+        public _FinalStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
@@ -123,7 +124,9 @@ public final class SingleUserHistoricalPullResponse {
 
         @java.lang.Override
         public _FinalStage putAllProvider(Map<String, SingleProviderHistoricalPullResponse> provider) {
-            this.provider.putAll(provider);
+            if (provider != null) {
+                this.provider.putAll(provider);
+            }
             return this;
         }
 

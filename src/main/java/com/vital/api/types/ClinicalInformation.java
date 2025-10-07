@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClinicalInformation.Builder.class)
 public final class ClinicalInformation {
     private final Optional<Boolean> fasting;
@@ -125,7 +125,7 @@ public final class ClinicalInformation {
         }
 
         public Builder fasting(Boolean fasting) {
-            this.fasting = Optional.of(fasting);
+            this.fasting = Optional.ofNullable(fasting);
             return this;
         }
 
@@ -136,7 +136,7 @@ public final class ClinicalInformation {
         }
 
         public Builder notes(String notes) {
-            this.notes = Optional.of(notes);
+            this.notes = Optional.ofNullable(notes);
             return this;
         }
 
@@ -147,7 +147,7 @@ public final class ClinicalInformation {
         }
 
         public Builder information(String information) {
-            this.information = Optional.of(information);
+            this.information = Optional.ofNullable(information);
             return this;
         }
 
@@ -158,7 +158,7 @@ public final class ClinicalInformation {
         }
 
         public Builder totalVolume(String totalVolume) {
-            this.totalVolume = Optional.of(totalVolume);
+            this.totalVolume = Optional.ofNullable(totalVolume);
             return this;
         }
 

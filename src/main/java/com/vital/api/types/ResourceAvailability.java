@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ResourceAvailability.Builder.class)
 public final class ResourceAvailability {
     private final Availability status;
@@ -75,7 +76,7 @@ public final class ResourceAvailability {
     }
 
     public interface StatusStage {
-        _FinalStage status(Availability status);
+        _FinalStage status(@NotNull Availability status);
 
         Builder from(ResourceAvailability other);
     }
@@ -108,14 +109,14 @@ public final class ResourceAvailability {
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(Availability status) {
-            this.status = status;
+        public _FinalStage status(@NotNull Availability status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage scopeRequirements(ScopeRequirementsGrants scopeRequirements) {
-            this.scopeRequirements = Optional.of(scopeRequirements);
+            this.scopeRequirements = Optional.ofNullable(scopeRequirements);
             return this;
         }
 

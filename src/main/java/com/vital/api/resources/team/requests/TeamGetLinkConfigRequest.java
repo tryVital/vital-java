@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TeamGetLinkConfigRequest.Builder.class)
 public final class TeamGetLinkConfigRequest {
     private final Optional<String> vitalLinkToken;
@@ -84,7 +84,7 @@ public final class TeamGetLinkConfigRequest {
         }
 
         public Builder vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

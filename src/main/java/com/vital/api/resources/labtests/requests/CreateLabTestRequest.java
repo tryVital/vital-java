@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateLabTestRequest.Builder.class)
 public final class CreateLabTestRequest {
     private final Optional<List<Integer>> markerIds;
@@ -118,17 +119,17 @@ public final class CreateLabTestRequest {
     }
 
     public interface NameStage {
-        MethodStage name(String name);
+        MethodStage name(@NotNull String name);
 
         Builder from(CreateLabTestRequest other);
     }
 
     public interface MethodStage {
-        DescriptionStage method(LabTestCollectionMethod method);
+        DescriptionStage method(@NotNull LabTestCollectionMethod method);
     }
 
     public interface DescriptionStage {
-        _FinalStage description(String description);
+        _FinalStage description(@NotNull String description);
     }
 
     public interface _FinalStage {
@@ -179,28 +180,28 @@ public final class CreateLabTestRequest {
 
         @java.lang.Override
         @JsonSetter("name")
-        public MethodStage name(String name) {
-            this.name = name;
+        public MethodStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("method")
-        public DescriptionStage method(LabTestCollectionMethod method) {
-            this.method = method;
+        public DescriptionStage method(@NotNull LabTestCollectionMethod method) {
+            this.method = Objects.requireNonNull(method, "method must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("description")
-        public _FinalStage description(String description) {
-            this.description = description;
+        public _FinalStage description(@NotNull String description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage fasting(Boolean fasting) {
-            this.fasting = Optional.of(fasting);
+            this.fasting = Optional.ofNullable(fasting);
             return this;
         }
 
@@ -213,7 +214,7 @@ public final class CreateLabTestRequest {
 
         @java.lang.Override
         public _FinalStage providerIds(List<String> providerIds) {
-            this.providerIds = Optional.of(providerIds);
+            this.providerIds = Optional.ofNullable(providerIds);
             return this;
         }
 
@@ -226,7 +227,7 @@ public final class CreateLabTestRequest {
 
         @java.lang.Override
         public _FinalStage markerIds(List<Integer> markerIds) {
-            this.markerIds = Optional.of(markerIds);
+            this.markerIds = Optional.ofNullable(markerIds);
             return this;
         }
 

@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetMarkersForOrderSetRequest.Builder.class)
 public final class LabTestsGetMarkersForOrderSetRequest {
     private final Optional<Integer> page;
@@ -86,7 +87,7 @@ public final class LabTestsGetMarkersForOrderSetRequest {
     }
 
     public interface BodyStage {
-        _FinalStage body(OrderSetRequest body);
+        _FinalStage body(@NotNull OrderSetRequest body);
 
         Builder from(LabTestsGetMarkersForOrderSetRequest other);
     }
@@ -126,14 +127,14 @@ public final class LabTestsGetMarkersForOrderSetRequest {
 
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(OrderSetRequest body) {
-            this.body = body;
+        public _FinalStage body(@NotNull OrderSetRequest body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage size(Integer size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 
@@ -146,7 +147,7 @@ public final class LabTestsGetMarkersForOrderSetRequest {
 
         @java.lang.Override
         public _FinalStage page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 

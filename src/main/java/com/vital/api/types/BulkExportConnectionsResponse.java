@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkExportConnectionsResponse.Builder.class)
 public final class BulkExportConnectionsResponse {
     private final List<ConnectionRecipe> data;
@@ -104,7 +104,9 @@ public final class BulkExportConnectionsResponse {
         }
 
         public Builder addAllData(List<ConnectionRecipe> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
@@ -115,7 +117,7 @@ public final class BulkExportConnectionsResponse {
         }
 
         public Builder nextToken(String nextToken) {
-            this.nextToken = Optional.of(nextToken);
+            this.nextToken = Optional.ofNullable(nextToken);
             return this;
         }
 

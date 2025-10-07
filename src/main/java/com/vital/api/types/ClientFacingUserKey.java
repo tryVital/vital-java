@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingUserKey.Builder.class)
 public final class ClientFacingUserKey {
     private final String userId;
@@ -76,13 +77,19 @@ public final class ClientFacingUserKey {
     }
 
     public interface UserIdStage {
-        ClientUserIdStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        ClientUserIdStage userId(@NotNull String userId);
 
         Builder from(ClientFacingUserKey other);
     }
 
     public interface ClientUserIdStage {
-        _FinalStage clientUserId(String clientUserId);
+        /**
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         */
+        _FinalStage clientUserId(@NotNull String clientUserId);
     }
 
     public interface _FinalStage {
@@ -109,23 +116,25 @@ public final class ClientFacingUserKey {
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public ClientUserIdStage userId(String userId) {
-            this.userId = userId;
+        public ClientUserIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("client_user_id")
-        public _FinalStage clientUserId(String clientUserId) {
-            this.clientUserId = clientUserId;
+        public _FinalStage clientUserId(@NotNull String clientUserId) {
+            this.clientUserId = Objects.requireNonNull(clientUserId, "clientUserId must not be null");
             return this;
         }
 

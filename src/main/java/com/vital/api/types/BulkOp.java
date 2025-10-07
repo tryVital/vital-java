@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkOp.Builder.class)
 public final class BulkOp {
     private final BulkOpType type;
@@ -134,17 +135,23 @@ public final class BulkOp {
     }
 
     public interface TypeStage {
-        StatusStage type(BulkOpType type);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        StatusStage type(@NotNull BulkOpType type);
 
         Builder from(BulkOp other);
     }
 
     public interface StatusStage {
-        ProviderStage status(BulkOpStatus status);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        ProviderStage status(@NotNull BulkOpStatus status);
     }
 
     public interface ProviderStage {
-        PendingStage provider(Providers provider);
+        PendingStage provider(@NotNull Providers provider);
     }
 
     public interface PendingStage {
@@ -156,7 +163,7 @@ public final class BulkOp {
     }
 
     public interface StartedAtStage {
-        _FinalStage startedAt(OffsetDateTime startedAt);
+        _FinalStage startedAt(@NotNull OffsetDateTime startedAt);
     }
 
     public interface _FinalStage {
@@ -209,30 +216,32 @@ public final class BulkOp {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("type")
-        public StatusStage type(BulkOpType type) {
-            this.type = type;
+        public StatusStage type(@NotNull BulkOpType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("status")
-        public ProviderStage status(BulkOpStatus status) {
-            this.status = status;
+        public ProviderStage status(@NotNull BulkOpStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public PendingStage provider(Providers provider) {
-            this.provider = provider;
+        public PendingStage provider(@NotNull Providers provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
@@ -252,14 +261,14 @@ public final class BulkOp {
 
         @java.lang.Override
         @JsonSetter("started_at")
-        public _FinalStage startedAt(OffsetDateTime startedAt) {
-            this.startedAt = startedAt;
+        public _FinalStage startedAt(@NotNull OffsetDateTime startedAt) {
+            this.startedAt = Objects.requireNonNull(startedAt, "startedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage endedAt(OffsetDateTime endedAt) {
-            this.endedAt = Optional.of(endedAt);
+            this.endedAt = Optional.ofNullable(endedAt);
             return this;
         }
 

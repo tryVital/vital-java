@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PaginatedUsersResponse.Builder.class)
 public final class PaginatedUsersResponse {
     private final List<ClientFacingUser> users;
@@ -160,7 +160,9 @@ public final class PaginatedUsersResponse {
 
         @java.lang.Override
         public _FinalStage addAllUsers(List<ClientFacingUser> users) {
-            this.users.addAll(users);
+            if (users != null) {
+                this.users.addAll(users);
+            }
             return this;
         }
 

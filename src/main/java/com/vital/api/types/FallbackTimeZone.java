@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FallbackTimeZone.Builder.class)
 public final class FallbackTimeZone {
     private final String id;
@@ -87,17 +88,24 @@ public final class FallbackTimeZone {
     }
 
     public interface IdStage {
-        SourceSlugStage id(String id);
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         */
+        SourceSlugStage id(@NotNull String id);
 
         Builder from(FallbackTimeZone other);
     }
 
     public interface SourceSlugStage {
-        UpdatedAtStage sourceSlug(String sourceSlug);
+        /**
+         * <p>Slug for designated source</p>
+         */
+        UpdatedAtStage sourceSlug(@NotNull String sourceSlug);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -128,30 +136,33 @@ public final class FallbackTimeZone {
         /**
          * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
          * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("id")
-        public SourceSlugStage id(String id) {
-            this.id = id;
+        public SourceSlugStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>Slug for designated source</p>
+         * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source_slug")
-        public UpdatedAtStage sourceSlug(String sourceSlug) {
-            this.sourceSlug = sourceSlug;
+        public UpdatedAtStage sourceSlug(@NotNull String sourceSlug) {
+            this.sourceSlug = Objects.requireNonNull(sourceSlug, "sourceSlug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingOrder.Builder.class)
 public final class ClientFacingOrder {
     private final String userId;
@@ -416,54 +417,87 @@ public final class ClientFacingOrder {
     }
 
     public interface UserIdStage {
-        IdStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        IdStage userId(@NotNull String userId);
 
         Builder from(ClientFacingOrder other);
     }
 
     public interface IdStage {
-        TeamIdStage id(String id);
+        /**
+         * <p>The Vital Order ID</p>
+         */
+        TeamIdStage id(@NotNull String id);
     }
 
     public interface TeamIdStage {
-        LabTestStage teamId(String teamId);
+        /**
+         * <p>Your team id.</p>
+         */
+        LabTestStage teamId(@NotNull String teamId);
     }
 
     public interface LabTestStage {
-        DetailsStage labTest(ClientFacingLabTest labTest);
+        /**
+         * <p>The Vital Test associated with the order</p>
+         */
+        DetailsStage labTest(@NotNull ClientFacingLabTest labTest);
     }
 
     public interface DetailsStage {
-        CreatedAtStage details(ClientFacingOrderDetails details);
+        CreatedAtStage details(@NotNull ClientFacingOrderDetails details);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        /**
+         * <p>When your order was created</p>
+         */
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        HasAbnStage updatedAt(OffsetDateTime updatedAt);
+        /**
+         * <p>When your order was last updated.</p>
+         */
+        HasAbnStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface HasAbnStage {
+        /**
+         * <p>Defines whether the order has an Advanced Beneficiary Notice (ABN) form or not.</p>
+         */
         _FinalStage hasAbn(boolean hasAbn);
     }
 
     public interface _FinalStage {
         ClientFacingOrder build();
 
+        /**
+         * <p>Patient Details</p>
+         */
         _FinalStage patientDetails(Optional<ClientFacingPatientDetailsCompatible> patientDetails);
 
         _FinalStage patientDetails(ClientFacingPatientDetailsCompatible patientDetails);
 
+        /**
+         * <p>Patient Address</p>
+         */
         _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress);
 
         _FinalStage patientAddress(PatientAddressCompatible patientAddress);
 
+        /**
+         * <p>Sample ID</p>
+         */
         _FinalStage sampleId(Optional<String> sampleId);
 
         _FinalStage sampleId(String sampleId);
 
+        /**
+         * <p>Notes associated with the order</p>
+         */
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
@@ -482,22 +516,37 @@ public final class ClientFacingOrder {
 
         _FinalStage physician(ClientFacingPhysician physician);
 
+        /**
+         * <p>Vital ID of the health insurance.</p>
+         */
         _FinalStage healthInsuranceId(Optional<String> healthInsuranceId);
 
         _FinalStage healthInsuranceId(String healthInsuranceId);
 
+        /**
+         * <p>DEPRECATED. Requistion form url.</p>
+         */
         _FinalStage requisitionFormUrl(Optional<String> requisitionFormUrl);
 
         _FinalStage requisitionFormUrl(String requisitionFormUrl);
 
+        /**
+         * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
+         */
         _FinalStage priority(Optional<Boolean> priority);
 
         _FinalStage priority(Boolean priority);
 
+        /**
+         * <p>Shipping Details. For unregistered testkit orders.</p>
+         */
         _FinalStage shippingDetails(Optional<ShippingAddress> shippingDetails);
 
         _FinalStage shippingDetails(ShippingAddress shippingDetails);
 
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         */
         _FinalStage activateBy(Optional<String> activateBy);
 
         _FinalStage activateBy(String activateBy);
@@ -514,18 +563,30 @@ public final class ClientFacingOrder {
 
         _FinalStage icdCodes(List<String> icdCodes);
 
+        /**
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         */
         _FinalStage interpretation(Optional<Interpretation> interpretation);
 
         _FinalStage interpretation(Interpretation interpretation);
 
+        /**
+         * <p>Defines whether the order result has missing biomarkers.</p>
+         */
         _FinalStage hasMissingResults(Optional<Boolean> hasMissingResults);
 
         _FinalStage hasMissingResults(Boolean hasMissingResults);
 
+        /**
+         * <p>The common-case date by which the order result is expected to be available.</p>
+         */
         _FinalStage expectedResultByDate(Optional<String> expectedResultByDate);
 
         _FinalStage expectedResultByDate(String expectedResultByDate);
 
+        /**
+         * <p>The latest date by which the order result is expected to be available.</p>
+         */
         _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate);
 
         _FinalStage worstCaseResultByDate(String worstCaseResultByDate);
@@ -635,78 +696,85 @@ public final class ClientFacingOrder {
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public IdStage userId(String userId) {
-            this.userId = userId;
+        public IdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>The Vital Order ID</p>
+         * <p>The Vital Order ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("id")
-        public TeamIdStage id(String id) {
-            this.id = id;
+        public TeamIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>Your team id.</p>
+         * <p>Your team id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("team_id")
-        public LabTestStage teamId(String teamId) {
-            this.teamId = teamId;
+        public LabTestStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         /**
          * <p>The Vital Test associated with the order</p>
+         * <p>The Vital Test associated with the order</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("lab_test")
-        public DetailsStage labTest(ClientFacingLabTest labTest) {
-            this.labTest = labTest;
+        public DetailsStage labTest(@NotNull ClientFacingLabTest labTest) {
+            this.labTest = Objects.requireNonNull(labTest, "labTest must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("details")
-        public CreatedAtStage details(ClientFacingOrderDetails details) {
-            this.details = details;
+        public CreatedAtStage details(@NotNull ClientFacingOrderDetails details) {
+            this.details = Objects.requireNonNull(details, "details must not be null");
             return this;
         }
 
         /**
          * <p>When your order was created</p>
+         * <p>When your order was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         /**
          * <p>When your order was last updated.</p>
+         * <p>When your order was last updated.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("updated_at")
-        public HasAbnStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public HasAbnStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         /**
+         * <p>Defines whether the order has an Advanced Beneficiary Notice (ABN) form or not.</p>
          * <p>Defines whether the order has an Advanced Beneficiary Notice (ABN) form or not.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -723,10 +791,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage worstCaseResultByDate(String worstCaseResultByDate) {
-            this.worstCaseResultByDate = Optional.of(worstCaseResultByDate);
+            this.worstCaseResultByDate = Optional.ofNullable(worstCaseResultByDate);
             return this;
         }
 
+        /**
+         * <p>The latest date by which the order result is expected to be available.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "worst_case_result_by_date", nulls = Nulls.SKIP)
         public _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate) {
@@ -740,10 +811,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage expectedResultByDate(String expectedResultByDate) {
-            this.expectedResultByDate = Optional.of(expectedResultByDate);
+            this.expectedResultByDate = Optional.ofNullable(expectedResultByDate);
             return this;
         }
 
+        /**
+         * <p>The common-case date by which the order result is expected to be available.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "expected_result_by_date", nulls = Nulls.SKIP)
         public _FinalStage expectedResultByDate(Optional<String> expectedResultByDate) {
@@ -757,10 +831,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage hasMissingResults(Boolean hasMissingResults) {
-            this.hasMissingResults = Optional.of(hasMissingResults);
+            this.hasMissingResults = Optional.ofNullable(hasMissingResults);
             return this;
         }
 
+        /**
+         * <p>Defines whether the order result has missing biomarkers.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "has_missing_results", nulls = Nulls.SKIP)
         public _FinalStage hasMissingResults(Optional<Boolean> hasMissingResults) {
@@ -774,10 +851,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage interpretation(Interpretation interpretation) {
-            this.interpretation = Optional.of(interpretation);
+            this.interpretation = Optional.ofNullable(interpretation);
             return this;
         }
 
+        /**
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public _FinalStage interpretation(Optional<Interpretation> interpretation) {
@@ -787,7 +867,7 @@ public final class ClientFacingOrder {
 
         @java.lang.Override
         public _FinalStage icdCodes(List<String> icdCodes) {
-            this.icdCodes = Optional.of(icdCodes);
+            this.icdCodes = Optional.ofNullable(icdCodes);
             return this;
         }
 
@@ -800,7 +880,7 @@ public final class ClientFacingOrder {
 
         @java.lang.Override
         public _FinalStage billingType(Billing billingType) {
-            this.billingType = Optional.of(billingType);
+            this.billingType = Optional.ofNullable(billingType);
             return this;
         }
 
@@ -813,7 +893,7 @@ public final class ClientFacingOrder {
 
         @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
-            this.passthrough = Optional.of(passthrough);
+            this.passthrough = Optional.ofNullable(passthrough);
             return this;
         }
 
@@ -830,10 +910,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage activateBy(String activateBy) {
-            this.activateBy = Optional.of(activateBy);
+            this.activateBy = Optional.ofNullable(activateBy);
             return this;
         }
 
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "activate_by", nulls = Nulls.SKIP)
         public _FinalStage activateBy(Optional<String> activateBy) {
@@ -847,10 +930,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage shippingDetails(ShippingAddress shippingDetails) {
-            this.shippingDetails = Optional.of(shippingDetails);
+            this.shippingDetails = Optional.ofNullable(shippingDetails);
             return this;
         }
 
+        /**
+         * <p>Shipping Details. For unregistered testkit orders.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "shipping_details", nulls = Nulls.SKIP)
         public _FinalStage shippingDetails(Optional<ShippingAddress> shippingDetails) {
@@ -864,10 +950,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage priority(Boolean priority) {
-            this.priority = Optional.of(priority);
+            this.priority = Optional.ofNullable(priority);
             return this;
         }
 
+        /**
+         * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "priority", nulls = Nulls.SKIP)
         public _FinalStage priority(Optional<Boolean> priority) {
@@ -881,10 +970,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage requisitionFormUrl(String requisitionFormUrl) {
-            this.requisitionFormUrl = Optional.of(requisitionFormUrl);
+            this.requisitionFormUrl = Optional.ofNullable(requisitionFormUrl);
             return this;
         }
 
+        /**
+         * <p>DEPRECATED. Requistion form url.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "requisition_form_url", nulls = Nulls.SKIP)
         public _FinalStage requisitionFormUrl(Optional<String> requisitionFormUrl) {
@@ -898,10 +990,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage healthInsuranceId(String healthInsuranceId) {
-            this.healthInsuranceId = Optional.of(healthInsuranceId);
+            this.healthInsuranceId = Optional.ofNullable(healthInsuranceId);
             return this;
         }
 
+        /**
+         * <p>Vital ID of the health insurance.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "health_insurance_id", nulls = Nulls.SKIP)
         public _FinalStage healthInsuranceId(Optional<String> healthInsuranceId) {
@@ -911,7 +1006,7 @@ public final class ClientFacingOrder {
 
         @java.lang.Override
         public _FinalStage physician(ClientFacingPhysician physician) {
-            this.physician = Optional.of(physician);
+            this.physician = Optional.ofNullable(physician);
             return this;
         }
 
@@ -924,7 +1019,7 @@ public final class ClientFacingOrder {
 
         @java.lang.Override
         public _FinalStage status(OrderTopLevelStatus status) {
-            this.status = Optional.of(status);
+            this.status = Optional.ofNullable(status);
             return this;
         }
 
@@ -937,7 +1032,9 @@ public final class ClientFacingOrder {
 
         @java.lang.Override
         public _FinalStage addAllEvents(List<ClientFacingOrderEvent> events) {
-            this.events.addAll(events);
+            if (events != null) {
+                this.events.addAll(events);
+            }
             return this;
         }
 
@@ -961,10 +1058,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage notes(String notes) {
-            this.notes = Optional.of(notes);
+            this.notes = Optional.ofNullable(notes);
             return this;
         }
 
+        /**
+         * <p>Notes associated with the order</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
@@ -978,10 +1078,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage sampleId(String sampleId) {
-            this.sampleId = Optional.of(sampleId);
+            this.sampleId = Optional.ofNullable(sampleId);
             return this;
         }
 
+        /**
+         * <p>Sample ID</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sample_id", nulls = Nulls.SKIP)
         public _FinalStage sampleId(Optional<String> sampleId) {
@@ -995,10 +1098,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
-            this.patientAddress = Optional.of(patientAddress);
+            this.patientAddress = Optional.ofNullable(patientAddress);
             return this;
         }
 
+        /**
+         * <p>Patient Address</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "patient_address", nulls = Nulls.SKIP)
         public _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress) {
@@ -1012,10 +1118,13 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         public _FinalStage patientDetails(ClientFacingPatientDetailsCompatible patientDetails) {
-            this.patientDetails = Optional.of(patientDetails);
+            this.patientDetails = Optional.ofNullable(patientDetails);
             return this;
         }
 
+        /**
+         * <p>Patient Details</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "patient_details", nulls = Nulls.SKIP)
         public _FinalStage patientDetails(Optional<ClientFacingPatientDetailsCompatible> patientDetails) {

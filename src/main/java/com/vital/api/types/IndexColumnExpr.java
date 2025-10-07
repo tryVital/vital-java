@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IndexColumnExpr.Builder.class)
 public final class IndexColumnExpr {
     private final IndexColumnExprIndex index;
@@ -65,7 +66,10 @@ public final class IndexColumnExpr {
     }
 
     public interface IndexStage {
-        _FinalStage index(IndexColumnExprIndex index);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage index(@NotNull IndexColumnExprIndex index);
 
         Builder from(IndexColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class IndexColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("index")
-        public _FinalStage index(IndexColumnExprIndex index) {
-            this.index = index;
+        public _FinalStage index(@NotNull IndexColumnExprIndex index) {
+            this.index = Objects.requireNonNull(index, "index must not be null");
             return this;
         }
 

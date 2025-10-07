@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AreaInfo.Builder.class)
 public final class AreaInfo {
     private final String zipCode;
@@ -86,13 +87,13 @@ public final class AreaInfo {
     }
 
     public interface ZipCodeStage {
-        PhlebotomyStage zipCode(String zipCode);
+        PhlebotomyStage zipCode(@NotNull String zipCode);
 
         Builder from(AreaInfo other);
     }
 
     public interface PhlebotomyStage {
-        _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy);
+        _FinalStage phlebotomy(@NotNull PhlebotomyAreaInfo phlebotomy);
     }
 
     public interface _FinalStage {
@@ -128,15 +129,15 @@ public final class AreaInfo {
 
         @java.lang.Override
         @JsonSetter("zip_code")
-        public PhlebotomyStage zipCode(String zipCode) {
-            this.zipCode = zipCode;
+        public PhlebotomyStage zipCode(@NotNull String zipCode) {
+            this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("phlebotomy")
-        public _FinalStage phlebotomy(PhlebotomyAreaInfo phlebotomy) {
-            this.phlebotomy = phlebotomy;
+        public _FinalStage phlebotomy(@NotNull PhlebotomyAreaInfo phlebotomy) {
+            this.phlebotomy = Objects.requireNonNull(phlebotomy, "phlebotomy must not be null");
             return this;
         }
 
@@ -148,7 +149,9 @@ public final class AreaInfo {
 
         @java.lang.Override
         public _FinalStage putAllCentralLabs(Map<String, PscAreaInfo> centralLabs) {
-            this.centralLabs.putAll(centralLabs);
+            if (centralLabs != null) {
+                this.centralLabs.putAll(centralLabs);
+            }
             return this;
         }
 

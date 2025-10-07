@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserRefreshRequest.Builder.class)
 public final class UserRefreshRequest {
     private final Optional<Double> timeout;
@@ -84,7 +84,7 @@ public final class UserRefreshRequest {
         }
 
         public Builder timeout(Double timeout) {
-            this.timeout = Optional.of(timeout);
+            this.timeout = Optional.ofNullable(timeout);
             return this;
         }
 

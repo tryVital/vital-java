@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RawProfile.Builder.class)
 public final class RawProfile {
     private final ProfileInDb profile;
@@ -62,7 +63,7 @@ public final class RawProfile {
     }
 
     public interface ProfileStage {
-        _FinalStage profile(ProfileInDb profile);
+        _FinalStage profile(@NotNull ProfileInDb profile);
 
         Builder from(RawProfile other);
     }
@@ -88,8 +89,8 @@ public final class RawProfile {
 
         @java.lang.Override
         @JsonSetter("profile")
-        public _FinalStage profile(ProfileInDb profile) {
-            this.profile = profile;
+        public _FinalStage profile(@NotNull ProfileInDb profile) {
+            this.profile = Objects.requireNonNull(profile, "profile must not be null");
             return this;
         }
 

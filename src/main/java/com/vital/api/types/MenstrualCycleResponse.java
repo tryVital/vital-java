@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MenstrualCycleResponse.Builder.class)
 public final class MenstrualCycleResponse {
     private final List<ClientFacingMenstrualCycle> menstrualCycle;
@@ -92,7 +92,9 @@ public final class MenstrualCycleResponse {
         }
 
         public Builder addAllMenstrualCycle(List<ClientFacingMenstrualCycle> menstrualCycle) {
-            this.menstrualCycle.addAll(menstrualCycle);
+            if (menstrualCycle != null) {
+                this.menstrualCycle.addAll(menstrualCycle);
+            }
             return this;
         }
 

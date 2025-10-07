@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabResultsMetadata.Builder.class)
 public final class LabResultsMetadata {
     private final String age;
@@ -210,25 +211,25 @@ public final class LabResultsMetadata {
     }
 
     public interface AgeStage {
-        DobStage age(String age);
+        DobStage age(@NotNull String age);
 
         Builder from(LabResultsMetadata other);
     }
 
     public interface DobStage {
-        PatientStage dob(String dob);
+        PatientStage dob(@NotNull String dob);
     }
 
     public interface PatientStage {
-        DateReportedStage patient(String patient);
+        DateReportedStage patient(@NotNull String patient);
     }
 
     public interface DateReportedStage {
-        SpecimenNumberStage dateReported(String dateReported);
+        SpecimenNumberStage dateReported(@NotNull String dateReported);
     }
 
     public interface SpecimenNumberStage {
-        _FinalStage specimenNumber(String specimenNumber);
+        _FinalStage specimenNumber(@NotNull String specimenNumber);
     }
 
     public interface _FinalStage {
@@ -328,42 +329,42 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         @JsonSetter("age")
-        public DobStage age(String age) {
-            this.age = age;
+        public DobStage age(@NotNull String age) {
+            this.age = Objects.requireNonNull(age, "age must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("dob")
-        public PatientStage dob(String dob) {
-            this.dob = dob;
+        public PatientStage dob(@NotNull String dob) {
+            this.dob = Objects.requireNonNull(dob, "dob must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient")
-        public DateReportedStage patient(String patient) {
-            this.patient = patient;
+        public DateReportedStage patient(@NotNull String patient) {
+            this.patient = Objects.requireNonNull(patient, "patient must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("date_reported")
-        public SpecimenNumberStage dateReported(String dateReported) {
-            this.dateReported = dateReported;
+        public SpecimenNumberStage dateReported(@NotNull String dateReported) {
+            this.dateReported = Objects.requireNonNull(dateReported, "dateReported must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("specimen_number")
-        public _FinalStage specimenNumber(String specimenNumber) {
-            this.specimenNumber = specimenNumber;
+        public _FinalStage specimenNumber(@NotNull String specimenNumber) {
+            this.specimenNumber = Objects.requireNonNull(specimenNumber, "specimenNumber must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage accountId(String accountId) {
-            this.accountId = Optional.of(accountId);
+            this.accountId = Optional.ofNullable(accountId);
             return this;
         }
 
@@ -376,7 +377,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage patientId(String patientId) {
-            this.patientId = Optional.of(patientId);
+            this.patientId = Optional.ofNullable(patientId);
             return this;
         }
 
@@ -389,7 +390,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage interpretation(String interpretation) {
-            this.interpretation = Optional.of(interpretation);
+            this.interpretation = Optional.ofNullable(interpretation);
             return this;
         }
 
@@ -402,7 +403,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage status(String status) {
-            this.status = Optional.of(status);
+            this.status = Optional.ofNullable(status);
             return this;
         }
 
@@ -415,7 +416,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage dateReceived(String dateReceived) {
-            this.dateReceived = Optional.of(dateReceived);
+            this.dateReceived = Optional.ofNullable(dateReceived);
             return this;
         }
 
@@ -428,7 +429,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage dateCollected(String dateCollected) {
-            this.dateCollected = Optional.of(dateCollected);
+            this.dateCollected = Optional.ofNullable(dateCollected);
             return this;
         }
 
@@ -441,7 +442,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage laboratory(String laboratory) {
-            this.laboratory = Optional.of(laboratory);
+            this.laboratory = Optional.ofNullable(laboratory);
             return this;
         }
 
@@ -454,7 +455,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage provider(String provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 
@@ -467,7 +468,7 @@ public final class LabResultsMetadata {
 
         @java.lang.Override
         public _FinalStage clia(String clia) {
-            this.clia = Optional.of(clia);
+            this.clia = Optional.ofNullable(clia);
             return this;
         }
 

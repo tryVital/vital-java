@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingLabLocation.Builder.class)
 public final class ClientFacingLabLocation {
     private final LabLocationMetadata metadata;
@@ -118,7 +119,7 @@ public final class ClientFacingLabLocation {
     }
 
     public interface MetadataStage {
-        DistanceStage metadata(LabLocationMetadata metadata);
+        DistanceStage metadata(@NotNull LabLocationMetadata metadata);
 
         Builder from(ClientFacingLabLocation other);
     }
@@ -128,11 +129,11 @@ public final class ClientFacingLabLocation {
     }
 
     public interface SiteCodeStage {
-        LocationStage siteCode(String siteCode);
+        LocationStage siteCode(@NotNull String siteCode);
     }
 
     public interface LocationStage {
-        _FinalStage location(LngLat location);
+        _FinalStage location(@NotNull LngLat location);
     }
 
     public interface _FinalStage {
@@ -184,8 +185,8 @@ public final class ClientFacingLabLocation {
 
         @java.lang.Override
         @JsonSetter("metadata")
-        public DistanceStage metadata(LabLocationMetadata metadata) {
-            this.metadata = metadata;
+        public DistanceStage metadata(@NotNull LabLocationMetadata metadata) {
+            this.metadata = Objects.requireNonNull(metadata, "metadata must not be null");
             return this;
         }
 
@@ -198,21 +199,23 @@ public final class ClientFacingLabLocation {
 
         @java.lang.Override
         @JsonSetter("site_code")
-        public LocationStage siteCode(String siteCode) {
-            this.siteCode = siteCode;
+        public LocationStage siteCode(@NotNull String siteCode) {
+            this.siteCode = Objects.requireNonNull(siteCode, "siteCode must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("location")
-        public _FinalStage location(LngLat location) {
-            this.location = location;
+        public _FinalStage location(@NotNull LngLat location) {
+            this.location = Objects.requireNonNull(location, "location must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllCapabilities(List<LabLocationCapability> capabilities) {
-            this.capabilities.addAll(capabilities);
+            if (capabilities != null) {
+                this.capabilities.addAll(capabilities);
+            }
             return this;
         }
 
@@ -232,7 +235,9 @@ public final class ClientFacingLabLocation {
 
         @java.lang.Override
         public _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes) {
-            this.supportedBillTypes.addAll(supportedBillTypes);
+            if (supportedBillTypes != null) {
+                this.supportedBillTypes.addAll(supportedBillTypes);
+            }
             return this;
         }
 

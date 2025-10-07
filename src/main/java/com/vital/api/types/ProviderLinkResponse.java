@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProviderLinkResponse.Builder.class)
 public final class ProviderLinkResponse {
     private final ProviderLinkResponseState state;
@@ -159,13 +160,16 @@ public final class ProviderLinkResponse {
     }
 
     public interface StateStage {
-        ProviderStage state(ProviderLinkResponseState state);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        ProviderStage state(@NotNull ProviderLinkResponseState state);
 
         Builder from(ProviderLinkResponse other);
     }
 
     public interface ProviderStage {
-        ConnectedStage provider(PasswordProviders provider);
+        ConnectedStage provider(@NotNull PasswordProviders provider);
     }
 
     public interface ConnectedStage {
@@ -175,18 +179,30 @@ public final class ProviderLinkResponse {
     public interface _FinalStage {
         ProviderLinkResponse build();
 
+        /**
+         * <p>The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).</p>
+         */
         _FinalStage redirectUrl(Optional<String> redirectUrl);
 
         _FinalStage redirectUrl(String redirectUrl);
 
+        /**
+         * <p>The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage errorType(Optional<ProviderLinkResponseErrorType> errorType);
 
         _FinalStage errorType(ProviderLinkResponseErrorType errorType);
 
+        /**
+         * <p>A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.</p>
+         */
         _FinalStage error(Optional<String> error);
 
         _FinalStage error(String error);
 
+        /**
+         * <p>The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.</p>
+         */
         _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa);
 
         _FinalStage providerMfa(ProviderMfaRequest providerMfa);
@@ -234,19 +250,20 @@ public final class ProviderLinkResponse {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("state")
-        public ProviderStage state(ProviderLinkResponseState state) {
-            this.state = state;
+        public ProviderStage state(@NotNull ProviderLinkResponseState state) {
+            this.state = Objects.requireNonNull(state, "state must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public ConnectedStage provider(PasswordProviders provider) {
-            this.provider = provider;
+        public ConnectedStage provider(@NotNull PasswordProviders provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
@@ -259,7 +276,7 @@ public final class ProviderLinkResponse {
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 
@@ -276,10 +293,13 @@ public final class ProviderLinkResponse {
          */
         @java.lang.Override
         public _FinalStage providerMfa(ProviderMfaRequest providerMfa) {
-            this.providerMfa = Optional.of(providerMfa);
+            this.providerMfa = Optional.ofNullable(providerMfa);
             return this;
         }
 
+        /**
+         * <p>The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "provider_mfa", nulls = Nulls.SKIP)
         public _FinalStage providerMfa(Optional<ProviderMfaRequest> providerMfa) {
@@ -293,10 +313,13 @@ public final class ProviderLinkResponse {
          */
         @java.lang.Override
         public _FinalStage error(String error) {
-            this.error = Optional.of(error);
+            this.error = Optional.ofNullable(error);
             return this;
         }
 
+        /**
+         * <p>A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "error", nulls = Nulls.SKIP)
         public _FinalStage error(Optional<String> error) {
@@ -310,10 +333,13 @@ public final class ProviderLinkResponse {
          */
         @java.lang.Override
         public _FinalStage errorType(ProviderLinkResponseErrorType errorType) {
-            this.errorType = Optional.of(errorType);
+            this.errorType = Optional.ofNullable(errorType);
             return this;
         }
 
+        /**
+         * <p>The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
         public _FinalStage errorType(Optional<ProviderLinkResponseErrorType> errorType) {
@@ -327,10 +353,13 @@ public final class ProviderLinkResponse {
          */
         @java.lang.Override
         public _FinalStage redirectUrl(String redirectUrl) {
-            this.redirectUrl = Optional.of(redirectUrl);
+            this.redirectUrl = Optional.ofNullable(redirectUrl);
             return this;
         }
 
+        /**
+         * <p>The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
         public _FinalStage redirectUrl(Optional<String> redirectUrl) {

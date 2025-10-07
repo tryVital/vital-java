@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingCriticalResult.Builder.class)
 public final class ClientFacingCriticalResult {
     private final String orderId;
@@ -164,37 +165,58 @@ public final class ClientFacingCriticalResult {
     }
 
     public interface OrderIdStage {
-        SampleIdStage orderId(String orderId);
+        /**
+         * <p>The Vital Order ID</p>
+         */
+        SampleIdStage orderId(@NotNull String orderId);
 
         Builder from(ClientFacingCriticalResult other);
     }
 
     public interface SampleIdStage {
-        StatusStage sampleId(String sampleId);
+        /**
+         * <p>Sample ID</p>
+         */
+        StatusStage sampleId(@NotNull String sampleId);
     }
 
     public interface StatusStage {
-        InterpretationStage status(String status);
+        /**
+         * <p>The current results status, can be either (final, partial).</p>
+         */
+        InterpretationStage status(@NotNull String status);
     }
 
     public interface InterpretationStage {
-        TeamIdStage interpretation(String interpretation);
+        /**
+         * <p>The results interpretation, can be one of (normal, abnormal, critical).</p>
+         */
+        TeamIdStage interpretation(@NotNull String interpretation);
     }
 
     public interface TeamIdStage {
-        UserIdStage teamId(String teamId);
+        /**
+         * <p>Your team id.</p>
+         */
+        UserIdStage teamId(@NotNull String teamId);
     }
 
     public interface UserIdStage {
-        CreatedAtStage userId(String userId);
+        CreatedAtStage userId(@NotNull String userId);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        /**
+         * <p>When the result was first fetched from a laboratory.</p>
+         */
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        /**
+         * <p>When the result was last fetched from a laboratory.</p>
+         */
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -248,85 +270,92 @@ public final class ClientFacingCriticalResult {
 
         /**
          * <p>The Vital Order ID</p>
+         * <p>The Vital Order ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("order_id")
-        public SampleIdStage orderId(String orderId) {
-            this.orderId = orderId;
+        public SampleIdStage orderId(@NotNull String orderId) {
+            this.orderId = Objects.requireNonNull(orderId, "orderId must not be null");
             return this;
         }
 
         /**
          * <p>Sample ID</p>
+         * <p>Sample ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("sample_id")
-        public StatusStage sampleId(String sampleId) {
-            this.sampleId = sampleId;
+        public StatusStage sampleId(@NotNull String sampleId) {
+            this.sampleId = Objects.requireNonNull(sampleId, "sampleId must not be null");
             return this;
         }
 
         /**
          * <p>The current results status, can be either (final, partial).</p>
+         * <p>The current results status, can be either (final, partial).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("status")
-        public InterpretationStage status(String status) {
-            this.status = status;
+        public InterpretationStage status(@NotNull String status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         /**
          * <p>The results interpretation, can be one of (normal, abnormal, critical).</p>
+         * <p>The results interpretation, can be one of (normal, abnormal, critical).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("interpretation")
-        public TeamIdStage interpretation(String interpretation) {
-            this.interpretation = interpretation;
+        public TeamIdStage interpretation(@NotNull String interpretation) {
+            this.interpretation = Objects.requireNonNull(interpretation, "interpretation must not be null");
             return this;
         }
 
         /**
          * <p>Your team id.</p>
+         * <p>Your team id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("team_id")
-        public UserIdStage teamId(String teamId) {
-            this.teamId = teamId;
+        public UserIdStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public CreatedAtStage userId(String userId) {
-            this.userId = userId;
+        public CreatedAtStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>When the result was first fetched from a laboratory.</p>
+         * <p>When the result was first fetched from a laboratory.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         /**
          * <p>When the result was last fetched from a laboratory.</p>
+         * <p>When the result was last fetched from a laboratory.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

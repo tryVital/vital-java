@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SampleData.Builder.class)
 public final class SampleData {
     private final Optional<String> sampleId;
@@ -171,7 +171,7 @@ public final class SampleData {
         }
 
         public Builder sampleId(String sampleId) {
-            this.sampleId = Optional.of(sampleId);
+            this.sampleId = Optional.ofNullable(sampleId);
             return this;
         }
 
@@ -182,7 +182,7 @@ public final class SampleData {
         }
 
         public Builder controlNumber(String controlNumber) {
-            this.controlNumber = Optional.of(controlNumber);
+            this.controlNumber = Optional.ofNullable(controlNumber);
             return this;
         }
 
@@ -193,7 +193,7 @@ public final class SampleData {
         }
 
         public Builder dateCollected(SampleDataDateCollected dateCollected) {
-            this.dateCollected = Optional.of(dateCollected);
+            this.dateCollected = Optional.ofNullable(dateCollected);
             return this;
         }
 
@@ -204,7 +204,7 @@ public final class SampleData {
         }
 
         public Builder dateReceived(SampleDataDateReceived dateReceived) {
-            this.dateReceived = Optional.of(dateReceived);
+            this.dateReceived = Optional.ofNullable(dateReceived);
             return this;
         }
 
@@ -215,7 +215,7 @@ public final class SampleData {
         }
 
         public Builder dateReported(SampleDataDateReported dateReported) {
-            this.dateReported = Optional.of(dateReported);
+            this.dateReported = Optional.ofNullable(dateReported);
             return this;
         }
 
@@ -227,7 +227,7 @@ public final class SampleData {
         }
 
         public Builder performingLaboratories(Map<String, Optional<PerformingLaboratory>> performingLaboratories) {
-            this.performingLaboratories = Optional.of(performingLaboratories);
+            this.performingLaboratories = Optional.ofNullable(performingLaboratories);
             return this;
         }
 
@@ -238,7 +238,7 @@ public final class SampleData {
         }
 
         public Builder clinicalInformation(ClinicalInformation clinicalInformation) {
-            this.clinicalInformation = Optional.of(clinicalInformation);
+            this.clinicalInformation = Optional.ofNullable(clinicalInformation);
             return this;
         }
 

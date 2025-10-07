@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AggregateExpr.Builder.class)
 public final class AggregateExpr {
     private final AggregateExprArg arg;
@@ -73,13 +74,16 @@ public final class AggregateExpr {
     }
 
     public interface ArgStage {
-        FuncStage arg(AggregateExprArg arg);
+        FuncStage arg(@NotNull AggregateExprArg arg);
 
         Builder from(AggregateExpr other);
     }
 
     public interface FuncStage {
-        _FinalStage func(AggregateExprFunc func);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage func(@NotNull AggregateExprFunc func);
     }
 
     public interface _FinalStage {
@@ -106,19 +110,20 @@ public final class AggregateExpr {
 
         @java.lang.Override
         @JsonSetter("arg")
-        public FuncStage arg(AggregateExprArg arg) {
-            this.arg = arg;
+        public FuncStage arg(@NotNull AggregateExprArg arg) {
+            this.arg = Objects.requireNonNull(arg, "arg must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("func")
-        public _FinalStage func(AggregateExprFunc func) {
-            this.func = func;
+        public _FinalStage func(@NotNull AggregateExprFunc func) {
+            this.func = Objects.requireNonNull(func, "func must not be null");
             return this;
         }
 

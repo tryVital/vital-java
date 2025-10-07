@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingPayorSearchResponse.Builder.class)
 public final class ClientFacingPayorSearchResponse {
     private final String payorCode;
@@ -122,26 +123,41 @@ public final class ClientFacingPayorSearchResponse {
     }
 
     public interface PayorCodeStage {
-        NameStage payorCode(String payorCode);
+        /**
+         * <p>Payor code returned for the insurance information.</p>
+         */
+        NameStage payorCode(@NotNull String payorCode);
 
         Builder from(ClientFacingPayorSearchResponse other);
     }
 
     public interface NameStage {
-        OrgAddressStage name(String name);
+        /**
+         * <p>Insurance name returned for the insurance information.</p>
+         */
+        OrgAddressStage name(@NotNull String name);
     }
 
     public interface OrgAddressStage {
-        SourceStage orgAddress(Address orgAddress);
+        /**
+         * <p>Insurance business address returned for the insurance information.</p>
+         */
+        SourceStage orgAddress(@NotNull Address orgAddress);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingPayorCodeSource source);
+        /**
+         * <p>The source of the payor, can be one of (platform, team).</p>
+         */
+        _FinalStage source(@NotNull ClientFacingPayorCodeSource source);
     }
 
     public interface _FinalStage {
         ClientFacingPayorSearchResponse build();
 
+        /**
+         * <p>Insurance name aliases returned for the insurance information.</p>
+         */
         _FinalStage aliases(List<String> aliases);
 
         _FinalStage addAliases(String aliases);
@@ -178,45 +194,49 @@ public final class ClientFacingPayorSearchResponse {
 
         /**
          * <p>Payor code returned for the insurance information.</p>
+         * <p>Payor code returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("payor_code")
-        public NameStage payorCode(String payorCode) {
-            this.payorCode = payorCode;
+        public NameStage payorCode(@NotNull String payorCode) {
+            this.payorCode = Objects.requireNonNull(payorCode, "payorCode must not be null");
             return this;
         }
 
         /**
          * <p>Insurance name returned for the insurance information.</p>
+         * <p>Insurance name returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("name")
-        public OrgAddressStage name(String name) {
-            this.name = name;
+        public OrgAddressStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         /**
          * <p>Insurance business address returned for the insurance information.</p>
+         * <p>Insurance business address returned for the insurance information.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("org_address")
-        public SourceStage orgAddress(Address orgAddress) {
-            this.orgAddress = orgAddress;
+        public SourceStage orgAddress(@NotNull Address orgAddress) {
+            this.orgAddress = Objects.requireNonNull(orgAddress, "orgAddress must not be null");
             return this;
         }
 
         /**
          * <p>The source of the payor, can be one of (platform, team).</p>
+         * <p>The source of the payor, can be one of (platform, team).</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingPayorCodeSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingPayorCodeSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
@@ -226,7 +246,9 @@ public final class ClientFacingPayorSearchResponse {
          */
         @java.lang.Override
         public _FinalStage addAllAliases(List<String> aliases) {
-            this.aliases.addAll(aliases);
+            if (aliases != null) {
+                this.aliases.addAll(aliases);
+            }
             return this;
         }
 
@@ -240,6 +262,9 @@ public final class ClientFacingPayorSearchResponse {
             return this;
         }
 
+        /**
+         * <p>Insurance name aliases returned for the insurance information.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "aliases", nulls = Nulls.SKIP)
         public _FinalStage aliases(List<String> aliases) {

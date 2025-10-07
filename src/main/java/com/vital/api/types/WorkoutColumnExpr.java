@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkoutColumnExpr.Builder.class)
 public final class WorkoutColumnExpr {
     private final WorkoutColumnExprWorkout workout;
@@ -65,7 +66,10 @@ public final class WorkoutColumnExpr {
     }
 
     public interface WorkoutStage {
-        _FinalStage workout(WorkoutColumnExprWorkout workout);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage workout(@NotNull WorkoutColumnExprWorkout workout);
 
         Builder from(WorkoutColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class WorkoutColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("workout")
-        public _FinalStage workout(WorkoutColumnExprWorkout workout) {
-            this.workout = workout;
+        public _FinalStage workout(@NotNull WorkoutColumnExprWorkout workout) {
+            this.workout = Objects.requireNonNull(workout, "workout must not be null");
             return this;
         }
 

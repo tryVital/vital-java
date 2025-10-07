@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DaySlots.Builder.class)
 public final class DaySlots {
     private final Optional<AppointmentLocation> location;
@@ -86,7 +87,7 @@ public final class DaySlots {
     }
 
     public interface DateStage {
-        _FinalStage date(String date);
+        _FinalStage date(@NotNull String date);
 
         Builder from(DaySlots other);
     }
@@ -128,14 +129,16 @@ public final class DaySlots {
 
         @java.lang.Override
         @JsonSetter("date")
-        public _FinalStage date(String date) {
-            this.date = date;
+        public _FinalStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllSlots(List<TimeSlot> slots) {
-            this.slots.addAll(slots);
+            if (slots != null) {
+                this.slots.addAll(slots);
+            }
             return this;
         }
 
@@ -155,7 +158,7 @@ public final class DaySlots {
 
         @java.lang.Override
         public _FinalStage location(AppointmentLocation location) {
-            this.location = Optional.of(location);
+            this.location = Optional.ofNullable(location);
             return this;
         }
 

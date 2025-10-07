@@ -5,6 +5,7 @@ package com.vital.api.errors;
 
 import com.vital.api.core.ApiError;
 import com.vital.api.types.HttpValidationError;
+import okhttp3.Response;
 
 public final class UnprocessableEntityError extends ApiError {
     /**
@@ -14,6 +15,11 @@ public final class UnprocessableEntityError extends ApiError {
 
     public UnprocessableEntityError(HttpValidationError body) {
         super("UnprocessableEntityError", 422, body);
+        this.body = body;
+    }
+
+    public UnprocessableEntityError(HttpValidationError body, Response rawResponse) {
+        super("UnprocessableEntityError", 422, body, rawResponse);
         this.body = body;
     }
 

@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateRegistrableTestkitOrderRequest.Builder.class)
 public final class CreateRegistrableTestkitOrderRequest {
     private final String userId;
@@ -98,17 +99,17 @@ public final class CreateRegistrableTestkitOrderRequest {
     }
 
     public interface UserIdStage {
-        LabTestIdStage userId(String userId);
+        LabTestIdStage userId(@NotNull String userId);
 
         Builder from(CreateRegistrableTestkitOrderRequest other);
     }
 
     public interface LabTestIdStage {
-        ShippingDetailsStage labTestId(String labTestId);
+        ShippingDetailsStage labTestId(@NotNull String labTestId);
     }
 
     public interface ShippingDetailsStage {
-        _FinalStage shippingDetails(ShippingAddressWithValidation shippingDetails);
+        _FinalStage shippingDetails(@NotNull ShippingAddressWithValidation shippingDetails);
     }
 
     public interface _FinalStage {
@@ -145,28 +146,28 @@ public final class CreateRegistrableTestkitOrderRequest {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public LabTestIdStage userId(String userId) {
-            this.userId = userId;
+        public LabTestIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("lab_test_id")
-        public ShippingDetailsStage labTestId(String labTestId) {
-            this.labTestId = labTestId;
+        public ShippingDetailsStage labTestId(@NotNull String labTestId) {
+            this.labTestId = Objects.requireNonNull(labTestId, "labTestId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("shipping_details")
-        public _FinalStage shippingDetails(ShippingAddressWithValidation shippingDetails) {
-            this.shippingDetails = shippingDetails;
+        public _FinalStage shippingDetails(@NotNull ShippingAddressWithValidation shippingDetails) {
+            this.shippingDetails = Objects.requireNonNull(shippingDetails, "shippingDetails must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
-            this.passthrough = Optional.of(passthrough);
+            this.passthrough = Optional.ofNullable(passthrough);
             return this;
         }
 

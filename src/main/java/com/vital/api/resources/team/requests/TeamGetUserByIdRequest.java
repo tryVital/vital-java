@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TeamGetUserByIdRequest.Builder.class)
 public final class TeamGetUserByIdRequest {
     private final Optional<String> queryId;
@@ -84,7 +84,7 @@ public final class TeamGetUserByIdRequest {
         }
 
         public Builder queryId(String queryId) {
-            this.queryId = Optional.of(queryId);
+            this.queryId = Optional.ofNullable(queryId);
             return this;
         }
 

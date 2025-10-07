@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VitalsCholesterolTriglyceridesRequest.Builder.class)
 public final class VitalsCholesterolTriglyceridesRequest {
     private final Optional<String> provider;
@@ -94,7 +95,10 @@ public final class VitalsCholesterolTriglyceridesRequest {
     }
 
     public interface StartDateStage {
-        _FinalStage startDate(String startDate);
+        /**
+         * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         */
+        _FinalStage startDate(@NotNull String startDate);
 
         Builder from(VitalsCholesterolTriglyceridesRequest other);
     }
@@ -102,10 +106,16 @@ public final class VitalsCholesterolTriglyceridesRequest {
     public interface _FinalStage {
         VitalsCholesterolTriglyceridesRequest build();
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         _FinalStage provider(Optional<String> provider);
 
         _FinalStage provider(String provider);
 
+        /**
+         * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59</p>
+         */
         _FinalStage endDate(Optional<String> endDate);
 
         _FinalStage endDate(String endDate);
@@ -134,12 +144,13 @@ public final class VitalsCholesterolTriglyceridesRequest {
 
         /**
          * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
+         * <p>Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("start_date")
-        public _FinalStage startDate(String startDate) {
-            this.startDate = startDate;
+        public _FinalStage startDate(@NotNull String startDate) {
+            this.startDate = Objects.requireNonNull(startDate, "startDate must not be null");
             return this;
         }
 
@@ -149,10 +160,13 @@ public final class VitalsCholesterolTriglyceridesRequest {
          */
         @java.lang.Override
         public _FinalStage endDate(String endDate) {
-            this.endDate = Optional.of(endDate);
+            this.endDate = Optional.ofNullable(endDate);
             return this;
         }
 
+        /**
+         * <p>Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "end_date", nulls = Nulls.SKIP)
         public _FinalStage endDate(Optional<String> endDate) {
@@ -166,10 +180,13 @@ public final class VitalsCholesterolTriglyceridesRequest {
          */
         @java.lang.Override
         public _FinalStage provider(String provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<String> provider) {

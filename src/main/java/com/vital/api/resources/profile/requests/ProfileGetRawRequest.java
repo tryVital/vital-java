@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProfileGetRawRequest.Builder.class)
 public final class ProfileGetRawRequest {
     private final Optional<String> provider;
@@ -80,6 +80,9 @@ public final class ProfileGetRawRequest {
             return this;
         }
 
+        /**
+         * <p>Provider oura/strava etc</p>
+         */
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public Builder provider(Optional<String> provider) {
             this.provider = provider;
@@ -87,7 +90,7 @@ public final class ProfileGetRawRequest {
         }
 
         public Builder provider(String provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 

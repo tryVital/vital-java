@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LibreConfig.Builder.class)
 public final class LibreConfig {
     private final Map<String, Object> practiceId;
@@ -98,7 +98,9 @@ public final class LibreConfig {
         }
 
         public Builder putAllPracticeId(Map<String, Object> practiceId) {
-            this.practiceId.putAll(practiceId);
+            if (practiceId != null) {
+                this.practiceId.putAll(practiceId);
+            }
             return this;
         }
 
@@ -114,7 +116,7 @@ public final class LibreConfig {
         }
 
         public Builder stripTz(Boolean stripTz) {
-            this.stripTz = Optional.of(stripTz);
+            this.stripTz = Optional.ofNullable(stripTz);
             return this;
         }
 

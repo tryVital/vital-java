@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Question.Builder.class)
 public final class Question {
     private final long id;
@@ -167,15 +168,15 @@ public final class Question {
     }
 
     public interface CodeStage {
-        ValueStage code(String code);
+        ValueStage code(@NotNull String code);
     }
 
     public interface ValueStage {
-        TypeStage value(String value);
+        TypeStage value(@NotNull String value);
     }
 
     public interface TypeStage {
-        SequenceStage type(QuestionType type);
+        SequenceStage type(@NotNull QuestionType type);
     }
 
     public interface SequenceStage {
@@ -256,22 +257,22 @@ public final class Question {
 
         @java.lang.Override
         @JsonSetter("code")
-        public ValueStage code(String code) {
-            this.code = code;
+        public ValueStage code(@NotNull String code) {
+            this.code = Objects.requireNonNull(code, "code must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("value")
-        public TypeStage value(String value) {
-            this.value = value;
+        public TypeStage value(@NotNull String value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public SequenceStage type(QuestionType type) {
-            this.type = type;
+        public SequenceStage type(@NotNull QuestionType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -284,7 +285,7 @@ public final class Question {
 
         @java.lang.Override
         public _FinalStage default_(String default_) {
-            this.default_ = Optional.of(default_);
+            this.default_ = Optional.ofNullable(default_);
             return this;
         }
 
@@ -297,7 +298,7 @@ public final class Question {
 
         @java.lang.Override
         public _FinalStage constraint(String constraint) {
-            this.constraint = Optional.of(constraint);
+            this.constraint = Optional.ofNullable(constraint);
             return this;
         }
 
@@ -310,7 +311,9 @@ public final class Question {
 
         @java.lang.Override
         public _FinalStage addAllAnswers(List<Answer> answers) {
-            this.answers.addAll(answers);
+            if (answers != null) {
+                this.answers.addAll(answers);
+            }
             return this;
         }
 

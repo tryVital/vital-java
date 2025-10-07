@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SexualActivityEntry.Builder.class)
 public final class SexualActivityEntry {
     private final String date;
@@ -73,7 +74,7 @@ public final class SexualActivityEntry {
     }
 
     public interface DateStage {
-        _FinalStage date(String date);
+        _FinalStage date(@NotNull String date);
 
         Builder from(SexualActivityEntry other);
     }
@@ -106,14 +107,14 @@ public final class SexualActivityEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public _FinalStage date(String date) {
-            this.date = date;
+        public _FinalStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage protectionUsed(Boolean protectionUsed) {
-            this.protectionUsed = Optional.of(protectionUsed);
+            this.protectionUsed = Optional.ofNullable(protectionUsed);
             return this;
         }
 

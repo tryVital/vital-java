@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetOrdersResponse.Builder.class)
 public final class GetOrdersResponse {
     private final List<ClientFacingOrder> orders;
@@ -133,7 +133,9 @@ public final class GetOrdersResponse {
         }
 
         public Builder addAllOrders(List<ClientFacingOrder> orders) {
-            this.orders.addAll(orders);
+            if (orders != null) {
+                this.orders.addAll(orders);
+            }
             return this;
         }
 
@@ -144,7 +146,7 @@ public final class GetOrdersResponse {
         }
 
         public Builder total(Integer total) {
-            this.total = Optional.of(total);
+            this.total = Optional.ofNullable(total);
             return this;
         }
 
@@ -155,7 +157,7 @@ public final class GetOrdersResponse {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 
@@ -166,7 +168,7 @@ public final class GetOrdersResponse {
         }
 
         public Builder size(Integer size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 

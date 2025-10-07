@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Micros.Builder.class)
 public final class Micros {
     private final Optional<Map<String, Optional<Double>>> minerals;
@@ -114,6 +114,9 @@ public final class Micros {
             return this;
         }
 
+        /**
+         * <p>Amount of each mineral in their respective units. Most minerals are measured in mg (milligrams), while sodium and potassium are in g (grams).</p>
+         */
         @JsonSetter(value = "minerals", nulls = Nulls.SKIP)
         public Builder minerals(Optional<Map<String, Optional<Double>>> minerals) {
             this.minerals = minerals;
@@ -121,10 +124,13 @@ public final class Micros {
         }
 
         public Builder minerals(Map<String, Optional<Double>> minerals) {
-            this.minerals = Optional.of(minerals);
+            this.minerals = Optional.ofNullable(minerals);
             return this;
         }
 
+        /**
+         * <p>Amount of each trace element in their respective units, most measured in μg (micrograms), while copper and manganese are in mg (milligrams).</p>
+         */
         @JsonSetter(value = "trace_elements", nulls = Nulls.SKIP)
         public Builder traceElements(Optional<Map<String, Optional<Double>>> traceElements) {
             this.traceElements = traceElements;
@@ -132,10 +138,13 @@ public final class Micros {
         }
 
         public Builder traceElements(Map<String, Optional<Double>> traceElements) {
-            this.traceElements = Optional.of(traceElements);
+            this.traceElements = Optional.ofNullable(traceElements);
             return this;
         }
 
+        /**
+         * <p>Amount of each vitamin in their respective units. A, B12, D and K in μg (micrograms), while B1, B2, B3, B5, B6, C and folic acid are in mg (milligrams).</p>
+         */
         @JsonSetter(value = "vitamins", nulls = Nulls.SKIP)
         public Builder vitamins(Optional<Map<String, Optional<Double>>> vitamins) {
             this.vitamins = vitamins;
@@ -143,7 +152,7 @@ public final class Micros {
         }
 
         public Builder vitamins(Map<String, Optional<Double>> vitamins) {
-            this.vitamins = Optional.of(vitamins);
+            this.vitamins = Optional.ofNullable(vitamins);
             return this;
         }
 

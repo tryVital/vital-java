@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest.Builder.class)
 public final class VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest {
     private final String cancellationReasonId;
@@ -74,7 +75,7 @@ public final class VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest 
     }
 
     public interface CancellationReasonIdStage {
-        _FinalStage cancellationReasonId(String cancellationReasonId);
+        _FinalStage cancellationReasonId(@NotNull String cancellationReasonId);
 
         Builder from(VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest other);
     }
@@ -107,14 +108,15 @@ public final class VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest 
 
         @java.lang.Override
         @JsonSetter("cancellationReasonId")
-        public _FinalStage cancellationReasonId(String cancellationReasonId) {
-            this.cancellationReasonId = cancellationReasonId;
+        public _FinalStage cancellationReasonId(@NotNull String cancellationReasonId) {
+            this.cancellationReasonId =
+                    Objects.requireNonNull(cancellationReasonId, "cancellationReasonId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage note(String note) {
-            this.note = Optional.of(note);
+            this.note = Optional.ofNullable(note);
             return this;
         }
 

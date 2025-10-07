@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Fats.Builder.class)
 public final class Fats {
     private final Optional<Double> saturated;
@@ -163,6 +163,9 @@ public final class Fats {
             return this;
         }
 
+        /**
+         * <p>Amount of saturated fats in grams (g)</p>
+         */
         @JsonSetter(value = "saturated", nulls = Nulls.SKIP)
         public Builder saturated(Optional<Double> saturated) {
             this.saturated = saturated;
@@ -170,10 +173,13 @@ public final class Fats {
         }
 
         public Builder saturated(Double saturated) {
-            this.saturated = Optional.of(saturated);
+            this.saturated = Optional.ofNullable(saturated);
             return this;
         }
 
+        /**
+         * <p>Amount of monounsaturated fats in grams (g)</p>
+         */
         @JsonSetter(value = "monounsaturated", nulls = Nulls.SKIP)
         public Builder monounsaturated(Optional<Double> monounsaturated) {
             this.monounsaturated = monounsaturated;
@@ -181,10 +187,13 @@ public final class Fats {
         }
 
         public Builder monounsaturated(Double monounsaturated) {
-            this.monounsaturated = Optional.of(monounsaturated);
+            this.monounsaturated = Optional.ofNullable(monounsaturated);
             return this;
         }
 
+        /**
+         * <p>Amount of polyunsaturated fats in grams (g)</p>
+         */
         @JsonSetter(value = "polyunsaturated", nulls = Nulls.SKIP)
         public Builder polyunsaturated(Optional<Double> polyunsaturated) {
             this.polyunsaturated = polyunsaturated;
@@ -192,10 +201,13 @@ public final class Fats {
         }
 
         public Builder polyunsaturated(Double polyunsaturated) {
-            this.polyunsaturated = Optional.of(polyunsaturated);
+            this.polyunsaturated = Optional.ofNullable(polyunsaturated);
             return this;
         }
 
+        /**
+         * <p>Amount of Omega-3 fatty acids in grams (g)</p>
+         */
         @JsonSetter(value = "omega3", nulls = Nulls.SKIP)
         public Builder omega3(Optional<Double> omega3) {
             this.omega3 = omega3;
@@ -203,10 +215,13 @@ public final class Fats {
         }
 
         public Builder omega3(Double omega3) {
-            this.omega3 = Optional.of(omega3);
+            this.omega3 = Optional.ofNullable(omega3);
             return this;
         }
 
+        /**
+         * <p>Amount of Omega-6 fatty acids in grams (g)</p>
+         */
         @JsonSetter(value = "omega6", nulls = Nulls.SKIP)
         public Builder omega6(Optional<Double> omega6) {
             this.omega6 = omega6;
@@ -214,10 +229,13 @@ public final class Fats {
         }
 
         public Builder omega6(Double omega6) {
-            this.omega6 = Optional.of(omega6);
+            this.omega6 = Optional.ofNullable(omega6);
             return this;
         }
 
+        /**
+         * <p>Total amount of fats in grams (g)</p>
+         */
         @JsonSetter(value = "total", nulls = Nulls.SKIP)
         public Builder total(Optional<Double> total) {
             this.total = total;
@@ -225,7 +243,7 @@ public final class Fats {
         }
 
         public Builder total(Double total) {
-            this.total = Optional.of(total);
+            this.total = Optional.ofNullable(total);
             return this;
         }
 

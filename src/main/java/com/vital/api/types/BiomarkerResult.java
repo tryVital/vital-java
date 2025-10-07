@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BiomarkerResult.Builder.class)
 public final class BiomarkerResult {
     private final String name;
@@ -281,17 +282,17 @@ public final class BiomarkerResult {
     }
 
     public interface NameStage {
-        ResultStage name(String name);
+        ResultStage name(@NotNull String name);
 
         Builder from(BiomarkerResult other);
     }
 
     public interface ResultStage {
-        TypeStage result(String result);
+        TypeStage result(@NotNull String result);
     }
 
     public interface TypeStage {
-        _FinalStage type(ResultType type);
+        _FinalStage type(@NotNull ResultType type);
     }
 
     public interface _FinalStage {
@@ -301,6 +302,9 @@ public final class BiomarkerResult {
 
         _FinalStage slug(String slug);
 
+        /**
+         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
+         */
         _FinalStage value(Optional<Double> value);
 
         _FinalStage value(Double value);
@@ -440,28 +444,28 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         @JsonSetter("name")
-        public ResultStage name(String name) {
-            this.name = name;
+        public ResultStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("result")
-        public TypeStage result(String result) {
-            this.result = result;
+        public TypeStage result(@NotNull String result) {
+            this.result = Objects.requireNonNull(result, "result must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(ResultType type) {
-            this.type = type;
+        public _FinalStage type(@NotNull ResultType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sourceSampleId(String sourceSampleId) {
-            this.sourceSampleId = Optional.of(sourceSampleId);
+            this.sourceSampleId = Optional.ofNullable(sourceSampleId);
             return this;
         }
 
@@ -474,7 +478,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage performingLaboratory(String performingLaboratory) {
-            this.performingLaboratory = Optional.of(performingLaboratory);
+            this.performingLaboratory = Optional.ofNullable(performingLaboratory);
             return this;
         }
 
@@ -487,7 +491,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers) {
-            this.sourceMarkers = Optional.of(sourceMarkers);
+            this.sourceMarkers = Optional.ofNullable(sourceMarkers);
             return this;
         }
 
@@ -500,7 +504,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 
@@ -513,7 +517,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage loincSlug(String loincSlug) {
-            this.loincSlug = Optional.of(loincSlug);
+            this.loincSlug = Optional.ofNullable(loincSlug);
             return this;
         }
 
@@ -526,7 +530,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage loinc(String loinc) {
-            this.loinc = Optional.of(loinc);
+            this.loinc = Optional.ofNullable(loinc);
             return this;
         }
 
@@ -539,7 +543,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage interpretation(String interpretation) {
-            this.interpretation = Optional.of(interpretation);
+            this.interpretation = Optional.ofNullable(interpretation);
             return this;
         }
 
@@ -552,7 +556,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage isBelowMinRange(Boolean isBelowMinRange) {
-            this.isBelowMinRange = Optional.of(isBelowMinRange);
+            this.isBelowMinRange = Optional.ofNullable(isBelowMinRange);
             return this;
         }
 
@@ -565,7 +569,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage isAboveMaxRange(Boolean isAboveMaxRange) {
-            this.isAboveMaxRange = Optional.of(isAboveMaxRange);
+            this.isAboveMaxRange = Optional.ofNullable(isAboveMaxRange);
             return this;
         }
 
@@ -578,7 +582,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage maxRangeValue(Double maxRangeValue) {
-            this.maxRangeValue = Optional.of(maxRangeValue);
+            this.maxRangeValue = Optional.ofNullable(maxRangeValue);
             return this;
         }
 
@@ -591,7 +595,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage minRangeValue(Double minRangeValue) {
-            this.minRangeValue = Optional.of(minRangeValue);
+            this.minRangeValue = Optional.ofNullable(minRangeValue);
             return this;
         }
 
@@ -604,7 +608,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage referenceRange(String referenceRange) {
-            this.referenceRange = Optional.of(referenceRange);
+            this.referenceRange = Optional.ofNullable(referenceRange);
             return this;
         }
 
@@ -617,7 +621,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage notes(String notes) {
-            this.notes = Optional.of(notes);
+            this.notes = Optional.ofNullable(notes);
             return this;
         }
 
@@ -630,7 +634,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = Optional.of(timestamp);
+            this.timestamp = Optional.ofNullable(timestamp);
             return this;
         }
 
@@ -643,7 +647,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage unit(String unit) {
-            this.unit = Optional.of(unit);
+            this.unit = Optional.ofNullable(unit);
             return this;
         }
 
@@ -660,10 +664,13 @@ public final class BiomarkerResult {
          */
         @java.lang.Override
         public _FinalStage value(Double value) {
-            this.value = Optional.of(value);
+            this.value = Optional.ofNullable(value);
             return this;
         }
 
+        /**
+         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "value", nulls = Nulls.SKIP)
         public _FinalStage value(Optional<Double> value) {
@@ -673,7 +680,7 @@ public final class BiomarkerResult {
 
         @java.lang.Override
         public _FinalStage slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 

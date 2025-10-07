@@ -3,193 +3,65 @@
  */
 package com.vital.api.resources.insurance;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
-import com.vital.api.core.MediaTypes;
-import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.core.VitalException;
-import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
 import com.vital.api.resources.insurance.requests.InsuranceSearchGetPayorInfoRequest;
 import com.vital.api.resources.insurance.requests.PayorSearchRequest;
 import com.vital.api.types.ClientFacingDiagnosisInformation;
 import com.vital.api.types.ClientFacingPayorSearchResponse;
 import com.vital.api.types.ClientFacingPayorSearchResponseDeprecated;
-import com.vital.api.types.HttpValidationError;
-import java.io.IOException;
 import java.util.List;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class InsuranceClient {
     protected final ClientOptions clientOptions;
 
+    private final RawInsuranceClient rawClient;
+
     public InsuranceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawInsuranceClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawInsuranceClient withRawResponse() {
+        return this.rawClient;
     }
 
     public List<ClientFacingPayorSearchResponse> searchGetPayorInfo() {
-        return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build());
+        return this.rawClient.searchGetPayorInfo().body();
     }
 
     public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest request) {
-        return searchGetPayorInfo(request, null);
+        return this.rawClient.searchGetPayorInfo(request).body();
     }
 
     public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(
             InsuranceSearchGetPayorInfoRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v3/insurance/search/payor");
-        if (request.getInsuranceName().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "insurance_name", request.getInsuranceName().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get().toString());
-        }
-        if (request.getProviderPayorId().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "provider_payor_id", request.getProviderPayorId().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingPayorSearchResponse>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.searchGetPayorInfo(request, requestOptions).body();
     }
 
     public List<ClientFacingPayorSearchResponseDeprecated> searchPayorInfo() {
-        return searchPayorInfo(PayorSearchRequest.builder().build());
+        return this.rawClient.searchPayorInfo().body();
     }
 
     public List<ClientFacingPayorSearchResponseDeprecated> searchPayorInfo(PayorSearchRequest request) {
-        return searchPayorInfo(request, null);
+        return this.rawClient.searchPayorInfo(request).body();
     }
 
     public List<ClientFacingPayorSearchResponseDeprecated> searchPayorInfo(
             PayorSearchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v3/insurance/search/payor")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingPayorSearchResponseDeprecated>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.searchPayorInfo(request, requestOptions).body();
     }
 
     public List<ClientFacingDiagnosisInformation> searchDiagnosis(InsuranceSearchDiagnosisRequest request) {
-        return searchDiagnosis(request, null);
+        return this.rawClient.searchDiagnosis(request).body();
     }
 
     public List<ClientFacingDiagnosisInformation> searchDiagnosis(
             InsuranceSearchDiagnosisRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v3/insurance/search/diagnosis");
-        httpUrl.addQueryParameter("diagnosis_query", request.getDiagnosisQuery());
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingDiagnosisInformation>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.searchDiagnosis(request, requestOptions).body();
     }
 }

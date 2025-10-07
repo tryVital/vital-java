@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ParentBiomarkerData.Builder.class)
 public final class ParentBiomarkerData {
     private final int markerId;
@@ -102,11 +103,11 @@ public final class ParentBiomarkerData {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
     }
 
     public interface SlugStage {
-        _FinalStage slug(String slug);
+        _FinalStage slug(@NotNull String slug);
     }
 
     public interface _FinalStage {
@@ -150,21 +151,21 @@ public final class ParentBiomarkerData {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public _FinalStage slug(String slug) {
-            this.slug = slug;
+        public _FinalStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 

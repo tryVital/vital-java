@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestResourcesResponse.Builder.class)
 public final class LabTestResourcesResponse {
     private final List<ClientFacingLabTest> data;
@@ -107,10 +107,15 @@ public final class LabTestResourcesResponse {
         }
 
         public Builder addAllData(List<ClientFacingLabTest> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         */
         @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
         public Builder nextCursor(Optional<String> nextCursor) {
             this.nextCursor = nextCursor;
@@ -118,7 +123,7 @@ public final class LabTestResourcesResponse {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 

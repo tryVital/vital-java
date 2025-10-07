@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingTeam.Builder.class)
 public final class ClientFacingTeam {
     private final String id;
@@ -255,17 +256,17 @@ public final class ClientFacingTeam {
     }
 
     public interface IdStage {
-        OrgIdStage id(String id);
+        OrgIdStage id(@NotNull String id);
 
         Builder from(ClientFacingTeam other);
     }
 
     public interface OrgIdStage {
-        NameStage orgId(String orgId);
+        NameStage orgId(@NotNull String orgId);
     }
 
     public interface NameStage {
-        TestkitsTextsEnabledStage name(String name);
+        TestkitsTextsEnabledStage name(@NotNull String name);
     }
 
     public interface TestkitsTextsEnabledStage {
@@ -287,7 +288,7 @@ public final class ClientFacingTeam {
     }
 
     public interface DelegatedFlowStage {
-        _FinalStage delegatedFlow(DelegatedFlowType delegatedFlow);
+        _FinalStage delegatedFlow(@NotNull DelegatedFlowType delegatedFlow);
     }
 
     public interface _FinalStage {
@@ -411,22 +412,22 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         @JsonSetter("id")
-        public OrgIdStage id(String id) {
-            this.id = id;
+        public OrgIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("org_id")
-        public NameStage orgId(String orgId) {
-            this.orgId = orgId;
+        public NameStage orgId(@NotNull String orgId) {
+            this.orgId = Objects.requireNonNull(orgId, "orgId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public TestkitsTextsEnabledStage name(String name) {
-            this.name = name;
+        public TestkitsTextsEnabledStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -463,14 +464,14 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         @JsonSetter("delegated_flow")
-        public _FinalStage delegatedFlow(DelegatedFlowType delegatedFlow) {
-            this.delegatedFlow = delegatedFlow;
+        public _FinalStage delegatedFlow(@NotNull DelegatedFlowType delegatedFlow) {
+            this.delegatedFlow = Objects.requireNonNull(delegatedFlow, "delegatedFlow must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage logoUrl(String logoUrl) {
-            this.logoUrl = Optional.of(logoUrl);
+            this.logoUrl = Optional.ofNullable(logoUrl);
             return this;
         }
 
@@ -483,7 +484,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage configuration(TeamConfig configuration) {
-            this.configuration = Optional.of(configuration);
+            this.configuration = Optional.ofNullable(configuration);
             return this;
         }
 
@@ -496,7 +497,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage apiKeys(List<ClientFacingApiKey> apiKeys) {
-            this.apiKeys = Optional.of(apiKeys);
+            this.apiKeys = Optional.ofNullable(apiKeys);
             return this;
         }
 
@@ -509,7 +510,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage apiKey(String apiKey) {
-            this.apiKey = Optional.of(apiKey);
+            this.apiKey = Optional.ofNullable(apiKey);
             return this;
         }
 
@@ -522,7 +523,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage webhookSecret(String webhookSecret) {
-            this.webhookSecret = Optional.of(webhookSecret);
+            this.webhookSecret = Optional.ofNullable(webhookSecret);
             return this;
         }
 
@@ -535,7 +536,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage airtableBaseId(String airtableBaseId) {
-            this.airtableBaseId = Optional.of(airtableBaseId);
+            this.airtableBaseId = Optional.ofNullable(airtableBaseId);
             return this;
         }
 
@@ -548,7 +549,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage airtableApiKey(String airtableApiKey) {
-            this.airtableApiKey = Optional.of(airtableApiKey);
+            this.airtableApiKey = Optional.ofNullable(airtableApiKey);
             return this;
         }
 
@@ -561,7 +562,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage clientSecret(String clientSecret) {
-            this.clientSecret = Optional.of(clientSecret);
+            this.clientSecret = Optional.ofNullable(clientSecret);
             return this;
         }
 
@@ -574,7 +575,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage clientId(String clientId) {
-            this.clientId = Optional.of(clientId);
+            this.clientId = Optional.ofNullable(clientId);
             return this;
         }
 
@@ -587,7 +588,7 @@ public final class ClientFacingTeam {
 
         @java.lang.Override
         public _FinalStage svixAppId(String svixAppId) {
-            this.svixAppId = Optional.of(svixAppId);
+            this.svixAppId = Optional.ofNullable(svixAppId);
             return this;
         }
 

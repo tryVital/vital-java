@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AppointmentLocation.Builder.class)
 public final class AppointmentLocation {
     private final LngLat location;
@@ -116,21 +117,21 @@ public final class AppointmentLocation {
     }
 
     public interface LocationStage {
-        AddressStage location(LngLat location);
+        AddressStage location(@NotNull LngLat location);
 
         Builder from(AppointmentLocation other);
     }
 
     public interface AddressStage {
-        CodeStage address(UsAddress address);
+        CodeStage address(@NotNull UsAddress address);
     }
 
     public interface CodeStage {
-        NameStage code(String code);
+        NameStage code(@NotNull String code);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -177,35 +178,35 @@ public final class AppointmentLocation {
 
         @java.lang.Override
         @JsonSetter("location")
-        public AddressStage location(LngLat location) {
-            this.location = location;
+        public AddressStage location(@NotNull LngLat location) {
+            this.location = Objects.requireNonNull(location, "location must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("address")
-        public CodeStage address(UsAddress address) {
-            this.address = address;
+        public CodeStage address(@NotNull UsAddress address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("code")
-        public NameStage code(String code) {
-            this.code = code;
+        public NameStage code(@NotNull String code) {
+            this.code = Objects.requireNonNull(code, "code must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage ianaTimezone(String ianaTimezone) {
-            this.ianaTimezone = Optional.of(ianaTimezone);
+            this.ianaTimezone = Optional.ofNullable(ianaTimezone);
             return this;
         }
 
@@ -218,7 +219,7 @@ public final class AppointmentLocation {
 
         @java.lang.Override
         public _FinalStage distance(Integer distance) {
-            this.distance = Optional.of(distance);
+            this.distance = Optional.ofNullable(distance);
             return this;
         }
 

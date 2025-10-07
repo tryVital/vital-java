@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientActivityResponse.Builder.class)
 public final class ClientActivityResponse {
     private final List<ClientFacingActivity> activity;
@@ -91,7 +91,9 @@ public final class ClientActivityResponse {
         }
 
         public Builder addAllActivity(List<ClientFacingActivity> activity) {
-            this.activity.addAll(activity);
+            if (activity != null) {
+                this.activity.addAll(activity);
+            }
             return this;
         }
 

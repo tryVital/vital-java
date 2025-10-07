@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UnrecognizedValueMacroExpr.Builder.class)
 public final class UnrecognizedValueMacroExpr {
     private final String valueMacro;
@@ -62,7 +63,7 @@ public final class UnrecognizedValueMacroExpr {
     }
 
     public interface ValueMacroStage {
-        _FinalStage valueMacro(String valueMacro);
+        _FinalStage valueMacro(@NotNull String valueMacro);
 
         Builder from(UnrecognizedValueMacroExpr other);
     }
@@ -88,8 +89,8 @@ public final class UnrecognizedValueMacroExpr {
 
         @java.lang.Override
         @JsonSetter("value_macro")
-        public _FinalStage valueMacro(String valueMacro) {
-            this.valueMacro = valueMacro;
+        public _FinalStage valueMacro(@NotNull String valueMacro) {
+            this.valueMacro = Objects.requireNonNull(valueMacro, "valueMacro must not be null");
             return this;
         }
 

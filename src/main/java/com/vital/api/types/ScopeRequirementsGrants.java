@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ScopeRequirementsGrants.Builder.class)
 public final class ScopeRequirementsGrants {
     private final ScopeRequirementsStr userGranted;
@@ -73,13 +74,13 @@ public final class ScopeRequirementsGrants {
     }
 
     public interface UserGrantedStage {
-        UserDeniedStage userGranted(ScopeRequirementsStr userGranted);
+        UserDeniedStage userGranted(@NotNull ScopeRequirementsStr userGranted);
 
         Builder from(ScopeRequirementsGrants other);
     }
 
     public interface UserDeniedStage {
-        _FinalStage userDenied(ScopeRequirementsStr userDenied);
+        _FinalStage userDenied(@NotNull ScopeRequirementsStr userDenied);
     }
 
     public interface _FinalStage {
@@ -106,15 +107,15 @@ public final class ScopeRequirementsGrants {
 
         @java.lang.Override
         @JsonSetter("user_granted")
-        public UserDeniedStage userGranted(ScopeRequirementsStr userGranted) {
-            this.userGranted = userGranted;
+        public UserDeniedStage userGranted(@NotNull ScopeRequirementsStr userGranted) {
+            this.userGranted = Objects.requireNonNull(userGranted, "userGranted must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_denied")
-        public _FinalStage userDenied(ScopeRequirementsStr userDenied) {
-            this.userDenied = userDenied;
+        public _FinalStage userDenied(@NotNull ScopeRequirementsStr userDenied) {
+            this.userDenied = Objects.requireNonNull(userDenied, "userDenied must not be null");
             return this;
         }
 

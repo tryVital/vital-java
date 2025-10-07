@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientWorkoutResponse.Builder.class)
 public final class ClientWorkoutResponse {
     private final List<ClientFacingWorkout> workouts;
@@ -91,7 +91,9 @@ public final class ClientWorkoutResponse {
         }
 
         public Builder addAllWorkouts(List<ClientFacingWorkout> workouts) {
-            this.workouts.addAll(workouts);
+            if (workouts != null) {
+                this.workouts.addAll(workouts);
+            }
             return this;
         }
 

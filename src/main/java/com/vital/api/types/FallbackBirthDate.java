@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FallbackBirthDate.Builder.class)
 public final class FallbackBirthDate {
     private final String value;
@@ -86,17 +87,23 @@ public final class FallbackBirthDate {
     }
 
     public interface ValueStage {
-        SourceSlugStage value(String value);
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         */
+        SourceSlugStage value(@NotNull String value);
 
         Builder from(FallbackBirthDate other);
     }
 
     public interface SourceSlugStage {
-        UpdatedAtStage sourceSlug(String sourceSlug);
+        /**
+         * <p>Slug for designated source</p>
+         */
+        UpdatedAtStage sourceSlug(@NotNull String sourceSlug);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -126,30 +133,32 @@ public final class FallbackBirthDate {
 
         /**
          * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("value")
-        public SourceSlugStage value(String value) {
-            this.value = value;
+        public SourceSlugStage value(@NotNull String value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 
         /**
          * <p>Slug for designated source</p>
+         * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source_slug")
-        public UpdatedAtStage sourceSlug(String sourceSlug) {
-            this.sourceSlug = sourceSlug;
+        public UpdatedAtStage sourceSlug(@NotNull String sourceSlug) {
+            this.sourceSlug = Objects.requireNonNull(sourceSlug, "sourceSlug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

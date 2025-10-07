@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingPatientDetailsCompatible.Builder.class)
 public final class ClientFacingPatientDetailsCompatible {
     private final Optional<String> firstName;
@@ -194,13 +195,13 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     public interface DobStage {
-        GenderStage dob(OffsetDateTime dob);
+        GenderStage dob(@NotNull OffsetDateTime dob);
 
         Builder from(ClientFacingPatientDetailsCompatible other);
     }
 
     public interface GenderStage {
-        _FinalStage gender(String gender);
+        _FinalStage gender(@NotNull String gender);
     }
 
     public interface _FinalStage {
@@ -222,22 +223,37 @@ public final class ClientFacingPatientDetailsCompatible {
 
         _FinalStage email(String email);
 
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         */
         _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
 
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage race(Optional<Race> race);
 
         _FinalStage race(Race race);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage ethnicity(Optional<Ethnicity> ethnicity);
 
         _FinalStage ethnicity(Ethnicity ethnicity);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
 
         _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
 
         _FinalStage genderIdentity(GenderIdentity genderIdentity);
@@ -290,15 +306,15 @@ public final class ClientFacingPatientDetailsCompatible {
 
         @java.lang.Override
         @JsonSetter("dob")
-        public GenderStage dob(OffsetDateTime dob) {
-            this.dob = dob;
+        public GenderStage dob(@NotNull OffsetDateTime dob) {
+            this.dob = Objects.requireNonNull(dob, "dob must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("gender")
-        public _FinalStage gender(String gender) {
-            this.gender = gender;
+        public _FinalStage gender(@NotNull String gender) {
+            this.gender = Objects.requireNonNull(gender, "gender must not be null");
             return this;
         }
 
@@ -308,10 +324,13 @@ public final class ClientFacingPatientDetailsCompatible {
          */
         @java.lang.Override
         public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
-            this.genderIdentity = Optional.of(genderIdentity);
+            this.genderIdentity = Optional.ofNullable(genderIdentity);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
         public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
@@ -325,10 +344,13 @@ public final class ClientFacingPatientDetailsCompatible {
          */
         @java.lang.Override
         public _FinalStage sexualOrientation(SexualOrientation sexualOrientation) {
-            this.sexualOrientation = Optional.of(sexualOrientation);
+            this.sexualOrientation = Optional.ofNullable(sexualOrientation);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sexual_orientation", nulls = Nulls.SKIP)
         public _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation) {
@@ -342,10 +364,13 @@ public final class ClientFacingPatientDetailsCompatible {
          */
         @java.lang.Override
         public _FinalStage ethnicity(Ethnicity ethnicity) {
-            this.ethnicity = Optional.of(ethnicity);
+            this.ethnicity = Optional.ofNullable(ethnicity);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
         public _FinalStage ethnicity(Optional<Ethnicity> ethnicity) {
@@ -359,10 +384,13 @@ public final class ClientFacingPatientDetailsCompatible {
          */
         @java.lang.Override
         public _FinalStage race(Race race) {
-            this.race = Optional.of(race);
+            this.race = Optional.ofNullable(race);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "race", nulls = Nulls.SKIP)
         public _FinalStage race(Optional<Race> race) {
@@ -376,10 +404,13 @@ public final class ClientFacingPatientDetailsCompatible {
          */
         @java.lang.Override
         public _FinalStage medicalProxy(GuarantorDetails medicalProxy) {
-            this.medicalProxy = Optional.of(medicalProxy);
+            this.medicalProxy = Optional.ofNullable(medicalProxy);
             return this;
         }
 
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "medical_proxy", nulls = Nulls.SKIP)
         public _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy) {
@@ -389,7 +420,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
         @java.lang.Override
         public _FinalStage email(String email) {
-            this.email = Optional.of(email);
+            this.email = Optional.ofNullable(email);
             return this;
         }
 
@@ -402,7 +433,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
         @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = Optional.of(phoneNumber);
+            this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
         }
 
@@ -415,7 +446,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
         @java.lang.Override
         public _FinalStage lastName(String lastName) {
-            this.lastName = Optional.of(lastName);
+            this.lastName = Optional.ofNullable(lastName);
             return this;
         }
 
@@ -428,7 +459,7 @@ public final class ClientFacingPatientDetailsCompatible {
 
         @java.lang.Override
         public _FinalStage firstName(String firstName) {
-            this.firstName = Optional.of(firstName);
+            this.firstName = Optional.ofNullable(firstName);
             return this;
         }
 

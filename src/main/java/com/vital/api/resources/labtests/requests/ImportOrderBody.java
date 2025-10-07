@@ -22,8 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ImportOrderBody.Builder.class)
 public final class ImportOrderBody {
     private final String userId;
@@ -150,33 +151,33 @@ public final class ImportOrderBody {
     }
 
     public interface UserIdStage {
-        BillingTypeStage userId(String userId);
+        BillingTypeStage userId(@NotNull String userId);
 
         Builder from(ImportOrderBody other);
     }
 
     public interface BillingTypeStage {
-        OrderSetStage billingType(Billing billingType);
+        OrderSetStage billingType(@NotNull Billing billingType);
     }
 
     public interface OrderSetStage {
-        CollectionMethodStage orderSet(OrderSetRequest orderSet);
+        CollectionMethodStage orderSet(@NotNull OrderSetRequest orderSet);
     }
 
     public interface CollectionMethodStage {
-        PatientDetailsStage collectionMethod(LabTestCollectionMethod collectionMethod);
+        PatientDetailsStage collectionMethod(@NotNull LabTestCollectionMethod collectionMethod);
     }
 
     public interface PatientDetailsStage {
-        PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails);
+        PatientAddressStage patientDetails(@NotNull PatientDetailsWithValidation patientDetails);
     }
 
     public interface PatientAddressStage {
-        SampleIdStage patientAddress(PatientAddress patientAddress);
+        SampleIdStage patientAddress(@NotNull PatientAddress patientAddress);
     }
 
     public interface SampleIdStage {
-        _FinalStage sampleId(String sampleId);
+        _FinalStage sampleId(@NotNull String sampleId);
     }
 
     public interface _FinalStage {
@@ -233,56 +234,56 @@ public final class ImportOrderBody {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public BillingTypeStage userId(String userId) {
-            this.userId = userId;
+        public BillingTypeStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("billing_type")
-        public OrderSetStage billingType(Billing billingType) {
-            this.billingType = billingType;
+        public OrderSetStage billingType(@NotNull Billing billingType) {
+            this.billingType = Objects.requireNonNull(billingType, "billingType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("order_set")
-        public CollectionMethodStage orderSet(OrderSetRequest orderSet) {
-            this.orderSet = orderSet;
+        public CollectionMethodStage orderSet(@NotNull OrderSetRequest orderSet) {
+            this.orderSet = Objects.requireNonNull(orderSet, "orderSet must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("collection_method")
-        public PatientDetailsStage collectionMethod(LabTestCollectionMethod collectionMethod) {
-            this.collectionMethod = collectionMethod;
+        public PatientDetailsStage collectionMethod(@NotNull LabTestCollectionMethod collectionMethod) {
+            this.collectionMethod = Objects.requireNonNull(collectionMethod, "collectionMethod must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_details")
-        public PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails) {
-            this.patientDetails = patientDetails;
+        public PatientAddressStage patientDetails(@NotNull PatientDetailsWithValidation patientDetails) {
+            this.patientDetails = Objects.requireNonNull(patientDetails, "patientDetails must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_address")
-        public SampleIdStage patientAddress(PatientAddress patientAddress) {
-            this.patientAddress = patientAddress;
+        public SampleIdStage patientAddress(@NotNull PatientAddress patientAddress) {
+            this.patientAddress = Objects.requireNonNull(patientAddress, "patientAddress must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sample_id")
-        public _FinalStage sampleId(String sampleId) {
-            this.sampleId = sampleId;
+        public _FinalStage sampleId(@NotNull String sampleId) {
+            this.sampleId = Objects.requireNonNull(sampleId, "sampleId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequest physician) {
-            this.physician = Optional.of(physician);
+            this.physician = Optional.ofNullable(physician);
             return this;
         }
 

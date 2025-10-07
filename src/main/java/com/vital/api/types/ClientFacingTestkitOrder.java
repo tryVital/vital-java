@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingTestkitOrder.Builder.class)
 public final class ClientFacingTestkitOrder {
     private final String id;
@@ -103,22 +104,28 @@ public final class ClientFacingTestkitOrder {
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        /**
+         * <p>The Vital TestKit Order ID</p>
+         */
+        CreatedAtStage id(@NotNull String id);
 
         Builder from(ClientFacingTestkitOrder other);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
         ClientFacingTestkitOrder build();
 
+        /**
+         * <p>Shipment object</p>
+         */
         _FinalStage shipment(Optional<ClientFacingShipment> shipment);
 
         _FinalStage shipment(ClientFacingShipment shipment);
@@ -150,26 +157,27 @@ public final class ClientFacingTestkitOrder {
 
         /**
          * <p>The Vital TestKit Order ID</p>
+         * <p>The Vital TestKit Order ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
@@ -179,10 +187,13 @@ public final class ClientFacingTestkitOrder {
          */
         @java.lang.Override
         public _FinalStage shipment(ClientFacingShipment shipment) {
-            this.shipment = Optional.of(shipment);
+            this.shipment = Optional.ofNullable(shipment);
             return this;
         }
 
+        /**
+         * <p>Shipment object</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "shipment", nulls = Nulls.SKIP)
         public _FinalStage shipment(Optional<ClientFacingShipment> shipment) {

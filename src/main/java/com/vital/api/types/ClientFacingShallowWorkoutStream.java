@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingShallowWorkoutStream.Builder.class)
 public final class ClientFacingShallowWorkoutStream {
     private final String userId;
@@ -125,21 +126,27 @@ public final class ClientFacingShallowWorkoutStream {
     }
 
     public interface UserIdStage {
-        WorkoutIdStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        WorkoutIdStage userId(@NotNull String userId);
 
         Builder from(ClientFacingShallowWorkoutStream other);
     }
 
     public interface WorkoutIdStage {
-        ProviderIdStage workoutId(String workoutId);
+        ProviderIdStage workoutId(@NotNull String workoutId);
     }
 
     public interface ProviderIdStage {
-        SourceStage providerId(String providerId);
+        SourceStage providerId(@NotNull String providerId);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        /**
+         * <p>Source the data has come from.</p>
+         */
+        _FinalStage source(@NotNull ClientFacingSource source);
     }
 
     public interface _FinalStage {
@@ -149,6 +156,9 @@ public final class ClientFacingShallowWorkoutStream {
 
         _FinalStage message(String message);
 
+        /**
+         * <p>Sport's name</p>
+         */
         _FinalStage sport(Optional<ClientFacingSport> sport);
 
         _FinalStage sport(ClientFacingSport sport);
@@ -187,37 +197,39 @@ public final class ClientFacingShallowWorkoutStream {
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public WorkoutIdStage userId(String userId) {
-            this.userId = userId;
+        public WorkoutIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("workout_id")
-        public ProviderIdStage workoutId(String workoutId) {
-            this.workoutId = workoutId;
+        public ProviderIdStage workoutId(@NotNull String workoutId) {
+            this.workoutId = Objects.requireNonNull(workoutId, "workoutId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider_id")
-        public SourceStage providerId(String providerId) {
-            this.providerId = providerId;
+        public SourceStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
         /**
          * <p>Source the data has come from.</p>
+         * <p>Source the data has come from.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
@@ -227,10 +239,13 @@ public final class ClientFacingShallowWorkoutStream {
          */
         @java.lang.Override
         public _FinalStage sport(ClientFacingSport sport) {
-            this.sport = Optional.of(sport);
+            this.sport = Optional.ofNullable(sport);
             return this;
         }
 
+        /**
+         * <p>Sport's name</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sport", nulls = Nulls.SKIP)
         public _FinalStage sport(Optional<ClientFacingSport> sport) {
@@ -240,7 +255,7 @@ public final class ClientFacingShallowWorkoutStream {
 
         @java.lang.Override
         public _FinalStage message(String message) {
-            this.message = Optional.of(message);
+            this.message = Optional.ofNullable(message);
             return this;
         }
 

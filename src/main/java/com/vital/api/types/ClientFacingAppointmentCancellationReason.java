@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingAppointmentCancellationReason.Builder.class)
 public final class ClientFacingAppointmentCancellationReason {
     private final String id;
@@ -80,13 +81,13 @@ public final class ClientFacingAppointmentCancellationReason {
     }
 
     public interface IdStage {
-        NameStage id(String id);
+        NameStage id(@NotNull String id);
 
         Builder from(ClientFacingAppointmentCancellationReason other);
     }
 
     public interface NameStage {
-        IsRefundableStage name(String name);
+        IsRefundableStage name(@NotNull String name);
     }
 
     public interface IsRefundableStage {
@@ -120,15 +121,15 @@ public final class ClientFacingAppointmentCancellationReason {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(String id) {
-            this.id = id;
+        public NameStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public IsRefundableStage name(String name) {
-            this.name = name;
+        public IsRefundableStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

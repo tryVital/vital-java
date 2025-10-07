@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DemoConnectionStatus.Builder.class)
 public final class DemoConnectionStatus {
     private final boolean success;
@@ -76,7 +77,7 @@ public final class DemoConnectionStatus {
     }
 
     public interface DetailStage {
-        _FinalStage detail(String detail);
+        _FinalStage detail(@NotNull String detail);
     }
 
     public interface _FinalStage {
@@ -110,8 +111,8 @@ public final class DemoConnectionStatus {
 
         @java.lang.Override
         @JsonSetter("detail")
-        public _FinalStage detail(String detail) {
-            this.detail = detail;
+        public _FinalStage detail(@NotNull String detail) {
+            this.detail = Objects.requireNonNull(detail, "detail must not be null");
             return this;
         }
 

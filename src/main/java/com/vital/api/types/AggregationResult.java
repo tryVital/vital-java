@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AggregationResult.Builder.class)
 public final class AggregationResult {
     private final Map<String, List<Object>> table;
@@ -81,6 +81,9 @@ public final class AggregationResult {
             return this;
         }
 
+        /**
+         * <p>The result table of the query, organized in a column oriented format.</p>
+         */
         @JsonSetter(value = "table", nulls = Nulls.SKIP)
         public Builder table(Map<String, List<Object>> table) {
             this.table.clear();
@@ -89,7 +92,9 @@ public final class AggregationResult {
         }
 
         public Builder putAllTable(Map<String, List<Object>> table) {
-            this.table.putAll(table);
+            if (table != null) {
+                this.table.putAll(table);
+            }
             return this;
         }
 

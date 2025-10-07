@@ -3,15 +3,8 @@
  */
 package com.vital.api.resources.link;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
-import com.vital.api.core.MediaTypes;
-import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.core.VitalException;
-import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.link.requests.BeginLinkTokenRequest;
 import com.vital.api.resources.link.requests.BulkExportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkImportConnectionsBody;
@@ -35,7 +28,6 @@ import com.vital.api.types.BulkExportConnectionsResponse;
 import com.vital.api.types.BulkImportConnectionsResponse;
 import com.vital.api.types.BulkOpsResponse;
 import com.vital.api.types.DemoConnectionStatus;
-import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.LinkTokenExchangeResponse;
 import com.vital.api.types.ManualProviders;
 import com.vital.api.types.OAuthProviders;
@@ -44,304 +36,68 @@ import com.vital.api.types.ProviderLinkResponse;
 import com.vital.api.types.Source;
 import com.vital.api.types.SourceLink;
 import com.vital.api.types.VitalTokenCreatedResponse;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class LinkClient {
     protected final ClientOptions clientOptions;
 
+    private final RawLinkClient rawClient;
+
     public LinkClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawLinkClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawLinkClient withRawResponse() {
+        return this.rawClient;
     }
 
     public BulkOpsResponse listBulkOps() {
-        return listBulkOps(LinkListBulkOpsRequest.builder().build());
+        return this.rawClient.listBulkOps().body();
     }
 
     public BulkOpsResponse listBulkOps(LinkListBulkOpsRequest request) {
-        return listBulkOps(request, null);
+        return this.rawClient.listBulkOps(request).body();
     }
 
     public BulkOpsResponse listBulkOps(LinkListBulkOpsRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/bulk_op");
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getPageSize().isPresent()) {
-            httpUrl.addQueryParameter("page_size", request.getPageSize().get().toString());
-        }
-        if (request.getTeamId().isPresent()) {
-            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), BulkOpsResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.listBulkOps(request, requestOptions).body();
     }
 
     public BulkImportConnectionsResponse bulkImport(BulkImportConnectionsBody request) {
-        return bulkImport(request, null);
+        return this.rawClient.bulkImport(request).body();
     }
 
     public BulkImportConnectionsResponse bulkImport(BulkImportConnectionsBody request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/bulk_import");
-        if (request.getTeamId().isPresent()) {
-            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
-        }
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("provider", request.getProvider());
-        properties.put("connections", request.getConnections());
-        if (request.getWaitForCompletion().isPresent()) {
-            properties.put("wait_for_completion", request.getWaitForCompletion());
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), BulkImportConnectionsResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bulkImport(request, requestOptions).body();
     }
 
     public Object bulkTriggerHistoricalPull(BulkTriggerHistoricalPullBody request) {
-        return bulkTriggerHistoricalPull(request, null);
+        return this.rawClient.bulkTriggerHistoricalPull(request).body();
     }
 
     public Object bulkTriggerHistoricalPull(BulkTriggerHistoricalPullBody request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/bulk_trigger_historical_pull");
-        if (request.getTeamId().isPresent()) {
-            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
-        }
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("user_ids", request.getUserIds());
-        properties.put("provider", request.getProvider());
-        if (request.getWaitForCompletion().isPresent()) {
-            properties.put("wait_for_completion", request.getWaitForCompletion());
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bulkTriggerHistoricalPull(request, requestOptions).body();
     }
 
     public BulkExportConnectionsResponse bulkExport(BulkExportConnectionsBody request) {
-        return bulkExport(request, null);
+        return this.rawClient.bulkExport(request).body();
     }
 
     public BulkExportConnectionsResponse bulkExport(BulkExportConnectionsBody request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/bulk_export");
-        if (request.getTeamId().isPresent()) {
-            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
-        }
-        Map<String, Object> properties = new HashMap<>();
-        if (request.getUserIds().isPresent()) {
-            properties.put("user_ids", request.getUserIds());
-        }
-        properties.put("provider", request.getProvider());
-        if (request.getNextToken().isPresent()) {
-            properties.put("next_token", request.getNextToken());
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), BulkExportConnectionsResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bulkExport(request, requestOptions).body();
     }
 
     public Object bulkPause(BulkPauseConnectionsBody request) {
-        return bulkPause(request, null);
+        return this.rawClient.bulkPause(request).body();
     }
 
     public Object bulkPause(BulkPauseConnectionsBody request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/bulk_pause");
-        if (request.getTeamId().isPresent()) {
-            httpUrl.addQueryParameter("team_id", request.getTeamId().get().toString());
-        }
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("user_ids", request.getUserIds());
-        properties.put("provider", request.getProvider());
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bulkPause(request, requestOptions).body();
     }
 
     /**
@@ -353,7 +109,7 @@ public class LinkClient {
      * pass in your own custom redirect_url parameter.
      */
     public LinkTokenExchangeResponse token(LinkTokenExchange request) {
-        return token(request, null);
+        return this.rawClient.token(request).body();
     }
 
     /**
@@ -365,149 +121,29 @@ public class LinkClient {
      * pass in your own custom redirect_url parameter.
      */
     public LinkTokenExchangeResponse token(LinkTokenExchange request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/token")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), LinkTokenExchangeResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.token(request, requestOptions).body();
     }
 
     public Map<String, Object> isTokenValid(LinkTokenValidationRequest request) {
-        return isTokenValid(request, null);
+        return this.rawClient.isTokenValid(request).body();
     }
 
     public Map<String, Object> isTokenValid(LinkTokenValidationRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/token/isValid")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<Map<String, Object>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.isTokenValid(request, requestOptions).body();
     }
 
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
     public VitalTokenCreatedResponse codeCreate(LinkCodeCreateRequest request) {
-        return codeCreate(request, null);
+        return this.rawClient.codeCreate(request).body();
     }
 
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
     public VitalTokenCreatedResponse codeCreate(LinkCodeCreateRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/code/create");
-        httpUrl.addQueryParameter("user_id", request.getUserId());
-        if (request.getExpiresAt().isPresent()) {
-            httpUrl.addQueryParameter("expires_at", request.getExpiresAt().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), VitalTokenCreatedResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.codeCreate(request, requestOptions).body();
     }
 
     /**
@@ -515,7 +151,7 @@ public class LinkClient {
      * Start link token process
      */
     public Map<String, Object> startConnect(BeginLinkTokenRequest request) {
-        return startConnect(request, null);
+        return this.rawClient.startConnect(request).body();
     }
 
     /**
@@ -523,49 +159,7 @@ public class LinkClient {
      * Start link token process
      */
     public Map<String, Object> startConnect(BeginLinkTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/start")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<Map<String, Object>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.startConnect(request, requestOptions).body();
     }
 
     /**
@@ -573,7 +167,7 @@ public class LinkClient {
      * Check link token state - can be hit continuously used as heartbeat
      */
     public Map<String, Object> tokenState() {
-        return tokenState(LinkTokenStateRequest.builder().build());
+        return this.rawClient.tokenState().body();
     }
 
     /**
@@ -581,7 +175,7 @@ public class LinkClient {
      * Check link token state - can be hit continuously used as heartbeat
      */
     public Map<String, Object> tokenState(LinkTokenStateRequest request) {
-        return tokenState(request, null);
+        return this.rawClient.tokenState(request).body();
     }
 
     /**
@@ -589,191 +183,49 @@ public class LinkClient {
      * Check link token state - can be hit continuously used as heartbeat
      */
     public Map<String, Object> tokenState(LinkTokenStateRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/state")
-                .build();
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<Map<String, Object>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.tokenState(request, requestOptions).body();
     }
 
     /**
      * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
      */
     public Object emailAuth(EmailAuthLink request) {
-        return emailAuth(request, null);
+        return this.rawClient.emailAuth(request).body();
     }
 
     /**
      * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
      */
     public Object emailAuth(EmailAuthLink request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/auth/email")
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("email", request.getEmail());
-        properties.put("provider", request.getProvider());
-        properties.put("auth_type", request.getAuthType());
-        if (request.getRegion().isPresent()) {
-            properties.put("region", request.getRegion());
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.emailAuth(request, requestOptions).body();
     }
 
     /**
      * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
      */
     public Object passwordAuth(PasswordAuthLink request) {
-        return passwordAuth(request, null);
+        return this.rawClient.passwordAuth(request).body();
     }
 
     /**
      * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
      */
     public Object passwordAuth(PasswordAuthLink request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/auth")
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("username", request.getUsername());
-        properties.put("password", request.getPassword());
-        properties.put("provider", request.getProvider());
-        properties.put("auth_type", request.getAuthType());
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.passwordAuth(request, requestOptions).body();
     }
 
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
     public Source generateOauthLink(OAuthProviders oauthProvider) {
-        return generateOauthLink(
-                oauthProvider, LinkGenerateOauthLinkRequest.builder().build());
+        return this.rawClient.generateOauthLink(oauthProvider).body();
     }
 
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
     public Source generateOauthLink(OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request) {
-        return generateOauthLink(oauthProvider, request, null);
+        return this.rawClient.generateOauthLink(oauthProvider, request).body();
     }
 
     /**
@@ -781,53 +233,16 @@ public class LinkClient {
      */
     public Source generateOauthLink(
             OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/provider/oauth")
-                .addPathSegment(oauthProvider.toString())
-                .build();
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Source.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .generateOauthLink(oauthProvider, request, requestOptions)
+                .body();
     }
 
     /**
      * This connects auth providers that are password based.
      */
     public ProviderLinkResponse connectPasswordProvider(PasswordProviders provider, IndividualProviderData request) {
-        return connectPasswordProvider(provider, request, null);
+        return this.rawClient.connectPasswordProvider(provider, request).body();
     }
 
     /**
@@ -835,59 +250,9 @@ public class LinkClient {
      */
     public ProviderLinkResponse connectPasswordProvider(
             PasswordProviders provider, IndividualProviderData request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/provider/password")
-                .addPathSegment(provider.toString())
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("username", request.getUsername());
-        properties.put("password", request.getPassword());
-        if (request.getRegion().isPresent()) {
-            properties.put("region", request.getRegion());
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProviderLinkResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .connectPasswordProvider(provider, request, requestOptions)
+                .body();
     }
 
     /**
@@ -895,7 +260,7 @@ public class LinkClient {
      */
     public ProviderLinkResponse completePasswordProviderMfa(
             PasswordProviders provider, CompletePasswordProviderMfaBody request) {
-        return completePasswordProviderMfa(provider, request, null);
+        return this.rawClient.completePasswordProviderMfa(provider, request).body();
     }
 
     /**
@@ -903,63 +268,16 @@ public class LinkClient {
      */
     public ProviderLinkResponse completePasswordProviderMfa(
             PasswordProviders provider, CompletePasswordProviderMfaBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/provider/password")
-                .addPathSegment(provider.toString())
-                .addPathSegments("complete_mfa")
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("mfa_code", request.getMfaCode());
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ProviderLinkResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .completePasswordProviderMfa(provider, request, requestOptions)
+                .body();
     }
 
     /**
      * This connects auth providers that are email based.
      */
     public Object connectEmailAuthProvider(String provider, EmailProviderAuthLink request) {
-        return connectEmailAuthProvider(provider, request, null);
+        return this.rawClient.connectEmailAuthProvider(provider, request).body();
     }
 
     /**
@@ -967,180 +285,48 @@ public class LinkClient {
      */
     public Object connectEmailAuthProvider(
             String provider, EmailProviderAuthLink request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/provider/email")
-                .addPathSegment(provider)
-                .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("email", request.getEmail());
-        if (request.getEmailProviderAuthLinkProvider().isPresent()) {
-            properties.put("provider", request.getEmailProviderAuthLinkProvider());
-        }
-        if (request.getRegion().isPresent()) {
-            properties.put("region", request.getRegion());
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Object.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .connectEmailAuthProvider(provider, request, requestOptions)
+                .body();
     }
 
     /**
      * GET List of all available providers given the generated link token.
      */
     public List<SourceLink> getAllProviders() {
-        return getAllProviders(LinkGetAllProvidersRequest.builder().build());
+        return this.rawClient.getAllProviders().body();
     }
 
     /**
      * GET List of all available providers given the generated link token.
      */
     public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request) {
-        return getAllProviders(request, null);
+        return this.rawClient.getAllProviders(request).body();
     }
 
     /**
      * GET List of all available providers given the generated link token.
      */
     public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/providers")
-                .build();
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<SourceLink>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getAllProviders(request, requestOptions).body();
     }
 
     public Map<String, Boolean> connectManualProvider(ManualProviders provider, ManualConnectionData request) {
-        return connectManualProvider(provider, request, null);
+        return this.rawClient.connectManualProvider(provider, request).body();
     }
 
     public Map<String, Boolean> connectManualProvider(
             ManualProviders provider, ManualConnectionData request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/provider/manual")
-                .addPathSegment(provider.toString())
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<Map<String, Boolean>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .connectManualProvider(provider, request, requestOptions)
+                .body();
     }
 
     /**
      * POST Connect the given Vital user to a demo provider.
      */
     public DemoConnectionStatus connectDemoProvider(DemoConnectionCreationPayload request) {
-        return connectDemoProvider(request, null);
+        return this.rawClient.connectDemoProvider(request).body();
     }
 
     /**
@@ -1148,47 +334,6 @@ public class LinkClient {
      */
     public DemoConnectionStatus connectDemoProvider(
             DemoConnectionCreationPayload request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/connect/demo")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), DemoConnectionStatus.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.connectDemoProvider(request, requestOptions).body();
     }
 }

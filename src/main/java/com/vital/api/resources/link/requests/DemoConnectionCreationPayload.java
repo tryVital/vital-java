@@ -15,8 +15,9 @@ import com.vital.api.types.DemoProviders;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DemoConnectionCreationPayload.Builder.class)
 public final class DemoConnectionCreationPayload {
     private final String userId;
@@ -78,13 +79,19 @@ public final class DemoConnectionCreationPayload {
     }
 
     public interface UserIdStage {
-        ProviderStage userId(String userId);
+        /**
+         * <p>Vital user ID</p>
+         */
+        ProviderStage userId(@NotNull String userId);
 
         Builder from(DemoConnectionCreationPayload other);
     }
 
     public interface ProviderStage {
-        _FinalStage provider(DemoProviders provider);
+        /**
+         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
+         */
+        _FinalStage provider(@NotNull DemoProviders provider);
     }
 
     public interface _FinalStage {
@@ -111,23 +118,25 @@ public final class DemoConnectionCreationPayload {
 
         /**
          * <p>Vital user ID</p>
+         * <p>Vital user ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public ProviderStage userId(String userId) {
-            this.userId = userId;
+        public ProviderStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
+         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(DemoProviders provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull DemoProviders provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 

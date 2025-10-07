@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DateTruncExpr.Builder.class)
 public final class DateTruncExpr {
     private final Period dateTrunc;
@@ -70,13 +71,13 @@ public final class DateTruncExpr {
     }
 
     public interface DateTruncStage {
-        ArgStage dateTrunc(Period dateTrunc);
+        ArgStage dateTrunc(@NotNull Period dateTrunc);
 
         Builder from(DateTruncExpr other);
     }
 
     public interface ArgStage {
-        _FinalStage arg(DateTruncExprArg arg);
+        _FinalStage arg(@NotNull DateTruncExprArg arg);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class DateTruncExpr {
 
         @java.lang.Override
         @JsonSetter("date_trunc")
-        public ArgStage dateTrunc(Period dateTrunc) {
-            this.dateTrunc = dateTrunc;
+        public ArgStage dateTrunc(@NotNull Period dateTrunc) {
+            this.dateTrunc = Objects.requireNonNull(dateTrunc, "dateTrunc must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("arg")
-        public _FinalStage arg(DateTruncExprArg arg) {
-            this.arg = arg;
+        public _FinalStage arg(@NotNull DateTruncExprArg arg) {
+            this.arg = Objects.requireNonNull(arg, "arg must not be null");
             return this;
         }
 

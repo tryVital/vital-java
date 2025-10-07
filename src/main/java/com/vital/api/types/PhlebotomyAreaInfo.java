@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PhlebotomyAreaInfo.Builder.class)
 public final class PhlebotomyAreaInfo {
     private final boolean isServed;
@@ -116,7 +116,9 @@ public final class PhlebotomyAreaInfo {
 
         @java.lang.Override
         public _FinalStage addAllProviders(List<PhlebotomyProviderInfo> providers) {
-            this.providers.addAll(providers);
+            if (providers != null) {
+                this.providers.addAll(providers);
+            }
             return this;
         }
 

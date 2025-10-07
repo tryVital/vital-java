@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContinuousQueryTaskHistoryEntry.Builder.class)
 public final class ContinuousQueryTaskHistoryEntry {
     private final String queryId;
@@ -134,21 +135,21 @@ public final class ContinuousQueryTaskHistoryEntry {
     }
 
     public interface QueryIdStage {
-        UserIdStage queryId(String queryId);
+        UserIdStage queryId(@NotNull String queryId);
 
         Builder from(ContinuousQueryTaskHistoryEntry other);
     }
 
     public interface UserIdStage {
-        StatusStage userId(String userId);
+        StatusStage userId(@NotNull String userId);
     }
 
     public interface StatusStage {
-        ScheduledAtStage status(ContinuousQueryTaskStatus status);
+        ScheduledAtStage status(@NotNull ContinuousQueryTaskStatus status);
     }
 
     public interface ScheduledAtStage {
-        _FinalStage scheduledAt(OffsetDateTime scheduledAt);
+        _FinalStage scheduledAt(@NotNull OffsetDateTime scheduledAt);
     }
 
     public interface _FinalStage {
@@ -202,35 +203,35 @@ public final class ContinuousQueryTaskHistoryEntry {
 
         @java.lang.Override
         @JsonSetter("query_id")
-        public UserIdStage queryId(String queryId) {
-            this.queryId = queryId;
+        public UserIdStage queryId(@NotNull String queryId) {
+            this.queryId = Objects.requireNonNull(queryId, "queryId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public StatusStage userId(String userId) {
-            this.userId = userId;
+        public StatusStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public ScheduledAtStage status(ContinuousQueryTaskStatus status) {
-            this.status = status;
+        public ScheduledAtStage status(@NotNull ContinuousQueryTaskStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("scheduled_at")
-        public _FinalStage scheduledAt(OffsetDateTime scheduledAt) {
-            this.scheduledAt = scheduledAt;
+        public _FinalStage scheduledAt(@NotNull OffsetDateTime scheduledAt) {
+            this.scheduledAt = Objects.requireNonNull(scheduledAt, "scheduledAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage errorDetails(String errorDetails) {
-            this.errorDetails = Optional.of(errorDetails);
+            this.errorDetails = Optional.ofNullable(errorDetails);
             return this;
         }
 
@@ -243,7 +244,7 @@ public final class ContinuousQueryTaskHistoryEntry {
 
         @java.lang.Override
         public _FinalStage endedAt(OffsetDateTime endedAt) {
-            this.endedAt = Optional.of(endedAt);
+            this.endedAt = Optional.ofNullable(endedAt);
             return this;
         }
 
@@ -256,7 +257,7 @@ public final class ContinuousQueryTaskHistoryEntry {
 
         @java.lang.Override
         public _FinalStage startedAt(OffsetDateTime startedAt) {
-            this.startedAt = Optional.of(startedAt);
+            this.startedAt = Optional.ofNullable(startedAt);
             return this;
         }
 

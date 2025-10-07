@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LinkCodeCreateRequest.Builder.class)
 public final class LinkCodeCreateRequest {
     private final String userId;
@@ -77,7 +78,7 @@ public final class LinkCodeCreateRequest {
     }
 
     public interface UserIdStage {
-        _FinalStage userId(String userId);
+        _FinalStage userId(@NotNull String userId);
 
         Builder from(LinkCodeCreateRequest other);
     }
@@ -85,6 +86,9 @@ public final class LinkCodeCreateRequest {
     public interface _FinalStage {
         LinkCodeCreateRequest build();
 
+        /**
+         * <p>When the link code should expire. Defaults to server time plus 1 hour.</p>
+         */
         _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt);
 
         _FinalStage expiresAt(OffsetDateTime expiresAt);
@@ -110,8 +114,8 @@ public final class LinkCodeCreateRequest {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public _FinalStage userId(String userId) {
-            this.userId = userId;
+        public _FinalStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
@@ -121,10 +125,13 @@ public final class LinkCodeCreateRequest {
          */
         @java.lang.Override
         public _FinalStage expiresAt(OffsetDateTime expiresAt) {
-            this.expiresAt = Optional.of(expiresAt);
+            this.expiresAt = Optional.ofNullable(expiresAt);
             return this;
         }
 
+        /**
+         * <p>When the link code should expire. Defaults to server time plus 1 hour.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "expires_at", nulls = Nulls.SKIP)
         public _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt) {

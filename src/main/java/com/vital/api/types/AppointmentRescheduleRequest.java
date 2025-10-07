@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AppointmentRescheduleRequest.Builder.class)
 public final class AppointmentRescheduleRequest {
     private final String bookingKey;
@@ -62,7 +63,7 @@ public final class AppointmentRescheduleRequest {
     }
 
     public interface BookingKeyStage {
-        _FinalStage bookingKey(String bookingKey);
+        _FinalStage bookingKey(@NotNull String bookingKey);
 
         Builder from(AppointmentRescheduleRequest other);
     }
@@ -88,8 +89,8 @@ public final class AppointmentRescheduleRequest {
 
         @java.lang.Override
         @JsonSetter("booking_key")
-        public _FinalStage bookingKey(String bookingKey) {
-            this.bookingKey = bookingKey;
+        public _FinalStage bookingKey(@NotNull String bookingKey) {
+            this.bookingKey = Objects.requireNonNull(bookingKey, "bookingKey must not be null");
             return this;
         }
 

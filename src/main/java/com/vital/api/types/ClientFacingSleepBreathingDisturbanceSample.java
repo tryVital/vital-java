@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingSleepBreathingDisturbanceSample.Builder.class)
 public final class ClientFacingSleepBreathingDisturbanceSample {
     private final Optional<Integer> id;
@@ -154,34 +155,55 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
     }
 
     public interface TimestampStage {
-        StartStage timestamp(OffsetDateTime timestamp);
+        /**
+         * <p>Depracated. The start time (inclusive) of the interval.</p>
+         */
+        StartStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(ClientFacingSleepBreathingDisturbanceSample other);
     }
 
     public interface StartStage {
-        EndStage start(OffsetDateTime start);
+        /**
+         * <p>The start time (inclusive) of the interval.</p>
+         */
+        EndStage start(@NotNull OffsetDateTime start);
     }
 
     public interface EndStage {
-        ValueStage end(OffsetDateTime end);
+        /**
+         * <p>The end time (exclusive) of the interval.</p>
+         */
+        ValueStage end(@NotNull OffsetDateTime end);
     }
 
     public interface ValueStage {
+        /**
+         * <p>The recorded value for the interval.</p>
+         */
         _FinalStage value(double value);
     }
 
     public interface _FinalStage {
         ClientFacingSleepBreathingDisturbanceSample build();
 
+        /**
+         * <p>Deprecated</p>
+         */
         _FinalStage id(Optional<Integer> id);
 
         _FinalStage id(Integer id);
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage type(Optional<ClientFacingSleepBreathingDisturbanceSampleType> type);
 
         _FinalStage type(ClientFacingSleepBreathingDisturbanceSampleType type);
@@ -222,38 +244,42 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
 
         /**
          * <p>Depracated. The start time (inclusive) of the interval.</p>
+         * <p>Depracated. The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("timestamp")
-        public StartStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public StartStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         /**
          * <p>The start time (inclusive) of the interval.</p>
+         * <p>The start time (inclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("start")
-        public EndStage start(OffsetDateTime start) {
-            this.start = start;
+        public EndStage start(@NotNull OffsetDateTime start) {
+            this.start = Objects.requireNonNull(start, "start must not be null");
             return this;
         }
 
         /**
          * <p>The end time (exclusive) of the interval.</p>
+         * <p>The end time (exclusive) of the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("end")
-        public ValueStage end(OffsetDateTime end) {
-            this.end = end;
+        public ValueStage end(@NotNull OffsetDateTime end) {
+            this.end = Objects.requireNonNull(end, "end must not be null");
             return this;
         }
 
         /**
+         * <p>The recorded value for the interval.</p>
          * <p>The recorded value for the interval.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -270,10 +296,13 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
          */
         @java.lang.Override
         public _FinalStage type(ClientFacingSleepBreathingDisturbanceSampleType type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<ClientFacingSleepBreathingDisturbanceSampleType> type) {
@@ -287,10 +316,13 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -304,10 +336,13 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
          */
         @java.lang.Override
         public _FinalStage id(Integer id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
+        /**
+         * <p>Deprecated</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {

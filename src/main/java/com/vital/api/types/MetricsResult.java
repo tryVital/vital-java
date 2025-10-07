@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MetricsResult.Builder.class)
 public final class MetricsResult {
     private final String teamId;
@@ -123,7 +124,7 @@ public final class MetricsResult {
     }
 
     public interface TeamIdStage {
-        _FinalStage teamId(String teamId);
+        _FinalStage teamId(@NotNull String teamId);
 
         Builder from(MetricsResult other);
     }
@@ -185,14 +186,14 @@ public final class MetricsResult {
 
         @java.lang.Override
         @JsonSetter("team_id")
-        public _FinalStage teamId(String teamId) {
-            this.teamId = teamId;
+        public _FinalStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage numberOfOrderedTests(Integer numberOfOrderedTests) {
-            this.numberOfOrderedTests = Optional.of(numberOfOrderedTests);
+            this.numberOfOrderedTests = Optional.ofNullable(numberOfOrderedTests);
             return this;
         }
 
@@ -205,7 +206,7 @@ public final class MetricsResult {
 
         @java.lang.Override
         public _FinalStage numberOfConnectedSourcesByWeek(List<TimeseriesMetricPoint> numberOfConnectedSourcesByWeek) {
-            this.numberOfConnectedSourcesByWeek = Optional.of(numberOfConnectedSourcesByWeek);
+            this.numberOfConnectedSourcesByWeek = Optional.ofNullable(numberOfConnectedSourcesByWeek);
             return this;
         }
 
@@ -219,7 +220,7 @@ public final class MetricsResult {
 
         @java.lang.Override
         public _FinalStage numberOfErroredConnectedSources(Integer numberOfErroredConnectedSources) {
-            this.numberOfErroredConnectedSources = Optional.of(numberOfErroredConnectedSources);
+            this.numberOfErroredConnectedSources = Optional.ofNullable(numberOfErroredConnectedSources);
             return this;
         }
 
@@ -232,7 +233,7 @@ public final class MetricsResult {
 
         @java.lang.Override
         public _FinalStage numberOfUsers(Integer numberOfUsers) {
-            this.numberOfUsers = Optional.of(numberOfUsers);
+            this.numberOfUsers = Optional.ofNullable(numberOfUsers);
             return this;
         }
 
@@ -245,7 +246,7 @@ public final class MetricsResult {
 
         @java.lang.Override
         public _FinalStage numberOfConnectedSources(Integer numberOfConnectedSources) {
-            this.numberOfConnectedSources = Optional.of(numberOfConnectedSources);
+            this.numberOfConnectedSources = Optional.ofNullable(numberOfConnectedSources);
             return this;
         }
 

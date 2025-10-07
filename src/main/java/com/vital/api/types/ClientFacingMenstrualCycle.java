@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingMenstrualCycle.Builder.class)
 public final class ClientFacingMenstrualCycle {
     private final String id;
@@ -314,37 +315,40 @@ public final class ClientFacingMenstrualCycle {
     }
 
     public interface IdStage {
-        PeriodStartStage id(String id);
+        PeriodStartStage id(@NotNull String id);
 
         Builder from(ClientFacingMenstrualCycle other);
     }
 
     public interface PeriodStartStage {
-        SourceProviderStage periodStart(String periodStart);
+        SourceProviderStage periodStart(@NotNull String periodStart);
     }
 
     public interface SourceProviderStage {
-        SourceTypeStage sourceProvider(ClientFacingMenstrualCycleSourceProvider sourceProvider);
+        SourceTypeStage sourceProvider(@NotNull ClientFacingMenstrualCycleSourceProvider sourceProvider);
     }
 
     public interface SourceTypeStage {
-        CreatedAtStage sourceType(ClientFacingMenstrualCycleSourceType sourceType);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        CreatedAtStage sourceType(@NotNull ClientFacingMenstrualCycleSourceType sourceType);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        UserIdStage updatedAt(OffsetDateTime updatedAt);
+        UserIdStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface UserIdStage {
-        SourceStage userId(String userId);
+        SourceStage userId(@NotNull String userId);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        _FinalStage source(@NotNull ClientFacingSource source);
     }
 
     public interface _FinalStage {
@@ -503,67 +507,68 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         @JsonSetter("id")
-        public PeriodStartStage id(String id) {
-            this.id = id;
+        public PeriodStartStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("period_start")
-        public SourceProviderStage periodStart(String periodStart) {
-            this.periodStart = periodStart;
+        public SourceProviderStage periodStart(@NotNull String periodStart) {
+            this.periodStart = Objects.requireNonNull(periodStart, "periodStart must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source_provider")
-        public SourceTypeStage sourceProvider(ClientFacingMenstrualCycleSourceProvider sourceProvider) {
-            this.sourceProvider = sourceProvider;
+        public SourceTypeStage sourceProvider(@NotNull ClientFacingMenstrualCycleSourceProvider sourceProvider) {
+            this.sourceProvider = Objects.requireNonNull(sourceProvider, "sourceProvider must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source_type")
-        public CreatedAtStage sourceType(ClientFacingMenstrualCycleSourceType sourceType) {
-            this.sourceType = sourceType;
+        public CreatedAtStage sourceType(@NotNull ClientFacingMenstrualCycleSourceType sourceType) {
+            this.sourceType = Objects.requireNonNull(sourceType, "sourceType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public UserIdStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public UserIdStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceStage userId(String userId) {
-            this.userId = userId;
+        public SourceStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
-            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
         }
 
@@ -576,7 +581,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
-            this.sourceAppId = Optional.of(sourceAppId);
+            this.sourceAppId = Optional.ofNullable(sourceAppId);
             return this;
         }
 
@@ -589,7 +594,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage basalBodyTemperature(List<BasalBodyTemperatureEntry> basalBodyTemperature) {
-            this.basalBodyTemperature = Optional.of(basalBodyTemperature);
+            this.basalBodyTemperature = Optional.ofNullable(basalBodyTemperature);
             return this;
         }
 
@@ -602,7 +607,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage sexualActivity(List<SexualActivityEntry> sexualActivity) {
-            this.sexualActivity = Optional.of(sexualActivity);
+            this.sexualActivity = Optional.ofNullable(sexualActivity);
             return this;
         }
 
@@ -615,7 +620,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage homeProgesteroneTest(List<HomeProgesteroneTestEntry> homeProgesteroneTest) {
-            this.homeProgesteroneTest = Optional.of(homeProgesteroneTest);
+            this.homeProgesteroneTest = Optional.ofNullable(homeProgesteroneTest);
             return this;
         }
 
@@ -628,7 +633,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage homePregnancyTest(List<HomePregnancyTestEntry> homePregnancyTest) {
-            this.homePregnancyTest = Optional.of(homePregnancyTest);
+            this.homePregnancyTest = Optional.ofNullable(homePregnancyTest);
             return this;
         }
 
@@ -641,7 +646,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage ovulationTest(List<OvulationTestEntry> ovulationTest) {
-            this.ovulationTest = Optional.of(ovulationTest);
+            this.ovulationTest = Optional.ofNullable(ovulationTest);
             return this;
         }
 
@@ -654,7 +659,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage detectedDeviations(List<DetectedDeviationEntry> detectedDeviations) {
-            this.detectedDeviations = Optional.of(detectedDeviations);
+            this.detectedDeviations = Optional.ofNullable(detectedDeviations);
             return this;
         }
 
@@ -667,7 +672,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage contraceptive(List<ContraceptiveEntry> contraceptive) {
-            this.contraceptive = Optional.of(contraceptive);
+            this.contraceptive = Optional.ofNullable(contraceptive);
             return this;
         }
 
@@ -680,7 +685,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage intermenstrualBleeding(List<IntermenstrualBleedingEntry> intermenstrualBleeding) {
-            this.intermenstrualBleeding = Optional.of(intermenstrualBleeding);
+            this.intermenstrualBleeding = Optional.ofNullable(intermenstrualBleeding);
             return this;
         }
 
@@ -693,7 +698,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage cervicalMucus(List<CervicalMucusEntry> cervicalMucus) {
-            this.cervicalMucus = Optional.of(cervicalMucus);
+            this.cervicalMucus = Optional.ofNullable(cervicalMucus);
             return this;
         }
 
@@ -706,7 +711,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage menstrualFlow(List<MenstrualFlowEntry> menstrualFlow) {
-            this.menstrualFlow = Optional.of(menstrualFlow);
+            this.menstrualFlow = Optional.ofNullable(menstrualFlow);
             return this;
         }
 
@@ -719,7 +724,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage isPredicted(Boolean isPredicted) {
-            this.isPredicted = Optional.of(isPredicted);
+            this.isPredicted = Optional.ofNullable(isPredicted);
             return this;
         }
 
@@ -732,7 +737,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage cycleEnd(String cycleEnd) {
-            this.cycleEnd = Optional.of(cycleEnd);
+            this.cycleEnd = Optional.ofNullable(cycleEnd);
             return this;
         }
 
@@ -745,7 +750,7 @@ public final class ClientFacingMenstrualCycle {
 
         @java.lang.Override
         public _FinalStage periodEnd(String periodEnd) {
-            this.periodEnd = Optional.of(periodEnd);
+            this.periodEnd = Optional.ofNullable(periodEnd);
             return this;
         }
 

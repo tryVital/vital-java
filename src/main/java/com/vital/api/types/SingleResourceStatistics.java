@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SingleResourceStatistics.Builder.class)
 public final class SingleResourceStatistics {
     private final Optional<LastAttempt> lastAttempt;
@@ -126,7 +126,7 @@ public final class SingleResourceStatistics {
         }
 
         public Builder lastAttempt(LastAttempt lastAttempt) {
-            this.lastAttempt = Optional.of(lastAttempt);
+            this.lastAttempt = Optional.ofNullable(lastAttempt);
             return this;
         }
 
@@ -137,7 +137,7 @@ public final class SingleResourceStatistics {
         }
 
         public Builder oldestData(OffsetDateTime oldestData) {
-            this.oldestData = Optional.of(oldestData);
+            this.oldestData = Optional.ofNullable(oldestData);
             return this;
         }
 
@@ -148,7 +148,7 @@ public final class SingleResourceStatistics {
         }
 
         public Builder newestData(OffsetDateTime newestData) {
-            this.newestData = Optional.of(newestData);
+            this.newestData = Optional.ofNullable(newestData);
             return this;
         }
 
@@ -159,7 +159,7 @@ public final class SingleResourceStatistics {
         }
 
         public Builder sentCount(Integer sentCount) {
-            this.sentCount = Optional.of(sentCount);
+            this.sentCount = Optional.ofNullable(sentCount);
             return this;
         }
 

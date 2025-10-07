@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Consent.Builder.class)
 public final class Consent {
     private final ConsentType consentType;
@@ -87,7 +88,7 @@ public final class Consent {
     }
 
     public interface ConsentTypeStage {
-        _FinalStage consentType(ConsentType consentType);
+        _FinalStage consentType(@NotNull ConsentType consentType);
 
         Builder from(Consent other);
     }
@@ -127,14 +128,14 @@ public final class Consent {
 
         @java.lang.Override
         @JsonSetter("consentType")
-        public _FinalStage consentType(ConsentType consentType) {
-            this.consentType = consentType;
+        public _FinalStage consentType(@NotNull ConsentType consentType) {
+            this.consentType = Objects.requireNonNull(consentType, "consentType must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage timeOfConsent(OffsetDateTime timeOfConsent) {
-            this.timeOfConsent = Optional.of(timeOfConsent);
+            this.timeOfConsent = Optional.ofNullable(timeOfConsent);
             return this;
         }
 
@@ -147,7 +148,7 @@ public final class Consent {
 
         @java.lang.Override
         public _FinalStage version(String version) {
-            this.version = Optional.of(version);
+            this.version = Optional.ofNullable(version);
             return this;
         }
 

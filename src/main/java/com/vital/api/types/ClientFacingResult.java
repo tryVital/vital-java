@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingResult.Builder.class)
 public final class ClientFacingResult {
     private final int id;
@@ -132,11 +133,11 @@ public final class ClientFacingResult {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
     }
 
     public interface SlugStage {
-        RequiredStage slug(String slug);
+        RequiredStage slug(@NotNull String slug);
     }
 
     public interface RequiredStage {
@@ -201,15 +202,15 @@ public final class ClientFacingResult {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public RequiredStage slug(String slug) {
-            this.slug = slug;
+        public RequiredStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
@@ -222,7 +223,7 @@ public final class ClientFacingResult {
 
         @java.lang.Override
         public _FinalStage loinc(ClientFacingLoinc loinc) {
-            this.loinc = Optional.of(loinc);
+            this.loinc = Optional.ofNullable(loinc);
             return this;
         }
 
@@ -235,7 +236,7 @@ public final class ClientFacingResult {
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 
@@ -248,7 +249,7 @@ public final class ClientFacingResult {
 
         @java.lang.Override
         public _FinalStage labId(Integer labId) {
-            this.labId = Optional.of(labId);
+            this.labId = Optional.ofNullable(labId);
             return this;
         }
 

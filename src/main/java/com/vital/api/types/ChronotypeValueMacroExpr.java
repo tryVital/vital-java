@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ChronotypeValueMacroExpr.Builder.class)
 public final class ChronotypeValueMacroExpr {
     private final Optional<String> version;
@@ -89,7 +89,7 @@ public final class ChronotypeValueMacroExpr {
         }
 
         public Builder version(String version) {
-            this.version = Optional.of(version);
+            this.version = Optional.ofNullable(version);
             return this;
         }
 

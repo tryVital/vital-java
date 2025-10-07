@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TimeseriesMetricPoint.Builder.class)
 public final class TimeseriesMetricPoint {
     private final OffsetDateTime date;
@@ -80,7 +81,7 @@ public final class TimeseriesMetricPoint {
     }
 
     public interface DateStage {
-        ValueStage date(OffsetDateTime date);
+        ValueStage date(@NotNull OffsetDateTime date);
 
         Builder from(TimeseriesMetricPoint other);
     }
@@ -120,8 +121,8 @@ public final class TimeseriesMetricPoint {
 
         @java.lang.Override
         @JsonSetter("date")
-        public ValueStage date(OffsetDateTime date) {
-            this.date = date;
+        public ValueStage date(@NotNull OffsetDateTime date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 

@@ -31,6 +31,7 @@ public final class QueryBatchTimeframe {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((RelativeTimeframe) this.value);
@@ -80,15 +81,15 @@ public final class QueryBatchTimeframe {
         }
 
         @java.lang.Override
-        public QueryBatchTimeframe deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public QueryBatchTimeframe deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, RelativeTimeframe.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Placeholder.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

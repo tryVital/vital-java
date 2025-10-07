@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Query.Builder.class)
 public final class Query {
     private final List<QuerySelectItem> select;
@@ -126,7 +126,9 @@ public final class Query {
         }
 
         public Builder addAllSelect(List<QuerySelectItem> select) {
-            this.select.addAll(select);
+            if (select != null) {
+                this.select.addAll(select);
+            }
             return this;
         }
 
@@ -137,10 +139,18 @@ public final class Query {
         }
 
         public Builder groupBy(List<QueryGroupByItem> groupBy) {
-            this.groupBy = Optional.of(groupBy);
+            this.groupBy = Optional.ofNullable(groupBy);
             return this;
         }
 
+        /**
+         * <p>A WHERE clause filtering the input data. If a GROUP BY clause is present, filtering happens prior to GROUP BY evaluation.</p>
+         * <p>WHERE clause uses SQL Expression syntax to describe the filtering criteria:</p>
+         * <ul>
+         * <li>Available operators: <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>!=</code>, <code>NOT</code>, <code>AND</code> and <code>OR</code>.</li>
+         * <li>Parentheses is supported.</li>
+         * </ul>
+         */
         @JsonSetter(value = "where", nulls = Nulls.SKIP)
         public Builder where(Optional<String> where) {
             this.where = where;
@@ -148,7 +158,7 @@ public final class Query {
         }
 
         public Builder where(String where) {
-            this.where = Optional.of(where);
+            this.where = Optional.ofNullable(where);
             return this;
         }
 

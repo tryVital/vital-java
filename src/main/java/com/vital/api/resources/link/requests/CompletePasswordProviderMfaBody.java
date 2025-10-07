@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CompletePasswordProviderMfaBody.Builder.class)
 public final class CompletePasswordProviderMfaBody {
     private final Optional<String> vitalLinkToken;
@@ -73,7 +74,7 @@ public final class CompletePasswordProviderMfaBody {
     }
 
     public interface MfaCodeStage {
-        _FinalStage mfaCode(String mfaCode);
+        _FinalStage mfaCode(@NotNull String mfaCode);
 
         Builder from(CompletePasswordProviderMfaBody other);
     }
@@ -106,14 +107,14 @@ public final class CompletePasswordProviderMfaBody {
 
         @java.lang.Override
         @JsonSetter("mfa_code")
-        public _FinalStage mfaCode(String mfaCode) {
-            this.mfaCode = mfaCode;
+        public _FinalStage mfaCode(@NotNull String mfaCode) {
+            this.mfaCode = Objects.requireNonNull(mfaCode, "mfaCode must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
-            this.vitalLinkToken = Optional.of(vitalLinkToken);
+            this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 

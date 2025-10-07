@@ -26,8 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateOrderRequestCompatible.Builder.class)
 public final class CreateOrderRequestCompatible {
     private final Optional<String> idempotencyKey;
@@ -248,17 +249,17 @@ public final class CreateOrderRequestCompatible {
     }
 
     public interface UserIdStage {
-        PatientDetailsStage userId(String userId);
+        PatientDetailsStage userId(@NotNull String userId);
 
         Builder from(CreateOrderRequestCompatible other);
     }
 
     public interface PatientDetailsStage {
-        PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails);
+        PatientAddressStage patientDetails(@NotNull PatientDetailsWithValidation patientDetails);
     }
 
     public interface PatientAddressStage {
-        _FinalStage patientAddress(PatientAddressWithValidation patientAddress);
+        _FinalStage patientAddress(@NotNull PatientAddressWithValidation patientAddress);
     }
 
     public interface _FinalStage {
@@ -288,6 +289,9 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance);
 
+        /**
+         * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
+         */
         _FinalStage priority(Optional<Boolean> priority);
 
         _FinalStage priority(Boolean priority);
@@ -304,6 +308,9 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage consents(List<Consent> consents);
 
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         */
         _FinalStage activateBy(Optional<String> activateBy);
 
         _FinalStage activateBy(String activateBy);
@@ -379,28 +386,28 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public PatientDetailsStage userId(String userId) {
-            this.userId = userId;
+        public PatientDetailsStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_details")
-        public PatientAddressStage patientDetails(PatientDetailsWithValidation patientDetails) {
-            this.patientDetails = patientDetails;
+        public PatientAddressStage patientDetails(@NotNull PatientDetailsWithValidation patientDetails) {
+            this.patientDetails = Objects.requireNonNull(patientDetails, "patientDetails must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("patient_address")
-        public _FinalStage patientAddress(PatientAddressWithValidation patientAddress) {
-            this.patientAddress = patientAddress;
+        public _FinalStage patientAddress(@NotNull PatientAddressWithValidation patientAddress) {
+            this.patientAddress = Objects.requireNonNull(patientAddress, "patientAddress must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
-            this.passthrough = Optional.of(passthrough);
+            this.passthrough = Optional.ofNullable(passthrough);
             return this;
         }
 
@@ -413,7 +420,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers) {
-            this.aoeAnswers = Optional.of(aoeAnswers);
+            this.aoeAnswers = Optional.ofNullable(aoeAnswers);
             return this;
         }
 
@@ -430,10 +437,13 @@ public final class CreateOrderRequestCompatible {
          */
         @java.lang.Override
         public _FinalStage activateBy(String activateBy) {
-            this.activateBy = Optional.of(activateBy);
+            this.activateBy = Optional.ofNullable(activateBy);
             return this;
         }
 
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "activate_by", nulls = Nulls.SKIP)
         public _FinalStage activateBy(Optional<String> activateBy) {
@@ -443,7 +453,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage consents(List<Consent> consents) {
-            this.consents = Optional.of(consents);
+            this.consents = Optional.ofNullable(consents);
             return this;
         }
 
@@ -456,7 +466,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage icdCodes(List<String> icdCodes) {
-            this.icdCodes = Optional.of(icdCodes);
+            this.icdCodes = Optional.ofNullable(icdCodes);
             return this;
         }
 
@@ -469,7 +479,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage billingType(Billing billingType) {
-            this.billingType = Optional.of(billingType);
+            this.billingType = Optional.ofNullable(billingType);
             return this;
         }
 
@@ -486,10 +496,13 @@ public final class CreateOrderRequestCompatible {
          */
         @java.lang.Override
         public _FinalStage priority(Boolean priority) {
-            this.priority = Optional.of(priority);
+            this.priority = Optional.ofNullable(priority);
             return this;
         }
 
+        /**
+         * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "priority", nulls = Nulls.SKIP)
         public _FinalStage priority(Optional<Boolean> priority) {
@@ -499,7 +512,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
-            this.healthInsurance = Optional.of(healthInsurance);
+            this.healthInsurance = Optional.ofNullable(healthInsurance);
             return this;
         }
 
@@ -512,7 +525,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequest physician) {
-            this.physician = Optional.of(physician);
+            this.physician = Optional.ofNullable(physician);
             return this;
         }
 
@@ -525,7 +538,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage collectionMethod(LabTestCollectionMethod collectionMethod) {
-            this.collectionMethod = Optional.of(collectionMethod);
+            this.collectionMethod = Optional.ofNullable(collectionMethod);
             return this;
         }
 
@@ -538,7 +551,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage orderSet(OrderSetRequest orderSet) {
-            this.orderSet = Optional.of(orderSet);
+            this.orderSet = Optional.ofNullable(orderSet);
             return this;
         }
 
@@ -551,7 +564,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage labTestId(String labTestId) {
-            this.labTestId = Optional.of(labTestId);
+            this.labTestId = Optional.ofNullable(labTestId);
             return this;
         }
 
@@ -564,7 +577,7 @@ public final class CreateOrderRequestCompatible {
 
         @java.lang.Override
         public _FinalStage idempotencyKey(String idempotencyKey) {
-            this.idempotencyKey = Optional.of(idempotencyKey);
+            this.idempotencyKey = Optional.ofNullable(idempotencyKey);
             return this;
         }
 

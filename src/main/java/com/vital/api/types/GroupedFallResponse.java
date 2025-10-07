@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedFallResponse.Builder.class)
 public final class GroupedFallResponse {
     private final Map<String, List<GroupedFall>> groups;
@@ -114,6 +114,9 @@ public final class GroupedFallResponse {
             return this;
         }
 
+        /**
+         * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
+         */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
         public Builder groups(Map<String, List<GroupedFall>> groups) {
             this.groups.clear();
@@ -122,7 +125,9 @@ public final class GroupedFallResponse {
         }
 
         public Builder putAllGroups(Map<String, List<GroupedFall>> groups) {
-            this.groups.putAll(groups);
+            if (groups != null) {
+                this.groups.putAll(groups);
+            }
             return this;
         }
 
@@ -131,6 +136,9 @@ public final class GroupedFallResponse {
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> if there is no more data.</p>
+         */
         @JsonSetter(value = "next", nulls = Nulls.SKIP)
         public Builder next(Optional<String> next) {
             this.next = next;
@@ -138,10 +146,13 @@ public final class GroupedFallResponse {
         }
 
         public Builder next(String next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> if there is no more data.</p>
+         */
         @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
         public Builder nextCursor(Optional<String> nextCursor) {
             this.nextCursor = nextCursor;
@@ -149,7 +160,7 @@ public final class GroupedFallResponse {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 

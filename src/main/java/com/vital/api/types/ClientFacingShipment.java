@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingShipment.Builder.class)
 public final class ClientFacingShipment {
     private final String id;
@@ -168,7 +169,10 @@ public final class ClientFacingShipment {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        /**
+         * <p>The Vital Shipment ID</p>
+         */
+        _FinalStage id(@NotNull String id);
 
         Builder from(ClientFacingShipment other);
     }
@@ -176,30 +180,51 @@ public final class ClientFacingShipment {
     public interface _FinalStage {
         ClientFacingShipment build();
 
+        /**
+         * <p>Tracking number for delivery to customer</p>
+         */
         _FinalStage outboundTrackingNumber(Optional<String> outboundTrackingNumber);
 
         _FinalStage outboundTrackingNumber(String outboundTrackingNumber);
 
+        /**
+         * <p>Tracking url for delivery to customer</p>
+         */
         _FinalStage outboundTrackingUrl(Optional<String> outboundTrackingUrl);
 
         _FinalStage outboundTrackingUrl(String outboundTrackingUrl);
 
+        /**
+         * <p>Tracking number for delivery to lab</p>
+         */
         _FinalStage inboundTrackingNumber(Optional<String> inboundTrackingNumber);
 
         _FinalStage inboundTrackingNumber(String inboundTrackingNumber);
 
+        /**
+         * <p>Tracking url for delivery to lab</p>
+         */
         _FinalStage inboundTrackingUrl(Optional<String> inboundTrackingUrl);
 
         _FinalStage inboundTrackingUrl(String inboundTrackingUrl);
 
+        /**
+         * <p>Courier used for delivery to customer</p>
+         */
         _FinalStage outboundCourier(Optional<String> outboundCourier);
 
         _FinalStage outboundCourier(String outboundCourier);
 
+        /**
+         * <p>Courier used for delivery to lab</p>
+         */
         _FinalStage inboundCourier(Optional<String> inboundCourier);
 
         _FinalStage inboundCourier(String inboundCourier);
 
+        /**
+         * <p>Notes associated to the Vital shipment</p>
+         */
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
@@ -243,12 +268,13 @@ public final class ClientFacingShipment {
 
         /**
          * <p>The Vital Shipment ID</p>
+         * <p>The Vital Shipment ID</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
-            this.id = id;
+        public _FinalStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -258,10 +284,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage notes(String notes) {
-            this.notes = Optional.of(notes);
+            this.notes = Optional.ofNullable(notes);
             return this;
         }
 
+        /**
+         * <p>Notes associated to the Vital shipment</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
@@ -275,10 +304,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage inboundCourier(String inboundCourier) {
-            this.inboundCourier = Optional.of(inboundCourier);
+            this.inboundCourier = Optional.ofNullable(inboundCourier);
             return this;
         }
 
+        /**
+         * <p>Courier used for delivery to lab</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "inbound_courier", nulls = Nulls.SKIP)
         public _FinalStage inboundCourier(Optional<String> inboundCourier) {
@@ -292,10 +324,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage outboundCourier(String outboundCourier) {
-            this.outboundCourier = Optional.of(outboundCourier);
+            this.outboundCourier = Optional.ofNullable(outboundCourier);
             return this;
         }
 
+        /**
+         * <p>Courier used for delivery to customer</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "outbound_courier", nulls = Nulls.SKIP)
         public _FinalStage outboundCourier(Optional<String> outboundCourier) {
@@ -309,10 +344,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage inboundTrackingUrl(String inboundTrackingUrl) {
-            this.inboundTrackingUrl = Optional.of(inboundTrackingUrl);
+            this.inboundTrackingUrl = Optional.ofNullable(inboundTrackingUrl);
             return this;
         }
 
+        /**
+         * <p>Tracking url for delivery to lab</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "inbound_tracking_url", nulls = Nulls.SKIP)
         public _FinalStage inboundTrackingUrl(Optional<String> inboundTrackingUrl) {
@@ -326,10 +364,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage inboundTrackingNumber(String inboundTrackingNumber) {
-            this.inboundTrackingNumber = Optional.of(inboundTrackingNumber);
+            this.inboundTrackingNumber = Optional.ofNullable(inboundTrackingNumber);
             return this;
         }
 
+        /**
+         * <p>Tracking number for delivery to lab</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "inbound_tracking_number", nulls = Nulls.SKIP)
         public _FinalStage inboundTrackingNumber(Optional<String> inboundTrackingNumber) {
@@ -343,10 +384,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage outboundTrackingUrl(String outboundTrackingUrl) {
-            this.outboundTrackingUrl = Optional.of(outboundTrackingUrl);
+            this.outboundTrackingUrl = Optional.ofNullable(outboundTrackingUrl);
             return this;
         }
 
+        /**
+         * <p>Tracking url for delivery to customer</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "outbound_tracking_url", nulls = Nulls.SKIP)
         public _FinalStage outboundTrackingUrl(Optional<String> outboundTrackingUrl) {
@@ -360,10 +404,13 @@ public final class ClientFacingShipment {
          */
         @java.lang.Override
         public _FinalStage outboundTrackingNumber(String outboundTrackingNumber) {
-            this.outboundTrackingNumber = Optional.of(outboundTrackingNumber);
+            this.outboundTrackingNumber = Optional.ofNullable(outboundTrackingNumber);
             return this;
         }
 
+        /**
+         * <p>Tracking number for delivery to customer</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "outbound_tracking_number", nulls = Nulls.SKIP)
         public _FinalStage outboundTrackingNumber(Optional<String> outboundTrackingNumber) {

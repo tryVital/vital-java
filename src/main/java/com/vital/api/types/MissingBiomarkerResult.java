@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MissingBiomarkerResult.Builder.class)
 public final class MissingBiomarkerResult {
     private final String name;
@@ -145,17 +146,17 @@ public final class MissingBiomarkerResult {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
 
         Builder from(MissingBiomarkerResult other);
     }
 
     public interface SlugStage {
-        InferredFailureTypeStage slug(String slug);
+        InferredFailureTypeStage slug(@NotNull String slug);
     }
 
     public interface InferredFailureTypeStage {
-        _FinalStage inferredFailureType(FailureType inferredFailureType);
+        _FinalStage inferredFailureType(@NotNull FailureType inferredFailureType);
     }
 
     public interface _FinalStage {
@@ -220,28 +221,29 @@ public final class MissingBiomarkerResult {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public InferredFailureTypeStage slug(String slug) {
-            this.slug = slug;
+        public InferredFailureTypeStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("inferred_failure_type")
-        public _FinalStage inferredFailureType(FailureType inferredFailureType) {
-            this.inferredFailureType = inferredFailureType;
+        public _FinalStage inferredFailureType(@NotNull FailureType inferredFailureType) {
+            this.inferredFailureType =
+                    Objects.requireNonNull(inferredFailureType, "inferredFailureType must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers) {
-            this.sourceMarkers = Optional.of(sourceMarkers);
+            this.sourceMarkers = Optional.ofNullable(sourceMarkers);
             return this;
         }
 
@@ -254,7 +256,7 @@ public final class MissingBiomarkerResult {
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 
@@ -267,7 +269,7 @@ public final class MissingBiomarkerResult {
 
         @java.lang.Override
         public _FinalStage loincSlug(String loincSlug) {
-            this.loincSlug = Optional.of(loincSlug);
+            this.loincSlug = Optional.ofNullable(loincSlug);
             return this;
         }
 
@@ -280,7 +282,7 @@ public final class MissingBiomarkerResult {
 
         @java.lang.Override
         public _FinalStage loinc(String loinc) {
-            this.loinc = Optional.of(loinc);
+            this.loinc = Optional.ofNullable(loinc);
             return this;
         }
 
@@ -293,7 +295,7 @@ public final class MissingBiomarkerResult {
 
         @java.lang.Override
         public _FinalStage note(String note) {
-            this.note = Optional.of(note);
+            this.note = Optional.ofNullable(note);
             return this;
         }
 

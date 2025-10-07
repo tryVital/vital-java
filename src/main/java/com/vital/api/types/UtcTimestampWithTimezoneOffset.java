@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UtcTimestampWithTimezoneOffset.Builder.class)
 public final class UtcTimestampWithTimezoneOffset {
     private final OffsetDateTime timestamp;
@@ -72,7 +73,7 @@ public final class UtcTimestampWithTimezoneOffset {
     }
 
     public interface TimestampStage {
-        TimezoneOffsetStage timestamp(OffsetDateTime timestamp);
+        TimezoneOffsetStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(UtcTimestampWithTimezoneOffset other);
     }
@@ -105,8 +106,8 @@ public final class UtcTimestampWithTimezoneOffset {
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public TimezoneOffsetStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public TimezoneOffsetStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 

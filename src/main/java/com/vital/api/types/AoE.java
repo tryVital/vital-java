@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AoE.Builder.class)
 public final class AoE {
     private final List<Question> questions;
@@ -91,7 +91,9 @@ public final class AoE {
         }
 
         public Builder addAllQuestions(List<Question> questions) {
-            this.questions.addAll(questions);
+            if (questions != null) {
+                this.questions.addAll(questions);
+            }
             return this;
         }
 

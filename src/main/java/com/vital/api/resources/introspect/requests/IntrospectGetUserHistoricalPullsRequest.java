@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = IntrospectGetUserHistoricalPullsRequest.Builder.class)
 public final class IntrospectGetUserHistoricalPullsRequest {
     private final Optional<String> userId;
@@ -139,6 +139,9 @@ public final class IntrospectGetUserHistoricalPullsRequest {
             return this;
         }
 
+        /**
+         * <p>Filter by user ID.</p>
+         */
         @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
         public Builder userId(Optional<String> userId) {
             this.userId = userId;
@@ -146,7 +149,7 @@ public final class IntrospectGetUserHistoricalPullsRequest {
         }
 
         public Builder userId(String userId) {
-            this.userId = Optional.of(userId);
+            this.userId = Optional.ofNullable(userId);
             return this;
         }
 
@@ -157,7 +160,7 @@ public final class IntrospectGetUserHistoricalPullsRequest {
         }
 
         public Builder provider(Providers provider) {
-            this.provider = Optional.of(provider);
+            this.provider = Optional.ofNullable(provider);
             return this;
         }
 
@@ -168,7 +171,7 @@ public final class IntrospectGetUserHistoricalPullsRequest {
         }
 
         public Builder userLimit(Integer userLimit) {
-            this.userLimit = Optional.of(userLimit);
+            this.userLimit = Optional.ofNullable(userLimit);
             return this;
         }
 
@@ -179,10 +182,13 @@ public final class IntrospectGetUserHistoricalPullsRequest {
         }
 
         public Builder cursor(String cursor) {
-            this.cursor = Optional.of(cursor);
+            this.cursor = Optional.ofNullable(cursor);
             return this;
         }
 
+        /**
+         * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
+         */
         @JsonSetter(value = "next_cursor", nulls = Nulls.SKIP)
         public Builder nextCursor(Optional<String> nextCursor) {
             this.nextCursor = nextCursor;
@@ -190,7 +196,7 @@ public final class IntrospectGetUserHistoricalPullsRequest {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 

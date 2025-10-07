@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AppointmentAvailabilitySlots.Builder.class)
 public final class AppointmentAvailabilitySlots {
     private final List<DaySlots> slots;
@@ -104,7 +104,9 @@ public final class AppointmentAvailabilitySlots {
         }
 
         public Builder addAllSlots(List<DaySlots> slots) {
-            this.slots.addAll(slots);
+            if (slots != null) {
+                this.slots.addAll(slots);
+            }
             return this;
         }
 
@@ -115,7 +117,7 @@ public final class AppointmentAvailabilitySlots {
         }
 
         public Builder timezone(String timezone) {
-            this.timezone = Optional.of(timezone);
+            this.timezone = Optional.ofNullable(timezone);
             return this;
         }
 

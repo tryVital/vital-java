@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserUndoDeleteRequest.Builder.class)
 public final class UserUndoDeleteRequest {
     private final Optional<String> userId;
@@ -95,6 +95,9 @@ public final class UserUndoDeleteRequest {
             return this;
         }
 
+        /**
+         * <p>User ID to undo deletion. Mutually exclusive with <code>client_user_id</code>.</p>
+         */
         @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
         public Builder userId(Optional<String> userId) {
             this.userId = userId;
@@ -102,10 +105,13 @@ public final class UserUndoDeleteRequest {
         }
 
         public Builder userId(String userId) {
-            this.userId = Optional.of(userId);
+            this.userId = Optional.ofNullable(userId);
             return this;
         }
 
+        /**
+         * <p>Client User ID to undo deletion. Mutually exclusive with <code>user_id</code>.</p>
+         */
         @JsonSetter(value = "client_user_id", nulls = Nulls.SKIP)
         public Builder clientUserId(Optional<String> clientUserId) {
             this.clientUserId = clientUserId;
@@ -113,7 +119,7 @@ public final class UserUndoDeleteRequest {
         }
 
         public Builder clientUserId(String clientUserId) {
-            this.clientUserId = Optional.of(clientUserId);
+            this.clientUserId = Optional.ofNullable(clientUserId);
             return this;
         }
 

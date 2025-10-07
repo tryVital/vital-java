@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SingleHistoricalPullStatistics.Builder.class)
 public final class SingleHistoricalPullStatistics {
     private final HistoricalPullStatus status;
@@ -145,17 +146,17 @@ public final class SingleHistoricalPullStatistics {
     }
 
     public interface StatusStage {
-        TimelineStage status(HistoricalPullStatus status);
+        TimelineStage status(@NotNull HistoricalPullStatus status);
 
         Builder from(SingleHistoricalPullStatistics other);
     }
 
     public interface TimelineStage {
-        ReleaseStage timeline(HistoricalPullTimeline timeline);
+        ReleaseStage timeline(@NotNull HistoricalPullTimeline timeline);
     }
 
     public interface ReleaseStage {
-        _FinalStage release(String release);
+        _FinalStage release(@NotNull String release);
     }
 
     public interface _FinalStage {
@@ -220,28 +221,28 @@ public final class SingleHistoricalPullStatistics {
 
         @java.lang.Override
         @JsonSetter("status")
-        public TimelineStage status(HistoricalPullStatus status) {
-            this.status = status;
+        public TimelineStage status(@NotNull HistoricalPullStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("timeline")
-        public ReleaseStage timeline(HistoricalPullTimeline timeline) {
-            this.timeline = timeline;
+        public ReleaseStage timeline(@NotNull HistoricalPullTimeline timeline) {
+            this.timeline = Objects.requireNonNull(timeline, "timeline must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("release")
-        public _FinalStage release(String release) {
-            this.release = release;
+        public _FinalStage release(@NotNull String release) {
+            this.release = Objects.requireNonNull(release, "release must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails) {
-            this.errorDetails = Optional.of(errorDetails);
+            this.errorDetails = Optional.ofNullable(errorDetails);
             return this;
         }
 
@@ -254,7 +255,7 @@ public final class SingleHistoricalPullStatistics {
 
         @java.lang.Override
         public _FinalStage traceId(String traceId) {
-            this.traceId = Optional.of(traceId);
+            this.traceId = Optional.ofNullable(traceId);
             return this;
         }
 
@@ -267,7 +268,7 @@ public final class SingleHistoricalPullStatistics {
 
         @java.lang.Override
         public _FinalStage daysWithData(Integer daysWithData) {
-            this.daysWithData = Optional.of(daysWithData);
+            this.daysWithData = Optional.ofNullable(daysWithData);
             return this;
         }
 
@@ -280,7 +281,7 @@ public final class SingleHistoricalPullStatistics {
 
         @java.lang.Override
         public _FinalStage rangeEnd(OffsetDateTime rangeEnd) {
-            this.rangeEnd = Optional.of(rangeEnd);
+            this.rangeEnd = Optional.ofNullable(rangeEnd);
             return this;
         }
 
@@ -293,7 +294,7 @@ public final class SingleHistoricalPullStatistics {
 
         @java.lang.Override
         public _FinalStage rangeStart(OffsetDateTime rangeStart) {
-            this.rangeStart = Optional.of(rangeStart);
+            this.rangeStart = Optional.ofNullable(rangeStart);
             return this;
         }
 

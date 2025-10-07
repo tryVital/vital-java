@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CervicalMucusEntry.Builder.class)
 public final class CervicalMucusEntry {
     private final String date;
@@ -74,13 +75,16 @@ public final class CervicalMucusEntry {
     }
 
     public interface DateStage {
-        QualityStage date(String date);
+        QualityStage date(@NotNull String date);
 
         Builder from(CervicalMucusEntry other);
     }
 
     public interface QualityStage {
-        _FinalStage quality(CervicalMucusEntryQuality quality);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage quality(@NotNull CervicalMucusEntryQuality quality);
     }
 
     public interface _FinalStage {
@@ -107,19 +111,20 @@ public final class CervicalMucusEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public QualityStage date(String date) {
-            this.date = date;
+        public QualityStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("quality")
-        public _FinalStage quality(CervicalMucusEntryQuality quality) {
-            this.quality = quality;
+        public _FinalStage quality(@NotNull CervicalMucusEntryQuality quality) {
+            this.quality = Objects.requireNonNull(quality, "quality must not be null");
             return this;
         }
 

@@ -18,8 +18,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SleepV2InDb.Builder.class)
 public final class SleepV2InDb {
     private final OffsetDateTime timestamp;
@@ -190,17 +191,17 @@ public final class SleepV2InDb {
     }
 
     public interface TimestampStage {
-        ProviderIdStage timestamp(OffsetDateTime timestamp);
+        ProviderIdStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(SleepV2InDb other);
     }
 
     public interface ProviderIdStage {
-        UserIdStage providerId(String providerId);
+        UserIdStage providerId(@NotNull String providerId);
     }
 
     public interface UserIdStage {
-        SourceIdStage userId(String userId);
+        SourceIdStage userId(@NotNull String userId);
     }
 
     public interface SourceIdStage {
@@ -208,11 +209,11 @@ public final class SleepV2InDb {
     }
 
     public interface IdStage {
-        SourceStage id(String id);
+        SourceStage id(@NotNull String id);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingProvider source);
+        _FinalStage source(@NotNull ClientFacingProvider source);
     }
 
     public interface _FinalStage {
@@ -296,22 +297,22 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public ProviderIdStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public ProviderIdStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider_id")
-        public UserIdStage providerId(String providerId) {
-            this.providerId = providerId;
+        public UserIdStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceIdStage userId(String userId) {
-            this.userId = userId;
+        public SourceIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
@@ -324,21 +325,21 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         @JsonSetter("id")
-        public SourceStage id(String id) {
-            this.id = id;
+        public SourceStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingProvider source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingProvider source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
+            this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 
@@ -351,7 +352,7 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.of(createdAt);
+            this.createdAt = Optional.ofNullable(createdAt);
             return this;
         }
 
@@ -364,7 +365,7 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
-            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
         }
 
@@ -377,7 +378,7 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         public _FinalStage priority(Integer priority) {
-            this.priority = Optional.of(priority);
+            this.priority = Optional.ofNullable(priority);
             return this;
         }
 
@@ -390,7 +391,7 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         public _FinalStage priorityId(Integer priorityId) {
-            this.priorityId = Optional.of(priorityId);
+            this.priorityId = Optional.ofNullable(priorityId);
             return this;
         }
 
@@ -409,7 +410,9 @@ public final class SleepV2InDb {
 
         @java.lang.Override
         public _FinalStage putAllData(Map<String, Object> data) {
-            this.data.putAll(data);
+            if (data != null) {
+                this.data.putAll(data);
+            }
             return this;
         }
 

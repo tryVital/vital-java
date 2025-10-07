@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RelativeTimeframe.Builder.class)
 public final class RelativeTimeframe {
     private final String anchor;
@@ -75,13 +76,13 @@ public final class RelativeTimeframe {
     }
 
     public interface AnchorStage {
-        PastStage anchor(String anchor);
+        PastStage anchor(@NotNull String anchor);
 
         Builder from(RelativeTimeframe other);
     }
 
     public interface PastStage {
-        _FinalStage past(Period past);
+        _FinalStage past(@NotNull Period past);
     }
 
     public interface _FinalStage {
@@ -108,15 +109,15 @@ public final class RelativeTimeframe {
 
         @java.lang.Override
         @JsonSetter("anchor")
-        public PastStage anchor(String anchor) {
-            this.anchor = anchor;
+        public PastStage anchor(@NotNull String anchor) {
+            this.anchor = Objects.requireNonNull(anchor, "anchor must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("past")
-        public _FinalStage past(Period past) {
-            this.past = past;
+        public _FinalStage past(@NotNull Period past) {
+            this.past = Objects.requireNonNull(past, "past must not be null");
             return this;
         }
 

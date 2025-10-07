@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetMarkersResponse.Builder.class)
 public final class GetMarkersResponse {
     private final List<ClientFacingMarkerComplete> markers;
@@ -146,7 +146,9 @@ public final class GetMarkersResponse {
         }
 
         public Builder addAllMarkers(List<ClientFacingMarkerComplete> markers) {
-            this.markers.addAll(markers);
+            if (markers != null) {
+                this.markers.addAll(markers);
+            }
             return this;
         }
 
@@ -157,7 +159,7 @@ public final class GetMarkersResponse {
         }
 
         public Builder total(Integer total) {
-            this.total = Optional.of(total);
+            this.total = Optional.ofNullable(total);
             return this;
         }
 
@@ -168,7 +170,7 @@ public final class GetMarkersResponse {
         }
 
         public Builder page(Integer page) {
-            this.page = Optional.of(page);
+            this.page = Optional.ofNullable(page);
             return this;
         }
 
@@ -179,7 +181,7 @@ public final class GetMarkersResponse {
         }
 
         public Builder size(Integer size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 
@@ -190,7 +192,7 @@ public final class GetMarkersResponse {
         }
 
         public Builder pages(Integer pages) {
-            this.pages = Optional.of(pages);
+            this.pages = Optional.ofNullable(pages);
             return this;
         }
 

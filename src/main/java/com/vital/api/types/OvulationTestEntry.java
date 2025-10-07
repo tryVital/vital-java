@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = OvulationTestEntry.Builder.class)
 public final class OvulationTestEntry {
     private final String date;
@@ -74,13 +75,16 @@ public final class OvulationTestEntry {
     }
 
     public interface DateStage {
-        TestResultStage date(String date);
+        TestResultStage date(@NotNull String date);
 
         Builder from(OvulationTestEntry other);
     }
 
     public interface TestResultStage {
-        _FinalStage testResult(OvulationTestEntryTestResult testResult);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage testResult(@NotNull OvulationTestEntryTestResult testResult);
     }
 
     public interface _FinalStage {
@@ -107,19 +111,20 @@ public final class OvulationTestEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public TestResultStage date(String date) {
-            this.date = date;
+        public TestResultStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("test_result")
-        public _FinalStage testResult(OvulationTestEntryTestResult testResult) {
-            this.testResult = testResult;
+        public _FinalStage testResult(@NotNull OvulationTestEntryTestResult testResult) {
+            this.testResult = Objects.requireNonNull(testResult, "testResult must not be null");
             return this;
         }
 

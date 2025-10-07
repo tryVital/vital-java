@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingSource.Builder.class)
 public final class ClientFacingSource {
     private final String provider;
@@ -185,7 +186,10 @@ public final class ClientFacingSource {
     }
 
     public interface ProviderStage {
-        _FinalStage provider(String provider);
+        /**
+         * <p>Provider slug. e.g., <code>oura</code>, <code>fitbit</code>, <code>garmin</code>.</p>
+         */
+        _FinalStage provider(@NotNull String provider);
 
         Builder from(ClientFacingSource other);
     }
@@ -193,34 +197,61 @@ public final class ClientFacingSource {
     public interface _FinalStage {
         ClientFacingSource build();
 
+        /**
+         * <p>The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to <code>unknown</code> when Vital cannot extract or infer that information</p>
+         */
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
 
+        /**
+         * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
+         */
         _FinalStage appId(Optional<String> appId);
 
         _FinalStage appId(String appId);
 
+        /**
+         * <p>The identifier of the device which recorded this summary.</p>
+         */
         _FinalStage deviceId(Optional<String> deviceId);
 
         _FinalStage deviceId(String deviceId);
 
+        /**
+         * <p>For workout stream timeseries, this is the standard sport slug of the workout with which the timeseries data are associated.</p>
+         * <p>For the <code>distance</code> timeseries, this is <code>wheelchair_pushing</code> if the user is a wheelchair user, or <code>null</code> otherwise.</p>
+         * <p>For all summary types and non-workout timeseries, this is always <code>null</code>.</p>
+         */
         _FinalStage sport(Optional<String> sport);
 
         _FinalStage sport(String sport);
 
+        /**
+         * <p>For workout stream timeseries, this is the workout ID with which the timeseries data are associated.</p>
+         * <p>For all other types, this is always <code>null</code>.</p>
+         */
         _FinalStage workoutId(Optional<String> workoutId);
 
         _FinalStage workoutId(String workoutId);
 
+        /**
+         * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
+         */
         _FinalStage name(Optional<String> name);
 
         _FinalStage name(String name);
 
+        /**
+         * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
+         */
         _FinalStage slug(Optional<String> slug);
 
         _FinalStage slug(String slug);
 
+        /**
+         * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
+         */
         _FinalStage logo(Optional<String> logo);
 
         _FinalStage logo(String logo);
@@ -267,12 +298,13 @@ public final class ClientFacingSource {
 
         /**
          * <p>Provider slug. e.g., <code>oura</code>, <code>fitbit</code>, <code>garmin</code>.</p>
+         * <p>Provider slug. e.g., <code>oura</code>, <code>fitbit</code>, <code>garmin</code>.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(String provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull String provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
@@ -282,10 +314,13 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage logo(String logo) {
-            this.logo = Optional.of(logo);
+            this.logo = Optional.ofNullable(logo);
             return this;
         }
 
+        /**
+         * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "logo", nulls = Nulls.SKIP)
         public _FinalStage logo(Optional<String> logo) {
@@ -299,10 +334,13 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
+        /**
+         * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "slug", nulls = Nulls.SKIP)
         public _FinalStage slug(Optional<String> slug) {
@@ -316,10 +354,13 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
+        /**
+         * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public _FinalStage name(Optional<String> name) {
@@ -334,10 +375,14 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage workoutId(String workoutId) {
-            this.workoutId = Optional.of(workoutId);
+            this.workoutId = Optional.ofNullable(workoutId);
             return this;
         }
 
+        /**
+         * <p>For workout stream timeseries, this is the workout ID with which the timeseries data are associated.</p>
+         * <p>For all other types, this is always <code>null</code>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "workout_id", nulls = Nulls.SKIP)
         public _FinalStage workoutId(Optional<String> workoutId) {
@@ -353,10 +398,15 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage sport(String sport) {
-            this.sport = Optional.of(sport);
+            this.sport = Optional.ofNullable(sport);
             return this;
         }
 
+        /**
+         * <p>For workout stream timeseries, this is the standard sport slug of the workout with which the timeseries data are associated.</p>
+         * <p>For the <code>distance</code> timeseries, this is <code>wheelchair_pushing</code> if the user is a wheelchair user, or <code>null</code> otherwise.</p>
+         * <p>For all summary types and non-workout timeseries, this is always <code>null</code>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sport", nulls = Nulls.SKIP)
         public _FinalStage sport(Optional<String> sport) {
@@ -370,10 +420,13 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage deviceId(String deviceId) {
-            this.deviceId = Optional.of(deviceId);
+            this.deviceId = Optional.ofNullable(deviceId);
             return this;
         }
 
+        /**
+         * <p>The identifier of the device which recorded this summary.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "device_id", nulls = Nulls.SKIP)
         public _FinalStage deviceId(Optional<String> deviceId) {
@@ -387,10 +440,13 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage appId(String appId) {
-            this.appId = Optional.of(appId);
+            this.appId = Optional.ofNullable(appId);
             return this;
         }
 
+        /**
+         * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "app_id", nulls = Nulls.SKIP)
         public _FinalStage appId(Optional<String> appId) {
@@ -404,10 +460,13 @@ public final class ClientFacingSource {
          */
         @java.lang.Override
         public _FinalStage type(String type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
+        /**
+         * <p>The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to <code>unknown</code> when Vital cannot extract or infer that information</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {

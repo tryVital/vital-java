@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserRefreshErrorResponse.Builder.class)
 public final class UserRefreshErrorResponse {
     private final boolean success;
@@ -103,17 +104,23 @@ public final class UserRefreshErrorResponse {
     }
 
     public interface SuccessStage {
+        /**
+         * <p>Whether operation was successful or not</p>
+         */
         UserIdStage success(boolean success);
 
         Builder from(UserRefreshErrorResponse other);
     }
 
     public interface UserIdStage {
-        ErrorStage userId(String userId);
+        /**
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         */
+        ErrorStage userId(@NotNull String userId);
     }
 
     public interface ErrorStage {
-        _FinalStage error(String error);
+        _FinalStage error(@NotNull String error);
     }
 
     public interface _FinalStage {
@@ -150,6 +157,7 @@ public final class UserRefreshErrorResponse {
 
         /**
          * <p>Whether operation was successful or not</p>
+         * <p>Whether operation was successful or not</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -161,25 +169,26 @@ public final class UserRefreshErrorResponse {
 
         /**
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public ErrorStage userId(String userId) {
-            this.userId = userId;
+        public ErrorStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("error")
-        public _FinalStage error(String error) {
-            this.error = error;
+        public _FinalStage error(@NotNull String error) {
+            this.error = Objects.requireNonNull(error, "error must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage failedSources(List<String> failedSources) {
-            this.failedSources = Optional.of(failedSources);
+            this.failedSources = Optional.ofNullable(failedSources);
             return this;
         }
 

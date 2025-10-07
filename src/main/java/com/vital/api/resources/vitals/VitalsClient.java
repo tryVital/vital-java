@@ -3,14 +3,8 @@
  */
 package com.vital.api.resources.vitals;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
-import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.core.VitalException;
-import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.vitals.requests.VitalsAfibBurdenGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBasalBodyTemperatureGroupedRequest;
 import com.vital.api.resources.vitals.requests.VitalsBloodOxygenGroupedRequest;
@@ -163,4369 +157,820 @@ import com.vital.api.types.GroupedWheelchairPushResponse;
 import com.vital.api.types.GroupedWorkoutDistanceResponse;
 import com.vital.api.types.GroupedWorkoutDurationResponse;
 import com.vital.api.types.GroupedWorkoutSwimmingStrokeResponse;
-import com.vital.api.types.HttpValidationError;
-import java.io.IOException;
 import java.util.List;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class VitalsClient {
     protected final ClientOptions clientOptions;
 
+    private final RawVitalsClient rawClient;
+
     public VitalsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawVitalsClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawVitalsClient withRawResponse() {
+        return this.rawClient;
     }
 
     public GroupedWorkoutSwimmingStrokeResponse workoutSwimmingStrokeGrouped(
             String userId, VitalsWorkoutSwimmingStrokeGroupedRequest request) {
-        return workoutSwimmingStrokeGrouped(userId, request, null);
+        return this.rawClient.workoutSwimmingStrokeGrouped(userId, request).body();
     }
 
     public GroupedWorkoutSwimmingStrokeResponse workoutSwimmingStrokeGrouped(
             String userId, VitalsWorkoutSwimmingStrokeGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("workout_swimming_stroke/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedWorkoutSwimmingStrokeResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .workoutSwimmingStrokeGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedWorkoutDistanceResponse workoutDistanceGrouped(
             String userId, VitalsWorkoutDistanceGroupedRequest request) {
-        return workoutDistanceGrouped(userId, request, null);
+        return this.rawClient.workoutDistanceGrouped(userId, request).body();
     }
 
     public GroupedWorkoutDistanceResponse workoutDistanceGrouped(
             String userId, VitalsWorkoutDistanceGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("workout_distance/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedWorkoutDistanceResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .workoutDistanceGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedHeartRateRecoveryOneMinuteResponse heartRateRecoveryOneMinuteGrouped(
             String userId, VitalsHeartRateRecoveryOneMinuteGroupedRequest request) {
-        return heartRateRecoveryOneMinuteGrouped(userId, request, null);
+        return this.rawClient.heartRateRecoveryOneMinuteGrouped(userId, request).body();
     }
 
     public GroupedHeartRateRecoveryOneMinuteResponse heartRateRecoveryOneMinuteGrouped(
             String userId, VitalsHeartRateRecoveryOneMinuteGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("heart_rate_recovery_one_minute/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedHeartRateRecoveryOneMinuteResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .heartRateRecoveryOneMinuteGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedWaistCircumferenceResponse waistCircumferenceGrouped(
             String userId, VitalsWaistCircumferenceGroupedRequest request) {
-        return waistCircumferenceGrouped(userId, request, null);
+        return this.rawClient.waistCircumferenceGrouped(userId, request).body();
     }
 
     public GroupedWaistCircumferenceResponse waistCircumferenceGrouped(
             String userId, VitalsWaistCircumferenceGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("waist_circumference/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedWaistCircumferenceResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .waistCircumferenceGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedLeanBodyMassResponse leanBodyMassGrouped(String userId, VitalsLeanBodyMassGroupedRequest request) {
-        return leanBodyMassGrouped(userId, request, null);
+        return this.rawClient.leanBodyMassGrouped(userId, request).body();
     }
 
     public GroupedLeanBodyMassResponse leanBodyMassGrouped(
             String userId, VitalsLeanBodyMassGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("lean_body_mass/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedLeanBodyMassResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .leanBodyMassGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedBodyMassIndexResponse bodyMassIndexGrouped(String userId, VitalsBodyMassIndexGroupedRequest request) {
-        return bodyMassIndexGrouped(userId, request, null);
+        return this.rawClient.bodyMassIndexGrouped(userId, request).body();
     }
 
     public GroupedBodyMassIndexResponse bodyMassIndexGrouped(
             String userId, VitalsBodyMassIndexGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_mass_index/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBodyMassIndexResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .bodyMassIndexGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedBasalBodyTemperatureResponse basalBodyTemperatureGrouped(
             String userId, VitalsBasalBodyTemperatureGroupedRequest request) {
-        return basalBodyTemperatureGrouped(userId, request, null);
+        return this.rawClient.basalBodyTemperatureGrouped(userId, request).body();
     }
 
     public GroupedBasalBodyTemperatureResponse basalBodyTemperatureGrouped(
             String userId, VitalsBasalBodyTemperatureGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("basal_body_temperature/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedBasalBodyTemperatureResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .basalBodyTemperatureGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedHandwashingResponse handwashingGrouped(String userId, VitalsHandwashingGroupedRequest request) {
-        return handwashingGrouped(userId, request, null);
+        return this.rawClient.handwashingGrouped(userId, request).body();
     }
 
     public GroupedHandwashingResponse handwashingGrouped(
             String userId, VitalsHandwashingGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("handwashing/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedHandwashingResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .handwashingGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedDaylightExposureResponse daylightExposureGrouped(
             String userId, VitalsDaylightExposureGroupedRequest request) {
-        return daylightExposureGrouped(userId, request, null);
+        return this.rawClient.daylightExposureGrouped(userId, request).body();
     }
 
     public GroupedDaylightExposureResponse daylightExposureGrouped(
             String userId, VitalsDaylightExposureGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("daylight_exposure/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedDaylightExposureResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .daylightExposureGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedUvExposureResponse uvExposureGrouped(String userId, VitalsUvExposureGroupedRequest request) {
-        return uvExposureGrouped(userId, request, null);
+        return this.rawClient.uvExposureGrouped(userId, request).body();
     }
 
     public GroupedUvExposureResponse uvExposureGrouped(
             String userId, VitalsUvExposureGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("uv_exposure/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedUvExposureResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.uvExposureGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedFallResponse fallGrouped(String userId, VitalsFallGroupedRequest request) {
-        return fallGrouped(userId, request, null);
+        return this.rawClient.fallGrouped(userId, request).body();
     }
 
     public GroupedFallResponse fallGrouped(
             String userId, VitalsFallGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("fall/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedFallResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.fallGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedInhalerUsageResponse inhalerUsageGrouped(String userId, VitalsInhalerUsageGroupedRequest request) {
-        return inhalerUsageGrouped(userId, request, null);
+        return this.rawClient.inhalerUsageGrouped(userId, request).body();
     }
 
     public GroupedInhalerUsageResponse inhalerUsageGrouped(
             String userId, VitalsInhalerUsageGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("inhaler_usage/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedInhalerUsageResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .inhalerUsageGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedPeakExpiratoryFlowRateResponse peakExpiratoryFlowRateGrouped(
             String userId, VitalsPeakExpiratoryFlowRateGroupedRequest request) {
-        return peakExpiratoryFlowRateGrouped(userId, request, null);
+        return this.rawClient.peakExpiratoryFlowRateGrouped(userId, request).body();
     }
 
     public GroupedPeakExpiratoryFlowRateResponse peakExpiratoryFlowRateGrouped(
             String userId, VitalsPeakExpiratoryFlowRateGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("peak_expiratory_flow_rate/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedPeakExpiratoryFlowRateResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .peakExpiratoryFlowRateGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedForcedVitalCapacityResponse forcedVitalCapacityGrouped(
             String userId, VitalsForcedVitalCapacityGroupedRequest request) {
-        return forcedVitalCapacityGrouped(userId, request, null);
+        return this.rawClient.forcedVitalCapacityGrouped(userId, request).body();
     }
 
     public GroupedForcedVitalCapacityResponse forcedVitalCapacityGrouped(
             String userId, VitalsForcedVitalCapacityGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("forced_vital_capacity/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedForcedVitalCapacityResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .forcedVitalCapacityGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedForcedExpiratoryVolume1Response forcedExpiratoryVolume1Grouped(
             String userId, VitalsForcedExpiratoryVolume1GroupedRequest request) {
-        return forcedExpiratoryVolume1Grouped(userId, request, null);
+        return this.rawClient.forcedExpiratoryVolume1Grouped(userId, request).body();
     }
 
     public GroupedForcedExpiratoryVolume1Response forcedExpiratoryVolume1Grouped(
             String userId, VitalsForcedExpiratoryVolume1GroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("forced_expiratory_volume_1/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedForcedExpiratoryVolume1Response.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .forcedExpiratoryVolume1Grouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedWheelchairPushResponse wheelchairPushGrouped(
             String userId, VitalsWheelchairPushGroupedRequest request) {
-        return wheelchairPushGrouped(userId, request, null);
+        return this.rawClient.wheelchairPushGrouped(userId, request).body();
     }
 
     public GroupedWheelchairPushResponse wheelchairPushGrouped(
             String userId, VitalsWheelchairPushGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("wheelchair_push/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedWheelchairPushResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .wheelchairPushGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedSleepBreathingDisturbanceResponse sleepBreathingDisturbanceGrouped(
             String userId, VitalsSleepBreathingDisturbanceGroupedRequest request) {
-        return sleepBreathingDisturbanceGrouped(userId, request, null);
+        return this.rawClient.sleepBreathingDisturbanceGrouped(userId, request).body();
     }
 
     public GroupedSleepBreathingDisturbanceResponse sleepBreathingDisturbanceGrouped(
             String userId, VitalsSleepBreathingDisturbanceGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("sleep_breathing_disturbance/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedSleepBreathingDisturbanceResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .sleepBreathingDisturbanceGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedSleepApneaAlertResponse sleepApneaAlertGrouped(
             String userId, VitalsSleepApneaAlertGroupedRequest request) {
-        return sleepApneaAlertGrouped(userId, request, null);
+        return this.rawClient.sleepApneaAlertGrouped(userId, request).body();
     }
 
     public GroupedSleepApneaAlertResponse sleepApneaAlertGrouped(
             String userId, VitalsSleepApneaAlertGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("sleep_apnea_alert/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedSleepApneaAlertResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .sleepApneaAlertGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedStandDurationResponse standDurationGrouped(String userId, VitalsStandDurationGroupedRequest request) {
-        return standDurationGrouped(userId, request, null);
+        return this.rawClient.standDurationGrouped(userId, request).body();
     }
 
     public GroupedStandDurationResponse standDurationGrouped(
             String userId, VitalsStandDurationGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("stand_duration/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedStandDurationResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .standDurationGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedStandHourResponse standHourGrouped(String userId, VitalsStandHourGroupedRequest request) {
-        return standHourGrouped(userId, request, null);
+        return this.rawClient.standHourGrouped(userId, request).body();
     }
 
     public GroupedStandHourResponse standHourGrouped(
             String userId, VitalsStandHourGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("stand_hour/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedStandHourResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.standHourGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedHeartRateAlertResponse heartRateAlertGrouped(
             String userId, VitalsHeartRateAlertGroupedRequest request) {
-        return heartRateAlertGrouped(userId, request, null);
+        return this.rawClient.heartRateAlertGrouped(userId, request).body();
     }
 
     public GroupedHeartRateAlertResponse heartRateAlertGrouped(
             String userId, VitalsHeartRateAlertGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("heart_rate_alert/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedHeartRateAlertResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .heartRateAlertGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedAFibBurdenResponse afibBurdenGrouped(String userId, VitalsAfibBurdenGroupedRequest request) {
-        return afibBurdenGrouped(userId, request, null);
+        return this.rawClient.afibBurdenGrouped(userId, request).body();
     }
 
     public GroupedAFibBurdenResponse afibBurdenGrouped(
             String userId, VitalsAfibBurdenGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("afib_burden/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedAFibBurdenResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.afibBurdenGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedWorkoutDurationResponse workoutDurationGrouped(
             String userId, VitalsWorkoutDurationGroupedRequest request) {
-        return workoutDurationGrouped(userId, request, null);
+        return this.rawClient.workoutDurationGrouped(userId, request).body();
     }
 
     public GroupedWorkoutDurationResponse workoutDurationGrouped(
             String userId, VitalsWorkoutDurationGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("workout_duration/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedWorkoutDurationResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .workoutDurationGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedVo2MaxResponse vo2MaxGrouped(String userId, VitalsVo2MaxGroupedRequest request) {
-        return vo2MaxGrouped(userId, request, null);
+        return this.rawClient.vo2MaxGrouped(userId, request).body();
     }
 
     public GroupedVo2MaxResponse vo2MaxGrouped(
             String userId, VitalsVo2MaxGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("vo2_max/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedVo2MaxResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.vo2MaxGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedStressLevelResponse stressLevelGrouped(String userId, VitalsStressLevelGroupedRequest request) {
-        return stressLevelGrouped(userId, request, null);
+        return this.rawClient.stressLevelGrouped(userId, request).body();
     }
 
     public GroupedStressLevelResponse stressLevelGrouped(
             String userId, VitalsStressLevelGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("stress_level/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedStressLevelResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .stressLevelGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedMindfulnessMinutesResponse mindfulnessMinutesGrouped(
             String userId, VitalsMindfulnessMinutesGroupedRequest request) {
-        return mindfulnessMinutesGrouped(userId, request, null);
+        return this.rawClient.mindfulnessMinutesGrouped(userId, request).body();
     }
 
     public GroupedMindfulnessMinutesResponse mindfulnessMinutesGrouped(
             String userId, VitalsMindfulnessMinutesGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("mindfulness_minutes/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedMindfulnessMinutesResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .mindfulnessMinutesGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedCaffeineResponse caffeineGrouped(String userId, VitalsCaffeineGroupedRequest request) {
-        return caffeineGrouped(userId, request, null);
+        return this.rawClient.caffeineGrouped(userId, request).body();
     }
 
     public GroupedCaffeineResponse caffeineGrouped(
             String userId, VitalsCaffeineGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("caffeine/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedCaffeineResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.caffeineGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedWaterResponse waterGrouped(String userId, VitalsWaterGroupedRequest request) {
-        return waterGrouped(userId, request, null);
+        return this.rawClient.waterGrouped(userId, request).body();
     }
 
     public GroupedWaterResponse waterGrouped(
             String userId, VitalsWaterGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("water/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedWaterResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.waterGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedStepsResponse stepsGrouped(String userId, VitalsStepsGroupedRequest request) {
-        return stepsGrouped(userId, request, null);
+        return this.rawClient.stepsGrouped(userId, request).body();
     }
 
     public GroupedStepsResponse stepsGrouped(
             String userId, VitalsStepsGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("steps/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedStepsResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.stepsGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedFloorsClimbedResponse floorsClimbedGrouped(String userId, VitalsFloorsClimbedGroupedRequest request) {
-        return floorsClimbedGrouped(userId, request, null);
+        return this.rawClient.floorsClimbedGrouped(userId, request).body();
     }
 
     public GroupedFloorsClimbedResponse floorsClimbedGrouped(
             String userId, VitalsFloorsClimbedGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("floors_climbed/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedFloorsClimbedResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .floorsClimbedGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedDistanceResponse distanceGrouped(String userId, VitalsDistanceGroupedRequest request) {
-        return distanceGrouped(userId, request, null);
+        return this.rawClient.distanceGrouped(userId, request).body();
     }
 
     public GroupedDistanceResponse distanceGrouped(
             String userId, VitalsDistanceGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("distance/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedDistanceResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.distanceGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedCaloriesBasalResponse caloriesBasalGrouped(String userId, VitalsCaloriesBasalGroupedRequest request) {
-        return caloriesBasalGrouped(userId, request, null);
+        return this.rawClient.caloriesBasalGrouped(userId, request).body();
     }
 
     public GroupedCaloriesBasalResponse caloriesBasalGrouped(
             String userId, VitalsCaloriesBasalGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("calories_basal/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedCaloriesBasalResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .caloriesBasalGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedCaloriesActiveResponse caloriesActiveGrouped(
             String userId, VitalsCaloriesActiveGroupedRequest request) {
-        return caloriesActiveGrouped(userId, request, null);
+        return this.rawClient.caloriesActiveGrouped(userId, request).body();
     }
 
     public GroupedCaloriesActiveResponse caloriesActiveGrouped(
             String userId, VitalsCaloriesActiveGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("calories_active/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedCaloriesActiveResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .caloriesActiveGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedRespiratoryRateResponse respiratoryRateGrouped(
             String userId, VitalsRespiratoryRateGroupedRequest request) {
-        return respiratoryRateGrouped(userId, request, null);
+        return this.rawClient.respiratoryRateGrouped(userId, request).body();
     }
 
     public GroupedRespiratoryRateResponse respiratoryRateGrouped(
             String userId, VitalsRespiratoryRateGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("respiratory_rate/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedRespiratoryRateResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .respiratoryRateGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedNoteResponse noteGrouped(String userId, VitalsNoteGroupedRequest request) {
-        return noteGrouped(userId, request, null);
+        return this.rawClient.noteGrouped(userId, request).body();
     }
 
     public GroupedNoteResponse noteGrouped(
             String userId, VitalsNoteGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("note/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedNoteResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.noteGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedInsulinInjectionResponse insulinInjectionGrouped(
             String userId, VitalsInsulinInjectionGroupedRequest request) {
-        return insulinInjectionGrouped(userId, request, null);
+        return this.rawClient.insulinInjectionGrouped(userId, request).body();
     }
 
     public GroupedInsulinInjectionResponse insulinInjectionGrouped(
             String userId, VitalsInsulinInjectionGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("insulin_injection/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedInsulinInjectionResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .insulinInjectionGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedIgeResponse igeGrouped(String userId, VitalsIgeGroupedRequest request) {
-        return igeGrouped(userId, request, null);
+        return this.rawClient.igeGrouped(userId, request).body();
     }
 
     public GroupedIgeResponse igeGrouped(
             String userId, VitalsIgeGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("ige/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedIgeResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.igeGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedIggResponse iggGrouped(String userId, VitalsIggGroupedRequest request) {
-        return iggGrouped(userId, request, null);
+        return this.rawClient.iggGrouped(userId, request).body();
     }
 
     public GroupedIggResponse iggGrouped(
             String userId, VitalsIggGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("igg/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedIggResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.iggGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedHypnogramResponse hypnogramGrouped(String userId, VitalsHypnogramGroupedRequest request) {
-        return hypnogramGrouped(userId, request, null);
+        return this.rawClient.hypnogramGrouped(userId, request).body();
     }
 
     public GroupedHypnogramResponse hypnogramGrouped(
             String userId, VitalsHypnogramGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("hypnogram/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedHypnogramResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.hypnogramGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedHrvResponse hrvGrouped(String userId, VitalsHrvGroupedRequest request) {
-        return hrvGrouped(userId, request, null);
+        return this.rawClient.hrvGrouped(userId, request).body();
     }
 
     public GroupedHrvResponse hrvGrouped(
             String userId, VitalsHrvGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("hrv/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedHrvResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.hrvGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedHeartRateResponse heartrateGrouped(String userId, VitalsHeartrateGroupedRequest request) {
-        return heartrateGrouped(userId, request, null);
+        return this.rawClient.heartrateGrouped(userId, request).body();
     }
 
     public GroupedHeartRateResponse heartrateGrouped(
             String userId, VitalsHeartrateGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("heartrate/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedHeartRateResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.heartrateGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedGlucoseResponse glucoseGrouped(String userId, VitalsGlucoseGroupedRequest request) {
-        return glucoseGrouped(userId, request, null);
+        return this.rawClient.glucoseGrouped(userId, request).body();
     }
 
     public GroupedGlucoseResponse glucoseGrouped(
             String userId, VitalsGlucoseGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("glucose/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedGlucoseResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.glucoseGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedCholesterolResponse cholesterolGrouped(String userId, VitalsCholesterolGroupedRequest request) {
-        return cholesterolGrouped(userId, request, null);
+        return this.rawClient.cholesterolGrouped(userId, request).body();
     }
 
     public GroupedCholesterolResponse cholesterolGrouped(
             String userId, VitalsCholesterolGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedCholesterolResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .cholesterolGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedCarbohydratesResponse carbohydratesGrouped(String userId, VitalsCarbohydratesGroupedRequest request) {
-        return carbohydratesGrouped(userId, request, null);
+        return this.rawClient.carbohydratesGrouped(userId, request).body();
     }
 
     public GroupedCarbohydratesResponse carbohydratesGrouped(
             String userId, VitalsCarbohydratesGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("carbohydrates/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedCarbohydratesResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .carbohydratesGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedBodyTemperatureDeltaResponse bodyTemperatureDeltaGrouped(
             String userId, VitalsBodyTemperatureDeltaGroupedRequest request) {
-        return bodyTemperatureDeltaGrouped(userId, request, null);
+        return this.rawClient.bodyTemperatureDeltaGrouped(userId, request).body();
     }
 
     public GroupedBodyTemperatureDeltaResponse bodyTemperatureDeltaGrouped(
             String userId, VitalsBodyTemperatureDeltaGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_temperature_delta/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedBodyTemperatureDeltaResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .bodyTemperatureDeltaGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedBodyTemperatureResponse bodyTemperatureGrouped(
             String userId, VitalsBodyTemperatureGroupedRequest request) {
-        return bodyTemperatureGrouped(userId, request, null);
+        return this.rawClient.bodyTemperatureGrouped(userId, request).body();
     }
 
     public GroupedBodyTemperatureResponse bodyTemperatureGrouped(
             String userId, VitalsBodyTemperatureGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_temperature/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBodyTemperatureResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .bodyTemperatureGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedBodyWeightResponse bodyWeightGrouped(String userId, VitalsBodyWeightGroupedRequest request) {
-        return bodyWeightGrouped(userId, request, null);
+        return this.rawClient.bodyWeightGrouped(userId, request).body();
     }
 
     public GroupedBodyWeightResponse bodyWeightGrouped(
             String userId, VitalsBodyWeightGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_weight/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBodyWeightResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bodyWeightGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedBodyFatResponse bodyFatGrouped(String userId, VitalsBodyFatGroupedRequest request) {
-        return bodyFatGrouped(userId, request, null);
+        return this.rawClient.bodyFatGrouped(userId, request).body();
     }
 
     public GroupedBodyFatResponse bodyFatGrouped(
             String userId, VitalsBodyFatGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_fat/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBodyFatResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bodyFatGrouped(userId, request, requestOptions).body();
     }
 
     public GroupedBloodOxygenResponse bloodOxygenGrouped(String userId, VitalsBloodOxygenGroupedRequest request) {
-        return bloodOxygenGrouped(userId, request, null);
+        return this.rawClient.bloodOxygenGrouped(userId, request).body();
     }
 
     public GroupedBloodOxygenResponse bloodOxygenGrouped(
             String userId, VitalsBloodOxygenGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("blood_oxygen/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBloodOxygenResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .bloodOxygenGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedElectrocardiogramVoltageResponse electrocardiogramVoltageGrouped(
             String userId, VitalsElectrocardiogramVoltageGroupedRequest request) {
-        return electrocardiogramVoltageGrouped(userId, request, null);
+        return this.rawClient.electrocardiogramVoltageGrouped(userId, request).body();
     }
 
     public GroupedElectrocardiogramVoltageResponse electrocardiogramVoltageGrouped(
             String userId, VitalsElectrocardiogramVoltageGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("electrocardiogram_voltage/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), GroupedElectrocardiogramVoltageResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .electrocardiogramVoltageGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public GroupedBloodPressureResponse bloodPressureGrouped(String userId, VitalsBloodPressureGroupedRequest request) {
-        return bloodPressureGrouped(userId, request, null);
+        return this.rawClient.bloodPressureGrouped(userId, request).body();
     }
 
     public GroupedBloodPressureResponse bloodPressureGrouped(
             String userId, VitalsBloodPressureGroupedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("blood_pressure/grouped");
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GroupedBloodPressureResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .bloodPressureGrouped(userId, request, requestOptions)
+                .body();
     }
 
     public List<ClientFacingVo2MaxTimeseries> vo2Max(String userId, VitalsVo2MaxRequest request) {
-        return vo2Max(userId, request, null);
+        return this.rawClient.vo2Max(userId, request).body();
     }
 
     public List<ClientFacingVo2MaxTimeseries> vo2Max(
             String userId, VitalsVo2MaxRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("vo2_max");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingVo2MaxTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.vo2Max(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingStressLevelTimeseries> stressLevel(String userId, VitalsStressLevelRequest request) {
-        return stressLevel(userId, request, null);
+        return this.rawClient.stressLevel(userId, request).body();
     }
 
     public List<ClientFacingStressLevelTimeseries> stressLevel(
             String userId, VitalsStressLevelRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("stress_level");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingStressLevelTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.stressLevel(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingMindfulnessMinutesTimeseries> mindfulnessMinutes(
             String userId, VitalsMindfulnessMinutesRequest request) {
-        return mindfulnessMinutes(userId, request, null);
+        return this.rawClient.mindfulnessMinutes(userId, request).body();
     }
 
     public List<ClientFacingMindfulnessMinutesTimeseries> mindfulnessMinutes(
             String userId, VitalsMindfulnessMinutesRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("mindfulness_minutes");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingMindfulnessMinutesTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .mindfulnessMinutes(userId, request, requestOptions)
+                .body();
     }
 
     public List<ClientFacingCaffeineTimeseries> caffeine(String userId, VitalsCaffeineRequest request) {
-        return caffeine(userId, request, null);
+        return this.rawClient.caffeine(userId, request).body();
     }
 
     public List<ClientFacingCaffeineTimeseries> caffeine(
             String userId, VitalsCaffeineRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("caffeine");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCaffeineTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.caffeine(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingWaterTimeseries> water(String userId, VitalsWaterRequest request) {
-        return water(userId, request, null);
+        return this.rawClient.water(userId, request).body();
     }
 
     public List<ClientFacingWaterTimeseries> water(
             String userId, VitalsWaterRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("water");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingWaterTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.water(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingStepsTimeseries> steps(String userId, VitalsStepsRequest request) {
-        return steps(userId, request, null);
+        return this.rawClient.steps(userId, request).body();
     }
 
     public List<ClientFacingStepsTimeseries> steps(
             String userId, VitalsStepsRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("steps");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingStepsTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.steps(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingFloorsClimbedTimeseries> floorsClimbed(String userId, VitalsFloorsClimbedRequest request) {
-        return floorsClimbed(userId, request, null);
+        return this.rawClient.floorsClimbed(userId, request).body();
     }
 
     public List<ClientFacingFloorsClimbedTimeseries> floorsClimbed(
             String userId, VitalsFloorsClimbedRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("floors_climbed");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingFloorsClimbedTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.floorsClimbed(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingDistanceTimeseries> distance(String userId, VitalsDistanceRequest request) {
-        return distance(userId, request, null);
+        return this.rawClient.distance(userId, request).body();
     }
 
     public List<ClientFacingDistanceTimeseries> distance(
             String userId, VitalsDistanceRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("distance");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingDistanceTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.distance(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingCaloriesBasalTimeseries> caloriesBasal(String userId, VitalsCaloriesBasalRequest request) {
-        return caloriesBasal(userId, request, null);
+        return this.rawClient.caloriesBasal(userId, request).body();
     }
 
     public List<ClientFacingCaloriesBasalTimeseries> caloriesBasal(
             String userId, VitalsCaloriesBasalRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("calories_basal");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCaloriesBasalTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.caloriesBasal(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingCaloriesActiveTimeseries> caloriesActive(
             String userId, VitalsCaloriesActiveRequest request) {
-        return caloriesActive(userId, request, null);
+        return this.rawClient.caloriesActive(userId, request).body();
     }
 
     public List<ClientFacingCaloriesActiveTimeseries> caloriesActive(
             String userId, VitalsCaloriesActiveRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("calories_active");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCaloriesActiveTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.caloriesActive(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingRespiratoryRateTimeseries> respiratoryRate(
             String userId, VitalsRespiratoryRateRequest request) {
-        return respiratoryRate(userId, request, null);
+        return this.rawClient.respiratoryRate(userId, request).body();
     }
 
     public List<ClientFacingRespiratoryRateTimeseries> respiratoryRate(
             String userId, VitalsRespiratoryRateRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("respiratory_rate");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingRespiratoryRateTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.respiratoryRate(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingIgeTimeseries> ige(String userId, VitalsIgeRequest request) {
-        return ige(userId, request, null);
+        return this.rawClient.ige(userId, request).body();
     }
 
     public List<ClientFacingIgeTimeseries> ige(String userId, VitalsIgeRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("ige");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingIgeTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.ige(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingIggTimeseries> igg(String userId, VitalsIggRequest request) {
-        return igg(userId, request, null);
+        return this.rawClient.igg(userId, request).body();
     }
 
     public List<ClientFacingIggTimeseries> igg(String userId, VitalsIggRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("igg");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingIggTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.igg(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingHypnogramTimeseries> hypnogram(String userId, VitalsHypnogramRequest request) {
-        return hypnogram(userId, request, null);
+        return this.rawClient.hypnogram(userId, request).body();
     }
 
     public List<ClientFacingHypnogramTimeseries> hypnogram(
             String userId, VitalsHypnogramRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("hypnogram");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingHypnogramTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.hypnogram(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingHrvTimeseries> hrv(String userId, VitalsHrvRequest request) {
-        return hrv(userId, request, null);
+        return this.rawClient.hrv(userId, request).body();
     }
 
     public List<ClientFacingHrvTimeseries> hrv(String userId, VitalsHrvRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("hrv");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingHrvTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.hrv(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingHeartRateTimeseries> heartrate(String userId, VitalsHeartrateRequest request) {
-        return heartrate(userId, request, null);
+        return this.rawClient.heartrate(userId, request).body();
     }
 
     public List<ClientFacingHeartRateTimeseries> heartrate(
             String userId, VitalsHeartrateRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("heartrate");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingHeartRateTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.heartrate(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingGlucoseTimeseries> glucose(String userId, VitalsGlucoseRequest request) {
-        return glucose(userId, request, null);
+        return this.rawClient.glucose(userId, request).body();
     }
 
     public List<ClientFacingGlucoseTimeseries> glucose(
             String userId, VitalsGlucoseRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("glucose");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingGlucoseTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.glucose(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolTriglycerides(
             String userId, VitalsCholesterolTriglyceridesRequest request) {
-        return cholesterolTriglycerides(userId, request, null);
+        return this.rawClient.cholesterolTriglycerides(userId, request).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolTriglycerides(
             String userId, VitalsCholesterolTriglyceridesRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol/triglycerides");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .cholesterolTriglycerides(userId, request, requestOptions)
+                .body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolTotal(
             String userId, VitalsCholesterolTotalRequest request) {
-        return cholesterolTotal(userId, request, null);
+        return this.rawClient.cholesterolTotal(userId, request).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolTotal(
             String userId, VitalsCholesterolTotalRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol/total");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.cholesterolTotal(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolLdl(String userId, VitalsCholesterolLdlRequest request) {
-        return cholesterolLdl(userId, request, null);
+        return this.rawClient.cholesterolLdl(userId, request).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolLdl(
             String userId, VitalsCholesterolLdlRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol/ldl");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.cholesterolLdl(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolHdl(String userId, VitalsCholesterolHdlRequest request) {
-        return cholesterolHdl(userId, request, null);
+        return this.rawClient.cholesterolHdl(userId, request).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterolHdl(
             String userId, VitalsCholesterolHdlRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol/hdl");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.cholesterolHdl(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterol(String userId, VitalsCholesterolRequest request) {
-        return cholesterol(userId, request, null);
+        return this.rawClient.cholesterol(userId, request).body();
     }
 
     public List<ClientFacingCholesterolTimeseries> cholesterol(
             String userId, VitalsCholesterolRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("cholesterol");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingCholesterolTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.cholesterol(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingBodyWeightTimeseries> bodyWeight(String userId, VitalsBodyWeightRequest request) {
-        return bodyWeight(userId, request, null);
+        return this.rawClient.bodyWeight(userId, request).body();
     }
 
     public List<ClientFacingBodyWeightTimeseries> bodyWeight(
             String userId, VitalsBodyWeightRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_weight");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingBodyWeightTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bodyWeight(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingBodyFatTimeseries> bodyFat(String userId, VitalsBodyFatRequest request) {
-        return bodyFat(userId, request, null);
+        return this.rawClient.bodyFat(userId, request).body();
     }
 
     public List<ClientFacingBodyFatTimeseries> bodyFat(
             String userId, VitalsBodyFatRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("body_fat");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingBodyFatTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bodyFat(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingBloodOxygenTimeseries> bloodOxygen(String userId, VitalsBloodOxygenRequest request) {
-        return bloodOxygen(userId, request, null);
+        return this.rawClient.bloodOxygen(userId, request).body();
     }
 
     public List<ClientFacingBloodOxygenTimeseries> bloodOxygen(
             String userId, VitalsBloodOxygenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("blood_oxygen");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingBloodOxygenTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bloodOxygen(userId, request, requestOptions).body();
     }
 
     public List<ClientFacingElectrocardiogramVoltageTimeseries> electrocardiogramVoltage(
             String userId, VitalsElectrocardiogramVoltageRequest request) {
-        return electrocardiogramVoltage(userId, request, null);
+        return this.rawClient.electrocardiogramVoltage(userId, request).body();
     }
 
     public List<ClientFacingElectrocardiogramVoltageTimeseries> electrocardiogramVoltage(
             String userId, VitalsElectrocardiogramVoltageRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("electrocardiogram_voltage");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(),
-                        new TypeReference<List<ClientFacingElectrocardiogramVoltageTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .electrocardiogramVoltage(userId, request, requestOptions)
+                .body();
     }
 
     public List<ClientFacingBloodPressureTimeseries> bloodPressure(String userId, VitalsBloodPressureRequest request) {
-        return bloodPressure(userId, request, null);
+        return this.rawClient.bloodPressure(userId, request).body();
     }
 
     public List<ClientFacingBloodPressureTimeseries> bloodPressure(
             String userId, VitalsBloodPressureRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/timeseries")
-                .addPathSegment(userId)
-                .addPathSegments("blood_pressure");
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<ClientFacingBloodPressureTimeseries>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.bloodPressure(userId, request, requestOptions).body();
     }
 }

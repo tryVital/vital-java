@@ -17,8 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProviderConnectionCreated.Builder.class)
 public final class ProviderConnectionCreated {
     private final String userId;
@@ -119,22 +120,34 @@ public final class ProviderConnectionCreated {
     }
 
     public interface UserIdStage {
-        SourceStage userId(String userId);
+        SourceStage userId(@NotNull String userId);
 
         Builder from(ProviderConnectionCreated other);
     }
 
     public interface SourceStage {
-        ProviderStage source(ClientFacingProvider source);
+        /**
+         * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
+         */
+        ProviderStage source(@NotNull ClientFacingProvider source);
     }
 
     public interface ProviderStage {
-        _FinalStage provider(ClientFacingProvider provider);
+        _FinalStage provider(@NotNull ClientFacingProvider provider);
     }
 
     public interface _FinalStage {
         ProviderConnectionCreated build();
 
+        /**
+         * <p>The unique identifier of the associated external data provider user.</p>
+         * <ul>
+         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+         * <li>Password Providers: Username</li>
+         * <li>Email Providers: Email</li>
+         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+         * </ul>
+         */
         _FinalStage externalUserId(Optional<String> externalUserId);
 
         _FinalStage externalUserId(String externalUserId);
@@ -175,26 +188,27 @@ public final class ProviderConnectionCreated {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceStage userId(String userId) {
-            this.userId = userId;
+        public SourceStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
+         * <p>Deprecated. Use <code>provider</code> instead. Subject to removal after 1 Jan 2024.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public ProviderStage source(ClientFacingProvider source) {
-            this.source = source;
+        public ProviderStage source(@NotNull ClientFacingProvider source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(ClientFacingProvider provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull ClientFacingProvider provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
@@ -206,7 +220,9 @@ public final class ProviderConnectionCreated {
 
         @java.lang.Override
         public _FinalStage putAllResourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
-            this.resourceAvailability.putAll(resourceAvailability);
+            if (resourceAvailability != null) {
+                this.resourceAvailability.putAll(resourceAvailability);
+            }
             return this;
         }
 
@@ -230,10 +246,19 @@ public final class ProviderConnectionCreated {
          */
         @java.lang.Override
         public _FinalStage externalUserId(String externalUserId) {
-            this.externalUserId = Optional.of(externalUserId);
+            this.externalUserId = Optional.ofNullable(externalUserId);
             return this;
         }
 
+        /**
+         * <p>The unique identifier of the associated external data provider user.</p>
+         * <ul>
+         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
+         * <li>Password Providers: Username</li>
+         * <li>Email Providers: Email</li>
+         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
+         * </ul>
+         */
         @java.lang.Override
         @JsonSetter(value = "external_user_id", nulls = Nulls.SKIP)
         public _FinalStage externalUserId(Optional<String> externalUserId) {

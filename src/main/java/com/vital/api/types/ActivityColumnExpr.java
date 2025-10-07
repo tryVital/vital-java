@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ActivityColumnExpr.Builder.class)
 public final class ActivityColumnExpr {
     private final ActivityColumnExprActivity activity;
@@ -65,7 +66,10 @@ public final class ActivityColumnExpr {
     }
 
     public interface ActivityStage {
-        _FinalStage activity(ActivityColumnExprActivity activity);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage activity(@NotNull ActivityColumnExprActivity activity);
 
         Builder from(ActivityColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class ActivityColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("activity")
-        public _FinalStage activity(ActivityColumnExprActivity activity) {
-            this.activity = activity;
+        public _FinalStage activity(@NotNull ActivityColumnExprActivity activity) {
+            this.activity = Objects.requireNonNull(activity, "activity must not be null");
             return this;
         }
 

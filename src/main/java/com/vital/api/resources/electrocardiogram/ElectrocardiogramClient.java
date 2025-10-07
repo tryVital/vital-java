@@ -3,36 +3,33 @@
  */
 package com.vital.api.resources.electrocardiogram;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
-import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.core.VitalException;
-import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.electrocardiogram.requests.ElectrocardiogramGetRequest;
 import com.vital.api.types.ClientFacingElectrocardiogramResponse;
-import com.vital.api.types.HttpValidationError;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class ElectrocardiogramClient {
     protected final ClientOptions clientOptions;
 
+    private final RawElectrocardiogramClient rawClient;
+
     public ElectrocardiogramClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawElectrocardiogramClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawElectrocardiogramClient withRawResponse() {
+        return this.rawClient;
     }
 
     /**
      * Get electrocardiogram summary for user_id
      */
     public ClientFacingElectrocardiogramResponse get(String userId, ElectrocardiogramGetRequest request) {
-        return get(userId, request, null);
+        return this.rawClient.get(userId, request).body();
     }
 
     /**
@@ -40,48 +37,6 @@ public class ElectrocardiogramClient {
      */
     public ClientFacingElectrocardiogramResponse get(
             String userId, ElectrocardiogramGetRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/summary/electrocardiogram")
-                .addPathSegment(userId);
-        httpUrl.addQueryParameter("start_date", request.getStartDate());
-        if (request.getEndDate().isPresent()) {
-            httpUrl.addQueryParameter("end_date", request.getEndDate().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), ClientFacingElectrocardiogramResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.get(userId, request, requestOptions).body();
     }
 }

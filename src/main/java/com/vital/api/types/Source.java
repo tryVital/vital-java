@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Source.Builder.class)
 public final class Source {
     private final String name;
@@ -177,21 +178,21 @@ public final class Source {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
 
         Builder from(Source other);
     }
 
     public interface SlugStage {
-        DescriptionStage slug(String slug);
+        DescriptionStage slug(@NotNull String slug);
     }
 
     public interface DescriptionStage {
-        LogoStage description(String description);
+        LogoStage description(@NotNull String description);
     }
 
     public interface LogoStage {
-        IdStage logo(String logo);
+        IdStage logo(@NotNull String logo);
     }
 
     public interface IdStage {
@@ -274,29 +275,29 @@ public final class Source {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public DescriptionStage slug(String slug) {
-            this.slug = slug;
+        public DescriptionStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("description")
-        public LogoStage description(String description) {
-            this.description = description;
+        public LogoStage description(@NotNull String description) {
+            this.description = Objects.requireNonNull(description, "description must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("logo")
-        public IdStage logo(String logo) {
-            this.logo = logo;
+        public IdStage logo(@NotNull String logo) {
+            this.logo = Objects.requireNonNull(logo, "logo must not be null");
             return this;
         }
 
@@ -309,7 +310,7 @@ public final class Source {
 
         @java.lang.Override
         public _FinalStage backfillNumDays(Integer backfillNumDays) {
-            this.backfillNumDays = Optional.of(backfillNumDays);
+            this.backfillNumDays = Optional.ofNullable(backfillNumDays);
             return this;
         }
 
@@ -322,7 +323,7 @@ public final class Source {
 
         @java.lang.Override
         public _FinalStage isActive(Boolean isActive) {
-            this.isActive = Optional.of(isActive);
+            this.isActive = Optional.ofNullable(isActive);
             return this;
         }
 
@@ -335,7 +336,7 @@ public final class Source {
 
         @java.lang.Override
         public _FinalStage sourceType(SourceType sourceType) {
-            this.sourceType = Optional.of(sourceType);
+            this.sourceType = Optional.ofNullable(sourceType);
             return this;
         }
 
@@ -348,7 +349,7 @@ public final class Source {
 
         @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
-            this.authType = Optional.of(authType);
+            this.authType = Optional.ofNullable(authType);
             return this;
         }
 
@@ -361,7 +362,7 @@ public final class Source {
 
         @java.lang.Override
         public _FinalStage oauthUrl(String oauthUrl) {
-            this.oauthUrl = Optional.of(oauthUrl);
+            this.oauthUrl = Optional.ofNullable(oauthUrl);
             return this;
         }
 
@@ -374,7 +375,7 @@ public final class Source {
 
         @java.lang.Override
         public _FinalStage group(String group) {
-            this.group = Optional.of(group);
+            this.group = Optional.ofNullable(group);
             return this;
         }
 

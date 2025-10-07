@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingFood.Builder.class)
 public final class ClientFacingFood {
     private final Optional<Energy> energy;
@@ -110,7 +110,7 @@ public final class ClientFacingFood {
         }
 
         public Builder energy(Energy energy) {
-            this.energy = Optional.of(energy);
+            this.energy = Optional.ofNullable(energy);
             return this;
         }
 
@@ -121,7 +121,7 @@ public final class ClientFacingFood {
         }
 
         public Builder macros(Macros macros) {
-            this.macros = Optional.of(macros);
+            this.macros = Optional.ofNullable(macros);
             return this;
         }
 
@@ -132,7 +132,7 @@ public final class ClientFacingFood {
         }
 
         public Builder micros(Micros micros) {
-            this.micros = Optional.of(micros);
+            this.micros = Optional.ofNullable(micros);
             return this;
         }
 

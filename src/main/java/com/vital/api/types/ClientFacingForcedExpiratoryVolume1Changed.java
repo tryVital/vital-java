@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingForcedExpiratoryVolume1Changed.Builder.class)
 public final class ClientFacingForcedExpiratoryVolume1Changed {
     private final ClientFacingForcedExpiratoryVolume1ChangedEventType eventType;
@@ -105,25 +106,25 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
     }
 
     public interface EventTypeStage {
-        UserIdStage eventType(ClientFacingForcedExpiratoryVolume1ChangedEventType eventType);
+        UserIdStage eventType(@NotNull ClientFacingForcedExpiratoryVolume1ChangedEventType eventType);
 
         Builder from(ClientFacingForcedExpiratoryVolume1Changed other);
     }
 
     public interface UserIdStage {
-        ClientUserIdStage userId(String userId);
+        ClientUserIdStage userId(@NotNull String userId);
     }
 
     public interface ClientUserIdStage {
-        TeamIdStage clientUserId(String clientUserId);
+        TeamIdStage clientUserId(@NotNull String clientUserId);
     }
 
     public interface TeamIdStage {
-        DataStage teamId(String teamId);
+        DataStage teamId(@NotNull String teamId);
     }
 
     public interface DataStage {
-        _FinalStage data(GroupedForcedExpiratoryVolume1 data);
+        _FinalStage data(@NotNull GroupedForcedExpiratoryVolume1 data);
     }
 
     public interface _FinalStage {
@@ -160,36 +161,36 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
 
         @java.lang.Override
         @JsonSetter("event_type")
-        public UserIdStage eventType(ClientFacingForcedExpiratoryVolume1ChangedEventType eventType) {
-            this.eventType = eventType;
+        public UserIdStage eventType(@NotNull ClientFacingForcedExpiratoryVolume1ChangedEventType eventType) {
+            this.eventType = Objects.requireNonNull(eventType, "eventType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public ClientUserIdStage userId(String userId) {
-            this.userId = userId;
+        public ClientUserIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("client_user_id")
-        public TeamIdStage clientUserId(String clientUserId) {
-            this.clientUserId = clientUserId;
+        public TeamIdStage clientUserId(@NotNull String clientUserId) {
+            this.clientUserId = Objects.requireNonNull(clientUserId, "clientUserId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("team_id")
-        public DataStage teamId(String teamId) {
-            this.teamId = teamId;
+        public DataStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(GroupedForcedExpiratoryVolume1 data) {
-            this.data = data;
+        public _FinalStage data(@NotNull GroupedForcedExpiratoryVolume1 data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

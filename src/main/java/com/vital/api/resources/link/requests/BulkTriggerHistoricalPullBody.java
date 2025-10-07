@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkTriggerHistoricalPullBody.Builder.class)
 public final class BulkTriggerHistoricalPullBody {
     private final Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId;
@@ -106,7 +107,7 @@ public final class BulkTriggerHistoricalPullBody {
     }
 
     public interface ProviderStage {
-        _FinalStage provider(OAuthProviders provider);
+        _FinalStage provider(@NotNull OAuthProviders provider);
 
         Builder from(BulkTriggerHistoricalPullBody other);
     }
@@ -124,6 +125,12 @@ public final class BulkTriggerHistoricalPullBody {
 
         _FinalStage addAllUserIds(List<String> userIds);
 
+        /**
+         * <p>Whether or not the endpoint should wait for the Bulk Op to complete before responding.</p>
+         * <p>When <code>wait_for_completion</code> is enabled, the endpoint may respond 200 OK if the Bulk Op takes less than 20 seconds to complete.</p>
+         * <p>Otherwise, the endpoint always responds with 202 Created once the submitted data have been enqueued successfully. You can use
+         * the <a href="https://docs.tryvital.io/api-reference/link/list-bulk-ops">List Bulk Ops</a> endpoint to inspect the progress of the Bulk Op.</p>
+         */
         _FinalStage waitForCompletion(Optional<Boolean> waitForCompletion);
 
         _FinalStage waitForCompletion(Boolean waitForCompletion);
@@ -155,8 +162,8 @@ public final class BulkTriggerHistoricalPullBody {
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(OAuthProviders provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull OAuthProviders provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
@@ -169,10 +176,16 @@ public final class BulkTriggerHistoricalPullBody {
          */
         @java.lang.Override
         public _FinalStage waitForCompletion(Boolean waitForCompletion) {
-            this.waitForCompletion = Optional.of(waitForCompletion);
+            this.waitForCompletion = Optional.ofNullable(waitForCompletion);
             return this;
         }
 
+        /**
+         * <p>Whether or not the endpoint should wait for the Bulk Op to complete before responding.</p>
+         * <p>When <code>wait_for_completion</code> is enabled, the endpoint may respond 200 OK if the Bulk Op takes less than 20 seconds to complete.</p>
+         * <p>Otherwise, the endpoint always responds with 202 Created once the submitted data have been enqueued successfully. You can use
+         * the <a href="https://docs.tryvital.io/api-reference/link/list-bulk-ops">List Bulk Ops</a> endpoint to inspect the progress of the Bulk Op.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "wait_for_completion", nulls = Nulls.SKIP)
         public _FinalStage waitForCompletion(Optional<Boolean> waitForCompletion) {
@@ -182,7 +195,9 @@ public final class BulkTriggerHistoricalPullBody {
 
         @java.lang.Override
         public _FinalStage addAllUserIds(List<String> userIds) {
-            this.userIds.addAll(userIds);
+            if (userIds != null) {
+                this.userIds.addAll(userIds);
+            }
             return this;
         }
 
@@ -202,7 +217,7 @@ public final class BulkTriggerHistoricalPullBody {
 
         @java.lang.Override
         public _FinalStage teamId(LinkBulkTriggerHistoricalPullRequestTeamId teamId) {
-            this.teamId = Optional.of(teamId);
+            this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 

@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MealColumnExpr.Builder.class)
 public final class MealColumnExpr {
     private final MealColumnExprMeal meal;
@@ -65,7 +66,10 @@ public final class MealColumnExpr {
     }
 
     public interface MealStage {
-        _FinalStage meal(MealColumnExprMeal meal);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage meal(@NotNull MealColumnExprMeal meal);
 
         Builder from(MealColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class MealColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("meal")
-        public _FinalStage meal(MealColumnExprMeal meal) {
-            this.meal = meal;
+        public _FinalStage meal(@NotNull MealColumnExprMeal meal) {
+            this.meal = Objects.requireNonNull(meal, "meal must not be null");
             return this;
         }
 

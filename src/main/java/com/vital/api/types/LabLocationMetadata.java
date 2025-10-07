@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabLocationMetadata.Builder.class)
 public final class LabLocationMetadata {
     private final String name;
@@ -155,25 +156,25 @@ public final class LabLocationMetadata {
     }
 
     public interface NameStage {
-        StateStage name(String name);
+        StateStage name(@NotNull String name);
 
         Builder from(LabLocationMetadata other);
     }
 
     public interface StateStage {
-        CityStage state(String state);
+        CityStage state(@NotNull String state);
     }
 
     public interface CityStage {
-        ZipCodeStage city(String city);
+        ZipCodeStage city(@NotNull String city);
     }
 
     public interface ZipCodeStage {
-        FirstLineStage zipCode(String zipCode);
+        FirstLineStage zipCode(@NotNull String zipCode);
     }
 
     public interface FirstLineStage {
-        _FinalStage firstLine(String firstLine);
+        _FinalStage firstLine(@NotNull String firstLine);
     }
 
     public interface _FinalStage {
@@ -238,42 +239,42 @@ public final class LabLocationMetadata {
 
         @java.lang.Override
         @JsonSetter("name")
-        public StateStage name(String name) {
-            this.name = name;
+        public StateStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("state")
-        public CityStage state(String state) {
-            this.state = state;
+        public CityStage state(@NotNull String state) {
+            this.state = Objects.requireNonNull(state, "state must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("city")
-        public ZipCodeStage city(String city) {
-            this.city = city;
+        public ZipCodeStage city(@NotNull String city) {
+            this.city = Objects.requireNonNull(city, "city must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("zip_code")
-        public FirstLineStage zipCode(String zipCode) {
-            this.zipCode = zipCode;
+        public FirstLineStage zipCode(@NotNull String zipCode) {
+            this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("first_line")
-        public _FinalStage firstLine(String firstLine) {
-            this.firstLine = firstLine;
+        public _FinalStage firstLine(@NotNull String firstLine) {
+            this.firstLine = Objects.requireNonNull(firstLine, "firstLine must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage hours(Map<String, Object> hours) {
-            this.hours = Optional.of(hours);
+            this.hours = Optional.ofNullable(hours);
             return this;
         }
 
@@ -286,7 +287,7 @@ public final class LabLocationMetadata {
 
         @java.lang.Override
         public _FinalStage faxNumber(String faxNumber) {
-            this.faxNumber = Optional.of(faxNumber);
+            this.faxNumber = Optional.ofNullable(faxNumber);
             return this;
         }
 
@@ -299,7 +300,7 @@ public final class LabLocationMetadata {
 
         @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = Optional.of(phoneNumber);
+            this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
         }
 
@@ -312,7 +313,7 @@ public final class LabLocationMetadata {
 
         @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
-            this.secondLine = Optional.of(secondLine);
+            this.secondLine = Optional.ofNullable(secondLine);
             return this;
         }
 

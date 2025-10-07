@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientUserIdConflictResponse.Builder.class)
 public final class ClientUserIdConflictResponse {
     private final ClientUserIdConflict detail;
@@ -62,7 +63,7 @@ public final class ClientUserIdConflictResponse {
     }
 
     public interface DetailStage {
-        _FinalStage detail(ClientUserIdConflict detail);
+        _FinalStage detail(@NotNull ClientUserIdConflict detail);
 
         Builder from(ClientUserIdConflictResponse other);
     }
@@ -88,8 +89,8 @@ public final class ClientUserIdConflictResponse {
 
         @java.lang.Override
         @JsonSetter("detail")
-        public _FinalStage detail(ClientUserIdConflict detail) {
-            this.detail = detail;
+        public _FinalStage detail(@NotNull ClientUserIdConflict detail) {
+            this.detail = Objects.requireNonNull(detail, "detail must not be null");
             return this;
         }
 

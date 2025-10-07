@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingContinuousQueryResultTableChanged.Builder.class)
 public final class ClientFacingContinuousQueryResultTableChanged {
     private final String userId;
@@ -103,17 +104,17 @@ public final class ClientFacingContinuousQueryResultTableChanged {
     }
 
     public interface UserIdStage {
-        ClientUserIdStage userId(String userId);
+        ClientUserIdStage userId(@NotNull String userId);
 
         Builder from(ClientFacingContinuousQueryResultTableChanged other);
     }
 
     public interface ClientUserIdStage {
-        TeamIdStage clientUserId(String clientUserId);
+        TeamIdStage clientUserId(@NotNull String clientUserId);
     }
 
     public interface TeamIdStage {
-        _FinalStage teamId(String teamId);
+        _FinalStage teamId(@NotNull String teamId);
     }
 
     public interface _FinalStage {
@@ -152,28 +153,30 @@ public final class ClientFacingContinuousQueryResultTableChanged {
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public ClientUserIdStage userId(String userId) {
-            this.userId = userId;
+        public ClientUserIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("client_user_id")
-        public TeamIdStage clientUserId(String clientUserId) {
-            this.clientUserId = clientUserId;
+        public TeamIdStage clientUserId(@NotNull String clientUserId) {
+            this.clientUserId = Objects.requireNonNull(clientUserId, "clientUserId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("team_id")
-        public _FinalStage teamId(String teamId) {
-            this.teamId = teamId;
+        public _FinalStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllData(List<ContinuousQueryResultTableChanges> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

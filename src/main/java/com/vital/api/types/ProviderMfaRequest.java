@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProviderMfaRequest.Builder.class)
 public final class ProviderMfaRequest {
     private final ProviderMfaRequestMethod method;
@@ -76,13 +77,19 @@ public final class ProviderMfaRequest {
     }
 
     public interface MethodStage {
-        HintStage method(ProviderMfaRequestMethod method);
+        /**
+         * <p>The MFA method requested by the password provider to complete authentication. ℹ️ This enum is non-exhaustive.</p>
+         */
+        HintStage method(@NotNull ProviderMfaRequestMethod method);
 
         Builder from(ProviderMfaRequest other);
     }
 
     public interface HintStage {
-        _FinalStage hint(String hint);
+        /**
+         * <p>The MFA hint provided by the password provider, e.g., the redacted phone number.</p>
+         */
+        _FinalStage hint(@NotNull String hint);
     }
 
     public interface _FinalStage {
@@ -109,23 +116,25 @@ public final class ProviderMfaRequest {
 
         /**
          * <p>The MFA method requested by the password provider to complete authentication. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The MFA method requested by the password provider to complete authentication. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("method")
-        public HintStage method(ProviderMfaRequestMethod method) {
-            this.method = method;
+        public HintStage method(@NotNull ProviderMfaRequestMethod method) {
+            this.method = Objects.requireNonNull(method, "method must not be null");
             return this;
         }
 
         /**
          * <p>The MFA hint provided by the password provider, e.g., the redacted phone number.</p>
+         * <p>The MFA hint provided by the password provider, e.g., the redacted phone number.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("hint")
-        public _FinalStage hint(String hint) {
-            this.hint = hint;
+        public _FinalStage hint(@NotNull String hint) {
+            this.hint = Objects.requireNonNull(hint, "hint must not be null");
             return this;
         }
 

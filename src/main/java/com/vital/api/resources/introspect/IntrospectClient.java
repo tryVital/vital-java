@@ -3,153 +3,53 @@
  */
 package com.vital.api.resources.introspect;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
-import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.core.VitalException;
-import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.introspect.requests.IntrospectGetUserHistoricalPullsRequest;
 import com.vital.api.resources.introspect.requests.IntrospectGetUserResourcesRequest;
-import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.UserHistoricalPullsResponse;
 import com.vital.api.types.UserResourcesResponse;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class IntrospectClient {
     protected final ClientOptions clientOptions;
 
+    private final RawIntrospectClient rawClient;
+
     public IntrospectClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawIntrospectClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawIntrospectClient withRawResponse() {
+        return this.rawClient;
     }
 
     public UserResourcesResponse getUserResources() {
-        return getUserResources(IntrospectGetUserResourcesRequest.builder().build());
+        return this.rawClient.getUserResources().body();
     }
 
     public UserResourcesResponse getUserResources(IntrospectGetUserResourcesRequest request) {
-        return getUserResources(request, null);
+        return this.rawClient.getUserResources(request).body();
     }
 
     public UserResourcesResponse getUserResources(
             IntrospectGetUserResourcesRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/introspect/resources");
-        if (request.getUserId().isPresent()) {
-            httpUrl.addQueryParameter("user_id", request.getUserId().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get().toString());
-        }
-        if (request.getUserLimit().isPresent()) {
-            httpUrl.addQueryParameter("user_limit", request.getUserLimit().get().toString());
-        }
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserResourcesResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getUserResources(request, requestOptions).body();
     }
 
     public UserHistoricalPullsResponse getUserHistoricalPulls() {
-        return getUserHistoricalPulls(
-                IntrospectGetUserHistoricalPullsRequest.builder().build());
+        return this.rawClient.getUserHistoricalPulls().body();
     }
 
     public UserHistoricalPullsResponse getUserHistoricalPulls(IntrospectGetUserHistoricalPullsRequest request) {
-        return getUserHistoricalPulls(request, null);
+        return this.rawClient.getUserHistoricalPulls(request).body();
     }
 
     public UserHistoricalPullsResponse getUserHistoricalPulls(
             IntrospectGetUserHistoricalPullsRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/introspect/historical_pull");
-        if (request.getUserId().isPresent()) {
-            httpUrl.addQueryParameter("user_id", request.getUserId().get());
-        }
-        if (request.getProvider().isPresent()) {
-            httpUrl.addQueryParameter("provider", request.getProvider().get().toString());
-        }
-        if (request.getUserLimit().isPresent()) {
-            httpUrl.addQueryParameter("user_limit", request.getUserLimit().get().toString());
-        }
-        if (request.getCursor().isPresent()) {
-            httpUrl.addQueryParameter("cursor", request.getCursor().get());
-        }
-        if (request.getNextCursor().isPresent()) {
-            httpUrl.addQueryParameter("next_cursor", request.getNextCursor().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserHistoricalPullsResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class));
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getUserHistoricalPulls(request, requestOptions).body();
     }
 }

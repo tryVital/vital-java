@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingWorkout.Builder.class)
 public final class ClientFacingWorkout {
     private final String id;
@@ -455,122 +456,200 @@ public final class ClientFacingWorkout {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingWorkout other);
     }
 
     public interface UserIdStage {
-        CalendarDateStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        CalendarDateStage userId(@NotNull String userId);
     }
 
     public interface CalendarDateStage {
-        TimeStartStage calendarDate(String calendarDate);
+        /**
+         * <p>Date of the workout summary in the YYYY-mm-dd format. This generally matches the workout start date.</p>
+         */
+        TimeStartStage calendarDate(@NotNull String calendarDate);
     }
 
     public interface TimeStartStage {
-        TimeEndStage timeStart(OffsetDateTime timeStart);
+        /**
+         * <p>Start time of the workout::time</p>
+         */
+        TimeEndStage timeStart(@NotNull OffsetDateTime timeStart);
     }
 
     public interface TimeEndStage {
-        ProviderIdStage timeEnd(OffsetDateTime timeEnd);
+        /**
+         * <p>End time of the workout::time</p>
+         */
+        ProviderIdStage timeEnd(@NotNull OffsetDateTime timeEnd);
     }
 
     public interface ProviderIdStage {
-        SourceStage providerId(String providerId);
+        /**
+         * <p>Provider ID given for that specific workout</p>
+         */
+        SourceStage providerId(@NotNull String providerId);
     }
 
     public interface SourceStage {
-        CreatedAtStage source(ClientFacingSource source);
+        /**
+         * <p>Source the data has come from.</p>
+         */
+        CreatedAtStage source(@NotNull ClientFacingSource source);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
         ClientFacingWorkout build();
 
+        /**
+         * <p>Title given for the workout</p>
+         */
         _FinalStage title(Optional<String> title);
 
         _FinalStage title(String title);
 
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        /**
+         * <p>Average heart rate during workout::bpm</p>
+         */
         _FinalStage averageHr(Optional<Integer> averageHr);
 
         _FinalStage averageHr(Integer averageHr);
 
+        /**
+         * <p>Max heart rate during workout::bpm</p>
+         */
         _FinalStage maxHr(Optional<Integer> maxHr);
 
         _FinalStage maxHr(Integer maxHr);
 
+        /**
+         * <p>Distance travelled during workout::meters</p>
+         */
         _FinalStage distance(Optional<Double> distance);
 
         _FinalStage distance(Double distance);
 
+        /**
+         * <p>Calories burned during the workout::kCal</p>
+         */
         _FinalStage calories(Optional<Double> calories);
 
         _FinalStage calories(Double calories);
 
+        /**
+         * <p>Sport's name</p>
+         */
         _FinalStage sport(Optional<ClientFacingSport> sport);
 
         _FinalStage sport(ClientFacingSport sport);
 
+        /**
+         * <p>Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers::seconds</p>
+         */
         _FinalStage hrZones(Optional<List<Integer>> hrZones);
 
         _FinalStage hrZones(List<Integer> hrZones);
 
+        /**
+         * <p>Time spent active during the workout::seconds</p>
+         */
         _FinalStage movingTime(Optional<Integer> movingTime);
 
         _FinalStage movingTime(Integer movingTime);
 
+        /**
+         * <p>Elevation gain during the workout::meters</p>
+         */
         _FinalStage totalElevationGain(Optional<Double> totalElevationGain);
 
         _FinalStage totalElevationGain(Double totalElevationGain);
 
+        /**
+         * <p>Highest point of elevation::meters</p>
+         */
         _FinalStage elevHigh(Optional<Double> elevHigh);
 
         _FinalStage elevHigh(Double elevHigh);
 
+        /**
+         * <p>Lowest point of elevation::meters</p>
+         */
         _FinalStage elevLow(Optional<Double> elevLow);
 
         _FinalStage elevLow(Double elevLow);
 
+        /**
+         * <p>Average speed during workout in m/s::meters/sec</p>
+         */
         _FinalStage averageSpeed(Optional<Double> averageSpeed);
 
         _FinalStage averageSpeed(Double averageSpeed);
 
+        /**
+         * <p>Max speed during workout in m/s::meters/sec</p>
+         */
         _FinalStage maxSpeed(Optional<Double> maxSpeed);
 
         _FinalStage maxSpeed(Double maxSpeed);
 
+        /**
+         * <p>Average watts burned during exercise::watts</p>
+         */
         _FinalStage averageWatts(Optional<Double> averageWatts);
 
         _FinalStage averageWatts(Double averageWatts);
 
+        /**
+         * <p>Watts burned during exercise::watts</p>
+         */
         _FinalStage deviceWatts(Optional<Double> deviceWatts);
 
         _FinalStage deviceWatts(Double deviceWatts);
 
+        /**
+         * <p>Max watts burned during exercise::watts</p>
+         */
         _FinalStage maxWatts(Optional<Double> maxWatts);
 
         _FinalStage maxWatts(Double maxWatts);
 
+        /**
+         * <p>Weighted average watts burned during exercise::watts</p>
+         */
         _FinalStage weightedAverageWatts(Optional<Double> weightedAverageWatts);
 
         _FinalStage weightedAverageWatts(Double weightedAverageWatts);
 
+        /**
+         * <p>Number of steps accumulated during this workout::count</p>
+         */
         _FinalStage steps(Optional<Integer> steps);
 
         _FinalStage steps(Integer steps);
 
+        /**
+         * <p>Map of the workout</p>
+         */
         _FinalStage map(Optional<ClientFacingWorkoutMap> map);
 
         _FinalStage map(ClientFacingWorkoutMap map);
@@ -687,88 +766,94 @@ public final class ClientFacingWorkout {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public CalendarDateStage userId(String userId) {
-            this.userId = userId;
+        public CalendarDateStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Date of the workout summary in the YYYY-mm-dd format. This generally matches the workout start date.</p>
+         * <p>Date of the workout summary in the YYYY-mm-dd format. This generally matches the workout start date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("calendar_date")
-        public TimeStartStage calendarDate(String calendarDate) {
-            this.calendarDate = calendarDate;
+        public TimeStartStage calendarDate(@NotNull String calendarDate) {
+            this.calendarDate = Objects.requireNonNull(calendarDate, "calendarDate must not be null");
             return this;
         }
 
         /**
          * <p>Start time of the workout::time</p>
+         * <p>Start time of the workout::time</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("time_start")
-        public TimeEndStage timeStart(OffsetDateTime timeStart) {
-            this.timeStart = timeStart;
+        public TimeEndStage timeStart(@NotNull OffsetDateTime timeStart) {
+            this.timeStart = Objects.requireNonNull(timeStart, "timeStart must not be null");
             return this;
         }
 
         /**
          * <p>End time of the workout::time</p>
+         * <p>End time of the workout::time</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("time_end")
-        public ProviderIdStage timeEnd(OffsetDateTime timeEnd) {
-            this.timeEnd = timeEnd;
+        public ProviderIdStage timeEnd(@NotNull OffsetDateTime timeEnd) {
+            this.timeEnd = Objects.requireNonNull(timeEnd, "timeEnd must not be null");
             return this;
         }
 
         /**
          * <p>Provider ID given for that specific workout</p>
+         * <p>Provider ID given for that specific workout</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("provider_id")
-        public SourceStage providerId(String providerId) {
-            this.providerId = providerId;
+        public SourceStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
         /**
          * <p>Source the data has come from.</p>
+         * <p>Source the data has come from.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public CreatedAtStage source(ClientFacingSource source) {
-            this.source = source;
+        public CreatedAtStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
@@ -778,10 +863,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage map(ClientFacingWorkoutMap map) {
-            this.map = Optional.of(map);
+            this.map = Optional.ofNullable(map);
             return this;
         }
 
+        /**
+         * <p>Map of the workout</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "map", nulls = Nulls.SKIP)
         public _FinalStage map(Optional<ClientFacingWorkoutMap> map) {
@@ -795,10 +883,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage steps(Integer steps) {
-            this.steps = Optional.of(steps);
+            this.steps = Optional.ofNullable(steps);
             return this;
         }
 
+        /**
+         * <p>Number of steps accumulated during this workout::count</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "steps", nulls = Nulls.SKIP)
         public _FinalStage steps(Optional<Integer> steps) {
@@ -812,10 +903,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage weightedAverageWatts(Double weightedAverageWatts) {
-            this.weightedAverageWatts = Optional.of(weightedAverageWatts);
+            this.weightedAverageWatts = Optional.ofNullable(weightedAverageWatts);
             return this;
         }
 
+        /**
+         * <p>Weighted average watts burned during exercise::watts</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "weighted_average_watts", nulls = Nulls.SKIP)
         public _FinalStage weightedAverageWatts(Optional<Double> weightedAverageWatts) {
@@ -829,10 +923,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage maxWatts(Double maxWatts) {
-            this.maxWatts = Optional.of(maxWatts);
+            this.maxWatts = Optional.ofNullable(maxWatts);
             return this;
         }
 
+        /**
+         * <p>Max watts burned during exercise::watts</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "max_watts", nulls = Nulls.SKIP)
         public _FinalStage maxWatts(Optional<Double> maxWatts) {
@@ -846,10 +943,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage deviceWatts(Double deviceWatts) {
-            this.deviceWatts = Optional.of(deviceWatts);
+            this.deviceWatts = Optional.ofNullable(deviceWatts);
             return this;
         }
 
+        /**
+         * <p>Watts burned during exercise::watts</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "device_watts", nulls = Nulls.SKIP)
         public _FinalStage deviceWatts(Optional<Double> deviceWatts) {
@@ -863,10 +963,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage averageWatts(Double averageWatts) {
-            this.averageWatts = Optional.of(averageWatts);
+            this.averageWatts = Optional.ofNullable(averageWatts);
             return this;
         }
 
+        /**
+         * <p>Average watts burned during exercise::watts</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "average_watts", nulls = Nulls.SKIP)
         public _FinalStage averageWatts(Optional<Double> averageWatts) {
@@ -880,10 +983,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage maxSpeed(Double maxSpeed) {
-            this.maxSpeed = Optional.of(maxSpeed);
+            this.maxSpeed = Optional.ofNullable(maxSpeed);
             return this;
         }
 
+        /**
+         * <p>Max speed during workout in m/s::meters/sec</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "max_speed", nulls = Nulls.SKIP)
         public _FinalStage maxSpeed(Optional<Double> maxSpeed) {
@@ -897,10 +1003,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage averageSpeed(Double averageSpeed) {
-            this.averageSpeed = Optional.of(averageSpeed);
+            this.averageSpeed = Optional.ofNullable(averageSpeed);
             return this;
         }
 
+        /**
+         * <p>Average speed during workout in m/s::meters/sec</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "average_speed", nulls = Nulls.SKIP)
         public _FinalStage averageSpeed(Optional<Double> averageSpeed) {
@@ -914,10 +1023,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage elevLow(Double elevLow) {
-            this.elevLow = Optional.of(elevLow);
+            this.elevLow = Optional.ofNullable(elevLow);
             return this;
         }
 
+        /**
+         * <p>Lowest point of elevation::meters</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "elev_low", nulls = Nulls.SKIP)
         public _FinalStage elevLow(Optional<Double> elevLow) {
@@ -931,10 +1043,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage elevHigh(Double elevHigh) {
-            this.elevHigh = Optional.of(elevHigh);
+            this.elevHigh = Optional.ofNullable(elevHigh);
             return this;
         }
 
+        /**
+         * <p>Highest point of elevation::meters</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "elev_high", nulls = Nulls.SKIP)
         public _FinalStage elevHigh(Optional<Double> elevHigh) {
@@ -948,10 +1063,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage totalElevationGain(Double totalElevationGain) {
-            this.totalElevationGain = Optional.of(totalElevationGain);
+            this.totalElevationGain = Optional.ofNullable(totalElevationGain);
             return this;
         }
 
+        /**
+         * <p>Elevation gain during the workout::meters</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "total_elevation_gain", nulls = Nulls.SKIP)
         public _FinalStage totalElevationGain(Optional<Double> totalElevationGain) {
@@ -965,10 +1083,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage movingTime(Integer movingTime) {
-            this.movingTime = Optional.of(movingTime);
+            this.movingTime = Optional.ofNullable(movingTime);
             return this;
         }
 
+        /**
+         * <p>Time spent active during the workout::seconds</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "moving_time", nulls = Nulls.SKIP)
         public _FinalStage movingTime(Optional<Integer> movingTime) {
@@ -982,10 +1103,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage hrZones(List<Integer> hrZones) {
-            this.hrZones = Optional.of(hrZones);
+            this.hrZones = Optional.ofNullable(hrZones);
             return this;
         }
 
+        /**
+         * <p>Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers::seconds</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "hr_zones", nulls = Nulls.SKIP)
         public _FinalStage hrZones(Optional<List<Integer>> hrZones) {
@@ -999,10 +1123,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage sport(ClientFacingSport sport) {
-            this.sport = Optional.of(sport);
+            this.sport = Optional.ofNullable(sport);
             return this;
         }
 
+        /**
+         * <p>Sport's name</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sport", nulls = Nulls.SKIP)
         public _FinalStage sport(Optional<ClientFacingSport> sport) {
@@ -1016,10 +1143,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage calories(Double calories) {
-            this.calories = Optional.of(calories);
+            this.calories = Optional.ofNullable(calories);
             return this;
         }
 
+        /**
+         * <p>Calories burned during the workout::kCal</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "calories", nulls = Nulls.SKIP)
         public _FinalStage calories(Optional<Double> calories) {
@@ -1033,10 +1163,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage distance(Double distance) {
-            this.distance = Optional.of(distance);
+            this.distance = Optional.ofNullable(distance);
             return this;
         }
 
+        /**
+         * <p>Distance travelled during workout::meters</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "distance", nulls = Nulls.SKIP)
         public _FinalStage distance(Optional<Double> distance) {
@@ -1050,10 +1183,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage maxHr(Integer maxHr) {
-            this.maxHr = Optional.of(maxHr);
+            this.maxHr = Optional.ofNullable(maxHr);
             return this;
         }
 
+        /**
+         * <p>Max heart rate during workout::bpm</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "max_hr", nulls = Nulls.SKIP)
         public _FinalStage maxHr(Optional<Integer> maxHr) {
@@ -1067,10 +1203,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage averageHr(Integer averageHr) {
-            this.averageHr = Optional.of(averageHr);
+            this.averageHr = Optional.ofNullable(averageHr);
             return this;
         }
 
+        /**
+         * <p>Average heart rate during workout::bpm</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "average_hr", nulls = Nulls.SKIP)
         public _FinalStage averageHr(Optional<Integer> averageHr) {
@@ -1084,10 +1223,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -1101,10 +1243,13 @@ public final class ClientFacingWorkout {
          */
         @java.lang.Override
         public _FinalStage title(String title) {
-            this.title = Optional.of(title);
+            this.title = Optional.ofNullable(title);
             return this;
         }
 
+        /**
+         * <p>Title given for the workout</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "title", nulls = Nulls.SKIP)
         public _FinalStage title(Optional<String> title) {

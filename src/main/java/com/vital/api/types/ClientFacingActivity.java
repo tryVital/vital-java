@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingActivity.Builder.class)
 public final class ClientFacingActivity {
     private final String id;
@@ -336,82 +337,130 @@ public final class ClientFacingActivity {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingActivity other);
     }
 
     public interface UserIdStage {
-        DateStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        DateStage userId(@NotNull String userId);
     }
 
     public interface DateStage {
-        CalendarDateStage date(OffsetDateTime date);
+        /**
+         * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
+         */
+        CalendarDateStage date(@NotNull OffsetDateTime date);
     }
 
     public interface CalendarDateStage {
-        SourceStage calendarDate(String calendarDate);
+        /**
+         * <p>Date of the summary in the YYYY-mm-dd format.</p>
+         */
+        SourceStage calendarDate(@NotNull String calendarDate);
     }
 
     public interface SourceStage {
-        CreatedAtStage source(ClientFacingSource source);
+        /**
+         * <p>Source the data has come from.</p>
+         */
+        CreatedAtStage source(@NotNull ClientFacingSource source);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
         ClientFacingActivity build();
 
+        /**
+         * <p>Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories</p>
+         */
         _FinalStage caloriesTotal(Optional<Double> caloriesTotal);
 
         _FinalStage caloriesTotal(Double caloriesTotal);
 
+        /**
+         * <p>Energy consumption caused by the physical activity of the day in kilocalories::kilocalories</p>
+         */
         _FinalStage caloriesActive(Optional<Double> caloriesActive);
 
         _FinalStage caloriesActive(Double caloriesActive);
 
+        /**
+         * <p>Total number of steps registered during the day::steps</p>
+         */
         _FinalStage steps(Optional<Integer> steps);
 
         _FinalStage steps(Integer steps);
 
+        /**
+         * <p>Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters</p>
+         */
         _FinalStage dailyMovement(Optional<Double> dailyMovement);
 
         _FinalStage dailyMovement(Double dailyMovement);
 
+        /**
+         * <p>Distance traveled during activities throughout the day::meters</p>
+         */
         _FinalStage distance(Optional<Double> distance);
 
         _FinalStage distance(Double distance);
 
+        /**
+         * <p>Number of minutes during the day with low intensity activity (e.g. household work)::minutes</p>
+         */
         _FinalStage low(Optional<Double> low);
 
         _FinalStage low(Double low);
 
+        /**
+         * <p>Number of minutes during the day with medium intensity activity (e.g. walking)::minutes</p>
+         */
         _FinalStage medium(Optional<Double> medium);
 
         _FinalStage medium(Double medium);
 
+        /**
+         * <p>Number of minutes during the day with high intensity activity (e.g. running)::minutes</p>
+         */
         _FinalStage high(Optional<Double> high);
 
         _FinalStage high(Double high);
 
+        /**
+         * <p>Number of floors climbed by the user::count</p>
+         */
         _FinalStage floorsClimbed(Optional<Integer> floorsClimbed);
 
         _FinalStage floorsClimbed(Integer floorsClimbed);
 
+        /**
+         * <p>The IANA time zone identifier. Example: 'Europe/London'.</p>
+         */
         _FinalStage timeZone(Optional<String> timeZone);
 
         _FinalStage timeZone(String timeZone);
 
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        /**
+         * <p>Heart rate daily summary.</p>
+         */
         _FinalStage heartRate(Optional<ClientFacingHeartRate> heartRate);
 
         _FinalStage heartRate(ClientFacingHeartRate heartRate);
@@ -510,72 +559,76 @@ public final class ClientFacingActivity {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public DateStage userId(String userId) {
-            this.userId = userId;
+        public DateStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
+         * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("date")
-        public CalendarDateStage date(OffsetDateTime date) {
-            this.date = date;
+        public CalendarDateStage date(@NotNull OffsetDateTime date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>Date of the summary in the YYYY-mm-dd format.</p>
+         * <p>Date of the summary in the YYYY-mm-dd format.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("calendar_date")
-        public SourceStage calendarDate(String calendarDate) {
-            this.calendarDate = calendarDate;
+        public SourceStage calendarDate(@NotNull String calendarDate) {
+            this.calendarDate = Objects.requireNonNull(calendarDate, "calendarDate must not be null");
             return this;
         }
 
         /**
          * <p>Source the data has come from.</p>
+         * <p>Source the data has come from.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source")
-        public CreatedAtStage source(ClientFacingSource source) {
-            this.source = source;
+        public CreatedAtStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage wheelchairPush(Integer wheelchairPush) {
-            this.wheelchairPush = Optional.of(wheelchairPush);
+            this.wheelchairPush = Optional.ofNullable(wheelchairPush);
             return this;
         }
 
@@ -588,7 +641,7 @@ public final class ClientFacingActivity {
 
         @java.lang.Override
         public _FinalStage wheelchairUse(Boolean wheelchairUse) {
-            this.wheelchairUse = Optional.of(wheelchairUse);
+            this.wheelchairUse = Optional.ofNullable(wheelchairUse);
             return this;
         }
 
@@ -605,10 +658,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage heartRate(ClientFacingHeartRate heartRate) {
-            this.heartRate = Optional.of(heartRate);
+            this.heartRate = Optional.ofNullable(heartRate);
             return this;
         }
 
+        /**
+         * <p>Heart rate daily summary.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "heart_rate", nulls = Nulls.SKIP)
         public _FinalStage heartRate(Optional<ClientFacingHeartRate> heartRate) {
@@ -622,10 +678,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -639,10 +698,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage timeZone(String timeZone) {
-            this.timeZone = Optional.of(timeZone);
+            this.timeZone = Optional.ofNullable(timeZone);
             return this;
         }
 
+        /**
+         * <p>The IANA time zone identifier. Example: 'Europe/London'.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "time_zone", nulls = Nulls.SKIP)
         public _FinalStage timeZone(Optional<String> timeZone) {
@@ -656,10 +718,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage floorsClimbed(Integer floorsClimbed) {
-            this.floorsClimbed = Optional.of(floorsClimbed);
+            this.floorsClimbed = Optional.ofNullable(floorsClimbed);
             return this;
         }
 
+        /**
+         * <p>Number of floors climbed by the user::count</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "floors_climbed", nulls = Nulls.SKIP)
         public _FinalStage floorsClimbed(Optional<Integer> floorsClimbed) {
@@ -673,10 +738,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage high(Double high) {
-            this.high = Optional.of(high);
+            this.high = Optional.ofNullable(high);
             return this;
         }
 
+        /**
+         * <p>Number of minutes during the day with high intensity activity (e.g. running)::minutes</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "high", nulls = Nulls.SKIP)
         public _FinalStage high(Optional<Double> high) {
@@ -690,10 +758,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage medium(Double medium) {
-            this.medium = Optional.of(medium);
+            this.medium = Optional.ofNullable(medium);
             return this;
         }
 
+        /**
+         * <p>Number of minutes during the day with medium intensity activity (e.g. walking)::minutes</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "medium", nulls = Nulls.SKIP)
         public _FinalStage medium(Optional<Double> medium) {
@@ -707,10 +778,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage low(Double low) {
-            this.low = Optional.of(low);
+            this.low = Optional.ofNullable(low);
             return this;
         }
 
+        /**
+         * <p>Number of minutes during the day with low intensity activity (e.g. household work)::minutes</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "low", nulls = Nulls.SKIP)
         public _FinalStage low(Optional<Double> low) {
@@ -724,10 +798,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage distance(Double distance) {
-            this.distance = Optional.of(distance);
+            this.distance = Optional.ofNullable(distance);
             return this;
         }
 
+        /**
+         * <p>Distance traveled during activities throughout the day::meters</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "distance", nulls = Nulls.SKIP)
         public _FinalStage distance(Optional<Double> distance) {
@@ -741,10 +818,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage dailyMovement(Double dailyMovement) {
-            this.dailyMovement = Optional.of(dailyMovement);
+            this.dailyMovement = Optional.ofNullable(dailyMovement);
             return this;
         }
 
+        /**
+         * <p>Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "daily_movement", nulls = Nulls.SKIP)
         public _FinalStage dailyMovement(Optional<Double> dailyMovement) {
@@ -758,10 +838,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage steps(Integer steps) {
-            this.steps = Optional.of(steps);
+            this.steps = Optional.ofNullable(steps);
             return this;
         }
 
+        /**
+         * <p>Total number of steps registered during the day::steps</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "steps", nulls = Nulls.SKIP)
         public _FinalStage steps(Optional<Integer> steps) {
@@ -775,10 +858,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage caloriesActive(Double caloriesActive) {
-            this.caloriesActive = Optional.of(caloriesActive);
+            this.caloriesActive = Optional.ofNullable(caloriesActive);
             return this;
         }
 
+        /**
+         * <p>Energy consumption caused by the physical activity of the day in kilocalories::kilocalories</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "calories_active", nulls = Nulls.SKIP)
         public _FinalStage caloriesActive(Optional<Double> caloriesActive) {
@@ -792,10 +878,13 @@ public final class ClientFacingActivity {
          */
         @java.lang.Override
         public _FinalStage caloriesTotal(Double caloriesTotal) {
-            this.caloriesTotal = Optional.of(caloriesTotal);
+            this.caloriesTotal = Optional.ofNullable(caloriesTotal);
             return this;
         }
 
+        /**
+         * <p>Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "calories_total", nulls = Nulls.SKIP)
         public _FinalStage caloriesTotal(Optional<Double> caloriesTotal) {

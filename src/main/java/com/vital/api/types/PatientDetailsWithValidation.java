@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PatientDetailsWithValidation.Builder.class)
 public final class PatientDetailsWithValidation {
     private final String firstName;
@@ -220,58 +221,79 @@ public final class PatientDetailsWithValidation {
     }
 
     public interface FirstNameStage {
-        LastNameStage firstName(String firstName);
+        LastNameStage firstName(@NotNull String firstName);
 
         Builder from(PatientDetailsWithValidation other);
     }
 
     public interface LastNameStage {
-        DobStage lastName(String lastName);
+        DobStage lastName(@NotNull String lastName);
     }
 
     public interface DobStage {
-        GenderStage dob(String dob);
+        GenderStage dob(@NotNull String dob);
     }
 
     public interface GenderStage {
-        PhoneNumberStage gender(Gender gender);
+        PhoneNumberStage gender(@NotNull Gender gender);
     }
 
     public interface PhoneNumberStage {
-        EmailStage phoneNumber(String phoneNumber);
+        EmailStage phoneNumber(@NotNull String phoneNumber);
     }
 
     public interface EmailStage {
-        _FinalStage email(String email);
+        _FinalStage email(@NotNull String email);
     }
 
     public interface _FinalStage {
         PatientDetailsWithValidation build();
 
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         */
         _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
 
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage race(Optional<Race> race);
 
         _FinalStage race(Race race);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage ethnicity(Optional<Ethnicity> ethnicity);
 
         _FinalStage ethnicity(Ethnicity ethnicity);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
 
         _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
 
         _FinalStage genderIdentity(GenderIdentity genderIdentity);
 
+        /**
+         * <p>Household income in USD. If not provided, will be set to None</p>
+         */
         _FinalStage householdIncome(Optional<Integer> householdIncome);
 
         _FinalStage householdIncome(Integer householdIncome);
 
+        /**
+         * <p>Household size. If not provided, will be set to None</p>
+         */
         _FinalStage householdSize(Optional<Integer> householdSize);
 
         _FinalStage householdSize(Integer householdSize);
@@ -331,43 +353,43 @@ public final class PatientDetailsWithValidation {
 
         @java.lang.Override
         @JsonSetter("first_name")
-        public LastNameStage firstName(String firstName) {
-            this.firstName = firstName;
+        public LastNameStage firstName(@NotNull String firstName) {
+            this.firstName = Objects.requireNonNull(firstName, "firstName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("last_name")
-        public DobStage lastName(String lastName) {
-            this.lastName = lastName;
+        public DobStage lastName(@NotNull String lastName) {
+            this.lastName = Objects.requireNonNull(lastName, "lastName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("dob")
-        public GenderStage dob(String dob) {
-            this.dob = dob;
+        public GenderStage dob(@NotNull String dob) {
+            this.dob = Objects.requireNonNull(dob, "dob must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("gender")
-        public PhoneNumberStage gender(Gender gender) {
-            this.gender = gender;
+        public PhoneNumberStage gender(@NotNull Gender gender) {
+            this.gender = Objects.requireNonNull(gender, "gender must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("phone_number")
-        public EmailStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public EmailStage phoneNumber(@NotNull String phoneNumber) {
+            this.phoneNumber = Objects.requireNonNull(phoneNumber, "phoneNumber must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("email")
-        public _FinalStage email(String email) {
-            this.email = email;
+        public _FinalStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
@@ -377,10 +399,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage householdSize(Integer householdSize) {
-            this.householdSize = Optional.of(householdSize);
+            this.householdSize = Optional.ofNullable(householdSize);
             return this;
         }
 
+        /**
+         * <p>Household size. If not provided, will be set to None</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "household_size", nulls = Nulls.SKIP)
         public _FinalStage householdSize(Optional<Integer> householdSize) {
@@ -394,10 +419,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage householdIncome(Integer householdIncome) {
-            this.householdIncome = Optional.of(householdIncome);
+            this.householdIncome = Optional.ofNullable(householdIncome);
             return this;
         }
 
+        /**
+         * <p>Household income in USD. If not provided, will be set to None</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "household_income", nulls = Nulls.SKIP)
         public _FinalStage householdIncome(Optional<Integer> householdIncome) {
@@ -411,10 +439,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
-            this.genderIdentity = Optional.of(genderIdentity);
+            this.genderIdentity = Optional.ofNullable(genderIdentity);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
         public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
@@ -428,10 +459,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage sexualOrientation(SexualOrientation sexualOrientation) {
-            this.sexualOrientation = Optional.of(sexualOrientation);
+            this.sexualOrientation = Optional.ofNullable(sexualOrientation);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sexual_orientation", nulls = Nulls.SKIP)
         public _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation) {
@@ -445,10 +479,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage ethnicity(Ethnicity ethnicity) {
-            this.ethnicity = Optional.of(ethnicity);
+            this.ethnicity = Optional.ofNullable(ethnicity);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
         public _FinalStage ethnicity(Optional<Ethnicity> ethnicity) {
@@ -462,10 +499,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage race(Race race) {
-            this.race = Optional.of(race);
+            this.race = Optional.ofNullable(race);
             return this;
         }
 
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "race", nulls = Nulls.SKIP)
         public _FinalStage race(Optional<Race> race) {
@@ -479,10 +519,13 @@ public final class PatientDetailsWithValidation {
          */
         @java.lang.Override
         public _FinalStage medicalProxy(GuarantorDetails medicalProxy) {
-            this.medicalProxy = Optional.of(medicalProxy);
+            this.medicalProxy = Optional.ofNullable(medicalProxy);
             return this;
         }
 
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "medical_proxy", nulls = Nulls.SKIP)
         public _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy) {

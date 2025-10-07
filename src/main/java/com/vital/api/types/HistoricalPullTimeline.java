@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = HistoricalPullTimeline.Builder.class)
 public final class HistoricalPullTimeline {
     private final OffsetDateTime scheduledAt;
@@ -87,7 +88,7 @@ public final class HistoricalPullTimeline {
     }
 
     public interface ScheduledAtStage {
-        _FinalStage scheduledAt(OffsetDateTime scheduledAt);
+        _FinalStage scheduledAt(@NotNull OffsetDateTime scheduledAt);
 
         Builder from(HistoricalPullTimeline other);
     }
@@ -127,14 +128,14 @@ public final class HistoricalPullTimeline {
 
         @java.lang.Override
         @JsonSetter("scheduled_at")
-        public _FinalStage scheduledAt(OffsetDateTime scheduledAt) {
-            this.scheduledAt = scheduledAt;
+        public _FinalStage scheduledAt(@NotNull OffsetDateTime scheduledAt) {
+            this.scheduledAt = Objects.requireNonNull(scheduledAt, "scheduledAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage endedAt(OffsetDateTime endedAt) {
-            this.endedAt = Optional.of(endedAt);
+            this.endedAt = Optional.ofNullable(endedAt);
             return this;
         }
 
@@ -147,7 +148,7 @@ public final class HistoricalPullTimeline {
 
         @java.lang.Override
         public _FinalStage startedAt(OffsetDateTime startedAt) {
-            this.startedAt = Optional.of(startedAt);
+            this.startedAt = Optional.ofNullable(startedAt);
             return this;
         }
 

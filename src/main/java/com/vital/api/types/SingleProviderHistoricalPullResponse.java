@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SingleProviderHistoricalPullResponse.Builder.class)
 public final class SingleProviderHistoricalPullResponse {
     private final Map<String, SingleHistoricalPullStatistics> pulled;
@@ -102,7 +102,9 @@ public final class SingleProviderHistoricalPullResponse {
         }
 
         public Builder putAllPulled(Map<String, SingleHistoricalPullStatistics> pulled) {
-            this.pulled.putAll(pulled);
+            if (pulled != null) {
+                this.pulled.putAll(pulled);
+            }
             return this;
         }
 
@@ -124,7 +126,9 @@ public final class SingleProviderHistoricalPullResponse {
         }
 
         public Builder addAllNotPulled(List<ClientFacingResource> notPulled) {
-            this.notPulled.addAll(notPulled);
+            if (notPulled != null) {
+                this.notPulled.addAll(notPulled);
+            }
             return this;
         }
 

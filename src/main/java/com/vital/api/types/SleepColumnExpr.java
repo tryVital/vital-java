@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SleepColumnExpr.Builder.class)
 public final class SleepColumnExpr {
     private final SleepColumnExprSleep sleep;
@@ -65,7 +66,10 @@ public final class SleepColumnExpr {
     }
 
     public interface SleepStage {
-        _FinalStage sleep(SleepColumnExprSleep sleep);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage sleep(@NotNull SleepColumnExprSleep sleep);
 
         Builder from(SleepColumnExpr other);
     }
@@ -91,12 +95,13 @@ public final class SleepColumnExpr {
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("sleep")
-        public _FinalStage sleep(SleepColumnExprSleep sleep) {
-            this.sleep = sleep;
+        public _FinalStage sleep(@NotNull SleepColumnExprSleep sleep) {
+            this.sleep = Objects.requireNonNull(sleep, "sleep must not be null");
             return this;
         }
 

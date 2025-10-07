@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingMealResponse.Builder.class)
 public final class ClientFacingMealResponse {
     private final List<MealInDbBaseClientFacingSource> meals;
@@ -92,7 +92,9 @@ public final class ClientFacingMealResponse {
         }
 
         public Builder addAllMeals(List<MealInDbBaseClientFacingSource> meals) {
-            this.meals.addAll(meals);
+            if (meals != null) {
+                this.meals.addAll(meals);
+            }
             return this;
         }
 

@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingUser.Builder.class)
 public final class ClientFacingUser {
     private final String userId;
@@ -186,44 +187,72 @@ public final class ClientFacingUser {
     }
 
     public interface UserIdStage {
-        TeamIdStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        TeamIdStage userId(@NotNull String userId);
 
         Builder from(ClientFacingUser other);
     }
 
     public interface TeamIdStage {
-        ClientUserIdStage teamId(String teamId);
+        /**
+         * <p>Your team id.</p>
+         */
+        ClientUserIdStage teamId(@NotNull String teamId);
     }
 
     public interface ClientUserIdStage {
-        CreatedOnStage clientUserId(String clientUserId);
+        /**
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         */
+        CreatedOnStage clientUserId(@NotNull String clientUserId);
     }
 
     public interface CreatedOnStage {
-        _FinalStage createdOn(OffsetDateTime createdOn);
+        /**
+         * <p>When your item is created</p>
+         */
+        _FinalStage createdOn(@NotNull OffsetDateTime createdOn);
     }
 
     public interface _FinalStage {
         ClientFacingUser build();
 
+        /**
+         * <p>A list of the users connected sources.</p>
+         */
         _FinalStage connectedSources(List<ConnectedSourceClientFacing> connectedSources);
 
         _FinalStage addConnectedSources(ConnectedSourceClientFacing connectedSources);
 
         _FinalStage addAllConnectedSources(List<ConnectedSourceClientFacing> connectedSources);
 
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         */
         _FinalStage fallbackTimeZone(Optional<FallbackTimeZone> fallbackTimeZone);
 
         _FinalStage fallbackTimeZone(FallbackTimeZone fallbackTimeZone);
 
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         */
         _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate);
 
         _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate);
 
+        /**
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         _FinalStage ingestionStart(Optional<String> ingestionStart);
 
         _FinalStage ingestionStart(String ingestionStart);
 
+        /**
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         _FinalStage ingestionEnd(Optional<String> ingestionEnd);
 
         _FinalStage ingestionEnd(String ingestionEnd);
@@ -271,45 +300,49 @@ public final class ClientFacingUser {
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public TeamIdStage userId(String userId) {
-            this.userId = userId;
+        public TeamIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Your team id.</p>
+         * <p>Your team id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("team_id")
-        public ClientUserIdStage teamId(String teamId) {
-            this.teamId = teamId;
+        public ClientUserIdStage teamId(@NotNull String teamId) {
+            this.teamId = Objects.requireNonNull(teamId, "teamId must not be null");
             return this;
         }
 
         /**
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("client_user_id")
-        public CreatedOnStage clientUserId(String clientUserId) {
-            this.clientUserId = clientUserId;
+        public CreatedOnStage clientUserId(@NotNull String clientUserId) {
+            this.clientUserId = Objects.requireNonNull(clientUserId, "clientUserId must not be null");
             return this;
         }
 
         /**
          * <p>When your item is created</p>
+         * <p>When your item is created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("created_on")
-        public _FinalStage createdOn(OffsetDateTime createdOn) {
-            this.createdOn = createdOn;
+        public _FinalStage createdOn(@NotNull OffsetDateTime createdOn) {
+            this.createdOn = Objects.requireNonNull(createdOn, "createdOn must not be null");
             return this;
         }
 
@@ -319,10 +352,13 @@ public final class ClientFacingUser {
          */
         @java.lang.Override
         public _FinalStage ingestionEnd(String ingestionEnd) {
-            this.ingestionEnd = Optional.of(ingestionEnd);
+            this.ingestionEnd = Optional.ofNullable(ingestionEnd);
             return this;
         }
 
+        /**
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
         public _FinalStage ingestionEnd(Optional<String> ingestionEnd) {
@@ -336,10 +372,13 @@ public final class ClientFacingUser {
          */
         @java.lang.Override
         public _FinalStage ingestionStart(String ingestionStart) {
-            this.ingestionStart = Optional.of(ingestionStart);
+            this.ingestionStart = Optional.ofNullable(ingestionStart);
             return this;
         }
 
+        /**
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ingestion_start", nulls = Nulls.SKIP)
         public _FinalStage ingestionStart(Optional<String> ingestionStart) {
@@ -353,10 +392,13 @@ public final class ClientFacingUser {
          */
         @java.lang.Override
         public _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate) {
-            this.fallbackBirthDate = Optional.of(fallbackBirthDate);
+            this.fallbackBirthDate = Optional.ofNullable(fallbackBirthDate);
             return this;
         }
 
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
         public _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate) {
@@ -371,10 +413,14 @@ public final class ClientFacingUser {
          */
         @java.lang.Override
         public _FinalStage fallbackTimeZone(FallbackTimeZone fallbackTimeZone) {
-            this.fallbackTimeZone = Optional.of(fallbackTimeZone);
+            this.fallbackTimeZone = Optional.ofNullable(fallbackTimeZone);
             return this;
         }
 
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fallback_time_zone", nulls = Nulls.SKIP)
         public _FinalStage fallbackTimeZone(Optional<FallbackTimeZone> fallbackTimeZone) {
@@ -388,7 +434,9 @@ public final class ClientFacingUser {
          */
         @java.lang.Override
         public _FinalStage addAllConnectedSources(List<ConnectedSourceClientFacing> connectedSources) {
-            this.connectedSources.addAll(connectedSources);
+            if (connectedSources != null) {
+                this.connectedSources.addAll(connectedSources);
+            }
             return this;
         }
 
@@ -402,6 +450,9 @@ public final class ClientFacingUser {
             return this;
         }
 
+        /**
+         * <p>A list of the users connected sources.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "connected_sources", nulls = Nulls.SKIP)
         public _FinalStage connectedSources(List<ConnectedSourceClientFacing> connectedSources) {

@@ -14,35 +14,46 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
 import com.vital.api.types.LabLocationCapability;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = LabTestsGetPscInfoRequest.Builder.class)
 public final class LabTestsGetPscInfoRequest {
+    private final Optional<List<LabLocationCapability>> capabilities;
+
     private final String zipCode;
 
     private final int labId;
 
     private final Optional<AllowedRadius> radius;
 
-    private final Optional<LabLocationCapability> capabilities;
-
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetPscInfoRequest(
+            Optional<List<LabLocationCapability>> capabilities,
             String zipCode,
             int labId,
             Optional<AllowedRadius> radius,
-            Optional<LabLocationCapability> capabilities,
             Map<String, Object> additionalProperties) {
+        this.capabilities = capabilities;
         this.zipCode = zipCode;
         this.labId = labId;
         this.radius = radius;
-        this.capabilities = capabilities;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Filter for only locations with certain capabilities
+     */
+    @JsonProperty("capabilities")
+    public Optional<List<LabLocationCapability>> getCapabilities() {
+        return capabilities;
     }
 
     /**
@@ -69,14 +80,6 @@ public final class LabTestsGetPscInfoRequest {
         return radius;
     }
 
-    /**
-     * @return Filter for only locations with certain capabilities
-     */
-    @JsonProperty("capabilities")
-    public Optional<LabLocationCapability> getCapabilities() {
-        return capabilities;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -89,15 +92,15 @@ public final class LabTestsGetPscInfoRequest {
     }
 
     private boolean equalTo(LabTestsGetPscInfoRequest other) {
-        return zipCode.equals(other.zipCode)
+        return capabilities.equals(other.capabilities)
+                && zipCode.equals(other.zipCode)
                 && labId == other.labId
-                && radius.equals(other.radius)
-                && capabilities.equals(other.capabilities);
+                && radius.equals(other.radius);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.zipCode, this.labId, this.radius, this.capabilities);
+        return Objects.hash(this.capabilities, this.zipCode, this.labId, this.radius);
     }
 
     @java.lang.Override
@@ -110,25 +113,39 @@ public final class LabTestsGetPscInfoRequest {
     }
 
     public interface ZipCodeStage {
-        LabIdStage zipCode(String zipCode);
+        /**
+         * <p>Zip code of the area to check</p>
+         */
+        LabIdStage zipCode(@NotNull String zipCode);
 
         Builder from(LabTestsGetPscInfoRequest other);
     }
 
     public interface LabIdStage {
+        /**
+         * <p>Lab ID to check for PSCs</p>
+         */
         _FinalStage labId(int labId);
     }
 
     public interface _FinalStage {
         LabTestsGetPscInfoRequest build();
 
+        /**
+         * <p>Filter for only locations with certain capabilities</p>
+         */
+        _FinalStage capabilities(Optional<List<LabLocationCapability>> capabilities);
+
+        _FinalStage capabilities(List<LabLocationCapability> capabilities);
+
+        _FinalStage capabilities(LabLocationCapability capabilities);
+
+        /**
+         * <p>Radius in which to search in miles. Note that we limit to 30 PSCs.</p>
+         */
         _FinalStage radius(Optional<AllowedRadius> radius);
 
         _FinalStage radius(AllowedRadius radius);
-
-        _FinalStage capabilities(Optional<LabLocationCapability> capabilities);
-
-        _FinalStage capabilities(LabLocationCapability capabilities);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -137,9 +154,9 @@ public final class LabTestsGetPscInfoRequest {
 
         private int labId;
 
-        private Optional<LabLocationCapability> capabilities = Optional.empty();
-
         private Optional<AllowedRadius> radius = Optional.empty();
+
+        private Optional<List<LabLocationCapability>> capabilities = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -148,25 +165,27 @@ public final class LabTestsGetPscInfoRequest {
 
         @java.lang.Override
         public Builder from(LabTestsGetPscInfoRequest other) {
+            capabilities(other.getCapabilities());
             zipCode(other.getZipCode());
             labId(other.getLabId());
             radius(other.getRadius());
-            capabilities(other.getCapabilities());
             return this;
         }
 
         /**
          * <p>Zip code of the area to check</p>
+         * <p>Zip code of the area to check</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("zip_code")
-        public LabIdStage zipCode(String zipCode) {
-            this.zipCode = zipCode;
+        public LabIdStage zipCode(@NotNull String zipCode) {
+            this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
             return this;
         }
 
         /**
+         * <p>Lab ID to check for PSCs</p>
          * <p>Lab ID to check for PSCs</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -178,32 +197,18 @@ public final class LabTestsGetPscInfoRequest {
         }
 
         /**
-         * <p>Filter for only locations with certain capabilities</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage capabilities(LabLocationCapability capabilities) {
-            this.capabilities = Optional.of(capabilities);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
-        public _FinalStage capabilities(Optional<LabLocationCapability> capabilities) {
-            this.capabilities = capabilities;
-            return this;
-        }
-
-        /**
          * <p>Radius in which to search in miles. Note that we limit to 30 PSCs.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         public _FinalStage radius(AllowedRadius radius) {
-            this.radius = Optional.of(radius);
+            this.radius = Optional.ofNullable(radius);
             return this;
         }
 
+        /**
+         * <p>Radius in which to search in miles. Note that we limit to 30 PSCs.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
         public _FinalStage radius(Optional<AllowedRadius> radius) {
@@ -212,8 +217,34 @@ public final class LabTestsGetPscInfoRequest {
         }
 
         @java.lang.Override
+        public _FinalStage capabilities(LabLocationCapability capabilities) {
+            this.capabilities = Optional.of(Collections.singletonList(capabilities));
+            return this;
+        }
+
+        /**
+         * <p>Filter for only locations with certain capabilities</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage capabilities(List<LabLocationCapability> capabilities) {
+            this.capabilities = Optional.ofNullable(capabilities);
+            return this;
+        }
+
+        /**
+         * <p>Filter for only locations with certain capabilities</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
+        public _FinalStage capabilities(Optional<List<LabLocationCapability>> capabilities) {
+            this.capabilities = capabilities;
+            return this;
+        }
+
+        @java.lang.Override
         public LabTestsGetPscInfoRequest build() {
-            return new LabTestsGetPscInfoRequest(zipCode, labId, radius, capabilities, additionalProperties);
+            return new LabTestsGetPscInfoRequest(capabilities, zipCode, labId, radius, additionalProperties);
         }
     }
 }

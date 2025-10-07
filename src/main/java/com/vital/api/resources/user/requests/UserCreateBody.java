@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserCreateBody.Builder.class)
 public final class UserCreateBody {
     private final String clientUserId;
@@ -127,7 +128,10 @@ public final class UserCreateBody {
     }
 
     public interface ClientUserIdStage {
-        _FinalStage clientUserId(String clientUserId);
+        /**
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         */
+        _FinalStage clientUserId(@NotNull String clientUserId);
 
         Builder from(UserCreateBody other);
     }
@@ -135,18 +139,31 @@ public final class UserCreateBody {
     public interface _FinalStage {
         UserCreateBody build();
 
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         */
         _FinalStage fallbackTimeZone(Optional<String> fallbackTimeZone);
 
         _FinalStage fallbackTimeZone(String fallbackTimeZone);
 
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         */
         _FinalStage fallbackBirthDate(Optional<String> fallbackBirthDate);
 
         _FinalStage fallbackBirthDate(String fallbackBirthDate);
 
+        /**
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         _FinalStage ingestionStart(Optional<String> ingestionStart);
 
         _FinalStage ingestionStart(String ingestionStart);
 
+        /**
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         _FinalStage ingestionEnd(Optional<String> ingestionEnd);
 
         _FinalStage ingestionEnd(String ingestionEnd);
@@ -181,12 +198,13 @@ public final class UserCreateBody {
 
         /**
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
+         * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("client_user_id")
-        public _FinalStage clientUserId(String clientUserId) {
-            this.clientUserId = clientUserId;
+        public _FinalStage clientUserId(@NotNull String clientUserId) {
+            this.clientUserId = Objects.requireNonNull(clientUserId, "clientUserId must not be null");
             return this;
         }
 
@@ -196,10 +214,13 @@ public final class UserCreateBody {
          */
         @java.lang.Override
         public _FinalStage ingestionEnd(String ingestionEnd) {
-            this.ingestionEnd = Optional.of(ingestionEnd);
+            this.ingestionEnd = Optional.ofNullable(ingestionEnd);
             return this;
         }
 
+        /**
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
         public _FinalStage ingestionEnd(Optional<String> ingestionEnd) {
@@ -213,10 +234,13 @@ public final class UserCreateBody {
          */
         @java.lang.Override
         public _FinalStage ingestionStart(String ingestionStart) {
-            this.ingestionStart = Optional.of(ingestionStart);
+            this.ingestionStart = Optional.ofNullable(ingestionStart);
             return this;
         }
 
+        /**
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ingestion_start", nulls = Nulls.SKIP)
         public _FinalStage ingestionStart(Optional<String> ingestionStart) {
@@ -230,10 +254,13 @@ public final class UserCreateBody {
          */
         @java.lang.Override
         public _FinalStage fallbackBirthDate(String fallbackBirthDate) {
-            this.fallbackBirthDate = Optional.of(fallbackBirthDate);
+            this.fallbackBirthDate = Optional.ofNullable(fallbackBirthDate);
             return this;
         }
 
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
         public _FinalStage fallbackBirthDate(Optional<String> fallbackBirthDate) {
@@ -248,10 +275,14 @@ public final class UserCreateBody {
          */
         @java.lang.Override
         public _FinalStage fallbackTimeZone(String fallbackTimeZone) {
-            this.fallbackTimeZone = Optional.of(fallbackTimeZone);
+            this.fallbackTimeZone = Optional.ofNullable(fallbackTimeZone);
             return this;
         }
 
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fallback_time_zone", nulls = Nulls.SKIP)
         public _FinalStage fallbackTimeZone(Optional<String> fallbackTimeZone) {

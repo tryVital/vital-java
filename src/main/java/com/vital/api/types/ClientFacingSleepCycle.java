@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingSleepCycle.Builder.class)
 public final class ClientFacingSleepCycle {
     private final String id;
@@ -247,45 +248,48 @@ public final class ClientFacingSleepCycle {
     }
 
     public interface IdStage {
-        SleepIdStage id(String id);
+        SleepIdStage id(@NotNull String id);
 
         Builder from(ClientFacingSleepCycle other);
     }
 
     public interface SleepIdStage {
-        SessionStartStage sleepId(String sleepId);
+        SessionStartStage sleepId(@NotNull String sleepId);
     }
 
     public interface SessionStartStage {
-        SessionEndStage sessionStart(OffsetDateTime sessionStart);
+        SessionEndStage sessionStart(@NotNull OffsetDateTime sessionStart);
     }
 
     public interface SessionEndStage {
-        SourceProviderStage sessionEnd(OffsetDateTime sessionEnd);
+        SourceProviderStage sessionEnd(@NotNull OffsetDateTime sessionEnd);
     }
 
     public interface SourceProviderStage {
-        SourceTypeStage sourceProvider(ClientFacingSleepCycleSourceProvider sourceProvider);
+        SourceTypeStage sourceProvider(@NotNull ClientFacingSleepCycleSourceProvider sourceProvider);
     }
 
     public interface SourceTypeStage {
-        CreatedAtStage sourceType(ClientFacingSleepCycleSourceType sourceType);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        CreatedAtStage sourceType(@NotNull ClientFacingSleepCycleSourceType sourceType);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        UserIdStage updatedAt(OffsetDateTime updatedAt);
+        UserIdStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface UserIdStage {
-        SourceStage userId(String userId);
+        SourceStage userId(@NotNull String userId);
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        _FinalStage source(@NotNull ClientFacingSource source);
     }
 
     public interface _FinalStage {
@@ -303,6 +307,15 @@ public final class ClientFacingSleepCycle {
 
         _FinalStage addAllStageEndOffsetSecond(List<Integer> stageEndOffsetSecond);
 
+        /**
+         * <p>Sleep stage classification:
+         * <code>-1</code>: Unknown or unclassified sleep stage;
+         * <code>1</code>: Deep sleep;
+         * <code>2</code>: Light/non-REM sleep;
+         * <code>3</code>: Rapid Eye Movement sleep;
+         * <code>4</code>: Awake period;
+         * <code>5</code>: Manually classified stage.</p>
+         */
         _FinalStage stageType(List<Integer> stageType);
 
         _FinalStage addStageType(Integer stageType);
@@ -395,81 +408,82 @@ public final class ClientFacingSleepCycle {
 
         @java.lang.Override
         @JsonSetter("id")
-        public SleepIdStage id(String id) {
-            this.id = id;
+        public SleepIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sleep_id")
-        public SessionStartStage sleepId(String sleepId) {
-            this.sleepId = sleepId;
+        public SessionStartStage sleepId(@NotNull String sleepId) {
+            this.sleepId = Objects.requireNonNull(sleepId, "sleepId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("session_start")
-        public SessionEndStage sessionStart(OffsetDateTime sessionStart) {
-            this.sessionStart = sessionStart;
+        public SessionEndStage sessionStart(@NotNull OffsetDateTime sessionStart) {
+            this.sessionStart = Objects.requireNonNull(sessionStart, "sessionStart must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("session_end")
-        public SourceProviderStage sessionEnd(OffsetDateTime sessionEnd) {
-            this.sessionEnd = sessionEnd;
+        public SourceProviderStage sessionEnd(@NotNull OffsetDateTime sessionEnd) {
+            this.sessionEnd = Objects.requireNonNull(sessionEnd, "sessionEnd must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source_provider")
-        public SourceTypeStage sourceProvider(ClientFacingSleepCycleSourceProvider sourceProvider) {
-            this.sourceProvider = sourceProvider;
+        public SourceTypeStage sourceProvider(@NotNull ClientFacingSleepCycleSourceProvider sourceProvider) {
+            this.sourceProvider = Objects.requireNonNull(sourceProvider, "sourceProvider must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("source_type")
-        public CreatedAtStage sourceType(ClientFacingSleepCycleSourceType sourceType) {
-            this.sourceType = sourceType;
+        public CreatedAtStage sourceType(@NotNull ClientFacingSleepCycleSourceType sourceType) {
+            this.sourceType = Objects.requireNonNull(sourceType, "sourceType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public UserIdStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public UserIdStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public SourceStage userId(String userId) {
-            this.userId = userId;
+        public SourceStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
-            this.sourceDeviceId = Optional.of(sourceDeviceId);
+            this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
         }
 
@@ -482,7 +496,7 @@ public final class ClientFacingSleepCycle {
 
         @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
-            this.sourceAppId = Optional.of(sourceAppId);
+            this.sourceAppId = Optional.ofNullable(sourceAppId);
             return this;
         }
 
@@ -495,7 +509,7 @@ public final class ClientFacingSleepCycle {
 
         @java.lang.Override
         public _FinalStage timeZone(String timeZone) {
-            this.timeZone = Optional.of(timeZone);
+            this.timeZone = Optional.ofNullable(timeZone);
             return this;
         }
 
@@ -518,7 +532,9 @@ public final class ClientFacingSleepCycle {
          */
         @java.lang.Override
         public _FinalStage addAllStageType(List<Integer> stageType) {
-            this.stageType.addAll(stageType);
+            if (stageType != null) {
+                this.stageType.addAll(stageType);
+            }
             return this;
         }
 
@@ -538,6 +554,15 @@ public final class ClientFacingSleepCycle {
             return this;
         }
 
+        /**
+         * <p>Sleep stage classification:
+         * <code>-1</code>: Unknown or unclassified sleep stage;
+         * <code>1</code>: Deep sleep;
+         * <code>2</code>: Light/non-REM sleep;
+         * <code>3</code>: Rapid Eye Movement sleep;
+         * <code>4</code>: Awake period;
+         * <code>5</code>: Manually classified stage.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "stage_type", nulls = Nulls.SKIP)
         public _FinalStage stageType(List<Integer> stageType) {
@@ -548,7 +573,9 @@ public final class ClientFacingSleepCycle {
 
         @java.lang.Override
         public _FinalStage addAllStageEndOffsetSecond(List<Integer> stageEndOffsetSecond) {
-            this.stageEndOffsetSecond.addAll(stageEndOffsetSecond);
+            if (stageEndOffsetSecond != null) {
+                this.stageEndOffsetSecond.addAll(stageEndOffsetSecond);
+            }
             return this;
         }
 
@@ -568,7 +595,9 @@ public final class ClientFacingSleepCycle {
 
         @java.lang.Override
         public _FinalStage addAllStageStartOffsetSecond(List<Integer> stageStartOffsetSecond) {
-            this.stageStartOffsetSecond.addAll(stageStartOffsetSecond);
+            if (stageStartOffsetSecond != null) {
+                this.stageStartOffsetSecond.addAll(stageStartOffsetSecond);
+            }
             return this;
         }
 

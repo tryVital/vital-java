@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BasalBodyTemperatureEntry.Builder.class)
 public final class BasalBodyTemperatureEntry {
     private final String date;
@@ -70,7 +71,7 @@ public final class BasalBodyTemperatureEntry {
     }
 
     public interface DateStage {
-        ValueStage date(String date);
+        ValueStage date(@NotNull String date);
 
         Builder from(BasalBodyTemperatureEntry other);
     }
@@ -103,8 +104,8 @@ public final class BasalBodyTemperatureEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public ValueStage date(String date) {
-            this.date = date;
+        public ValueStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 

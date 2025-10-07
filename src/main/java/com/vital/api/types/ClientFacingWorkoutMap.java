@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingWorkoutMap.Builder.class)
 public final class ClientFacingWorkoutMap {
     private final Optional<String> polyline;
@@ -95,6 +95,9 @@ public final class ClientFacingWorkoutMap {
             return this;
         }
 
+        /**
+         * <p>Polyline of the map</p>
+         */
         @JsonSetter(value = "polyline", nulls = Nulls.SKIP)
         public Builder polyline(Optional<String> polyline) {
             this.polyline = polyline;
@@ -102,10 +105,13 @@ public final class ClientFacingWorkoutMap {
         }
 
         public Builder polyline(String polyline) {
-            this.polyline = Optional.of(polyline);
+            this.polyline = Optional.ofNullable(polyline);
             return this;
         }
 
+        /**
+         * <p>A lower resolution summary of the polyline</p>
+         */
         @JsonSetter(value = "summary_polyline", nulls = Nulls.SKIP)
         public Builder summaryPolyline(Optional<String> summaryPolyline) {
             this.summaryPolyline = summaryPolyline;
@@ -113,7 +119,7 @@ public final class ClientFacingWorkoutMap {
         }
 
         public Builder summaryPolyline(String summaryPolyline) {
-            this.summaryPolyline = Optional.of(summaryPolyline);
+            this.summaryPolyline = Optional.ofNullable(summaryPolyline);
             return this;
         }
 

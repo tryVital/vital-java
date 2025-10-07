@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InsuranceSearchDiagnosisRequest.Builder.class)
 public final class InsuranceSearchDiagnosisRequest {
     private final String diagnosisQuery;
@@ -62,7 +63,7 @@ public final class InsuranceSearchDiagnosisRequest {
     }
 
     public interface DiagnosisQueryStage {
-        _FinalStage diagnosisQuery(String diagnosisQuery);
+        _FinalStage diagnosisQuery(@NotNull String diagnosisQuery);
 
         Builder from(InsuranceSearchDiagnosisRequest other);
     }
@@ -88,8 +89,8 @@ public final class InsuranceSearchDiagnosisRequest {
 
         @java.lang.Override
         @JsonSetter("diagnosis_query")
-        public _FinalStage diagnosisQuery(String diagnosisQuery) {
-            this.diagnosisQuery = diagnosisQuery;
+        public _FinalStage diagnosisQuery(@NotNull String diagnosisQuery) {
+            this.diagnosisQuery = Objects.requireNonNull(diagnosisQuery, "diagnosisQuery must not be null");
             return this;
         }
 

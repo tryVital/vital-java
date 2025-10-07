@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingTestKitOrderDetails.Builder.class)
 public final class ClientFacingTestKitOrderDetails {
     private final Optional<ClientFacingTestkitOrder> data;
@@ -85,7 +85,7 @@ public final class ClientFacingTestKitOrderDetails {
         }
 
         public Builder data(ClientFacingTestkitOrder data) {
-            this.data = Optional.of(data);
+            this.data = Optional.ofNullable(data);
             return this;
         }
 

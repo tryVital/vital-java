@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingOrderEvent.Builder.class)
 public final class ClientFacingOrderEvent {
     private final int id;
@@ -86,11 +87,11 @@ public final class ClientFacingOrderEvent {
     }
 
     public interface CreatedAtStage {
-        StatusStage createdAt(OffsetDateTime createdAt);
+        StatusStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface StatusStage {
-        _FinalStage status(OrderStatus status);
+        _FinalStage status(@NotNull OrderStatus status);
     }
 
     public interface _FinalStage {
@@ -127,15 +128,15 @@ public final class ClientFacingOrderEvent {
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public StatusStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public StatusStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(OrderStatus status) {
-            this.status = status;
+        public _FinalStage status(@NotNull OrderStatus status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 

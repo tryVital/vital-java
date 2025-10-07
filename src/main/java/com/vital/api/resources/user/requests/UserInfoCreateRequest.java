@@ -22,8 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserInfoCreateRequest.Builder.class)
 public final class UserInfoCreateRequest {
     private final String firstName;
@@ -194,33 +195,33 @@ public final class UserInfoCreateRequest {
     }
 
     public interface FirstNameStage {
-        LastNameStage firstName(String firstName);
+        LastNameStage firstName(@NotNull String firstName);
 
         Builder from(UserInfoCreateRequest other);
     }
 
     public interface LastNameStage {
-        EmailStage lastName(String lastName);
+        EmailStage lastName(@NotNull String lastName);
     }
 
     public interface EmailStage {
-        PhoneNumberStage email(String email);
+        PhoneNumberStage email(@NotNull String email);
     }
 
     public interface PhoneNumberStage {
-        GenderStage phoneNumber(String phoneNumber);
+        GenderStage phoneNumber(@NotNull String phoneNumber);
     }
 
     public interface GenderStage {
-        DobStage gender(String gender);
+        DobStage gender(@NotNull String gender);
     }
 
     public interface DobStage {
-        AddressStage dob(String dob);
+        AddressStage dob(@NotNull String dob);
     }
 
     public interface AddressStage {
-        _FinalStage address(Address address);
+        _FinalStage address(@NotNull Address address);
     }
 
     public interface _FinalStage {
@@ -305,56 +306,56 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         @JsonSetter("first_name")
-        public LastNameStage firstName(String firstName) {
-            this.firstName = firstName;
+        public LastNameStage firstName(@NotNull String firstName) {
+            this.firstName = Objects.requireNonNull(firstName, "firstName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("last_name")
-        public EmailStage lastName(String lastName) {
-            this.lastName = lastName;
+        public EmailStage lastName(@NotNull String lastName) {
+            this.lastName = Objects.requireNonNull(lastName, "lastName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("email")
-        public PhoneNumberStage email(String email) {
-            this.email = email;
+        public PhoneNumberStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("phone_number")
-        public GenderStage phoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
+        public GenderStage phoneNumber(@NotNull String phoneNumber) {
+            this.phoneNumber = Objects.requireNonNull(phoneNumber, "phoneNumber must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("gender")
-        public DobStage gender(String gender) {
-            this.gender = gender;
+        public DobStage gender(@NotNull String gender) {
+            this.gender = Objects.requireNonNull(gender, "gender must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("dob")
-        public AddressStage dob(String dob) {
-            this.dob = dob;
+        public AddressStage dob(@NotNull String dob) {
+            this.dob = Objects.requireNonNull(dob, "dob must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(Address address) {
-            this.address = address;
+        public _FinalStage address(@NotNull Address address) {
+            this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
-            this.genderIdentity = Optional.of(genderIdentity);
+            this.genderIdentity = Optional.ofNullable(genderIdentity);
             return this;
         }
 
@@ -367,7 +368,7 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         public _FinalStage sexualOrientation(SexualOrientation sexualOrientation) {
-            this.sexualOrientation = Optional.of(sexualOrientation);
+            this.sexualOrientation = Optional.ofNullable(sexualOrientation);
             return this;
         }
 
@@ -380,7 +381,7 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         public _FinalStage ethnicity(Ethnicity ethnicity) {
-            this.ethnicity = Optional.of(ethnicity);
+            this.ethnicity = Optional.ofNullable(ethnicity);
             return this;
         }
 
@@ -393,7 +394,7 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         public _FinalStage race(Race race) {
-            this.race = Optional.of(race);
+            this.race = Optional.ofNullable(race);
             return this;
         }
 
@@ -406,7 +407,7 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         public _FinalStage medicalProxy(GuarantorDetails medicalProxy) {
-            this.medicalProxy = Optional.of(medicalProxy);
+            this.medicalProxy = Optional.ofNullable(medicalProxy);
             return this;
         }
 

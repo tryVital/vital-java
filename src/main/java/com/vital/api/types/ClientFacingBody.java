@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingBody.Builder.class)
 public final class ClientFacingBody {
     private final String id;
@@ -260,58 +261,85 @@ public final class ClientFacingBody {
     }
 
     public interface IdStage {
-        UserIdStage id(String id);
+        UserIdStage id(@NotNull String id);
 
         Builder from(ClientFacingBody other);
     }
 
     public interface UserIdStage {
-        DateStage userId(String userId);
+        /**
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         */
+        DateStage userId(@NotNull String userId);
     }
 
     public interface DateStage {
-        CalendarDateStage date(OffsetDateTime date);
+        /**
+         * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
+         */
+        CalendarDateStage date(@NotNull OffsetDateTime date);
     }
 
     public interface CalendarDateStage {
-        SourceStage calendarDate(String calendarDate);
+        /**
+         * <p>Date of the summary in the YYYY-mm-dd format.</p>
+         */
+        SourceStage calendarDate(@NotNull String calendarDate);
     }
 
     public interface SourceStage {
-        CreatedAtStage source(ClientFacingSource source);
+        CreatedAtStage source(@NotNull ClientFacingSource source);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
         ClientFacingBody build();
 
+        /**
+         * <p>Weight in kg::kg</p>
+         */
         _FinalStage weight(Optional<Double> weight);
 
         _FinalStage weight(Double weight);
 
+        /**
+         * <p>Total body fat percentage::perc</p>
+         */
         _FinalStage fat(Optional<Double> fat);
 
         _FinalStage fat(Double fat);
 
+        /**
+         * <p>Water percentage in the body::perc</p>
+         */
         _FinalStage waterPercentage(Optional<Double> waterPercentage);
 
         _FinalStage waterPercentage(Double waterPercentage);
 
+        /**
+         * <p>Muscle mass percentage in the body::perc</p>
+         */
         _FinalStage muscleMassPercentage(Optional<Double> muscleMassPercentage);
 
         _FinalStage muscleMassPercentage(Double muscleMassPercentage);
 
+        /**
+         * <p>Visceral fat index::scalar</p>
+         */
         _FinalStage visceralFatIndex(Optional<Double> visceralFatIndex);
 
         _FinalStage visceralFatIndex(Double visceralFatIndex);
 
+        /**
+         * <p>Bone mass percentage in the body::perc</p>
+         */
         _FinalStage boneMassPercentage(Optional<Double> boneMassPercentage);
 
         _FinalStage boneMassPercentage(Double boneMassPercentage);
@@ -399,68 +427,71 @@ public final class ClientFacingBody {
 
         @java.lang.Override
         @JsonSetter("id")
-        public UserIdStage id(String id) {
-            this.id = id;
+        public UserIdStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         /**
          * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
+         * <p>User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public DateStage userId(String userId) {
-            this.userId = userId;
+        public DateStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         /**
          * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
+         * <p>Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("date")
-        public CalendarDateStage date(OffsetDateTime date) {
-            this.date = date;
+        public CalendarDateStage date(@NotNull OffsetDateTime date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>Date of the summary in the YYYY-mm-dd format.</p>
+         * <p>Date of the summary in the YYYY-mm-dd format.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("calendar_date")
-        public SourceStage calendarDate(String calendarDate) {
-            this.calendarDate = calendarDate;
+        public SourceStage calendarDate(@NotNull String calendarDate) {
+            this.calendarDate = Objects.requireNonNull(calendarDate, "calendarDate must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public CreatedAtStage source(ClientFacingSource source) {
-            this.source = source;
+        public CreatedAtStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage waistCircumferenceCentimeter(Double waistCircumferenceCentimeter) {
-            this.waistCircumferenceCentimeter = Optional.of(waistCircumferenceCentimeter);
+            this.waistCircumferenceCentimeter = Optional.ofNullable(waistCircumferenceCentimeter);
             return this;
         }
 
@@ -473,7 +504,7 @@ public final class ClientFacingBody {
 
         @java.lang.Override
         public _FinalStage leanBodyMassKilogram(Double leanBodyMassKilogram) {
-            this.leanBodyMassKilogram = Optional.of(leanBodyMassKilogram);
+            this.leanBodyMassKilogram = Optional.ofNullable(leanBodyMassKilogram);
             return this;
         }
 
@@ -486,7 +517,7 @@ public final class ClientFacingBody {
 
         @java.lang.Override
         public _FinalStage bodyMassIndex(Double bodyMassIndex) {
-            this.bodyMassIndex = Optional.of(bodyMassIndex);
+            this.bodyMassIndex = Optional.ofNullable(bodyMassIndex);
             return this;
         }
 
@@ -503,10 +534,13 @@ public final class ClientFacingBody {
          */
         @java.lang.Override
         public _FinalStage boneMassPercentage(Double boneMassPercentage) {
-            this.boneMassPercentage = Optional.of(boneMassPercentage);
+            this.boneMassPercentage = Optional.ofNullable(boneMassPercentage);
             return this;
         }
 
+        /**
+         * <p>Bone mass percentage in the body::perc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "bone_mass_percentage", nulls = Nulls.SKIP)
         public _FinalStage boneMassPercentage(Optional<Double> boneMassPercentage) {
@@ -520,10 +554,13 @@ public final class ClientFacingBody {
          */
         @java.lang.Override
         public _FinalStage visceralFatIndex(Double visceralFatIndex) {
-            this.visceralFatIndex = Optional.of(visceralFatIndex);
+            this.visceralFatIndex = Optional.ofNullable(visceralFatIndex);
             return this;
         }
 
+        /**
+         * <p>Visceral fat index::scalar</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "visceral_fat_index", nulls = Nulls.SKIP)
         public _FinalStage visceralFatIndex(Optional<Double> visceralFatIndex) {
@@ -537,10 +574,13 @@ public final class ClientFacingBody {
          */
         @java.lang.Override
         public _FinalStage muscleMassPercentage(Double muscleMassPercentage) {
-            this.muscleMassPercentage = Optional.of(muscleMassPercentage);
+            this.muscleMassPercentage = Optional.ofNullable(muscleMassPercentage);
             return this;
         }
 
+        /**
+         * <p>Muscle mass percentage in the body::perc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "muscle_mass_percentage", nulls = Nulls.SKIP)
         public _FinalStage muscleMassPercentage(Optional<Double> muscleMassPercentage) {
@@ -554,10 +594,13 @@ public final class ClientFacingBody {
          */
         @java.lang.Override
         public _FinalStage waterPercentage(Double waterPercentage) {
-            this.waterPercentage = Optional.of(waterPercentage);
+            this.waterPercentage = Optional.ofNullable(waterPercentage);
             return this;
         }
 
+        /**
+         * <p>Water percentage in the body::perc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "water_percentage", nulls = Nulls.SKIP)
         public _FinalStage waterPercentage(Optional<Double> waterPercentage) {
@@ -571,10 +614,13 @@ public final class ClientFacingBody {
          */
         @java.lang.Override
         public _FinalStage fat(Double fat) {
-            this.fat = Optional.of(fat);
+            this.fat = Optional.ofNullable(fat);
             return this;
         }
 
+        /**
+         * <p>Total body fat percentage::perc</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fat", nulls = Nulls.SKIP)
         public _FinalStage fat(Optional<Double> fat) {
@@ -588,10 +634,13 @@ public final class ClientFacingBody {
          */
         @java.lang.Override
         public _FinalStage weight(Double weight) {
-            this.weight = Optional.of(weight);
+            this.weight = Optional.ofNullable(weight);
             return this;
         }
 
+        /**
+         * <p>Weight in kg::kg</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "weight", nulls = Nulls.SKIP)
         public _FinalStage weight(Optional<Double> weight) {

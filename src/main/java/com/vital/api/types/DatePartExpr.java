@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DatePartExpr.Builder.class)
 public final class DatePartExpr {
     private final DatePartExprArg arg;
@@ -73,13 +74,16 @@ public final class DatePartExpr {
     }
 
     public interface ArgStage {
-        DatePartStage arg(DatePartExprArg arg);
+        DatePartStage arg(@NotNull DatePartExprArg arg);
 
         Builder from(DatePartExpr other);
     }
 
     public interface DatePartStage {
-        _FinalStage datePart(DatePartExprDatePart datePart);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage datePart(@NotNull DatePartExprDatePart datePart);
     }
 
     public interface _FinalStage {
@@ -106,19 +110,20 @@ public final class DatePartExpr {
 
         @java.lang.Override
         @JsonSetter("arg")
-        public DatePartStage arg(DatePartExprArg arg) {
-            this.arg = arg;
+        public DatePartStage arg(@NotNull DatePartExprArg arg) {
+            this.arg = Objects.requireNonNull(arg, "arg must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("date_part")
-        public _FinalStage datePart(DatePartExprDatePart datePart) {
-            this.datePart = datePart;
+        public _FinalStage datePart(@NotNull DatePartExprDatePart datePart) {
+            this.datePart = Objects.requireNonNull(datePart, "datePart must not be null");
             return this;
         }
 

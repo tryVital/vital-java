@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkExportConnectionsBody.Builder.class)
 public final class BulkExportConnectionsBody {
     private final Optional<LinkBulkExportRequestTeamId> teamId;
@@ -99,7 +100,7 @@ public final class BulkExportConnectionsBody {
     }
 
     public interface ProviderStage {
-        _FinalStage provider(OAuthProviders provider);
+        _FinalStage provider(@NotNull OAuthProviders provider);
 
         Builder from(BulkExportConnectionsBody other);
     }
@@ -146,14 +147,14 @@ public final class BulkExportConnectionsBody {
 
         @java.lang.Override
         @JsonSetter("provider")
-        public _FinalStage provider(OAuthProviders provider) {
-            this.provider = provider;
+        public _FinalStage provider(@NotNull OAuthProviders provider) {
+            this.provider = Objects.requireNonNull(provider, "provider must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage nextToken(String nextToken) {
-            this.nextToken = Optional.of(nextToken);
+            this.nextToken = Optional.ofNullable(nextToken);
             return this;
         }
 
@@ -166,7 +167,7 @@ public final class BulkExportConnectionsBody {
 
         @java.lang.Override
         public _FinalStage userIds(List<String> userIds) {
-            this.userIds = Optional.of(userIds);
+            this.userIds = Optional.ofNullable(userIds);
             return this;
         }
 
@@ -179,7 +180,7 @@ public final class BulkExportConnectionsBody {
 
         @java.lang.Override
         public _FinalStage teamId(LinkBulkExportRequestTeamId teamId) {
-            this.teamId = Optional.of(teamId);
+            this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 

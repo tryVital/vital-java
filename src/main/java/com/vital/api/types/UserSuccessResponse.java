@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserSuccessResponse.Builder.class)
 public final class UserSuccessResponse {
     private final boolean success;
@@ -65,6 +65,9 @@ public final class UserSuccessResponse {
     }
 
     public interface SuccessStage {
+        /**
+         * <p>Whether operation was successful or not</p>
+         */
         _FinalStage success(boolean success);
 
         Builder from(UserSuccessResponse other);
@@ -90,6 +93,7 @@ public final class UserSuccessResponse {
         }
 
         /**
+         * <p>Whether operation was successful or not</p>
          * <p>Whether operation was successful or not</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

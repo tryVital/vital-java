@@ -29,6 +29,7 @@ public final class GroupKeyColumnExprGroupKey {
         return this.value;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
             return visitor.visit((int) this.value);
@@ -78,14 +79,14 @@ public final class GroupKeyColumnExprGroupKey {
         }
 
         @java.lang.Override
-        public GroupKeyColumnExprGroupKey deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+        public GroupKeyColumnExprGroupKey deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             if (value instanceof Integer) {
                 return of((Integer) value);
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Select.class));
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
         }

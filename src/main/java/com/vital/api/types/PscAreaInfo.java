@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PscAreaInfo.Builder.class)
 public final class PscAreaInfo {
     private final PscAreaInfoDetails patientServiceCenters;
@@ -87,7 +88,7 @@ public final class PscAreaInfo {
     }
 
     public interface PatientServiceCentersStage {
-        LabIdStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters);
+        LabIdStage patientServiceCenters(@NotNull PscAreaInfoDetails patientServiceCenters);
 
         Builder from(PscAreaInfo other);
     }
@@ -129,8 +130,9 @@ public final class PscAreaInfo {
 
         @java.lang.Override
         @JsonSetter("patient_service_centers")
-        public LabIdStage patientServiceCenters(PscAreaInfoDetails patientServiceCenters) {
-            this.patientServiceCenters = patientServiceCenters;
+        public LabIdStage patientServiceCenters(@NotNull PscAreaInfoDetails patientServiceCenters) {
+            this.patientServiceCenters =
+                    Objects.requireNonNull(patientServiceCenters, "patientServiceCenters must not be null");
             return this;
         }
 
@@ -143,7 +145,9 @@ public final class PscAreaInfo {
 
         @java.lang.Override
         public _FinalStage addAllSupportedBillTypes(List<Billing> supportedBillTypes) {
-            this.supportedBillTypes.addAll(supportedBillTypes);
+            if (supportedBillTypes != null) {
+                this.supportedBillTypes.addAll(supportedBillTypes);
+            }
             return this;
         }
 

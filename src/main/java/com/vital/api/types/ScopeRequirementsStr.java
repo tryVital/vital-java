@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ScopeRequirementsStr.Builder.class)
 public final class ScopeRequirementsStr {
     private final List<String> required;
@@ -103,7 +103,9 @@ public final class ScopeRequirementsStr {
         }
 
         public Builder addAllRequired(List<String> required) {
-            this.required.addAll(required);
+            if (required != null) {
+                this.required.addAll(required);
+            }
             return this;
         }
 
@@ -120,7 +122,9 @@ public final class ScopeRequirementsStr {
         }
 
         public Builder addAllOptional(List<String> optional) {
-            this.optional.addAll(optional);
+            if (optional != null) {
+                this.optional.addAll(optional);
+            }
             return this;
         }
 

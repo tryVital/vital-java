@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingProvider.Builder.class)
 public final class ClientFacingProvider {
     private final String name;
@@ -87,17 +88,26 @@ public final class ClientFacingProvider {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        /**
+         * <p>Name of source of information</p>
+         */
+        SlugStage name(@NotNull String name);
 
         Builder from(ClientFacingProvider other);
     }
 
     public interface SlugStage {
-        LogoStage slug(String slug);
+        /**
+         * <p>Slug for designated source</p>
+         */
+        LogoStage slug(@NotNull String slug);
     }
 
     public interface LogoStage {
-        _FinalStage logo(String logo);
+        /**
+         * <p>URL for source logo</p>
+         */
+        _FinalStage logo(@NotNull String logo);
     }
 
     public interface _FinalStage {
@@ -127,34 +137,37 @@ public final class ClientFacingProvider {
 
         /**
          * <p>Name of source of information</p>
+         * <p>Name of source of information</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         /**
          * <p>Slug for designated source</p>
+         * <p>Slug for designated source</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("slug")
-        public LogoStage slug(String slug) {
-            this.slug = slug;
+        public LogoStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         /**
          * <p>URL for source logo</p>
+         * <p>URL for source logo</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("logo")
-        public _FinalStage logo(String logo) {
-            this.logo = logo;
+        public _FinalStage logo(@NotNull String logo) {
+            this.logo = Objects.requireNonNull(logo, "logo must not be null");
             return this;
         }
 

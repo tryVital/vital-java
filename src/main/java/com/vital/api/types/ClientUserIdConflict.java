@@ -15,8 +15,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientUserIdConflict.Builder.class)
 public final class ClientUserIdConflict {
     private final String errorType;
@@ -95,21 +96,21 @@ public final class ClientUserIdConflict {
     }
 
     public interface ErrorTypeStage {
-        ErrorMessageStage errorType(String errorType);
+        ErrorMessageStage errorType(@NotNull String errorType);
 
         Builder from(ClientUserIdConflict other);
     }
 
     public interface ErrorMessageStage {
-        UserIdStage errorMessage(String errorMessage);
+        UserIdStage errorMessage(@NotNull String errorMessage);
     }
 
     public interface UserIdStage {
-        CreatedOnStage userId(String userId);
+        CreatedOnStage userId(@NotNull String userId);
     }
 
     public interface CreatedOnStage {
-        _FinalStage createdOn(OffsetDateTime createdOn);
+        _FinalStage createdOn(@NotNull OffsetDateTime createdOn);
     }
 
     public interface _FinalStage {
@@ -143,29 +144,29 @@ public final class ClientUserIdConflict {
 
         @java.lang.Override
         @JsonSetter("error_type")
-        public ErrorMessageStage errorType(String errorType) {
-            this.errorType = errorType;
+        public ErrorMessageStage errorType(@NotNull String errorType) {
+            this.errorType = Objects.requireNonNull(errorType, "errorType must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("error_message")
-        public UserIdStage errorMessage(String errorMessage) {
-            this.errorMessage = errorMessage;
+        public UserIdStage errorMessage(@NotNull String errorMessage) {
+            this.errorMessage = Objects.requireNonNull(errorMessage, "errorMessage must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("user_id")
-        public CreatedOnStage userId(String userId) {
-            this.userId = userId;
+        public CreatedOnStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("created_on")
-        public _FinalStage createdOn(OffsetDateTime createdOn) {
-            this.createdOn = createdOn;
+        public _FinalStage createdOn(@NotNull OffsetDateTime createdOn) {
+            this.createdOn = Objects.requireNonNull(createdOn, "createdOn must not be null");
             return this;
         }
 

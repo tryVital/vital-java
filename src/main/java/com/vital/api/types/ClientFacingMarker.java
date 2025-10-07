@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingMarker.Builder.class)
 public final class ClientFacingMarker {
     private final int id;
@@ -216,11 +217,11 @@ public final class ClientFacingMarker {
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
     }
 
     public interface SlugStage {
-        _FinalStage slug(String slug);
+        _FinalStage slug(@NotNull String slug);
     }
 
     public interface _FinalStage {
@@ -334,21 +335,21 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("slug")
-        public _FinalStage slug(String slug) {
-            this.slug = slug;
+        public _FinalStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage isOrderable(Boolean isOrderable) {
-            this.isOrderable = Optional.of(isOrderable);
+            this.isOrderable = Optional.ofNullable(isOrderable);
             return this;
         }
 
@@ -361,7 +362,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage worstCaseTatDays(Integer worstCaseTatDays) {
-            this.worstCaseTatDays = Optional.of(worstCaseTatDays);
+            this.worstCaseTatDays = Optional.ofNullable(worstCaseTatDays);
             return this;
         }
 
@@ -374,7 +375,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage commonTatDays(Integer commonTatDays) {
-            this.commonTatDays = Optional.of(commonTatDays);
+            this.commonTatDays = Optional.ofNullable(commonTatDays);
             return this;
         }
 
@@ -387,7 +388,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage aLaCarteEnabled(Boolean aLaCarteEnabled) {
-            this.aLaCarteEnabled = Optional.of(aLaCarteEnabled);
+            this.aLaCarteEnabled = Optional.ofNullable(aLaCarteEnabled);
             return this;
         }
 
@@ -400,7 +401,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage aoe(AoE aoe) {
-            this.aoe = Optional.of(aoe);
+            this.aoe = Optional.ofNullable(aoe);
             return this;
         }
 
@@ -413,7 +414,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage price(String price) {
-            this.price = Optional.of(price);
+            this.price = Optional.ofNullable(price);
             return this;
         }
 
@@ -426,7 +427,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage unit(String unit) {
-            this.unit = Optional.of(unit);
+            this.unit = Optional.ofNullable(unit);
             return this;
         }
 
@@ -439,7 +440,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage type(MarkerType type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
@@ -452,7 +453,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage providerId(String providerId) {
-            this.providerId = Optional.of(providerId);
+            this.providerId = Optional.ofNullable(providerId);
             return this;
         }
 
@@ -465,7 +466,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage labId(Integer labId) {
-            this.labId = Optional.of(labId);
+            this.labId = Optional.ofNullable(labId);
             return this;
         }
 
@@ -478,7 +479,7 @@ public final class ClientFacingMarker {
 
         @java.lang.Override
         public _FinalStage description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 

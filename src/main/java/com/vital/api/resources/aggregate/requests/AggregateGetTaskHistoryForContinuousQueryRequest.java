@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AggregateGetTaskHistoryForContinuousQueryRequest.Builder.class)
 public final class AggregateGetTaskHistoryForContinuousQueryRequest {
     private final Optional<String> nextCursor;
@@ -97,7 +97,7 @@ public final class AggregateGetTaskHistoryForContinuousQueryRequest {
         }
 
         public Builder nextCursor(String nextCursor) {
-            this.nextCursor = Optional.of(nextCursor);
+            this.nextCursor = Optional.ofNullable(nextCursor);
             return this;
         }
 
@@ -108,7 +108,7 @@ public final class AggregateGetTaskHistoryForContinuousQueryRequest {
         }
 
         public Builder limit(Integer limit) {
-            this.limit = Optional.of(limit);
+            this.limit = Optional.ofNullable(limit);
             return this;
         }
 

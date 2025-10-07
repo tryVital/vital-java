@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PhysicianCreateRequestBase.Builder.class)
 public final class PhysicianCreateRequestBase {
     private final String firstName;
@@ -107,17 +108,17 @@ public final class PhysicianCreateRequestBase {
     }
 
     public interface FirstNameStage {
-        LastNameStage firstName(String firstName);
+        LastNameStage firstName(@NotNull String firstName);
 
         Builder from(PhysicianCreateRequestBase other);
     }
 
     public interface LastNameStage {
-        NpiStage lastName(String lastName);
+        NpiStage lastName(@NotNull String lastName);
     }
 
     public interface NpiStage {
-        _FinalStage npi(String npi);
+        _FinalStage npi(@NotNull String npi);
     }
 
     public interface _FinalStage {
@@ -161,28 +162,28 @@ public final class PhysicianCreateRequestBase {
 
         @java.lang.Override
         @JsonSetter("first_name")
-        public LastNameStage firstName(String firstName) {
-            this.firstName = firstName;
+        public LastNameStage firstName(@NotNull String firstName) {
+            this.firstName = Objects.requireNonNull(firstName, "firstName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("last_name")
-        public NpiStage lastName(String lastName) {
-            this.lastName = lastName;
+        public NpiStage lastName(@NotNull String lastName) {
+            this.lastName = Objects.requireNonNull(lastName, "lastName must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("npi")
-        public _FinalStage npi(String npi) {
-            this.npi = npi;
+        public _FinalStage npi(@NotNull String npi) {
+            this.npi = Objects.requireNonNull(npi, "npi must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage licensedStates(List<String> licensedStates) {
-            this.licensedStates = Optional.of(licensedStates);
+            this.licensedStates = Optional.ofNullable(licensedStates);
             return this;
         }
 
@@ -195,7 +196,7 @@ public final class PhysicianCreateRequestBase {
 
         @java.lang.Override
         public _FinalStage email(String email) {
-            this.email = Optional.of(email);
+            this.email = Optional.ofNullable(email);
             return this;
         }
 

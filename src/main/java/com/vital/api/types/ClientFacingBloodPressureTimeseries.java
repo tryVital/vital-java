@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ClientFacingBloodPressureTimeseries.Builder.class)
 public final class ClientFacingBloodPressureTimeseries {
     private final Optional<Integer> id;
@@ -159,13 +160,16 @@ public final class ClientFacingBloodPressureTimeseries {
     }
 
     public interface UnitStage {
-        TimestampStage unit(String unit);
+        /**
+         * <p>The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.</p>
+         */
+        TimestampStage unit(@NotNull String unit);
 
         Builder from(ClientFacingBloodPressureTimeseries other);
     }
 
     public interface TimestampStage {
-        SystolicStage timestamp(OffsetDateTime timestamp);
+        SystolicStage timestamp(@NotNull OffsetDateTime timestamp);
     }
 
     public interface SystolicStage {
@@ -179,14 +183,23 @@ public final class ClientFacingBloodPressureTimeseries {
     public interface _FinalStage {
         ClientFacingBloodPressureTimeseries build();
 
+        /**
+         * <p>Deprecated</p>
+         */
         _FinalStage id(Optional<Integer> id);
 
         _FinalStage id(Integer id);
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         */
         _FinalStage type(Optional<String> type);
 
         _FinalStage type(String type);
@@ -234,19 +247,20 @@ public final class ClientFacingBloodPressureTimeseries {
 
         /**
          * <p>The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.</p>
+         * <p>The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("unit")
-        public TimestampStage unit(String unit) {
-            this.unit = unit;
+        public TimestampStage unit(@NotNull String unit) {
+            this.unit = Objects.requireNonNull(unit, "unit must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public SystolicStage timestamp(OffsetDateTime timestamp) {
-            this.timestamp = timestamp;
+        public SystolicStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
@@ -266,7 +280,7 @@ public final class ClientFacingBloodPressureTimeseries {
 
         @java.lang.Override
         public _FinalStage grouping(List<Object> grouping) {
-            this.grouping = Optional.of(grouping);
+            this.grouping = Optional.ofNullable(grouping);
             return this;
         }
 
@@ -283,10 +297,13 @@ public final class ClientFacingBloodPressureTimeseries {
          */
         @java.lang.Override
         public _FinalStage type(String type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
+        /**
+         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
@@ -300,10 +317,13 @@ public final class ClientFacingBloodPressureTimeseries {
          */
         @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
-            this.timezoneOffset = Optional.of(timezoneOffset);
+            this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
         }
 
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
@@ -317,10 +337,13 @@ public final class ClientFacingBloodPressureTimeseries {
          */
         @java.lang.Override
         public _FinalStage id(Integer id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
+        /**
+         * <p>Deprecated</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
         public _FinalStage id(Optional<Integer> id) {

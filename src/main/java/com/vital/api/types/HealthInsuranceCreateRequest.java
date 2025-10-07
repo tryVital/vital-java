@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = HealthInsuranceCreateRequest.Builder.class)
 public final class HealthInsuranceCreateRequest {
     private final Optional<HealthInsuranceCreateRequestFrontImage> frontImage;
@@ -238,6 +238,9 @@ public final class HealthInsuranceCreateRequest {
             return this;
         }
 
+        /**
+         * <p>An image of the front of the patient insurance card.</p>
+         */
         @JsonSetter(value = "front_image", nulls = Nulls.SKIP)
         public Builder frontImage(Optional<HealthInsuranceCreateRequestFrontImage> frontImage) {
             this.frontImage = frontImage;
@@ -245,10 +248,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder frontImage(HealthInsuranceCreateRequestFrontImage frontImage) {
-            this.frontImage = Optional.of(frontImage);
+            this.frontImage = Optional.ofNullable(frontImage);
             return this;
         }
 
+        /**
+         * <p>An image of the back of the patient insurance card.</p>
+         */
         @JsonSetter(value = "back_image", nulls = Nulls.SKIP)
         public Builder backImage(Optional<HealthInsuranceCreateRequestBackImage> backImage) {
             this.backImage = backImage;
@@ -256,10 +262,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder backImage(HealthInsuranceCreateRequestBackImage backImage) {
-            this.backImage = Optional.of(backImage);
+            this.backImage = Optional.ofNullable(backImage);
             return this;
         }
 
+        /**
+         * <p>An image of the patient signature for health insurance billing.</p>
+         */
         @JsonSetter(value = "patient_signature_image", nulls = Nulls.SKIP)
         public Builder patientSignatureImage(
                 Optional<HealthInsuranceCreateRequestPatientSignatureImage> patientSignatureImage) {
@@ -268,10 +277,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder patientSignatureImage(HealthInsuranceCreateRequestPatientSignatureImage patientSignatureImage) {
-            this.patientSignatureImage = Optional.of(patientSignatureImage);
+            this.patientSignatureImage = Optional.ofNullable(patientSignatureImage);
             return this;
         }
 
+        /**
+         * <p>Textual description of what are the patient symptoms and attempted treatments.</p>
+         */
         @JsonSetter(value = "subjective", nulls = Nulls.SKIP)
         public Builder subjective(Optional<String> subjective) {
             this.subjective = subjective;
@@ -279,10 +291,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder subjective(String subjective) {
-            this.subjective = Optional.of(subjective);
+            this.subjective = Optional.ofNullable(subjective);
             return this;
         }
 
+        /**
+         * <p>Textual description of what are the physician assessments and testing plans.</p>
+         */
         @JsonSetter(value = "assessment_plan", nulls = Nulls.SKIP)
         public Builder assessmentPlan(Optional<String> assessmentPlan) {
             this.assessmentPlan = assessmentPlan;
@@ -290,10 +305,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder assessmentPlan(String assessmentPlan) {
-            this.assessmentPlan = Optional.of(assessmentPlan);
+            this.assessmentPlan = Optional.ofNullable(assessmentPlan);
             return this;
         }
 
+        /**
+         * <p>Unique identifier representing a specific Health Insurance.</p>
+         */
         @JsonSetter(value = "payor_code", nulls = Nulls.SKIP)
         public Builder payorCode(Optional<String> payorCode) {
             this.payorCode = payorCode;
@@ -301,10 +319,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder payorCode(String payorCode) {
-            this.payorCode = Optional.of(payorCode);
+            this.payorCode = Optional.ofNullable(payorCode);
             return this;
         }
 
+        /**
+         * <p>Insurance unique number assigned to a patient, usually present on the insurance card.</p>
+         */
         @JsonSetter(value = "insurance_id", nulls = Nulls.SKIP)
         public Builder insuranceId(Optional<String> insuranceId) {
             this.insuranceId = insuranceId;
@@ -312,10 +333,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder insuranceId(String insuranceId) {
-            this.insuranceId = Optional.of(insuranceId);
+            this.insuranceId = Optional.ofNullable(insuranceId);
             return this;
         }
 
+        /**
+         * <p>Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship).</p>
+         */
         @JsonSetter(value = "responsible_relationship", nulls = Nulls.SKIP)
         public Builder responsibleRelationship(Optional<ResponsibleRelationship> responsibleRelationship) {
             this.responsibleRelationship = responsibleRelationship;
@@ -323,10 +347,13 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder responsibleRelationship(ResponsibleRelationship responsibleRelationship) {
-            this.responsibleRelationship = Optional.of(responsibleRelationship);
+            this.responsibleRelationship = Optional.ofNullable(responsibleRelationship);
             return this;
         }
 
+        /**
+         * <p>Responsible details when the value of responsible_relationship is not 'Self'.</p>
+         */
         @JsonSetter(value = "responsible_details", nulls = Nulls.SKIP)
         public Builder responsibleDetails(
                 Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> responsibleDetails) {
@@ -336,10 +363,13 @@ public final class HealthInsuranceCreateRequest {
 
         public Builder responsibleDetails(
                 VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails responsibleDetails) {
-            this.responsibleDetails = Optional.of(responsibleDetails);
+            this.responsibleDetails = Optional.ofNullable(responsibleDetails);
             return this;
         }
 
+        /**
+         * <p>Diagnosis codes for insurance billing.</p>
+         */
         @JsonSetter(value = "diagnosis_codes", nulls = Nulls.SKIP)
         public Builder diagnosisCodes(Optional<List<String>> diagnosisCodes) {
             this.diagnosisCodes = diagnosisCodes;
@@ -347,7 +377,7 @@ public final class HealthInsuranceCreateRequest {
         }
 
         public Builder diagnosisCodes(List<String> diagnosisCodes) {
-            this.diagnosisCodes = Optional.of(diagnosisCodes);
+            this.diagnosisCodes = Optional.ofNullable(diagnosisCodes);
             return this;
         }
 

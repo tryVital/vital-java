@@ -17,8 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ContinuousQueryResultTableChanges.Builder.class)
 public final class ContinuousQueryResultTableChanges {
     private final String queryId;
@@ -85,13 +86,13 @@ public final class ContinuousQueryResultTableChanges {
     }
 
     public interface QueryIdStage {
-        QuerySlugStage queryId(String queryId);
+        QuerySlugStage queryId(@NotNull String queryId);
 
         Builder from(ContinuousQueryResultTableChanges other);
     }
 
     public interface QuerySlugStage {
-        _FinalStage querySlug(String querySlug);
+        _FinalStage querySlug(@NotNull String querySlug);
     }
 
     public interface _FinalStage {
@@ -127,15 +128,15 @@ public final class ContinuousQueryResultTableChanges {
 
         @java.lang.Override
         @JsonSetter("query_id")
-        public QuerySlugStage queryId(String queryId) {
-            this.queryId = queryId;
+        public QuerySlugStage queryId(@NotNull String queryId) {
+            this.queryId = Objects.requireNonNull(queryId, "queryId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("query_slug")
-        public _FinalStage querySlug(String querySlug) {
-            this.querySlug = querySlug;
+        public _FinalStage querySlug(@NotNull String querySlug) {
+            this.querySlug = Objects.requireNonNull(querySlug, "querySlug must not be null");
             return this;
         }
 
@@ -147,7 +148,9 @@ public final class ContinuousQueryResultTableChanges {
 
         @java.lang.Override
         public _FinalStage putAllData(Map<String, List<Object>> data) {
-            this.data.putAll(data);
+            if (data != null) {
+                this.data.putAll(data);
+            }
             return this;
         }
 

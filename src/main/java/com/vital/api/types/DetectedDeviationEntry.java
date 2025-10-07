@@ -14,8 +14,9 @@ import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DetectedDeviationEntry.Builder.class)
 public final class DetectedDeviationEntry {
     private final String date;
@@ -74,13 +75,16 @@ public final class DetectedDeviationEntry {
     }
 
     public interface DateStage {
-        DeviationStage date(String date);
+        DeviationStage date(@NotNull String date);
 
         Builder from(DetectedDeviationEntry other);
     }
 
     public interface DeviationStage {
-        _FinalStage deviation(DetectedDeviationEntryDeviation deviation);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage deviation(@NotNull DetectedDeviationEntryDeviation deviation);
     }
 
     public interface _FinalStage {
@@ -107,19 +111,20 @@ public final class DetectedDeviationEntry {
 
         @java.lang.Override
         @JsonSetter("date")
-        public DeviationStage date(String date) {
-            this.date = date;
+        public DeviationStage date(@NotNull String date) {
+            this.date = Objects.requireNonNull(date, "date must not be null");
             return this;
         }
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("deviation")
-        public _FinalStage deviation(DetectedDeviationEntryDeviation deviation) {
-            this.deviation = deviation;
+        public _FinalStage deviation(@NotNull DetectedDeviationEntryDeviation deviation) {
+            this.deviation = Objects.requireNonNull(deviation, "deviation must not be null");
             return this;
         }
 

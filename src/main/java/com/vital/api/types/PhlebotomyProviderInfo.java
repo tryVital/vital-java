@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PhlebotomyProviderInfo.Builder.class)
 public final class PhlebotomyProviderInfo {
     private final AppointmentProvider name;
@@ -76,7 +77,7 @@ public final class PhlebotomyProviderInfo {
     }
 
     public interface NameStage {
-        _FinalStage name(AppointmentProvider name);
+        _FinalStage name(@NotNull AppointmentProvider name);
 
         Builder from(PhlebotomyProviderInfo other);
     }
@@ -111,14 +112,16 @@ public final class PhlebotomyProviderInfo {
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(AppointmentProvider name) {
-            this.name = name;
+        public _FinalStage name(@NotNull AppointmentProvider name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllServiceTypes(List<AppointmentServiceType> serviceTypes) {
-            this.serviceTypes.addAll(serviceTypes);
+            if (serviceTypes != null) {
+                this.serviceTypes.addAll(serviceTypes);
+            }
             return this;
         }
 

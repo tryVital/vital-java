@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedInsulinInjection.Builder.class)
 public final class GroupedInsulinInjection {
     private final ClientFacingSource source;
@@ -76,7 +77,7 @@ public final class GroupedInsulinInjection {
     }
 
     public interface SourceStage {
-        _FinalStage source(ClientFacingSource source);
+        _FinalStage source(@NotNull ClientFacingSource source);
 
         Builder from(GroupedInsulinInjection other);
     }
@@ -111,14 +112,16 @@ public final class GroupedInsulinInjection {
 
         @java.lang.Override
         @JsonSetter("source")
-        public _FinalStage source(ClientFacingSource source) {
-            this.source = source;
+        public _FinalStage source(@NotNull ClientFacingSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage addAllData(List<ClientFacingInsulinInjectionSample> data) {
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
