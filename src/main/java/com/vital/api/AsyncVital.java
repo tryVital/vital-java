@@ -32,10 +32,6 @@ import java.util.function.Supplier;
 public class AsyncVital {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<AsyncProvidersClient> providersClient;
-
-    protected final Supplier<AsyncUserClient> userClient;
-
     protected final Supplier<AsyncLinkClient> linkClient;
 
     protected final Supplier<AsyncElectrocardiogramClient> electrocardiogramClient;
@@ -60,7 +56,11 @@ public class AsyncVital {
 
     protected final Supplier<AsyncVitalsClient> vitalsClient;
 
+    protected final Supplier<AsyncUserClient> userClient;
+
     protected final Supplier<AsyncTeamClient> teamClient;
+
+    protected final Supplier<AsyncProvidersClient> providersClient;
 
     protected final Supplier<AsyncIntrospectClient> introspectClient;
 
@@ -78,8 +78,6 @@ public class AsyncVital {
 
     public AsyncVital(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.providersClient = Suppliers.memoize(() -> new AsyncProvidersClient(clientOptions));
-        this.userClient = Suppliers.memoize(() -> new AsyncUserClient(clientOptions));
         this.linkClient = Suppliers.memoize(() -> new AsyncLinkClient(clientOptions));
         this.electrocardiogramClient = Suppliers.memoize(() -> new AsyncElectrocardiogramClient(clientOptions));
         this.sleepCycleClient = Suppliers.memoize(() -> new AsyncSleepCycleClient(clientOptions));
@@ -92,7 +90,9 @@ public class AsyncVital {
         this.mealClient = Suppliers.memoize(() -> new AsyncMealClient(clientOptions));
         this.menstrualCycleClient = Suppliers.memoize(() -> new AsyncMenstrualCycleClient(clientOptions));
         this.vitalsClient = Suppliers.memoize(() -> new AsyncVitalsClient(clientOptions));
+        this.userClient = Suppliers.memoize(() -> new AsyncUserClient(clientOptions));
         this.teamClient = Suppliers.memoize(() -> new AsyncTeamClient(clientOptions));
+        this.providersClient = Suppliers.memoize(() -> new AsyncProvidersClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new AsyncIntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new AsyncLabTestsClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new AsyncTestkitClient(clientOptions));
@@ -100,14 +100,6 @@ public class AsyncVital {
         this.insuranceClient = Suppliers.memoize(() -> new AsyncInsuranceClient(clientOptions));
         this.payorClient = Suppliers.memoize(() -> new AsyncPayorClient(clientOptions));
         this.aggregateClient = Suppliers.memoize(() -> new AsyncAggregateClient(clientOptions));
-    }
-
-    public AsyncProvidersClient providers() {
-        return this.providersClient.get();
-    }
-
-    public AsyncUserClient user() {
-        return this.userClient.get();
     }
 
     public AsyncLinkClient link() {
@@ -158,8 +150,16 @@ public class AsyncVital {
         return this.vitalsClient.get();
     }
 
+    public AsyncUserClient user() {
+        return this.userClient.get();
+    }
+
     public AsyncTeamClient team() {
         return this.teamClient.get();
+    }
+
+    public AsyncProvidersClient providers() {
+        return this.providersClient.get();
     }
 
     public AsyncIntrospectClient introspect() {
