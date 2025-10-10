@@ -58,6 +58,8 @@ public final class ClientFacingTeam {
 
     private final DelegatedFlowType delegatedFlow;
 
+    private final Optional<String> criticalResultNotificationEmail;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingTeam(
@@ -79,6 +81,7 @@ public final class ClientFacingTeam {
             boolean labTestsPatientEmailCommunicationEnabled,
             Optional<String> logoUrl,
             DelegatedFlowType delegatedFlow,
+            Optional<String> criticalResultNotificationEmail,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.orgId = orgId;
@@ -98,6 +101,7 @@ public final class ClientFacingTeam {
         this.labTestsPatientEmailCommunicationEnabled = labTestsPatientEmailCommunicationEnabled;
         this.logoUrl = logoUrl;
         this.delegatedFlow = delegatedFlow;
+        this.criticalResultNotificationEmail = criticalResultNotificationEmail;
         this.additionalProperties = additionalProperties;
     }
 
@@ -191,6 +195,11 @@ public final class ClientFacingTeam {
         return delegatedFlow;
     }
 
+    @JsonProperty("critical_result_notification_email")
+    public Optional<String> getCriticalResultNotificationEmail() {
+        return criticalResultNotificationEmail;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -220,7 +229,8 @@ public final class ClientFacingTeam {
                 && labTestsPatientSmsCommunicationEnabled == other.labTestsPatientSmsCommunicationEnabled
                 && labTestsPatientEmailCommunicationEnabled == other.labTestsPatientEmailCommunicationEnabled
                 && logoUrl.equals(other.logoUrl)
-                && delegatedFlow.equals(other.delegatedFlow);
+                && delegatedFlow.equals(other.delegatedFlow)
+                && criticalResultNotificationEmail.equals(other.criticalResultNotificationEmail);
     }
 
     @java.lang.Override
@@ -243,7 +253,8 @@ public final class ClientFacingTeam {
                 this.labTestsPatientSmsCommunicationEnabled,
                 this.labTestsPatientEmailCommunicationEnabled,
                 this.logoUrl,
-                this.delegatedFlow);
+                this.delegatedFlow,
+                this.criticalResultNotificationEmail);
     }
 
     @java.lang.Override
@@ -333,6 +344,10 @@ public final class ClientFacingTeam {
         _FinalStage logoUrl(Optional<String> logoUrl);
 
         _FinalStage logoUrl(String logoUrl);
+
+        _FinalStage criticalResultNotificationEmail(Optional<String> criticalResultNotificationEmail);
+
+        _FinalStage criticalResultNotificationEmail(String criticalResultNotificationEmail);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -361,6 +376,8 @@ public final class ClientFacingTeam {
         private boolean labTestsPatientEmailCommunicationEnabled;
 
         private DelegatedFlowType delegatedFlow;
+
+        private Optional<String> criticalResultNotificationEmail = Optional.empty();
 
         private Optional<String> logoUrl = Optional.empty();
 
@@ -407,6 +424,7 @@ public final class ClientFacingTeam {
             labTestsPatientEmailCommunicationEnabled(other.getLabTestsPatientEmailCommunicationEnabled());
             logoUrl(other.getLogoUrl());
             delegatedFlow(other.getDelegatedFlow());
+            criticalResultNotificationEmail(other.getCriticalResultNotificationEmail());
             return this;
         }
 
@@ -466,6 +484,19 @@ public final class ClientFacingTeam {
         @JsonSetter("delegated_flow")
         public _FinalStage delegatedFlow(@NotNull DelegatedFlowType delegatedFlow) {
             this.delegatedFlow = Objects.requireNonNull(delegatedFlow, "delegatedFlow must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage criticalResultNotificationEmail(String criticalResultNotificationEmail) {
+            this.criticalResultNotificationEmail = Optional.ofNullable(criticalResultNotificationEmail);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "critical_result_notification_email", nulls = Nulls.SKIP)
+        public _FinalStage criticalResultNotificationEmail(Optional<String> criticalResultNotificationEmail) {
+            this.criticalResultNotificationEmail = criticalResultNotificationEmail;
             return this;
         }
 
@@ -620,6 +651,7 @@ public final class ClientFacingTeam {
                     labTestsPatientEmailCommunicationEnabled,
                     logoUrl,
                     delegatedFlow,
+                    criticalResultNotificationEmail,
                     additionalProperties);
         }
     }

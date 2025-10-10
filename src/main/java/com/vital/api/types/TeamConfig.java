@@ -34,6 +34,10 @@ public final class TeamConfig {
 
     private final Optional<Boolean> sdkPerDeviceActivityTimeseries;
 
+    private final Optional<Boolean> partialWebhooksEnabled;
+
+    private final Optional<Boolean> minorOrderingEnabled;
+
     private final Optional<EventDestinationPreferences> edsPreferences;
 
     private final Optional<List<String>> eventTypePrefixes;
@@ -47,6 +51,8 @@ public final class TeamConfig {
             Optional<Boolean> providerRawData,
             Optional<Boolean> rejectDuplicateConnection,
             Optional<Boolean> sdkPerDeviceActivityTimeseries,
+            Optional<Boolean> partialWebhooksEnabled,
+            Optional<Boolean> minorOrderingEnabled,
             Optional<EventDestinationPreferences> edsPreferences,
             Optional<List<String>> eventTypePrefixes,
             Map<String, Object> additionalProperties) {
@@ -56,6 +62,8 @@ public final class TeamConfig {
         this.providerRawData = providerRawData;
         this.rejectDuplicateConnection = rejectDuplicateConnection;
         this.sdkPerDeviceActivityTimeseries = sdkPerDeviceActivityTimeseries;
+        this.partialWebhooksEnabled = partialWebhooksEnabled;
+        this.minorOrderingEnabled = minorOrderingEnabled;
         this.edsPreferences = edsPreferences;
         this.eventTypePrefixes = eventTypePrefixes;
         this.additionalProperties = additionalProperties;
@@ -91,6 +99,16 @@ public final class TeamConfig {
         return sdkPerDeviceActivityTimeseries;
     }
 
+    @JsonProperty("partial_webhooks_enabled")
+    public Optional<Boolean> getPartialWebhooksEnabled() {
+        return partialWebhooksEnabled;
+    }
+
+    @JsonProperty("minor_ordering_enabled")
+    public Optional<Boolean> getMinorOrderingEnabled() {
+        return minorOrderingEnabled;
+    }
+
     @JsonProperty("eds_preferences")
     public Optional<EventDestinationPreferences> getEdsPreferences() {
         return edsPreferences;
@@ -119,6 +137,8 @@ public final class TeamConfig {
                 && providerRawData.equals(other.providerRawData)
                 && rejectDuplicateConnection.equals(other.rejectDuplicateConnection)
                 && sdkPerDeviceActivityTimeseries.equals(other.sdkPerDeviceActivityTimeseries)
+                && partialWebhooksEnabled.equals(other.partialWebhooksEnabled)
+                && minorOrderingEnabled.equals(other.minorOrderingEnabled)
                 && edsPreferences.equals(other.edsPreferences)
                 && eventTypePrefixes.equals(other.eventTypePrefixes);
     }
@@ -132,6 +152,8 @@ public final class TeamConfig {
                 this.providerRawData,
                 this.rejectDuplicateConnection,
                 this.sdkPerDeviceActivityTimeseries,
+                this.partialWebhooksEnabled,
+                this.minorOrderingEnabled,
                 this.edsPreferences,
                 this.eventTypePrefixes);
     }
@@ -174,6 +196,14 @@ public final class TeamConfig {
 
         _FinalStage sdkPerDeviceActivityTimeseries(Boolean sdkPerDeviceActivityTimeseries);
 
+        _FinalStage partialWebhooksEnabled(Optional<Boolean> partialWebhooksEnabled);
+
+        _FinalStage partialWebhooksEnabled(Boolean partialWebhooksEnabled);
+
+        _FinalStage minorOrderingEnabled(Optional<Boolean> minorOrderingEnabled);
+
+        _FinalStage minorOrderingEnabled(Boolean minorOrderingEnabled);
+
         _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences);
 
         _FinalStage edsPreferences(EventDestinationPreferences edsPreferences);
@@ -190,6 +220,10 @@ public final class TeamConfig {
         private Optional<List<String>> eventTypePrefixes = Optional.empty();
 
         private Optional<EventDestinationPreferences> edsPreferences = Optional.empty();
+
+        private Optional<Boolean> minorOrderingEnabled = Optional.empty();
+
+        private Optional<Boolean> partialWebhooksEnabled = Optional.empty();
 
         private Optional<Boolean> sdkPerDeviceActivityTimeseries = Optional.empty();
 
@@ -214,6 +248,8 @@ public final class TeamConfig {
             providerRawData(other.getProviderRawData());
             rejectDuplicateConnection(other.getRejectDuplicateConnection());
             sdkPerDeviceActivityTimeseries(other.getSdkPerDeviceActivityTimeseries());
+            partialWebhooksEnabled(other.getPartialWebhooksEnabled());
+            minorOrderingEnabled(other.getMinorOrderingEnabled());
             edsPreferences(other.getEdsPreferences());
             eventTypePrefixes(other.getEventTypePrefixes());
             return this;
@@ -249,6 +285,32 @@ public final class TeamConfig {
         @JsonSetter(value = "eds_preferences", nulls = Nulls.SKIP)
         public _FinalStage edsPreferences(Optional<EventDestinationPreferences> edsPreferences) {
             this.edsPreferences = edsPreferences;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage minorOrderingEnabled(Boolean minorOrderingEnabled) {
+            this.minorOrderingEnabled = Optional.ofNullable(minorOrderingEnabled);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "minor_ordering_enabled", nulls = Nulls.SKIP)
+        public _FinalStage minorOrderingEnabled(Optional<Boolean> minorOrderingEnabled) {
+            this.minorOrderingEnabled = minorOrderingEnabled;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage partialWebhooksEnabled(Boolean partialWebhooksEnabled) {
+            this.partialWebhooksEnabled = Optional.ofNullable(partialWebhooksEnabled);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "partial_webhooks_enabled", nulls = Nulls.SKIP)
+        public _FinalStage partialWebhooksEnabled(Optional<Boolean> partialWebhooksEnabled) {
+            this.partialWebhooksEnabled = partialWebhooksEnabled;
             return this;
         }
 
@@ -326,6 +388,8 @@ public final class TeamConfig {
                     providerRawData,
                     rejectDuplicateConnection,
                     sdkPerDeviceActivityTimeseries,
+                    partialWebhooksEnabled,
+                    minorOrderingEnabled,
                     edsPreferences,
                     eventTypePrefixes,
                     additionalProperties);
