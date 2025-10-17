@@ -26,7 +26,7 @@ public final class ClientFacingIggTimeseries {
 
     private final Optional<Integer> timezoneOffset;
 
-    private final Optional<String> type;
+    private final String type;
 
     private final String unit;
 
@@ -39,7 +39,7 @@ public final class ClientFacingIggTimeseries {
     private ClientFacingIggTimeseries(
             Optional<Integer> id,
             Optional<Integer> timezoneOffset,
-            Optional<String> type,
+            String type,
             String unit,
             OffsetDateTime timestamp,
             double value,
@@ -70,10 +70,10 @@ public final class ClientFacingIggTimeseries {
     }
 
     /**
-     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+     * @return The reading type of the measurement.
      */
     @JsonProperty("type")
-    public Optional<String> getType() {
+    public String getType() {
         return type;
     }
 
@@ -131,8 +131,17 @@ public final class ClientFacingIggTimeseries {
         return ObjectMappers.stringify(this);
     }
 
-    public static UnitStage builder() {
+    public static TypeStage builder() {
         return new Builder();
+    }
+
+    public interface TypeStage {
+        /**
+         * <p>The reading type of the measurement.</p>
+         */
+        UnitStage type(@NotNull String type);
+
+        Builder from(ClientFacingIggTimeseries other);
     }
 
     public interface UnitStage {
@@ -140,8 +149,6 @@ public final class ClientFacingIggTimeseries {
          * <p>Measured in FSU.</p>
          */
         TimestampStage unit(@NotNull String unit);
-
-        Builder from(ClientFacingIggTimeseries other);
     }
 
     public interface TimestampStage {
@@ -174,24 +181,17 @@ public final class ClientFacingIggTimeseries {
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
-
-        /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
-         */
-        _FinalStage type(Optional<String> type);
-
-        _FinalStage type(String type);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UnitStage, TimestampStage, ValueStage, _FinalStage {
+    public static final class Builder implements TypeStage, UnitStage, TimestampStage, ValueStage, _FinalStage {
+        private String type;
+
         private String unit;
 
         private OffsetDateTime timestamp;
 
         private double value;
-
-        private Optional<String> type = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -210,6 +210,18 @@ public final class ClientFacingIggTimeseries {
             unit(other.getUnit());
             timestamp(other.getTimestamp());
             value(other.getValue());
+            return this;
+        }
+
+        /**
+         * <p>The reading type of the measurement.</p>
+         * <p>The reading type of the measurement.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("type")
+        public UnitStage type(@NotNull String type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -246,26 +258,6 @@ public final class ClientFacingIggTimeseries {
         @JsonSetter("value")
         public _FinalStage value(double value) {
             this.value = value;
-            return this;
-        }
-
-        /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage type(String type) {
-            this.type = Optional.ofNullable(type);
-            return this;
-        }
-
-        /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "type", nulls = Nulls.SKIP)
-        public _FinalStage type(Optional<String> type) {
-            this.type = type;
             return this;
         }
 

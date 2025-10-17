@@ -74,7 +74,7 @@ public final class ClientFacingStandHourSample {
     }
 
     /**
-     * @return ℹ️ This enum is non-exhaustive.
+     * @return The type of stand hour. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("type")
     public ClientFacingStandHourSampleType getType() {
@@ -155,7 +155,7 @@ public final class ClientFacingStandHourSample {
 
     public interface TypeStage {
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of stand hour. ℹ️ This enum is non-exhaustive.</p>
          */
         TimestampStage type(@NotNull ClientFacingStandHourSampleType type);
 
@@ -243,8 +243,8 @@ public final class ClientFacingStandHourSample {
         }
 
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of stand hour. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of stand hour. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

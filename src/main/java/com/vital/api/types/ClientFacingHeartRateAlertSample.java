@@ -74,7 +74,7 @@ public final class ClientFacingHeartRateAlertSample {
     }
 
     /**
-     * @return ℹ️ This enum is non-exhaustive.
+     * @return The type of heart rate alert. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("type")
     public ClientFacingHeartRateAlertSampleType getType() {
@@ -152,7 +152,7 @@ public final class ClientFacingHeartRateAlertSample {
 
     public interface TypeStage {
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of heart rate alert. ℹ️ This enum is non-exhaustive.</p>
          */
         TimestampStage type(@NotNull ClientFacingHeartRateAlertSampleType type);
 
@@ -237,8 +237,8 @@ public final class ClientFacingHeartRateAlertSample {
         }
 
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of heart rate alert. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of heart rate alert. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

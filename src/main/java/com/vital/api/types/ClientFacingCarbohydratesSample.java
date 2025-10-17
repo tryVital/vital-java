@@ -78,7 +78,7 @@ public final class ClientFacingCarbohydratesSample {
     }
 
     /**
-     * @return The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+     * @return Type is always null for this resource.
      */
     @JsonProperty("type")
     public Optional<String> getType() {
@@ -217,7 +217,7 @@ public final class ClientFacingCarbohydratesSample {
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
         /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * <p>Type is always null for this resource.</p>
          */
         _FinalStage type(Optional<String> type);
 
@@ -322,7 +322,7 @@ public final class ClientFacingCarbohydratesSample {
         }
 
         /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * <p>Type is always null for this resource.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -332,7 +332,7 @@ public final class ClientFacingCarbohydratesSample {
         }
 
         /**
-         * <p>The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.</p>
+         * <p>Type is always null for this resource.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)

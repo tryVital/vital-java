@@ -74,7 +74,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
     }
 
     /**
-     * @return ℹ️ This enum is non-exhaustive.
+     * @return The type of sleep breathing disturbance. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("type")
     public Optional<ClientFacingSleepBreathingDisturbanceSampleType> getType() {
@@ -202,7 +202,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of sleep breathing disturbance. ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage type(Optional<ClientFacingSleepBreathingDisturbanceSampleType> type);
 
@@ -291,7 +291,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         }
 
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of sleep breathing disturbance. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -301,7 +301,7 @@ public final class ClientFacingSleepBreathingDisturbanceSample {
         }
 
         /**
-         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of sleep breathing disturbance. ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)

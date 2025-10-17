@@ -74,7 +74,7 @@ public final class ClientFacingInsulinInjectionSample {
     }
 
     /**
-     * @return Insulin type: rapid vs long acting ℹ️ This enum is non-exhaustive.
+     * @return The type of insulin injection. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("type")
     public ClientFacingInsulinInjectionSampleType getType() {
@@ -156,7 +156,7 @@ public final class ClientFacingInsulinInjectionSample {
 
     public interface TypeStage {
         /**
-         * <p>Insulin type: rapid vs long acting ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of insulin injection. ℹ️ This enum is non-exhaustive.</p>
          */
         TimestampStage type(@NotNull ClientFacingInsulinInjectionSampleType type);
 
@@ -244,8 +244,8 @@ public final class ClientFacingInsulinInjectionSample {
         }
 
         /**
-         * <p>Insulin type: rapid vs long acting ℹ️ This enum is non-exhaustive.</p>
-         * <p>Insulin type: rapid vs long acting ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of insulin injection. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The type of insulin injection. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
