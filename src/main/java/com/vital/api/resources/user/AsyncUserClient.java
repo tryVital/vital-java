@@ -6,6 +6,7 @@ package com.vital.api.resources.user;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.user.requests.CreateInsuranceRequest;
+import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
 import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
@@ -17,6 +18,7 @@ import com.vital.api.types.ClientFacingInsurance;
 import com.vital.api.types.ClientFacingProviderWithStatus;
 import com.vital.api.types.ClientFacingUser;
 import com.vital.api.types.ClientFacingUserKey;
+import com.vital.api.types.CreateUserPortalUrlResponse;
 import com.vital.api.types.MetricsResult;
 import com.vital.api.types.PaginatedUsersResponse;
 import com.vital.api.types.Providers;
@@ -94,14 +96,6 @@ public class AsyncUserClient {
         return this.rawClient.getTeamMetrics(requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(String userId) {
-        return this.rawClient.getUserSignInToken(userId).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUserSignInToken(userId, requestOptions).thenApply(response -> response.body());
-    }
-
     /**
      * GET Users connected providers
      */
@@ -115,40 +109,6 @@ public class AsyncUserClient {
     public CompletableFuture<Map<String, List<ClientFacingProviderWithStatus>>> getConnectedProviders(
             String userId, RequestOptions requestOptions) {
         return this.rawClient.getConnectedProviders(userId, requestOptions).thenApply(response -> response.body());
-    }
-
-    /**
-     * GET User details given the user_id.
-     */
-    public CompletableFuture<ClientFacingUser> get(String userId) {
-        return this.rawClient.get(userId).thenApply(response -> response.body());
-    }
-
-    /**
-     * GET User details given the user_id.
-     */
-    public CompletableFuture<ClientFacingUser> get(String userId, RequestOptions requestOptions) {
-        return this.rawClient.get(userId, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UserSuccessResponse> delete(String userId) {
-        return this.rawClient.delete(userId).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UserSuccessResponse> delete(String userId, RequestOptions requestOptions) {
-        return this.rawClient.delete(userId, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> patch(String userId) {
-        return this.rawClient.patch(userId).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> patch(String userId, UserPatchBody request) {
-        return this.rawClient.patch(userId, request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> patch(String userId, UserPatchBody request, RequestOptions requestOptions) {
-        return this.rawClient.patch(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserInfo> getLatestUserInfo(String userId) {
@@ -210,6 +170,34 @@ public class AsyncUserClient {
                 .thenApply(response -> response.body());
     }
 
+    public CompletableFuture<ClientFacingUser> get(String userId) {
+        return this.rawClient.get(userId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingUser> get(String userId, RequestOptions requestOptions) {
+        return this.rawClient.get(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSuccessResponse> delete(String userId) {
+        return this.rawClient.delete(userId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSuccessResponse> delete(String userId, RequestOptions requestOptions) {
+        return this.rawClient.delete(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> patch(String userId) {
+        return this.rawClient.patch(userId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> patch(String userId, UserPatchBody request) {
+        return this.rawClient.patch(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> patch(String userId, UserPatchBody request, RequestOptions requestOptions) {
+        return this.rawClient.patch(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<UserSuccessResponse> undoDelete() {
         return this.rawClient.undoDelete().thenApply(response -> response.body());
     }
@@ -260,5 +248,23 @@ public class AsyncUserClient {
     public CompletableFuture<ClientFacingDevice> getDevice(
             String userId, String deviceId, RequestOptions requestOptions) {
         return this.rawClient.getDevice(userId, deviceId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(String userId) {
+        return this.rawClient.getUserSignInToken(userId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getUserSignInToken(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<CreateUserPortalUrlResponse> createPortalUrl(
+            String userId, CreateUserPortalUrlBody request) {
+        return this.rawClient.createPortalUrl(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<CreateUserPortalUrlResponse> createPortalUrl(
+            String userId, CreateUserPortalUrlBody request, RequestOptions requestOptions) {
+        return this.rawClient.createPortalUrl(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }
