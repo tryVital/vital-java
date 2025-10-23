@@ -14,6 +14,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.ResponseBodyInputStream;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
+import com.vital.api.errors.NotFoundError;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
@@ -53,6 +54,7 @@ import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.LabTestResourcesResponse;
+import com.vital.api.types.NotFoundErrorBody;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
 import java.io.IOException;
@@ -2244,11 +2246,19 @@ public class AsyncRawLabTestsClient {
                     }
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
+                        switch (response.code()) {
+                            case 404:
+                                future.completeExceptionally(new NotFoundError(
+                                        ObjectMappers.JSON_MAPPER.readValue(
+                                                responseBodyString, NotFoundErrorBody.class),
+                                        response));
+                                return;
+                            case 422:
+                                future.completeExceptionally(new UnprocessableEntityError(
+                                        ObjectMappers.JSON_MAPPER.readValue(
+                                                responseBodyString, HttpValidationError.class),
+                                        response));
+                                return;
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
