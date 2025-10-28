@@ -61,6 +61,8 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<String> labAccountId;
 
+    private final Optional<String> creatorMemberId;
+
     private final PatientDetailsWithValidation patientDetails;
 
     private final PatientAddressWithValidation patientAddress;
@@ -83,6 +85,7 @@ public final class CreateOrderRequestCompatible {
             Optional<List<AoEAnswer>> aoeAnswers,
             Optional<String> passthrough,
             Optional<String> labAccountId,
+            Optional<String> creatorMemberId,
             PatientDetailsWithValidation patientDetails,
             PatientAddressWithValidation patientAddress,
             Map<String, Object> additionalProperties) {
@@ -101,6 +104,7 @@ public final class CreateOrderRequestCompatible {
         this.aoeAnswers = aoeAnswers;
         this.passthrough = passthrough;
         this.labAccountId = labAccountId;
+        this.creatorMemberId = creatorMemberId;
         this.patientDetails = patientDetails;
         this.patientAddress = patientAddress;
         this.additionalProperties = additionalProperties;
@@ -187,6 +191,11 @@ public final class CreateOrderRequestCompatible {
         return labAccountId;
     }
 
+    @JsonProperty("creator_member_id")
+    public Optional<String> getCreatorMemberId() {
+        return creatorMemberId;
+    }
+
     @JsonProperty("patient_details")
     public PatientDetailsWithValidation getPatientDetails() {
         return patientDetails;
@@ -224,6 +233,7 @@ public final class CreateOrderRequestCompatible {
                 && aoeAnswers.equals(other.aoeAnswers)
                 && passthrough.equals(other.passthrough)
                 && labAccountId.equals(other.labAccountId)
+                && creatorMemberId.equals(other.creatorMemberId)
                 && patientDetails.equals(other.patientDetails)
                 && patientAddress.equals(other.patientAddress);
     }
@@ -246,6 +256,7 @@ public final class CreateOrderRequestCompatible {
                 this.aoeAnswers,
                 this.passthrough,
                 this.labAccountId,
+                this.creatorMemberId,
                 this.patientDetails,
                 this.patientAddress);
     }
@@ -337,6 +348,10 @@ public final class CreateOrderRequestCompatible {
         _FinalStage labAccountId(Optional<String> labAccountId);
 
         _FinalStage labAccountId(String labAccountId);
+
+        _FinalStage creatorMemberId(Optional<String> creatorMemberId);
+
+        _FinalStage creatorMemberId(String creatorMemberId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -346,6 +361,8 @@ public final class CreateOrderRequestCompatible {
         private PatientDetailsWithValidation patientDetails;
 
         private PatientAddressWithValidation patientAddress;
+
+        private Optional<String> creatorMemberId = Optional.empty();
 
         private Optional<String> labAccountId = Optional.empty();
 
@@ -397,6 +414,7 @@ public final class CreateOrderRequestCompatible {
             aoeAnswers(other.getAoeAnswers());
             passthrough(other.getPassthrough());
             labAccountId(other.getLabAccountId());
+            creatorMemberId(other.getCreatorMemberId());
             patientDetails(other.getPatientDetails());
             patientAddress(other.getPatientAddress());
             return this;
@@ -420,6 +438,19 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter("patient_address")
         public _FinalStage patientAddress(@NotNull PatientAddressWithValidation patientAddress) {
             this.patientAddress = Objects.requireNonNull(patientAddress, "patientAddress must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage creatorMemberId(String creatorMemberId) {
+            this.creatorMemberId = Optional.ofNullable(creatorMemberId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "creator_member_id", nulls = Nulls.SKIP)
+        public _FinalStage creatorMemberId(Optional<String> creatorMemberId) {
+            this.creatorMemberId = creatorMemberId;
             return this;
         }
 
@@ -637,6 +668,7 @@ public final class CreateOrderRequestCompatible {
                     aoeAnswers,
                     passthrough,
                     labAccountId,
+                    creatorMemberId,
                     patientDetails,
                     patientAddress,
                     additionalProperties);

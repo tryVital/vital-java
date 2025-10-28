@@ -2951,6 +2951,9 @@ public class AsyncRawLabTestsClient {
         if (request.getLabAccountId().isPresent()) {
             properties.put("lab_account_id", request.getLabAccountId());
         }
+        if (request.getCreatorMemberId().isPresent()) {
+            properties.put("creator_member_id", request.getCreatorMemberId());
+        }
         properties.put("patient_details", request.getPatientDetails());
         properties.put("patient_address", request.getPatientAddress());
         RequestBody body;
