@@ -26,7 +26,9 @@ public enum Labs {
 
     IHD("ihd"),
 
-    NEXUS("nexus");
+    NEXUS("nexus"),
+
+    MY_UTI("my_uti");
 
     private final String value;
 
