@@ -33,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 public final class CreateOrderRequestCompatible {
     private final Optional<String> idempotencyKey;
 
+    private final Optional<String> idempotencyError;
+
     private final String userId;
 
     private final Optional<String> labTestId;
@@ -71,6 +73,7 @@ public final class CreateOrderRequestCompatible {
 
     private CreateOrderRequestCompatible(
             Optional<String> idempotencyKey,
+            Optional<String> idempotencyError,
             String userId,
             Optional<String> labTestId,
             Optional<OrderSetRequest> orderSet,
@@ -90,6 +93,7 @@ public final class CreateOrderRequestCompatible {
             PatientAddressWithValidation patientAddress,
             Map<String, Object> additionalProperties) {
         this.idempotencyKey = idempotencyKey;
+        this.idempotencyError = idempotencyError;
         this.userId = userId;
         this.labTestId = labTestId;
         this.orderSet = orderSet;
@@ -113,6 +117,11 @@ public final class CreateOrderRequestCompatible {
     @JsonProperty("X-Idempotency-Key")
     public Optional<String> getIdempotencyKey() {
         return idempotencyKey;
+    }
+
+    @JsonProperty("X-Idempotency-Error")
+    public Optional<String> getIdempotencyError() {
+        return idempotencyError;
     }
 
     @JsonProperty("user_id")
@@ -219,6 +228,7 @@ public final class CreateOrderRequestCompatible {
 
     private boolean equalTo(CreateOrderRequestCompatible other) {
         return idempotencyKey.equals(other.idempotencyKey)
+                && idempotencyError.equals(other.idempotencyError)
                 && userId.equals(other.userId)
                 && labTestId.equals(other.labTestId)
                 && orderSet.equals(other.orderSet)
@@ -242,6 +252,7 @@ public final class CreateOrderRequestCompatible {
     public int hashCode() {
         return Objects.hash(
                 this.idempotencyKey,
+                this.idempotencyError,
                 this.userId,
                 this.labTestId,
                 this.orderSet,
@@ -290,6 +301,10 @@ public final class CreateOrderRequestCompatible {
         _FinalStage idempotencyKey(Optional<String> idempotencyKey);
 
         _FinalStage idempotencyKey(String idempotencyKey);
+
+        _FinalStage idempotencyError(Optional<String> idempotencyError);
+
+        _FinalStage idempotencyError(String idempotencyError);
 
         _FinalStage labTestId(Optional<String> labTestId);
 
@@ -390,6 +405,8 @@ public final class CreateOrderRequestCompatible {
 
         private Optional<String> labTestId = Optional.empty();
 
+        private Optional<String> idempotencyError = Optional.empty();
+
         private Optional<String> idempotencyKey = Optional.empty();
 
         @JsonAnySetter
@@ -400,6 +417,7 @@ public final class CreateOrderRequestCompatible {
         @java.lang.Override
         public Builder from(CreateOrderRequestCompatible other) {
             idempotencyKey(other.getIdempotencyKey());
+            idempotencyError(other.getIdempotencyError());
             userId(other.getUserId());
             labTestId(other.getLabTestId());
             orderSet(other.getOrderSet());
@@ -638,6 +656,19 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage idempotencyError(String idempotencyError) {
+            this.idempotencyError = Optional.ofNullable(idempotencyError);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "X-Idempotency-Error", nulls = Nulls.SKIP)
+        public _FinalStage idempotencyError(Optional<String> idempotencyError) {
+            this.idempotencyError = idempotencyError;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage idempotencyKey(String idempotencyKey) {
             this.idempotencyKey = Optional.ofNullable(idempotencyKey);
             return this;
@@ -654,6 +685,7 @@ public final class CreateOrderRequestCompatible {
         public CreateOrderRequestCompatible build() {
             return new CreateOrderRequestCompatible(
                     idempotencyKey,
+                    idempotencyError,
                     userId,
                     labTestId,
                     orderSet,

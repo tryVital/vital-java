@@ -9,11 +9,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -23,12 +25,18 @@ public final class ClientFacingDiagnosisInformation {
 
     private final String description;
 
+    private final Optional<Boolean> isSecondary;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingDiagnosisInformation(
-            String diagnosisCode, String description, Map<String, Object> additionalProperties) {
+            String diagnosisCode,
+            String description,
+            Optional<Boolean> isSecondary,
+            Map<String, Object> additionalProperties) {
         this.diagnosisCode = diagnosisCode;
         this.description = description;
+        this.isSecondary = isSecondary;
         this.additionalProperties = additionalProperties;
     }
 
@@ -48,6 +56,11 @@ public final class ClientFacingDiagnosisInformation {
         return description;
     }
 
+    @JsonProperty("is_secondary")
+    public Optional<Boolean> getIsSecondary() {
+        return isSecondary;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -60,12 +73,14 @@ public final class ClientFacingDiagnosisInformation {
     }
 
     private boolean equalTo(ClientFacingDiagnosisInformation other) {
-        return diagnosisCode.equals(other.diagnosisCode) && description.equals(other.description);
+        return diagnosisCode.equals(other.diagnosisCode)
+                && description.equals(other.description)
+                && isSecondary.equals(other.isSecondary);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.diagnosisCode, this.description);
+        return Objects.hash(this.diagnosisCode, this.description, this.isSecondary);
     }
 
     @java.lang.Override
@@ -95,6 +110,10 @@ public final class ClientFacingDiagnosisInformation {
 
     public interface _FinalStage {
         ClientFacingDiagnosisInformation build();
+
+        _FinalStage isSecondary(Optional<Boolean> isSecondary);
+
+        _FinalStage isSecondary(Boolean isSecondary);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -102,6 +121,8 @@ public final class ClientFacingDiagnosisInformation {
         private String diagnosisCode;
 
         private String description;
+
+        private Optional<Boolean> isSecondary = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -112,6 +133,7 @@ public final class ClientFacingDiagnosisInformation {
         public Builder from(ClientFacingDiagnosisInformation other) {
             diagnosisCode(other.getDiagnosisCode());
             description(other.getDescription());
+            isSecondary(other.getIsSecondary());
             return this;
         }
 
@@ -140,8 +162,21 @@ public final class ClientFacingDiagnosisInformation {
         }
 
         @java.lang.Override
+        public _FinalStage isSecondary(Boolean isSecondary) {
+            this.isSecondary = Optional.ofNullable(isSecondary);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "is_secondary", nulls = Nulls.SKIP)
+        public _FinalStage isSecondary(Optional<Boolean> isSecondary) {
+            this.isSecondary = isSecondary;
+            return this;
+        }
+
+        @java.lang.Override
         public ClientFacingDiagnosisInformation build() {
-            return new ClientFacingDiagnosisInformation(diagnosisCode, description, additionalProperties);
+            return new ClientFacingDiagnosisInformation(diagnosisCode, description, isSecondary, additionalProperties);
         }
     }
 }

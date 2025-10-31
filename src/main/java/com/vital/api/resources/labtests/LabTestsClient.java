@@ -26,6 +26,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
 import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
+import com.vital.api.resources.labtests.requests.ValidateIcdCodesBody;
 import com.vital.api.resources.labtests.requests.VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
 import com.vital.api.types.AppointmentBookingRequest;
@@ -44,6 +45,7 @@ import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.LabTestResourcesResponse;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
+import com.vital.api.types.ValidateIcdCodesResponse;
 import java.io.InputStream;
 import java.util.List;
 
@@ -695,5 +697,13 @@ public class LabTestsClient {
         return this.rawClient
                 .updateOnSiteCollectionOrderDrawCompleted(orderId, requestOptions)
                 .body();
+    }
+
+    public ValidateIcdCodesResponse validateIcdCodes(ValidateIcdCodesBody request) {
+        return this.rawClient.validateIcdCodes(request).body();
+    }
+
+    public ValidateIcdCodesResponse validateIcdCodes(ValidateIcdCodesBody request, RequestOptions requestOptions) {
+        return this.rawClient.validateIcdCodes(request, requestOptions).body();
     }
 }

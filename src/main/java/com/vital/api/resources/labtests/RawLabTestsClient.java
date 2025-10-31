@@ -37,6 +37,7 @@ import com.vital.api.resources.labtests.requests.LabTestsGetRequest;
 import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
 import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
+import com.vital.api.resources.labtests.requests.ValidateIcdCodesBody;
 import com.vital.api.resources.labtests.requests.VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
 import com.vital.api.types.AppointmentBookingRequest;
@@ -57,6 +58,7 @@ import com.vital.api.types.LabTestResourcesResponse;
 import com.vital.api.types.NotFoundErrorBody;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
+import com.vital.api.types.ValidateIcdCodesResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -2424,6 +2426,10 @@ public class RawLabTestsClient {
             _requestBuilder.addHeader(
                     "X-Idempotency-Key", request.getIdempotencyKey().get());
         }
+        if (request.getIdempotencyError().isPresent()) {
+            _requestBuilder.addHeader(
+                    "X-Idempotency-Error", request.getIdempotencyError().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -2674,6 +2680,61 @@ public class RawLabTestsClient {
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PostOrderResponse.class), response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 422) {
+                    throw new UnprocessableEntityError(
+                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
+                            response);
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new ApiError(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new VitalException("Network error executing HTTP request", e);
+        }
+    }
+
+    public VitalHttpResponse<ValidateIcdCodesResponse> validateIcdCodes(ValidateIcdCodesBody request) {
+        return validateIcdCodes(request, null);
+    }
+
+    public VitalHttpResponse<ValidateIcdCodesResponse> validateIcdCodes(
+            ValidateIcdCodesBody request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("v3/insurance/validate_icd_codes")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new VitalHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ValidateIcdCodesResponse.class),
+                        response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
