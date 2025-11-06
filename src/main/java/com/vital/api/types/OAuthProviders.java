@@ -34,7 +34,9 @@ public enum OAuthProviders {
 
     MY_FITNESS_PAL_V_2("my_fitness_pal_v2"),
 
-    ULTRAHUMAN("ultrahuman");
+    ULTRAHUMAN("ultrahuman"),
+
+    RUNKEEPER("runkeeper");
 
     private final String value;
 

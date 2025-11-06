@@ -78,7 +78,9 @@ public enum Providers {
 
     MY_FITNESS_PAL_V_2("my_fitness_pal_v2"),
 
-    MAP_MY_FITNESS("map_my_fitness");
+    MAP_MY_FITNESS("map_my_fitness"),
+
+    RUNKEEPER("runkeeper");
 
     private final String value;
 
