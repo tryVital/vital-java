@@ -21,13 +21,13 @@ import org.jetbrains.annotations.NotNull;
 public final class CompanyDetails {
     private final String name;
 
-    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
     private final Map<String, Object> additionalProperties;
 
     private CompanyDetails(
             String name,
-            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
+            VitalCoreSchemasDbSchemasLabTestInsuranceAddress address,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.address = address;
@@ -40,7 +40,7 @@ public final class CompanyDetails {
     }
 
     @JsonProperty("address")
-    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getAddress() {
         return address;
     }
 
@@ -80,7 +80,7 @@ public final class CompanyDetails {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
+        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
     }
 
     public interface _FinalStage {
@@ -91,7 +91,7 @@ public final class CompanyDetails {
     public static final class Builder implements NameStage, AddressStage, _FinalStage {
         private String name;
 
-        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -114,7 +114,7 @@ public final class CompanyDetails {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
+        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

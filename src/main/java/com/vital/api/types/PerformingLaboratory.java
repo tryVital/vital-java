@@ -27,7 +27,7 @@ public final class PerformingLaboratory {
 
     private final Optional<String> medicalDirector;
 
-    private final Optional<VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress> address;
+    private final Optional<VitalCoreSchemasDbSchemasLabTestInsuranceAddress> address;
 
     private final Map<String, Object> additionalProperties;
 
@@ -35,7 +35,7 @@ public final class PerformingLaboratory {
             String name,
             Optional<String> phoneNumber,
             Optional<String> medicalDirector,
-            Optional<VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress> address,
+            Optional<VitalCoreSchemasDbSchemasLabTestInsuranceAddress> address,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -60,7 +60,7 @@ public final class PerformingLaboratory {
     }
 
     @JsonProperty("address")
-    public Optional<VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress> getAddress() {
+    public Optional<VitalCoreSchemasDbSchemasLabTestInsuranceAddress> getAddress() {
         return address;
     }
 
@@ -113,16 +113,16 @@ public final class PerformingLaboratory {
 
         _FinalStage medicalDirector(String medicalDirector);
 
-        _FinalStage address(Optional<VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress> address);
+        _FinalStage address(Optional<VitalCoreSchemasDbSchemasLabTestInsuranceAddress> address);
 
-        _FinalStage address(VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
+        _FinalStage address(VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements NameStage, _FinalStage {
         private String name;
 
-        private Optional<VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress> address = Optional.empty();
+        private Optional<VitalCoreSchemasDbSchemasLabTestInsuranceAddress> address = Optional.empty();
 
         private Optional<String> medicalDirector = Optional.empty();
 
@@ -150,14 +150,14 @@ public final class PerformingLaboratory {
         }
 
         @java.lang.Override
-        public _FinalStage address(VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
+        public _FinalStage address(VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
             this.address = Optional.ofNullable(address);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "address", nulls = Nulls.SKIP)
-        public _FinalStage address(Optional<VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress> address) {
+        public _FinalStage address(Optional<VitalCoreSchemasDbSchemasLabTestInsuranceAddress> address) {
             this.address = address;
             return this;
         }

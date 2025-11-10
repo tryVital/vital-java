@@ -19,8 +19,8 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress.Builder.class)
-public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
+@JsonDeserialize(builder = VitalCoreSchemasDbSchemasLabTestInsuranceAddress.Builder.class)
+public final class VitalCoreSchemasDbSchemasLabTestInsuranceAddress {
     private final String firstLine;
 
     private final Optional<String> secondLine;
@@ -35,7 +35,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
 
     private final Map<String, Object> additionalProperties;
 
-    private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress(
+    private VitalCoreSchemasDbSchemasLabTestInsuranceAddress(
             String firstLine,
             Optional<String> secondLine,
             String country,
@@ -85,8 +85,8 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress
-                && equalTo((VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress) other);
+        return other instanceof VitalCoreSchemasDbSchemasLabTestInsuranceAddress
+                && equalTo((VitalCoreSchemasDbSchemasLabTestInsuranceAddress) other);
     }
 
     @JsonAnyGetter
@@ -94,7 +94,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress other) {
+    private boolean equalTo(VitalCoreSchemasDbSchemasLabTestInsuranceAddress other) {
         return firstLine.equals(other.firstLine)
                 && secondLine.equals(other.secondLine)
                 && country.equals(other.country)
@@ -120,7 +120,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
     public interface FirstLineStage {
         CountryStage firstLine(@NotNull String firstLine);
 
-        Builder from(VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress other);
+        Builder from(VitalCoreSchemasDbSchemasLabTestInsuranceAddress other);
     }
 
     public interface CountryStage {
@@ -140,7 +140,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
     }
 
     public interface _FinalStage {
-        VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress build();
+        VitalCoreSchemasDbSchemasLabTestInsuranceAddress build();
 
         _FinalStage secondLine(Optional<String> secondLine);
 
@@ -168,7 +168,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress other) {
+        public Builder from(VitalCoreSchemasDbSchemasLabTestInsuranceAddress other) {
             firstLine(other.getFirstLine());
             secondLine(other.getSecondLine());
             country(other.getCountry());
@@ -227,8 +227,8 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress {
         }
 
         @java.lang.Override
-        public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress build() {
-            return new VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress(
+        public VitalCoreSchemasDbSchemasLabTestInsuranceAddress build() {
+            return new VitalCoreSchemasDbSchemasLabTestInsuranceAddress(
                     firstLine, secondLine, country, zip, city, state, additionalProperties);
         }
     }

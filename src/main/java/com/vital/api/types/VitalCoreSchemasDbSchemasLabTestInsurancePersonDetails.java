@@ -25,7 +25,7 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
 
     private final Gender gender;
 
-    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
     private final String dob;
 
@@ -39,7 +39,7 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
             String firstName,
             String lastName,
             Gender gender,
-            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
+            VitalCoreSchemasDbSchemasLabTestInsuranceAddress address,
             String dob,
             String email,
             String phoneNumber,
@@ -70,7 +70,7 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
     }
 
     @JsonProperty("address")
-    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getAddress() {
         return address;
     }
 
@@ -141,7 +141,7 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
     }
 
     public interface AddressStage {
-        DobStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
+        DobStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
     }
 
     public interface DobStage {
@@ -176,7 +176,7 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
 
         private Gender gender;
 
-        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
         private String dob;
 
@@ -224,7 +224,7 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
 
         @java.lang.Override
         @JsonSetter("address")
-        public DobStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
+        public DobStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

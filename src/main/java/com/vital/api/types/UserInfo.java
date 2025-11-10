@@ -33,7 +33,7 @@ public final class UserInfo {
 
     private final String dob;
 
-    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
     private final Optional<GuarantorDetails> medicalProxy;
 
@@ -54,7 +54,7 @@ public final class UserInfo {
             String phoneNumber,
             String gender,
             String dob,
-            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
+            VitalCoreSchemasDbSchemasLabTestInsuranceAddress address,
             Optional<GuarantorDetails> medicalProxy,
             Optional<Race> race,
             Optional<Ethnicity> ethnicity,
@@ -107,7 +107,7 @@ public final class UserInfo {
     }
 
     @JsonProperty("address")
-    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getAddress() {
         return address;
     }
 
@@ -215,7 +215,7 @@ public final class UserInfo {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
+        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
     }
 
     public interface _FinalStage {
@@ -264,7 +264,7 @@ public final class UserInfo {
 
         private String dob;
 
-        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
         private Optional<GenderIdentity> genderIdentity = Optional.empty();
 
@@ -342,7 +342,7 @@ public final class UserInfo {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
+        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

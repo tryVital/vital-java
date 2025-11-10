@@ -25,7 +25,7 @@ public final class GuarantorDetails {
 
     private final String lastName;
 
-    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
     private final String phoneNumber;
 
@@ -40,7 +40,7 @@ public final class GuarantorDetails {
     private GuarantorDetails(
             String firstName,
             String lastName,
-            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
+            VitalCoreSchemasDbSchemasLabTestInsuranceAddress address,
             String phoneNumber,
             Optional<Integer> householdIncome,
             Optional<Integer> householdSize,
@@ -67,7 +67,7 @@ public final class GuarantorDetails {
     }
 
     @JsonProperty("address")
-    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getAddress() {
         return address;
     }
 
@@ -144,7 +144,7 @@ public final class GuarantorDetails {
     }
 
     public interface AddressStage {
-        PhoneNumberStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
+        PhoneNumberStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
     }
 
     public interface PhoneNumberStage {
@@ -174,7 +174,7 @@ public final class GuarantorDetails {
 
         private String lastName;
 
-        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
+        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
 
         private String phoneNumber;
 
@@ -217,7 +217,7 @@ public final class GuarantorDetails {
 
         @java.lang.Override
         @JsonSetter("address")
-        public PhoneNumberStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
+        public PhoneNumberStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
