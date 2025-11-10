@@ -27,7 +27,8 @@ public final class ClientFacingSleepApneaAlertChanged {
 
     private final String teamId;
 
-    private final GroupedSleepApneaAlert data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepApneaAlertSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingSleepApneaAlertChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedSleepApneaAlert data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepApneaAlertSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingSleepApneaAlertChanged {
     }
 
     @JsonProperty("data")
-    public GroupedSleepApneaAlert getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepApneaAlertSample
+            getData() {
         return data;
     }
 
@@ -124,7 +126,10 @@ public final class ClientFacingSleepApneaAlertChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedSleepApneaAlert data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepApneaAlertSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +147,8 @@ public final class ClientFacingSleepApneaAlertChanged {
 
         private String teamId;
 
-        private GroupedSleepApneaAlert data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepApneaAlertSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +195,10 @@ public final class ClientFacingSleepApneaAlertChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedSleepApneaAlert data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepApneaAlertSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

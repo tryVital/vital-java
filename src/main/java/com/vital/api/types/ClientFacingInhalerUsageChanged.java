@@ -27,7 +27,8 @@ public final class ClientFacingInhalerUsageChanged {
 
     private final String teamId;
 
-    private final GroupedInhalerUsage data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingInhalerUsageChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedInhalerUsage data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingInhalerUsageChanged {
     }
 
     @JsonProperty("data")
-    public GroupedInhalerUsage getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample
+            getData() {
         return data;
     }
 
@@ -123,7 +125,10 @@ public final class ClientFacingInhalerUsageChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedInhalerUsage data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +146,7 @@ public final class ClientFacingInhalerUsageChanged {
 
         private String teamId;
 
-        private GroupedInhalerUsage data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +193,10 @@ public final class ClientFacingInhalerUsageChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedInhalerUsage data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

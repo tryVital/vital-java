@@ -22,7 +22,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedHeartRateRecoveryOneMinuteResponse.Builder.class)
 public final class GroupedHeartRateRecoveryOneMinuteResponse {
-    private final Map<String, List<GroupedHeartRateRecoveryOneMinute>> groups;
+    private final Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>>
+            groups;
 
     private final Optional<String> next;
 
@@ -31,7 +35,11 @@ public final class GroupedHeartRateRecoveryOneMinuteResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedHeartRateRecoveryOneMinuteResponse(
-            Map<String, List<GroupedHeartRateRecoveryOneMinute>> groups,
+            Map<
+                            String,
+                            List<
+                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>>
+                    groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -45,7 +53,11 @@ public final class GroupedHeartRateRecoveryOneMinuteResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<GroupedHeartRateRecoveryOneMinute>> getGroups() {
+    public Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>>
+            getGroups() {
         return groups;
     }
 
@@ -97,7 +109,11 @@ public final class GroupedHeartRateRecoveryOneMinuteResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<GroupedHeartRateRecoveryOneMinute>> groups = new LinkedHashMap<>();
+        private Map<
+                        String,
+                        List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>>
+                groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -119,20 +135,34 @@ public final class GroupedHeartRateRecoveryOneMinuteResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(Map<String, List<GroupedHeartRateRecoveryOneMinute>> groups) {
+        public Builder groups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>>
+                        groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(Map<String, List<GroupedHeartRateRecoveryOneMinute>> groups) {
+        public Builder putAllGroups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>>
+                        groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(String key, List<GroupedHeartRateRecoveryOneMinute> value) {
+        public Builder groups(
+                String key,
+                List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateRecoveryOneMinuteSample>
+                        value) {
             this.groups.put(key, value);
             return this;
         }

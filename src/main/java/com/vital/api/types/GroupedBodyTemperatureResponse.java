@@ -22,7 +22,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedBodyTemperatureResponse.Builder.class)
 public final class GroupedBodyTemperatureResponse {
-    private final Map<String, List<GroupedBodyTemperature>> groups;
+    private final Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>>
+            groups;
 
     private final Optional<String> next;
 
@@ -31,7 +35,11 @@ public final class GroupedBodyTemperatureResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedBodyTemperatureResponse(
-            Map<String, List<GroupedBodyTemperature>> groups,
+            Map<
+                            String,
+                            List<
+                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>>
+                    groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -45,7 +53,11 @@ public final class GroupedBodyTemperatureResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<GroupedBodyTemperature>> getGroups() {
+    public Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>>
+            getGroups() {
         return groups;
     }
 
@@ -96,7 +108,11 @@ public final class GroupedBodyTemperatureResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<GroupedBodyTemperature>> groups = new LinkedHashMap<>();
+        private Map<
+                        String,
+                        List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>>
+                groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -118,20 +134,34 @@ public final class GroupedBodyTemperatureResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(Map<String, List<GroupedBodyTemperature>> groups) {
+        public Builder groups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>>
+                        groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(Map<String, List<GroupedBodyTemperature>> groups) {
+        public Builder putAllGroups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>>
+                        groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(String key, List<GroupedBodyTemperature> value) {
+        public Builder groups(
+                String key,
+                List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureSample>
+                        value) {
             this.groups.put(key, value);
             return this;
         }

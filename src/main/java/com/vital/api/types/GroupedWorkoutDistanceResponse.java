@@ -22,7 +22,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedWorkoutDistanceResponse.Builder.class)
 public final class GroupedWorkoutDistanceResponse {
-    private final Map<String, List<GroupedWorkoutDistance>> groups;
+    private final Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>>
+            groups;
 
     private final Optional<String> next;
 
@@ -31,7 +35,11 @@ public final class GroupedWorkoutDistanceResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedWorkoutDistanceResponse(
-            Map<String, List<GroupedWorkoutDistance>> groups,
+            Map<
+                            String,
+                            List<
+                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>>
+                    groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -45,7 +53,11 @@ public final class GroupedWorkoutDistanceResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<GroupedWorkoutDistance>> getGroups() {
+    public Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>>
+            getGroups() {
         return groups;
     }
 
@@ -96,7 +108,11 @@ public final class GroupedWorkoutDistanceResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<GroupedWorkoutDistance>> groups = new LinkedHashMap<>();
+        private Map<
+                        String,
+                        List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>>
+                groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -118,20 +134,34 @@ public final class GroupedWorkoutDistanceResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(Map<String, List<GroupedWorkoutDistance>> groups) {
+        public Builder groups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>>
+                        groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(Map<String, List<GroupedWorkoutDistance>> groups) {
+        public Builder putAllGroups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>>
+                        groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(String key, List<GroupedWorkoutDistance> value) {
+        public Builder groups(
+                String key,
+                List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample>
+                        value) {
             this.groups.put(key, value);
             return this;
         }

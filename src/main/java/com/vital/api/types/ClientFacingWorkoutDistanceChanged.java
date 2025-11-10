@@ -27,7 +27,8 @@ public final class ClientFacingWorkoutDistanceChanged {
 
     private final String teamId;
 
-    private final GroupedWorkoutDistance data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingWorkoutDistanceChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedWorkoutDistance data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingWorkoutDistanceChanged {
     }
 
     @JsonProperty("data")
-    public GroupedWorkoutDistance getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample
+            getData() {
         return data;
     }
 
@@ -124,7 +126,10 @@ public final class ClientFacingWorkoutDistanceChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedWorkoutDistance data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +147,8 @@ public final class ClientFacingWorkoutDistanceChanged {
 
         private String teamId;
 
-        private GroupedWorkoutDistance data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +195,10 @@ public final class ClientFacingWorkoutDistanceChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedWorkoutDistance data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutDistanceSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

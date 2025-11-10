@@ -28,7 +28,7 @@ public final class ClientFacingPayorSearchResponse {
 
     private final List<String> aliases;
 
-    private final Address orgAddress;
+    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress;
 
     private final ClientFacingPayorCodeSource source;
 
@@ -38,7 +38,7 @@ public final class ClientFacingPayorSearchResponse {
             String payorCode,
             String name,
             List<String> aliases,
-            Address orgAddress,
+            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress,
             ClientFacingPayorCodeSource source,
             Map<String, Object> additionalProperties) {
         this.payorCode = payorCode;
@@ -77,7 +77,7 @@ public final class ClientFacingPayorSearchResponse {
      * @return Insurance business address returned for the insurance information.
      */
     @JsonProperty("org_address")
-    public Address getOrgAddress() {
+    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getOrgAddress() {
         return orgAddress;
     }
 
@@ -142,7 +142,7 @@ public final class ClientFacingPayorSearchResponse {
         /**
          * <p>Insurance business address returned for the insurance information.</p>
          */
-        SourceStage orgAddress(@NotNull Address orgAddress);
+        SourceStage orgAddress(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress);
     }
 
     public interface SourceStage {
@@ -171,7 +171,7 @@ public final class ClientFacingPayorSearchResponse {
 
         private String name;
 
-        private Address orgAddress;
+        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress;
 
         private ClientFacingPayorCodeSource source;
 
@@ -223,7 +223,7 @@ public final class ClientFacingPayorSearchResponse {
          */
         @java.lang.Override
         @JsonSetter("org_address")
-        public SourceStage orgAddress(@NotNull Address orgAddress) {
+        public SourceStage orgAddress(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress) {
             this.orgAddress = Objects.requireNonNull(orgAddress, "orgAddress must not be null");
             return this;
         }

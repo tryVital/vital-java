@@ -12,12 +12,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.types.Address;
 import com.vital.api.types.Ethnicity;
 import com.vital.api.types.GenderIdentity;
 import com.vital.api.types.GuarantorDetails;
 import com.vital.api.types.Race;
 import com.vital.api.types.SexualOrientation;
+import com.vital.api.types.VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +39,7 @@ public final class UserInfoCreateRequest {
 
     private final String dob;
 
-    private final Address address;
+    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
 
     private final Optional<GuarantorDetails> medicalProxy;
 
@@ -60,7 +60,7 @@ public final class UserInfoCreateRequest {
             String phoneNumber,
             String gender,
             String dob,
-            Address address,
+            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
             Optional<GuarantorDetails> medicalProxy,
             Optional<Race> race,
             Optional<Ethnicity> ethnicity,
@@ -113,7 +113,7 @@ public final class UserInfoCreateRequest {
     }
 
     @JsonProperty("address")
-    public Address getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
         return address;
     }
 
@@ -221,7 +221,7 @@ public final class UserInfoCreateRequest {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull Address address);
+        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
     }
 
     public interface _FinalStage {
@@ -270,7 +270,7 @@ public final class UserInfoCreateRequest {
 
         private String dob;
 
-        private Address address;
+        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
 
         private Optional<GenderIdentity> genderIdentity = Optional.empty();
 
@@ -348,7 +348,7 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull Address address) {
+        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

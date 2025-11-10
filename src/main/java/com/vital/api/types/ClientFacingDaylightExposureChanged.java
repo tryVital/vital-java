@@ -27,7 +27,8 @@ public final class ClientFacingDaylightExposureChanged {
 
     private final String teamId;
 
-    private final GroupedDaylightExposure data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDaylightExposureSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingDaylightExposureChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedDaylightExposure data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDaylightExposureSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingDaylightExposureChanged {
     }
 
     @JsonProperty("data")
-    public GroupedDaylightExposure getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDaylightExposureSample
+            getData() {
         return data;
     }
 
@@ -124,7 +126,10 @@ public final class ClientFacingDaylightExposureChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedDaylightExposure data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDaylightExposureSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +147,8 @@ public final class ClientFacingDaylightExposureChanged {
 
         private String teamId;
 
-        private GroupedDaylightExposure data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDaylightExposureSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +195,10 @@ public final class ClientFacingDaylightExposureChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedDaylightExposure data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDaylightExposureSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

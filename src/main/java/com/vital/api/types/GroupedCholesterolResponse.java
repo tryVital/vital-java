@@ -22,7 +22,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedCholesterolResponse.Builder.class)
 public final class GroupedCholesterolResponse {
-    private final Map<String, List<GroupedCholesterol>> groups;
+    private final Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>>
+            groups;
 
     private final Optional<String> next;
 
@@ -31,7 +35,11 @@ public final class GroupedCholesterolResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedCholesterolResponse(
-            Map<String, List<GroupedCholesterol>> groups,
+            Map<
+                            String,
+                            List<
+                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>>
+                    groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -45,7 +53,11 @@ public final class GroupedCholesterolResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<GroupedCholesterol>> getGroups() {
+    public Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>>
+            getGroups() {
         return groups;
     }
 
@@ -96,7 +108,11 @@ public final class GroupedCholesterolResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<GroupedCholesterol>> groups = new LinkedHashMap<>();
+        private Map<
+                        String,
+                        List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>>
+                groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -118,20 +134,34 @@ public final class GroupedCholesterolResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(Map<String, List<GroupedCholesterol>> groups) {
+        public Builder groups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>>
+                        groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(Map<String, List<GroupedCholesterol>> groups) {
+        public Builder putAllGroups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>>
+                        groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(String key, List<GroupedCholesterol> value) {
+        public Builder groups(
+                String key,
+                List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries>
+                        value) {
             this.groups.put(key, value);
             return this;
         }

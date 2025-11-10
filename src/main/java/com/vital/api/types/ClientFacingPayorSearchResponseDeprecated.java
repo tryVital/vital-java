@@ -28,7 +28,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
 
     private final List<String> aliases;
 
-    private final Address orgAddress;
+    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress;
 
     private final ClientFacingPayorCodeSource source;
 
@@ -38,7 +38,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
             String code,
             String name,
             List<String> aliases,
-            Address orgAddress,
+            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress,
             ClientFacingPayorCodeSource source,
             Map<String, Object> additionalProperties) {
         this.code = code;
@@ -77,7 +77,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
      * @return Insurance business address returned for the insurance information.
      */
     @JsonProperty("org_address")
-    public Address getOrgAddress() {
+    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getOrgAddress() {
         return orgAddress;
     }
 
@@ -143,7 +143,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
         /**
          * <p>Insurance business address returned for the insurance information.</p>
          */
-        SourceStage orgAddress(@NotNull Address orgAddress);
+        SourceStage orgAddress(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress);
     }
 
     public interface SourceStage {
@@ -172,7 +172,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
 
         private String name;
 
-        private Address orgAddress;
+        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress;
 
         private ClientFacingPayorCodeSource source;
 
@@ -224,7 +224,7 @@ public final class ClientFacingPayorSearchResponseDeprecated {
          */
         @java.lang.Override
         @JsonSetter("org_address")
-        public SourceStage orgAddress(@NotNull Address orgAddress) {
+        public SourceStage orgAddress(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress orgAddress) {
             this.orgAddress = Objects.requireNonNull(orgAddress, "orgAddress must not be null");
             return this;
         }

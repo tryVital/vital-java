@@ -27,7 +27,8 @@ public final class ClientFacingMindfulnessMinutesChanged {
 
     private final String teamId;
 
-    private final GroupedMindfulnessMinutes data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingMindfulnessMinutesChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedMindfulnessMinutes data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingMindfulnessMinutesChanged {
     }
 
     @JsonProperty("data")
-    public GroupedMindfulnessMinutes getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries
+            getData() {
         return data;
     }
 
@@ -124,7 +127,10 @@ public final class ClientFacingMindfulnessMinutesChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedMindfulnessMinutes data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +148,9 @@ public final class ClientFacingMindfulnessMinutesChanged {
 
         private String teamId;
 
-        private GroupedMindfulnessMinutes data;
+        private
+        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +197,10 @@ public final class ClientFacingMindfulnessMinutesChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedMindfulnessMinutes data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

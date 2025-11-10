@@ -27,7 +27,8 @@ public final class ClientFacingFatChanged {
 
     private final String teamId;
 
-    private final GroupedBodyFat data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingFatChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedBodyFat data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,7 @@ public final class ClientFacingFatChanged {
     }
 
     @JsonProperty("data")
-    public GroupedBodyFat getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries getData() {
         return data;
     }
 
@@ -123,7 +124,10 @@ public final class ClientFacingFatChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedBodyFat data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +145,7 @@ public final class ClientFacingFatChanged {
 
         private String teamId;
 
-        private GroupedBodyFat data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +192,10 @@ public final class ClientFacingFatChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedBodyFat data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

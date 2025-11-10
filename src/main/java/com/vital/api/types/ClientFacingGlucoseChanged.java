@@ -27,7 +27,8 @@ public final class ClientFacingGlucoseChanged {
 
     private final String teamId;
 
-    private final GroupedGlucose data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingGlucoseChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedGlucose data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,7 @@ public final class ClientFacingGlucoseChanged {
     }
 
     @JsonProperty("data")
-    public GroupedGlucose getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries getData() {
         return data;
     }
 
@@ -123,7 +124,10 @@ public final class ClientFacingGlucoseChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedGlucose data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +145,7 @@ public final class ClientFacingGlucoseChanged {
 
         private String teamId;
 
-        private GroupedGlucose data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +192,10 @@ public final class ClientFacingGlucoseChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedGlucose data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

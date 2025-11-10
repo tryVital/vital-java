@@ -27,7 +27,8 @@ public final class ClientFacingHeartrateChanged {
 
     private final String teamId;
 
-    private final GroupedHeartRate data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateTimeseries
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingHeartrateChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedHeartRate data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateTimeseries data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingHeartrateChanged {
     }
 
     @JsonProperty("data")
-    public GroupedHeartRate getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateTimeseries
+            getData() {
         return data;
     }
 
@@ -123,7 +125,10 @@ public final class ClientFacingHeartrateChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedHeartRate data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +146,8 @@ public final class ClientFacingHeartrateChanged {
 
         private String teamId;
 
-        private GroupedHeartRate data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateTimeseries
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +194,10 @@ public final class ClientFacingHeartrateChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedHeartRate data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

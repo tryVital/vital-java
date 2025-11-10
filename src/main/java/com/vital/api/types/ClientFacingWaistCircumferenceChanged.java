@@ -27,7 +27,8 @@ public final class ClientFacingWaistCircumferenceChanged {
 
     private final String teamId;
 
-    private final GroupedWaistCircumference data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingWaistCircumferenceChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedWaistCircumference data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingWaistCircumferenceChanged {
     }
 
     @JsonProperty("data")
-    public GroupedWaistCircumference getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample
+            getData() {
         return data;
     }
 
@@ -124,7 +127,10 @@ public final class ClientFacingWaistCircumferenceChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedWaistCircumference data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +148,8 @@ public final class ClientFacingWaistCircumferenceChanged {
 
         private String teamId;
 
-        private GroupedWaistCircumference data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +196,10 @@ public final class ClientFacingWaistCircumferenceChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedWaistCircumference data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

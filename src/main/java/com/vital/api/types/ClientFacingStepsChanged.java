@@ -27,7 +27,7 @@ public final class ClientFacingStepsChanged {
 
     private final String teamId;
 
-    private final GroupedSteps data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStepsTimeseries data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingStepsChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedSteps data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStepsTimeseries data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingStepsChanged {
     }
 
     @JsonProperty("data")
-    public GroupedSteps getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStepsTimeseries getData() {
         return data;
     }
 
@@ -123,7 +123,10 @@ public final class ClientFacingStepsChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedSteps data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStepsTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +144,7 @@ public final class ClientFacingStepsChanged {
 
         private String teamId;
 
-        private GroupedSteps data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStepsTimeseries data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +191,10 @@ public final class ClientFacingStepsChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedSteps data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStepsTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

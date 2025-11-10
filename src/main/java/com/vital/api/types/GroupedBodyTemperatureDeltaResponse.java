@@ -22,7 +22,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedBodyTemperatureDeltaResponse.Builder.class)
 public final class GroupedBodyTemperatureDeltaResponse {
-    private final Map<String, List<GroupedBodyTemperatureDelta>> groups;
+    private final Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>>
+            groups;
 
     private final Optional<String> next;
 
@@ -31,7 +35,11 @@ public final class GroupedBodyTemperatureDeltaResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedBodyTemperatureDeltaResponse(
-            Map<String, List<GroupedBodyTemperatureDelta>> groups,
+            Map<
+                            String,
+                            List<
+                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>>
+                    groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -45,7 +53,11 @@ public final class GroupedBodyTemperatureDeltaResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<GroupedBodyTemperatureDelta>> getGroups() {
+    public Map<
+                    String,
+                    List<
+                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>>
+            getGroups() {
         return groups;
     }
 
@@ -97,7 +109,11 @@ public final class GroupedBodyTemperatureDeltaResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<GroupedBodyTemperatureDelta>> groups = new LinkedHashMap<>();
+        private Map<
+                        String,
+                        List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>>
+                groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -119,20 +135,34 @@ public final class GroupedBodyTemperatureDeltaResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(Map<String, List<GroupedBodyTemperatureDelta>> groups) {
+        public Builder groups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>>
+                        groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(Map<String, List<GroupedBodyTemperatureDelta>> groups) {
+        public Builder putAllGroups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>>
+                        groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(String key, List<GroupedBodyTemperatureDelta> value) {
+        public Builder groups(
+                String key,
+                List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample>
+                        value) {
             this.groups.put(key, value);
             return this;
         }

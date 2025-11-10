@@ -27,7 +27,8 @@ public final class ClientFacingCaloriesActiveChanged {
 
     private final String teamId;
 
-    private final GroupedCaloriesActive data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaloriesActiveTimeseries data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingCaloriesActiveChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedCaloriesActive data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaloriesActiveTimeseries
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingCaloriesActiveChanged {
     }
 
     @JsonProperty("data")
-    public GroupedCaloriesActive getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaloriesActiveTimeseries
+            getData() {
         return data;
     }
 
@@ -123,7 +126,10 @@ public final class ClientFacingCaloriesActiveChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedCaloriesActive data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaloriesActiveTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +147,8 @@ public final class ClientFacingCaloriesActiveChanged {
 
         private String teamId;
 
-        private GroupedCaloriesActive data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaloriesActiveTimeseries
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +195,10 @@ public final class ClientFacingCaloriesActiveChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedCaloriesActive data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaloriesActiveTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

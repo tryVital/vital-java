@@ -27,7 +27,8 @@ public final class ClientFacingFloorsClimbedChanged {
 
     private final String teamId;
 
-    private final GroupedFloorsClimbed data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFloorsClimbedTimeseries data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingFloorsClimbedChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedFloorsClimbed data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFloorsClimbedTimeseries
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingFloorsClimbedChanged {
     }
 
     @JsonProperty("data")
-    public GroupedFloorsClimbed getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFloorsClimbedTimeseries
+            getData() {
         return data;
     }
 
@@ -123,7 +126,10 @@ public final class ClientFacingFloorsClimbedChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedFloorsClimbed data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFloorsClimbedTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +147,8 @@ public final class ClientFacingFloorsClimbedChanged {
 
         private String teamId;
 
-        private GroupedFloorsClimbed data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFloorsClimbedTimeseries
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +195,10 @@ public final class ClientFacingFloorsClimbedChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedFloorsClimbed data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFloorsClimbedTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

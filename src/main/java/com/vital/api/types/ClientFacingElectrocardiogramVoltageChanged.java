@@ -27,7 +27,9 @@ public final class ClientFacingElectrocardiogramVoltageChanged {
 
     private final String teamId;
 
-    private final GroupedElectrocardiogramVoltage data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +38,8 @@ public final class ClientFacingElectrocardiogramVoltageChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedElectrocardiogramVoltage data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +70,9 @@ public final class ClientFacingElectrocardiogramVoltageChanged {
     }
 
     @JsonProperty("data")
-    public GroupedElectrocardiogramVoltage getData() {
+    public
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries
+            getData() {
         return data;
     }
 
@@ -124,7 +129,10 @@ public final class ClientFacingElectrocardiogramVoltageChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedElectrocardiogramVoltage data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +150,9 @@ public final class ClientFacingElectrocardiogramVoltageChanged {
 
         private String teamId;
 
-        private GroupedElectrocardiogramVoltage data;
+        private
+        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +199,10 @@ public final class ClientFacingElectrocardiogramVoltageChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedElectrocardiogramVoltage data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

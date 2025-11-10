@@ -27,7 +27,8 @@ public final class ClientFacingHandwashingChanged {
 
     private final String teamId;
 
-    private final GroupedHandwashing data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHandwashingSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingHandwashingChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedHandwashing data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHandwashingSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,7 @@ public final class ClientFacingHandwashingChanged {
     }
 
     @JsonProperty("data")
-    public GroupedHandwashing getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHandwashingSample getData() {
         return data;
     }
 
@@ -123,7 +124,10 @@ public final class ClientFacingHandwashingChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedHandwashing data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHandwashingSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +145,7 @@ public final class ClientFacingHandwashingChanged {
 
         private String teamId;
 
-        private GroupedHandwashing data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHandwashingSample data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +192,10 @@ public final class ClientFacingHandwashingChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedHandwashing data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHandwashingSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

@@ -25,7 +25,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
 
     private final String lastName;
 
-    private final Address address;
+    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
 
     private final String phoneNumber;
 
@@ -36,7 +36,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
     private VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails(
             String firstName,
             String lastName,
-            Address address,
+            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
             String phoneNumber,
             Optional<String> phoneType,
             Map<String, Object> additionalProperties) {
@@ -59,7 +59,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
     }
 
     @JsonProperty("address")
-    public Address getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
         return address;
     }
 
@@ -118,7 +118,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
     }
 
     public interface AddressStage {
-        PhoneNumberStage address(@NotNull Address address);
+        PhoneNumberStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
     }
 
     public interface PhoneNumberStage {
@@ -140,7 +140,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
 
         private String lastName;
 
-        private Address address;
+        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
 
         private String phoneNumber;
 
@@ -177,7 +177,7 @@ public final class VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails 
 
         @java.lang.Override
         @JsonSetter("address")
-        public PhoneNumberStage address(@NotNull Address address) {
+        public PhoneNumberStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

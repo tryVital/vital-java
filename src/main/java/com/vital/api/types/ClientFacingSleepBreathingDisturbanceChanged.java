@@ -27,7 +27,9 @@ public final class ClientFacingSleepBreathingDisturbanceChanged {
 
     private final String teamId;
 
-    private final GroupedSleepBreathingDisturbance data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +38,8 @@ public final class ClientFacingSleepBreathingDisturbanceChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedSleepBreathingDisturbance data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +70,9 @@ public final class ClientFacingSleepBreathingDisturbanceChanged {
     }
 
     @JsonProperty("data")
-    public GroupedSleepBreathingDisturbance getData() {
+    public
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample
+            getData() {
         return data;
     }
 
@@ -124,7 +129,10 @@ public final class ClientFacingSleepBreathingDisturbanceChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedSleepBreathingDisturbance data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +150,9 @@ public final class ClientFacingSleepBreathingDisturbanceChanged {
 
         private String teamId;
 
-        private GroupedSleepBreathingDisturbance data;
+        private
+        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +199,10 @@ public final class ClientFacingSleepBreathingDisturbanceChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedSleepBreathingDisturbance data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

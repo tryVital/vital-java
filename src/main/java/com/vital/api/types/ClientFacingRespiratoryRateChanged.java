@@ -27,7 +27,8 @@ public final class ClientFacingRespiratoryRateChanged {
 
     private final String teamId;
 
-    private final GroupedRespiratoryRate data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingRespiratoryRateTimeseries data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingRespiratoryRateChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedRespiratoryRate data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingRespiratoryRateTimeseries
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingRespiratoryRateChanged {
     }
 
     @JsonProperty("data")
-    public GroupedRespiratoryRate getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingRespiratoryRateTimeseries
+            getData() {
         return data;
     }
 
@@ -124,7 +127,10 @@ public final class ClientFacingRespiratoryRateChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedRespiratoryRate data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingRespiratoryRateTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +148,8 @@ public final class ClientFacingRespiratoryRateChanged {
 
         private String teamId;
 
-        private GroupedRespiratoryRate data;
+        private
+        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingRespiratoryRateTimeseries data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +196,10 @@ public final class ClientFacingRespiratoryRateChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedRespiratoryRate data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingRespiratoryRateTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

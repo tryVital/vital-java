@@ -27,7 +27,8 @@ public final class ClientFacingBodyMassIndexChanged {
 
     private final String teamId;
 
-    private final GroupedBodyMassIndex data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyMassIndexSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingBodyMassIndexChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedBodyMassIndex data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyMassIndexSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingBodyMassIndexChanged {
     }
 
     @JsonProperty("data")
-    public GroupedBodyMassIndex getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyMassIndexSample
+            getData() {
         return data;
     }
 
@@ -123,7 +125,10 @@ public final class ClientFacingBodyMassIndexChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedBodyMassIndex data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyMassIndexSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +146,8 @@ public final class ClientFacingBodyMassIndexChanged {
 
         private String teamId;
 
-        private GroupedBodyMassIndex data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyMassIndexSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +194,10 @@ public final class ClientFacingBodyMassIndexChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedBodyMassIndex data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyMassIndexSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

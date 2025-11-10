@@ -27,7 +27,8 @@ public final class ClientFacingBloodPressureChanged {
 
     private final String teamId;
 
-    private final GroupedBloodPressure data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBloodPressureTimeseries data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingBloodPressureChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedBloodPressure data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBloodPressureTimeseries
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingBloodPressureChanged {
     }
 
     @JsonProperty("data")
-    public GroupedBloodPressure getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBloodPressureTimeseries
+            getData() {
         return data;
     }
 
@@ -123,7 +126,10 @@ public final class ClientFacingBloodPressureChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedBloodPressure data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBloodPressureTimeseries
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +147,8 @@ public final class ClientFacingBloodPressureChanged {
 
         private String teamId;
 
-        private GroupedBloodPressure data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBloodPressureTimeseries
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +195,10 @@ public final class ClientFacingBloodPressureChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedBloodPressure data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBloodPressureTimeseries
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

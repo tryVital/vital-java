@@ -27,7 +27,8 @@ public final class ClientFacingPeakExpiratoryFlowRateChanged {
 
     private final String teamId;
 
-    private final GroupedPeakExpiratoryFlowRate data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingPeakExpiratoryFlowRateSample data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingPeakExpiratoryFlowRateChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedPeakExpiratoryFlowRate data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingPeakExpiratoryFlowRateSample
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingPeakExpiratoryFlowRateChanged {
     }
 
     @JsonProperty("data")
-    public GroupedPeakExpiratoryFlowRate getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingPeakExpiratoryFlowRateSample
+            getData() {
         return data;
     }
 
@@ -124,7 +127,10 @@ public final class ClientFacingPeakExpiratoryFlowRateChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedPeakExpiratoryFlowRate data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingPeakExpiratoryFlowRateSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +148,9 @@ public final class ClientFacingPeakExpiratoryFlowRateChanged {
 
         private String teamId;
 
-        private GroupedPeakExpiratoryFlowRate data;
+        private
+        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingPeakExpiratoryFlowRateSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +197,10 @@ public final class ClientFacingPeakExpiratoryFlowRateChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedPeakExpiratoryFlowRate data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingPeakExpiratoryFlowRateSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

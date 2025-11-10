@@ -27,7 +27,8 @@ public final class ClientFacingBodyTemperatureDeltaChanged {
 
     private final String teamId;
 
-    private final GroupedBodyTemperatureDelta data;
+    private final
+    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,8 @@ public final class ClientFacingBodyTemperatureDeltaChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedBodyTemperatureDelta data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample
+                    data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +69,8 @@ public final class ClientFacingBodyTemperatureDeltaChanged {
     }
 
     @JsonProperty("data")
-    public GroupedBodyTemperatureDelta getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample
+            getData() {
         return data;
     }
 
@@ -124,7 +127,10 @@ public final class ClientFacingBodyTemperatureDeltaChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedBodyTemperatureDelta data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -142,7 +148,8 @@ public final class ClientFacingBodyTemperatureDeltaChanged {
 
         private String teamId;
 
-        private GroupedBodyTemperatureDelta data;
+        private
+        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -189,7 +196,10 @@ public final class ClientFacingBodyTemperatureDeltaChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedBodyTemperatureDelta data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyTemperatureDeltaSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

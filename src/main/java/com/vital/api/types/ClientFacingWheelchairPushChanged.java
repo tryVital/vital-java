@@ -27,7 +27,8 @@ public final class ClientFacingWheelchairPushChanged {
 
     private final String teamId;
 
-    private final GroupedWheelchairPush data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWheelchairPushSample
+            data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class ClientFacingWheelchairPushChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedWheelchairPush data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWheelchairPushSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +68,8 @@ public final class ClientFacingWheelchairPushChanged {
     }
 
     @JsonProperty("data")
-    public GroupedWheelchairPush getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWheelchairPushSample
+            getData() {
         return data;
     }
 
@@ -123,7 +125,10 @@ public final class ClientFacingWheelchairPushChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedWheelchairPush data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWheelchairPushSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +146,8 @@ public final class ClientFacingWheelchairPushChanged {
 
         private String teamId;
 
-        private GroupedWheelchairPush data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWheelchairPushSample
+                data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +194,10 @@ public final class ClientFacingWheelchairPushChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedWheelchairPush data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWheelchairPushSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

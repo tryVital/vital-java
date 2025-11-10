@@ -33,7 +33,7 @@ public final class UserInfo {
 
     private final String dob;
 
-    private final Address address;
+    private final VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
 
     private final Optional<GuarantorDetails> medicalProxy;
 
@@ -54,7 +54,7 @@ public final class UserInfo {
             String phoneNumber,
             String gender,
             String dob,
-            Address address,
+            VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address,
             Optional<GuarantorDetails> medicalProxy,
             Optional<Race> race,
             Optional<Ethnicity> ethnicity,
@@ -107,7 +107,7 @@ public final class UserInfo {
     }
 
     @JsonProperty("address")
-    public Address getAddress() {
+    public VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress getAddress() {
         return address;
     }
 
@@ -215,7 +215,7 @@ public final class UserInfo {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull Address address);
+        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address);
     }
 
     public interface _FinalStage {
@@ -264,7 +264,7 @@ public final class UserInfo {
 
         private String dob;
 
-        private Address address;
+        private VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address;
 
         private Optional<GenderIdentity> genderIdentity = Optional.empty();
 
@@ -342,7 +342,7 @@ public final class UserInfo {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull Address address) {
+        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestHealthInsuranceAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

@@ -27,7 +27,7 @@ public final class ClientFacingStandHourChanged {
 
     private final String teamId;
 
-    private final GroupedStandHour data;
+    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStandHourSample data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingStandHourChanged {
             String userId,
             String clientUserId,
             String teamId,
-            GroupedStandHour data,
+            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStandHourSample data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingStandHourChanged {
     }
 
     @JsonProperty("data")
-    public GroupedStandHour getData() {
+    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStandHourSample getData() {
         return data;
     }
 
@@ -123,7 +123,10 @@ public final class ClientFacingStandHourChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(@NotNull GroupedStandHour data);
+        _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStandHourSample
+                                data);
     }
 
     public interface _FinalStage {
@@ -141,7 +144,7 @@ public final class ClientFacingStandHourChanged {
 
         private String teamId;
 
-        private GroupedStandHour data;
+        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStandHourSample data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -188,7 +191,10 @@ public final class ClientFacingStandHourChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(@NotNull GroupedStandHour data) {
+        public _FinalStage data(
+                @NotNull
+                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingStandHourSample
+                                data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

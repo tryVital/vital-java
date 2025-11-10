@@ -22,7 +22,10 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedHrvResponse.Builder.class)
 public final class GroupedHrvResponse {
-    private final Map<String, List<GroupedHrv>> groups;
+    private final Map<
+                    String,
+                    List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>>
+            groups;
 
     private final Optional<String> next;
 
@@ -31,7 +34,11 @@ public final class GroupedHrvResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedHrvResponse(
-            Map<String, List<GroupedHrv>> groups,
+            Map<
+                            String,
+                            List<
+                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>>
+                    groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -45,7 +52,10 @@ public final class GroupedHrvResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<GroupedHrv>> getGroups() {
+    public Map<
+                    String,
+                    List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>>
+            getGroups() {
         return groups;
     }
 
@@ -96,7 +106,11 @@ public final class GroupedHrvResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<String, List<GroupedHrv>> groups = new LinkedHashMap<>();
+        private Map<
+                        String,
+                        List<
+                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>>
+                groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -118,20 +132,33 @@ public final class GroupedHrvResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(Map<String, List<GroupedHrv>> groups) {
+        public Builder groups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>>
+                        groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(Map<String, List<GroupedHrv>> groups) {
+        public Builder putAllGroups(
+                Map<
+                                String,
+                                List<
+                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>>
+                        groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(String key, List<GroupedHrv> value) {
+        public Builder groups(
+                String key,
+                List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHrvTimeseries>
+                        value) {
             this.groups.put(key, value);
             return this;
         }
