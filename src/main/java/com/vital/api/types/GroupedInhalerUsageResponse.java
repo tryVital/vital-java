@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedInhalerUsageResponse.Builder.class)
 public final class GroupedInhalerUsageResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>>
-            groups;
+    private final Map<String, List<GroupedInhalerUsage>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedInhalerUsageResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedInhalerUsageResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>>
-                    groups,
+            Map<String, List<GroupedInhalerUsage>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedInhalerUsageResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>>
-            getGroups() {
+    public Map<String, List<GroupedInhalerUsage>> getGroups() {
         return groups;
     }
 
@@ -108,11 +96,7 @@ public final class GroupedInhalerUsageResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedInhalerUsage>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -134,33 +118,20 @@ public final class GroupedInhalerUsageResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedInhalerUsage>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedInhalerUsage>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingInhalerUsageSample>
-                        value) {
+        public Builder groups(String key, List<GroupedInhalerUsage> value) {
             this.groups.put(key, value);
             return this;
         }

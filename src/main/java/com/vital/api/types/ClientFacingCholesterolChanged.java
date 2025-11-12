@@ -27,8 +27,7 @@ public final class ClientFacingCholesterolChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries
-            data;
+    private final GroupedCholesterol data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +36,7 @@ public final class ClientFacingCholesterolChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries data,
+            GroupedCholesterol data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -68,8 +67,7 @@ public final class ClientFacingCholesterolChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries
-            getData() {
+    public GroupedCholesterol getData() {
         return data;
     }
 
@@ -125,10 +123,7 @@ public final class ClientFacingCholesterolChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedCholesterol data);
     }
 
     public interface _FinalStage {
@@ -146,8 +141,7 @@ public final class ClientFacingCholesterolChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries
-                data;
+        private GroupedCholesterol data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -194,10 +188,7 @@ public final class ClientFacingCholesterolChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCholesterolTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedCholesterol data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

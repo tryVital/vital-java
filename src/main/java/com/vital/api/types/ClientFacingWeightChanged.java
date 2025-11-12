@@ -27,8 +27,7 @@ public final class ClientFacingWeightChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyWeightTimeseries
-            data;
+    private final GroupedBodyWeight data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +36,7 @@ public final class ClientFacingWeightChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyWeightTimeseries data,
+            GroupedBodyWeight data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -68,8 +67,7 @@ public final class ClientFacingWeightChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyWeightTimeseries
-            getData() {
+    public GroupedBodyWeight getData() {
         return data;
     }
 
@@ -125,10 +123,7 @@ public final class ClientFacingWeightChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyWeightTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedBodyWeight data);
     }
 
     public interface _FinalStage {
@@ -146,8 +141,7 @@ public final class ClientFacingWeightChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyWeightTimeseries
-                data;
+        private GroupedBodyWeight data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -194,10 +188,7 @@ public final class ClientFacingWeightChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyWeightTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedBodyWeight data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedMindfulnessMinutesResponse.Builder.class)
 public final class GroupedMindfulnessMinutesResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>>
-            groups;
+    private final Map<String, List<GroupedMindfulnessMinutes>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedMindfulnessMinutesResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedMindfulnessMinutesResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>>
-                    groups,
+            Map<String, List<GroupedMindfulnessMinutes>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedMindfulnessMinutesResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>>
-            getGroups() {
+    public Map<String, List<GroupedMindfulnessMinutes>> getGroups() {
         return groups;
     }
 
@@ -108,11 +96,7 @@ public final class GroupedMindfulnessMinutesResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedMindfulnessMinutes>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -134,34 +118,20 @@ public final class GroupedMindfulnessMinutesResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedMindfulnessMinutes>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedMindfulnessMinutes>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingMindfulnessMinutesTimeseries>
-                        value) {
+        public Builder groups(String key, List<GroupedMindfulnessMinutes> value) {
             this.groups.put(key, value);
             return this;
         }

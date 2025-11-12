@@ -27,8 +27,7 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
 
     private final String teamId;
 
-    private final
-    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedExpiratoryVolume1Sample data;
+    private final GroupedForcedExpiratoryVolume1 data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,8 +36,7 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedExpiratoryVolume1Sample
-                    data,
+            GroupedForcedExpiratoryVolume1 data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -69,8 +67,7 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedExpiratoryVolume1Sample
-            getData() {
+    public GroupedForcedExpiratoryVolume1 getData() {
         return data;
     }
 
@@ -127,10 +124,7 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedExpiratoryVolume1Sample
-                                data);
+        _FinalStage data(@NotNull GroupedForcedExpiratoryVolume1 data);
     }
 
     public interface _FinalStage {
@@ -148,9 +142,7 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
 
         private String teamId;
 
-        private
-        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedExpiratoryVolume1Sample
-                data;
+        private GroupedForcedExpiratoryVolume1 data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -197,10 +189,7 @@ public final class ClientFacingForcedExpiratoryVolume1Changed {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedExpiratoryVolume1Sample
-                                data) {
+        public _FinalStage data(@NotNull GroupedForcedExpiratoryVolume1 data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
+import com.vital.api.types.Address;
 import com.vital.api.types.PayorCodeExternalProvider;
-import com.vital.api.types.VitalCoreSchemasDbSchemasLabTestInsuranceAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 public final class CreatePayorBody {
     private final String name;
 
-    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
+    private final Address address;
 
     private final Optional<PayorCodeExternalProvider> provider;
 
@@ -35,7 +35,7 @@ public final class CreatePayorBody {
 
     private CreatePayorBody(
             String name,
-            VitalCoreSchemasDbSchemasLabTestInsuranceAddress address,
+            Address address,
             Optional<PayorCodeExternalProvider> provider,
             Optional<String> providerPayorId,
             Map<String, Object> additionalProperties) {
@@ -52,7 +52,7 @@ public final class CreatePayorBody {
     }
 
     @JsonProperty("address")
-    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -105,7 +105,7 @@ public final class CreatePayorBody {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
+        _FinalStage address(@NotNull Address address);
     }
 
     public interface _FinalStage {
@@ -124,7 +124,7 @@ public final class CreatePayorBody {
     public static final class Builder implements NameStage, AddressStage, _FinalStage {
         private String name;
 
-        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
+        private Address address;
 
         private Optional<String> providerPayorId = Optional.empty();
 
@@ -153,7 +153,7 @@ public final class CreatePayorBody {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
+        public _FinalStage address(@NotNull Address address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

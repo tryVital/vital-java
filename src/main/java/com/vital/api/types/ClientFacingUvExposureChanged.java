@@ -27,7 +27,7 @@ public final class ClientFacingUvExposureChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingUvExposureSample data;
+    private final GroupedUvExposure data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingUvExposureChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingUvExposureSample data,
+            GroupedUvExposure data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingUvExposureChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingUvExposureSample getData() {
+    public GroupedUvExposure getData() {
         return data;
     }
 
@@ -123,10 +123,7 @@ public final class ClientFacingUvExposureChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingUvExposureSample
-                                data);
+        _FinalStage data(@NotNull GroupedUvExposure data);
     }
 
     public interface _FinalStage {
@@ -144,7 +141,7 @@ public final class ClientFacingUvExposureChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingUvExposureSample data;
+        private GroupedUvExposure data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,10 +188,7 @@ public final class ClientFacingUvExposureChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingUvExposureSample
-                                data) {
+        public _FinalStage data(@NotNull GroupedUvExposure data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

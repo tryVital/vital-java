@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedForcedVitalCapacityResponse.Builder.class)
 public final class GroupedForcedVitalCapacityResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>>
-            groups;
+    private final Map<String, List<GroupedForcedVitalCapacity>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedForcedVitalCapacityResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedForcedVitalCapacityResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>>
-                    groups,
+            Map<String, List<GroupedForcedVitalCapacity>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedForcedVitalCapacityResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>>
-            getGroups() {
+    public Map<String, List<GroupedForcedVitalCapacity>> getGroups() {
         return groups;
     }
 
@@ -109,11 +97,7 @@ public final class GroupedForcedVitalCapacityResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedForcedVitalCapacity>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -135,34 +119,20 @@ public final class GroupedForcedVitalCapacityResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedForcedVitalCapacity>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedForcedVitalCapacity>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingForcedVitalCapacitySample>
-                        value) {
+        public Builder groups(String key, List<GroupedForcedVitalCapacity> value) {
             this.groups.put(key, value);
             return this;
         }

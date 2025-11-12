@@ -27,7 +27,7 @@ public final class ClientFacingIgeChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIgeTimeseries data;
+    private final GroupedIge data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingIgeChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIgeTimeseries data,
+            GroupedIge data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingIgeChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIgeTimeseries getData() {
+    public GroupedIge getData() {
         return data;
     }
 
@@ -123,10 +123,7 @@ public final class ClientFacingIgeChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIgeTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedIge data);
     }
 
     public interface _FinalStage {
@@ -144,7 +141,7 @@ public final class ClientFacingIgeChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIgeTimeseries data;
+        private GroupedIge data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,10 +188,7 @@ public final class ClientFacingIgeChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIgeTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedIge data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

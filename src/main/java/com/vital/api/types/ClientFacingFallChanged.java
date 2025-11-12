@@ -27,7 +27,7 @@ public final class ClientFacingFallChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample data;
+    private final GroupedFall data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingFallChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample data,
+            GroupedFall data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingFallChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample getData() {
+    public GroupedFall getData() {
         return data;
     }
 
@@ -123,10 +123,7 @@ public final class ClientFacingFallChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample
-                                data);
+        _FinalStage data(@NotNull GroupedFall data);
     }
 
     public interface _FinalStage {
@@ -144,7 +141,7 @@ public final class ClientFacingFallChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample data;
+        private GroupedFall data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,10 +188,7 @@ public final class ClientFacingFallChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample
-                                data) {
+        public _FinalStage data(@NotNull GroupedFall data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

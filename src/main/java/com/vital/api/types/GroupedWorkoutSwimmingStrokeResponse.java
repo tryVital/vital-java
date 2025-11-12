@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedWorkoutSwimmingStrokeResponse.Builder.class)
 public final class GroupedWorkoutSwimmingStrokeResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>>
-            groups;
+    private final Map<String, List<GroupedWorkoutSwimmingStroke>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedWorkoutSwimmingStrokeResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedWorkoutSwimmingStrokeResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>>
-                    groups,
+            Map<String, List<GroupedWorkoutSwimmingStroke>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedWorkoutSwimmingStrokeResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>>
-            getGroups() {
+    public Map<String, List<GroupedWorkoutSwimmingStroke>> getGroups() {
         return groups;
     }
 
@@ -109,11 +97,7 @@ public final class GroupedWorkoutSwimmingStrokeResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedWorkoutSwimmingStroke>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -135,34 +119,20 @@ public final class GroupedWorkoutSwimmingStrokeResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedWorkoutSwimmingStroke>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedWorkoutSwimmingStroke>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample>
-                        value) {
+        public Builder groups(String key, List<GroupedWorkoutSwimmingStroke> value) {
             this.groups.put(key, value);
             return this;
         }

@@ -27,7 +27,7 @@ public final class ClientFacingVo2MaxChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingVo2MaxTimeseries data;
+    private final GroupedVo2Max data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingVo2MaxChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingVo2MaxTimeseries data,
+            GroupedVo2Max data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingVo2MaxChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingVo2MaxTimeseries getData() {
+    public GroupedVo2Max getData() {
         return data;
     }
 
@@ -123,10 +123,7 @@ public final class ClientFacingVo2MaxChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingVo2MaxTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedVo2Max data);
     }
 
     public interface _FinalStage {
@@ -144,7 +141,7 @@ public final class ClientFacingVo2MaxChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingVo2MaxTimeseries data;
+        private GroupedVo2Max data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,10 +188,7 @@ public final class ClientFacingVo2MaxChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingVo2MaxTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedVo2Max data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

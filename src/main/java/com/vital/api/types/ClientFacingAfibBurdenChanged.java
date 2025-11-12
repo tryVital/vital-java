@@ -27,7 +27,7 @@ public final class ClientFacingAfibBurdenChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingAFibBurdenSample data;
+    private final GroupedAFibBurden data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +36,7 @@ public final class ClientFacingAfibBurdenChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingAFibBurdenSample data,
+            GroupedAFibBurden data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -67,7 +67,7 @@ public final class ClientFacingAfibBurdenChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingAFibBurdenSample getData() {
+    public GroupedAFibBurden getData() {
         return data;
     }
 
@@ -123,10 +123,7 @@ public final class ClientFacingAfibBurdenChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingAFibBurdenSample
-                                data);
+        _FinalStage data(@NotNull GroupedAFibBurden data);
     }
 
     public interface _FinalStage {
@@ -144,7 +141,7 @@ public final class ClientFacingAfibBurdenChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingAFibBurdenSample data;
+        private GroupedAFibBurden data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -191,10 +188,7 @@ public final class ClientFacingAfibBurdenChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingAFibBurdenSample
-                                data) {
+        public _FinalStage data(@NotNull GroupedAFibBurden data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

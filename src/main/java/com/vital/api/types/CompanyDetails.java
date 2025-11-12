@@ -21,14 +21,11 @@ import org.jetbrains.annotations.NotNull;
 public final class CompanyDetails {
     private final String name;
 
-    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
+    private final Address address;
 
     private final Map<String, Object> additionalProperties;
 
-    private CompanyDetails(
-            String name,
-            VitalCoreSchemasDbSchemasLabTestInsuranceAddress address,
-            Map<String, Object> additionalProperties) {
+    private CompanyDetails(String name, Address address, Map<String, Object> additionalProperties) {
         this.name = name;
         this.address = address;
         this.additionalProperties = additionalProperties;
@@ -40,7 +37,7 @@ public final class CompanyDetails {
     }
 
     @JsonProperty("address")
-    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -80,7 +77,7 @@ public final class CompanyDetails {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address);
+        _FinalStage address(@NotNull Address address);
     }
 
     public interface _FinalStage {
@@ -91,7 +88,7 @@ public final class CompanyDetails {
     public static final class Builder implements NameStage, AddressStage, _FinalStage {
         private String name;
 
-        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress address;
+        private Address address;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -114,7 +111,7 @@ public final class CompanyDetails {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress address) {
+        public _FinalStage address(@NotNull Address address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }

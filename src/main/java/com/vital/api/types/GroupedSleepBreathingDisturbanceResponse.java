@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedSleepBreathingDisturbanceResponse.Builder.class)
 public final class GroupedSleepBreathingDisturbanceResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>>
-            groups;
+    private final Map<String, List<GroupedSleepBreathingDisturbance>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedSleepBreathingDisturbanceResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedSleepBreathingDisturbanceResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>>
-                    groups,
+            Map<String, List<GroupedSleepBreathingDisturbance>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedSleepBreathingDisturbanceResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>>
-            getGroups() {
+    public Map<String, List<GroupedSleepBreathingDisturbance>> getGroups() {
         return groups;
     }
 
@@ -109,11 +97,7 @@ public final class GroupedSleepBreathingDisturbanceResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedSleepBreathingDisturbance>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -135,34 +119,20 @@ public final class GroupedSleepBreathingDisturbanceResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedSleepBreathingDisturbance>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedSleepBreathingDisturbance>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingSleepBreathingDisturbanceSample>
-                        value) {
+        public Builder groups(String key, List<GroupedSleepBreathingDisturbance> value) {
             this.groups.put(key, value);
             return this;
         }

@@ -22,10 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedFallResponse.Builder.class)
 public final class GroupedFallResponse {
-    private final Map<
-                    String,
-                    List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>>
-            groups;
+    private final Map<String, List<GroupedFall>> groups;
 
     private final Optional<String> next;
 
@@ -34,11 +31,7 @@ public final class GroupedFallResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedFallResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>>
-                    groups,
+            Map<String, List<GroupedFall>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -52,8 +45,7 @@ public final class GroupedFallResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<String, List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>>
-            getGroups() {
+    public Map<String, List<GroupedFall>> getGroups() {
         return groups;
     }
 
@@ -104,11 +96,7 @@ public final class GroupedFallResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedFall>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -130,33 +118,20 @@ public final class GroupedFallResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedFall>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedFall>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingFallSample>
-                        value) {
+        public Builder groups(String key, List<GroupedFall> value) {
             this.groups.put(key, value);
             return this;
         }

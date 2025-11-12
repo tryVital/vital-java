@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedElectrocardiogramVoltageResponse.Builder.class)
 public final class GroupedElectrocardiogramVoltageResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>>
-            groups;
+    private final Map<String, List<GroupedElectrocardiogramVoltage>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedElectrocardiogramVoltageResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedElectrocardiogramVoltageResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>>
-                    groups,
+            Map<String, List<GroupedElectrocardiogramVoltage>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedElectrocardiogramVoltageResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>>
-            getGroups() {
+    public Map<String, List<GroupedElectrocardiogramVoltage>> getGroups() {
         return groups;
     }
 
@@ -109,11 +97,7 @@ public final class GroupedElectrocardiogramVoltageResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedElectrocardiogramVoltage>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -135,34 +119,20 @@ public final class GroupedElectrocardiogramVoltageResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedElectrocardiogramVoltage>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedElectrocardiogramVoltage>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingElectrocardiogramVoltageTimeseries>
-                        value) {
+        public Builder groups(String key, List<GroupedElectrocardiogramVoltage> value) {
             this.groups.put(key, value);
             return this;
         }

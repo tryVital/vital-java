@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedGlucoseResponse.Builder.class)
 public final class GroupedGlucoseResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>>
-            groups;
+    private final Map<String, List<GroupedGlucose>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedGlucoseResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedGlucoseResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>>
-                    groups,
+            Map<String, List<GroupedGlucose>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedGlucoseResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>>
-            getGroups() {
+    public Map<String, List<GroupedGlucose>> getGroups() {
         return groups;
     }
 
@@ -108,11 +96,7 @@ public final class GroupedGlucoseResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedGlucose>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -134,33 +118,20 @@ public final class GroupedGlucoseResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedGlucose>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedGlucose>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingGlucoseTimeseries>
-                        value) {
+        public Builder groups(String key, List<GroupedGlucose> value) {
             this.groups.put(key, value);
             return this;
         }

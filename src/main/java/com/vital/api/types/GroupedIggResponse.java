@@ -22,10 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedIggResponse.Builder.class)
 public final class GroupedIggResponse {
-    private final Map<
-                    String,
-                    List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>>
-            groups;
+    private final Map<String, List<GroupedIgg>> groups;
 
     private final Optional<String> next;
 
@@ -34,11 +31,7 @@ public final class GroupedIggResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedIggResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>>
-                    groups,
+            Map<String, List<GroupedIgg>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -52,10 +45,7 @@ public final class GroupedIggResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>>
-            getGroups() {
+    public Map<String, List<GroupedIgg>> getGroups() {
         return groups;
     }
 
@@ -106,11 +96,7 @@ public final class GroupedIggResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedIgg>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -132,33 +118,20 @@ public final class GroupedIggResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedIgg>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedIgg>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingIggTimeseries>
-                        value) {
+        public Builder groups(String key, List<GroupedIgg> value) {
             this.groups.put(key, value);
             return this;
         }

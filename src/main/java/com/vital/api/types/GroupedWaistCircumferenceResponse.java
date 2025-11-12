@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedWaistCircumferenceResponse.Builder.class)
 public final class GroupedWaistCircumferenceResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>>
-            groups;
+    private final Map<String, List<GroupedWaistCircumference>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedWaistCircumferenceResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedWaistCircumferenceResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>>
-                    groups,
+            Map<String, List<GroupedWaistCircumference>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedWaistCircumferenceResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>>
-            getGroups() {
+    public Map<String, List<GroupedWaistCircumference>> getGroups() {
         return groups;
     }
 
@@ -108,11 +96,7 @@ public final class GroupedWaistCircumferenceResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedWaistCircumference>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -134,34 +118,20 @@ public final class GroupedWaistCircumferenceResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedWaistCircumference>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedWaistCircumference>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWaistCircumferenceSample>
-                        value) {
+        public Builder groups(String key, List<GroupedWaistCircumference> value) {
             this.groups.put(key, value);
             return this;
         }

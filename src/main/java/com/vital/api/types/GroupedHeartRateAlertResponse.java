@@ -22,11 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GroupedHeartRateAlertResponse.Builder.class)
 public final class GroupedHeartRateAlertResponse {
-    private final Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>>
-            groups;
+    private final Map<String, List<GroupedHeartRateAlert>> groups;
 
     private final Optional<String> next;
 
@@ -35,11 +31,7 @@ public final class GroupedHeartRateAlertResponse {
     private final Map<String, Object> additionalProperties;
 
     private GroupedHeartRateAlertResponse(
-            Map<
-                            String,
-                            List<
-                                    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>>
-                    groups,
+            Map<String, List<GroupedHeartRateAlert>> groups,
             Optional<String> next,
             Optional<String> nextCursor,
             Map<String, Object> additionalProperties) {
@@ -53,11 +45,7 @@ public final class GroupedHeartRateAlertResponse {
      * @return For each matching provider or lab, a list of grouped timeseries values.
      */
     @JsonProperty("groups")
-    public Map<
-                    String,
-                    List<
-                            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>>
-            getGroups() {
+    public Map<String, List<GroupedHeartRateAlert>> getGroups() {
         return groups;
     }
 
@@ -108,11 +96,7 @@ public final class GroupedHeartRateAlertResponse {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Map<
-                        String,
-                        List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>>
-                groups = new LinkedHashMap<>();
+        private Map<String, List<GroupedHeartRateAlert>> groups = new LinkedHashMap<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -134,34 +118,20 @@ public final class GroupedHeartRateAlertResponse {
          * <p>For each matching provider or lab, a list of grouped timeseries values.</p>
          */
         @JsonSetter(value = "groups", nulls = Nulls.SKIP)
-        public Builder groups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>>
-                        groups) {
+        public Builder groups(Map<String, List<GroupedHeartRateAlert>> groups) {
             this.groups.clear();
             this.groups.putAll(groups);
             return this;
         }
 
-        public Builder putAllGroups(
-                Map<
-                                String,
-                                List<
-                                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>>
-                        groups) {
+        public Builder putAllGroups(Map<String, List<GroupedHeartRateAlert>> groups) {
             if (groups != null) {
                 this.groups.putAll(groups);
             }
             return this;
         }
 
-        public Builder groups(
-                String key,
-                List<
-                                VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingHeartRateAlertSample>
-                        value) {
+        public Builder groups(String key, List<GroupedHeartRateAlert> value) {
             this.groups.put(key, value);
             return this;
         }

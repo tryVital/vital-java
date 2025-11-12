@@ -28,7 +28,7 @@ public final class ClientFacingPayor {
 
     private final List<String> aliases;
 
-    private final VitalCoreSchemasDbSchemasLabTestInsuranceAddress orgAddress;
+    private final Address orgAddress;
 
     private final ClientFacingPayorCodeSource source;
 
@@ -38,7 +38,7 @@ public final class ClientFacingPayor {
             String payorCode,
             String name,
             List<String> aliases,
-            VitalCoreSchemasDbSchemasLabTestInsuranceAddress orgAddress,
+            Address orgAddress,
             ClientFacingPayorCodeSource source,
             Map<String, Object> additionalProperties) {
         this.payorCode = payorCode;
@@ -77,7 +77,7 @@ public final class ClientFacingPayor {
      * @return Insurance business address returned for the insurance information.
      */
     @JsonProperty("org_address")
-    public VitalCoreSchemasDbSchemasLabTestInsuranceAddress getOrgAddress() {
+    public Address getOrgAddress() {
         return orgAddress;
     }
 
@@ -142,7 +142,7 @@ public final class ClientFacingPayor {
         /**
          * <p>Insurance business address returned for the insurance information.</p>
          */
-        SourceStage orgAddress(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress orgAddress);
+        SourceStage orgAddress(@NotNull Address orgAddress);
     }
 
     public interface SourceStage {
@@ -171,7 +171,7 @@ public final class ClientFacingPayor {
 
         private String name;
 
-        private VitalCoreSchemasDbSchemasLabTestInsuranceAddress orgAddress;
+        private Address orgAddress;
 
         private ClientFacingPayorCodeSource source;
 
@@ -223,7 +223,7 @@ public final class ClientFacingPayor {
          */
         @java.lang.Override
         @JsonSetter("org_address")
-        public SourceStage orgAddress(@NotNull VitalCoreSchemasDbSchemasLabTestInsuranceAddress orgAddress) {
+        public SourceStage orgAddress(@NotNull Address orgAddress) {
             this.orgAddress = Objects.requireNonNull(orgAddress, "orgAddress must not be null");
             return this;
         }

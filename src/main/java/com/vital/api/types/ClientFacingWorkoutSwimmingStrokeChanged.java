@@ -27,8 +27,7 @@ public final class ClientFacingWorkoutSwimmingStrokeChanged {
 
     private final String teamId;
 
-    private final
-    VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample data;
+    private final GroupedWorkoutSwimmingStroke data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,8 +36,7 @@ public final class ClientFacingWorkoutSwimmingStrokeChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample
-                    data,
+            GroupedWorkoutSwimmingStroke data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -69,8 +67,7 @@ public final class ClientFacingWorkoutSwimmingStrokeChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample
-            getData() {
+    public GroupedWorkoutSwimmingStroke getData() {
         return data;
     }
 
@@ -127,10 +124,7 @@ public final class ClientFacingWorkoutSwimmingStrokeChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample
-                                data);
+        _FinalStage data(@NotNull GroupedWorkoutSwimmingStroke data);
     }
 
     public interface _FinalStage {
@@ -148,9 +142,7 @@ public final class ClientFacingWorkoutSwimmingStrokeChanged {
 
         private String teamId;
 
-        private
-        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample
-                data;
+        private GroupedWorkoutSwimmingStroke data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -197,10 +189,7 @@ public final class ClientFacingWorkoutSwimmingStrokeChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingWorkoutSwimmingStrokeSample
-                                data) {
+        public _FinalStage data(@NotNull GroupedWorkoutSwimmingStroke data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

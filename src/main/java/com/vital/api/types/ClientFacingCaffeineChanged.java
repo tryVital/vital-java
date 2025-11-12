@@ -27,8 +27,7 @@ public final class ClientFacingCaffeineChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaffeineTimeseries
-            data;
+    private final GroupedCaffeine data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +36,7 @@ public final class ClientFacingCaffeineChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaffeineTimeseries data,
+            GroupedCaffeine data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -68,8 +67,7 @@ public final class ClientFacingCaffeineChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaffeineTimeseries
-            getData() {
+    public GroupedCaffeine getData() {
         return data;
     }
 
@@ -125,10 +123,7 @@ public final class ClientFacingCaffeineChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaffeineTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedCaffeine data);
     }
 
     public interface _FinalStage {
@@ -146,7 +141,7 @@ public final class ClientFacingCaffeineChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaffeineTimeseries data;
+        private GroupedCaffeine data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -193,10 +188,7 @@ public final class ClientFacingCaffeineChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingCaffeineTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedCaffeine data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

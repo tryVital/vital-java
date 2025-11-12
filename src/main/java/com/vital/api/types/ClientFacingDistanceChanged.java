@@ -27,8 +27,7 @@ public final class ClientFacingDistanceChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDistanceTimeseries
-            data;
+    private final GroupedDistance data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +36,7 @@ public final class ClientFacingDistanceChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDistanceTimeseries data,
+            GroupedDistance data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -68,8 +67,7 @@ public final class ClientFacingDistanceChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDistanceTimeseries
-            getData() {
+    public GroupedDistance getData() {
         return data;
     }
 
@@ -125,10 +123,7 @@ public final class ClientFacingDistanceChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDistanceTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedDistance data);
     }
 
     public interface _FinalStage {
@@ -146,7 +141,7 @@ public final class ClientFacingDistanceChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDistanceTimeseries data;
+        private GroupedDistance data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -193,10 +188,7 @@ public final class ClientFacingDistanceChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingDistanceTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedDistance data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }

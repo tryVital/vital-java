@@ -27,8 +27,7 @@ public final class ClientFacingFatChanged {
 
     private final String teamId;
 
-    private final VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries
-            data;
+    private final GroupedBodyFat data;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +36,7 @@ public final class ClientFacingFatChanged {
             String userId,
             String clientUserId,
             String teamId,
-            VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries data,
+            GroupedBodyFat data,
             Map<String, Object> additionalProperties) {
         this.eventType = eventType;
         this.userId = userId;
@@ -68,7 +67,7 @@ public final class ClientFacingFatChanged {
     }
 
     @JsonProperty("data")
-    public VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries getData() {
+    public GroupedBodyFat getData() {
         return data;
     }
 
@@ -124,10 +123,7 @@ public final class ClientFacingFatChanged {
     }
 
     public interface DataStage {
-        _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries
-                                data);
+        _FinalStage data(@NotNull GroupedBodyFat data);
     }
 
     public interface _FinalStage {
@@ -145,7 +141,7 @@ public final class ClientFacingFatChanged {
 
         private String teamId;
 
-        private VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries data;
+        private GroupedBodyFat data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -192,10 +188,7 @@ public final class ClientFacingFatChanged {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(
-                @NotNull
-                        VitalCoreSchemasResponseSchemasTimeseriesClientFacingTimeseriesGroupClientFacingBodyFatTimeseries
-                                data) {
+        public _FinalStage data(@NotNull GroupedBodyFat data) {
             this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
