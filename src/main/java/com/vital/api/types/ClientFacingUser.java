@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -111,32 +114,68 @@ public final class ClientFacingUser {
      * @return Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
      * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).
      */
-    @JsonProperty("fallback_time_zone")
+    @JsonIgnore
     public Optional<FallbackTimeZone> getFallbackTimeZone() {
+        if (fallbackTimeZone == null) {
+            return Optional.empty();
+        }
         return fallbackTimeZone;
     }
 
     /**
      * @return Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.
      */
-    @JsonProperty("fallback_birth_date")
+    @JsonIgnore
     public Optional<FallbackBirthDate> getFallbackBirthDate() {
+        if (fallbackBirthDate == null) {
+            return Optional.empty();
+        }
         return fallbackBirthDate;
     }
 
     /**
      * @return Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.
      */
-    @JsonProperty("ingestion_start")
+    @JsonIgnore
     public Optional<String> getIngestionStart() {
+        if (ingestionStart == null) {
+            return Optional.empty();
+        }
         return ingestionStart;
     }
 
     /**
      * @return Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.
      */
-    @JsonProperty("ingestion_end")
+    @JsonIgnore
     public Optional<String> getIngestionEnd() {
+        if (ingestionEnd == null) {
+            return Optional.empty();
+        }
+        return ingestionEnd;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("fallback_time_zone")
+    private Optional<FallbackTimeZone> _getFallbackTimeZone() {
+        return fallbackTimeZone;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("fallback_birth_date")
+    private Optional<FallbackBirthDate> _getFallbackBirthDate() {
+        return fallbackBirthDate;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("ingestion_start")
+    private Optional<String> _getIngestionStart() {
+        return ingestionStart;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("ingestion_end")
+    private Optional<String> _getIngestionEnd() {
         return ingestionEnd;
     }
 
@@ -236,12 +275,16 @@ public final class ClientFacingUser {
 
         _FinalStage fallbackTimeZone(FallbackTimeZone fallbackTimeZone);
 
+        _FinalStage fallbackTimeZone(Nullable<FallbackTimeZone> fallbackTimeZone);
+
         /**
          * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
          */
         _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate);
 
         _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate);
+
+        _FinalStage fallbackBirthDate(Nullable<FallbackBirthDate> fallbackBirthDate);
 
         /**
          * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
@@ -250,12 +293,16 @@ public final class ClientFacingUser {
 
         _FinalStage ingestionStart(String ingestionStart);
 
+        _FinalStage ingestionStart(Nullable<String> ingestionStart);
+
         /**
          * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
          */
         _FinalStage ingestionEnd(Optional<String> ingestionEnd);
 
         _FinalStage ingestionEnd(String ingestionEnd);
+
+        _FinalStage ingestionEnd(Nullable<String> ingestionEnd);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -351,6 +398,22 @@ public final class ClientFacingUser {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage ingestionEnd(Nullable<String> ingestionEnd) {
+            if (ingestionEnd.isNull()) {
+                this.ingestionEnd = null;
+            } else if (ingestionEnd.isEmpty()) {
+                this.ingestionEnd = Optional.empty();
+            } else {
+                this.ingestionEnd = Optional.of(ingestionEnd.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Ending bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage ingestionEnd(String ingestionEnd) {
             this.ingestionEnd = Optional.ofNullable(ingestionEnd);
             return this;
@@ -363,6 +426,22 @@ public final class ClientFacingUser {
         @JsonSetter(value = "ingestion_end", nulls = Nulls.SKIP)
         public _FinalStage ingestionEnd(Optional<String> ingestionEnd) {
             this.ingestionEnd = ingestionEnd;
+            return this;
+        }
+
+        /**
+         * <p>Starting bound for user <a href="https://docs.tryvital.io/wearables/providers/data-ingestion-bounds">data ingestion bounds</a>.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage ingestionStart(Nullable<String> ingestionStart) {
+            if (ingestionStart.isNull()) {
+                this.ingestionStart = null;
+            } else if (ingestionStart.isEmpty()) {
+                this.ingestionStart = Optional.empty();
+            } else {
+                this.ingestionStart = Optional.of(ingestionStart.get());
+            }
             return this;
         }
 
@@ -391,6 +470,22 @@ public final class ClientFacingUser {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage fallbackBirthDate(Nullable<FallbackBirthDate> fallbackBirthDate) {
+            if (fallbackBirthDate.isNull()) {
+                this.fallbackBirthDate = null;
+            } else if (fallbackBirthDate.isEmpty()) {
+                this.fallbackBirthDate = Optional.empty();
+            } else {
+                this.fallbackBirthDate = Optional.of(fallbackBirthDate.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Fallback date of birth of the user, in YYYY-mm-dd format. Used for calculating max heartrate for providers that don not provide users' age.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage fallbackBirthDate(FallbackBirthDate fallbackBirthDate) {
             this.fallbackBirthDate = Optional.ofNullable(fallbackBirthDate);
             return this;
@@ -403,6 +498,23 @@ public final class ClientFacingUser {
         @JsonSetter(value = "fallback_birth_date", nulls = Nulls.SKIP)
         public _FinalStage fallbackBirthDate(Optional<FallbackBirthDate> fallbackBirthDate) {
             this.fallbackBirthDate = fallbackBirthDate;
+            return this;
+        }
+
+        /**
+         * <p>Fallback time zone of the user, in the form of a valid IANA tzdatabase identifier (e.g., <code>Europe/London</code> or <code>America/Los_Angeles</code>).
+         * Used when pulling data from sources that are completely time zone agnostic (e.g., all time is relative to UTC clock, without any time zone attributions on data points).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage fallbackTimeZone(Nullable<FallbackTimeZone> fallbackTimeZone) {
+            if (fallbackTimeZone.isNull()) {
+                this.fallbackTimeZone = null;
+            } else if (fallbackTimeZone.isEmpty()) {
+                this.fallbackTimeZone = Optional.empty();
+            } else {
+                this.fallbackTimeZone = Optional.of(fallbackTimeZone.get());
+            }
             return this;
         }
 

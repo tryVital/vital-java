@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -82,28 +85,43 @@ public final class ClientFacingProfile {
         return userId;
     }
 
-    @JsonProperty("height")
+    @JsonIgnore
     public Optional<Integer> getHeight() {
+        if (height == null) {
+            return Optional.empty();
+        }
         return height;
     }
 
-    @JsonProperty("birth_date")
+    @JsonIgnore
     public Optional<String> getBirthDate() {
+        if (birthDate == null) {
+            return Optional.empty();
+        }
         return birthDate;
     }
 
-    @JsonProperty("wheelchair_use")
+    @JsonIgnore
     public Optional<Boolean> getWheelchairUse() {
+        if (wheelchairUse == null) {
+            return Optional.empty();
+        }
         return wheelchairUse;
     }
 
-    @JsonProperty("gender")
+    @JsonIgnore
     public Optional<Gender> getGender() {
+        if (gender == null) {
+            return Optional.empty();
+        }
         return gender;
     }
 
-    @JsonProperty("sex")
+    @JsonIgnore
     public Optional<Sex> getSex() {
+        if (sex == null) {
+            return Optional.empty();
+        }
         return sex;
     }
 
@@ -120,6 +138,36 @@ public final class ClientFacingProfile {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("height")
+    private Optional<Integer> _getHeight() {
+        return height;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("birth_date")
+    private Optional<String> _getBirthDate() {
+        return birthDate;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("wheelchair_use")
+    private Optional<Boolean> _getWheelchairUse() {
+        return wheelchairUse;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("gender")
+    private Optional<Gender> _getGender() {
+        return gender;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sex")
+    private Optional<Sex> _getSex() {
+        return sex;
     }
 
     @java.lang.Override
@@ -202,21 +250,31 @@ public final class ClientFacingProfile {
 
         _FinalStage height(Integer height);
 
+        _FinalStage height(Nullable<Integer> height);
+
         _FinalStage birthDate(Optional<String> birthDate);
 
         _FinalStage birthDate(String birthDate);
+
+        _FinalStage birthDate(Nullable<String> birthDate);
 
         _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse);
 
         _FinalStage wheelchairUse(Boolean wheelchairUse);
 
+        _FinalStage wheelchairUse(Nullable<Boolean> wheelchairUse);
+
         _FinalStage gender(Optional<Gender> gender);
 
         _FinalStage gender(Gender gender);
 
+        _FinalStage gender(Nullable<Gender> gender);
+
         _FinalStage sex(Optional<Sex> sex);
 
         _FinalStage sex(Sex sex);
+
+        _FinalStage sex(Nullable<Sex> sex);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -303,6 +361,18 @@ public final class ClientFacingProfile {
         }
 
         @java.lang.Override
+        public _FinalStage sex(Nullable<Sex> sex) {
+            if (sex.isNull()) {
+                this.sex = null;
+            } else if (sex.isEmpty()) {
+                this.sex = Optional.empty();
+            } else {
+                this.sex = Optional.of(sex.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sex(Sex sex) {
             this.sex = Optional.ofNullable(sex);
             return this;
@@ -312,6 +382,18 @@ public final class ClientFacingProfile {
         @JsonSetter(value = "sex", nulls = Nulls.SKIP)
         public _FinalStage sex(Optional<Sex> sex) {
             this.sex = sex;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage gender(Nullable<Gender> gender) {
+            if (gender.isNull()) {
+                this.gender = null;
+            } else if (gender.isEmpty()) {
+                this.gender = Optional.empty();
+            } else {
+                this.gender = Optional.of(gender.get());
+            }
             return this;
         }
 
@@ -329,6 +411,18 @@ public final class ClientFacingProfile {
         }
 
         @java.lang.Override
+        public _FinalStage wheelchairUse(Nullable<Boolean> wheelchairUse) {
+            if (wheelchairUse.isNull()) {
+                this.wheelchairUse = null;
+            } else if (wheelchairUse.isEmpty()) {
+                this.wheelchairUse = Optional.empty();
+            } else {
+                this.wheelchairUse = Optional.of(wheelchairUse.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage wheelchairUse(Boolean wheelchairUse) {
             this.wheelchairUse = Optional.ofNullable(wheelchairUse);
             return this;
@@ -342,6 +436,18 @@ public final class ClientFacingProfile {
         }
 
         @java.lang.Override
+        public _FinalStage birthDate(Nullable<String> birthDate) {
+            if (birthDate.isNull()) {
+                this.birthDate = null;
+            } else if (birthDate.isEmpty()) {
+                this.birthDate = Optional.empty();
+            } else {
+                this.birthDate = Optional.of(birthDate.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage birthDate(String birthDate) {
             this.birthDate = Optional.ofNullable(birthDate);
             return this;
@@ -351,6 +457,18 @@ public final class ClientFacingProfile {
         @JsonSetter(value = "birth_date", nulls = Nulls.SKIP)
         public _FinalStage birthDate(Optional<String> birthDate) {
             this.birthDate = birthDate;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage height(Nullable<Integer> height) {
+            if (height.isNull()) {
+                this.height = null;
+            } else if (height.isEmpty()) {
+                this.height = Optional.empty();
+            } else {
+                this.height = Optional.of(height.get());
+            }
             return this;
         }
 

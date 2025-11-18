@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -66,13 +69,19 @@ public final class SingleHistoricalPullStatistics {
         return status;
     }
 
-    @JsonProperty("range_start")
+    @JsonIgnore
     public Optional<OffsetDateTime> getRangeStart() {
+        if (rangeStart == null) {
+            return Optional.empty();
+        }
         return rangeStart;
     }
 
-    @JsonProperty("range_end")
+    @JsonIgnore
     public Optional<OffsetDateTime> getRangeEnd() {
+        if (rangeEnd == null) {
+            return Optional.empty();
+        }
         return rangeEnd;
     }
 
@@ -91,13 +100,43 @@ public final class SingleHistoricalPullStatistics {
         return release;
     }
 
-    @JsonProperty("trace_id")
+    @JsonIgnore
     public Optional<String> getTraceId() {
+        if (traceId == null) {
+            return Optional.empty();
+        }
         return traceId;
     }
 
-    @JsonProperty("error_details")
+    @JsonIgnore
     public Optional<SingleHistoricalPullStatisticsErrorDetails> getErrorDetails() {
+        if (errorDetails == null) {
+            return Optional.empty();
+        }
+        return errorDetails;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("range_start")
+    private Optional<OffsetDateTime> _getRangeStart() {
+        return rangeStart;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("range_end")
+    private Optional<OffsetDateTime> _getRangeEnd() {
+        return rangeEnd;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("trace_id")
+    private Optional<String> _getTraceId() {
+        return traceId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("error_details")
+    private Optional<SingleHistoricalPullStatisticsErrorDetails> _getErrorDetails() {
         return errorDetails;
     }
 
@@ -166,9 +205,13 @@ public final class SingleHistoricalPullStatistics {
 
         _FinalStage rangeStart(OffsetDateTime rangeStart);
 
+        _FinalStage rangeStart(Nullable<OffsetDateTime> rangeStart);
+
         _FinalStage rangeEnd(Optional<OffsetDateTime> rangeEnd);
 
         _FinalStage rangeEnd(OffsetDateTime rangeEnd);
+
+        _FinalStage rangeEnd(Nullable<OffsetDateTime> rangeEnd);
 
         _FinalStage daysWithData(Optional<Integer> daysWithData);
 
@@ -178,9 +221,13 @@ public final class SingleHistoricalPullStatistics {
 
         _FinalStage traceId(String traceId);
 
+        _FinalStage traceId(Nullable<String> traceId);
+
         _FinalStage errorDetails(Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails);
 
         _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails);
+
+        _FinalStage errorDetails(Nullable<SingleHistoricalPullStatisticsErrorDetails> errorDetails);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -241,6 +288,18 @@ public final class SingleHistoricalPullStatistics {
         }
 
         @java.lang.Override
+        public _FinalStage errorDetails(Nullable<SingleHistoricalPullStatisticsErrorDetails> errorDetails) {
+            if (errorDetails.isNull()) {
+                this.errorDetails = null;
+            } else if (errorDetails.isEmpty()) {
+                this.errorDetails = Optional.empty();
+            } else {
+                this.errorDetails = Optional.of(errorDetails.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails) {
             this.errorDetails = Optional.ofNullable(errorDetails);
             return this;
@@ -250,6 +309,18 @@ public final class SingleHistoricalPullStatistics {
         @JsonSetter(value = "error_details", nulls = Nulls.SKIP)
         public _FinalStage errorDetails(Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails) {
             this.errorDetails = errorDetails;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage traceId(Nullable<String> traceId) {
+            if (traceId.isNull()) {
+                this.traceId = null;
+            } else if (traceId.isEmpty()) {
+                this.traceId = Optional.empty();
+            } else {
+                this.traceId = Optional.of(traceId.get());
+            }
             return this;
         }
 
@@ -280,6 +351,18 @@ public final class SingleHistoricalPullStatistics {
         }
 
         @java.lang.Override
+        public _FinalStage rangeEnd(Nullable<OffsetDateTime> rangeEnd) {
+            if (rangeEnd.isNull()) {
+                this.rangeEnd = null;
+            } else if (rangeEnd.isEmpty()) {
+                this.rangeEnd = Optional.empty();
+            } else {
+                this.rangeEnd = Optional.of(rangeEnd.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage rangeEnd(OffsetDateTime rangeEnd) {
             this.rangeEnd = Optional.ofNullable(rangeEnd);
             return this;
@@ -289,6 +372,18 @@ public final class SingleHistoricalPullStatistics {
         @JsonSetter(value = "range_end", nulls = Nulls.SKIP)
         public _FinalStage rangeEnd(Optional<OffsetDateTime> rangeEnd) {
             this.rangeEnd = rangeEnd;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage rangeStart(Nullable<OffsetDateTime> rangeStart) {
+            if (rangeStart.isNull()) {
+                this.rangeStart = null;
+            } else if (rangeStart.isEmpty()) {
+                this.rangeStart = Optional.empty();
+            } else {
+                this.rangeStart = Optional.of(rangeStart.get());
+            }
             return this;
         }
 

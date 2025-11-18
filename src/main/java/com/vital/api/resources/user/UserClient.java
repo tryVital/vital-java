@@ -7,12 +7,22 @@ import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
+import com.vital.api.resources.user.requests.DeleteUserRequest;
+import com.vital.api.resources.user.requests.DeregisterProviderUserRequest;
+import com.vital.api.resources.user.requests.GetAllUserRequest;
+import com.vital.api.resources.user.requests.GetByClientUserIdUserRequest;
+import com.vital.api.resources.user.requests.GetConnectedProvidersUserRequest;
+import com.vital.api.resources.user.requests.GetDeviceUserRequest;
+import com.vital.api.resources.user.requests.GetDevicesUserRequest;
+import com.vital.api.resources.user.requests.GetLatestInsuranceUserRequest;
+import com.vital.api.resources.user.requests.GetLatestUserInfoUserRequest;
+import com.vital.api.resources.user.requests.GetUserRequest;
+import com.vital.api.resources.user.requests.GetUserSignInTokenUserRequest;
+import com.vital.api.resources.user.requests.RefreshUserRequest;
+import com.vital.api.resources.user.requests.UndoDeleteUserRequest;
 import com.vital.api.resources.user.requests.UserCreateBody;
-import com.vital.api.resources.user.requests.UserGetAllRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
-import com.vital.api.resources.user.requests.UserRefreshRequest;
-import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
 import com.vital.api.types.ClientFacingDevice;
 import com.vital.api.types.ClientFacingInsurance;
 import com.vital.api.types.ClientFacingProviderWithStatus;
@@ -56,14 +66,14 @@ public class UserClient {
     /**
      * GET All users for team.
      */
-    public PaginatedUsersResponse getAll(UserGetAllRequest request) {
+    public PaginatedUsersResponse getAll(GetAllUserRequest request) {
         return this.rawClient.getAll(request).body();
     }
 
     /**
      * GET All users for team.
      */
-    public PaginatedUsersResponse getAll(UserGetAllRequest request, RequestOptions requestOptions) {
+    public PaginatedUsersResponse getAll(GetAllUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAll(request, requestOptions).body();
     }
 
@@ -106,16 +116,31 @@ public class UserClient {
      * GET Users connected providers
      */
     public Map<String, List<ClientFacingProviderWithStatus>> getConnectedProviders(
-            String userId, RequestOptions requestOptions) {
-        return this.rawClient.getConnectedProviders(userId, requestOptions).body();
+            String userId, GetConnectedProvidersUserRequest request) {
+        return this.rawClient.getConnectedProviders(userId, request).body();
+    }
+
+    /**
+     * GET Users connected providers
+     */
+    public Map<String, List<ClientFacingProviderWithStatus>> getConnectedProviders(
+            String userId, GetConnectedProvidersUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getConnectedProviders(userId, request, requestOptions)
+                .body();
     }
 
     public UserInfo getLatestUserInfo(String userId) {
         return this.rawClient.getLatestUserInfo(userId).body();
     }
 
-    public UserInfo getLatestUserInfo(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestUserInfo(userId, requestOptions).body();
+    public UserInfo getLatestUserInfo(String userId, GetLatestUserInfoUserRequest request) {
+        return this.rawClient.getLatestUserInfo(userId, request).body();
+    }
+
+    public UserInfo getLatestUserInfo(
+            String userId, GetLatestUserInfoUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getLatestUserInfo(userId, request, requestOptions).body();
     }
 
     public ClientFacingInsurance createInsurance(String userId, CreateInsuranceRequest request) {
@@ -131,8 +156,15 @@ public class UserClient {
         return this.rawClient.getLatestInsurance(userId).body();
     }
 
-    public ClientFacingInsurance getLatestInsurance(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestInsurance(userId, requestOptions).body();
+    public ClientFacingInsurance getLatestInsurance(String userId, GetLatestInsuranceUserRequest request) {
+        return this.rawClient.getLatestInsurance(userId, request).body();
+    }
+
+    public ClientFacingInsurance getLatestInsurance(
+            String userId, GetLatestInsuranceUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getLatestInsurance(userId, request, requestOptions)
+                .body();
     }
 
     public UserInfo upsertUserInfo(String userId, UserInfoCreateRequest request) {
@@ -153,17 +185,33 @@ public class UserClient {
     /**
      * GET user_id from client_user_id.
      */
-    public ClientFacingUser getByClientUserId(String clientUserId, RequestOptions requestOptions) {
-        return this.rawClient.getByClientUserId(clientUserId, requestOptions).body();
+    public ClientFacingUser getByClientUserId(String clientUserId, GetByClientUserIdUserRequest request) {
+        return this.rawClient.getByClientUserId(clientUserId, request).body();
+    }
+
+    /**
+     * GET user_id from client_user_id.
+     */
+    public ClientFacingUser getByClientUserId(
+            String clientUserId, GetByClientUserIdUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getByClientUserId(clientUserId, request, requestOptions)
+                .body();
     }
 
     public UserSuccessResponse deregisterProvider(String userId, Providers provider) {
         return this.rawClient.deregisterProvider(userId, provider).body();
     }
 
-    public UserSuccessResponse deregisterProvider(String userId, Providers provider, RequestOptions requestOptions) {
+    public UserSuccessResponse deregisterProvider(
+            String userId, Providers provider, DeregisterProviderUserRequest request) {
+        return this.rawClient.deregisterProvider(userId, provider, request).body();
+    }
+
+    public UserSuccessResponse deregisterProvider(
+            String userId, Providers provider, DeregisterProviderUserRequest request, RequestOptions requestOptions) {
         return this.rawClient
-                .deregisterProvider(userId, provider, requestOptions)
+                .deregisterProvider(userId, provider, request, requestOptions)
                 .body();
     }
 
@@ -171,16 +219,24 @@ public class UserClient {
         return this.rawClient.get(userId).body();
     }
 
-    public ClientFacingUser get(String userId, RequestOptions requestOptions) {
-        return this.rawClient.get(userId, requestOptions).body();
+    public ClientFacingUser get(String userId, GetUserRequest request) {
+        return this.rawClient.get(userId, request).body();
+    }
+
+    public ClientFacingUser get(String userId, GetUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.get(userId, request, requestOptions).body();
     }
 
     public UserSuccessResponse delete(String userId) {
         return this.rawClient.delete(userId).body();
     }
 
-    public UserSuccessResponse delete(String userId, RequestOptions requestOptions) {
-        return this.rawClient.delete(userId, requestOptions).body();
+    public UserSuccessResponse delete(String userId, DeleteUserRequest request) {
+        return this.rawClient.delete(userId, request).body();
+    }
+
+    public UserSuccessResponse delete(String userId, DeleteUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.delete(userId, request, requestOptions).body();
     }
 
     public void patch(String userId) {
@@ -199,11 +255,11 @@ public class UserClient {
         return this.rawClient.undoDelete().body();
     }
 
-    public UserSuccessResponse undoDelete(UserUndoDeleteRequest request) {
+    public UserSuccessResponse undoDelete(UndoDeleteUserRequest request) {
         return this.rawClient.undoDelete(request).body();
     }
 
-    public UserSuccessResponse undoDelete(UserUndoDeleteRequest request, RequestOptions requestOptions) {
+    public UserSuccessResponse undoDelete(UndoDeleteUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.undoDelete(request, requestOptions).body();
     }
 
@@ -217,7 +273,7 @@ public class UserClient {
     /**
      * Trigger a manual refresh for a specific user
      */
-    public UserRefreshSuccessResponse refresh(String userId, UserRefreshRequest request) {
+    public UserRefreshSuccessResponse refresh(String userId, RefreshUserRequest request) {
         return this.rawClient.refresh(userId, request).body();
     }
 
@@ -225,7 +281,7 @@ public class UserClient {
      * Trigger a manual refresh for a specific user
      */
     public UserRefreshSuccessResponse refresh(
-            String userId, UserRefreshRequest request, RequestOptions requestOptions) {
+            String userId, RefreshUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.refresh(userId, request, requestOptions).body();
     }
 
@@ -233,24 +289,43 @@ public class UserClient {
         return this.rawClient.getDevices(userId).body();
     }
 
-    public List<ClientFacingDevice> getDevices(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getDevices(userId, requestOptions).body();
+    public List<ClientFacingDevice> getDevices(String userId, GetDevicesUserRequest request) {
+        return this.rawClient.getDevices(userId, request).body();
+    }
+
+    public List<ClientFacingDevice> getDevices(
+            String userId, GetDevicesUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getDevices(userId, request, requestOptions).body();
     }
 
     public ClientFacingDevice getDevice(String userId, String deviceId) {
         return this.rawClient.getDevice(userId, deviceId).body();
     }
 
-    public ClientFacingDevice getDevice(String userId, String deviceId, RequestOptions requestOptions) {
-        return this.rawClient.getDevice(userId, deviceId, requestOptions).body();
+    public ClientFacingDevice getDevice(String userId, String deviceId, GetDeviceUserRequest request) {
+        return this.rawClient.getDevice(userId, deviceId, request).body();
+    }
+
+    public ClientFacingDevice getDevice(
+            String userId, String deviceId, GetDeviceUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getDevice(userId, deviceId, request, requestOptions)
+                .body();
     }
 
     public UserSignInTokenResponse getUserSignInToken(String userId) {
         return this.rawClient.getUserSignInToken(userId).body();
     }
 
-    public UserSignInTokenResponse getUserSignInToken(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUserSignInToken(userId, requestOptions).body();
+    public UserSignInTokenResponse getUserSignInToken(String userId, GetUserSignInTokenUserRequest request) {
+        return this.rawClient.getUserSignInToken(userId, request).body();
+    }
+
+    public UserSignInTokenResponse getUserSignInToken(
+            String userId, GetUserSignInTokenUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSignInToken(userId, request, requestOptions)
+                .body();
     }
 
     public CreateUserPortalUrlResponse createPortalUrl(String userId, CreateUserPortalUrlBody request) {

@@ -13,9 +13,11 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
-import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
-import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
+import com.vital.api.resources.team.requests.GetLinkConfigTeamRequest;
+import com.vital.api.resources.team.requests.GetPhysiciansTeamRequest;
+import com.vital.api.resources.team.requests.GetSourcePrioritiesTeamRequest;
+import com.vital.api.resources.team.requests.GetTeamRequest;
+import com.vital.api.resources.team.requests.GetUserByIdTeamRequest;
 import com.vital.api.types.ClientFacingPhysician;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
@@ -45,13 +47,13 @@ public class AsyncRawTeamClient {
      * Post teams.
      */
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> getLinkConfig() {
-        return getLinkConfig(TeamGetLinkConfigRequest.builder().build());
+        return getLinkConfig(GetLinkConfigTeamRequest.builder().build());
     }
 
     /**
      * Post teams.
      */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> getLinkConfig(TeamGetLinkConfigRequest request) {
+    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> getLinkConfig(GetLinkConfigTeamRequest request) {
         return getLinkConfig(request, null);
     }
 
@@ -59,7 +61,7 @@ public class AsyncRawTeamClient {
      * Post teams.
      */
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> getLinkConfig(
-            TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
+            GetLinkConfigTeamRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/link/config")
@@ -124,24 +126,32 @@ public class AsyncRawTeamClient {
      * Get team.
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingTeam>> get(String teamId) {
-        return get(teamId, null);
+        return get(teamId, GetTeamRequest.builder().build());
     }
 
     /**
      * Get team.
      */
-    public CompletableFuture<VitalHttpResponse<ClientFacingTeam>> get(String teamId, RequestOptions requestOptions) {
+    public CompletableFuture<VitalHttpResponse<ClientFacingTeam>> get(String teamId, GetTeamRequest request) {
+        return get(teamId, request, null);
+    }
+
+    /**
+     * Get team.
+     */
+    public CompletableFuture<VitalHttpResponse<ClientFacingTeam>> get(
+            String teamId, GetTeamRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team")
                 .addPathSegment(teamId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -191,13 +201,13 @@ public class AsyncRawTeamClient {
      * Search team users by user_id
      */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingUser>>> getUserById() {
-        return getUserById(TeamGetUserByIdRequest.builder().build());
+        return getUserById(GetUserByIdTeamRequest.builder().build());
     }
 
     /**
      * Search team users by user_id
      */
-    public CompletableFuture<VitalHttpResponse<List<ClientFacingUser>>> getUserById(TeamGetUserByIdRequest request) {
+    public CompletableFuture<VitalHttpResponse<List<ClientFacingUser>>> getUserById(GetUserByIdTeamRequest request) {
         return getUserById(request, null);
     }
 
@@ -205,7 +215,7 @@ public class AsyncRawTeamClient {
      * Search team users by user_id
      */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingUser>>> getUserById(
-            TeamGetUserByIdRequest request, RequestOptions requestOptions) {
+            GetUserByIdTeamRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/users/search");
@@ -320,14 +330,14 @@ public class AsyncRawTeamClient {
      * GET source priorities.
      */
     public CompletableFuture<VitalHttpResponse<List<Map<String, Object>>>> getSourcePriorities() {
-        return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build());
+        return getSourcePriorities(GetSourcePrioritiesTeamRequest.builder().build());
     }
 
     /**
      * GET source priorities.
      */
     public CompletableFuture<VitalHttpResponse<List<Map<String, Object>>>> getSourcePriorities(
-            TeamGetSourcePrioritiesRequest request) {
+            GetSourcePrioritiesTeamRequest request) {
         return getSourcePriorities(request, null);
     }
 
@@ -335,7 +345,7 @@ public class AsyncRawTeamClient {
      * GET source priorities.
      */
     public CompletableFuture<VitalHttpResponse<List<Map<String, Object>>>> getSourcePriorities(
-            TeamGetSourcePrioritiesRequest request, RequestOptions requestOptions) {
+            GetSourcePrioritiesTeamRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/source/priorities");
@@ -454,23 +464,28 @@ public class AsyncRawTeamClient {
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingPhysician>>> getPhysicians(String teamId) {
-        return getPhysicians(teamId, null);
+        return getPhysicians(teamId, GetPhysiciansTeamRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingPhysician>>> getPhysicians(
-            String teamId, RequestOptions requestOptions) {
+            String teamId, GetPhysiciansTeamRequest request) {
+        return getPhysicians(teamId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<List<ClientFacingPhysician>>> getPhysicians(
+            String teamId, GetPhysiciansTeamRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team")
                 .addPathSegment(teamId)
                 .addPathSegments("physicians")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

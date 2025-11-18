@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -40,18 +43,45 @@ public final class OrderSetRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("lab_test_ids")
+    @JsonIgnore
     public Optional<List<String>> getLabTestIds() {
+        if (labTestIds == null) {
+            return Optional.empty();
+        }
         return labTestIds;
     }
 
-    @JsonProperty("add_on")
+    @JsonIgnore
     public Optional<AddOnOrder> getAddOn() {
+        if (addOn == null) {
+            return Optional.empty();
+        }
         return addOn;
     }
 
-    @JsonProperty("lab_account_id")
+    @JsonIgnore
     public Optional<String> getLabAccountId() {
+        if (labAccountId == null) {
+            return Optional.empty();
+        }
+        return labAccountId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("lab_test_ids")
+    private Optional<List<String>> _getLabTestIds() {
+        return labTestIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("add_on")
+    private Optional<AddOnOrder> _getAddOn() {
+        return addOn;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("lab_account_id")
+    private Optional<String> _getLabAccountId() {
         return labAccountId;
     }
 
@@ -117,6 +147,17 @@ public final class OrderSetRequest {
             return this;
         }
 
+        public Builder labTestIds(Nullable<List<String>> labTestIds) {
+            if (labTestIds.isNull()) {
+                this.labTestIds = null;
+            } else if (labTestIds.isEmpty()) {
+                this.labTestIds = Optional.empty();
+            } else {
+                this.labTestIds = Optional.of(labTestIds.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "add_on", nulls = Nulls.SKIP)
         public Builder addOn(Optional<AddOnOrder> addOn) {
             this.addOn = addOn;
@@ -128,6 +169,17 @@ public final class OrderSetRequest {
             return this;
         }
 
+        public Builder addOn(Nullable<AddOnOrder> addOn) {
+            if (addOn.isNull()) {
+                this.addOn = null;
+            } else if (addOn.isEmpty()) {
+                this.addOn = Optional.empty();
+            } else {
+                this.addOn = Optional.of(addOn.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
         public Builder labAccountId(Optional<String> labAccountId) {
             this.labAccountId = labAccountId;
@@ -136,6 +188,17 @@ public final class OrderSetRequest {
 
         public Builder labAccountId(String labAccountId) {
             this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        public Builder labAccountId(Nullable<String> labAccountId) {
+            if (labAccountId.isNull()) {
+                this.labAccountId = null;
+            } else if (labAccountId.isEmpty()) {
+                this.labAccountId = Optional.empty();
+            } else {
+                this.labAccountId = Optional.of(labAccountId.get());
+            }
             return this;
         }
 

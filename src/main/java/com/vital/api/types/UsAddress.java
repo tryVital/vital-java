@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,8 +60,11 @@ public final class UsAddress {
         return firstLine;
     }
 
-    @JsonProperty("second_line")
+    @JsonIgnore
     public Optional<String> getSecondLine() {
+        if (secondLine == null) {
+            return Optional.empty();
+        }
         return secondLine;
     }
 
@@ -80,8 +86,23 @@ public final class UsAddress {
     /**
      * @return Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.
      */
-    @JsonProperty("unit")
+    @JsonIgnore
     public Optional<String> getUnit() {
+        if (unit == null) {
+            return Optional.empty();
+        }
+        return unit;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("second_line")
+    private Optional<String> _getSecondLine() {
+        return secondLine;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("unit")
+    private Optional<String> _getUnit() {
         return unit;
     }
 
@@ -144,12 +165,16 @@ public final class UsAddress {
 
         _FinalStage secondLine(String secondLine);
 
+        _FinalStage secondLine(Nullable<String> secondLine);
+
         /**
          * <p>Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.</p>
          */
         _FinalStage unit(Optional<String> unit);
 
         _FinalStage unit(String unit);
+
+        _FinalStage unit(Nullable<String> unit);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -215,6 +240,22 @@ public final class UsAddress {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage unit(Nullable<String> unit) {
+            if (unit.isNull()) {
+                this.unit = null;
+            } else if (unit.isEmpty()) {
+                this.unit = Optional.empty();
+            } else {
+                this.unit = Optional.of(unit.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Deprecated. Use <code>second_line</code> instead to provide the unit number. Subject to removal after 20 Nov 2023.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.ofNullable(unit);
             return this;
@@ -227,6 +268,18 @@ public final class UsAddress {
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage secondLine(Nullable<String> secondLine) {
+            if (secondLine.isNull()) {
+                this.secondLine = null;
+            } else if (secondLine.isEmpty()) {
+                this.secondLine = Optional.empty();
+            } else {
+                this.secondLine = Optional.of(secondLine.get());
+            }
             return this;
         }
 

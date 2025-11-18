@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -80,19 +83,37 @@ public final class ClientFacingProviderDetailed {
     /**
      * @return URL for source logo
      */
-    @JsonProperty("logo")
+    @JsonIgnore
     public Optional<String> getLogo() {
+        if (logo == null) {
+            return Optional.empty();
+        }
         return logo;
     }
 
-    @JsonProperty("auth_type")
+    @JsonIgnore
     public Optional<SourceAuthType> getAuthType() {
+        if (authType == null) {
+            return Optional.empty();
+        }
         return authType;
     }
 
     @JsonProperty("supported_resources")
     public Optional<List<ClientFacingResource>> getSupportedResources() {
         return supportedResources;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("logo")
+    private Optional<String> _getLogo() {
+        return logo;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("auth_type")
+    private Optional<SourceAuthType> _getAuthType() {
+        return authType;
     }
 
     @java.lang.Override
@@ -162,9 +183,13 @@ public final class ClientFacingProviderDetailed {
 
         _FinalStage logo(String logo);
 
+        _FinalStage logo(Nullable<String> logo);
+
         _FinalStage authType(Optional<SourceAuthType> authType);
 
         _FinalStage authType(SourceAuthType authType);
+
+        _FinalStage authType(Nullable<SourceAuthType> authType);
 
         _FinalStage supportedResources(Optional<List<ClientFacingResource>> supportedResources);
 
@@ -251,6 +276,18 @@ public final class ClientFacingProviderDetailed {
         }
 
         @java.lang.Override
+        public _FinalStage authType(Nullable<SourceAuthType> authType) {
+            if (authType.isNull()) {
+                this.authType = null;
+            } else if (authType.isEmpty()) {
+                this.authType = Optional.empty();
+            } else {
+                this.authType = Optional.of(authType.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.ofNullable(authType);
             return this;
@@ -260,6 +297,22 @@ public final class ClientFacingProviderDetailed {
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
             this.authType = authType;
+            return this;
+        }
+
+        /**
+         * <p>URL for source logo</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage logo(Nullable<String> logo) {
+            if (logo.isNull()) {
+                this.logo = null;
+            } else if (logo.isEmpty()) {
+                this.logo = Optional.empty();
+            } else {
+                this.logo = Optional.of(logo.get());
+            }
             return this;
         }
 

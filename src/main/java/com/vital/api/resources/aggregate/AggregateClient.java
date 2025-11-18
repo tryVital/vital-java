@@ -5,7 +5,8 @@ package com.vital.api.resources.aggregate;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.aggregate.requests.AggregateGetTaskHistoryForContinuousQueryRequest;
+import com.vital.api.resources.aggregate.requests.GetResultTableForContinuousQueryAggregateRequest;
+import com.vital.api.resources.aggregate.requests.GetTaskHistoryForContinuousQueryAggregateRequest;
 import com.vital.api.resources.aggregate.requests.QueryBatch;
 import com.vital.api.types.AggregationResponse;
 import com.vital.api.types.AggregationResult;
@@ -36,16 +37,20 @@ public class AggregateClient {
         return this.rawClient.queryOne(userId, request, requestOptions).body();
     }
 
-    public AggregationResult getResultTableForContinuousQuery(String userId, String queryIdOrSlug) {
+    public AggregationResult getResultTableForContinuousQuery(
+            String userId, String queryIdOrSlug, GetResultTableForContinuousQueryAggregateRequest request) {
         return this.rawClient
-                .getResultTableForContinuousQuery(userId, queryIdOrSlug)
+                .getResultTableForContinuousQuery(userId, queryIdOrSlug, request)
                 .body();
     }
 
     public AggregationResult getResultTableForContinuousQuery(
-            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+            String userId,
+            String queryIdOrSlug,
+            GetResultTableForContinuousQueryAggregateRequest request,
+            RequestOptions requestOptions) {
         return this.rawClient
-                .getResultTableForContinuousQuery(userId, queryIdOrSlug, requestOptions)
+                .getResultTableForContinuousQuery(userId, queryIdOrSlug, request, requestOptions)
                 .body();
     }
 
@@ -56,7 +61,7 @@ public class AggregateClient {
     }
 
     public ContinuousQueryTaskHistoryResponse getTaskHistoryForContinuousQuery(
-            String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
+            String userId, String queryIdOrSlug, GetTaskHistoryForContinuousQueryAggregateRequest request) {
         return this.rawClient
                 .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request)
                 .body();
@@ -65,7 +70,7 @@ public class AggregateClient {
     public ContinuousQueryTaskHistoryResponse getTaskHistoryForContinuousQuery(
             String userId,
             String queryIdOrSlug,
-            AggregateGetTaskHistoryForContinuousQueryRequest request,
+            GetTaskHistoryForContinuousQueryAggregateRequest request,
             RequestOptions requestOptions) {
         return this.rawClient
                 .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request, requestOptions)

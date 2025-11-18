@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -103,8 +106,11 @@ public final class SleepV2InDb {
         return sourceId;
     }
 
-    @JsonProperty("priority_id")
+    @JsonIgnore
     public Optional<Integer> getPriorityId() {
+        if (priorityId == null) {
+            return Optional.empty();
+        }
         return priorityId;
     }
 
@@ -118,13 +124,19 @@ public final class SleepV2InDb {
         return source;
     }
 
-    @JsonProperty("priority")
+    @JsonIgnore
     public Optional<Integer> getPriority() {
+        if (priority == null) {
+            return Optional.empty();
+        }
         return priority;
     }
 
-    @JsonProperty("source_device_id")
+    @JsonIgnore
     public Optional<String> getSourceDeviceId() {
+        if (sourceDeviceId == null) {
+            return Optional.empty();
+        }
         return sourceDeviceId;
     }
 
@@ -136,6 +148,24 @@ public final class SleepV2InDb {
     @JsonProperty("updated_at")
     public Optional<OffsetDateTime> getUpdatedAt() {
         return updatedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("priority_id")
+    private Optional<Integer> _getPriorityId() {
+        return priorityId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("priority")
+    private Optional<Integer> _getPriority() {
+        return priority;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_device_id")
+    private Optional<String> _getSourceDeviceId() {
+        return sourceDeviceId;
     }
 
     @java.lang.Override
@@ -229,13 +259,19 @@ public final class SleepV2InDb {
 
         _FinalStage priorityId(Integer priorityId);
 
+        _FinalStage priorityId(Nullable<Integer> priorityId);
+
         _FinalStage priority(Optional<Integer> priority);
 
         _FinalStage priority(Integer priority);
 
+        _FinalStage priority(Nullable<Integer> priority);
+
         _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
 
         _FinalStage sourceDeviceId(String sourceDeviceId);
+
+        _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId);
 
         _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
 
@@ -364,6 +400,18 @@ public final class SleepV2InDb {
         }
 
         @java.lang.Override
+        public _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId) {
+            if (sourceDeviceId.isNull()) {
+                this.sourceDeviceId = null;
+            } else if (sourceDeviceId.isEmpty()) {
+                this.sourceDeviceId = Optional.empty();
+            } else {
+                this.sourceDeviceId = Optional.of(sourceDeviceId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
             this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
@@ -377,6 +425,18 @@ public final class SleepV2InDb {
         }
 
         @java.lang.Override
+        public _FinalStage priority(Nullable<Integer> priority) {
+            if (priority.isNull()) {
+                this.priority = null;
+            } else if (priority.isEmpty()) {
+                this.priority = Optional.empty();
+            } else {
+                this.priority = Optional.of(priority.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage priority(Integer priority) {
             this.priority = Optional.ofNullable(priority);
             return this;
@@ -386,6 +446,18 @@ public final class SleepV2InDb {
         @JsonSetter(value = "priority", nulls = Nulls.SKIP)
         public _FinalStage priority(Optional<Integer> priority) {
             this.priority = priority;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage priorityId(Nullable<Integer> priorityId) {
+            if (priorityId.isNull()) {
+                this.priorityId = null;
+            } else if (priorityId.isEmpty()) {
+                this.priorityId = Optional.empty();
+            } else {
+                this.priorityId = Optional.of(priorityId.get());
+            }
             return this;
         }
 

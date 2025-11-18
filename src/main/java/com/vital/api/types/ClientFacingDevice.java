@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,28 +90,73 @@ public final class ClientFacingDevice {
         return sourceType;
     }
 
-    @JsonProperty("app_id")
+    @JsonIgnore
     public Optional<String> getAppId() {
+        if (appId == null) {
+            return Optional.empty();
+        }
         return appId;
     }
 
-    @JsonProperty("device_manufacturer")
+    @JsonIgnore
     public Optional<String> getDeviceManufacturer() {
+        if (deviceManufacturer == null) {
+            return Optional.empty();
+        }
         return deviceManufacturer;
     }
 
-    @JsonProperty("device_model")
+    @JsonIgnore
     public Optional<String> getDeviceModel() {
+        if (deviceModel == null) {
+            return Optional.empty();
+        }
         return deviceModel;
     }
 
-    @JsonProperty("device_version")
+    @JsonIgnore
     public Optional<String> getDeviceVersion() {
+        if (deviceVersion == null) {
+            return Optional.empty();
+        }
         return deviceVersion;
     }
 
-    @JsonProperty("device_id")
+    @JsonIgnore
     public Optional<String> getDeviceId() {
+        if (deviceId == null) {
+            return Optional.empty();
+        }
+        return deviceId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("app_id")
+    private Optional<String> _getAppId() {
+        return appId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("device_manufacturer")
+    private Optional<String> _getDeviceManufacturer() {
+        return deviceManufacturer;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("device_model")
+    private Optional<String> _getDeviceModel() {
+        return deviceModel;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("device_version")
+    private Optional<String> _getDeviceVersion() {
+        return deviceVersion;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("device_id")
+    private Optional<String> _getDeviceId() {
         return deviceId;
     }
 
@@ -186,21 +234,31 @@ public final class ClientFacingDevice {
 
         _FinalStage appId(String appId);
 
+        _FinalStage appId(Nullable<String> appId);
+
         _FinalStage deviceManufacturer(Optional<String> deviceManufacturer);
 
         _FinalStage deviceManufacturer(String deviceManufacturer);
+
+        _FinalStage deviceManufacturer(Nullable<String> deviceManufacturer);
 
         _FinalStage deviceModel(Optional<String> deviceModel);
 
         _FinalStage deviceModel(String deviceModel);
 
+        _FinalStage deviceModel(Nullable<String> deviceModel);
+
         _FinalStage deviceVersion(Optional<String> deviceVersion);
 
         _FinalStage deviceVersion(String deviceVersion);
 
+        _FinalStage deviceVersion(Nullable<String> deviceVersion);
+
         _FinalStage deviceId(Optional<String> deviceId);
 
         _FinalStage deviceId(String deviceId);
+
+        _FinalStage deviceId(Nullable<String> deviceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -276,6 +334,18 @@ public final class ClientFacingDevice {
         }
 
         @java.lang.Override
+        public _FinalStage deviceId(Nullable<String> deviceId) {
+            if (deviceId.isNull()) {
+                this.deviceId = null;
+            } else if (deviceId.isEmpty()) {
+                this.deviceId = Optional.empty();
+            } else {
+                this.deviceId = Optional.of(deviceId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage deviceId(String deviceId) {
             this.deviceId = Optional.ofNullable(deviceId);
             return this;
@@ -285,6 +355,18 @@ public final class ClientFacingDevice {
         @JsonSetter(value = "device_id", nulls = Nulls.SKIP)
         public _FinalStage deviceId(Optional<String> deviceId) {
             this.deviceId = deviceId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage deviceVersion(Nullable<String> deviceVersion) {
+            if (deviceVersion.isNull()) {
+                this.deviceVersion = null;
+            } else if (deviceVersion.isEmpty()) {
+                this.deviceVersion = Optional.empty();
+            } else {
+                this.deviceVersion = Optional.of(deviceVersion.get());
+            }
             return this;
         }
 
@@ -302,6 +384,18 @@ public final class ClientFacingDevice {
         }
 
         @java.lang.Override
+        public _FinalStage deviceModel(Nullable<String> deviceModel) {
+            if (deviceModel.isNull()) {
+                this.deviceModel = null;
+            } else if (deviceModel.isEmpty()) {
+                this.deviceModel = Optional.empty();
+            } else {
+                this.deviceModel = Optional.of(deviceModel.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage deviceModel(String deviceModel) {
             this.deviceModel = Optional.ofNullable(deviceModel);
             return this;
@@ -315,6 +409,18 @@ public final class ClientFacingDevice {
         }
 
         @java.lang.Override
+        public _FinalStage deviceManufacturer(Nullable<String> deviceManufacturer) {
+            if (deviceManufacturer.isNull()) {
+                this.deviceManufacturer = null;
+            } else if (deviceManufacturer.isEmpty()) {
+                this.deviceManufacturer = Optional.empty();
+            } else {
+                this.deviceManufacturer = Optional.of(deviceManufacturer.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage deviceManufacturer(String deviceManufacturer) {
             this.deviceManufacturer = Optional.ofNullable(deviceManufacturer);
             return this;
@@ -324,6 +430,18 @@ public final class ClientFacingDevice {
         @JsonSetter(value = "device_manufacturer", nulls = Nulls.SKIP)
         public _FinalStage deviceManufacturer(Optional<String> deviceManufacturer) {
             this.deviceManufacturer = deviceManufacturer;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage appId(Nullable<String> appId) {
+            if (appId.isNull()) {
+                this.appId = null;
+            } else if (appId.isEmpty()) {
+                this.appId = Optional.empty();
+            } else {
+                this.appId = Optional.of(appId.get());
+            }
             return this;
         }
 

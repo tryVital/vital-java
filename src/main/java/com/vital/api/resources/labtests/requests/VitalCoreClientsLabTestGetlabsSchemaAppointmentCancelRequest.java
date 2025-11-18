@@ -5,12 +5,15 @@ package com.vital.api.resources.labtests.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,8 +42,17 @@ public final class VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest 
         return cancellationReasonId;
     }
 
-    @JsonProperty("note")
+    @JsonIgnore
     public Optional<String> getNote() {
+        if (note == null) {
+            return Optional.empty();
+        }
+        return note;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("note")
+    private Optional<String> _getNote() {
         return note;
     }
 
@@ -86,6 +98,8 @@ public final class VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest 
         _FinalStage note(Optional<String> note);
 
         _FinalStage note(String note);
+
+        _FinalStage note(Nullable<String> note);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -111,6 +125,18 @@ public final class VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest 
         public _FinalStage cancellationReasonId(@NotNull String cancellationReasonId) {
             this.cancellationReasonId =
                     Objects.requireNonNull(cancellationReasonId, "cancellationReasonId must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage note(Nullable<String> note) {
+            if (note.isNull()) {
+                this.note = null;
+            } else if (note.isEmpty()) {
+                this.note = Optional.empty();
+            } else {
+                this.note = Optional.of(note.get());
+            }
             return this;
         }
 

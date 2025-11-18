@@ -5,12 +5,15 @@ package com.vital.api.resources.testkit.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Consent;
 import com.vital.api.types.HealthInsuranceCreateRequest;
@@ -65,8 +68,11 @@ public final class RegisterTestkitRequest {
     /**
      * @return The user ID of the patient.
      */
-    @JsonProperty("user_id")
+    @JsonIgnore
     public Optional<String> getUserId() {
+        if (userId == null) {
+            return Optional.empty();
+        }
         return userId;
     }
 
@@ -85,19 +91,43 @@ public final class RegisterTestkitRequest {
         return patientAddress;
     }
 
-    @JsonProperty("physician")
+    @JsonIgnore
     public Optional<PhysicianCreateRequestBase> getPhysician() {
+        if (physician == null) {
+            return Optional.empty();
+        }
         return physician;
     }
 
-    @JsonProperty("health_insurance")
+    @JsonIgnore
     public Optional<HealthInsuranceCreateRequest> getHealthInsurance() {
+        if (healthInsurance == null) {
+            return Optional.empty();
+        }
         return healthInsurance;
     }
 
     @JsonProperty("consents")
     public Optional<List<Consent>> getConsents() {
         return consents;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("user_id")
+    private Optional<String> _getUserId() {
+        return userId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("physician")
+    private Optional<PhysicianCreateRequestBase> _getPhysician() {
+        return physician;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("health_insurance")
+    private Optional<HealthInsuranceCreateRequest> _getHealthInsurance() {
+        return healthInsurance;
     }
 
     @java.lang.Override
@@ -166,13 +196,19 @@ public final class RegisterTestkitRequest {
 
         _FinalStage userId(String userId);
 
+        _FinalStage userId(Nullable<String> userId);
+
         _FinalStage physician(Optional<PhysicianCreateRequestBase> physician);
 
         _FinalStage physician(PhysicianCreateRequestBase physician);
 
+        _FinalStage physician(Nullable<PhysicianCreateRequestBase> physician);
+
         _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance);
 
         _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance);
+
+        _FinalStage healthInsurance(Nullable<HealthInsuranceCreateRequest> healthInsurance);
 
         _FinalStage consents(Optional<List<Consent>> consents);
 
@@ -247,6 +283,18 @@ public final class RegisterTestkitRequest {
         }
 
         @java.lang.Override
+        public _FinalStage healthInsurance(Nullable<HealthInsuranceCreateRequest> healthInsurance) {
+            if (healthInsurance.isNull()) {
+                this.healthInsurance = null;
+            } else if (healthInsurance.isEmpty()) {
+                this.healthInsurance = Optional.empty();
+            } else {
+                this.healthInsurance = Optional.of(healthInsurance.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
             this.healthInsurance = Optional.ofNullable(healthInsurance);
             return this;
@@ -260,6 +308,18 @@ public final class RegisterTestkitRequest {
         }
 
         @java.lang.Override
+        public _FinalStage physician(Nullable<PhysicianCreateRequestBase> physician) {
+            if (physician.isNull()) {
+                this.physician = null;
+            } else if (physician.isEmpty()) {
+                this.physician = Optional.empty();
+            } else {
+                this.physician = Optional.of(physician.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage physician(PhysicianCreateRequestBase physician) {
             this.physician = Optional.ofNullable(physician);
             return this;
@@ -269,6 +329,22 @@ public final class RegisterTestkitRequest {
         @JsonSetter(value = "physician", nulls = Nulls.SKIP)
         public _FinalStage physician(Optional<PhysicianCreateRequestBase> physician) {
             this.physician = physician;
+            return this;
+        }
+
+        /**
+         * <p>The user ID of the patient.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage userId(Nullable<String> userId) {
+            if (userId.isNull()) {
+                this.userId = null;
+            } else if (userId.isEmpty()) {
+                this.userId = Optional.empty();
+            } else {
+                this.userId = Optional.of(userId.get());
+            }
             return this;
         }
 

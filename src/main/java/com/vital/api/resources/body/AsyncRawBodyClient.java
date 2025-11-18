@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.body.requests.BodyGetRawRequest;
-import com.vital.api.resources.body.requests.BodyGetRequest;
+import com.vital.api.resources.body.requests.GetBodyRequest;
+import com.vital.api.resources.body.requests.GetRawBodyRequest;
 import com.vital.api.types.ClientBodyResponse;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawBody;
@@ -39,7 +39,7 @@ public class AsyncRawBodyClient {
     /**
      * Get Body summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<ClientBodyResponse>> get(String userId, BodyGetRequest request) {
+    public CompletableFuture<VitalHttpResponse<ClientBodyResponse>> get(String userId, GetBodyRequest request) {
         return get(userId, request, null);
     }
 
@@ -47,7 +47,7 @@ public class AsyncRawBodyClient {
      * Get Body summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientBodyResponse>> get(
-            String userId, BodyGetRequest request, RequestOptions requestOptions) {
+            String userId, GetBodyRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/body")
@@ -115,7 +115,7 @@ public class AsyncRawBodyClient {
     /**
      * Get raw Body summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawBody>> getRaw(String userId, BodyGetRawRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawBody>> getRaw(String userId, GetRawBodyRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -123,7 +123,7 @@ public class AsyncRawBodyClient {
      * Get raw Body summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawBody>> getRaw(
-            String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawBodyRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/body")

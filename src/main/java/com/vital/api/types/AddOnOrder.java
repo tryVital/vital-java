@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -36,13 +39,31 @@ public final class AddOnOrder {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("marker_ids")
+    @JsonIgnore
     public Optional<List<Integer>> getMarkerIds() {
+        if (markerIds == null) {
+            return Optional.empty();
+        }
         return markerIds;
     }
 
-    @JsonProperty("provider_ids")
+    @JsonIgnore
     public Optional<List<String>> getProviderIds() {
+        if (providerIds == null) {
+            return Optional.empty();
+        }
+        return providerIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("marker_ids")
+    private Optional<List<Integer>> _getMarkerIds() {
+        return markerIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_ids")
+    private Optional<List<String>> _getProviderIds() {
         return providerIds;
     }
 
@@ -103,6 +124,17 @@ public final class AddOnOrder {
             return this;
         }
 
+        public Builder markerIds(Nullable<List<Integer>> markerIds) {
+            if (markerIds.isNull()) {
+                this.markerIds = null;
+            } else if (markerIds.isEmpty()) {
+                this.markerIds = Optional.empty();
+            } else {
+                this.markerIds = Optional.of(markerIds.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "provider_ids", nulls = Nulls.SKIP)
         public Builder providerIds(Optional<List<String>> providerIds) {
             this.providerIds = providerIds;
@@ -111,6 +143,17 @@ public final class AddOnOrder {
 
         public Builder providerIds(List<String> providerIds) {
             this.providerIds = Optional.ofNullable(providerIds);
+            return this;
+        }
+
+        public Builder providerIds(Nullable<List<String>> providerIds) {
+            if (providerIds.isNull()) {
+                this.providerIds = null;
+            } else if (providerIds.isEmpty()) {
+                this.providerIds = Optional.empty();
+            } else {
+                this.providerIds = Optional.of(providerIds.get());
+            }
             return this;
         }
 

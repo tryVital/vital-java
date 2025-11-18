@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.electrocardiogram.requests.ElectrocardiogramGetRequest;
+import com.vital.api.resources.electrocardiogram.requests.GetElectrocardiogramRequest;
 import com.vital.api.types.ClientFacingElectrocardiogramResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class AsyncRawElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingElectrocardiogramResponse>> get(
-            String userId, ElectrocardiogramGetRequest request) {
+            String userId, GetElectrocardiogramRequest request) {
         return get(userId, request, null);
     }
 
@@ -46,7 +46,7 @@ public class AsyncRawElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingElectrocardiogramResponse>> get(
-            String userId, ElectrocardiogramGetRequest request, RequestOptions requestOptions) {
+            String userId, GetElectrocardiogramRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/electrocardiogram")

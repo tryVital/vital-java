@@ -13,7 +13,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.aggregate.requests.AggregateGetTaskHistoryForContinuousQueryRequest;
+import com.vital.api.resources.aggregate.requests.GetResultTableForContinuousQueryAggregateRequest;
+import com.vital.api.resources.aggregate.requests.GetTaskHistoryForContinuousQueryAggregateRequest;
 import com.vital.api.resources.aggregate.requests.QueryBatch;
 import com.vital.api.types.AggregationResponse;
 import com.vital.api.types.AggregationResult;
@@ -120,12 +121,15 @@ public class AsyncRawAggregateClient {
     }
 
     public CompletableFuture<VitalHttpResponse<AggregationResult>> getResultTableForContinuousQuery(
-            String userId, String queryIdOrSlug) {
-        return getResultTableForContinuousQuery(userId, queryIdOrSlug, null);
+            String userId, String queryIdOrSlug, GetResultTableForContinuousQueryAggregateRequest request) {
+        return getResultTableForContinuousQuery(userId, queryIdOrSlug, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<AggregationResult>> getResultTableForContinuousQuery(
-            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+            String userId,
+            String queryIdOrSlug,
+            GetResultTableForContinuousQueryAggregateRequest request,
+            RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("aggregate/v1/user")
@@ -134,12 +138,13 @@ public class AsyncRawAggregateClient {
                 .addPathSegment(queryIdOrSlug)
                 .addPathSegments("result_table")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        _requestBuilder.addHeader("accept", request.getAccept());
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -190,18 +195,18 @@ public class AsyncRawAggregateClient {
         return getTaskHistoryForContinuousQuery(
                 userId,
                 queryIdOrSlug,
-                AggregateGetTaskHistoryForContinuousQueryRequest.builder().build());
+                GetTaskHistoryForContinuousQueryAggregateRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<ContinuousQueryTaskHistoryResponse>> getTaskHistoryForContinuousQuery(
-            String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
+            String userId, String queryIdOrSlug, GetTaskHistoryForContinuousQueryAggregateRequest request) {
         return getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<ContinuousQueryTaskHistoryResponse>> getTaskHistoryForContinuousQuery(
             String userId,
             String queryIdOrSlug,
-            AggregateGetTaskHistoryForContinuousQueryRequest request,
+            GetTaskHistoryForContinuousQueryAggregateRequest request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

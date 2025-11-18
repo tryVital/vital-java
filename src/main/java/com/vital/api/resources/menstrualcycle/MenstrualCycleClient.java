@@ -5,7 +5,7 @@ package com.vital.api.resources.menstrualcycle;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.menstrualcycle.requests.MenstrualCycleGetRequest;
+import com.vital.api.resources.menstrualcycle.requests.GetMenstrualCycleRequest;
 import com.vital.api.types.MenstrualCycleResponse;
 
 public class MenstrualCycleClient {
@@ -25,11 +25,11 @@ public class MenstrualCycleClient {
         return this.rawClient;
     }
 
-    public MenstrualCycleResponse get(String userId, MenstrualCycleGetRequest request) {
+    public MenstrualCycleResponse get(String userId, GetMenstrualCycleRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
-    public MenstrualCycleResponse get(String userId, MenstrualCycleGetRequest request, RequestOptions requestOptions) {
+    public MenstrualCycleResponse get(String userId, GetMenstrualCycleRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 }

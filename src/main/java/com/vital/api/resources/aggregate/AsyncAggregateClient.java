@@ -5,7 +5,8 @@ package com.vital.api.resources.aggregate;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.aggregate.requests.AggregateGetTaskHistoryForContinuousQueryRequest;
+import com.vital.api.resources.aggregate.requests.GetResultTableForContinuousQueryAggregateRequest;
+import com.vital.api.resources.aggregate.requests.GetTaskHistoryForContinuousQueryAggregateRequest;
 import com.vital.api.resources.aggregate.requests.QueryBatch;
 import com.vital.api.types.AggregationResponse;
 import com.vital.api.types.AggregationResult;
@@ -38,16 +39,20 @@ public class AsyncAggregateClient {
         return this.rawClient.queryOne(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<AggregationResult> getResultTableForContinuousQuery(String userId, String queryIdOrSlug) {
+    public CompletableFuture<AggregationResult> getResultTableForContinuousQuery(
+            String userId, String queryIdOrSlug, GetResultTableForContinuousQueryAggregateRequest request) {
         return this.rawClient
-                .getResultTableForContinuousQuery(userId, queryIdOrSlug)
+                .getResultTableForContinuousQuery(userId, queryIdOrSlug, request)
                 .thenApply(response -> response.body());
     }
 
     public CompletableFuture<AggregationResult> getResultTableForContinuousQuery(
-            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+            String userId,
+            String queryIdOrSlug,
+            GetResultTableForContinuousQueryAggregateRequest request,
+            RequestOptions requestOptions) {
         return this.rawClient
-                .getResultTableForContinuousQuery(userId, queryIdOrSlug, requestOptions)
+                .getResultTableForContinuousQuery(userId, queryIdOrSlug, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -59,7 +64,7 @@ public class AsyncAggregateClient {
     }
 
     public CompletableFuture<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
-            String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
+            String userId, String queryIdOrSlug, GetTaskHistoryForContinuousQueryAggregateRequest request) {
         return this.rawClient
                 .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request)
                 .thenApply(response -> response.body());
@@ -68,7 +73,7 @@ public class AsyncAggregateClient {
     public CompletableFuture<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
             String userId,
             String queryIdOrSlug,
-            AggregateGetTaskHistoryForContinuousQueryRequest request,
+            GetTaskHistoryForContinuousQueryAggregateRequest request,
             RequestOptions requestOptions) {
         return this.rawClient
                 .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request, requestOptions)

@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -51,8 +54,17 @@ public final class ClientFacingAppointmentEvent {
         return status;
     }
 
-    @JsonProperty("data")
+    @JsonIgnore
     public Optional<Map<String, Object>> getData() {
+        if (data == null) {
+            return Optional.empty();
+        }
+        return data;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("data")
+    private Optional<Map<String, Object>> _getData() {
         return data;
     }
 
@@ -101,6 +113,8 @@ public final class ClientFacingAppointmentEvent {
         _FinalStage data(Optional<Map<String, Object>> data);
 
         _FinalStage data(Map<String, Object> data);
+
+        _FinalStage data(Nullable<Map<String, Object>> data);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -135,6 +149,18 @@ public final class ClientFacingAppointmentEvent {
         @JsonSetter("status")
         public _FinalStage status(@NotNull AppointmentEventStatus status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage data(Nullable<Map<String, Object>> data) {
+            if (data.isNull()) {
+                this.data = null;
+            } else if (data.isEmpty()) {
+                this.data = Optional.empty();
+            } else {
+                this.data = Optional.of(data.get());
+            }
             return this;
         }
 

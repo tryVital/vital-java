@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
-import com.vital.api.resources.activity.requests.ActivityGetRequest;
+import com.vital.api.resources.activity.requests.GetActivityRequest;
+import com.vital.api.resources.activity.requests.GetRawActivityRequest;
 import com.vital.api.types.ClientActivityResponse;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawActivity;
@@ -35,7 +35,7 @@ public class RawActivityClient {
     /**
      * Get activity summary for user_id
      */
-    public VitalHttpResponse<ClientActivityResponse> get(String userId, ActivityGetRequest request) {
+    public VitalHttpResponse<ClientActivityResponse> get(String userId, GetActivityRequest request) {
         return get(userId, request, null);
     }
 
@@ -43,7 +43,7 @@ public class RawActivityClient {
      * Get activity summary for user_id
      */
     public VitalHttpResponse<ClientActivityResponse> get(
-            String userId, ActivityGetRequest request, RequestOptions requestOptions) {
+            String userId, GetActivityRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/activity")
@@ -97,7 +97,7 @@ public class RawActivityClient {
     /**
      * Get raw activity summary for user_id
      */
-    public VitalHttpResponse<RawActivity> getRaw(String userId, ActivityGetRawRequest request) {
+    public VitalHttpResponse<RawActivity> getRaw(String userId, GetRawActivityRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -105,7 +105,7 @@ public class RawActivityClient {
      * Get raw activity summary for user_id
      */
     public VitalHttpResponse<RawActivity> getRaw(
-            String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawActivityRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/activity")

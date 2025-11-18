@@ -5,12 +5,15 @@ package com.vital.api.resources.insurance.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.PayorCodeExternalProvider;
 import java.util.HashMap;
@@ -40,18 +43,45 @@ public final class PayorSearchRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("insurance_name")
+    @JsonIgnore
     public Optional<String> getInsuranceName() {
+        if (insuranceName == null) {
+            return Optional.empty();
+        }
         return insuranceName;
     }
 
-    @JsonProperty("provider")
+    @JsonIgnore
     public Optional<PayorCodeExternalProvider> getProvider() {
+        if (provider == null) {
+            return Optional.empty();
+        }
         return provider;
     }
 
-    @JsonProperty("provider_id")
+    @JsonIgnore
     public Optional<String> getProviderId() {
+        if (providerId == null) {
+            return Optional.empty();
+        }
+        return providerId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("insurance_name")
+    private Optional<String> _getInsuranceName() {
+        return insuranceName;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider")
+    private Optional<PayorCodeExternalProvider> _getProvider() {
+        return provider;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_id")
+    private Optional<String> _getProviderId() {
         return providerId;
     }
 
@@ -117,6 +147,17 @@ public final class PayorSearchRequest {
             return this;
         }
 
+        public Builder insuranceName(Nullable<String> insuranceName) {
+            if (insuranceName.isNull()) {
+                this.insuranceName = null;
+            } else if (insuranceName.isEmpty()) {
+                this.insuranceName = Optional.empty();
+            } else {
+                this.insuranceName = Optional.of(insuranceName.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public Builder provider(Optional<PayorCodeExternalProvider> provider) {
             this.provider = provider;
@@ -128,6 +169,17 @@ public final class PayorSearchRequest {
             return this;
         }
 
+        public Builder provider(Nullable<PayorCodeExternalProvider> provider) {
+            if (provider.isNull()) {
+                this.provider = null;
+            } else if (provider.isEmpty()) {
+                this.provider = Optional.empty();
+            } else {
+                this.provider = Optional.of(provider.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public Builder providerId(Optional<String> providerId) {
             this.providerId = providerId;
@@ -136,6 +188,17 @@ public final class PayorSearchRequest {
 
         public Builder providerId(String providerId) {
             this.providerId = Optional.ofNullable(providerId);
+            return this;
+        }
+
+        public Builder providerId(Nullable<String> providerId) {
+            if (providerId.isNull()) {
+                this.providerId = null;
+            } else if (providerId.isEmpty()) {
+                this.providerId = Optional.empty();
+            } else {
+                this.providerId = Optional.of(providerId.get());
+            }
             return this;
         }
 

@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -113,56 +116,119 @@ public final class PatientDetailsWithValidation {
     /**
      * @return Parent/medical_proxy details. Required if patient is a minor.
      */
-    @JsonProperty("medical_proxy")
+    @JsonIgnore
     public Optional<GuarantorDetails> getMedicalProxy() {
+        if (medicalProxy == null) {
+            return Optional.empty();
+        }
         return medicalProxy;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("race")
+    @JsonIgnore
     public Optional<Race> getRace() {
+        if (race == null) {
+            return Optional.empty();
+        }
         return race;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("ethnicity")
+    @JsonIgnore
     public Optional<Ethnicity> getEthnicity() {
+        if (ethnicity == null) {
+            return Optional.empty();
+        }
         return ethnicity;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("sexual_orientation")
+    @JsonIgnore
     public Optional<SexualOrientation> getSexualOrientation() {
+        if (sexualOrientation == null) {
+            return Optional.empty();
+        }
         return sexualOrientation;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("gender_identity")
+    @JsonIgnore
     public Optional<GenderIdentity> getGenderIdentity() {
+        if (genderIdentity == null) {
+            return Optional.empty();
+        }
         return genderIdentity;
     }
 
     /**
      * @return Household income in USD. If not provided, will be set to None
      */
-    @JsonProperty("household_income")
+    @JsonIgnore
     public Optional<Integer> getHouseholdIncome() {
+        if (householdIncome == null) {
+            return Optional.empty();
+        }
         return householdIncome;
     }
 
     /**
      * @return Household size. If not provided, will be set to None
      */
-    @JsonProperty("household_size")
+    @JsonIgnore
     public Optional<Integer> getHouseholdSize() {
+        if (householdSize == null) {
+            return Optional.empty();
+        }
+        return householdSize;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("medical_proxy")
+    private Optional<GuarantorDetails> _getMedicalProxy() {
+        return medicalProxy;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("race")
+    private Optional<Race> _getRace() {
+        return race;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("ethnicity")
+    private Optional<Ethnicity> _getEthnicity() {
+        return ethnicity;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sexual_orientation")
+    private Optional<SexualOrientation> _getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("gender_identity")
+    private Optional<GenderIdentity> _getGenderIdentity() {
+        return genderIdentity;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("household_income")
+    private Optional<Integer> _getHouseholdIncome() {
+        return householdIncome;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("household_size")
+    private Optional<Integer> _getHouseholdSize() {
         return householdSize;
     }
 
@@ -256,12 +322,16 @@ public final class PatientDetailsWithValidation {
 
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
 
+        _FinalStage medicalProxy(Nullable<GuarantorDetails> medicalProxy);
+
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
          */
         _FinalStage race(Optional<Race> race);
 
         _FinalStage race(Race race);
+
+        _FinalStage race(Nullable<Race> race);
 
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
@@ -270,12 +340,16 @@ public final class PatientDetailsWithValidation {
 
         _FinalStage ethnicity(Ethnicity ethnicity);
 
+        _FinalStage ethnicity(Nullable<Ethnicity> ethnicity);
+
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
          */
         _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
 
         _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
+
+        _FinalStage sexualOrientation(Nullable<SexualOrientation> sexualOrientation);
 
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
@@ -284,6 +358,8 @@ public final class PatientDetailsWithValidation {
 
         _FinalStage genderIdentity(GenderIdentity genderIdentity);
 
+        _FinalStage genderIdentity(Nullable<GenderIdentity> genderIdentity);
+
         /**
          * <p>Household income in USD. If not provided, will be set to None</p>
          */
@@ -291,12 +367,16 @@ public final class PatientDetailsWithValidation {
 
         _FinalStage householdIncome(Integer householdIncome);
 
+        _FinalStage householdIncome(Nullable<Integer> householdIncome);
+
         /**
          * <p>Household size. If not provided, will be set to None</p>
          */
         _FinalStage householdSize(Optional<Integer> householdSize);
 
         _FinalStage householdSize(Integer householdSize);
+
+        _FinalStage householdSize(Nullable<Integer> householdSize);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -398,6 +478,22 @@ public final class PatientDetailsWithValidation {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage householdSize(Nullable<Integer> householdSize) {
+            if (householdSize.isNull()) {
+                this.householdSize = null;
+            } else if (householdSize.isEmpty()) {
+                this.householdSize = Optional.empty();
+            } else {
+                this.householdSize = Optional.of(householdSize.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Household size. If not provided, will be set to None</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage householdSize(Integer householdSize) {
             this.householdSize = Optional.ofNullable(householdSize);
             return this;
@@ -410,6 +506,22 @@ public final class PatientDetailsWithValidation {
         @JsonSetter(value = "household_size", nulls = Nulls.SKIP)
         public _FinalStage householdSize(Optional<Integer> householdSize) {
             this.householdSize = householdSize;
+            return this;
+        }
+
+        /**
+         * <p>Household income in USD. If not provided, will be set to None</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage householdIncome(Nullable<Integer> householdIncome) {
+            if (householdIncome.isNull()) {
+                this.householdIncome = null;
+            } else if (householdIncome.isEmpty()) {
+                this.householdIncome = Optional.empty();
+            } else {
+                this.householdIncome = Optional.of(householdIncome.get());
+            }
             return this;
         }
 
@@ -438,6 +550,22 @@ public final class PatientDetailsWithValidation {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage genderIdentity(Nullable<GenderIdentity> genderIdentity) {
+            if (genderIdentity.isNull()) {
+                this.genderIdentity = null;
+            } else if (genderIdentity.isEmpty()) {
+                this.genderIdentity = Optional.empty();
+            } else {
+                this.genderIdentity = Optional.of(genderIdentity.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
             this.genderIdentity = Optional.ofNullable(genderIdentity);
             return this;
@@ -450,6 +578,22 @@ public final class PatientDetailsWithValidation {
         @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
         public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
             this.genderIdentity = genderIdentity;
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage sexualOrientation(Nullable<SexualOrientation> sexualOrientation) {
+            if (sexualOrientation.isNull()) {
+                this.sexualOrientation = null;
+            } else if (sexualOrientation.isEmpty()) {
+                this.sexualOrientation = Optional.empty();
+            } else {
+                this.sexualOrientation = Optional.of(sexualOrientation.get());
+            }
             return this;
         }
 
@@ -478,6 +622,22 @@ public final class PatientDetailsWithValidation {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage ethnicity(Nullable<Ethnicity> ethnicity) {
+            if (ethnicity.isNull()) {
+                this.ethnicity = null;
+            } else if (ethnicity.isEmpty()) {
+                this.ethnicity = Optional.empty();
+            } else {
+                this.ethnicity = Optional.of(ethnicity.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage ethnicity(Ethnicity ethnicity) {
             this.ethnicity = Optional.ofNullable(ethnicity);
             return this;
@@ -498,6 +658,22 @@ public final class PatientDetailsWithValidation {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage race(Nullable<Race> race) {
+            if (race.isNull()) {
+                this.race = null;
+            } else if (race.isEmpty()) {
+                this.race = Optional.empty();
+            } else {
+                this.race = Optional.of(race.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage race(Race race) {
             this.race = Optional.ofNullable(race);
             return this;
@@ -510,6 +686,22 @@ public final class PatientDetailsWithValidation {
         @JsonSetter(value = "race", nulls = Nulls.SKIP)
         public _FinalStage race(Optional<Race> race) {
             this.race = race;
+            return this;
+        }
+
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage medicalProxy(Nullable<GuarantorDetails> medicalProxy) {
+            if (medicalProxy.isNull()) {
+                this.medicalProxy = null;
+            } else if (medicalProxy.isEmpty()) {
+                this.medicalProxy = Optional.empty();
+            } else {
+                this.medicalProxy = Optional.of(medicalProxy.get());
+            }
             return this;
         }
 

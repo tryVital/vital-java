@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,18 +52,45 @@ public final class PerformingLaboratory {
         return name;
     }
 
-    @JsonProperty("phone_number")
+    @JsonIgnore
     public Optional<String> getPhoneNumber() {
+        if (phoneNumber == null) {
+            return Optional.empty();
+        }
         return phoneNumber;
     }
 
-    @JsonProperty("medical_director")
+    @JsonIgnore
     public Optional<String> getMedicalDirector() {
+        if (medicalDirector == null) {
+            return Optional.empty();
+        }
         return medicalDirector;
     }
 
-    @JsonProperty("address")
+    @JsonIgnore
     public Optional<Address> getAddress() {
+        if (address == null) {
+            return Optional.empty();
+        }
+        return address;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("phone_number")
+    private Optional<String> _getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("medical_director")
+    private Optional<String> _getMedicalDirector() {
+        return medicalDirector;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("address")
+    private Optional<Address> _getAddress() {
         return address;
     }
 
@@ -109,13 +139,19 @@ public final class PerformingLaboratory {
 
         _FinalStage phoneNumber(String phoneNumber);
 
+        _FinalStage phoneNumber(Nullable<String> phoneNumber);
+
         _FinalStage medicalDirector(Optional<String> medicalDirector);
 
         _FinalStage medicalDirector(String medicalDirector);
 
+        _FinalStage medicalDirector(Nullable<String> medicalDirector);
+
         _FinalStage address(Optional<Address> address);
 
         _FinalStage address(Address address);
+
+        _FinalStage address(Nullable<Address> address);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -150,6 +186,18 @@ public final class PerformingLaboratory {
         }
 
         @java.lang.Override
+        public _FinalStage address(Nullable<Address> address) {
+            if (address.isNull()) {
+                this.address = null;
+            } else if (address.isEmpty()) {
+                this.address = Optional.empty();
+            } else {
+                this.address = Optional.of(address.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage address(Address address) {
             this.address = Optional.ofNullable(address);
             return this;
@@ -163,6 +211,18 @@ public final class PerformingLaboratory {
         }
 
         @java.lang.Override
+        public _FinalStage medicalDirector(Nullable<String> medicalDirector) {
+            if (medicalDirector.isNull()) {
+                this.medicalDirector = null;
+            } else if (medicalDirector.isEmpty()) {
+                this.medicalDirector = Optional.empty();
+            } else {
+                this.medicalDirector = Optional.of(medicalDirector.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage medicalDirector(String medicalDirector) {
             this.medicalDirector = Optional.ofNullable(medicalDirector);
             return this;
@@ -172,6 +232,18 @@ public final class PerformingLaboratory {
         @JsonSetter(value = "medical_director", nulls = Nulls.SKIP)
         public _FinalStage medicalDirector(Optional<String> medicalDirector) {
             this.medicalDirector = medicalDirector;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage phoneNumber(Nullable<String> phoneNumber) {
+            if (phoneNumber.isNull()) {
+                this.phoneNumber = null;
+            } else if (phoneNumber.isEmpty()) {
+                this.phoneNumber = Optional.empty();
+            } else {
+                this.phoneNumber = Optional.of(phoneNumber.get());
+            }
             return this;
         }
 

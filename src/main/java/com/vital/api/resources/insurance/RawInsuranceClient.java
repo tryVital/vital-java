@@ -14,9 +14,9 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
-import com.vital.api.resources.insurance.requests.InsuranceSearchGetPayorInfoRequest;
 import com.vital.api.resources.insurance.requests.PayorSearchRequest;
+import com.vital.api.resources.insurance.requests.SearchDiagnosisInsuranceRequest;
+import com.vital.api.resources.insurance.requests.SearchGetPayorInfoInsuranceRequest;
 import com.vital.api.types.ClientFacingDiagnosisInformation;
 import com.vital.api.types.ClientFacingPayorSearchResponse;
 import com.vital.api.types.ClientFacingPayorSearchResponseDeprecated;
@@ -39,16 +39,16 @@ public class RawInsuranceClient {
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo() {
-        return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build());
+        return searchGetPayorInfo(SearchGetPayorInfoInsuranceRequest.builder().build());
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
-            InsuranceSearchGetPayorInfoRequest request) {
+            SearchGetPayorInfoInsuranceRequest request) {
         return searchGetPayorInfo(request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
-            InsuranceSearchGetPayorInfoRequest request, RequestOptions requestOptions) {
+            SearchGetPayorInfoInsuranceRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/payor");
@@ -165,12 +165,12 @@ public class RawInsuranceClient {
     }
 
     public VitalHttpResponse<List<ClientFacingDiagnosisInformation>> searchDiagnosis(
-            InsuranceSearchDiagnosisRequest request) {
+            SearchDiagnosisInsuranceRequest request) {
         return searchDiagnosis(request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingDiagnosisInformation>> searchDiagnosis(
-            InsuranceSearchDiagnosisRequest request, RequestOptions requestOptions) {
+            SearchDiagnosisInsuranceRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/diagnosis");

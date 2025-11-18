@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,39 +95,93 @@ public final class Source {
         return logo;
     }
 
-    @JsonProperty("group")
+    @JsonIgnore
     public Optional<String> getGroup() {
+        if (group == null) {
+            return Optional.empty();
+        }
         return group;
     }
 
-    @JsonProperty("oauth_url")
+    @JsonIgnore
     public Optional<String> getOauthUrl() {
+        if (oauthUrl == null) {
+            return Optional.empty();
+        }
         return oauthUrl;
     }
 
-    @JsonProperty("auth_type")
+    @JsonIgnore
     public Optional<SourceAuthType> getAuthType() {
+        if (authType == null) {
+            return Optional.empty();
+        }
         return authType;
     }
 
-    @JsonProperty("source_type")
+    @JsonIgnore
     public Optional<SourceType> getSourceType() {
+        if (sourceType == null) {
+            return Optional.empty();
+        }
         return sourceType;
     }
 
-    @JsonProperty("is_active")
+    @JsonIgnore
     public Optional<Boolean> getIsActive() {
+        if (isActive == null) {
+            return Optional.empty();
+        }
         return isActive;
     }
 
-    @JsonProperty("backfill_num_days")
+    @JsonIgnore
     public Optional<Integer> getBackfillNumDays() {
+        if (backfillNumDays == null) {
+            return Optional.empty();
+        }
         return backfillNumDays;
     }
 
     @JsonProperty("id")
     public int getId() {
         return id;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("group")
+    private Optional<String> _getGroup() {
+        return group;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("oauth_url")
+    private Optional<String> _getOauthUrl() {
+        return oauthUrl;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("auth_type")
+    private Optional<SourceAuthType> _getAuthType() {
+        return authType;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_type")
+    private Optional<SourceType> _getSourceType() {
+        return sourceType;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("is_active")
+    private Optional<Boolean> _getIsActive() {
+        return isActive;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("backfill_num_days")
+    private Optional<Integer> _getBackfillNumDays() {
+        return backfillNumDays;
     }
 
     @java.lang.Override
@@ -206,25 +263,37 @@ public final class Source {
 
         _FinalStage group(String group);
 
+        _FinalStage group(Nullable<String> group);
+
         _FinalStage oauthUrl(Optional<String> oauthUrl);
 
         _FinalStage oauthUrl(String oauthUrl);
+
+        _FinalStage oauthUrl(Nullable<String> oauthUrl);
 
         _FinalStage authType(Optional<SourceAuthType> authType);
 
         _FinalStage authType(SourceAuthType authType);
 
+        _FinalStage authType(Nullable<SourceAuthType> authType);
+
         _FinalStage sourceType(Optional<SourceType> sourceType);
 
         _FinalStage sourceType(SourceType sourceType);
+
+        _FinalStage sourceType(Nullable<SourceType> sourceType);
 
         _FinalStage isActive(Optional<Boolean> isActive);
 
         _FinalStage isActive(Boolean isActive);
 
+        _FinalStage isActive(Nullable<Boolean> isActive);
+
         _FinalStage backfillNumDays(Optional<Integer> backfillNumDays);
 
         _FinalStage backfillNumDays(Integer backfillNumDays);
+
+        _FinalStage backfillNumDays(Nullable<Integer> backfillNumDays);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -309,6 +378,18 @@ public final class Source {
         }
 
         @java.lang.Override
+        public _FinalStage backfillNumDays(Nullable<Integer> backfillNumDays) {
+            if (backfillNumDays.isNull()) {
+                this.backfillNumDays = null;
+            } else if (backfillNumDays.isEmpty()) {
+                this.backfillNumDays = Optional.empty();
+            } else {
+                this.backfillNumDays = Optional.of(backfillNumDays.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage backfillNumDays(Integer backfillNumDays) {
             this.backfillNumDays = Optional.ofNullable(backfillNumDays);
             return this;
@@ -318,6 +399,18 @@ public final class Source {
         @JsonSetter(value = "backfill_num_days", nulls = Nulls.SKIP)
         public _FinalStage backfillNumDays(Optional<Integer> backfillNumDays) {
             this.backfillNumDays = backfillNumDays;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage isActive(Nullable<Boolean> isActive) {
+            if (isActive.isNull()) {
+                this.isActive = null;
+            } else if (isActive.isEmpty()) {
+                this.isActive = Optional.empty();
+            } else {
+                this.isActive = Optional.of(isActive.get());
+            }
             return this;
         }
 
@@ -335,6 +428,18 @@ public final class Source {
         }
 
         @java.lang.Override
+        public _FinalStage sourceType(Nullable<SourceType> sourceType) {
+            if (sourceType.isNull()) {
+                this.sourceType = null;
+            } else if (sourceType.isEmpty()) {
+                this.sourceType = Optional.empty();
+            } else {
+                this.sourceType = Optional.of(sourceType.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceType(SourceType sourceType) {
             this.sourceType = Optional.ofNullable(sourceType);
             return this;
@@ -344,6 +449,18 @@ public final class Source {
         @JsonSetter(value = "source_type", nulls = Nulls.SKIP)
         public _FinalStage sourceType(Optional<SourceType> sourceType) {
             this.sourceType = sourceType;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage authType(Nullable<SourceAuthType> authType) {
+            if (authType.isNull()) {
+                this.authType = null;
+            } else if (authType.isEmpty()) {
+                this.authType = Optional.empty();
+            } else {
+                this.authType = Optional.of(authType.get());
+            }
             return this;
         }
 
@@ -361,6 +478,18 @@ public final class Source {
         }
 
         @java.lang.Override
+        public _FinalStage oauthUrl(Nullable<String> oauthUrl) {
+            if (oauthUrl.isNull()) {
+                this.oauthUrl = null;
+            } else if (oauthUrl.isEmpty()) {
+                this.oauthUrl = Optional.empty();
+            } else {
+                this.oauthUrl = Optional.of(oauthUrl.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage oauthUrl(String oauthUrl) {
             this.oauthUrl = Optional.ofNullable(oauthUrl);
             return this;
@@ -370,6 +499,18 @@ public final class Source {
         @JsonSetter(value = "oauth_url", nulls = Nulls.SKIP)
         public _FinalStage oauthUrl(Optional<String> oauthUrl) {
             this.oauthUrl = oauthUrl;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage group(Nullable<String> group) {
+            if (group.isNull()) {
+                this.group = null;
+            } else if (group.isEmpty()) {
+                this.group = Optional.empty();
+            } else {
+                this.group = Optional.of(group.get());
+            }
             return this;
         }
 

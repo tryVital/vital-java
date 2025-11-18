@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +35,17 @@ public final class QueryConfig {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("provider_priority_overrides")
+    @JsonIgnore
     public Optional<List<QueryConfigProviderPriorityOverridesItem>> getProviderPriorityOverrides() {
+        if (providerPriorityOverrides == null) {
+            return Optional.empty();
+        }
+        return providerPriorityOverrides;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_priority_overrides")
+    private Optional<List<QueryConfigProviderPriorityOverridesItem>> _getProviderPriorityOverrides() {
         return providerPriorityOverrides;
     }
 
@@ -90,6 +102,18 @@ public final class QueryConfig {
         public Builder providerPriorityOverrides(
                 List<QueryConfigProviderPriorityOverridesItem> providerPriorityOverrides) {
             this.providerPriorityOverrides = Optional.ofNullable(providerPriorityOverrides);
+            return this;
+        }
+
+        public Builder providerPriorityOverrides(
+                Nullable<List<QueryConfigProviderPriorityOverridesItem>> providerPriorityOverrides) {
+            if (providerPriorityOverrides.isNull()) {
+                this.providerPriorityOverrides = null;
+            } else if (providerPriorityOverrides.isEmpty()) {
+                this.providerPriorityOverrides = Optional.empty();
+            } else {
+                this.providerPriorityOverrides = Optional.of(providerPriorityOverrides.get());
+            }
             return this;
         }
 

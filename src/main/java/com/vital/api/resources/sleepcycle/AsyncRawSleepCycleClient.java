@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.sleepcycle.requests.SleepCycleGetRequest;
+import com.vital.api.resources.sleepcycle.requests.GetSleepCycleRequest;
 import com.vital.api.types.ClientSleepCycleResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class AsyncRawSleepCycleClient {
      * Get sleep cycle for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientSleepCycleResponse>> get(
-            String userId, SleepCycleGetRequest request) {
+            String userId, GetSleepCycleRequest request) {
         return get(userId, request, null);
     }
 
@@ -46,7 +46,7 @@ public class AsyncRawSleepCycleClient {
      * Get sleep cycle for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientSleepCycleResponse>> get(
-            String userId, SleepCycleGetRequest request, RequestOptions requestOptions) {
+            String userId, GetSleepCycleRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep_cycle")

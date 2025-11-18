@@ -35,7 +35,7 @@ public final class ClientFacingStreamCadence {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visitListOfOptionalDouble((List<Optional<Double>>) this.value);
+            return visitor.visitListOfNullableDouble((List<Optional<Double>>) this.value);
         } else if (this.type == 1) {
             return visitor.visitListOfDouble((List<Double>) this.value);
         }
@@ -62,7 +62,7 @@ public final class ClientFacingStreamCadence {
         return this.value.toString();
     }
 
-    public static ClientFacingStreamCadence ofListOfOptionalDouble(List<Optional<Double>> value) {
+    public static ClientFacingStreamCadence ofListOfNullableDouble(List<Optional<Double>> value) {
         return new ClientFacingStreamCadence(value, 0);
     }
 
@@ -71,7 +71,7 @@ public final class ClientFacingStreamCadence {
     }
 
     public interface Visitor<T> {
-        T visitListOfOptionalDouble(List<Optional<Double>> value);
+        T visitListOfNullableDouble(List<Optional<Double>> value);
 
         T visitListOfDouble(List<Double> value);
     }
@@ -85,7 +85,7 @@ public final class ClientFacingStreamCadence {
         public ClientFacingStreamCadence deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return ofListOfOptionalDouble(
+                return ofListOfNullableDouble(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Double>>>() {}));
             } catch (RuntimeException e) {
             }

@@ -17,12 +17,22 @@ import com.vital.api.errors.BadRequestError;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
+import com.vital.api.resources.user.requests.DeleteUserRequest;
+import com.vital.api.resources.user.requests.DeregisterProviderUserRequest;
+import com.vital.api.resources.user.requests.GetAllUserRequest;
+import com.vital.api.resources.user.requests.GetByClientUserIdUserRequest;
+import com.vital.api.resources.user.requests.GetConnectedProvidersUserRequest;
+import com.vital.api.resources.user.requests.GetDeviceUserRequest;
+import com.vital.api.resources.user.requests.GetDevicesUserRequest;
+import com.vital.api.resources.user.requests.GetLatestInsuranceUserRequest;
+import com.vital.api.resources.user.requests.GetLatestUserInfoUserRequest;
+import com.vital.api.resources.user.requests.GetUserRequest;
+import com.vital.api.resources.user.requests.GetUserSignInTokenUserRequest;
+import com.vital.api.resources.user.requests.RefreshUserRequest;
+import com.vital.api.resources.user.requests.UndoDeleteUserRequest;
 import com.vital.api.resources.user.requests.UserCreateBody;
-import com.vital.api.resources.user.requests.UserGetAllRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
-import com.vital.api.resources.user.requests.UserRefreshRequest;
-import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
 import com.vital.api.types.ClientFacingDevice;
 import com.vital.api.types.ClientFacingInsurance;
 import com.vital.api.types.ClientFacingProviderWithStatus;
@@ -63,13 +73,13 @@ public class AsyncRawUserClient {
      * GET All users for team.
      */
     public CompletableFuture<VitalHttpResponse<PaginatedUsersResponse>> getAll() {
-        return getAll(UserGetAllRequest.builder().build());
+        return getAll(GetAllUserRequest.builder().build());
     }
 
     /**
      * GET All users for team.
      */
-    public CompletableFuture<VitalHttpResponse<PaginatedUsersResponse>> getAll(UserGetAllRequest request) {
+    public CompletableFuture<VitalHttpResponse<PaginatedUsersResponse>> getAll(GetAllUserRequest request) {
         return getAll(request, null);
     }
 
@@ -77,7 +87,7 @@ public class AsyncRawUserClient {
      * GET All users for team.
      */
     public CompletableFuture<VitalHttpResponse<PaginatedUsersResponse>> getAll(
-            UserGetAllRequest request, RequestOptions requestOptions) {
+            GetAllUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user");
@@ -284,25 +294,35 @@ public class AsyncRawUserClient {
      */
     public CompletableFuture<VitalHttpResponse<Map<String, List<ClientFacingProviderWithStatus>>>>
             getConnectedProviders(String userId) {
-        return getConnectedProviders(userId, null);
+        return getConnectedProviders(
+                userId, GetConnectedProvidersUserRequest.builder().build());
     }
 
     /**
      * GET Users connected providers
      */
     public CompletableFuture<VitalHttpResponse<Map<String, List<ClientFacingProviderWithStatus>>>>
-            getConnectedProviders(String userId, RequestOptions requestOptions) {
+            getConnectedProviders(String userId, GetConnectedProvidersUserRequest request) {
+        return getConnectedProviders(userId, request, null);
+    }
+
+    /**
+     * GET Users connected providers
+     */
+    public CompletableFuture<VitalHttpResponse<Map<String, List<ClientFacingProviderWithStatus>>>>
+            getConnectedProviders(
+                    String userId, GetConnectedProvidersUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user/providers")
                 .addPathSegment(userId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -352,23 +372,28 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<UserInfo>> getLatestUserInfo(String userId) {
-        return getLatestUserInfo(userId, null);
+        return getLatestUserInfo(userId, GetLatestUserInfoUserRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<UserInfo>> getLatestUserInfo(
-            String userId, RequestOptions requestOptions) {
+            String userId, GetLatestUserInfoUserRequest request) {
+        return getLatestUserInfo(userId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<UserInfo>> getLatestUserInfo(
+            String userId, GetLatestUserInfoUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .addPathSegments("info/latest")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -486,23 +511,29 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(String userId) {
-        return getLatestInsurance(userId, null);
+        return getLatestInsurance(
+                userId, GetLatestInsuranceUserRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(
-            String userId, RequestOptions requestOptions) {
+            String userId, GetLatestInsuranceUserRequest request) {
+        return getLatestInsurance(userId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(
+            String userId, GetLatestInsuranceUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .addPathSegments("insurance/latest")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -622,25 +653,34 @@ public class AsyncRawUserClient {
      * GET user_id from client_user_id.
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingUser>> getByClientUserId(String clientUserId) {
-        return getByClientUserId(clientUserId, null);
+        return getByClientUserId(
+                clientUserId, GetByClientUserIdUserRequest.builder().build());
     }
 
     /**
      * GET user_id from client_user_id.
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingUser>> getByClientUserId(
-            String clientUserId, RequestOptions requestOptions) {
+            String clientUserId, GetByClientUserIdUserRequest request) {
+        return getByClientUserId(clientUserId, request, null);
+    }
+
+    /**
+     * GET user_id from client_user_id.
+     */
+    public CompletableFuture<VitalHttpResponse<ClientFacingUser>> getByClientUserId(
+            String clientUserId, GetByClientUserIdUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user/resolve")
                 .addPathSegment(clientUserId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -688,23 +728,29 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> deregisterProvider(
             String userId, Providers provider) {
-        return deregisterProvider(userId, provider, null);
+        return deregisterProvider(
+                userId, provider, DeregisterProviderUserRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> deregisterProvider(
-            String userId, Providers provider, RequestOptions requestOptions) {
+            String userId, Providers provider, DeregisterProviderUserRequest request) {
+        return deregisterProvider(userId, provider, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> deregisterProvider(
+            String userId, Providers provider, DeregisterProviderUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .addPathSegment(provider.toString())
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -751,21 +797,26 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingUser>> get(String userId) {
-        return get(userId, null);
+        return get(userId, GetUserRequest.builder().build());
     }
 
-    public CompletableFuture<VitalHttpResponse<ClientFacingUser>> get(String userId, RequestOptions requestOptions) {
+    public CompletableFuture<VitalHttpResponse<ClientFacingUser>> get(String userId, GetUserRequest request) {
+        return get(userId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingUser>> get(
+            String userId, GetUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -812,22 +863,26 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> delete(String userId) {
-        return delete(userId, null);
+        return delete(userId, DeleteUserRequest.builder().build());
+    }
+
+    public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> delete(String userId, DeleteUserRequest request) {
+        return delete(userId, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> delete(
-            String userId, RequestOptions requestOptions) {
+            String userId, DeleteUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -946,15 +1001,15 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> undoDelete() {
-        return undoDelete(UserUndoDeleteRequest.builder().build());
+        return undoDelete(UndoDeleteUserRequest.builder().build());
     }
 
-    public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> undoDelete(UserUndoDeleteRequest request) {
+    public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> undoDelete(UndoDeleteUserRequest request) {
         return undoDelete(request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<UserSuccessResponse>> undoDelete(
-            UserUndoDeleteRequest request, RequestOptions requestOptions) {
+            UndoDeleteUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user/undo_delete");
@@ -1021,14 +1076,14 @@ public class AsyncRawUserClient {
      * Trigger a manual refresh for a specific user
      */
     public CompletableFuture<VitalHttpResponse<UserRefreshSuccessResponse>> refresh(String userId) {
-        return refresh(userId, UserRefreshRequest.builder().build());
+        return refresh(userId, RefreshUserRequest.builder().build());
     }
 
     /**
      * Trigger a manual refresh for a specific user
      */
     public CompletableFuture<VitalHttpResponse<UserRefreshSuccessResponse>> refresh(
-            String userId, UserRefreshRequest request) {
+            String userId, RefreshUserRequest request) {
         return refresh(userId, request, null);
     }
 
@@ -1036,7 +1091,7 @@ public class AsyncRawUserClient {
      * Trigger a manual refresh for a specific user
      */
     public CompletableFuture<VitalHttpResponse<UserRefreshSuccessResponse>> refresh(
-            String userId, UserRefreshRequest request, RequestOptions requestOptions) {
+            String userId, RefreshUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user/refresh")
@@ -1105,23 +1160,28 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingDevice>>> getDevices(String userId) {
-        return getDevices(userId, null);
+        return getDevices(userId, GetDevicesUserRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingDevice>>> getDevices(
-            String userId, RequestOptions requestOptions) {
+            String userId, GetDevicesUserRequest request) {
+        return getDevices(userId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<List<ClientFacingDevice>>> getDevices(
+            String userId, GetDevicesUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .addPathSegments("device")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1169,11 +1229,16 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingDevice>> getDevice(String userId, String deviceId) {
-        return getDevice(userId, deviceId, null);
+        return getDevice(userId, deviceId, GetDeviceUserRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingDevice>> getDevice(
-            String userId, String deviceId, RequestOptions requestOptions) {
+            String userId, String deviceId, GetDeviceUserRequest request) {
+        return getDevice(userId, deviceId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingDevice>> getDevice(
+            String userId, String deviceId, GetDeviceUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
@@ -1181,12 +1246,12 @@ public class AsyncRawUserClient {
                 .addPathSegments("device")
                 .addPathSegment(deviceId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1233,23 +1298,29 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<UserSignInTokenResponse>> getUserSignInToken(String userId) {
-        return getUserSignInToken(userId, null);
+        return getUserSignInToken(
+                userId, GetUserSignInTokenUserRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<UserSignInTokenResponse>> getUserSignInToken(
-            String userId, RequestOptions requestOptions) {
+            String userId, GetUserSignInTokenUserRequest request) {
+        return getUserSignInToken(userId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<UserSignInTokenResponse>> getUserSignInToken(
+            String userId, GetUserSignInTokenUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .addPathSegments("sign_in_token")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

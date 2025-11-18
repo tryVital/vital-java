@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.menstrualcycle.requests.MenstrualCycleGetRequest;
+import com.vital.api.resources.menstrualcycle.requests.GetMenstrualCycleRequest;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.MenstrualCycleResponse;
 import java.io.IOException;
@@ -35,12 +35,12 @@ public class AsyncRawMenstrualCycleClient {
     }
 
     public CompletableFuture<VitalHttpResponse<MenstrualCycleResponse>> get(
-            String userId, MenstrualCycleGetRequest request) {
+            String userId, GetMenstrualCycleRequest request) {
         return get(userId, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<MenstrualCycleResponse>> get(
-            String userId, MenstrualCycleGetRequest request, RequestOptions requestOptions) {
+            String userId, GetMenstrualCycleRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/menstrual_cycle")

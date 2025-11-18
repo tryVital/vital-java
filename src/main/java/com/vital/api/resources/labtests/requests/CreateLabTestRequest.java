@@ -5,12 +5,15 @@ package com.vital.api.resources.labtests.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.LabTestCollectionMethod;
 import java.util.HashMap;
@@ -54,13 +57,19 @@ public final class CreateLabTestRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("marker_ids")
+    @JsonIgnore
     public Optional<List<Integer>> getMarkerIds() {
+        if (markerIds == null) {
+            return Optional.empty();
+        }
         return markerIds;
     }
 
-    @JsonProperty("provider_ids")
+    @JsonIgnore
     public Optional<List<String>> getProviderIds() {
+        if (providerIds == null) {
+            return Optional.empty();
+        }
         return providerIds;
     }
 
@@ -79,8 +88,29 @@ public final class CreateLabTestRequest {
         return description;
     }
 
-    @JsonProperty("fasting")
+    @JsonIgnore
     public Optional<Boolean> getFasting() {
+        if (fasting == null) {
+            return Optional.empty();
+        }
+        return fasting;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("marker_ids")
+    private Optional<List<Integer>> _getMarkerIds() {
+        return markerIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_ids")
+    private Optional<List<String>> _getProviderIds() {
+        return providerIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("fasting")
+    private Optional<Boolean> _getFasting() {
         return fasting;
     }
 
@@ -139,13 +169,19 @@ public final class CreateLabTestRequest {
 
         _FinalStage markerIds(List<Integer> markerIds);
 
+        _FinalStage markerIds(Nullable<List<Integer>> markerIds);
+
         _FinalStage providerIds(Optional<List<String>> providerIds);
 
         _FinalStage providerIds(List<String> providerIds);
 
+        _FinalStage providerIds(Nullable<List<String>> providerIds);
+
         _FinalStage fasting(Optional<Boolean> fasting);
 
         _FinalStage fasting(Boolean fasting);
+
+        _FinalStage fasting(Nullable<Boolean> fasting);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -200,6 +236,18 @@ public final class CreateLabTestRequest {
         }
 
         @java.lang.Override
+        public _FinalStage fasting(Nullable<Boolean> fasting) {
+            if (fasting.isNull()) {
+                this.fasting = null;
+            } else if (fasting.isEmpty()) {
+                this.fasting = Optional.empty();
+            } else {
+                this.fasting = Optional.of(fasting.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage fasting(Boolean fasting) {
             this.fasting = Optional.ofNullable(fasting);
             return this;
@@ -213,6 +261,18 @@ public final class CreateLabTestRequest {
         }
 
         @java.lang.Override
+        public _FinalStage providerIds(Nullable<List<String>> providerIds) {
+            if (providerIds.isNull()) {
+                this.providerIds = null;
+            } else if (providerIds.isEmpty()) {
+                this.providerIds = Optional.empty();
+            } else {
+                this.providerIds = Optional.of(providerIds.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage providerIds(List<String> providerIds) {
             this.providerIds = Optional.ofNullable(providerIds);
             return this;
@@ -222,6 +282,18 @@ public final class CreateLabTestRequest {
         @JsonSetter(value = "provider_ids", nulls = Nulls.SKIP)
         public _FinalStage providerIds(Optional<List<String>> providerIds) {
             this.providerIds = providerIds;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage markerIds(Nullable<List<Integer>> markerIds) {
+            if (markerIds.isNull()) {
+                this.markerIds = null;
+            } else if (markerIds.isEmpty()) {
+                this.markerIds = Optional.empty();
+            } else {
+                this.markerIds = Optional.of(markerIds.get());
+            }
             return this;
         }
 

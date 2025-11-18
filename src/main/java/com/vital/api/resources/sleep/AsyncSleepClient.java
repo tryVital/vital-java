@@ -5,8 +5,9 @@ package com.vital.api.resources.sleep;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
-import com.vital.api.resources.sleep.requests.SleepGetRequest;
+import com.vital.api.resources.sleep.requests.GetRawSleepRequest;
+import com.vital.api.resources.sleep.requests.GetSleepRequest;
+import com.vital.api.resources.sleep.requests.GetStreamBySleepIdSleepRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.RawSleep;
@@ -32,7 +33,7 @@ public class AsyncSleepClient {
     /**
      * Get sleep summary for user_id
      */
-    public CompletableFuture<ClientSleepResponse> get(String userId, SleepGetRequest request) {
+    public CompletableFuture<ClientSleepResponse> get(String userId, GetSleepRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -40,14 +41,14 @@ public class AsyncSleepClient {
      * Get sleep summary for user_id
      */
     public CompletableFuture<ClientSleepResponse> get(
-            String userId, SleepGetRequest request, RequestOptions requestOptions) {
+            String userId, GetSleepRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Get raw sleep summary for user_id
      */
-    public CompletableFuture<RawSleep> getRaw(String userId, SleepGetRawRequest request) {
+    public CompletableFuture<RawSleep> getRaw(String userId, GetRawSleepRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
@@ -55,7 +56,7 @@ public class AsyncSleepClient {
      * Get raw sleep summary for user_id
      */
     public CompletableFuture<RawSleep> getRaw(
-            String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawSleepRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -70,7 +71,17 @@ public class AsyncSleepClient {
      * Get Sleep stream for a user_id
      */
     public CompletableFuture<ClientFacingSleepStream> getStreamBySleepId(
-            String sleepId, RequestOptions requestOptions) {
-        return this.rawClient.getStreamBySleepId(sleepId, requestOptions).thenApply(response -> response.body());
+            String sleepId, GetStreamBySleepIdSleepRequest request) {
+        return this.rawClient.getStreamBySleepId(sleepId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get Sleep stream for a user_id
+     */
+    public CompletableFuture<ClientFacingSleepStream> getStreamBySleepId(
+            String sleepId, GetStreamBySleepIdSleepRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getStreamBySleepId(sleepId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

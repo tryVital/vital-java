@@ -5,7 +5,7 @@ package com.vital.api.resources.electrocardiogram;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.electrocardiogram.requests.ElectrocardiogramGetRequest;
+import com.vital.api.resources.electrocardiogram.requests.GetElectrocardiogramRequest;
 import com.vital.api.types.ClientFacingElectrocardiogramResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -30,7 +30,7 @@ public class AsyncElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public CompletableFuture<ClientFacingElectrocardiogramResponse> get(
-            String userId, ElectrocardiogramGetRequest request) {
+            String userId, GetElectrocardiogramRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -38,7 +38,7 @@ public class AsyncElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public CompletableFuture<ClientFacingElectrocardiogramResponse> get(
-            String userId, ElectrocardiogramGetRequest request, RequestOptions requestOptions) {
+            String userId, GetElectrocardiogramRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

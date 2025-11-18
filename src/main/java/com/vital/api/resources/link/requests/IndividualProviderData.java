@@ -5,12 +5,15 @@ package com.vital.api.resources.link.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Region;
 import java.util.HashMap;
@@ -45,8 +48,11 @@ public final class IndividualProviderData {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("x-vital-link-token")
+    @JsonIgnore
     public Optional<String> getVitalLinkToken() {
+        if (vitalLinkToken == null) {
+            return Optional.empty();
+        }
         return vitalLinkToken;
     }
 
@@ -69,8 +75,23 @@ public final class IndividualProviderData {
     /**
      * @return Provider region to authenticate against. Only applicable to specific providers.
      */
-    @JsonProperty("region")
+    @JsonIgnore
     public Optional<Region> getRegion() {
+        if (region == null) {
+            return Optional.empty();
+        }
+        return region;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("x-vital-link-token")
+    private Optional<String> _getVitalLinkToken() {
+        return vitalLinkToken;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("region")
+    private Optional<Region> _getRegion() {
         return region;
     }
 
@@ -129,12 +150,16 @@ public final class IndividualProviderData {
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
 
+        _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken);
+
         /**
          * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
          */
         _FinalStage region(Optional<Region> region);
 
         _FinalStage region(Region region);
+
+        _FinalStage region(Nullable<Region> region);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -190,6 +215,22 @@ public final class IndividualProviderData {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage region(Nullable<Region> region) {
+            if (region.isNull()) {
+                this.region = null;
+            } else if (region.isEmpty()) {
+                this.region = Optional.empty();
+            } else {
+                this.region = Optional.of(region.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage region(Region region) {
             this.region = Optional.ofNullable(region);
             return this;
@@ -202,6 +243,18 @@ public final class IndividualProviderData {
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
         public _FinalStage region(Optional<Region> region) {
             this.region = region;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken) {
+            if (vitalLinkToken.isNull()) {
+                this.vitalLinkToken = null;
+            } else if (vitalLinkToken.isEmpty()) {
+                this.vitalLinkToken = Optional.empty();
+            } else {
+                this.vitalLinkToken = Optional.of(vitalLinkToken.get());
+            }
             return this;
         }
 

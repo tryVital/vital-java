@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -115,8 +118,17 @@ public final class ConnectionRecipe {
      * <li>Garmin: No scope</li>
      * </ul>
      */
-    @JsonProperty("oauth_scopes")
+    @JsonIgnore
     public Optional<List<String>> getOauthScopes() {
+        if (oauthScopes == null) {
+            return Optional.empty();
+        }
+        return oauthScopes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("oauth_scopes")
+    private Optional<List<String>> _getOauthScopes() {
         return oauthScopes;
     }
 
@@ -220,6 +232,8 @@ public final class ConnectionRecipe {
         _FinalStage oauthScopes(Optional<List<String>> oauthScopes);
 
         _FinalStage oauthScopes(List<String> oauthScopes);
+
+        _FinalStage oauthScopes(Nullable<List<String>> oauthScopes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -338,6 +352,27 @@ public final class ConnectionRecipe {
         @JsonSetter("expires_at")
         public _FinalStage expiresAt(int expiresAt) {
             this.expiresAt = expiresAt;
+            return this;
+        }
+
+        /**
+         * <p>OAuth scopes of the data provider. Specify <code>null</code> if you do not
+         * have any scopes on record.</p>
+         * <ul>
+         * <li>Fitbit: Has scopes</li>
+         * <li>Garmin: No scope</li>
+         * </ul>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage oauthScopes(Nullable<List<String>> oauthScopes) {
+            if (oauthScopes.isNull()) {
+                this.oauthScopes = null;
+            } else if (oauthScopes.isEmpty()) {
+                this.oauthScopes = Optional.empty();
+            } else {
+                this.oauthScopes = Optional.of(oauthScopes.get());
+            }
             return this;
         }
 

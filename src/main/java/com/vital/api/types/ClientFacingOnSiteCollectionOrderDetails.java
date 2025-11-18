@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +33,17 @@ public final class ClientFacingOnSiteCollectionOrderDetails {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("data")
+    @JsonIgnore
     public Optional<ClientFacingOnSiteCollectionOrder> getData() {
+        if (data == null) {
+            return Optional.empty();
+        }
+        return data;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("data")
+    private Optional<ClientFacingOnSiteCollectionOrder> _getData() {
         return data;
     }
 
@@ -87,6 +99,17 @@ public final class ClientFacingOnSiteCollectionOrderDetails {
 
         public Builder data(ClientFacingOnSiteCollectionOrder data) {
             this.data = Optional.ofNullable(data);
+            return this;
+        }
+
+        public Builder data(Nullable<ClientFacingOnSiteCollectionOrder> data) {
+            if (data.isNull()) {
+                this.data = null;
+            } else if (data.isEmpty()) {
+                this.data = Optional.empty();
+            } else {
+                this.data = Optional.of(data.get());
+            }
             return this;
         }
 

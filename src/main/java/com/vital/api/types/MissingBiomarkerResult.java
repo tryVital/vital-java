@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -76,28 +79,73 @@ public final class MissingBiomarkerResult {
         return inferredFailureType;
     }
 
-    @JsonProperty("note")
+    @JsonIgnore
     public Optional<String> getNote() {
+        if (note == null) {
+            return Optional.empty();
+        }
         return note;
     }
 
-    @JsonProperty("loinc")
+    @JsonIgnore
     public Optional<String> getLoinc() {
+        if (loinc == null) {
+            return Optional.empty();
+        }
         return loinc;
     }
 
-    @JsonProperty("loinc_slug")
+    @JsonIgnore
     public Optional<String> getLoincSlug() {
+        if (loincSlug == null) {
+            return Optional.empty();
+        }
         return loincSlug;
     }
 
-    @JsonProperty("provider_id")
+    @JsonIgnore
     public Optional<String> getProviderId() {
+        if (providerId == null) {
+            return Optional.empty();
+        }
         return providerId;
     }
 
-    @JsonProperty("source_markers")
+    @JsonIgnore
     public Optional<List<ParentBiomarkerData>> getSourceMarkers() {
+        if (sourceMarkers == null) {
+            return Optional.empty();
+        }
+        return sourceMarkers;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("note")
+    private Optional<String> _getNote() {
+        return note;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("loinc")
+    private Optional<String> _getLoinc() {
+        return loinc;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("loinc_slug")
+    private Optional<String> _getLoincSlug() {
+        return loincSlug;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_id")
+    private Optional<String> _getProviderId() {
+        return providerId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_markers")
+    private Optional<List<ParentBiomarkerData>> _getSourceMarkers() {
         return sourceMarkers;
     }
 
@@ -166,21 +214,31 @@ public final class MissingBiomarkerResult {
 
         _FinalStage note(String note);
 
+        _FinalStage note(Nullable<String> note);
+
         _FinalStage loinc(Optional<String> loinc);
 
         _FinalStage loinc(String loinc);
+
+        _FinalStage loinc(Nullable<String> loinc);
 
         _FinalStage loincSlug(Optional<String> loincSlug);
 
         _FinalStage loincSlug(String loincSlug);
 
+        _FinalStage loincSlug(Nullable<String> loincSlug);
+
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
 
+        _FinalStage providerId(Nullable<String> providerId);
+
         _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers);
 
         _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers);
+
+        _FinalStage sourceMarkers(Nullable<List<ParentBiomarkerData>> sourceMarkers);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -242,6 +300,18 @@ public final class MissingBiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage sourceMarkers(Nullable<List<ParentBiomarkerData>> sourceMarkers) {
+            if (sourceMarkers.isNull()) {
+                this.sourceMarkers = null;
+            } else if (sourceMarkers.isEmpty()) {
+                this.sourceMarkers = Optional.empty();
+            } else {
+                this.sourceMarkers = Optional.of(sourceMarkers.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers) {
             this.sourceMarkers = Optional.ofNullable(sourceMarkers);
             return this;
@@ -251,6 +321,18 @@ public final class MissingBiomarkerResult {
         @JsonSetter(value = "source_markers", nulls = Nulls.SKIP)
         public _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers) {
             this.sourceMarkers = sourceMarkers;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage providerId(Nullable<String> providerId) {
+            if (providerId.isNull()) {
+                this.providerId = null;
+            } else if (providerId.isEmpty()) {
+                this.providerId = Optional.empty();
+            } else {
+                this.providerId = Optional.of(providerId.get());
+            }
             return this;
         }
 
@@ -268,6 +350,18 @@ public final class MissingBiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage loincSlug(Nullable<String> loincSlug) {
+            if (loincSlug.isNull()) {
+                this.loincSlug = null;
+            } else if (loincSlug.isEmpty()) {
+                this.loincSlug = Optional.empty();
+            } else {
+                this.loincSlug = Optional.of(loincSlug.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage loincSlug(String loincSlug) {
             this.loincSlug = Optional.ofNullable(loincSlug);
             return this;
@@ -281,6 +375,18 @@ public final class MissingBiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage loinc(Nullable<String> loinc) {
+            if (loinc.isNull()) {
+                this.loinc = null;
+            } else if (loinc.isEmpty()) {
+                this.loinc = Optional.empty();
+            } else {
+                this.loinc = Optional.of(loinc.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage loinc(String loinc) {
             this.loinc = Optional.ofNullable(loinc);
             return this;
@@ -290,6 +396,18 @@ public final class MissingBiomarkerResult {
         @JsonSetter(value = "loinc", nulls = Nulls.SKIP)
         public _FinalStage loinc(Optional<String> loinc) {
             this.loinc = loinc;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage note(Nullable<String> note) {
+            if (note.isNull()) {
+                this.note = null;
+            } else if (note.isEmpty()) {
+                this.note = Optional.empty();
+            } else {
+                this.note = Optional.of(note.get());
+            }
             return this;
         }
 

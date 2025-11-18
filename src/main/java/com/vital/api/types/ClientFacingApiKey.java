@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -63,8 +66,11 @@ public final class ClientFacingApiKey {
         return value;
     }
 
-    @JsonProperty("team_id")
+    @JsonIgnore
     public Optional<String> getTeamId() {
+        if (teamId == null) {
+            return Optional.empty();
+        }
         return teamId;
     }
 
@@ -78,8 +84,23 @@ public final class ClientFacingApiKey {
         return createdAt;
     }
 
-    @JsonProperty("deleted_at")
+    @JsonIgnore
     public Optional<OffsetDateTime> getDeletedAt() {
+        if (deletedAt == null) {
+            return Optional.empty();
+        }
+        return deletedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("team_id")
+    private Optional<String> _getTeamId() {
+        return teamId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("deleted_at")
+    private Optional<OffsetDateTime> _getDeletedAt() {
         return deletedAt;
     }
 
@@ -142,9 +163,13 @@ public final class ClientFacingApiKey {
 
         _FinalStage teamId(String teamId);
 
+        _FinalStage teamId(Nullable<String> teamId);
+
         _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt);
 
         _FinalStage deletedAt(OffsetDateTime deletedAt);
+
+        _FinalStage deletedAt(Nullable<OffsetDateTime> deletedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -206,6 +231,18 @@ public final class ClientFacingApiKey {
         }
 
         @java.lang.Override
+        public _FinalStage deletedAt(Nullable<OffsetDateTime> deletedAt) {
+            if (deletedAt.isNull()) {
+                this.deletedAt = null;
+            } else if (deletedAt.isEmpty()) {
+                this.deletedAt = Optional.empty();
+            } else {
+                this.deletedAt = Optional.of(deletedAt.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
             this.deletedAt = Optional.ofNullable(deletedAt);
             return this;
@@ -215,6 +252,18 @@ public final class ClientFacingApiKey {
         @JsonSetter(value = "deleted_at", nulls = Nulls.SKIP)
         public _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt) {
             this.deletedAt = deletedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage teamId(Nullable<String> teamId) {
+            if (teamId.isNull()) {
+                this.teamId = null;
+            } else if (teamId.isEmpty()) {
+                this.teamId = Optional.empty();
+            } else {
+                this.teamId = Optional.of(teamId.get());
+            }
             return this;
         }
 

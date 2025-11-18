@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,38 +58,101 @@ public final class SampleData {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("sample_id")
+    @JsonIgnore
     public Optional<String> getSampleId() {
+        if (sampleId == null) {
+            return Optional.empty();
+        }
         return sampleId;
     }
 
-    @JsonProperty("control_number")
+    @JsonIgnore
     public Optional<String> getControlNumber() {
+        if (controlNumber == null) {
+            return Optional.empty();
+        }
         return controlNumber;
     }
 
-    @JsonProperty("date_collected")
+    @JsonIgnore
     public Optional<SampleDataDateCollected> getDateCollected() {
+        if (dateCollected == null) {
+            return Optional.empty();
+        }
         return dateCollected;
     }
 
-    @JsonProperty("date_received")
+    @JsonIgnore
     public Optional<SampleDataDateReceived> getDateReceived() {
+        if (dateReceived == null) {
+            return Optional.empty();
+        }
         return dateReceived;
     }
 
-    @JsonProperty("date_reported")
+    @JsonIgnore
     public Optional<SampleDataDateReported> getDateReported() {
+        if (dateReported == null) {
+            return Optional.empty();
+        }
         return dateReported;
     }
 
-    @JsonProperty("performing_laboratories")
+    @JsonIgnore
     public Optional<Map<String, Optional<PerformingLaboratory>>> getPerformingLaboratories() {
+        if (performingLaboratories == null) {
+            return Optional.empty();
+        }
         return performingLaboratories;
     }
 
-    @JsonProperty("clinical_information")
+    @JsonIgnore
     public Optional<ClinicalInformation> getClinicalInformation() {
+        if (clinicalInformation == null) {
+            return Optional.empty();
+        }
+        return clinicalInformation;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sample_id")
+    private Optional<String> _getSampleId() {
+        return sampleId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("control_number")
+    private Optional<String> _getControlNumber() {
+        return controlNumber;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("date_collected")
+    private Optional<SampleDataDateCollected> _getDateCollected() {
+        return dateCollected;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("date_received")
+    private Optional<SampleDataDateReceived> _getDateReceived() {
+        return dateReceived;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("date_reported")
+    private Optional<SampleDataDateReported> _getDateReported() {
+        return dateReported;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("performing_laboratories")
+    private Optional<Map<String, Optional<PerformingLaboratory>>> _getPerformingLaboratories() {
+        return performingLaboratories;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("clinical_information")
+    private Optional<ClinicalInformation> _getClinicalInformation() {
         return clinicalInformation;
     }
 
@@ -175,6 +241,17 @@ public final class SampleData {
             return this;
         }
 
+        public Builder sampleId(Nullable<String> sampleId) {
+            if (sampleId.isNull()) {
+                this.sampleId = null;
+            } else if (sampleId.isEmpty()) {
+                this.sampleId = Optional.empty();
+            } else {
+                this.sampleId = Optional.of(sampleId.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "control_number", nulls = Nulls.SKIP)
         public Builder controlNumber(Optional<String> controlNumber) {
             this.controlNumber = controlNumber;
@@ -183,6 +260,17 @@ public final class SampleData {
 
         public Builder controlNumber(String controlNumber) {
             this.controlNumber = Optional.ofNullable(controlNumber);
+            return this;
+        }
+
+        public Builder controlNumber(Nullable<String> controlNumber) {
+            if (controlNumber.isNull()) {
+                this.controlNumber = null;
+            } else if (controlNumber.isEmpty()) {
+                this.controlNumber = Optional.empty();
+            } else {
+                this.controlNumber = Optional.of(controlNumber.get());
+            }
             return this;
         }
 
@@ -197,6 +285,17 @@ public final class SampleData {
             return this;
         }
 
+        public Builder dateCollected(Nullable<SampleDataDateCollected> dateCollected) {
+            if (dateCollected.isNull()) {
+                this.dateCollected = null;
+            } else if (dateCollected.isEmpty()) {
+                this.dateCollected = Optional.empty();
+            } else {
+                this.dateCollected = Optional.of(dateCollected.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "date_received", nulls = Nulls.SKIP)
         public Builder dateReceived(Optional<SampleDataDateReceived> dateReceived) {
             this.dateReceived = dateReceived;
@@ -208,6 +307,17 @@ public final class SampleData {
             return this;
         }
 
+        public Builder dateReceived(Nullable<SampleDataDateReceived> dateReceived) {
+            if (dateReceived.isNull()) {
+                this.dateReceived = null;
+            } else if (dateReceived.isEmpty()) {
+                this.dateReceived = Optional.empty();
+            } else {
+                this.dateReceived = Optional.of(dateReceived.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "date_reported", nulls = Nulls.SKIP)
         public Builder dateReported(Optional<SampleDataDateReported> dateReported) {
             this.dateReported = dateReported;
@@ -216,6 +326,17 @@ public final class SampleData {
 
         public Builder dateReported(SampleDataDateReported dateReported) {
             this.dateReported = Optional.ofNullable(dateReported);
+            return this;
+        }
+
+        public Builder dateReported(Nullable<SampleDataDateReported> dateReported) {
+            if (dateReported.isNull()) {
+                this.dateReported = null;
+            } else if (dateReported.isEmpty()) {
+                this.dateReported = Optional.empty();
+            } else {
+                this.dateReported = Optional.of(dateReported.get());
+            }
             return this;
         }
 
@@ -231,6 +352,18 @@ public final class SampleData {
             return this;
         }
 
+        public Builder performingLaboratories(
+                Nullable<Map<String, Optional<PerformingLaboratory>>> performingLaboratories) {
+            if (performingLaboratories.isNull()) {
+                this.performingLaboratories = null;
+            } else if (performingLaboratories.isEmpty()) {
+                this.performingLaboratories = Optional.empty();
+            } else {
+                this.performingLaboratories = Optional.of(performingLaboratories.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "clinical_information", nulls = Nulls.SKIP)
         public Builder clinicalInformation(Optional<ClinicalInformation> clinicalInformation) {
             this.clinicalInformation = clinicalInformation;
@@ -239,6 +372,17 @@ public final class SampleData {
 
         public Builder clinicalInformation(ClinicalInformation clinicalInformation) {
             this.clinicalInformation = Optional.ofNullable(clinicalInformation);
+            return this;
+        }
+
+        public Builder clinicalInformation(Nullable<ClinicalInformation> clinicalInformation) {
+            if (clinicalInformation.isNull()) {
+                this.clinicalInformation = null;
+            } else if (clinicalInformation.isEmpty()) {
+                this.clinicalInformation = Optional.empty();
+            } else {
+                this.clinicalInformation = Optional.of(clinicalInformation.get());
+            }
             return this;
         }
 

@@ -13,84 +13,84 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.vitals.requests.VitalsAfibBurdenGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBasalBodyTemperatureGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBloodOxygenGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBloodOxygenRequest;
-import com.vital.api.resources.vitals.requests.VitalsBloodPressureGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBloodPressureRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyFatGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyFatRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyMassIndexGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyTemperatureDeltaGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyTemperatureGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyWeightGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsBodyWeightRequest;
-import com.vital.api.resources.vitals.requests.VitalsCaffeineGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsCaffeineRequest;
-import com.vital.api.resources.vitals.requests.VitalsCaloriesActiveGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsCaloriesActiveRequest;
-import com.vital.api.resources.vitals.requests.VitalsCaloriesBasalGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsCaloriesBasalRequest;
-import com.vital.api.resources.vitals.requests.VitalsCarbohydratesGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolHdlRequest;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolLdlRequest;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolRequest;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolTotalRequest;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolTriglyceridesRequest;
-import com.vital.api.resources.vitals.requests.VitalsDaylightExposureGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsDistanceGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsDistanceRequest;
-import com.vital.api.resources.vitals.requests.VitalsElectrocardiogramVoltageGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsElectrocardiogramVoltageRequest;
-import com.vital.api.resources.vitals.requests.VitalsFallGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedRequest;
-import com.vital.api.resources.vitals.requests.VitalsForcedExpiratoryVolume1GroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsForcedVitalCapacityGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsGlucoseGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsGlucoseRequest;
-import com.vital.api.resources.vitals.requests.VitalsHandwashingGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsHeartRateAlertGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsHeartRateRecoveryOneMinuteGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsHeartrateGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsHeartrateRequest;
-import com.vital.api.resources.vitals.requests.VitalsHrvGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsHrvRequest;
-import com.vital.api.resources.vitals.requests.VitalsHypnogramGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsHypnogramRequest;
-import com.vital.api.resources.vitals.requests.VitalsIgeGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsIgeRequest;
-import com.vital.api.resources.vitals.requests.VitalsIggGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsIggRequest;
-import com.vital.api.resources.vitals.requests.VitalsInhalerUsageGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsInsulinInjectionGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsLeanBodyMassGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesRequest;
-import com.vital.api.resources.vitals.requests.VitalsNoteGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsPeakExpiratoryFlowRateGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsRespiratoryRateGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsRespiratoryRateRequest;
-import com.vital.api.resources.vitals.requests.VitalsSleepApneaAlertGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsSleepBreathingDisturbanceGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsStandDurationGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsStandHourGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsStepsGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsStepsRequest;
-import com.vital.api.resources.vitals.requests.VitalsStressLevelGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsStressLevelRequest;
-import com.vital.api.resources.vitals.requests.VitalsUvExposureGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsVo2MaxGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsVo2MaxRequest;
-import com.vital.api.resources.vitals.requests.VitalsWaistCircumferenceGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsWaterGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsWaterRequest;
-import com.vital.api.resources.vitals.requests.VitalsWheelchairPushGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsWorkoutDistanceGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsWorkoutDurationGroupedRequest;
-import com.vital.api.resources.vitals.requests.VitalsWorkoutSwimmingStrokeGroupedRequest;
+import com.vital.api.resources.vitals.requests.AfibBurdenGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BasalBodyTemperatureGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BloodOxygenGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BloodOxygenVitalsRequest;
+import com.vital.api.resources.vitals.requests.BloodPressureGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BloodPressureVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyFatGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyFatVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyMassIndexGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyTemperatureDeltaGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyTemperatureGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyWeightGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.BodyWeightVitalsRequest;
+import com.vital.api.resources.vitals.requests.CaffeineGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.CaffeineVitalsRequest;
+import com.vital.api.resources.vitals.requests.CaloriesActiveGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.CaloriesActiveVitalsRequest;
+import com.vital.api.resources.vitals.requests.CaloriesBasalGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.CaloriesBasalVitalsRequest;
+import com.vital.api.resources.vitals.requests.CarbohydratesGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.CholesterolGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.CholesterolHdlVitalsRequest;
+import com.vital.api.resources.vitals.requests.CholesterolLdlVitalsRequest;
+import com.vital.api.resources.vitals.requests.CholesterolTotalVitalsRequest;
+import com.vital.api.resources.vitals.requests.CholesterolTriglyceridesVitalsRequest;
+import com.vital.api.resources.vitals.requests.CholesterolVitalsRequest;
+import com.vital.api.resources.vitals.requests.DaylightExposureGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.DistanceGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.DistanceVitalsRequest;
+import com.vital.api.resources.vitals.requests.ElectrocardiogramVoltageGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.ElectrocardiogramVoltageVitalsRequest;
+import com.vital.api.resources.vitals.requests.FallGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.FloorsClimbedGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.FloorsClimbedVitalsRequest;
+import com.vital.api.resources.vitals.requests.ForcedExpiratoryVolume1GroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.ForcedVitalCapacityGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.GlucoseGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.GlucoseVitalsRequest;
+import com.vital.api.resources.vitals.requests.HandwashingGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.HeartRateAlertGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.HeartRateRecoveryOneMinuteGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.HeartrateGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.HeartrateVitalsRequest;
+import com.vital.api.resources.vitals.requests.HrvGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.HrvVitalsRequest;
+import com.vital.api.resources.vitals.requests.HypnogramGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.HypnogramVitalsRequest;
+import com.vital.api.resources.vitals.requests.IgeGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.IgeVitalsRequest;
+import com.vital.api.resources.vitals.requests.IggGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.IggVitalsRequest;
+import com.vital.api.resources.vitals.requests.InhalerUsageGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.InsulinInjectionGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.LeanBodyMassGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.MindfulnessMinutesGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.MindfulnessMinutesVitalsRequest;
+import com.vital.api.resources.vitals.requests.NoteGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.PeakExpiratoryFlowRateGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.RespiratoryRateGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.RespiratoryRateVitalsRequest;
+import com.vital.api.resources.vitals.requests.SleepApneaAlertGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.SleepBreathingDisturbanceGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.StandDurationGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.StandHourGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.StepsGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.StepsVitalsRequest;
+import com.vital.api.resources.vitals.requests.StressLevelGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.StressLevelVitalsRequest;
+import com.vital.api.resources.vitals.requests.UvExposureGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.Vo2MaxGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.Vo2MaxVitalsRequest;
+import com.vital.api.resources.vitals.requests.WaistCircumferenceGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.WaterGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.WaterVitalsRequest;
+import com.vital.api.resources.vitals.requests.WheelchairPushGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.WorkoutDistanceGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.WorkoutDurationGroupedVitalsRequest;
+import com.vital.api.resources.vitals.requests.WorkoutSwimmingStrokeGroupedVitalsRequest;
 import com.vital.api.types.ClientFacingBloodOxygenTimeseries;
 import com.vital.api.types.ClientFacingBloodPressureTimeseries;
 import com.vital.api.types.ClientFacingBodyFatTimeseries;
@@ -183,12 +183,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedWorkoutSwimmingStrokeResponse> workoutSwimmingStrokeGrouped(
-            String userId, VitalsWorkoutSwimmingStrokeGroupedRequest request) {
+            String userId, WorkoutSwimmingStrokeGroupedVitalsRequest request) {
         return workoutSwimmingStrokeGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedWorkoutSwimmingStrokeResponse> workoutSwimmingStrokeGrouped(
-            String userId, VitalsWorkoutSwimmingStrokeGroupedRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutSwimmingStrokeGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -250,12 +250,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedWorkoutDistanceResponse> workoutDistanceGrouped(
-            String userId, VitalsWorkoutDistanceGroupedRequest request) {
+            String userId, WorkoutDistanceGroupedVitalsRequest request) {
         return workoutDistanceGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedWorkoutDistanceResponse> workoutDistanceGrouped(
-            String userId, VitalsWorkoutDistanceGroupedRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutDistanceGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -317,12 +317,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedHeartRateRecoveryOneMinuteResponse> heartRateRecoveryOneMinuteGrouped(
-            String userId, VitalsHeartRateRecoveryOneMinuteGroupedRequest request) {
+            String userId, HeartRateRecoveryOneMinuteGroupedVitalsRequest request) {
         return heartRateRecoveryOneMinuteGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedHeartRateRecoveryOneMinuteResponse> heartRateRecoveryOneMinuteGrouped(
-            String userId, VitalsHeartRateRecoveryOneMinuteGroupedRequest request, RequestOptions requestOptions) {
+            String userId, HeartRateRecoveryOneMinuteGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -384,12 +384,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedWaistCircumferenceResponse> waistCircumferenceGrouped(
-            String userId, VitalsWaistCircumferenceGroupedRequest request) {
+            String userId, WaistCircumferenceGroupedVitalsRequest request) {
         return waistCircumferenceGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedWaistCircumferenceResponse> waistCircumferenceGrouped(
-            String userId, VitalsWaistCircumferenceGroupedRequest request, RequestOptions requestOptions) {
+            String userId, WaistCircumferenceGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -451,12 +451,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedLeanBodyMassResponse> leanBodyMassGrouped(
-            String userId, VitalsLeanBodyMassGroupedRequest request) {
+            String userId, LeanBodyMassGroupedVitalsRequest request) {
         return leanBodyMassGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedLeanBodyMassResponse> leanBodyMassGrouped(
-            String userId, VitalsLeanBodyMassGroupedRequest request, RequestOptions requestOptions) {
+            String userId, LeanBodyMassGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -517,12 +517,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBodyMassIndexResponse> bodyMassIndexGrouped(
-            String userId, VitalsBodyMassIndexGroupedRequest request) {
+            String userId, BodyMassIndexGroupedVitalsRequest request) {
         return bodyMassIndexGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBodyMassIndexResponse> bodyMassIndexGrouped(
-            String userId, VitalsBodyMassIndexGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BodyMassIndexGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -583,12 +583,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBasalBodyTemperatureResponse> basalBodyTemperatureGrouped(
-            String userId, VitalsBasalBodyTemperatureGroupedRequest request) {
+            String userId, BasalBodyTemperatureGroupedVitalsRequest request) {
         return basalBodyTemperatureGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBasalBodyTemperatureResponse> basalBodyTemperatureGrouped(
-            String userId, VitalsBasalBodyTemperatureGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BasalBodyTemperatureGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -650,12 +650,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedHandwashingResponse> handwashingGrouped(
-            String userId, VitalsHandwashingGroupedRequest request) {
+            String userId, HandwashingGroupedVitalsRequest request) {
         return handwashingGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedHandwashingResponse> handwashingGrouped(
-            String userId, VitalsHandwashingGroupedRequest request, RequestOptions requestOptions) {
+            String userId, HandwashingGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -716,12 +716,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedDaylightExposureResponse> daylightExposureGrouped(
-            String userId, VitalsDaylightExposureGroupedRequest request) {
+            String userId, DaylightExposureGroupedVitalsRequest request) {
         return daylightExposureGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedDaylightExposureResponse> daylightExposureGrouped(
-            String userId, VitalsDaylightExposureGroupedRequest request, RequestOptions requestOptions) {
+            String userId, DaylightExposureGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -783,12 +783,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedUvExposureResponse> uvExposureGrouped(
-            String userId, VitalsUvExposureGroupedRequest request) {
+            String userId, UvExposureGroupedVitalsRequest request) {
         return uvExposureGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedUvExposureResponse> uvExposureGrouped(
-            String userId, VitalsUvExposureGroupedRequest request, RequestOptions requestOptions) {
+            String userId, UvExposureGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -848,12 +848,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedFallResponse> fallGrouped(String userId, VitalsFallGroupedRequest request) {
+    public VitalHttpResponse<GroupedFallResponse> fallGrouped(String userId, FallGroupedVitalsRequest request) {
         return fallGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedFallResponse> fallGrouped(
-            String userId, VitalsFallGroupedRequest request, RequestOptions requestOptions) {
+            String userId, FallGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -914,12 +914,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedInhalerUsageResponse> inhalerUsageGrouped(
-            String userId, VitalsInhalerUsageGroupedRequest request) {
+            String userId, InhalerUsageGroupedVitalsRequest request) {
         return inhalerUsageGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedInhalerUsageResponse> inhalerUsageGrouped(
-            String userId, VitalsInhalerUsageGroupedRequest request, RequestOptions requestOptions) {
+            String userId, InhalerUsageGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -980,12 +980,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedPeakExpiratoryFlowRateResponse> peakExpiratoryFlowRateGrouped(
-            String userId, VitalsPeakExpiratoryFlowRateGroupedRequest request) {
+            String userId, PeakExpiratoryFlowRateGroupedVitalsRequest request) {
         return peakExpiratoryFlowRateGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedPeakExpiratoryFlowRateResponse> peakExpiratoryFlowRateGrouped(
-            String userId, VitalsPeakExpiratoryFlowRateGroupedRequest request, RequestOptions requestOptions) {
+            String userId, PeakExpiratoryFlowRateGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1047,12 +1047,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedForcedVitalCapacityResponse> forcedVitalCapacityGrouped(
-            String userId, VitalsForcedVitalCapacityGroupedRequest request) {
+            String userId, ForcedVitalCapacityGroupedVitalsRequest request) {
         return forcedVitalCapacityGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedForcedVitalCapacityResponse> forcedVitalCapacityGrouped(
-            String userId, VitalsForcedVitalCapacityGroupedRequest request, RequestOptions requestOptions) {
+            String userId, ForcedVitalCapacityGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1114,12 +1114,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedForcedExpiratoryVolume1Response> forcedExpiratoryVolume1Grouped(
-            String userId, VitalsForcedExpiratoryVolume1GroupedRequest request) {
+            String userId, ForcedExpiratoryVolume1GroupedVitalsRequest request) {
         return forcedExpiratoryVolume1Grouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedForcedExpiratoryVolume1Response> forcedExpiratoryVolume1Grouped(
-            String userId, VitalsForcedExpiratoryVolume1GroupedRequest request, RequestOptions requestOptions) {
+            String userId, ForcedExpiratoryVolume1GroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1181,12 +1181,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedWheelchairPushResponse> wheelchairPushGrouped(
-            String userId, VitalsWheelchairPushGroupedRequest request) {
+            String userId, WheelchairPushGroupedVitalsRequest request) {
         return wheelchairPushGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedWheelchairPushResponse> wheelchairPushGrouped(
-            String userId, VitalsWheelchairPushGroupedRequest request, RequestOptions requestOptions) {
+            String userId, WheelchairPushGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1247,12 +1247,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedSleepBreathingDisturbanceResponse> sleepBreathingDisturbanceGrouped(
-            String userId, VitalsSleepBreathingDisturbanceGroupedRequest request) {
+            String userId, SleepBreathingDisturbanceGroupedVitalsRequest request) {
         return sleepBreathingDisturbanceGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedSleepBreathingDisturbanceResponse> sleepBreathingDisturbanceGrouped(
-            String userId, VitalsSleepBreathingDisturbanceGroupedRequest request, RequestOptions requestOptions) {
+            String userId, SleepBreathingDisturbanceGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1314,12 +1314,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedSleepApneaAlertResponse> sleepApneaAlertGrouped(
-            String userId, VitalsSleepApneaAlertGroupedRequest request) {
+            String userId, SleepApneaAlertGroupedVitalsRequest request) {
         return sleepApneaAlertGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedSleepApneaAlertResponse> sleepApneaAlertGrouped(
-            String userId, VitalsSleepApneaAlertGroupedRequest request, RequestOptions requestOptions) {
+            String userId, SleepApneaAlertGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1381,12 +1381,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedStandDurationResponse> standDurationGrouped(
-            String userId, VitalsStandDurationGroupedRequest request) {
+            String userId, StandDurationGroupedVitalsRequest request) {
         return standDurationGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedStandDurationResponse> standDurationGrouped(
-            String userId, VitalsStandDurationGroupedRequest request, RequestOptions requestOptions) {
+            String userId, StandDurationGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1447,12 +1447,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedStandHourResponse> standHourGrouped(
-            String userId, VitalsStandHourGroupedRequest request) {
+            String userId, StandHourGroupedVitalsRequest request) {
         return standHourGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedStandHourResponse> standHourGrouped(
-            String userId, VitalsStandHourGroupedRequest request, RequestOptions requestOptions) {
+            String userId, StandHourGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1513,12 +1513,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedHeartRateAlertResponse> heartRateAlertGrouped(
-            String userId, VitalsHeartRateAlertGroupedRequest request) {
+            String userId, HeartRateAlertGroupedVitalsRequest request) {
         return heartRateAlertGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedHeartRateAlertResponse> heartRateAlertGrouped(
-            String userId, VitalsHeartRateAlertGroupedRequest request, RequestOptions requestOptions) {
+            String userId, HeartRateAlertGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1579,12 +1579,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedAFibBurdenResponse> afibBurdenGrouped(
-            String userId, VitalsAfibBurdenGroupedRequest request) {
+            String userId, AfibBurdenGroupedVitalsRequest request) {
         return afibBurdenGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedAFibBurdenResponse> afibBurdenGrouped(
-            String userId, VitalsAfibBurdenGroupedRequest request, RequestOptions requestOptions) {
+            String userId, AfibBurdenGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1645,12 +1645,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedWorkoutDurationResponse> workoutDurationGrouped(
-            String userId, VitalsWorkoutDurationGroupedRequest request) {
+            String userId, WorkoutDurationGroupedVitalsRequest request) {
         return workoutDurationGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedWorkoutDurationResponse> workoutDurationGrouped(
-            String userId, VitalsWorkoutDurationGroupedRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutDurationGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1711,12 +1711,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedVo2MaxResponse> vo2MaxGrouped(String userId, VitalsVo2MaxGroupedRequest request) {
+    public VitalHttpResponse<GroupedVo2MaxResponse> vo2MaxGrouped(String userId, Vo2MaxGroupedVitalsRequest request) {
         return vo2MaxGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedVo2MaxResponse> vo2MaxGrouped(
-            String userId, VitalsVo2MaxGroupedRequest request, RequestOptions requestOptions) {
+            String userId, Vo2MaxGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1777,12 +1777,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedStressLevelResponse> stressLevelGrouped(
-            String userId, VitalsStressLevelGroupedRequest request) {
+            String userId, StressLevelGroupedVitalsRequest request) {
         return stressLevelGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedStressLevelResponse> stressLevelGrouped(
-            String userId, VitalsStressLevelGroupedRequest request, RequestOptions requestOptions) {
+            String userId, StressLevelGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1843,12 +1843,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedMindfulnessMinutesResponse> mindfulnessMinutesGrouped(
-            String userId, VitalsMindfulnessMinutesGroupedRequest request) {
+            String userId, MindfulnessMinutesGroupedVitalsRequest request) {
         return mindfulnessMinutesGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedMindfulnessMinutesResponse> mindfulnessMinutesGrouped(
-            String userId, VitalsMindfulnessMinutesGroupedRequest request, RequestOptions requestOptions) {
+            String userId, MindfulnessMinutesGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1910,12 +1910,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedCaffeineResponse> caffeineGrouped(
-            String userId, VitalsCaffeineGroupedRequest request) {
+            String userId, CaffeineGroupedVitalsRequest request) {
         return caffeineGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedCaffeineResponse> caffeineGrouped(
-            String userId, VitalsCaffeineGroupedRequest request, RequestOptions requestOptions) {
+            String userId, CaffeineGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -1975,12 +1975,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedWaterResponse> waterGrouped(String userId, VitalsWaterGroupedRequest request) {
+    public VitalHttpResponse<GroupedWaterResponse> waterGrouped(String userId, WaterGroupedVitalsRequest request) {
         return waterGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedWaterResponse> waterGrouped(
-            String userId, VitalsWaterGroupedRequest request, RequestOptions requestOptions) {
+            String userId, WaterGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2040,12 +2040,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedStepsResponse> stepsGrouped(String userId, VitalsStepsGroupedRequest request) {
+    public VitalHttpResponse<GroupedStepsResponse> stepsGrouped(String userId, StepsGroupedVitalsRequest request) {
         return stepsGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedStepsResponse> stepsGrouped(
-            String userId, VitalsStepsGroupedRequest request, RequestOptions requestOptions) {
+            String userId, StepsGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2106,12 +2106,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedFloorsClimbedResponse> floorsClimbedGrouped(
-            String userId, VitalsFloorsClimbedGroupedRequest request) {
+            String userId, FloorsClimbedGroupedVitalsRequest request) {
         return floorsClimbedGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedFloorsClimbedResponse> floorsClimbedGrouped(
-            String userId, VitalsFloorsClimbedGroupedRequest request, RequestOptions requestOptions) {
+            String userId, FloorsClimbedGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2172,12 +2172,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedDistanceResponse> distanceGrouped(
-            String userId, VitalsDistanceGroupedRequest request) {
+            String userId, DistanceGroupedVitalsRequest request) {
         return distanceGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedDistanceResponse> distanceGrouped(
-            String userId, VitalsDistanceGroupedRequest request, RequestOptions requestOptions) {
+            String userId, DistanceGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2238,12 +2238,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedCaloriesBasalResponse> caloriesBasalGrouped(
-            String userId, VitalsCaloriesBasalGroupedRequest request) {
+            String userId, CaloriesBasalGroupedVitalsRequest request) {
         return caloriesBasalGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedCaloriesBasalResponse> caloriesBasalGrouped(
-            String userId, VitalsCaloriesBasalGroupedRequest request, RequestOptions requestOptions) {
+            String userId, CaloriesBasalGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2304,12 +2304,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedCaloriesActiveResponse> caloriesActiveGrouped(
-            String userId, VitalsCaloriesActiveGroupedRequest request) {
+            String userId, CaloriesActiveGroupedVitalsRequest request) {
         return caloriesActiveGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedCaloriesActiveResponse> caloriesActiveGrouped(
-            String userId, VitalsCaloriesActiveGroupedRequest request, RequestOptions requestOptions) {
+            String userId, CaloriesActiveGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2370,12 +2370,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedRespiratoryRateResponse> respiratoryRateGrouped(
-            String userId, VitalsRespiratoryRateGroupedRequest request) {
+            String userId, RespiratoryRateGroupedVitalsRequest request) {
         return respiratoryRateGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedRespiratoryRateResponse> respiratoryRateGrouped(
-            String userId, VitalsRespiratoryRateGroupedRequest request, RequestOptions requestOptions) {
+            String userId, RespiratoryRateGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2436,12 +2436,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedNoteResponse> noteGrouped(String userId, VitalsNoteGroupedRequest request) {
+    public VitalHttpResponse<GroupedNoteResponse> noteGrouped(String userId, NoteGroupedVitalsRequest request) {
         return noteGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedNoteResponse> noteGrouped(
-            String userId, VitalsNoteGroupedRequest request, RequestOptions requestOptions) {
+            String userId, NoteGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2502,12 +2502,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedInsulinInjectionResponse> insulinInjectionGrouped(
-            String userId, VitalsInsulinInjectionGroupedRequest request) {
+            String userId, InsulinInjectionGroupedVitalsRequest request) {
         return insulinInjectionGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedInsulinInjectionResponse> insulinInjectionGrouped(
-            String userId, VitalsInsulinInjectionGroupedRequest request, RequestOptions requestOptions) {
+            String userId, InsulinInjectionGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2568,12 +2568,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedIgeResponse> igeGrouped(String userId, VitalsIgeGroupedRequest request) {
+    public VitalHttpResponse<GroupedIgeResponse> igeGrouped(String userId, IgeGroupedVitalsRequest request) {
         return igeGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedIgeResponse> igeGrouped(
-            String userId, VitalsIgeGroupedRequest request, RequestOptions requestOptions) {
+            String userId, IgeGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2632,12 +2632,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedIggResponse> iggGrouped(String userId, VitalsIggGroupedRequest request) {
+    public VitalHttpResponse<GroupedIggResponse> iggGrouped(String userId, IggGroupedVitalsRequest request) {
         return iggGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedIggResponse> iggGrouped(
-            String userId, VitalsIggGroupedRequest request, RequestOptions requestOptions) {
+            String userId, IggGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2697,12 +2697,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedHypnogramResponse> hypnogramGrouped(
-            String userId, VitalsHypnogramGroupedRequest request) {
+            String userId, HypnogramGroupedVitalsRequest request) {
         return hypnogramGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedHypnogramResponse> hypnogramGrouped(
-            String userId, VitalsHypnogramGroupedRequest request, RequestOptions requestOptions) {
+            String userId, HypnogramGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2762,12 +2762,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<GroupedHrvResponse> hrvGrouped(String userId, VitalsHrvGroupedRequest request) {
+    public VitalHttpResponse<GroupedHrvResponse> hrvGrouped(String userId, HrvGroupedVitalsRequest request) {
         return hrvGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedHrvResponse> hrvGrouped(
-            String userId, VitalsHrvGroupedRequest request, RequestOptions requestOptions) {
+            String userId, HrvGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2827,12 +2827,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedHeartRateResponse> heartrateGrouped(
-            String userId, VitalsHeartrateGroupedRequest request) {
+            String userId, HeartrateGroupedVitalsRequest request) {
         return heartrateGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedHeartRateResponse> heartrateGrouped(
-            String userId, VitalsHeartrateGroupedRequest request, RequestOptions requestOptions) {
+            String userId, HeartrateGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2893,12 +2893,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedGlucoseResponse> glucoseGrouped(
-            String userId, VitalsGlucoseGroupedRequest request) {
+            String userId, GlucoseGroupedVitalsRequest request) {
         return glucoseGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedGlucoseResponse> glucoseGrouped(
-            String userId, VitalsGlucoseGroupedRequest request, RequestOptions requestOptions) {
+            String userId, GlucoseGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -2959,12 +2959,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedCholesterolResponse> cholesterolGrouped(
-            String userId, VitalsCholesterolGroupedRequest request) {
+            String userId, CholesterolGroupedVitalsRequest request) {
         return cholesterolGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedCholesterolResponse> cholesterolGrouped(
-            String userId, VitalsCholesterolGroupedRequest request, RequestOptions requestOptions) {
+            String userId, CholesterolGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3025,12 +3025,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedCarbohydratesResponse> carbohydratesGrouped(
-            String userId, VitalsCarbohydratesGroupedRequest request) {
+            String userId, CarbohydratesGroupedVitalsRequest request) {
         return carbohydratesGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedCarbohydratesResponse> carbohydratesGrouped(
-            String userId, VitalsCarbohydratesGroupedRequest request, RequestOptions requestOptions) {
+            String userId, CarbohydratesGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3091,12 +3091,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBodyTemperatureDeltaResponse> bodyTemperatureDeltaGrouped(
-            String userId, VitalsBodyTemperatureDeltaGroupedRequest request) {
+            String userId, BodyTemperatureDeltaGroupedVitalsRequest request) {
         return bodyTemperatureDeltaGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBodyTemperatureDeltaResponse> bodyTemperatureDeltaGrouped(
-            String userId, VitalsBodyTemperatureDeltaGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BodyTemperatureDeltaGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3158,12 +3158,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBodyTemperatureResponse> bodyTemperatureGrouped(
-            String userId, VitalsBodyTemperatureGroupedRequest request) {
+            String userId, BodyTemperatureGroupedVitalsRequest request) {
         return bodyTemperatureGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBodyTemperatureResponse> bodyTemperatureGrouped(
-            String userId, VitalsBodyTemperatureGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BodyTemperatureGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3225,12 +3225,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBodyWeightResponse> bodyWeightGrouped(
-            String userId, VitalsBodyWeightGroupedRequest request) {
+            String userId, BodyWeightGroupedVitalsRequest request) {
         return bodyWeightGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBodyWeightResponse> bodyWeightGrouped(
-            String userId, VitalsBodyWeightGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BodyWeightGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3291,12 +3291,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBodyFatResponse> bodyFatGrouped(
-            String userId, VitalsBodyFatGroupedRequest request) {
+            String userId, BodyFatGroupedVitalsRequest request) {
         return bodyFatGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBodyFatResponse> bodyFatGrouped(
-            String userId, VitalsBodyFatGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BodyFatGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3357,12 +3357,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBloodOxygenResponse> bloodOxygenGrouped(
-            String userId, VitalsBloodOxygenGroupedRequest request) {
+            String userId, BloodOxygenGroupedVitalsRequest request) {
         return bloodOxygenGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBloodOxygenResponse> bloodOxygenGrouped(
-            String userId, VitalsBloodOxygenGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BloodOxygenGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3423,12 +3423,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedElectrocardiogramVoltageResponse> electrocardiogramVoltageGrouped(
-            String userId, VitalsElectrocardiogramVoltageGroupedRequest request) {
+            String userId, ElectrocardiogramVoltageGroupedVitalsRequest request) {
         return electrocardiogramVoltageGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedElectrocardiogramVoltageResponse> electrocardiogramVoltageGrouped(
-            String userId, VitalsElectrocardiogramVoltageGroupedRequest request, RequestOptions requestOptions) {
+            String userId, ElectrocardiogramVoltageGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3490,12 +3490,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<GroupedBloodPressureResponse> bloodPressureGrouped(
-            String userId, VitalsBloodPressureGroupedRequest request) {
+            String userId, BloodPressureGroupedVitalsRequest request) {
         return bloodPressureGrouped(userId, request, null);
     }
 
     public VitalHttpResponse<GroupedBloodPressureResponse> bloodPressureGrouped(
-            String userId, VitalsBloodPressureGroupedRequest request, RequestOptions requestOptions) {
+            String userId, BloodPressureGroupedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3555,12 +3555,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingVo2MaxTimeseries>> vo2Max(String userId, VitalsVo2MaxRequest request) {
+    public VitalHttpResponse<List<ClientFacingVo2MaxTimeseries>> vo2Max(String userId, Vo2MaxVitalsRequest request) {
         return vo2Max(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingVo2MaxTimeseries>> vo2Max(
-            String userId, VitalsVo2MaxRequest request, RequestOptions requestOptions) {
+            String userId, Vo2MaxVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3614,12 +3614,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingStressLevelTimeseries>> stressLevel(
-            String userId, VitalsStressLevelRequest request) {
+            String userId, StressLevelVitalsRequest request) {
         return stressLevel(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingStressLevelTimeseries>> stressLevel(
-            String userId, VitalsStressLevelRequest request, RequestOptions requestOptions) {
+            String userId, StressLevelVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3673,12 +3673,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingMindfulnessMinutesTimeseries>> mindfulnessMinutes(
-            String userId, VitalsMindfulnessMinutesRequest request) {
+            String userId, MindfulnessMinutesVitalsRequest request) {
         return mindfulnessMinutes(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingMindfulnessMinutesTimeseries>> mindfulnessMinutes(
-            String userId, VitalsMindfulnessMinutesRequest request, RequestOptions requestOptions) {
+            String userId, MindfulnessMinutesVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3733,12 +3733,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCaffeineTimeseries>> caffeine(
-            String userId, VitalsCaffeineRequest request) {
+            String userId, CaffeineVitalsRequest request) {
         return caffeine(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCaffeineTimeseries>> caffeine(
-            String userId, VitalsCaffeineRequest request, RequestOptions requestOptions) {
+            String userId, CaffeineVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3791,12 +3791,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingWaterTimeseries>> water(String userId, VitalsWaterRequest request) {
+    public VitalHttpResponse<List<ClientFacingWaterTimeseries>> water(String userId, WaterVitalsRequest request) {
         return water(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingWaterTimeseries>> water(
-            String userId, VitalsWaterRequest request, RequestOptions requestOptions) {
+            String userId, WaterVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3849,12 +3849,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingStepsTimeseries>> steps(String userId, VitalsStepsRequest request) {
+    public VitalHttpResponse<List<ClientFacingStepsTimeseries>> steps(String userId, StepsVitalsRequest request) {
         return steps(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingStepsTimeseries>> steps(
-            String userId, VitalsStepsRequest request, RequestOptions requestOptions) {
+            String userId, StepsVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3908,12 +3908,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingFloorsClimbedTimeseries>> floorsClimbed(
-            String userId, VitalsFloorsClimbedRequest request) {
+            String userId, FloorsClimbedVitalsRequest request) {
         return floorsClimbed(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingFloorsClimbedTimeseries>> floorsClimbed(
-            String userId, VitalsFloorsClimbedRequest request, RequestOptions requestOptions) {
+            String userId, FloorsClimbedVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -3968,12 +3968,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingDistanceTimeseries>> distance(
-            String userId, VitalsDistanceRequest request) {
+            String userId, DistanceVitalsRequest request) {
         return distance(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingDistanceTimeseries>> distance(
-            String userId, VitalsDistanceRequest request, RequestOptions requestOptions) {
+            String userId, DistanceVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4027,12 +4027,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCaloriesBasalTimeseries>> caloriesBasal(
-            String userId, VitalsCaloriesBasalRequest request) {
+            String userId, CaloriesBasalVitalsRequest request) {
         return caloriesBasal(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCaloriesBasalTimeseries>> caloriesBasal(
-            String userId, VitalsCaloriesBasalRequest request, RequestOptions requestOptions) {
+            String userId, CaloriesBasalVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4087,12 +4087,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCaloriesActiveTimeseries>> caloriesActive(
-            String userId, VitalsCaloriesActiveRequest request) {
+            String userId, CaloriesActiveVitalsRequest request) {
         return caloriesActive(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCaloriesActiveTimeseries>> caloriesActive(
-            String userId, VitalsCaloriesActiveRequest request, RequestOptions requestOptions) {
+            String userId, CaloriesActiveVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4147,12 +4147,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingRespiratoryRateTimeseries>> respiratoryRate(
-            String userId, VitalsRespiratoryRateRequest request) {
+            String userId, RespiratoryRateVitalsRequest request) {
         return respiratoryRate(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingRespiratoryRateTimeseries>> respiratoryRate(
-            String userId, VitalsRespiratoryRateRequest request, RequestOptions requestOptions) {
+            String userId, RespiratoryRateVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4206,12 +4206,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingIgeTimeseries>> ige(String userId, VitalsIgeRequest request) {
+    public VitalHttpResponse<List<ClientFacingIgeTimeseries>> ige(String userId, IgeVitalsRequest request) {
         return ige(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingIgeTimeseries>> ige(
-            String userId, VitalsIgeRequest request, RequestOptions requestOptions) {
+            String userId, IgeVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4264,12 +4264,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingIggTimeseries>> igg(String userId, VitalsIggRequest request) {
+    public VitalHttpResponse<List<ClientFacingIggTimeseries>> igg(String userId, IggVitalsRequest request) {
         return igg(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingIggTimeseries>> igg(
-            String userId, VitalsIggRequest request, RequestOptions requestOptions) {
+            String userId, IggVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4323,12 +4323,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingHypnogramTimeseries>> hypnogram(
-            String userId, VitalsHypnogramRequest request) {
+            String userId, HypnogramVitalsRequest request) {
         return hypnogram(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingHypnogramTimeseries>> hypnogram(
-            String userId, VitalsHypnogramRequest request, RequestOptions requestOptions) {
+            String userId, HypnogramVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4381,12 +4381,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingHrvTimeseries>> hrv(String userId, VitalsHrvRequest request) {
+    public VitalHttpResponse<List<ClientFacingHrvTimeseries>> hrv(String userId, HrvVitalsRequest request) {
         return hrv(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingHrvTimeseries>> hrv(
-            String userId, VitalsHrvRequest request, RequestOptions requestOptions) {
+            String userId, HrvVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4440,12 +4440,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingHeartRateTimeseries>> heartrate(
-            String userId, VitalsHeartrateRequest request) {
+            String userId, HeartrateVitalsRequest request) {
         return heartrate(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingHeartRateTimeseries>> heartrate(
-            String userId, VitalsHeartrateRequest request, RequestOptions requestOptions) {
+            String userId, HeartrateVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4498,12 +4498,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingGlucoseTimeseries>> glucose(String userId, VitalsGlucoseRequest request) {
+    public VitalHttpResponse<List<ClientFacingGlucoseTimeseries>> glucose(String userId, GlucoseVitalsRequest request) {
         return glucose(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingGlucoseTimeseries>> glucose(
-            String userId, VitalsGlucoseRequest request, RequestOptions requestOptions) {
+            String userId, GlucoseVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4557,12 +4557,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolTriglycerides(
-            String userId, VitalsCholesterolTriglyceridesRequest request) {
+            String userId, CholesterolTriglyceridesVitalsRequest request) {
         return cholesterolTriglycerides(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolTriglycerides(
-            String userId, VitalsCholesterolTriglyceridesRequest request, RequestOptions requestOptions) {
+            String userId, CholesterolTriglyceridesVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4616,12 +4616,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolTotal(
-            String userId, VitalsCholesterolTotalRequest request) {
+            String userId, CholesterolTotalVitalsRequest request) {
         return cholesterolTotal(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolTotal(
-            String userId, VitalsCholesterolTotalRequest request, RequestOptions requestOptions) {
+            String userId, CholesterolTotalVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4675,12 +4675,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolLdl(
-            String userId, VitalsCholesterolLdlRequest request) {
+            String userId, CholesterolLdlVitalsRequest request) {
         return cholesterolLdl(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolLdl(
-            String userId, VitalsCholesterolLdlRequest request, RequestOptions requestOptions) {
+            String userId, CholesterolLdlVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4734,12 +4734,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolHdl(
-            String userId, VitalsCholesterolHdlRequest request) {
+            String userId, CholesterolHdlVitalsRequest request) {
         return cholesterolHdl(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterolHdl(
-            String userId, VitalsCholesterolHdlRequest request, RequestOptions requestOptions) {
+            String userId, CholesterolHdlVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4793,12 +4793,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterol(
-            String userId, VitalsCholesterolRequest request) {
+            String userId, CholesterolVitalsRequest request) {
         return cholesterol(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingCholesterolTimeseries>> cholesterol(
-            String userId, VitalsCholesterolRequest request, RequestOptions requestOptions) {
+            String userId, CholesterolVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4852,12 +4852,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingBodyWeightTimeseries>> bodyWeight(
-            String userId, VitalsBodyWeightRequest request) {
+            String userId, BodyWeightVitalsRequest request) {
         return bodyWeight(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingBodyWeightTimeseries>> bodyWeight(
-            String userId, VitalsBodyWeightRequest request, RequestOptions requestOptions) {
+            String userId, BodyWeightVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4910,12 +4910,12 @@ public class RawVitalsClient {
         }
     }
 
-    public VitalHttpResponse<List<ClientFacingBodyFatTimeseries>> bodyFat(String userId, VitalsBodyFatRequest request) {
+    public VitalHttpResponse<List<ClientFacingBodyFatTimeseries>> bodyFat(String userId, BodyFatVitalsRequest request) {
         return bodyFat(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingBodyFatTimeseries>> bodyFat(
-            String userId, VitalsBodyFatRequest request, RequestOptions requestOptions) {
+            String userId, BodyFatVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -4969,12 +4969,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingBloodOxygenTimeseries>> bloodOxygen(
-            String userId, VitalsBloodOxygenRequest request) {
+            String userId, BloodOxygenVitalsRequest request) {
         return bloodOxygen(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingBloodOxygenTimeseries>> bloodOxygen(
-            String userId, VitalsBloodOxygenRequest request, RequestOptions requestOptions) {
+            String userId, BloodOxygenVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -5028,12 +5028,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingElectrocardiogramVoltageTimeseries>> electrocardiogramVoltage(
-            String userId, VitalsElectrocardiogramVoltageRequest request) {
+            String userId, ElectrocardiogramVoltageVitalsRequest request) {
         return electrocardiogramVoltage(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingElectrocardiogramVoltageTimeseries>> electrocardiogramVoltage(
-            String userId, VitalsElectrocardiogramVoltageRequest request, RequestOptions requestOptions) {
+            String userId, ElectrocardiogramVoltageVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")
@@ -5088,12 +5088,12 @@ public class RawVitalsClient {
     }
 
     public VitalHttpResponse<List<ClientFacingBloodPressureTimeseries>> bloodPressure(
-            String userId, VitalsBloodPressureRequest request) {
+            String userId, BloodPressureVitalsRequest request) {
         return bloodPressure(userId, request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingBloodPressureTimeseries>> bloodPressure(
-            String userId, VitalsBloodPressureRequest request, RequestOptions requestOptions) {
+            String userId, BloodPressureVitalsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries")

@@ -5,8 +5,8 @@ package com.vital.api.resources.profile;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.profile.requests.ProfileGetRawRequest;
-import com.vital.api.resources.profile.requests.ProfileGetRequest;
+import com.vital.api.resources.profile.requests.GetProfileRequest;
+import com.vital.api.resources.profile.requests.GetRawProfileRequest;
 import com.vital.api.types.ClientFacingProfile;
 import com.vital.api.types.RawProfile;
 
@@ -37,14 +37,14 @@ public class ProfileClient {
     /**
      * Get profile for user_id
      */
-    public ClientFacingProfile get(String userId, ProfileGetRequest request) {
+    public ClientFacingProfile get(String userId, GetProfileRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get profile for user_id
      */
-    public ClientFacingProfile get(String userId, ProfileGetRequest request, RequestOptions requestOptions) {
+    public ClientFacingProfile get(String userId, GetProfileRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 
@@ -58,14 +58,14 @@ public class ProfileClient {
     /**
      * Get raw profile for user_id
      */
-    public RawProfile getRaw(String userId, ProfileGetRawRequest request) {
+    public RawProfile getRaw(String userId, GetRawProfileRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw profile for user_id
      */
-    public RawProfile getRaw(String userId, ProfileGetRawRequest request, RequestOptions requestOptions) {
+    public RawProfile getRaw(String userId, GetRawProfileRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 }

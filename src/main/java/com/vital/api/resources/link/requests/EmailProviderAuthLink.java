@@ -5,12 +5,15 @@ package com.vital.api.resources.link.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Providers;
 import com.vital.api.types.Region;
@@ -46,8 +49,11 @@ public final class EmailProviderAuthLink {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("x-vital-link-token")
+    @JsonIgnore
     public Optional<String> getVitalLinkToken() {
+        if (vitalLinkToken == null) {
+            return Optional.empty();
+        }
         return vitalLinkToken;
     }
 
@@ -56,14 +62,29 @@ public final class EmailProviderAuthLink {
         return email;
     }
 
-    @JsonProperty("provider")
+    @JsonIgnore
     public Optional<Providers> getEmailProviderAuthLinkProvider() {
+        if (emailProviderAuthLinkProvider == null) {
+            return Optional.empty();
+        }
         return emailProviderAuthLinkProvider;
     }
 
     @JsonProperty("region")
     public Optional<Region> getRegion() {
         return region;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("x-vital-link-token")
+    private Optional<String> _getVitalLinkToken() {
+        return vitalLinkToken;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider")
+    private Optional<Providers> _getEmailProviderAuthLinkProvider() {
+        return emailProviderAuthLinkProvider;
     }
 
     @java.lang.Override
@@ -111,9 +132,13 @@ public final class EmailProviderAuthLink {
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
 
+        _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken);
+
         _FinalStage emailProviderAuthLinkProvider(Optional<Providers> emailProviderAuthLinkProvider);
 
         _FinalStage emailProviderAuthLinkProvider(Providers emailProviderAuthLinkProvider);
+
+        _FinalStage emailProviderAuthLinkProvider(Nullable<Providers> emailProviderAuthLinkProvider);
 
         _FinalStage region(Optional<Region> region);
 
@@ -165,6 +190,18 @@ public final class EmailProviderAuthLink {
         }
 
         @java.lang.Override
+        public _FinalStage emailProviderAuthLinkProvider(Nullable<Providers> emailProviderAuthLinkProvider) {
+            if (emailProviderAuthLinkProvider.isNull()) {
+                this.emailProviderAuthLinkProvider = null;
+            } else if (emailProviderAuthLinkProvider.isEmpty()) {
+                this.emailProviderAuthLinkProvider = Optional.empty();
+            } else {
+                this.emailProviderAuthLinkProvider = Optional.of(emailProviderAuthLinkProvider.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage emailProviderAuthLinkProvider(Providers emailProviderAuthLinkProvider) {
             this.emailProviderAuthLinkProvider = Optional.ofNullable(emailProviderAuthLinkProvider);
             return this;
@@ -174,6 +211,18 @@ public final class EmailProviderAuthLink {
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage emailProviderAuthLinkProvider(Optional<Providers> emailProviderAuthLinkProvider) {
             this.emailProviderAuthLinkProvider = emailProviderAuthLinkProvider;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken) {
+            if (vitalLinkToken.isNull()) {
+                this.vitalLinkToken = null;
+            } else if (vitalLinkToken.isEmpty()) {
+                this.vitalLinkToken = Optional.empty();
+            } else {
+                this.vitalLinkToken = Optional.of(vitalLinkToken.get());
+            }
             return this;
         }
 

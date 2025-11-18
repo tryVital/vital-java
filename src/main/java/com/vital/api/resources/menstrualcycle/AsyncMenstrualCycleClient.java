@@ -5,7 +5,7 @@ package com.vital.api.resources.menstrualcycle;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.menstrualcycle.requests.MenstrualCycleGetRequest;
+import com.vital.api.resources.menstrualcycle.requests.GetMenstrualCycleRequest;
 import com.vital.api.types.MenstrualCycleResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,12 +26,12 @@ public class AsyncMenstrualCycleClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<MenstrualCycleResponse> get(String userId, MenstrualCycleGetRequest request) {
+    public CompletableFuture<MenstrualCycleResponse> get(String userId, GetMenstrualCycleRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<MenstrualCycleResponse> get(
-            String userId, MenstrualCycleGetRequest request, RequestOptions requestOptions) {
+            String userId, GetMenstrualCycleRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

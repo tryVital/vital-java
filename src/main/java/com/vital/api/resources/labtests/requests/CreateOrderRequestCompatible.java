@@ -5,12 +5,15 @@ package com.vital.api.resources.labtests.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AoEAnswer;
 import com.vital.api.types.Billing;
@@ -114,13 +117,19 @@ public final class CreateOrderRequestCompatible {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("X-Idempotency-Key")
+    @JsonIgnore
     public Optional<String> getIdempotencyKey() {
+        if (idempotencyKey == null) {
+            return Optional.empty();
+        }
         return idempotencyKey;
     }
 
-    @JsonProperty("X-Idempotency-Error")
+    @JsonIgnore
     public Optional<String> getIdempotencyError() {
+        if (idempotencyError == null) {
+            return Optional.empty();
+        }
         return idempotencyError;
     }
 
@@ -129,28 +138,43 @@ public final class CreateOrderRequestCompatible {
         return userId;
     }
 
-    @JsonProperty("lab_test_id")
+    @JsonIgnore
     public Optional<String> getLabTestId() {
+        if (labTestId == null) {
+            return Optional.empty();
+        }
         return labTestId;
     }
 
-    @JsonProperty("order_set")
+    @JsonIgnore
     public Optional<OrderSetRequest> getOrderSet() {
+        if (orderSet == null) {
+            return Optional.empty();
+        }
         return orderSet;
     }
 
-    @JsonProperty("collection_method")
+    @JsonIgnore
     public Optional<LabTestCollectionMethod> getCollectionMethod() {
+        if (collectionMethod == null) {
+            return Optional.empty();
+        }
         return collectionMethod;
     }
 
-    @JsonProperty("physician")
+    @JsonIgnore
     public Optional<PhysicianCreateRequest> getPhysician() {
+        if (physician == null) {
+            return Optional.empty();
+        }
         return physician;
     }
 
-    @JsonProperty("health_insurance")
+    @JsonIgnore
     public Optional<HealthInsuranceCreateRequest> getHealthInsurance() {
+        if (healthInsurance == null) {
+            return Optional.empty();
+        }
         return healthInsurance;
     }
 
@@ -167,8 +191,11 @@ public final class CreateOrderRequestCompatible {
         return billingType;
     }
 
-    @JsonProperty("icd_codes")
+    @JsonIgnore
     public Optional<List<String>> getIcdCodes() {
+        if (icdCodes == null) {
+            return Optional.empty();
+        }
         return icdCodes;
     }
 
@@ -180,28 +207,43 @@ public final class CreateOrderRequestCompatible {
     /**
      * @return Schedule an Order to be processed in a future date.
      */
-    @JsonProperty("activate_by")
+    @JsonIgnore
     public Optional<String> getActivateBy() {
+        if (activateBy == null) {
+            return Optional.empty();
+        }
         return activateBy;
     }
 
-    @JsonProperty("aoe_answers")
+    @JsonIgnore
     public Optional<List<AoEAnswer>> getAoeAnswers() {
+        if (aoeAnswers == null) {
+            return Optional.empty();
+        }
         return aoeAnswers;
     }
 
-    @JsonProperty("passthrough")
+    @JsonIgnore
     public Optional<String> getPassthrough() {
+        if (passthrough == null) {
+            return Optional.empty();
+        }
         return passthrough;
     }
 
-    @JsonProperty("lab_account_id")
+    @JsonIgnore
     public Optional<String> getLabAccountId() {
+        if (labAccountId == null) {
+            return Optional.empty();
+        }
         return labAccountId;
     }
 
-    @JsonProperty("creator_member_id")
+    @JsonIgnore
     public Optional<String> getCreatorMemberId() {
+        if (creatorMemberId == null) {
+            return Optional.empty();
+        }
         return creatorMemberId;
     }
 
@@ -213,6 +255,84 @@ public final class CreateOrderRequestCompatible {
     @JsonProperty("patient_address")
     public PatientAddressWithValidation getPatientAddress() {
         return patientAddress;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("X-Idempotency-Key")
+    private Optional<String> _getIdempotencyKey() {
+        return idempotencyKey;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("X-Idempotency-Error")
+    private Optional<String> _getIdempotencyError() {
+        return idempotencyError;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("lab_test_id")
+    private Optional<String> _getLabTestId() {
+        return labTestId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("order_set")
+    private Optional<OrderSetRequest> _getOrderSet() {
+        return orderSet;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("collection_method")
+    private Optional<LabTestCollectionMethod> _getCollectionMethod() {
+        return collectionMethod;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("physician")
+    private Optional<PhysicianCreateRequest> _getPhysician() {
+        return physician;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("health_insurance")
+    private Optional<HealthInsuranceCreateRequest> _getHealthInsurance() {
+        return healthInsurance;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("icd_codes")
+    private Optional<List<String>> _getIcdCodes() {
+        return icdCodes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("activate_by")
+    private Optional<String> _getActivateBy() {
+        return activateBy;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("aoe_answers")
+    private Optional<List<AoEAnswer>> _getAoeAnswers() {
+        return aoeAnswers;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("passthrough")
+    private Optional<String> _getPassthrough() {
+        return passthrough;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("lab_account_id")
+    private Optional<String> _getLabAccountId() {
+        return labAccountId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("creator_member_id")
+    private Optional<String> _getCreatorMemberId() {
+        return creatorMemberId;
     }
 
     @java.lang.Override
@@ -302,29 +422,43 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage idempotencyKey(String idempotencyKey);
 
+        _FinalStage idempotencyKey(Nullable<String> idempotencyKey);
+
         _FinalStage idempotencyError(Optional<String> idempotencyError);
 
         _FinalStage idempotencyError(String idempotencyError);
+
+        _FinalStage idempotencyError(Nullable<String> idempotencyError);
 
         _FinalStage labTestId(Optional<String> labTestId);
 
         _FinalStage labTestId(String labTestId);
 
+        _FinalStage labTestId(Nullable<String> labTestId);
+
         _FinalStage orderSet(Optional<OrderSetRequest> orderSet);
 
         _FinalStage orderSet(OrderSetRequest orderSet);
+
+        _FinalStage orderSet(Nullable<OrderSetRequest> orderSet);
 
         _FinalStage collectionMethod(Optional<LabTestCollectionMethod> collectionMethod);
 
         _FinalStage collectionMethod(LabTestCollectionMethod collectionMethod);
 
+        _FinalStage collectionMethod(Nullable<LabTestCollectionMethod> collectionMethod);
+
         _FinalStage physician(Optional<PhysicianCreateRequest> physician);
 
         _FinalStage physician(PhysicianCreateRequest physician);
 
+        _FinalStage physician(Nullable<PhysicianCreateRequest> physician);
+
         _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance);
 
         _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance);
+
+        _FinalStage healthInsurance(Nullable<HealthInsuranceCreateRequest> healthInsurance);
 
         /**
          * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
@@ -341,6 +475,8 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage icdCodes(List<String> icdCodes);
 
+        _FinalStage icdCodes(Nullable<List<String>> icdCodes);
+
         _FinalStage consents(Optional<List<Consent>> consents);
 
         _FinalStage consents(List<Consent> consents);
@@ -352,21 +488,31 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage activateBy(String activateBy);
 
+        _FinalStage activateBy(Nullable<String> activateBy);
+
         _FinalStage aoeAnswers(Optional<List<AoEAnswer>> aoeAnswers);
 
         _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers);
+
+        _FinalStage aoeAnswers(Nullable<List<AoEAnswer>> aoeAnswers);
 
         _FinalStage passthrough(Optional<String> passthrough);
 
         _FinalStage passthrough(String passthrough);
 
+        _FinalStage passthrough(Nullable<String> passthrough);
+
         _FinalStage labAccountId(Optional<String> labAccountId);
 
         _FinalStage labAccountId(String labAccountId);
 
+        _FinalStage labAccountId(Nullable<String> labAccountId);
+
         _FinalStage creatorMemberId(Optional<String> creatorMemberId);
 
         _FinalStage creatorMemberId(String creatorMemberId);
+
+        _FinalStage creatorMemberId(Nullable<String> creatorMemberId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -460,6 +606,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage creatorMemberId(Nullable<String> creatorMemberId) {
+            if (creatorMemberId.isNull()) {
+                this.creatorMemberId = null;
+            } else if (creatorMemberId.isEmpty()) {
+                this.creatorMemberId = Optional.empty();
+            } else {
+                this.creatorMemberId = Optional.of(creatorMemberId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage creatorMemberId(String creatorMemberId) {
             this.creatorMemberId = Optional.ofNullable(creatorMemberId);
             return this;
@@ -469,6 +627,18 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "creator_member_id", nulls = Nulls.SKIP)
         public _FinalStage creatorMemberId(Optional<String> creatorMemberId) {
             this.creatorMemberId = creatorMemberId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage labAccountId(Nullable<String> labAccountId) {
+            if (labAccountId.isNull()) {
+                this.labAccountId = null;
+            } else if (labAccountId.isEmpty()) {
+                this.labAccountId = Optional.empty();
+            } else {
+                this.labAccountId = Optional.of(labAccountId.get());
+            }
             return this;
         }
 
@@ -486,6 +656,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage passthrough(Nullable<String> passthrough) {
+            if (passthrough.isNull()) {
+                this.passthrough = null;
+            } else if (passthrough.isEmpty()) {
+                this.passthrough = Optional.empty();
+            } else {
+                this.passthrough = Optional.of(passthrough.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
             this.passthrough = Optional.ofNullable(passthrough);
             return this;
@@ -499,6 +681,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage aoeAnswers(Nullable<List<AoEAnswer>> aoeAnswers) {
+            if (aoeAnswers.isNull()) {
+                this.aoeAnswers = null;
+            } else if (aoeAnswers.isEmpty()) {
+                this.aoeAnswers = Optional.empty();
+            } else {
+                this.aoeAnswers = Optional.of(aoeAnswers.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage aoeAnswers(List<AoEAnswer> aoeAnswers) {
             this.aoeAnswers = Optional.ofNullable(aoeAnswers);
             return this;
@@ -508,6 +702,22 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "aoe_answers", nulls = Nulls.SKIP)
         public _FinalStage aoeAnswers(Optional<List<AoEAnswer>> aoeAnswers) {
             this.aoeAnswers = aoeAnswers;
+            return this;
+        }
+
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage activateBy(Nullable<String> activateBy) {
+            if (activateBy.isNull()) {
+                this.activateBy = null;
+            } else if (activateBy.isEmpty()) {
+                this.activateBy = Optional.empty();
+            } else {
+                this.activateBy = Optional.of(activateBy.get());
+            }
             return this;
         }
 
@@ -541,6 +751,18 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "consents", nulls = Nulls.SKIP)
         public _FinalStage consents(Optional<List<Consent>> consents) {
             this.consents = consents;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage icdCodes(Nullable<List<String>> icdCodes) {
+            if (icdCodes.isNull()) {
+                this.icdCodes = null;
+            } else if (icdCodes.isEmpty()) {
+                this.icdCodes = Optional.empty();
+            } else {
+                this.icdCodes = Optional.of(icdCodes.get());
+            }
             return this;
         }
 
@@ -591,6 +813,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage healthInsurance(Nullable<HealthInsuranceCreateRequest> healthInsurance) {
+            if (healthInsurance.isNull()) {
+                this.healthInsurance = null;
+            } else if (healthInsurance.isEmpty()) {
+                this.healthInsurance = Optional.empty();
+            } else {
+                this.healthInsurance = Optional.of(healthInsurance.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage healthInsurance(HealthInsuranceCreateRequest healthInsurance) {
             this.healthInsurance = Optional.ofNullable(healthInsurance);
             return this;
@@ -600,6 +834,18 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "health_insurance", nulls = Nulls.SKIP)
         public _FinalStage healthInsurance(Optional<HealthInsuranceCreateRequest> healthInsurance) {
             this.healthInsurance = healthInsurance;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage physician(Nullable<PhysicianCreateRequest> physician) {
+            if (physician.isNull()) {
+                this.physician = null;
+            } else if (physician.isEmpty()) {
+                this.physician = Optional.empty();
+            } else {
+                this.physician = Optional.of(physician.get());
+            }
             return this;
         }
 
@@ -617,6 +863,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage collectionMethod(Nullable<LabTestCollectionMethod> collectionMethod) {
+            if (collectionMethod.isNull()) {
+                this.collectionMethod = null;
+            } else if (collectionMethod.isEmpty()) {
+                this.collectionMethod = Optional.empty();
+            } else {
+                this.collectionMethod = Optional.of(collectionMethod.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage collectionMethod(LabTestCollectionMethod collectionMethod) {
             this.collectionMethod = Optional.ofNullable(collectionMethod);
             return this;
@@ -626,6 +884,18 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "collection_method", nulls = Nulls.SKIP)
         public _FinalStage collectionMethod(Optional<LabTestCollectionMethod> collectionMethod) {
             this.collectionMethod = collectionMethod;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage orderSet(Nullable<OrderSetRequest> orderSet) {
+            if (orderSet.isNull()) {
+                this.orderSet = null;
+            } else if (orderSet.isEmpty()) {
+                this.orderSet = Optional.empty();
+            } else {
+                this.orderSet = Optional.of(orderSet.get());
+            }
             return this;
         }
 
@@ -643,6 +913,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage labTestId(Nullable<String> labTestId) {
+            if (labTestId.isNull()) {
+                this.labTestId = null;
+            } else if (labTestId.isEmpty()) {
+                this.labTestId = Optional.empty();
+            } else {
+                this.labTestId = Optional.of(labTestId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage labTestId(String labTestId) {
             this.labTestId = Optional.ofNullable(labTestId);
             return this;
@@ -656,6 +938,18 @@ public final class CreateOrderRequestCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage idempotencyError(Nullable<String> idempotencyError) {
+            if (idempotencyError.isNull()) {
+                this.idempotencyError = null;
+            } else if (idempotencyError.isEmpty()) {
+                this.idempotencyError = Optional.empty();
+            } else {
+                this.idempotencyError = Optional.of(idempotencyError.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage idempotencyError(String idempotencyError) {
             this.idempotencyError = Optional.ofNullable(idempotencyError);
             return this;
@@ -665,6 +959,18 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "X-Idempotency-Error", nulls = Nulls.SKIP)
         public _FinalStage idempotencyError(Optional<String> idempotencyError) {
             this.idempotencyError = idempotencyError;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage idempotencyKey(Nullable<String> idempotencyKey) {
+            if (idempotencyKey.isNull()) {
+                this.idempotencyKey = null;
+            } else if (idempotencyKey.isEmpty()) {
+                this.idempotencyKey = Optional.empty();
+            } else {
+                this.idempotencyKey = Optional.of(idempotencyKey.get());
+            }
             return this;
         }
 

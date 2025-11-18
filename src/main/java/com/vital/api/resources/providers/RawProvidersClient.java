@@ -13,7 +13,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.providers.requests.ProvidersGetAllRequest;
+import com.vital.api.resources.providers.requests.GetAllProvidersRequest;
 import com.vital.api.types.ClientFacingProviderDetailed;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
@@ -36,13 +36,13 @@ public class RawProvidersClient {
      * Get Provider list
      */
     public VitalHttpResponse<List<ClientFacingProviderDetailed>> getAll() {
-        return getAll(ProvidersGetAllRequest.builder().build());
+        return getAll(GetAllProvidersRequest.builder().build());
     }
 
     /**
      * Get Provider list
      */
-    public VitalHttpResponse<List<ClientFacingProviderDetailed>> getAll(ProvidersGetAllRequest request) {
+    public VitalHttpResponse<List<ClientFacingProviderDetailed>> getAll(GetAllProvidersRequest request) {
         return getAll(request, null);
     }
 
@@ -50,7 +50,7 @@ public class RawProvidersClient {
      * Get Provider list
      */
     public VitalHttpResponse<List<ClientFacingProviderDetailed>> getAll(
-            ProvidersGetAllRequest request, RequestOptions requestOptions) {
+            GetAllProvidersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/providers");

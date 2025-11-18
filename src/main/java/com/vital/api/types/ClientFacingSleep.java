@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -208,8 +211,11 @@ public final class ClientFacingSleep {
     /**
      * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
      */
-    @JsonProperty("timezone_offset")
+    @JsonIgnore
     public Optional<Integer> getTimezoneOffset() {
+        if (timezoneOffset == null) {
+            return Optional.empty();
+        }
         return timezoneOffset;
     }
 
@@ -264,96 +270,132 @@ public final class ClientFacingSleep {
     /**
      * @return A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar
      */
-    @JsonProperty("score")
+    @JsonIgnore
     public Optional<Integer> getScore() {
+        if (score == null) {
+            return Optional.empty();
+        }
         return score;
     }
 
     /**
      * @return The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute
      */
-    @JsonProperty("hr_lowest")
+    @JsonIgnore
     public Optional<Integer> getHrLowest() {
+        if (hrLowest == null) {
+            return Optional.empty();
+        }
         return hrLowest;
     }
 
     /**
      * @return The average heart rate registered during the sleep period::beats per minute
      */
-    @JsonProperty("hr_average")
+    @JsonIgnore
     public Optional<Integer> getHrAverage() {
+        if (hrAverage == null) {
+            return Optional.empty();
+        }
         return hrAverage;
     }
 
     /**
      * @return Resting heart rate recorded during a sleep session::bpm
      */
-    @JsonProperty("hr_resting")
+    @JsonIgnore
     public Optional<Integer> getHrResting() {
+        if (hrResting == null) {
+            return Optional.empty();
+        }
         return hrResting;
     }
 
     /**
      * @return Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc
      */
-    @JsonProperty("efficiency")
+    @JsonIgnore
     public Optional<Double> getEfficiency() {
+        if (efficiency == null) {
+            return Optional.empty();
+        }
         return efficiency;
     }
 
     /**
      * @return Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds
      */
-    @JsonProperty("latency")
+    @JsonIgnore
     public Optional<Integer> getLatency() {
+        if (latency == null) {
+            return Optional.empty();
+        }
         return latency;
     }
 
     /**
      * @return Skin temperature deviation from the long-term temperature average::celcius
      */
-    @JsonProperty("temperature_delta")
+    @JsonIgnore
     public Optional<Double> getTemperatureDelta() {
+        if (temperatureDelta == null) {
+            return Optional.empty();
+        }
         return temperatureDelta;
     }
 
     /**
      * @return The skin temperature::celcius
      */
-    @JsonProperty("skin_temperature")
+    @JsonIgnore
     public Optional<Double> getSkinTemperature() {
+        if (skinTemperature == null) {
+            return Optional.empty();
+        }
         return skinTemperature;
     }
 
     /**
      * @return Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc
      */
-    @JsonProperty("hr_dip")
+    @JsonIgnore
     public Optional<Double> getHrDip() {
+        if (hrDip == null) {
+            return Optional.empty();
+        }
         return hrDip;
     }
 
     /**
      * @return Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str
      */
-    @JsonProperty("state")
+    @JsonIgnore
     public Optional<SleepSummaryState> getState() {
+        if (state == null) {
+            return Optional.empty();
+        }
         return state;
     }
 
     /**
      * @return The average heart rate variability registered during the sleep period::rmssd
      */
-    @JsonProperty("average_hrv")
+    @JsonIgnore
     public Optional<Double> getAverageHrv() {
+        if (averageHrv == null) {
+            return Optional.empty();
+        }
         return averageHrv;
     }
 
     /**
      * @return Average respiratory rate::breaths per minute
      */
-    @JsonProperty("respiratory_rate")
+    @JsonIgnore
     public Optional<Double> getRespiratoryRate() {
+        if (respiratoryRate == null) {
+            return Optional.empty();
+        }
         return respiratoryRate;
     }
 
@@ -365,8 +407,11 @@ public final class ClientFacingSleep {
         return source;
     }
 
-    @JsonProperty("sleep_stream")
+    @JsonIgnore
     public Optional<ClientFacingSleepStream> getSleepStream() {
+        if (sleepStream == null) {
+            return Optional.empty();
+        }
         return sleepStream;
     }
 
@@ -378,6 +423,90 @@ public final class ClientFacingSleep {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("timezone_offset")
+    private Optional<Integer> _getTimezoneOffset() {
+        return timezoneOffset;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("score")
+    private Optional<Integer> _getScore() {
+        return score;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("hr_lowest")
+    private Optional<Integer> _getHrLowest() {
+        return hrLowest;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("hr_average")
+    private Optional<Integer> _getHrAverage() {
+        return hrAverage;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("hr_resting")
+    private Optional<Integer> _getHrResting() {
+        return hrResting;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("efficiency")
+    private Optional<Double> _getEfficiency() {
+        return efficiency;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("latency")
+    private Optional<Integer> _getLatency() {
+        return latency;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("temperature_delta")
+    private Optional<Double> _getTemperatureDelta() {
+        return temperatureDelta;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("skin_temperature")
+    private Optional<Double> _getSkinTemperature() {
+        return skinTemperature;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("hr_dip")
+    private Optional<Double> _getHrDip() {
+        return hrDip;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("state")
+    private Optional<SleepSummaryState> _getState() {
+        return state;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("average_hrv")
+    private Optional<Double> _getAverageHrv() {
+        return averageHrv;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("respiratory_rate")
+    private Optional<Double> _getRespiratoryRate() {
+        return respiratoryRate;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sleep_stream")
+    private Optional<ClientFacingSleepStream> _getSleepStream() {
+        return sleepStream;
     }
 
     @java.lang.Override
@@ -586,12 +715,16 @@ public final class ClientFacingSleep {
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
+        _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset);
+
         /**
          * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
          */
         _FinalStage score(Optional<Integer> score);
 
         _FinalStage score(Integer score);
+
+        _FinalStage score(Nullable<Integer> score);
 
         /**
          * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
@@ -600,12 +733,16 @@ public final class ClientFacingSleep {
 
         _FinalStage hrLowest(Integer hrLowest);
 
+        _FinalStage hrLowest(Nullable<Integer> hrLowest);
+
         /**
          * <p>The average heart rate registered during the sleep period::beats per minute</p>
          */
         _FinalStage hrAverage(Optional<Integer> hrAverage);
 
         _FinalStage hrAverage(Integer hrAverage);
+
+        _FinalStage hrAverage(Nullable<Integer> hrAverage);
 
         /**
          * <p>Resting heart rate recorded during a sleep session::bpm</p>
@@ -614,12 +751,16 @@ public final class ClientFacingSleep {
 
         _FinalStage hrResting(Integer hrResting);
 
+        _FinalStage hrResting(Nullable<Integer> hrResting);
+
         /**
          * <p>Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc</p>
          */
         _FinalStage efficiency(Optional<Double> efficiency);
 
         _FinalStage efficiency(Double efficiency);
+
+        _FinalStage efficiency(Nullable<Double> efficiency);
 
         /**
          * <p>Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds</p>
@@ -628,12 +769,16 @@ public final class ClientFacingSleep {
 
         _FinalStage latency(Integer latency);
 
+        _FinalStage latency(Nullable<Integer> latency);
+
         /**
          * <p>Skin temperature deviation from the long-term temperature average::celcius</p>
          */
         _FinalStage temperatureDelta(Optional<Double> temperatureDelta);
 
         _FinalStage temperatureDelta(Double temperatureDelta);
+
+        _FinalStage temperatureDelta(Nullable<Double> temperatureDelta);
 
         /**
          * <p>The skin temperature::celcius</p>
@@ -642,12 +787,16 @@ public final class ClientFacingSleep {
 
         _FinalStage skinTemperature(Double skinTemperature);
 
+        _FinalStage skinTemperature(Nullable<Double> skinTemperature);
+
         /**
          * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
          */
         _FinalStage hrDip(Optional<Double> hrDip);
 
         _FinalStage hrDip(Double hrDip);
+
+        _FinalStage hrDip(Nullable<Double> hrDip);
 
         /**
          * <p>Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str</p>
@@ -656,12 +805,16 @@ public final class ClientFacingSleep {
 
         _FinalStage state(SleepSummaryState state);
 
+        _FinalStage state(Nullable<SleepSummaryState> state);
+
         /**
          * <p>The average heart rate variability registered during the sleep period::rmssd</p>
          */
         _FinalStage averageHrv(Optional<Double> averageHrv);
 
         _FinalStage averageHrv(Double averageHrv);
+
+        _FinalStage averageHrv(Nullable<Double> averageHrv);
 
         /**
          * <p>Average respiratory rate::breaths per minute</p>
@@ -670,9 +823,13 @@ public final class ClientFacingSleep {
 
         _FinalStage respiratoryRate(Double respiratoryRate);
 
+        _FinalStage respiratoryRate(Nullable<Double> respiratoryRate);
+
         _FinalStage sleepStream(Optional<ClientFacingSleepStream> sleepStream);
 
         _FinalStage sleepStream(ClientFacingSleepStream sleepStream);
+
+        _FinalStage sleepStream(Nullable<ClientFacingSleepStream> sleepStream);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -978,6 +1135,18 @@ public final class ClientFacingSleep {
         }
 
         @java.lang.Override
+        public _FinalStage sleepStream(Nullable<ClientFacingSleepStream> sleepStream) {
+            if (sleepStream.isNull()) {
+                this.sleepStream = null;
+            } else if (sleepStream.isEmpty()) {
+                this.sleepStream = Optional.empty();
+            } else {
+                this.sleepStream = Optional.of(sleepStream.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sleepStream(ClientFacingSleepStream sleepStream) {
             this.sleepStream = Optional.ofNullable(sleepStream);
             return this;
@@ -987,6 +1156,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "sleep_stream", nulls = Nulls.SKIP)
         public _FinalStage sleepStream(Optional<ClientFacingSleepStream> sleepStream) {
             this.sleepStream = sleepStream;
+            return this;
+        }
+
+        /**
+         * <p>Average respiratory rate::breaths per minute</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage respiratoryRate(Nullable<Double> respiratoryRate) {
+            if (respiratoryRate.isNull()) {
+                this.respiratoryRate = null;
+            } else if (respiratoryRate.isEmpty()) {
+                this.respiratoryRate = Optional.empty();
+            } else {
+                this.respiratoryRate = Optional.of(respiratoryRate.get());
+            }
             return this;
         }
 
@@ -1015,6 +1200,22 @@ public final class ClientFacingSleep {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage averageHrv(Nullable<Double> averageHrv) {
+            if (averageHrv.isNull()) {
+                this.averageHrv = null;
+            } else if (averageHrv.isEmpty()) {
+                this.averageHrv = Optional.empty();
+            } else {
+                this.averageHrv = Optional.of(averageHrv.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>The average heart rate variability registered during the sleep period::rmssd</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage averageHrv(Double averageHrv) {
             this.averageHrv = Optional.ofNullable(averageHrv);
             return this;
@@ -1027,6 +1228,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "average_hrv", nulls = Nulls.SKIP)
         public _FinalStage averageHrv(Optional<Double> averageHrv) {
             this.averageHrv = averageHrv;
+            return this;
+        }
+
+        /**
+         * <p>Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage state(Nullable<SleepSummaryState> state) {
+            if (state.isNull()) {
+                this.state = null;
+            } else if (state.isEmpty()) {
+                this.state = Optional.empty();
+            } else {
+                this.state = Optional.of(state.get());
+            }
             return this;
         }
 
@@ -1055,6 +1272,22 @@ public final class ClientFacingSleep {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage hrDip(Nullable<Double> hrDip) {
+            if (hrDip.isNull()) {
+                this.hrDip = null;
+            } else if (hrDip.isEmpty()) {
+                this.hrDip = Optional.empty();
+            } else {
+                this.hrDip = Optional.of(hrDip.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage hrDip(Double hrDip) {
             this.hrDip = Optional.ofNullable(hrDip);
             return this;
@@ -1067,6 +1300,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "hr_dip", nulls = Nulls.SKIP)
         public _FinalStage hrDip(Optional<Double> hrDip) {
             this.hrDip = hrDip;
+            return this;
+        }
+
+        /**
+         * <p>The skin temperature::celcius</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage skinTemperature(Nullable<Double> skinTemperature) {
+            if (skinTemperature.isNull()) {
+                this.skinTemperature = null;
+            } else if (skinTemperature.isEmpty()) {
+                this.skinTemperature = Optional.empty();
+            } else {
+                this.skinTemperature = Optional.of(skinTemperature.get());
+            }
             return this;
         }
 
@@ -1095,6 +1344,22 @@ public final class ClientFacingSleep {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage temperatureDelta(Nullable<Double> temperatureDelta) {
+            if (temperatureDelta.isNull()) {
+                this.temperatureDelta = null;
+            } else if (temperatureDelta.isEmpty()) {
+                this.temperatureDelta = Optional.empty();
+            } else {
+                this.temperatureDelta = Optional.of(temperatureDelta.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Skin temperature deviation from the long-term temperature average::celcius</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage temperatureDelta(Double temperatureDelta) {
             this.temperatureDelta = Optional.ofNullable(temperatureDelta);
             return this;
@@ -1107,6 +1372,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "temperature_delta", nulls = Nulls.SKIP)
         public _FinalStage temperatureDelta(Optional<Double> temperatureDelta) {
             this.temperatureDelta = temperatureDelta;
+            return this;
+        }
+
+        /**
+         * <p>Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage latency(Nullable<Integer> latency) {
+            if (latency.isNull()) {
+                this.latency = null;
+            } else if (latency.isEmpty()) {
+                this.latency = Optional.empty();
+            } else {
+                this.latency = Optional.of(latency.get());
+            }
             return this;
         }
 
@@ -1135,6 +1416,22 @@ public final class ClientFacingSleep {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage efficiency(Nullable<Double> efficiency) {
+            if (efficiency.isNull()) {
+                this.efficiency = null;
+            } else if (efficiency.isEmpty()) {
+                this.efficiency = Optional.empty();
+            } else {
+                this.efficiency = Optional.of(efficiency.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage efficiency(Double efficiency) {
             this.efficiency = Optional.ofNullable(efficiency);
             return this;
@@ -1147,6 +1444,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "efficiency", nulls = Nulls.SKIP)
         public _FinalStage efficiency(Optional<Double> efficiency) {
             this.efficiency = efficiency;
+            return this;
+        }
+
+        /**
+         * <p>Resting heart rate recorded during a sleep session::bpm</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage hrResting(Nullable<Integer> hrResting) {
+            if (hrResting.isNull()) {
+                this.hrResting = null;
+            } else if (hrResting.isEmpty()) {
+                this.hrResting = Optional.empty();
+            } else {
+                this.hrResting = Optional.of(hrResting.get());
+            }
             return this;
         }
 
@@ -1175,6 +1488,22 @@ public final class ClientFacingSleep {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage hrAverage(Nullable<Integer> hrAverage) {
+            if (hrAverage.isNull()) {
+                this.hrAverage = null;
+            } else if (hrAverage.isEmpty()) {
+                this.hrAverage = Optional.empty();
+            } else {
+                this.hrAverage = Optional.of(hrAverage.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>The average heart rate registered during the sleep period::beats per minute</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage hrAverage(Integer hrAverage) {
             this.hrAverage = Optional.ofNullable(hrAverage);
             return this;
@@ -1187,6 +1516,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "hr_average", nulls = Nulls.SKIP)
         public _FinalStage hrAverage(Optional<Integer> hrAverage) {
             this.hrAverage = hrAverage;
+            return this;
+        }
+
+        /**
+         * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage hrLowest(Nullable<Integer> hrLowest) {
+            if (hrLowest.isNull()) {
+                this.hrLowest = null;
+            } else if (hrLowest.isEmpty()) {
+                this.hrLowest = Optional.empty();
+            } else {
+                this.hrLowest = Optional.of(hrLowest.get());
+            }
             return this;
         }
 
@@ -1215,6 +1560,22 @@ public final class ClientFacingSleep {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage score(Nullable<Integer> score) {
+            if (score.isNull()) {
+                this.score = null;
+            } else if (score.isEmpty()) {
+                this.score = Optional.empty();
+            } else {
+                this.score = Optional.of(score.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage score(Integer score) {
             this.score = Optional.ofNullable(score);
             return this;
@@ -1227,6 +1588,22 @@ public final class ClientFacingSleep {
         @JsonSetter(value = "score", nulls = Nulls.SKIP)
         public _FinalStage score(Optional<Integer> score) {
             this.score = score;
+            return this;
+        }
+
+        /**
+         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset) {
+            if (timezoneOffset.isNull()) {
+                this.timezoneOffset = null;
+            } else if (timezoneOffset.isEmpty()) {
+                this.timezoneOffset = Optional.empty();
+            } else {
+                this.timezoneOffset = Optional.of(timezoneOffset.get());
+            }
             return this;
         }
 

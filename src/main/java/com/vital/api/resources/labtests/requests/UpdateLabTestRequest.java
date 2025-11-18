@@ -5,12 +5,15 @@ package com.vital.api.resources.labtests.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +36,31 @@ public final class UpdateLabTestRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("name")
+    @JsonIgnore
     public Optional<String> getName() {
+        if (name == null) {
+            return Optional.empty();
+        }
         return name;
     }
 
-    @JsonProperty("active")
+    @JsonIgnore
     public Optional<Boolean> getActive() {
+        if (active == null) {
+            return Optional.empty();
+        }
+        return active;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("name")
+    private Optional<String> _getName() {
+        return name;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("active")
+    private Optional<Boolean> _getActive() {
         return active;
     }
 
@@ -100,6 +121,17 @@ public final class UpdateLabTestRequest {
             return this;
         }
 
+        public Builder name(Nullable<String> name) {
+            if (name.isNull()) {
+                this.name = null;
+            } else if (name.isEmpty()) {
+                this.name = Optional.empty();
+            } else {
+                this.name = Optional.of(name.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "active", nulls = Nulls.SKIP)
         public Builder active(Optional<Boolean> active) {
             this.active = active;
@@ -108,6 +140,17 @@ public final class UpdateLabTestRequest {
 
         public Builder active(Boolean active) {
             this.active = Optional.ofNullable(active);
+            return this;
+        }
+
+        public Builder active(Nullable<Boolean> active) {
+            if (active.isNull()) {
+                this.active = null;
+            } else if (active.isEmpty()) {
+                this.active = Optional.empty();
+            } else {
+                this.active = Optional.of(active.get());
+            }
             return this;
         }
 

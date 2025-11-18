@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -71,80 +74,170 @@ public final class HealthInsuranceCreateRequest {
     /**
      * @return An image of the front of the patient insurance card.
      */
-    @JsonProperty("front_image")
+    @JsonIgnore
     public Optional<HealthInsuranceCreateRequestFrontImage> getFrontImage() {
+        if (frontImage == null) {
+            return Optional.empty();
+        }
         return frontImage;
     }
 
     /**
      * @return An image of the back of the patient insurance card.
      */
-    @JsonProperty("back_image")
+    @JsonIgnore
     public Optional<HealthInsuranceCreateRequestBackImage> getBackImage() {
+        if (backImage == null) {
+            return Optional.empty();
+        }
         return backImage;
     }
 
     /**
      * @return An image of the patient signature for health insurance billing.
      */
-    @JsonProperty("patient_signature_image")
+    @JsonIgnore
     public Optional<HealthInsuranceCreateRequestPatientSignatureImage> getPatientSignatureImage() {
+        if (patientSignatureImage == null) {
+            return Optional.empty();
+        }
         return patientSignatureImage;
     }
 
     /**
      * @return Textual description of what are the patient symptoms and attempted treatments.
      */
-    @JsonProperty("subjective")
+    @JsonIgnore
     public Optional<String> getSubjective() {
+        if (subjective == null) {
+            return Optional.empty();
+        }
         return subjective;
     }
 
     /**
      * @return Textual description of what are the physician assessments and testing plans.
      */
-    @JsonProperty("assessment_plan")
+    @JsonIgnore
     public Optional<String> getAssessmentPlan() {
+        if (assessmentPlan == null) {
+            return Optional.empty();
+        }
         return assessmentPlan;
     }
 
     /**
      * @return Unique identifier representing a specific Health Insurance.
      */
-    @JsonProperty("payor_code")
+    @JsonIgnore
     public Optional<String> getPayorCode() {
+        if (payorCode == null) {
+            return Optional.empty();
+        }
         return payorCode;
     }
 
     /**
      * @return Insurance unique number assigned to a patient, usually present on the insurance card.
      */
-    @JsonProperty("insurance_id")
+    @JsonIgnore
     public Optional<String> getInsuranceId() {
+        if (insuranceId == null) {
+            return Optional.empty();
+        }
         return insuranceId;
     }
 
     /**
      * @return Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship).
      */
-    @JsonProperty("responsible_relationship")
+    @JsonIgnore
     public Optional<ResponsibleRelationship> getResponsibleRelationship() {
+        if (responsibleRelationship == null) {
+            return Optional.empty();
+        }
         return responsibleRelationship;
     }
 
     /**
      * @return Responsible details when the value of responsible_relationship is not 'Self'.
      */
-    @JsonProperty("responsible_details")
+    @JsonIgnore
     public Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> getResponsibleDetails() {
+        if (responsibleDetails == null) {
+            return Optional.empty();
+        }
         return responsibleDetails;
     }
 
     /**
      * @return Diagnosis codes for insurance billing.
      */
-    @JsonProperty("diagnosis_codes")
+    @JsonIgnore
     public Optional<List<String>> getDiagnosisCodes() {
+        if (diagnosisCodes == null) {
+            return Optional.empty();
+        }
+        return diagnosisCodes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("front_image")
+    private Optional<HealthInsuranceCreateRequestFrontImage> _getFrontImage() {
+        return frontImage;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("back_image")
+    private Optional<HealthInsuranceCreateRequestBackImage> _getBackImage() {
+        return backImage;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("patient_signature_image")
+    private Optional<HealthInsuranceCreateRequestPatientSignatureImage> _getPatientSignatureImage() {
+        return patientSignatureImage;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("subjective")
+    private Optional<String> _getSubjective() {
+        return subjective;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("assessment_plan")
+    private Optional<String> _getAssessmentPlan() {
+        return assessmentPlan;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("payor_code")
+    private Optional<String> _getPayorCode() {
+        return payorCode;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("insurance_id")
+    private Optional<String> _getInsuranceId() {
+        return insuranceId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("responsible_relationship")
+    private Optional<ResponsibleRelationship> _getResponsibleRelationship() {
+        return responsibleRelationship;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("responsible_details")
+    private Optional<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> _getResponsibleDetails() {
+        return responsibleDetails;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("diagnosis_codes")
+    private Optional<List<String>> _getDiagnosisCodes() {
         return diagnosisCodes;
     }
 
@@ -252,6 +345,17 @@ public final class HealthInsuranceCreateRequest {
             return this;
         }
 
+        public Builder frontImage(Nullable<HealthInsuranceCreateRequestFrontImage> frontImage) {
+            if (frontImage.isNull()) {
+                this.frontImage = null;
+            } else if (frontImage.isEmpty()) {
+                this.frontImage = Optional.empty();
+            } else {
+                this.frontImage = Optional.of(frontImage.get());
+            }
+            return this;
+        }
+
         /**
          * <p>An image of the back of the patient insurance card.</p>
          */
@@ -263,6 +367,17 @@ public final class HealthInsuranceCreateRequest {
 
         public Builder backImage(HealthInsuranceCreateRequestBackImage backImage) {
             this.backImage = Optional.ofNullable(backImage);
+            return this;
+        }
+
+        public Builder backImage(Nullable<HealthInsuranceCreateRequestBackImage> backImage) {
+            if (backImage.isNull()) {
+                this.backImage = null;
+            } else if (backImage.isEmpty()) {
+                this.backImage = Optional.empty();
+            } else {
+                this.backImage = Optional.of(backImage.get());
+            }
             return this;
         }
 
@@ -281,6 +396,18 @@ public final class HealthInsuranceCreateRequest {
             return this;
         }
 
+        public Builder patientSignatureImage(
+                Nullable<HealthInsuranceCreateRequestPatientSignatureImage> patientSignatureImage) {
+            if (patientSignatureImage.isNull()) {
+                this.patientSignatureImage = null;
+            } else if (patientSignatureImage.isEmpty()) {
+                this.patientSignatureImage = Optional.empty();
+            } else {
+                this.patientSignatureImage = Optional.of(patientSignatureImage.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Textual description of what are the patient symptoms and attempted treatments.</p>
          */
@@ -292,6 +419,17 @@ public final class HealthInsuranceCreateRequest {
 
         public Builder subjective(String subjective) {
             this.subjective = Optional.ofNullable(subjective);
+            return this;
+        }
+
+        public Builder subjective(Nullable<String> subjective) {
+            if (subjective.isNull()) {
+                this.subjective = null;
+            } else if (subjective.isEmpty()) {
+                this.subjective = Optional.empty();
+            } else {
+                this.subjective = Optional.of(subjective.get());
+            }
             return this;
         }
 
@@ -309,6 +447,17 @@ public final class HealthInsuranceCreateRequest {
             return this;
         }
 
+        public Builder assessmentPlan(Nullable<String> assessmentPlan) {
+            if (assessmentPlan.isNull()) {
+                this.assessmentPlan = null;
+            } else if (assessmentPlan.isEmpty()) {
+                this.assessmentPlan = Optional.empty();
+            } else {
+                this.assessmentPlan = Optional.of(assessmentPlan.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Unique identifier representing a specific Health Insurance.</p>
          */
@@ -320,6 +469,17 @@ public final class HealthInsuranceCreateRequest {
 
         public Builder payorCode(String payorCode) {
             this.payorCode = Optional.ofNullable(payorCode);
+            return this;
+        }
+
+        public Builder payorCode(Nullable<String> payorCode) {
+            if (payorCode.isNull()) {
+                this.payorCode = null;
+            } else if (payorCode.isEmpty()) {
+                this.payorCode = Optional.empty();
+            } else {
+                this.payorCode = Optional.of(payorCode.get());
+            }
             return this;
         }
 
@@ -337,6 +497,17 @@ public final class HealthInsuranceCreateRequest {
             return this;
         }
 
+        public Builder insuranceId(Nullable<String> insuranceId) {
+            if (insuranceId.isNull()) {
+                this.insuranceId = null;
+            } else if (insuranceId.isEmpty()) {
+                this.insuranceId = Optional.empty();
+            } else {
+                this.insuranceId = Optional.of(insuranceId.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship).</p>
          */
@@ -348,6 +519,17 @@ public final class HealthInsuranceCreateRequest {
 
         public Builder responsibleRelationship(ResponsibleRelationship responsibleRelationship) {
             this.responsibleRelationship = Optional.ofNullable(responsibleRelationship);
+            return this;
+        }
+
+        public Builder responsibleRelationship(Nullable<ResponsibleRelationship> responsibleRelationship) {
+            if (responsibleRelationship.isNull()) {
+                this.responsibleRelationship = null;
+            } else if (responsibleRelationship.isEmpty()) {
+                this.responsibleRelationship = Optional.empty();
+            } else {
+                this.responsibleRelationship = Optional.of(responsibleRelationship.get());
+            }
             return this;
         }
 
@@ -367,6 +549,18 @@ public final class HealthInsuranceCreateRequest {
             return this;
         }
 
+        public Builder responsibleDetails(
+                Nullable<VitalCoreSchemasDbSchemasLabTestHealthInsurancePersonDetails> responsibleDetails) {
+            if (responsibleDetails.isNull()) {
+                this.responsibleDetails = null;
+            } else if (responsibleDetails.isEmpty()) {
+                this.responsibleDetails = Optional.empty();
+            } else {
+                this.responsibleDetails = Optional.of(responsibleDetails.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Diagnosis codes for insurance billing.</p>
          */
@@ -378,6 +572,17 @@ public final class HealthInsuranceCreateRequest {
 
         public Builder diagnosisCodes(List<String> diagnosisCodes) {
             this.diagnosisCodes = Optional.ofNullable(diagnosisCodes);
+            return this;
+        }
+
+        public Builder diagnosisCodes(Nullable<List<String>> diagnosisCodes) {
+            if (diagnosisCodes.isNull()) {
+                this.diagnosisCodes = null;
+            } else if (diagnosisCodes.isEmpty()) {
+                this.diagnosisCodes = Optional.empty();
+            } else {
+                this.diagnosisCodes = Optional.of(diagnosisCodes.get());
+            }
             return this;
         }
 

@@ -12,8 +12,9 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
-import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
+import com.vital.api.resources.workouts.requests.GetByWorkoutIdWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.GetRawWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.GetWorkoutsRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.HttpValidationError;
@@ -36,7 +37,7 @@ public class RawWorkoutsClient {
     /**
      * Get workout summary for user_id
      */
-    public VitalHttpResponse<ClientWorkoutResponse> get(String userId, WorkoutsGetRequest request) {
+    public VitalHttpResponse<ClientWorkoutResponse> get(String userId, GetWorkoutsRequest request) {
         return get(userId, request, null);
     }
 
@@ -44,7 +45,7 @@ public class RawWorkoutsClient {
      * Get workout summary for user_id
      */
     public VitalHttpResponse<ClientWorkoutResponse> get(
-            String userId, WorkoutsGetRequest request, RequestOptions requestOptions) {
+            String userId, GetWorkoutsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/workouts")
@@ -98,7 +99,7 @@ public class RawWorkoutsClient {
     /**
      * Get raw workout summary for user_id
      */
-    public VitalHttpResponse<RawWorkout> getRaw(String userId, WorkoutsGetRawRequest request) {
+    public VitalHttpResponse<RawWorkout> getRaw(String userId, GetRawWorkoutsRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -106,7 +107,7 @@ public class RawWorkoutsClient {
      * Get raw workout summary for user_id
      */
     public VitalHttpResponse<RawWorkout> getRaw(
-            String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawWorkoutsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/workouts")
@@ -158,22 +159,28 @@ public class RawWorkoutsClient {
     }
 
     public VitalHttpResponse<ClientFacingStream> getByWorkoutId(String workoutId) {
-        return getByWorkoutId(workoutId, null);
+        return getByWorkoutId(workoutId, GetByWorkoutIdWorkoutsRequest.builder().build());
     }
 
-    public VitalHttpResponse<ClientFacingStream> getByWorkoutId(String workoutId, RequestOptions requestOptions) {
+    public VitalHttpResponse<ClientFacingStream> getByWorkoutId(
+            String workoutId, GetByWorkoutIdWorkoutsRequest request) {
+        return getByWorkoutId(workoutId, request, null);
+    }
+
+    public VitalHttpResponse<ClientFacingStream> getByWorkoutId(
+            String workoutId, GetByWorkoutIdWorkoutsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries/workouts")
                 .addPathSegment(workoutId)
                 .addPathSegments("stream")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

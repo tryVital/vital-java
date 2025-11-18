@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -55,13 +58,31 @@ public final class LabResultsRaw {
         return results;
     }
 
-    @JsonProperty("missing_results")
+    @JsonIgnore
     public Optional<List<MissingBiomarkerResult>> getMissingResults() {
+        if (missingResults == null) {
+            return Optional.empty();
+        }
         return missingResults;
     }
 
-    @JsonProperty("sample_information")
+    @JsonIgnore
     public Optional<Map<String, Optional<SampleData>>> getSampleInformation() {
+        if (sampleInformation == null) {
+            return Optional.empty();
+        }
+        return sampleInformation;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("missing_results")
+    private Optional<List<MissingBiomarkerResult>> _getMissingResults() {
+        return missingResults;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sample_information")
+    private Optional<Map<String, Optional<SampleData>>> _getSampleInformation() {
         return sampleInformation;
     }
 
@@ -114,9 +135,13 @@ public final class LabResultsRaw {
 
         _FinalStage missingResults(List<MissingBiomarkerResult> missingResults);
 
+        _FinalStage missingResults(Nullable<List<MissingBiomarkerResult>> missingResults);
+
         _FinalStage sampleInformation(Optional<Map<String, Optional<SampleData>>> sampleInformation);
 
         _FinalStage sampleInformation(Map<String, Optional<SampleData>> sampleInformation);
+
+        _FinalStage sampleInformation(Nullable<Map<String, Optional<SampleData>>> sampleInformation);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -158,6 +183,18 @@ public final class LabResultsRaw {
         }
 
         @java.lang.Override
+        public _FinalStage sampleInformation(Nullable<Map<String, Optional<SampleData>>> sampleInformation) {
+            if (sampleInformation.isNull()) {
+                this.sampleInformation = null;
+            } else if (sampleInformation.isEmpty()) {
+                this.sampleInformation = Optional.empty();
+            } else {
+                this.sampleInformation = Optional.of(sampleInformation.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sampleInformation(Map<String, Optional<SampleData>> sampleInformation) {
             this.sampleInformation = Optional.ofNullable(sampleInformation);
             return this;
@@ -167,6 +204,18 @@ public final class LabResultsRaw {
         @JsonSetter(value = "sample_information", nulls = Nulls.SKIP)
         public _FinalStage sampleInformation(Optional<Map<String, Optional<SampleData>>> sampleInformation) {
             this.sampleInformation = sampleInformation;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage missingResults(Nullable<List<MissingBiomarkerResult>> missingResults) {
+            if (missingResults.isNull()) {
+                this.missingResults = null;
+            } else if (missingResults.isEmpty()) {
+                this.missingResults = Optional.empty();
+            } else {
+                this.missingResults = Optional.of(missingResults.get());
+            }
             return this;
         }
 

@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,16 +39,34 @@ public final class ClientFacingWorkoutMap {
     /**
      * @return Polyline of the map
      */
-    @JsonProperty("polyline")
+    @JsonIgnore
     public Optional<String> getPolyline() {
+        if (polyline == null) {
+            return Optional.empty();
+        }
         return polyline;
     }
 
     /**
      * @return A lower resolution summary of the polyline
      */
-    @JsonProperty("summary_polyline")
+    @JsonIgnore
     public Optional<String> getSummaryPolyline() {
+        if (summaryPolyline == null) {
+            return Optional.empty();
+        }
+        return summaryPolyline;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("polyline")
+    private Optional<String> _getPolyline() {
+        return polyline;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("summary_polyline")
+    private Optional<String> _getSummaryPolyline() {
         return summaryPolyline;
     }
 
@@ -109,6 +130,17 @@ public final class ClientFacingWorkoutMap {
             return this;
         }
 
+        public Builder polyline(Nullable<String> polyline) {
+            if (polyline.isNull()) {
+                this.polyline = null;
+            } else if (polyline.isEmpty()) {
+                this.polyline = Optional.empty();
+            } else {
+                this.polyline = Optional.of(polyline.get());
+            }
+            return this;
+        }
+
         /**
          * <p>A lower resolution summary of the polyline</p>
          */
@@ -120,6 +152,17 @@ public final class ClientFacingWorkoutMap {
 
         public Builder summaryPolyline(String summaryPolyline) {
             this.summaryPolyline = Optional.ofNullable(summaryPolyline);
+            return this;
+        }
+
+        public Builder summaryPolyline(Nullable<String> summaryPolyline) {
+            if (summaryPolyline.isNull()) {
+                this.summaryPolyline = null;
+            } else if (summaryPolyline.isEmpty()) {
+                this.summaryPolyline = Optional.empty();
+            } else {
+                this.summaryPolyline = Optional.of(summaryPolyline.get());
+            }
             return this;
         }
 

@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,8 +73,11 @@ public final class PatientAddressCompatible {
         return firstLine;
     }
 
-    @JsonProperty("second_line")
+    @JsonIgnore
     public Optional<String> getSecondLine() {
+        if (secondLine == null) {
+            return Optional.empty();
+        }
         return secondLine;
     }
 
@@ -95,8 +101,23 @@ public final class PatientAddressCompatible {
         return country;
     }
 
-    @JsonProperty("phone_number")
+    @JsonIgnore
     public Optional<String> getPhoneNumber() {
+        if (phoneNumber == null) {
+            return Optional.empty();
+        }
+        return phoneNumber;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("second_line")
+    private Optional<String> _getSecondLine() {
+        return secondLine;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("phone_number")
+    private Optional<String> _getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -177,9 +198,13 @@ public final class PatientAddressCompatible {
 
         _FinalStage secondLine(String secondLine);
 
+        _FinalStage secondLine(Nullable<String> secondLine);
+
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
         _FinalStage phoneNumber(String phoneNumber);
+
+        _FinalStage phoneNumber(Nullable<String> phoneNumber);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -255,6 +280,18 @@ public final class PatientAddressCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage phoneNumber(Nullable<String> phoneNumber) {
+            if (phoneNumber.isNull()) {
+                this.phoneNumber = null;
+            } else if (phoneNumber.isEmpty()) {
+                this.phoneNumber = Optional.empty();
+            } else {
+                this.phoneNumber = Optional.of(phoneNumber.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
@@ -264,6 +301,18 @@ public final class PatientAddressCompatible {
         @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
         public _FinalStage phoneNumber(Optional<String> phoneNumber) {
             this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage secondLine(Nullable<String> secondLine) {
+            if (secondLine.isNull()) {
+                this.secondLine = null;
+            } else if (secondLine.isEmpty()) {
+                this.secondLine = Optional.empty();
+            } else {
+                this.secondLine = Optional.of(secondLine.get());
+            }
             return this;
         }
 

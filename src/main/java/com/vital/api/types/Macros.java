@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,16 +65,22 @@ public final class Macros {
     /**
      * @return Amount of carbohydrates in grams (g)
      */
-    @JsonProperty("carbs")
+    @JsonIgnore
     public Optional<Double> getCarbs() {
+        if (carbs == null) {
+            return Optional.empty();
+        }
         return carbs;
     }
 
     /**
      * @return Amount of protein in grams (g)
      */
-    @JsonProperty("protein")
+    @JsonIgnore
     public Optional<Double> getProtein() {
+        if (protein == null) {
+            return Optional.empty();
+        }
         return protein;
     }
 
@@ -86,40 +95,97 @@ public final class Macros {
     /**
      * @return Amount of alcohol in grams (g)
      */
-    @JsonProperty("alcohol")
+    @JsonIgnore
     public Optional<Double> getAlcohol() {
+        if (alcohol == null) {
+            return Optional.empty();
+        }
         return alcohol;
     }
 
     /**
      * @return Amount of water in grams (g)
      */
-    @JsonProperty("water")
+    @JsonIgnore
     public Optional<Double> getWater() {
+        if (water == null) {
+            return Optional.empty();
+        }
         return water;
     }
 
     /**
      * @return Amount of dietary fiber in grams (g)
      */
-    @JsonProperty("fibre")
+    @JsonIgnore
     public Optional<Double> getFibre() {
+        if (fibre == null) {
+            return Optional.empty();
+        }
         return fibre;
     }
 
     /**
      * @return Amount of sugar in grams (g)
      */
-    @JsonProperty("sugar")
+    @JsonIgnore
     public Optional<Double> getSugar() {
+        if (sugar == null) {
+            return Optional.empty();
+        }
         return sugar;
     }
 
     /**
      * @return Amount of cholesterol in grams (g)
      */
-    @JsonProperty("cholesterol")
+    @JsonIgnore
     public Optional<Double> getCholesterol() {
+        if (cholesterol == null) {
+            return Optional.empty();
+        }
+        return cholesterol;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("carbs")
+    private Optional<Double> _getCarbs() {
+        return carbs;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("protein")
+    private Optional<Double> _getProtein() {
+        return protein;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("alcohol")
+    private Optional<Double> _getAlcohol() {
+        return alcohol;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("water")
+    private Optional<Double> _getWater() {
+        return water;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("fibre")
+    private Optional<Double> _getFibre() {
+        return fibre;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sugar")
+    private Optional<Double> _getSugar() {
+        return sugar;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("cholesterol")
+    private Optional<Double> _getCholesterol() {
         return cholesterol;
     }
 
@@ -216,6 +282,17 @@ public final class Macros {
             return this;
         }
 
+        public Builder carbs(Nullable<Double> carbs) {
+            if (carbs.isNull()) {
+                this.carbs = null;
+            } else if (carbs.isEmpty()) {
+                this.carbs = Optional.empty();
+            } else {
+                this.carbs = Optional.of(carbs.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Amount of protein in grams (g)</p>
          */
@@ -227,6 +304,17 @@ public final class Macros {
 
         public Builder protein(Double protein) {
             this.protein = Optional.ofNullable(protein);
+            return this;
+        }
+
+        public Builder protein(Nullable<Double> protein) {
+            if (protein.isNull()) {
+                this.protein = null;
+            } else if (protein.isEmpty()) {
+                this.protein = Optional.empty();
+            } else {
+                this.protein = Optional.of(protein.get());
+            }
             return this;
         }
 
@@ -258,6 +346,17 @@ public final class Macros {
             return this;
         }
 
+        public Builder alcohol(Nullable<Double> alcohol) {
+            if (alcohol.isNull()) {
+                this.alcohol = null;
+            } else if (alcohol.isEmpty()) {
+                this.alcohol = Optional.empty();
+            } else {
+                this.alcohol = Optional.of(alcohol.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Amount of water in grams (g)</p>
          */
@@ -269,6 +368,17 @@ public final class Macros {
 
         public Builder water(Double water) {
             this.water = Optional.ofNullable(water);
+            return this;
+        }
+
+        public Builder water(Nullable<Double> water) {
+            if (water.isNull()) {
+                this.water = null;
+            } else if (water.isEmpty()) {
+                this.water = Optional.empty();
+            } else {
+                this.water = Optional.of(water.get());
+            }
             return this;
         }
 
@@ -286,6 +396,17 @@ public final class Macros {
             return this;
         }
 
+        public Builder fibre(Nullable<Double> fibre) {
+            if (fibre.isNull()) {
+                this.fibre = null;
+            } else if (fibre.isEmpty()) {
+                this.fibre = Optional.empty();
+            } else {
+                this.fibre = Optional.of(fibre.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Amount of sugar in grams (g)</p>
          */
@@ -300,6 +421,17 @@ public final class Macros {
             return this;
         }
 
+        public Builder sugar(Nullable<Double> sugar) {
+            if (sugar.isNull()) {
+                this.sugar = null;
+            } else if (sugar.isEmpty()) {
+                this.sugar = Optional.empty();
+            } else {
+                this.sugar = Optional.of(sugar.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Amount of cholesterol in grams (g)</p>
          */
@@ -311,6 +443,17 @@ public final class Macros {
 
         public Builder cholesterol(Double cholesterol) {
             this.cholesterol = Optional.ofNullable(cholesterol);
+            return this;
+        }
+
+        public Builder cholesterol(Nullable<Double> cholesterol) {
+            if (cholesterol.isNull()) {
+                this.cholesterol = null;
+            } else if (cholesterol.isEmpty()) {
+                this.cholesterol = Optional.empty();
+            } else {
+                this.cholesterol = Optional.of(cholesterol.get());
+            }
             return this;
         }
 

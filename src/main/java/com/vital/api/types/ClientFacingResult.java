@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,13 +74,19 @@ public final class ClientFacingResult {
         return slug;
     }
 
-    @JsonProperty("lab_id")
+    @JsonIgnore
     public Optional<Integer> getLabId() {
+        if (labId == null) {
+            return Optional.empty();
+        }
         return labId;
     }
 
-    @JsonProperty("provider_id")
+    @JsonIgnore
     public Optional<String> getProviderId() {
+        if (providerId == null) {
+            return Optional.empty();
+        }
         return providerId;
     }
 
@@ -86,8 +95,29 @@ public final class ClientFacingResult {
         return required;
     }
 
-    @JsonProperty("loinc")
+    @JsonIgnore
     public Optional<ClientFacingLoinc> getLoinc() {
+        if (loinc == null) {
+            return Optional.empty();
+        }
+        return loinc;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("lab_id")
+    private Optional<Integer> _getLabId() {
+        return labId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_id")
+    private Optional<String> _getProviderId() {
+        return providerId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("loinc")
+    private Optional<ClientFacingLoinc> _getLoinc() {
         return loinc;
     }
 
@@ -151,13 +181,19 @@ public final class ClientFacingResult {
 
         _FinalStage labId(Integer labId);
 
+        _FinalStage labId(Nullable<Integer> labId);
+
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
 
+        _FinalStage providerId(Nullable<String> providerId);
+
         _FinalStage loinc(Optional<ClientFacingLoinc> loinc);
 
         _FinalStage loinc(ClientFacingLoinc loinc);
+
+        _FinalStage loinc(Nullable<ClientFacingLoinc> loinc);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -222,6 +258,18 @@ public final class ClientFacingResult {
         }
 
         @java.lang.Override
+        public _FinalStage loinc(Nullable<ClientFacingLoinc> loinc) {
+            if (loinc.isNull()) {
+                this.loinc = null;
+            } else if (loinc.isEmpty()) {
+                this.loinc = Optional.empty();
+            } else {
+                this.loinc = Optional.of(loinc.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage loinc(ClientFacingLoinc loinc) {
             this.loinc = Optional.ofNullable(loinc);
             return this;
@@ -235,6 +283,18 @@ public final class ClientFacingResult {
         }
 
         @java.lang.Override
+        public _FinalStage providerId(Nullable<String> providerId) {
+            if (providerId.isNull()) {
+                this.providerId = null;
+            } else if (providerId.isEmpty()) {
+                this.providerId = Optional.empty();
+            } else {
+                this.providerId = Optional.of(providerId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.ofNullable(providerId);
             return this;
@@ -244,6 +304,18 @@ public final class ClientFacingResult {
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage labId(Nullable<Integer> labId) {
+            if (labId.isNull()) {
+                this.labId = null;
+            } else if (labId.isEmpty()) {
+                this.labId = Optional.empty();
+            } else {
+                this.labId = Optional.of(labId.get());
+            }
             return this;
         }
 

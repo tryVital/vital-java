@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,8 +97,11 @@ public final class LabResultsMetadata {
         return dob;
     }
 
-    @JsonProperty("clia_#")
+    @JsonIgnore
     public Optional<String> getClia() {
+        if (clia == null) {
+            return Optional.empty();
+        }
         return clia;
     }
 
@@ -104,13 +110,19 @@ public final class LabResultsMetadata {
         return patient;
     }
 
-    @JsonProperty("provider")
+    @JsonIgnore
     public Optional<String> getProvider() {
+        if (provider == null) {
+            return Optional.empty();
+        }
         return provider;
     }
 
-    @JsonProperty("laboratory")
+    @JsonIgnore
     public Optional<String> getLaboratory() {
+        if (laboratory == null) {
+            return Optional.empty();
+        }
         return laboratory;
     }
 
@@ -119,8 +131,11 @@ public final class LabResultsMetadata {
         return dateReported;
     }
 
-    @JsonProperty("date_collected")
+    @JsonIgnore
     public Optional<String> getDateCollected() {
+        if (dateCollected == null) {
+            return Optional.empty();
+        }
         return dateCollected;
     }
 
@@ -129,8 +144,11 @@ public final class LabResultsMetadata {
         return specimenNumber;
     }
 
-    @JsonProperty("date_received")
+    @JsonIgnore
     public Optional<String> getDateReceived() {
+        if (dateReceived == null) {
+            return Optional.empty();
+        }
         return dateReceived;
     }
 
@@ -139,18 +157,75 @@ public final class LabResultsMetadata {
         return status;
     }
 
-    @JsonProperty("interpretation")
+    @JsonIgnore
     public Optional<String> getInterpretation() {
+        if (interpretation == null) {
+            return Optional.empty();
+        }
         return interpretation;
     }
 
-    @JsonProperty("patient_id")
+    @JsonIgnore
     public Optional<String> getPatientId() {
+        if (patientId == null) {
+            return Optional.empty();
+        }
         return patientId;
     }
 
-    @JsonProperty("account_id")
+    @JsonIgnore
     public Optional<String> getAccountId() {
+        if (accountId == null) {
+            return Optional.empty();
+        }
+        return accountId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("clia_#")
+    private Optional<String> _getClia() {
+        return clia;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider")
+    private Optional<String> _getProvider() {
+        return provider;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("laboratory")
+    private Optional<String> _getLaboratory() {
+        return laboratory;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("date_collected")
+    private Optional<String> _getDateCollected() {
+        return dateCollected;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("date_received")
+    private Optional<String> _getDateReceived() {
+        return dateReceived;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("interpretation")
+    private Optional<String> _getInterpretation() {
+        return interpretation;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("patient_id")
+    private Optional<String> _getPatientId() {
+        return patientId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("account_id")
+    private Optional<String> _getAccountId() {
         return accountId;
     }
 
@@ -239,21 +314,31 @@ public final class LabResultsMetadata {
 
         _FinalStage clia(String clia);
 
+        _FinalStage clia(Nullable<String> clia);
+
         _FinalStage provider(Optional<String> provider);
 
         _FinalStage provider(String provider);
+
+        _FinalStage provider(Nullable<String> provider);
 
         _FinalStage laboratory(Optional<String> laboratory);
 
         _FinalStage laboratory(String laboratory);
 
+        _FinalStage laboratory(Nullable<String> laboratory);
+
         _FinalStage dateCollected(Optional<String> dateCollected);
 
         _FinalStage dateCollected(String dateCollected);
 
+        _FinalStage dateCollected(Nullable<String> dateCollected);
+
         _FinalStage dateReceived(Optional<String> dateReceived);
 
         _FinalStage dateReceived(String dateReceived);
+
+        _FinalStage dateReceived(Nullable<String> dateReceived);
 
         _FinalStage status(Optional<String> status);
 
@@ -263,13 +348,19 @@ public final class LabResultsMetadata {
 
         _FinalStage interpretation(String interpretation);
 
+        _FinalStage interpretation(Nullable<String> interpretation);
+
         _FinalStage patientId(Optional<String> patientId);
 
         _FinalStage patientId(String patientId);
 
+        _FinalStage patientId(Nullable<String> patientId);
+
         _FinalStage accountId(Optional<String> accountId);
 
         _FinalStage accountId(String accountId);
+
+        _FinalStage accountId(Nullable<String> accountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -363,6 +454,18 @@ public final class LabResultsMetadata {
         }
 
         @java.lang.Override
+        public _FinalStage accountId(Nullable<String> accountId) {
+            if (accountId.isNull()) {
+                this.accountId = null;
+            } else if (accountId.isEmpty()) {
+                this.accountId = Optional.empty();
+            } else {
+                this.accountId = Optional.of(accountId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage accountId(String accountId) {
             this.accountId = Optional.ofNullable(accountId);
             return this;
@@ -376,6 +479,18 @@ public final class LabResultsMetadata {
         }
 
         @java.lang.Override
+        public _FinalStage patientId(Nullable<String> patientId) {
+            if (patientId.isNull()) {
+                this.patientId = null;
+            } else if (patientId.isEmpty()) {
+                this.patientId = Optional.empty();
+            } else {
+                this.patientId = Optional.of(patientId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage patientId(String patientId) {
             this.patientId = Optional.ofNullable(patientId);
             return this;
@@ -385,6 +500,18 @@ public final class LabResultsMetadata {
         @JsonSetter(value = "patient_id", nulls = Nulls.SKIP)
         public _FinalStage patientId(Optional<String> patientId) {
             this.patientId = patientId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage interpretation(Nullable<String> interpretation) {
+            if (interpretation.isNull()) {
+                this.interpretation = null;
+            } else if (interpretation.isEmpty()) {
+                this.interpretation = Optional.empty();
+            } else {
+                this.interpretation = Optional.of(interpretation.get());
+            }
             return this;
         }
 
@@ -415,6 +542,18 @@ public final class LabResultsMetadata {
         }
 
         @java.lang.Override
+        public _FinalStage dateReceived(Nullable<String> dateReceived) {
+            if (dateReceived.isNull()) {
+                this.dateReceived = null;
+            } else if (dateReceived.isEmpty()) {
+                this.dateReceived = Optional.empty();
+            } else {
+                this.dateReceived = Optional.of(dateReceived.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage dateReceived(String dateReceived) {
             this.dateReceived = Optional.ofNullable(dateReceived);
             return this;
@@ -424,6 +563,18 @@ public final class LabResultsMetadata {
         @JsonSetter(value = "date_received", nulls = Nulls.SKIP)
         public _FinalStage dateReceived(Optional<String> dateReceived) {
             this.dateReceived = dateReceived;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage dateCollected(Nullable<String> dateCollected) {
+            if (dateCollected.isNull()) {
+                this.dateCollected = null;
+            } else if (dateCollected.isEmpty()) {
+                this.dateCollected = Optional.empty();
+            } else {
+                this.dateCollected = Optional.of(dateCollected.get());
+            }
             return this;
         }
 
@@ -441,6 +592,18 @@ public final class LabResultsMetadata {
         }
 
         @java.lang.Override
+        public _FinalStage laboratory(Nullable<String> laboratory) {
+            if (laboratory.isNull()) {
+                this.laboratory = null;
+            } else if (laboratory.isEmpty()) {
+                this.laboratory = Optional.empty();
+            } else {
+                this.laboratory = Optional.of(laboratory.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage laboratory(String laboratory) {
             this.laboratory = Optional.ofNullable(laboratory);
             return this;
@@ -454,6 +617,18 @@ public final class LabResultsMetadata {
         }
 
         @java.lang.Override
+        public _FinalStage provider(Nullable<String> provider) {
+            if (provider.isNull()) {
+                this.provider = null;
+            } else if (provider.isEmpty()) {
+                this.provider = Optional.empty();
+            } else {
+                this.provider = Optional.of(provider.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage provider(String provider) {
             this.provider = Optional.ofNullable(provider);
             return this;
@@ -463,6 +638,18 @@ public final class LabResultsMetadata {
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<String> provider) {
             this.provider = provider;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage clia(Nullable<String> clia) {
+            if (clia.isNull()) {
+                this.clia = null;
+            } else if (clia.isEmpty()) {
+                this.clia = Optional.empty();
+            } else {
+                this.clia = Optional.of(clia.get());
+            }
             return this;
         }
 

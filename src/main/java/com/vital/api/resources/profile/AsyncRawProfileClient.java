@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.profile.requests.ProfileGetRawRequest;
-import com.vital.api.resources.profile.requests.ProfileGetRequest;
+import com.vital.api.resources.profile.requests.GetProfileRequest;
+import com.vital.api.resources.profile.requests.GetRawProfileRequest;
 import com.vital.api.types.ClientFacingProfile;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawProfile;
@@ -40,13 +40,13 @@ public class AsyncRawProfileClient {
      * Get profile for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingProfile>> get(String userId) {
-        return get(userId, ProfileGetRequest.builder().build());
+        return get(userId, GetProfileRequest.builder().build());
     }
 
     /**
      * Get profile for user_id
      */
-    public CompletableFuture<VitalHttpResponse<ClientFacingProfile>> get(String userId, ProfileGetRequest request) {
+    public CompletableFuture<VitalHttpResponse<ClientFacingProfile>> get(String userId, GetProfileRequest request) {
         return get(userId, request, null);
     }
 
@@ -54,7 +54,7 @@ public class AsyncRawProfileClient {
      * Get profile for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingProfile>> get(
-            String userId, ProfileGetRequest request, RequestOptions requestOptions) {
+            String userId, GetProfileRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/profile")
@@ -118,13 +118,13 @@ public class AsyncRawProfileClient {
      * Get raw profile for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawProfile>> getRaw(String userId) {
-        return getRaw(userId, ProfileGetRawRequest.builder().build());
+        return getRaw(userId, GetRawProfileRequest.builder().build());
     }
 
     /**
      * Get raw profile for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawProfile>> getRaw(String userId, ProfileGetRawRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawProfile>> getRaw(String userId, GetRawProfileRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -132,7 +132,7 @@ public class AsyncRawProfileClient {
      * Get raw profile for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawProfile>> getRaw(
-            String userId, ProfileGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawProfileRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/profile")

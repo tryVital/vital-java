@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.devices.requests.DevicesGetRawRequest;
+import com.vital.api.resources.devices.requests.GetRawDevicesRequest;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawDevices;
 import java.io.IOException;
@@ -34,13 +34,13 @@ public class RawDevicesClient {
      * Get Devices for user_id
      */
     public VitalHttpResponse<RawDevices> getRaw(String userId) {
-        return getRaw(userId, DevicesGetRawRequest.builder().build());
+        return getRaw(userId, GetRawDevicesRequest.builder().build());
     }
 
     /**
      * Get Devices for user_id
      */
-    public VitalHttpResponse<RawDevices> getRaw(String userId, DevicesGetRawRequest request) {
+    public VitalHttpResponse<RawDevices> getRaw(String userId, GetRawDevicesRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -48,7 +48,7 @@ public class RawDevicesClient {
      * Get Devices for user_id
      */
     public VitalHttpResponse<RawDevices> getRaw(
-            String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawDevicesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/devices")

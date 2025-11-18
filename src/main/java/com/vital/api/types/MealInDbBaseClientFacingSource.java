@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -137,18 +140,27 @@ public final class MealInDbBaseClientFacingSource {
         return name;
     }
 
-    @JsonProperty("energy")
+    @JsonIgnore
     public Optional<Energy> getEnergy() {
+        if (energy == null) {
+            return Optional.empty();
+        }
         return energy;
     }
 
-    @JsonProperty("macros")
+    @JsonIgnore
     public Optional<Macros> getMacros() {
+        if (macros == null) {
+            return Optional.empty();
+        }
         return macros;
     }
 
-    @JsonProperty("micros")
+    @JsonIgnore
     public Optional<Micros> getMicros() {
+        if (micros == null) {
+            return Optional.empty();
+        }
         return micros;
     }
 
@@ -172,13 +184,49 @@ public final class MealInDbBaseClientFacingSource {
         return updatedAt;
     }
 
-    @JsonProperty("source_app_id")
+    @JsonIgnore
     public Optional<String> getSourceAppId() {
+        if (sourceAppId == null) {
+            return Optional.empty();
+        }
         return sourceAppId;
     }
 
-    @JsonProperty("source_device_id")
+    @JsonIgnore
     public Optional<String> getSourceDeviceId() {
+        if (sourceDeviceId == null) {
+            return Optional.empty();
+        }
+        return sourceDeviceId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("energy")
+    private Optional<Energy> _getEnergy() {
+        return energy;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("macros")
+    private Optional<Macros> _getMacros() {
+        return macros;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("micros")
+    private Optional<Micros> _getMicros() {
+        return micros;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_app_id")
+    private Optional<String> _getSourceAppId() {
+        return sourceAppId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_device_id")
+    private Optional<String> _getSourceDeviceId() {
         return sourceDeviceId;
     }
 
@@ -300,13 +348,19 @@ public final class MealInDbBaseClientFacingSource {
 
         _FinalStage energy(Energy energy);
 
+        _FinalStage energy(Nullable<Energy> energy);
+
         _FinalStage macros(Optional<Macros> macros);
 
         _FinalStage macros(Macros macros);
 
+        _FinalStage macros(Nullable<Macros> macros);
+
         _FinalStage micros(Optional<Micros> micros);
 
         _FinalStage micros(Micros micros);
+
+        _FinalStage micros(Nullable<Micros> micros);
 
         _FinalStage data(Optional<Map<String, ClientFacingFood>> data);
 
@@ -316,9 +370,13 @@ public final class MealInDbBaseClientFacingSource {
 
         _FinalStage sourceAppId(String sourceAppId);
 
+        _FinalStage sourceAppId(Nullable<String> sourceAppId);
+
         _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
 
         _FinalStage sourceDeviceId(String sourceDeviceId);
+
+        _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -478,6 +536,18 @@ public final class MealInDbBaseClientFacingSource {
         }
 
         @java.lang.Override
+        public _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId) {
+            if (sourceDeviceId.isNull()) {
+                this.sourceDeviceId = null;
+            } else if (sourceDeviceId.isEmpty()) {
+                this.sourceDeviceId = Optional.empty();
+            } else {
+                this.sourceDeviceId = Optional.of(sourceDeviceId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
             this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
@@ -487,6 +557,18 @@ public final class MealInDbBaseClientFacingSource {
         @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
         public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
             this.sourceDeviceId = sourceDeviceId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceAppId(Nullable<String> sourceAppId) {
+            if (sourceAppId.isNull()) {
+                this.sourceAppId = null;
+            } else if (sourceAppId.isEmpty()) {
+                this.sourceAppId = Optional.empty();
+            } else {
+                this.sourceAppId = Optional.of(sourceAppId.get());
+            }
             return this;
         }
 
@@ -517,6 +599,18 @@ public final class MealInDbBaseClientFacingSource {
         }
 
         @java.lang.Override
+        public _FinalStage micros(Nullable<Micros> micros) {
+            if (micros.isNull()) {
+                this.micros = null;
+            } else if (micros.isEmpty()) {
+                this.micros = Optional.empty();
+            } else {
+                this.micros = Optional.of(micros.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage micros(Micros micros) {
             this.micros = Optional.ofNullable(micros);
             return this;
@@ -530,6 +624,18 @@ public final class MealInDbBaseClientFacingSource {
         }
 
         @java.lang.Override
+        public _FinalStage macros(Nullable<Macros> macros) {
+            if (macros.isNull()) {
+                this.macros = null;
+            } else if (macros.isEmpty()) {
+                this.macros = Optional.empty();
+            } else {
+                this.macros = Optional.of(macros.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage macros(Macros macros) {
             this.macros = Optional.ofNullable(macros);
             return this;
@@ -539,6 +645,18 @@ public final class MealInDbBaseClientFacingSource {
         @JsonSetter(value = "macros", nulls = Nulls.SKIP)
         public _FinalStage macros(Optional<Macros> macros) {
             this.macros = macros;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage energy(Nullable<Energy> energy) {
+            if (energy.isNull()) {
+                this.energy = null;
+            } else if (energy.isEmpty()) {
+                this.energy = Optional.empty();
+            } else {
+                this.energy = Optional.of(energy.get());
+            }
             return this;
         }
 

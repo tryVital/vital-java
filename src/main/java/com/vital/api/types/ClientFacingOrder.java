@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -166,16 +169,22 @@ public final class ClientFacingOrder {
     /**
      * @return Patient Details
      */
-    @JsonProperty("patient_details")
+    @JsonIgnore
     public Optional<ClientFacingPatientDetailsCompatible> getPatientDetails() {
+        if (patientDetails == null) {
+            return Optional.empty();
+        }
         return patientDetails;
     }
 
     /**
      * @return Patient Address
      */
-    @JsonProperty("patient_address")
+    @JsonIgnore
     public Optional<PatientAddressCompatible> getPatientAddress() {
+        if (patientAddress == null) {
+            return Optional.empty();
+        }
         return patientAddress;
     }
 
@@ -195,16 +204,22 @@ public final class ClientFacingOrder {
     /**
      * @return Sample ID
      */
-    @JsonProperty("sample_id")
+    @JsonIgnore
     public Optional<String> getSampleId() {
+        if (sampleId == null) {
+            return Optional.empty();
+        }
         return sampleId;
     }
 
     /**
      * @return Notes associated with the order
      */
-    @JsonProperty("notes")
+    @JsonIgnore
     public Optional<String> getNotes() {
+        if (notes == null) {
+            return Optional.empty();
+        }
         return notes;
     }
 
@@ -229,29 +244,41 @@ public final class ClientFacingOrder {
         return events;
     }
 
-    @JsonProperty("status")
+    @JsonIgnore
     public Optional<OrderTopLevelStatus> getStatus() {
+        if (status == null) {
+            return Optional.empty();
+        }
         return status;
     }
 
-    @JsonProperty("physician")
+    @JsonIgnore
     public Optional<ClientFacingPhysician> getPhysician() {
+        if (physician == null) {
+            return Optional.empty();
+        }
         return physician;
     }
 
     /**
      * @return Vital ID of the health insurance.
      */
-    @JsonProperty("health_insurance_id")
+    @JsonIgnore
     public Optional<String> getHealthInsuranceId() {
+        if (healthInsuranceId == null) {
+            return Optional.empty();
+        }
         return healthInsuranceId;
     }
 
     /**
      * @return DEPRECATED. Requistion form url.
      */
-    @JsonProperty("requisition_form_url")
+    @JsonIgnore
     public Optional<String> getRequisitionFormUrl() {
+        if (requisitionFormUrl == null) {
+            return Optional.empty();
+        }
         return requisitionFormUrl;
     }
 
@@ -266,21 +293,30 @@ public final class ClientFacingOrder {
     /**
      * @return Shipping Details. For unregistered testkit orders.
      */
-    @JsonProperty("shipping_details")
+    @JsonIgnore
     public Optional<ShippingAddress> getShippingDetails() {
+        if (shippingDetails == null) {
+            return Optional.empty();
+        }
         return shippingDetails;
     }
 
     /**
      * @return Schedule an Order to be processed in a future date.
      */
-    @JsonProperty("activate_by")
+    @JsonIgnore
     public Optional<String> getActivateBy() {
+        if (activateBy == null) {
+            return Optional.empty();
+        }
         return activateBy;
     }
 
-    @JsonProperty("passthrough")
+    @JsonIgnore
     public Optional<String> getPassthrough() {
+        if (passthrough == null) {
+            return Optional.empty();
+        }
         return passthrough;
     }
 
@@ -289,8 +325,11 @@ public final class ClientFacingOrder {
         return billingType;
     }
 
-    @JsonProperty("icd_codes")
+    @JsonIgnore
     public Optional<List<String>> getIcdCodes() {
+        if (icdCodes == null) {
+            return Optional.empty();
+        }
         return icdCodes;
     }
 
@@ -305,32 +344,140 @@ public final class ClientFacingOrder {
     /**
      * @return Interpretation of the order result. Can be one of (normal, abnormal, critical).
      */
-    @JsonProperty("interpretation")
+    @JsonIgnore
     public Optional<Interpretation> getInterpretation() {
+        if (interpretation == null) {
+            return Optional.empty();
+        }
         return interpretation;
     }
 
     /**
      * @return Defines whether the order result has missing biomarkers.
      */
-    @JsonProperty("has_missing_results")
+    @JsonIgnore
     public Optional<Boolean> getHasMissingResults() {
+        if (hasMissingResults == null) {
+            return Optional.empty();
+        }
         return hasMissingResults;
     }
 
     /**
      * @return The common-case date by which the order result is expected to be available.
      */
-    @JsonProperty("expected_result_by_date")
+    @JsonIgnore
     public Optional<String> getExpectedResultByDate() {
+        if (expectedResultByDate == null) {
+            return Optional.empty();
+        }
         return expectedResultByDate;
     }
 
     /**
      * @return The latest date by which the order result is expected to be available.
      */
-    @JsonProperty("worst_case_result_by_date")
+    @JsonIgnore
     public Optional<String> getWorstCaseResultByDate() {
+        if (worstCaseResultByDate == null) {
+            return Optional.empty();
+        }
+        return worstCaseResultByDate;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("patient_details")
+    private Optional<ClientFacingPatientDetailsCompatible> _getPatientDetails() {
+        return patientDetails;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("patient_address")
+    private Optional<PatientAddressCompatible> _getPatientAddress() {
+        return patientAddress;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sample_id")
+    private Optional<String> _getSampleId() {
+        return sampleId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("notes")
+    private Optional<String> _getNotes() {
+        return notes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("status")
+    private Optional<OrderTopLevelStatus> _getStatus() {
+        return status;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("physician")
+    private Optional<ClientFacingPhysician> _getPhysician() {
+        return physician;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("health_insurance_id")
+    private Optional<String> _getHealthInsuranceId() {
+        return healthInsuranceId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("requisition_form_url")
+    private Optional<String> _getRequisitionFormUrl() {
+        return requisitionFormUrl;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("shipping_details")
+    private Optional<ShippingAddress> _getShippingDetails() {
+        return shippingDetails;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("activate_by")
+    private Optional<String> _getActivateBy() {
+        return activateBy;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("passthrough")
+    private Optional<String> _getPassthrough() {
+        return passthrough;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("icd_codes")
+    private Optional<List<String>> _getIcdCodes() {
+        return icdCodes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("interpretation")
+    private Optional<Interpretation> _getInterpretation() {
+        return interpretation;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("has_missing_results")
+    private Optional<Boolean> _getHasMissingResults() {
+        return hasMissingResults;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("expected_result_by_date")
+    private Optional<String> _getExpectedResultByDate() {
+        return expectedResultByDate;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("worst_case_result_by_date")
+    private Optional<String> _getWorstCaseResultByDate() {
         return worstCaseResultByDate;
     }
 
@@ -481,12 +628,16 @@ public final class ClientFacingOrder {
 
         _FinalStage patientDetails(ClientFacingPatientDetailsCompatible patientDetails);
 
+        _FinalStage patientDetails(Nullable<ClientFacingPatientDetailsCompatible> patientDetails);
+
         /**
          * <p>Patient Address</p>
          */
         _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress);
 
         _FinalStage patientAddress(PatientAddressCompatible patientAddress);
+
+        _FinalStage patientAddress(Nullable<PatientAddressCompatible> patientAddress);
 
         /**
          * <p>Sample ID</p>
@@ -495,12 +646,16 @@ public final class ClientFacingOrder {
 
         _FinalStage sampleId(String sampleId);
 
+        _FinalStage sampleId(Nullable<String> sampleId);
+
         /**
          * <p>Notes associated with the order</p>
          */
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
+
+        _FinalStage notes(Nullable<String> notes);
 
         _FinalStage events(List<ClientFacingOrderEvent> events);
 
@@ -512,9 +667,13 @@ public final class ClientFacingOrder {
 
         _FinalStage status(OrderTopLevelStatus status);
 
+        _FinalStage status(Nullable<OrderTopLevelStatus> status);
+
         _FinalStage physician(Optional<ClientFacingPhysician> physician);
 
         _FinalStage physician(ClientFacingPhysician physician);
+
+        _FinalStage physician(Nullable<ClientFacingPhysician> physician);
 
         /**
          * <p>Vital ID of the health insurance.</p>
@@ -523,12 +682,16 @@ public final class ClientFacingOrder {
 
         _FinalStage healthInsuranceId(String healthInsuranceId);
 
+        _FinalStage healthInsuranceId(Nullable<String> healthInsuranceId);
+
         /**
          * <p>DEPRECATED. Requistion form url.</p>
          */
         _FinalStage requisitionFormUrl(Optional<String> requisitionFormUrl);
 
         _FinalStage requisitionFormUrl(String requisitionFormUrl);
+
+        _FinalStage requisitionFormUrl(Nullable<String> requisitionFormUrl);
 
         /**
          * <p>Defines whether order is priority or not. For some labs, this refers to a STAT order.</p>
@@ -544,6 +707,8 @@ public final class ClientFacingOrder {
 
         _FinalStage shippingDetails(ShippingAddress shippingDetails);
 
+        _FinalStage shippingDetails(Nullable<ShippingAddress> shippingDetails);
+
         /**
          * <p>Schedule an Order to be processed in a future date.</p>
          */
@@ -551,9 +716,13 @@ public final class ClientFacingOrder {
 
         _FinalStage activateBy(String activateBy);
 
+        _FinalStage activateBy(Nullable<String> activateBy);
+
         _FinalStage passthrough(Optional<String> passthrough);
 
         _FinalStage passthrough(String passthrough);
+
+        _FinalStage passthrough(Nullable<String> passthrough);
 
         _FinalStage billingType(Optional<Billing> billingType);
 
@@ -563,12 +732,16 @@ public final class ClientFacingOrder {
 
         _FinalStage icdCodes(List<String> icdCodes);
 
+        _FinalStage icdCodes(Nullable<List<String>> icdCodes);
+
         /**
          * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
          */
         _FinalStage interpretation(Optional<Interpretation> interpretation);
 
         _FinalStage interpretation(Interpretation interpretation);
+
+        _FinalStage interpretation(Nullable<Interpretation> interpretation);
 
         /**
          * <p>Defines whether the order result has missing biomarkers.</p>
@@ -577,6 +750,8 @@ public final class ClientFacingOrder {
 
         _FinalStage hasMissingResults(Boolean hasMissingResults);
 
+        _FinalStage hasMissingResults(Nullable<Boolean> hasMissingResults);
+
         /**
          * <p>The common-case date by which the order result is expected to be available.</p>
          */
@@ -584,12 +759,16 @@ public final class ClientFacingOrder {
 
         _FinalStage expectedResultByDate(String expectedResultByDate);
 
+        _FinalStage expectedResultByDate(Nullable<String> expectedResultByDate);
+
         /**
          * <p>The latest date by which the order result is expected to be available.</p>
          */
         _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate);
 
         _FinalStage worstCaseResultByDate(String worstCaseResultByDate);
+
+        _FinalStage worstCaseResultByDate(Nullable<String> worstCaseResultByDate);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -790,6 +969,22 @@ public final class ClientFacingOrder {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage worstCaseResultByDate(Nullable<String> worstCaseResultByDate) {
+            if (worstCaseResultByDate.isNull()) {
+                this.worstCaseResultByDate = null;
+            } else if (worstCaseResultByDate.isEmpty()) {
+                this.worstCaseResultByDate = Optional.empty();
+            } else {
+                this.worstCaseResultByDate = Optional.of(worstCaseResultByDate.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>The latest date by which the order result is expected to be available.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage worstCaseResultByDate(String worstCaseResultByDate) {
             this.worstCaseResultByDate = Optional.ofNullable(worstCaseResultByDate);
             return this;
@@ -802,6 +997,22 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "worst_case_result_by_date", nulls = Nulls.SKIP)
         public _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate) {
             this.worstCaseResultByDate = worstCaseResultByDate;
+            return this;
+        }
+
+        /**
+         * <p>The common-case date by which the order result is expected to be available.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage expectedResultByDate(Nullable<String> expectedResultByDate) {
+            if (expectedResultByDate.isNull()) {
+                this.expectedResultByDate = null;
+            } else if (expectedResultByDate.isEmpty()) {
+                this.expectedResultByDate = Optional.empty();
+            } else {
+                this.expectedResultByDate = Optional.of(expectedResultByDate.get());
+            }
             return this;
         }
 
@@ -830,6 +1041,22 @@ public final class ClientFacingOrder {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage hasMissingResults(Nullable<Boolean> hasMissingResults) {
+            if (hasMissingResults.isNull()) {
+                this.hasMissingResults = null;
+            } else if (hasMissingResults.isEmpty()) {
+                this.hasMissingResults = Optional.empty();
+            } else {
+                this.hasMissingResults = Optional.of(hasMissingResults.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Defines whether the order result has missing biomarkers.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage hasMissingResults(Boolean hasMissingResults) {
             this.hasMissingResults = Optional.ofNullable(hasMissingResults);
             return this;
@@ -850,6 +1077,22 @@ public final class ClientFacingOrder {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage interpretation(Nullable<Interpretation> interpretation) {
+            if (interpretation.isNull()) {
+                this.interpretation = null;
+            } else if (interpretation.isEmpty()) {
+                this.interpretation = Optional.empty();
+            } else {
+                this.interpretation = Optional.of(interpretation.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage interpretation(Interpretation interpretation) {
             this.interpretation = Optional.ofNullable(interpretation);
             return this;
@@ -862,6 +1105,18 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public _FinalStage interpretation(Optional<Interpretation> interpretation) {
             this.interpretation = interpretation;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage icdCodes(Nullable<List<String>> icdCodes) {
+            if (icdCodes.isNull()) {
+                this.icdCodes = null;
+            } else if (icdCodes.isEmpty()) {
+                this.icdCodes = Optional.empty();
+            } else {
+                this.icdCodes = Optional.of(icdCodes.get());
+            }
             return this;
         }
 
@@ -892,6 +1147,18 @@ public final class ClientFacingOrder {
         }
 
         @java.lang.Override
+        public _FinalStage passthrough(Nullable<String> passthrough) {
+            if (passthrough.isNull()) {
+                this.passthrough = null;
+            } else if (passthrough.isEmpty()) {
+                this.passthrough = Optional.empty();
+            } else {
+                this.passthrough = Optional.of(passthrough.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage passthrough(String passthrough) {
             this.passthrough = Optional.ofNullable(passthrough);
             return this;
@@ -901,6 +1168,22 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "passthrough", nulls = Nulls.SKIP)
         public _FinalStage passthrough(Optional<String> passthrough) {
             this.passthrough = passthrough;
+            return this;
+        }
+
+        /**
+         * <p>Schedule an Order to be processed in a future date.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage activateBy(Nullable<String> activateBy) {
+            if (activateBy.isNull()) {
+                this.activateBy = null;
+            } else if (activateBy.isEmpty()) {
+                this.activateBy = Optional.empty();
+            } else {
+                this.activateBy = Optional.of(activateBy.get());
+            }
             return this;
         }
 
@@ -921,6 +1204,22 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "activate_by", nulls = Nulls.SKIP)
         public _FinalStage activateBy(Optional<String> activateBy) {
             this.activateBy = activateBy;
+            return this;
+        }
+
+        /**
+         * <p>Shipping Details. For unregistered testkit orders.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage shippingDetails(Nullable<ShippingAddress> shippingDetails) {
+            if (shippingDetails.isNull()) {
+                this.shippingDetails = null;
+            } else if (shippingDetails.isEmpty()) {
+                this.shippingDetails = Optional.empty();
+            } else {
+                this.shippingDetails = Optional.of(shippingDetails.get());
+            }
             return this;
         }
 
@@ -969,6 +1268,22 @@ public final class ClientFacingOrder {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage requisitionFormUrl(Nullable<String> requisitionFormUrl) {
+            if (requisitionFormUrl.isNull()) {
+                this.requisitionFormUrl = null;
+            } else if (requisitionFormUrl.isEmpty()) {
+                this.requisitionFormUrl = Optional.empty();
+            } else {
+                this.requisitionFormUrl = Optional.of(requisitionFormUrl.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>DEPRECATED. Requistion form url.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage requisitionFormUrl(String requisitionFormUrl) {
             this.requisitionFormUrl = Optional.ofNullable(requisitionFormUrl);
             return this;
@@ -981,6 +1296,22 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "requisition_form_url", nulls = Nulls.SKIP)
         public _FinalStage requisitionFormUrl(Optional<String> requisitionFormUrl) {
             this.requisitionFormUrl = requisitionFormUrl;
+            return this;
+        }
+
+        /**
+         * <p>Vital ID of the health insurance.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage healthInsuranceId(Nullable<String> healthInsuranceId) {
+            if (healthInsuranceId.isNull()) {
+                this.healthInsuranceId = null;
+            } else if (healthInsuranceId.isEmpty()) {
+                this.healthInsuranceId = Optional.empty();
+            } else {
+                this.healthInsuranceId = Optional.of(healthInsuranceId.get());
+            }
             return this;
         }
 
@@ -1005,6 +1336,18 @@ public final class ClientFacingOrder {
         }
 
         @java.lang.Override
+        public _FinalStage physician(Nullable<ClientFacingPhysician> physician) {
+            if (physician.isNull()) {
+                this.physician = null;
+            } else if (physician.isEmpty()) {
+                this.physician = Optional.empty();
+            } else {
+                this.physician = Optional.of(physician.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage physician(ClientFacingPhysician physician) {
             this.physician = Optional.ofNullable(physician);
             return this;
@@ -1014,6 +1357,18 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "physician", nulls = Nulls.SKIP)
         public _FinalStage physician(Optional<ClientFacingPhysician> physician) {
             this.physician = physician;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage status(Nullable<OrderTopLevelStatus> status) {
+            if (status.isNull()) {
+                this.status = null;
+            } else if (status.isEmpty()) {
+                this.status = Optional.empty();
+            } else {
+                this.status = Optional.of(status.get());
+            }
             return this;
         }
 
@@ -1057,6 +1412,22 @@ public final class ClientFacingOrder {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage notes(Nullable<String> notes) {
+            if (notes.isNull()) {
+                this.notes = null;
+            } else if (notes.isEmpty()) {
+                this.notes = Optional.empty();
+            } else {
+                this.notes = Optional.of(notes.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Notes associated with the order</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.ofNullable(notes);
             return this;
@@ -1069,6 +1440,22 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
             this.notes = notes;
+            return this;
+        }
+
+        /**
+         * <p>Sample ID</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage sampleId(Nullable<String> sampleId) {
+            if (sampleId.isNull()) {
+                this.sampleId = null;
+            } else if (sampleId.isEmpty()) {
+                this.sampleId = Optional.empty();
+            } else {
+                this.sampleId = Optional.of(sampleId.get());
+            }
             return this;
         }
 
@@ -1097,6 +1484,22 @@ public final class ClientFacingOrder {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage patientAddress(Nullable<PatientAddressCompatible> patientAddress) {
+            if (patientAddress.isNull()) {
+                this.patientAddress = null;
+            } else if (patientAddress.isEmpty()) {
+                this.patientAddress = Optional.empty();
+            } else {
+                this.patientAddress = Optional.of(patientAddress.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Patient Address</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage patientAddress(PatientAddressCompatible patientAddress) {
             this.patientAddress = Optional.ofNullable(patientAddress);
             return this;
@@ -1109,6 +1512,22 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "patient_address", nulls = Nulls.SKIP)
         public _FinalStage patientAddress(Optional<PatientAddressCompatible> patientAddress) {
             this.patientAddress = patientAddress;
+            return this;
+        }
+
+        /**
+         * <p>Patient Details</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage patientDetails(Nullable<ClientFacingPatientDetailsCompatible> patientDetails) {
+            if (patientDetails.isNull()) {
+                this.patientDetails = null;
+            } else if (patientDetails.isEmpty()) {
+                this.patientDetails = Optional.empty();
+            } else {
+                this.patientDetails = Optional.of(patientDetails.get());
+            }
             return this;
         }
 

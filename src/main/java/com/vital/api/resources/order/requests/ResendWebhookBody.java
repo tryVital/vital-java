@@ -5,12 +5,15 @@ package com.vital.api.resources.order.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -41,18 +44,45 @@ public final class ResendWebhookBody {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("order_ids")
+    @JsonIgnore
     public Optional<List<String>> getOrderIds() {
+        if (orderIds == null) {
+            return Optional.empty();
+        }
         return orderIds;
     }
 
-    @JsonProperty("start_at")
+    @JsonIgnore
     public Optional<OffsetDateTime> getStartAt() {
+        if (startAt == null) {
+            return Optional.empty();
+        }
         return startAt;
     }
 
-    @JsonProperty("end_at")
+    @JsonIgnore
     public Optional<OffsetDateTime> getEndAt() {
+        if (endAt == null) {
+            return Optional.empty();
+        }
+        return endAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("order_ids")
+    private Optional<List<String>> _getOrderIds() {
+        return orderIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("start_at")
+    private Optional<OffsetDateTime> _getStartAt() {
+        return startAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("end_at")
+    private Optional<OffsetDateTime> _getEndAt() {
         return endAt;
     }
 
@@ -116,6 +146,17 @@ public final class ResendWebhookBody {
             return this;
         }
 
+        public Builder orderIds(Nullable<List<String>> orderIds) {
+            if (orderIds.isNull()) {
+                this.orderIds = null;
+            } else if (orderIds.isEmpty()) {
+                this.orderIds = Optional.empty();
+            } else {
+                this.orderIds = Optional.of(orderIds.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "start_at", nulls = Nulls.SKIP)
         public Builder startAt(Optional<OffsetDateTime> startAt) {
             this.startAt = startAt;
@@ -127,6 +168,17 @@ public final class ResendWebhookBody {
             return this;
         }
 
+        public Builder startAt(Nullable<OffsetDateTime> startAt) {
+            if (startAt.isNull()) {
+                this.startAt = null;
+            } else if (startAt.isEmpty()) {
+                this.startAt = Optional.empty();
+            } else {
+                this.startAt = Optional.of(startAt.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
         public Builder endAt(Optional<OffsetDateTime> endAt) {
             this.endAt = endAt;
@@ -135,6 +187,17 @@ public final class ResendWebhookBody {
 
         public Builder endAt(OffsetDateTime endAt) {
             this.endAt = Optional.ofNullable(endAt);
+            return this;
+        }
+
+        public Builder endAt(Nullable<OffsetDateTime> endAt) {
+            if (endAt.isNull()) {
+                this.endAt = null;
+            } else if (endAt.isEmpty()) {
+                this.endAt = Optional.empty();
+            } else {
+                this.endAt = Optional.of(endAt.get());
+            }
             return this;
         }
 

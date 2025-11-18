@@ -5,8 +5,9 @@ package com.vital.api.resources.workouts;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
-import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
+import com.vital.api.resources.workouts.requests.GetByWorkoutIdWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.GetRawWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.GetWorkoutsRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.RawWorkout;
@@ -31,28 +32,28 @@ public class WorkoutsClient {
     /**
      * Get workout summary for user_id
      */
-    public ClientWorkoutResponse get(String userId, WorkoutsGetRequest request) {
+    public ClientWorkoutResponse get(String userId, GetWorkoutsRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get workout summary for user_id
      */
-    public ClientWorkoutResponse get(String userId, WorkoutsGetRequest request, RequestOptions requestOptions) {
+    public ClientWorkoutResponse get(String userId, GetWorkoutsRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 
     /**
      * Get raw workout summary for user_id
      */
-    public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request) {
+    public RawWorkout getRaw(String userId, GetRawWorkoutsRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw workout summary for user_id
      */
-    public RawWorkout getRaw(String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
+    public RawWorkout getRaw(String userId, GetRawWorkoutsRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 
@@ -60,7 +61,12 @@ public class WorkoutsClient {
         return this.rawClient.getByWorkoutId(workoutId).body();
     }
 
-    public ClientFacingStream getByWorkoutId(String workoutId, RequestOptions requestOptions) {
-        return this.rawClient.getByWorkoutId(workoutId, requestOptions).body();
+    public ClientFacingStream getByWorkoutId(String workoutId, GetByWorkoutIdWorkoutsRequest request) {
+        return this.rawClient.getByWorkoutId(workoutId, request).body();
+    }
+
+    public ClientFacingStream getByWorkoutId(
+            String workoutId, GetByWorkoutIdWorkoutsRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getByWorkoutId(workoutId, request, requestOptions).body();
     }
 }

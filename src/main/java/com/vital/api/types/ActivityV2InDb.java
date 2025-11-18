@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -114,8 +117,11 @@ public final class ActivityV2InDb {
         return source;
     }
 
-    @JsonProperty("source_device_id")
+    @JsonIgnore
     public Optional<String> getSourceDeviceId() {
+        if (sourceDeviceId == null) {
+            return Optional.empty();
+        }
         return sourceDeviceId;
     }
 
@@ -127,6 +133,12 @@ public final class ActivityV2InDb {
     @JsonProperty("updated_at")
     public Optional<OffsetDateTime> getUpdatedAt() {
         return updatedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_device_id")
+    private Optional<String> _getSourceDeviceId() {
+        return sourceDeviceId;
     }
 
     @java.lang.Override
@@ -221,6 +233,8 @@ public final class ActivityV2InDb {
         _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
 
         _FinalStage sourceDeviceId(String sourceDeviceId);
+
+        _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId);
 
         _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
 
@@ -356,6 +370,18 @@ public final class ActivityV2InDb {
         @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
         public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
             this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId) {
+            if (sourceDeviceId.isNull()) {
+                this.sourceDeviceId = null;
+            } else if (sourceDeviceId.isEmpty()) {
+                this.sourceDeviceId = Optional.empty();
+            } else {
+                this.sourceDeviceId = Optional.of(sourceDeviceId.get());
+            }
             return this;
         }
 

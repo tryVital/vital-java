@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -46,13 +49,31 @@ public final class HistoricalPullTimeline {
         return scheduledAt;
     }
 
-    @JsonProperty("started_at")
+    @JsonIgnore
     public Optional<OffsetDateTime> getStartedAt() {
+        if (startedAt == null) {
+            return Optional.empty();
+        }
         return startedAt;
     }
 
-    @JsonProperty("ended_at")
+    @JsonIgnore
     public Optional<OffsetDateTime> getEndedAt() {
+        if (endedAt == null) {
+            return Optional.empty();
+        }
+        return endedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("started_at")
+    private Optional<OffsetDateTime> _getStartedAt() {
+        return startedAt;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("ended_at")
+    private Optional<OffsetDateTime> _getEndedAt() {
         return endedAt;
     }
 
@@ -100,9 +121,13 @@ public final class HistoricalPullTimeline {
 
         _FinalStage startedAt(OffsetDateTime startedAt);
 
+        _FinalStage startedAt(Nullable<OffsetDateTime> startedAt);
+
         _FinalStage endedAt(Optional<OffsetDateTime> endedAt);
 
         _FinalStage endedAt(OffsetDateTime endedAt);
+
+        _FinalStage endedAt(Nullable<OffsetDateTime> endedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -134,6 +159,18 @@ public final class HistoricalPullTimeline {
         }
 
         @java.lang.Override
+        public _FinalStage endedAt(Nullable<OffsetDateTime> endedAt) {
+            if (endedAt.isNull()) {
+                this.endedAt = null;
+            } else if (endedAt.isEmpty()) {
+                this.endedAt = Optional.empty();
+            } else {
+                this.endedAt = Optional.of(endedAt.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage endedAt(OffsetDateTime endedAt) {
             this.endedAt = Optional.ofNullable(endedAt);
             return this;
@@ -143,6 +180,18 @@ public final class HistoricalPullTimeline {
         @JsonSetter(value = "ended_at", nulls = Nulls.SKIP)
         public _FinalStage endedAt(Optional<OffsetDateTime> endedAt) {
             this.endedAt = endedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage startedAt(Nullable<OffsetDateTime> startedAt) {
+            if (startedAt.isNull()) {
+                this.startedAt = null;
+            } else if (startedAt.isEmpty()) {
+                this.startedAt = Optional.empty();
+            } else {
+                this.startedAt = Optional.of(startedAt.get());
+            }
             return this;
         }
 

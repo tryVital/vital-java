@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,23 +57,59 @@ public final class GetMarkersResponse {
         return markers;
     }
 
-    @JsonProperty("total")
+    @JsonIgnore
     public Optional<Integer> getTotal() {
+        if (total == null) {
+            return Optional.empty();
+        }
         return total;
     }
 
-    @JsonProperty("page")
+    @JsonIgnore
     public Optional<Integer> getPage() {
+        if (page == null) {
+            return Optional.empty();
+        }
         return page;
     }
 
-    @JsonProperty("size")
+    @JsonIgnore
     public Optional<Integer> getSize() {
+        if (size == null) {
+            return Optional.empty();
+        }
         return size;
     }
 
-    @JsonProperty("pages")
+    @JsonIgnore
     public Optional<Integer> getPages() {
+        if (pages == null) {
+            return Optional.empty();
+        }
+        return pages;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("total")
+    private Optional<Integer> _getTotal() {
+        return total;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("page")
+    private Optional<Integer> _getPage() {
+        return page;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("size")
+    private Optional<Integer> _getSize() {
+        return size;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("pages")
+    private Optional<Integer> _getPages() {
         return pages;
     }
 
@@ -163,6 +202,17 @@ public final class GetMarkersResponse {
             return this;
         }
 
+        public Builder total(Nullable<Integer> total) {
+            if (total.isNull()) {
+                this.total = null;
+            } else if (total.isEmpty()) {
+                this.total = Optional.empty();
+            } else {
+                this.total = Optional.of(total.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -171,6 +221,17 @@ public final class GetMarkersResponse {
 
         public Builder page(Integer page) {
             this.page = Optional.ofNullable(page);
+            return this;
+        }
+
+        public Builder page(Nullable<Integer> page) {
+            if (page.isNull()) {
+                this.page = null;
+            } else if (page.isEmpty()) {
+                this.page = Optional.empty();
+            } else {
+                this.page = Optional.of(page.get());
+            }
             return this;
         }
 
@@ -185,6 +246,17 @@ public final class GetMarkersResponse {
             return this;
         }
 
+        public Builder size(Nullable<Integer> size) {
+            if (size.isNull()) {
+                this.size = null;
+            } else if (size.isEmpty()) {
+                this.size = Optional.empty();
+            } else {
+                this.size = Optional.of(size.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "pages", nulls = Nulls.SKIP)
         public Builder pages(Optional<Integer> pages) {
             this.pages = pages;
@@ -193,6 +265,17 @@ public final class GetMarkersResponse {
 
         public Builder pages(Integer pages) {
             this.pages = Optional.ofNullable(pages);
+            return this;
+        }
+
+        public Builder pages(Nullable<Integer> pages) {
+            if (pages.isNull()) {
+                this.pages = null;
+            } else if (pages.isEmpty()) {
+                this.pages = Optional.empty();
+            } else {
+                this.pages = Optional.of(pages.get());
+            }
             return this;
         }
 

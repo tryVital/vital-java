@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +62,17 @@ public final class ParentBiomarkerData {
         return slug;
     }
 
-    @JsonProperty("provider_id")
+    @JsonIgnore
     public Optional<String> getProviderId() {
+        if (providerId == null) {
+            return Optional.empty();
+        }
+        return providerId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_id")
+    private Optional<String> _getProviderId() {
         return providerId;
     }
 
@@ -116,6 +128,8 @@ public final class ParentBiomarkerData {
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
+
+        _FinalStage providerId(Nullable<String> providerId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -160,6 +174,18 @@ public final class ParentBiomarkerData {
         @JsonSetter("slug")
         public _FinalStage slug(@NotNull String slug) {
             this.slug = Objects.requireNonNull(slug, "slug must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage providerId(Nullable<String> providerId) {
+            if (providerId.isNull()) {
+                this.providerId = null;
+            } else if (providerId.isEmpty()) {
+                this.providerId = Optional.empty();
+            } else {
+                this.providerId = Optional.of(providerId.get());
+            }
             return this;
         }
 

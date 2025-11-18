@@ -17,31 +17,45 @@ import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.NotFoundError;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest;
+import com.vital.api.resources.labtests.requests.BookPhlebotomyAppointmentLabTestsRequest;
+import com.vital.api.resources.labtests.requests.BookPscAppointmentLabTestsRequest;
+import com.vital.api.resources.labtests.requests.CancelOrderLabTestsRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
+import com.vital.api.resources.labtests.requests.GetAreaInfoLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetByIdLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetLabTestCollectionInstructionPdfLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetLabelsPdfLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetMarkersByLabAndProviderIdLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetMarkersForLabTestLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetMarkersForOrderSetLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetMarkersLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetOrderAbnPdfLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetOrderCollectionInstructionPdfLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetOrderLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetOrderPscInfoLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetOrderRequistionPdfLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetOrdersLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetPaginatedLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetPhlebotomyAppointmentAvailabilityLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetPhlebotomyAppointmentLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetPscAppointmentAvailabilityLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetPscAppointmentLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetPscInfoLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetResultMetadataLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetResultPdfLabTestsRequest;
+import com.vital.api.resources.labtests.requests.GetResultRawLabTestsRequest;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
-import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetMarkersByLabAndProviderIdRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForOrderSetRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetPaginatedRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetPhlebotomyAppointmentAvailabilityRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetPscAppointmentAvailabilityRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
-import com.vital.api.resources.labtests.requests.LabTestsGetRequest;
-import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
+import com.vital.api.resources.labtests.requests.ReschedulePhlebotomyAppointmentLabTestsRequest;
+import com.vital.api.resources.labtests.requests.ReschedulePscAppointmentLabTestsRequest;
+import com.vital.api.resources.labtests.requests.SimulateOrderProcessLabTestsRequest;
 import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
+import com.vital.api.resources.labtests.requests.UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest;
 import com.vital.api.resources.labtests.requests.ValidateIcdCodesBody;
 import com.vital.api.resources.labtests.requests.VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
-import com.vital.api.types.AppointmentBookingRequest;
-import com.vital.api.types.AppointmentRescheduleRequest;
 import com.vital.api.types.AreaInfo;
 import com.vital.api.types.ClientFacingAppointment;
 import com.vital.api.types.ClientFacingAppointmentCancellationReason;
@@ -83,20 +97,20 @@ public class RawLabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public VitalHttpResponse<List<ClientFacingLabTest>> get() {
-        return get(LabTestsGetRequest.builder().build());
+        return get(GetLabTestsRequest.builder().build());
     }
 
     /**
      * GET all the lab tests the team has access to.
      */
-    public VitalHttpResponse<List<ClientFacingLabTest>> get(LabTestsGetRequest request) {
+    public VitalHttpResponse<List<ClientFacingLabTest>> get(GetLabTestsRequest request) {
         return get(request, null);
     }
 
     /**
      * GET all the lab tests the team has access to.
      */
-    public VitalHttpResponse<List<ClientFacingLabTest>> get(LabTestsGetRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<List<ClientFacingLabTest>> get(GetLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests");
@@ -116,6 +130,14 @@ public class RawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "status", request.getStatus().get(), false);
         }
+        if (request.getMarkerIds().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "marker_ids", request.getMarkerIds().get(), false);
+        }
+        if (request.getProviderIds().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "provider_ids", request.getProviderIds().get(), false);
+        }
         if (request.getName().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "name", request.getName().get(), false);
@@ -127,14 +149,6 @@ public class RawLabTestsClient {
         if (request.getOrderDirection().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order_direction", request.getOrderDirection().get(), false);
-        }
-        if (request.getMarkerIds().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "marker_ids", request.getMarkerIds().get(), true);
-        }
-        if (request.getProviderIds().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "provider_ids", request.getProviderIds().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -232,13 +246,13 @@ public class RawLabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public VitalHttpResponse<ClientFacingLabTest> getById(String labTestId) {
-        return getById(labTestId, LabTestsGetByIdRequest.builder().build());
+        return getById(labTestId, GetByIdLabTestsRequest.builder().build());
     }
 
     /**
      * GET all the lab tests the team has access to.
      */
-    public VitalHttpResponse<ClientFacingLabTest> getById(String labTestId, LabTestsGetByIdRequest request) {
+    public VitalHttpResponse<ClientFacingLabTest> getById(String labTestId, GetByIdLabTestsRequest request) {
         return getById(labTestId, request, null);
     }
 
@@ -246,7 +260,7 @@ public class RawLabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public VitalHttpResponse<ClientFacingLabTest> getById(
-            String labTestId, LabTestsGetByIdRequest request, RequestOptions requestOptions) {
+            String labTestId, GetByIdLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests")
@@ -356,13 +370,13 @@ public class RawLabTestsClient {
      * GET all the markers for the given lab.
      */
     public VitalHttpResponse<GetMarkersResponse> getMarkers() {
-        return getMarkers(LabTestsGetMarkersRequest.builder().build());
+        return getMarkers(GetMarkersLabTestsRequest.builder().build());
     }
 
     /**
      * GET all the markers for the given lab.
      */
-    public VitalHttpResponse<GetMarkersResponse> getMarkers(LabTestsGetMarkersRequest request) {
+    public VitalHttpResponse<GetMarkersResponse> getMarkers(GetMarkersLabTestsRequest request) {
         return getMarkers(request, null);
     }
 
@@ -370,10 +384,14 @@ public class RawLabTestsClient {
      * GET all the markers for the given lab.
      */
     public VitalHttpResponse<GetMarkersResponse> getMarkers(
-            LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
+            GetMarkersLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests/markers");
+        if (request.getLabId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_id", request.getLabId().get(), false);
+        }
         if (request.getName().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "name", request.getName().get(), false);
@@ -393,10 +411,6 @@ public class RawLabTestsClient {
         if (request.getSize().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "size", request.getSize().get(), false);
-        }
-        if (request.getLabId().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "lab_id", request.getLabId().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -434,12 +448,12 @@ public class RawLabTestsClient {
         }
     }
 
-    public VitalHttpResponse<GetMarkersResponse> getMarkersForOrderSet(LabTestsGetMarkersForOrderSetRequest request) {
+    public VitalHttpResponse<GetMarkersResponse> getMarkersForOrderSet(GetMarkersForOrderSetLabTestsRequest request) {
         return getMarkersForOrderSet(request, null);
     }
 
     public VitalHttpResponse<GetMarkersResponse> getMarkersForOrderSet(
-            LabTestsGetMarkersForOrderSetRequest request, RequestOptions requestOptions) {
+            GetMarkersForOrderSetLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests/list_order_set_markers");
@@ -497,16 +511,16 @@ public class RawLabTestsClient {
 
     public VitalHttpResponse<GetMarkersResponse> getMarkersForLabTest(String labTestId) {
         return getMarkersForLabTest(
-                labTestId, LabTestsGetMarkersForLabTestRequest.builder().build());
+                labTestId, GetMarkersForLabTestLabTestsRequest.builder().build());
     }
 
     public VitalHttpResponse<GetMarkersResponse> getMarkersForLabTest(
-            String labTestId, LabTestsGetMarkersForLabTestRequest request) {
+            String labTestId, GetMarkersForLabTestLabTestsRequest request) {
         return getMarkersForLabTest(labTestId, request, null);
     }
 
     public VitalHttpResponse<GetMarkersResponse> getMarkersForLabTest(
-            String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
+            String labTestId, GetMarkersForLabTestLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests")
@@ -563,28 +577,28 @@ public class RawLabTestsClient {
     /**
      * GET a specific marker for the given lab and provider_id
      */
-    public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(String providerId, int labId) {
+    public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(int labId, String providerId) {
         return getMarkersByLabAndProviderId(
-                providerId,
                 labId,
-                LabTestsGetMarkersByLabAndProviderIdRequest.builder().build());
+                providerId,
+                GetMarkersByLabAndProviderIdLabTestsRequest.builder().build());
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(
-            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
-        return getMarkersByLabAndProviderId(providerId, labId, request, null);
+            int labId, String providerId, GetMarkersByLabAndProviderIdLabTestsRequest request) {
+        return getMarkersByLabAndProviderId(labId, providerId, request, null);
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(
-            String providerId,
             int labId,
-            LabTestsGetMarkersByLabAndProviderIdRequest request,
+            String providerId,
+            GetMarkersByLabAndProviderIdLabTestsRequest request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -680,13 +694,13 @@ public class RawLabTestsClient {
      * GET lab tests the team has access to as a paginated list.
      */
     public VitalHttpResponse<LabTestResourcesResponse> getPaginated() {
-        return getPaginated(LabTestsGetPaginatedRequest.builder().build());
+        return getPaginated(GetPaginatedLabTestsRequest.builder().build());
     }
 
     /**
      * GET lab tests the team has access to as a paginated list.
      */
-    public VitalHttpResponse<LabTestResourcesResponse> getPaginated(LabTestsGetPaginatedRequest request) {
+    public VitalHttpResponse<LabTestResourcesResponse> getPaginated(GetPaginatedLabTestsRequest request) {
         return getPaginated(request, null);
     }
 
@@ -694,7 +708,7 @@ public class RawLabTestsClient {
      * GET lab tests the team has access to as a paginated list.
      */
     public VitalHttpResponse<LabTestResourcesResponse> getPaginated(
-            LabTestsGetPaginatedRequest request, RequestOptions requestOptions) {
+            GetPaginatedLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_test");
@@ -722,6 +736,14 @@ public class RawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "status", request.getStatus().get(), false);
         }
+        if (request.getMarkerIds().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "marker_ids", request.getMarkerIds().get(), false);
+        }
+        if (request.getProviderIds().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "provider_ids", request.getProviderIds().get(), false);
+        }
         if (request.getName().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "name", request.getName().get(), false);
@@ -733,14 +755,6 @@ public class RawLabTestsClient {
         if (request.getOrderDirection().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order_direction", request.getOrderDirection().get(), false);
-        }
-        if (request.getMarkerIds().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "marker_ids", request.getMarkerIds().get(), true);
-        }
-        if (request.getProviderIds().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "provider_ids", request.getProviderIds().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -780,23 +794,32 @@ public class RawLabTestsClient {
     }
 
     public VitalHttpResponse<InputStream> getLabTestCollectionInstructionPdf(String labTestId) {
-        return getLabTestCollectionInstructionPdf(labTestId, null);
+        return getLabTestCollectionInstructionPdf(
+                labTestId,
+                GetLabTestCollectionInstructionPdfLabTestsRequest.builder().build());
     }
 
     public VitalHttpResponse<InputStream> getLabTestCollectionInstructionPdf(
-            String labTestId, RequestOptions requestOptions) {
+            String labTestId, GetLabTestCollectionInstructionPdfLabTestsRequest request) {
+        return getLabTestCollectionInstructionPdf(labTestId, request, null);
+    }
+
+    public VitalHttpResponse<InputStream> getLabTestCollectionInstructionPdf(
+            String labTestId,
+            GetLabTestCollectionInstructionPdfLabTestsRequest request,
+            RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_test")
                 .addPathSegment(labTestId)
                 .addPathSegments("collection_instruction_pdf")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -831,13 +854,13 @@ public class RawLabTestsClient {
      * GET many orders with filters.
      */
     public VitalHttpResponse<GetOrdersResponse> getOrders() {
-        return getOrders(LabTestsGetOrdersRequest.builder().build());
+        return getOrders(GetOrdersLabTestsRequest.builder().build());
     }
 
     /**
      * GET many orders with filters.
      */
-    public VitalHttpResponse<GetOrdersResponse> getOrders(LabTestsGetOrdersRequest request) {
+    public VitalHttpResponse<GetOrdersResponse> getOrders(GetOrdersLabTestsRequest request) {
         return getOrders(request, null);
     }
 
@@ -845,7 +868,7 @@ public class RawLabTestsClient {
      * GET many orders with filters.
      */
     public VitalHttpResponse<GetOrdersResponse> getOrders(
-            LabTestsGetOrdersRequest request, RequestOptions requestOptions) {
+            GetOrdersLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/orders");
@@ -869,6 +892,10 @@ public class RawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "updated_end_date", request.getUpdatedEndDate().get(), false);
         }
+        if (request.getStatus().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "status", request.getStatus().get(), false);
+        }
         if (request.getOrderKey().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order_key", request.getOrderKey().get(), false);
@@ -877,6 +904,10 @@ public class RawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order_direction", request.getOrderDirection().get(), false);
         }
+        if (request.getOrderType().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order_type", request.getOrderType().get(), false);
+        }
         if (request.getIsCritical().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "is_critical", request.getIsCritical().get(), false);
@@ -884,6 +915,13 @@ public class RawLabTestsClient {
         if (request.getInterpretation().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "interpretation", request.getInterpretation().get(), false);
+        }
+        if (request.getOrderActivationTypes().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "order_activation_types",
+                    request.getOrderActivationTypes().get(),
+                    false);
         }
         if (request.getUserId().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -900,6 +938,10 @@ public class RawLabTestsClient {
                     request.getShippingRecipientName().get(),
                     false);
         }
+        if (request.getOrderIds().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "order_ids", request.getOrderIds().get(), false);
+        }
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
@@ -907,25 +949,6 @@ public class RawLabTestsClient {
         if (request.getSize().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "size", request.getSize().get(), false);
-        }
-        if (request.getStatus().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "status", request.getStatus().get(), true);
-        }
-        if (request.getOrderType().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "order_type", request.getOrderType().get(), true);
-        }
-        if (request.getOrderActivationTypes().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl,
-                    "order_activation_types",
-                    request.getOrderActivationTypes().get(),
-                    true);
-        }
-        if (request.getOrderIds().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "order_ids", request.getOrderIds().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -968,7 +991,7 @@ public class RawLabTestsClient {
      * for the given address and order.
      */
     public VitalHttpResponse<AppointmentAvailabilitySlots> getPhlebotomyAppointmentAvailability(
-            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request) {
+            GetPhlebotomyAppointmentAvailabilityLabTestsRequest request) {
         return getPhlebotomyAppointmentAvailability(request, null);
     }
 
@@ -977,7 +1000,7 @@ public class RawLabTestsClient {
      * for the given address and order.
      */
     public VitalHttpResponse<AppointmentAvailabilitySlots> getPhlebotomyAppointmentAvailability(
-            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
+            GetPhlebotomyAppointmentAvailabilityLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order/phlebotomy/appointment/availability");
@@ -1034,7 +1057,7 @@ public class RawLabTestsClient {
      * Book an at-home phlebotomy appointment.
      */
     public VitalHttpResponse<ClientFacingAppointment> bookPhlebotomyAppointment(
-            String orderId, AppointmentBookingRequest request) {
+            String orderId, BookPhlebotomyAppointmentLabTestsRequest request) {
         return bookPhlebotomyAppointment(orderId, request, null);
     }
 
@@ -1042,7 +1065,7 @@ public class RawLabTestsClient {
      * Book an at-home phlebotomy appointment.
      */
     public VitalHttpResponse<ClientFacingAppointment> bookPhlebotomyAppointment(
-            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
+            String orderId, BookPhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -1162,7 +1185,7 @@ public class RawLabTestsClient {
      * Reschedule a previously booked at-home phlebotomy appointment.
      */
     public VitalHttpResponse<ClientFacingAppointment> reschedulePhlebotomyAppointment(
-            String orderId, AppointmentRescheduleRequest request) {
+            String orderId, ReschedulePhlebotomyAppointmentLabTestsRequest request) {
         return reschedulePhlebotomyAppointment(orderId, request, null);
     }
 
@@ -1170,7 +1193,7 @@ public class RawLabTestsClient {
      * Reschedule a previously booked at-home phlebotomy appointment.
      */
     public VitalHttpResponse<ClientFacingAppointment> reschedulePhlebotomyAppointment(
-            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
+            String orderId, ReschedulePhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -1339,26 +1362,35 @@ public class RawLabTestsClient {
      * Get the appointment associated with an order.
      */
     public VitalHttpResponse<ClientFacingAppointment> getPhlebotomyAppointment(String orderId) {
-        return getPhlebotomyAppointment(orderId, null);
+        return getPhlebotomyAppointment(
+                orderId, GetPhlebotomyAppointmentLabTestsRequest.builder().build());
     }
 
     /**
      * Get the appointment associated with an order.
      */
     public VitalHttpResponse<ClientFacingAppointment> getPhlebotomyAppointment(
-            String orderId, RequestOptions requestOptions) {
+            String orderId, GetPhlebotomyAppointmentLabTestsRequest request) {
+        return getPhlebotomyAppointment(orderId, request, null);
+    }
+
+    /**
+     * Get the appointment associated with an order.
+     */
+    public VitalHttpResponse<ClientFacingAppointment> getPhlebotomyAppointment(
+            String orderId, GetPhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("phlebotomy/appointment")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1398,7 +1430,7 @@ public class RawLabTestsClient {
      * <li>List of Lab locations in the area.</li>
      * </ul>
      */
-    public VitalHttpResponse<AreaInfo> getAreaInfo(LabTestsGetAreaInfoRequest request) {
+    public VitalHttpResponse<AreaInfo> getAreaInfo(GetAreaInfoLabTestsRequest request) {
         return getAreaInfo(request, null);
     }
 
@@ -1410,7 +1442,7 @@ public class RawLabTestsClient {
      * <li>List of Lab locations in the area.</li>
      * </ul>
      */
-    public VitalHttpResponse<AreaInfo> getAreaInfo(LabTestsGetAreaInfoRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<AreaInfo> getAreaInfo(GetAreaInfoLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order/area/info");
@@ -1422,13 +1454,13 @@ public class RawLabTestsClient {
         if (request.getLab().isPresent()) {
             QueryStringMapper.addQueryParameter(httpUrl, "lab", request.getLab().get(), false);
         }
+        if (request.getLabs().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "labs", request.getLabs().get(), false);
+        }
         if (request.getLabAccountId().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
-        }
-        if (request.getLabs().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "labs", request.getLabs().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -1466,11 +1498,11 @@ public class RawLabTestsClient {
         }
     }
 
-    public VitalHttpResponse<PscInfo> getPscInfo(LabTestsGetPscInfoRequest request) {
+    public VitalHttpResponse<PscInfo> getPscInfo(GetPscInfoLabTestsRequest request) {
         return getPscInfo(request, null);
     }
 
-    public VitalHttpResponse<PscInfo> getPscInfo(LabTestsGetPscInfoRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<PscInfo> getPscInfo(GetPscInfoLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order/psc/info");
@@ -1480,13 +1512,13 @@ public class RawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "radius", request.getRadius().get(), false);
         }
+        if (request.getCapabilities().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "capabilities", request.getCapabilities().get(), false);
+        }
         if (request.getLabAccountId().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
-        }
-        if (request.getCapabilities().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "capabilities", request.getCapabilities().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -1525,15 +1557,15 @@ public class RawLabTestsClient {
     }
 
     public VitalHttpResponse<PscInfo> getOrderPscInfo(String orderId) {
-        return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build());
+        return getOrderPscInfo(orderId, GetOrderPscInfoLabTestsRequest.builder().build());
     }
 
-    public VitalHttpResponse<PscInfo> getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
+    public VitalHttpResponse<PscInfo> getOrderPscInfo(String orderId, GetOrderPscInfoLabTestsRequest request) {
         return getOrderPscInfo(orderId, request, null);
     }
 
     public VitalHttpResponse<PscInfo> getOrderPscInfo(
-            String orderId, LabTestsGetOrderPscInfoRequest request, RequestOptions requestOptions) {
+            String orderId, GetOrderPscInfoLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -1545,7 +1577,7 @@ public class RawLabTestsClient {
         }
         if (request.getCapabilities().isPresent()) {
             QueryStringMapper.addQueryParameter(
-                    httpUrl, "capabilities", request.getCapabilities().get(), true);
+                    httpUrl, "capabilities", request.getCapabilities().get(), false);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -1587,25 +1619,33 @@ public class RawLabTestsClient {
      * This endpoint returns the lab results for the order.
      */
     public VitalHttpResponse<InputStream> getResultPdf(String orderId) {
-        return getResultPdf(orderId, null);
+        return getResultPdf(orderId, GetResultPdfLabTestsRequest.builder().build());
     }
 
     /**
      * This endpoint returns the lab results for the order.
      */
-    public VitalHttpResponse<InputStream> getResultPdf(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<InputStream> getResultPdf(String orderId, GetResultPdfLabTestsRequest request) {
+        return getResultPdf(orderId, request, null);
+    }
+
+    /**
+     * This endpoint returns the lab results for the order.
+     */
+    public VitalHttpResponse<InputStream> getResultPdf(
+            String orderId, GetResultPdfLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("result/pdf")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1641,26 +1681,37 @@ public class RawLabTestsClient {
      * provider and sample dates.
      */
     public VitalHttpResponse<LabResultsMetadata> getResultMetadata(String orderId) {
-        return getResultMetadata(orderId, null);
+        return getResultMetadata(
+                orderId, GetResultMetadataLabTestsRequest.builder().build());
     }
 
     /**
      * Return metadata related to order results, such as lab metadata,
      * provider and sample dates.
      */
-    public VitalHttpResponse<LabResultsMetadata> getResultMetadata(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<LabResultsMetadata> getResultMetadata(
+            String orderId, GetResultMetadataLabTestsRequest request) {
+        return getResultMetadata(orderId, request, null);
+    }
+
+    /**
+     * Return metadata related to order results, such as lab metadata,
+     * provider and sample dates.
+     */
+    public VitalHttpResponse<LabResultsMetadata> getResultMetadata(
+            String orderId, GetResultMetadataLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("result/metadata")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1695,25 +1746,33 @@ public class RawLabTestsClient {
      * Return both metadata and raw json test data
      */
     public VitalHttpResponse<LabResultsRaw> getResultRaw(String orderId) {
-        return getResultRaw(orderId, null);
+        return getResultRaw(orderId, GetResultRawLabTestsRequest.builder().build());
     }
 
     /**
      * Return both metadata and raw json test data
      */
-    public VitalHttpResponse<LabResultsRaw> getResultRaw(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<LabResultsRaw> getResultRaw(String orderId, GetResultRawLabTestsRequest request) {
+        return getResultRaw(orderId, request, null);
+    }
+
+    /**
+     * Return both metadata and raw json test data
+     */
+    public VitalHttpResponse<LabResultsRaw> getResultRaw(
+            String orderId, GetResultRawLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("result")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -1747,7 +1806,7 @@ public class RawLabTestsClient {
     /**
      * This endpoint returns the printed labels for the order.
      */
-    public VitalHttpResponse<InputStream> getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
+    public VitalHttpResponse<InputStream> getLabelsPdf(String orderId, GetLabelsPdfLabTestsRequest request) {
         return getLabelsPdf(orderId, request, null);
     }
 
@@ -1755,7 +1814,7 @@ public class RawLabTestsClient {
      * This endpoint returns the printed labels for the order.
      */
     public VitalHttpResponse<InputStream> getLabelsPdf(
-            String orderId, LabTestsGetLabelsPdfRequest request, RequestOptions requestOptions) {
+            String orderId, GetLabelsPdfLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -1803,12 +1862,12 @@ public class RawLabTestsClient {
     }
 
     public VitalHttpResponse<AppointmentAvailabilitySlots> getPscAppointmentAvailability(
-            LabTestsGetPscAppointmentAvailabilityRequest request) {
+            GetPscAppointmentAvailabilityLabTestsRequest request) {
         return getPscAppointmentAvailability(request, null);
     }
 
     public VitalHttpResponse<AppointmentAvailabilitySlots> getPscAppointmentAvailability(
-            LabTestsGetPscAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
+            GetPscAppointmentAvailabilityLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order/psc/appointment/availability");
@@ -1817,6 +1876,10 @@ public class RawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "start_date", request.getStartDate().get(), false);
         }
+        if (request.getSiteCodes().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "site_codes", request.getSiteCodes().get(), false);
+        }
         if (request.getZipCode().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "zip_code", request.getZipCode().get(), false);
@@ -1824,10 +1887,6 @@ public class RawLabTestsClient {
         if (request.getRadius().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "radius", request.getRadius().get(), false);
-        }
-        if (request.getSiteCodes().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "site_codes", request.getSiteCodes().get(), true);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -1872,12 +1931,12 @@ public class RawLabTestsClient {
     }
 
     public VitalHttpResponse<ClientFacingAppointment> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request) {
+            String orderId, BookPscAppointmentLabTestsRequest request) {
         return bookPscAppointment(orderId, request, null);
     }
 
     public VitalHttpResponse<ClientFacingAppointment> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
+            String orderId, BookPscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -1930,12 +1989,12 @@ public class RawLabTestsClient {
     }
 
     public VitalHttpResponse<ClientFacingAppointment> reschedulePscAppointment(
-            String orderId, AppointmentRescheduleRequest request) {
+            String orderId, ReschedulePscAppointmentLabTestsRequest request) {
         return reschedulePscAppointment(orderId, request, null);
     }
 
     public VitalHttpResponse<ClientFacingAppointment> reschedulePscAppointment(
-            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
+            String orderId, ReschedulePscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -2091,25 +2150,35 @@ public class RawLabTestsClient {
      * Get the appointment associated with an order.
      */
     public VitalHttpResponse<ClientFacingAppointment> getPscAppointment(String orderId) {
-        return getPscAppointment(orderId, null);
+        return getPscAppointment(
+                orderId, GetPscAppointmentLabTestsRequest.builder().build());
     }
 
     /**
      * Get the appointment associated with an order.
      */
-    public VitalHttpResponse<ClientFacingAppointment> getPscAppointment(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<ClientFacingAppointment> getPscAppointment(
+            String orderId, GetPscAppointmentLabTestsRequest request) {
+        return getPscAppointment(orderId, request, null);
+    }
+
+    /**
+     * Get the appointment associated with an order.
+     */
+    public VitalHttpResponse<ClientFacingAppointment> getPscAppointment(
+            String orderId, GetPscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("psc/appointment")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2145,26 +2214,36 @@ public class RawLabTestsClient {
      * GET collection instructions for an order
      */
     public VitalHttpResponse<InputStream> getOrderCollectionInstructionPdf(String orderId) {
-        return getOrderCollectionInstructionPdf(orderId, null);
+        return getOrderCollectionInstructionPdf(
+                orderId,
+                GetOrderCollectionInstructionPdfLabTestsRequest.builder().build());
     }
 
     /**
      * GET collection instructions for an order
      */
     public VitalHttpResponse<InputStream> getOrderCollectionInstructionPdf(
-            String orderId, RequestOptions requestOptions) {
+            String orderId, GetOrderCollectionInstructionPdfLabTestsRequest request) {
+        return getOrderCollectionInstructionPdf(orderId, request, null);
+    }
+
+    /**
+     * GET collection instructions for an order
+     */
+    public VitalHttpResponse<InputStream> getOrderCollectionInstructionPdf(
+            String orderId, GetOrderCollectionInstructionPdfLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("collection_instruction_pdf")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2199,25 +2278,35 @@ public class RawLabTestsClient {
      * GET requisition pdf for an order
      */
     public VitalHttpResponse<InputStream> getOrderRequistionPdf(String orderId) {
-        return getOrderRequistionPdf(orderId, null);
+        return getOrderRequistionPdf(
+                orderId, GetOrderRequistionPdfLabTestsRequest.builder().build());
     }
 
     /**
      * GET requisition pdf for an order
      */
-    public VitalHttpResponse<InputStream> getOrderRequistionPdf(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<InputStream> getOrderRequistionPdf(
+            String orderId, GetOrderRequistionPdfLabTestsRequest request) {
+        return getOrderRequistionPdf(orderId, request, null);
+    }
+
+    /**
+     * GET requisition pdf for an order
+     */
+    public VitalHttpResponse<InputStream> getOrderRequistionPdf(
+            String orderId, GetOrderRequistionPdfLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("requisition/pdf")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2252,25 +2341,33 @@ public class RawLabTestsClient {
      * GET ABN pdf for an order
      */
     public VitalHttpResponse<InputStream> getOrderAbnPdf(String orderId) {
-        return getOrderAbnPdf(orderId, null);
+        return getOrderAbnPdf(orderId, GetOrderAbnPdfLabTestsRequest.builder().build());
     }
 
     /**
      * GET ABN pdf for an order
      */
-    public VitalHttpResponse<InputStream> getOrderAbnPdf(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<InputStream> getOrderAbnPdf(String orderId, GetOrderAbnPdfLabTestsRequest request) {
+        return getOrderAbnPdf(orderId, request, null);
+    }
+
+    /**
+     * GET ABN pdf for an order
+     */
+    public VitalHttpResponse<InputStream> getOrderAbnPdf(
+            String orderId, GetOrderAbnPdfLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("abn_pdf")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2305,24 +2402,32 @@ public class RawLabTestsClient {
      * GET individual order by ID.
      */
     public VitalHttpResponse<ClientFacingOrder> getOrder(String orderId) {
-        return getOrder(orderId, null);
+        return getOrder(orderId, GetOrderLabTestsRequest.builder().build());
     }
 
     /**
      * GET individual order by ID.
      */
-    public VitalHttpResponse<ClientFacingOrder> getOrder(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<ClientFacingOrder> getOrder(String orderId, GetOrderLabTestsRequest request) {
+        return getOrder(orderId, request, null);
+    }
+
+    /**
+     * GET individual order by ID.
+     */
+    public VitalHttpResponse<ClientFacingOrder> getOrder(
+            String orderId, GetOrderLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2518,25 +2623,33 @@ public class RawLabTestsClient {
      * POST cancel order
      */
     public VitalHttpResponse<PostOrderResponse> cancelOrder(String orderId) {
-        return cancelOrder(orderId, null);
+        return cancelOrder(orderId, CancelOrderLabTestsRequest.builder().build());
     }
 
     /**
      * POST cancel order
      */
-    public VitalHttpResponse<PostOrderResponse> cancelOrder(String orderId, RequestOptions requestOptions) {
+    public VitalHttpResponse<PostOrderResponse> cancelOrder(String orderId, CancelOrderLabTestsRequest request) {
+        return cancelOrder(orderId, request, null);
+    }
+
+    /**
+     * POST cancel order
+     */
+    public VitalHttpResponse<PostOrderResponse> cancelOrder(
+            String orderId, CancelOrderLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("cancel")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2570,15 +2683,7 @@ public class RawLabTestsClient {
     /**
      * Get available test kits.
      */
-    public VitalHttpResponse<Object> simulateOrderProcess(String orderId) {
-        return simulateOrderProcess(
-                orderId, LabTestsSimulateOrderProcessRequest.builder().build());
-    }
-
-    /**
-     * Get available test kits.
-     */
-    public VitalHttpResponse<Object> simulateOrderProcess(String orderId, LabTestsSimulateOrderProcessRequest request) {
+    public VitalHttpResponse<Object> simulateOrderProcess(String orderId, SimulateOrderProcessLabTestsRequest request) {
         return simulateOrderProcess(orderId, request, null);
     }
 
@@ -2586,7 +2691,7 @@ public class RawLabTestsClient {
      * Get available test kits.
      */
     public VitalHttpResponse<Object> simulateOrderProcess(
-            String orderId, LabTestsSimulateOrderProcessRequest request, RequestOptions requestOptions) {
+            String orderId, SimulateOrderProcessLabTestsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -2602,11 +2707,8 @@ public class RawLabTestsClient {
         }
         RequestBody body;
         try {
-            body = RequestBody.create("", null);
-            if (request.getBody().isPresent()) {
-                body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
-            }
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -2651,26 +2753,39 @@ public class RawLabTestsClient {
      * PATCH update on site collection order when draw is completed
      */
     public VitalHttpResponse<PostOrderResponse> updateOnSiteCollectionOrderDrawCompleted(String orderId) {
-        return updateOnSiteCollectionOrderDrawCompleted(orderId, null);
+        return updateOnSiteCollectionOrderDrawCompleted(
+                orderId,
+                UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest.builder()
+                        .build());
     }
 
     /**
      * PATCH update on site collection order when draw is completed
      */
     public VitalHttpResponse<PostOrderResponse> updateOnSiteCollectionOrderDrawCompleted(
-            String orderId, RequestOptions requestOptions) {
+            String orderId, UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest request) {
+        return updateOnSiteCollectionOrderDrawCompleted(orderId, request, null);
+    }
+
+    /**
+     * PATCH update on site collection order when draw is completed
+     */
+    public VitalHttpResponse<PostOrderResponse> updateOnSiteCollectionOrderDrawCompleted(
+            String orderId,
+            UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest request,
+            RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("draw_completed")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("PATCH", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

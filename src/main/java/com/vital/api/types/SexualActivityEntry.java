@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,8 +42,17 @@ public final class SexualActivityEntry {
         return date;
     }
 
-    @JsonProperty("protection_used")
+    @JsonIgnore
     public Optional<Boolean> getProtectionUsed() {
+        if (protectionUsed == null) {
+            return Optional.empty();
+        }
+        return protectionUsed;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("protection_used")
+    private Optional<Boolean> _getProtectionUsed() {
         return protectionUsed;
     }
 
@@ -85,6 +97,8 @@ public final class SexualActivityEntry {
         _FinalStage protectionUsed(Optional<Boolean> protectionUsed);
 
         _FinalStage protectionUsed(Boolean protectionUsed);
+
+        _FinalStage protectionUsed(Nullable<Boolean> protectionUsed);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -109,6 +123,18 @@ public final class SexualActivityEntry {
         @JsonSetter("date")
         public _FinalStage date(@NotNull String date) {
             this.date = Objects.requireNonNull(date, "date must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage protectionUsed(Nullable<Boolean> protectionUsed) {
+            if (protectionUsed.isNull()) {
+                this.protectionUsed = null;
+            } else if (protectionUsed.isEmpty()) {
+                this.protectionUsed = Optional.empty();
+            } else {
+                this.protectionUsed = Optional.of(protectionUsed.get());
+            }
             return this;
         }
 

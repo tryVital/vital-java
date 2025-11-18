@@ -7,12 +7,22 @@ import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
+import com.vital.api.resources.user.requests.DeleteUserRequest;
+import com.vital.api.resources.user.requests.DeregisterProviderUserRequest;
+import com.vital.api.resources.user.requests.GetAllUserRequest;
+import com.vital.api.resources.user.requests.GetByClientUserIdUserRequest;
+import com.vital.api.resources.user.requests.GetConnectedProvidersUserRequest;
+import com.vital.api.resources.user.requests.GetDeviceUserRequest;
+import com.vital.api.resources.user.requests.GetDevicesUserRequest;
+import com.vital.api.resources.user.requests.GetLatestInsuranceUserRequest;
+import com.vital.api.resources.user.requests.GetLatestUserInfoUserRequest;
+import com.vital.api.resources.user.requests.GetUserRequest;
+import com.vital.api.resources.user.requests.GetUserSignInTokenUserRequest;
+import com.vital.api.resources.user.requests.RefreshUserRequest;
+import com.vital.api.resources.user.requests.UndoDeleteUserRequest;
 import com.vital.api.resources.user.requests.UserCreateBody;
-import com.vital.api.resources.user.requests.UserGetAllRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
-import com.vital.api.resources.user.requests.UserRefreshRequest;
-import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
 import com.vital.api.types.ClientFacingDevice;
 import com.vital.api.types.ClientFacingInsurance;
 import com.vital.api.types.ClientFacingProviderWithStatus;
@@ -57,14 +67,14 @@ public class AsyncUserClient {
     /**
      * GET All users for team.
      */
-    public CompletableFuture<PaginatedUsersResponse> getAll(UserGetAllRequest request) {
+    public CompletableFuture<PaginatedUsersResponse> getAll(GetAllUserRequest request) {
         return this.rawClient.getAll(request).thenApply(response -> response.body());
     }
 
     /**
      * GET All users for team.
      */
-    public CompletableFuture<PaginatedUsersResponse> getAll(UserGetAllRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<PaginatedUsersResponse> getAll(GetAllUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAll(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -107,16 +117,31 @@ public class AsyncUserClient {
      * GET Users connected providers
      */
     public CompletableFuture<Map<String, List<ClientFacingProviderWithStatus>>> getConnectedProviders(
-            String userId, RequestOptions requestOptions) {
-        return this.rawClient.getConnectedProviders(userId, requestOptions).thenApply(response -> response.body());
+            String userId, GetConnectedProvidersUserRequest request) {
+        return this.rawClient.getConnectedProviders(userId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * GET Users connected providers
+     */
+    public CompletableFuture<Map<String, List<ClientFacingProviderWithStatus>>> getConnectedProviders(
+            String userId, GetConnectedProvidersUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getConnectedProviders(userId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserInfo> getLatestUserInfo(String userId) {
         return this.rawClient.getLatestUserInfo(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UserInfo> getLatestUserInfo(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestUserInfo(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<UserInfo> getLatestUserInfo(String userId, GetLatestUserInfoUserRequest request) {
+        return this.rawClient.getLatestUserInfo(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserInfo> getLatestUserInfo(
+            String userId, GetLatestUserInfoUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getLatestUserInfo(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingInsurance> createInsurance(String userId, CreateInsuranceRequest request) {
@@ -132,8 +157,16 @@ public class AsyncUserClient {
         return this.rawClient.getLatestInsurance(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestInsurance(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(
+            String userId, GetLatestInsuranceUserRequest request) {
+        return this.rawClient.getLatestInsurance(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(
+            String userId, GetLatestInsuranceUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getLatestInsurance(userId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserInfo> upsertUserInfo(String userId, UserInfoCreateRequest request) {
@@ -155,8 +188,19 @@ public class AsyncUserClient {
     /**
      * GET user_id from client_user_id.
      */
-    public CompletableFuture<ClientFacingUser> getByClientUserId(String clientUserId, RequestOptions requestOptions) {
-        return this.rawClient.getByClientUserId(clientUserId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingUser> getByClientUserId(
+            String clientUserId, GetByClientUserIdUserRequest request) {
+        return this.rawClient.getByClientUserId(clientUserId, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * GET user_id from client_user_id.
+     */
+    public CompletableFuture<ClientFacingUser> getByClientUserId(
+            String clientUserId, GetByClientUserIdUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getByClientUserId(clientUserId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserSuccessResponse> deregisterProvider(String userId, Providers provider) {
@@ -164,9 +208,14 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<UserSuccessResponse> deregisterProvider(
-            String userId, Providers provider, RequestOptions requestOptions) {
+            String userId, Providers provider, DeregisterProviderUserRequest request) {
+        return this.rawClient.deregisterProvider(userId, provider, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSuccessResponse> deregisterProvider(
+            String userId, Providers provider, DeregisterProviderUserRequest request, RequestOptions requestOptions) {
         return this.rawClient
-                .deregisterProvider(userId, provider, requestOptions)
+                .deregisterProvider(userId, provider, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -174,16 +223,26 @@ public class AsyncUserClient {
         return this.rawClient.get(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ClientFacingUser> get(String userId, RequestOptions requestOptions) {
-        return this.rawClient.get(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingUser> get(String userId, GetUserRequest request) {
+        return this.rawClient.get(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingUser> get(
+            String userId, GetUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserSuccessResponse> delete(String userId) {
         return this.rawClient.delete(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UserSuccessResponse> delete(String userId, RequestOptions requestOptions) {
-        return this.rawClient.delete(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<UserSuccessResponse> delete(String userId, DeleteUserRequest request) {
+        return this.rawClient.delete(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSuccessResponse> delete(
+            String userId, DeleteUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.delete(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> patch(String userId) {
@@ -202,12 +261,12 @@ public class AsyncUserClient {
         return this.rawClient.undoDelete().thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UserSuccessResponse> undoDelete(UserUndoDeleteRequest request) {
+    public CompletableFuture<UserSuccessResponse> undoDelete(UndoDeleteUserRequest request) {
         return this.rawClient.undoDelete(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserSuccessResponse> undoDelete(
-            UserUndoDeleteRequest request, RequestOptions requestOptions) {
+            UndoDeleteUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.undoDelete(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -221,7 +280,7 @@ public class AsyncUserClient {
     /**
      * Trigger a manual refresh for a specific user
      */
-    public CompletableFuture<UserRefreshSuccessResponse> refresh(String userId, UserRefreshRequest request) {
+    public CompletableFuture<UserRefreshSuccessResponse> refresh(String userId, RefreshUserRequest request) {
         return this.rawClient.refresh(userId, request).thenApply(response -> response.body());
     }
 
@@ -229,7 +288,7 @@ public class AsyncUserClient {
      * Trigger a manual refresh for a specific user
      */
     public CompletableFuture<UserRefreshSuccessResponse> refresh(
-            String userId, UserRefreshRequest request, RequestOptions requestOptions) {
+            String userId, RefreshUserRequest request, RequestOptions requestOptions) {
         return this.rawClient.refresh(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -237,8 +296,13 @@ public class AsyncUserClient {
         return this.rawClient.getDevices(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<List<ClientFacingDevice>> getDevices(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getDevices(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<List<ClientFacingDevice>> getDevices(String userId, GetDevicesUserRequest request) {
+        return this.rawClient.getDevices(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<ClientFacingDevice>> getDevices(
+            String userId, GetDevicesUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient.getDevices(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingDevice> getDevice(String userId, String deviceId) {
@@ -246,16 +310,31 @@ public class AsyncUserClient {
     }
 
     public CompletableFuture<ClientFacingDevice> getDevice(
-            String userId, String deviceId, RequestOptions requestOptions) {
-        return this.rawClient.getDevice(userId, deviceId, requestOptions).thenApply(response -> response.body());
+            String userId, String deviceId, GetDeviceUserRequest request) {
+        return this.rawClient.getDevice(userId, deviceId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingDevice> getDevice(
+            String userId, String deviceId, GetDeviceUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getDevice(userId, deviceId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(String userId) {
         return this.rawClient.getUserSignInToken(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getUserSignInToken(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(
+            String userId, GetUserSignInTokenUserRequest request) {
+        return this.rawClient.getUserSignInToken(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSignInTokenResponse> getUserSignInToken(
+            String userId, GetUserSignInTokenUserRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSignInToken(userId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<CreateUserPortalUrlResponse> createPortalUrl(

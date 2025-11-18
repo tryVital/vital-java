@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,37 +53,82 @@ public final class ClientFacingHeartRate {
     /**
      * @return Average heart rate::bpm
      */
-    @JsonProperty("avg_bpm")
+    @JsonIgnore
     public Optional<Double> getAvgBpm() {
+        if (avgBpm == null) {
+            return Optional.empty();
+        }
         return avgBpm;
     }
 
     /**
      * @return Minimum heart rate::bpm
      */
-    @JsonProperty("min_bpm")
+    @JsonIgnore
     public Optional<Double> getMinBpm() {
+        if (minBpm == null) {
+            return Optional.empty();
+        }
         return minBpm;
     }
 
     /**
      * @return Maximum heart rate::bpm
      */
-    @JsonProperty("max_bpm")
+    @JsonIgnore
     public Optional<Double> getMaxBpm() {
+        if (maxBpm == null) {
+            return Optional.empty();
+        }
         return maxBpm;
     }
 
     /**
      * @return Resting heart rate::bpm
      */
-    @JsonProperty("resting_bpm")
+    @JsonIgnore
     public Optional<Double> getRestingBpm() {
+        if (restingBpm == null) {
+            return Optional.empty();
+        }
         return restingBpm;
     }
 
-    @JsonProperty("avg_walking_bpm")
+    @JsonIgnore
     public Optional<Double> getAvgWalkingBpm() {
+        if (avgWalkingBpm == null) {
+            return Optional.empty();
+        }
+        return avgWalkingBpm;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("avg_bpm")
+    private Optional<Double> _getAvgBpm() {
+        return avgBpm;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("min_bpm")
+    private Optional<Double> _getMinBpm() {
+        return minBpm;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("max_bpm")
+    private Optional<Double> _getMaxBpm() {
+        return maxBpm;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("resting_bpm")
+    private Optional<Double> _getRestingBpm() {
+        return restingBpm;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("avg_walking_bpm")
+    private Optional<Double> _getAvgWalkingBpm() {
         return avgWalkingBpm;
     }
 
@@ -157,6 +205,17 @@ public final class ClientFacingHeartRate {
             return this;
         }
 
+        public Builder avgBpm(Nullable<Double> avgBpm) {
+            if (avgBpm.isNull()) {
+                this.avgBpm = null;
+            } else if (avgBpm.isEmpty()) {
+                this.avgBpm = Optional.empty();
+            } else {
+                this.avgBpm = Optional.of(avgBpm.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Minimum heart rate::bpm</p>
          */
@@ -168,6 +227,17 @@ public final class ClientFacingHeartRate {
 
         public Builder minBpm(Double minBpm) {
             this.minBpm = Optional.ofNullable(minBpm);
+            return this;
+        }
+
+        public Builder minBpm(Nullable<Double> minBpm) {
+            if (minBpm.isNull()) {
+                this.minBpm = null;
+            } else if (minBpm.isEmpty()) {
+                this.minBpm = Optional.empty();
+            } else {
+                this.minBpm = Optional.of(minBpm.get());
+            }
             return this;
         }
 
@@ -185,6 +255,17 @@ public final class ClientFacingHeartRate {
             return this;
         }
 
+        public Builder maxBpm(Nullable<Double> maxBpm) {
+            if (maxBpm.isNull()) {
+                this.maxBpm = null;
+            } else if (maxBpm.isEmpty()) {
+                this.maxBpm = Optional.empty();
+            } else {
+                this.maxBpm = Optional.of(maxBpm.get());
+            }
+            return this;
+        }
+
         /**
          * <p>Resting heart rate::bpm</p>
          */
@@ -199,6 +280,17 @@ public final class ClientFacingHeartRate {
             return this;
         }
 
+        public Builder restingBpm(Nullable<Double> restingBpm) {
+            if (restingBpm.isNull()) {
+                this.restingBpm = null;
+            } else if (restingBpm.isEmpty()) {
+                this.restingBpm = Optional.empty();
+            } else {
+                this.restingBpm = Optional.of(restingBpm.get());
+            }
+            return this;
+        }
+
         @JsonSetter(value = "avg_walking_bpm", nulls = Nulls.SKIP)
         public Builder avgWalkingBpm(Optional<Double> avgWalkingBpm) {
             this.avgWalkingBpm = avgWalkingBpm;
@@ -207,6 +299,17 @@ public final class ClientFacingHeartRate {
 
         public Builder avgWalkingBpm(Double avgWalkingBpm) {
             this.avgWalkingBpm = Optional.ofNullable(avgWalkingBpm);
+            return this;
+        }
+
+        public Builder avgWalkingBpm(Nullable<Double> avgWalkingBpm) {
+            if (avgWalkingBpm.isNull()) {
+                this.avgWalkingBpm = null;
+            } else if (avgWalkingBpm.isEmpty()) {
+                this.avgWalkingBpm = Optional.empty();
+            } else {
+                this.avgWalkingBpm = Optional.of(avgWalkingBpm.get());
+            }
             return this;
         }
 

@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.introspect.requests.IntrospectGetUserHistoricalPullsRequest;
-import com.vital.api.resources.introspect.requests.IntrospectGetUserResourcesRequest;
+import com.vital.api.resources.introspect.requests.GetUserHistoricalPullsIntrospectRequest;
+import com.vital.api.resources.introspect.requests.GetUserResourcesIntrospectRequest;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.UserHistoricalPullsResponse;
 import com.vital.api.types.UserResourcesResponse;
@@ -37,16 +37,16 @@ public class AsyncRawIntrospectClient {
     }
 
     public CompletableFuture<VitalHttpResponse<UserResourcesResponse>> getUserResources() {
-        return getUserResources(IntrospectGetUserResourcesRequest.builder().build());
+        return getUserResources(GetUserResourcesIntrospectRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<UserResourcesResponse>> getUserResources(
-            IntrospectGetUserResourcesRequest request) {
+            GetUserResourcesIntrospectRequest request) {
         return getUserResources(request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<UserResourcesResponse>> getUserResources(
-            IntrospectGetUserResourcesRequest request, RequestOptions requestOptions) {
+            GetUserResourcesIntrospectRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/introspect/resources");
@@ -123,16 +123,16 @@ public class AsyncRawIntrospectClient {
 
     public CompletableFuture<VitalHttpResponse<UserHistoricalPullsResponse>> getUserHistoricalPulls() {
         return getUserHistoricalPulls(
-                IntrospectGetUserHistoricalPullsRequest.builder().build());
+                GetUserHistoricalPullsIntrospectRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<UserHistoricalPullsResponse>> getUserHistoricalPulls(
-            IntrospectGetUserHistoricalPullsRequest request) {
+            GetUserHistoricalPullsIntrospectRequest request) {
         return getUserHistoricalPulls(request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<UserHistoricalPullsResponse>> getUserHistoricalPulls(
-            IntrospectGetUserHistoricalPullsRequest request, RequestOptions requestOptions) {
+            GetUserHistoricalPullsIntrospectRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/introspect/historical_pull");

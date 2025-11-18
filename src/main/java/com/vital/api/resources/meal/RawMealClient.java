@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.meal.requests.MealGetRequest;
+import com.vital.api.resources.meal.requests.GetMealRequest;
 import com.vital.api.types.ClientFacingMealResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class RawMealClient {
     /**
      * Get user's meals
      */
-    public VitalHttpResponse<ClientFacingMealResponse> get(String userId, MealGetRequest request) {
+    public VitalHttpResponse<ClientFacingMealResponse> get(String userId, GetMealRequest request) {
         return get(userId, request, null);
     }
 
@@ -41,7 +41,7 @@ public class RawMealClient {
      * Get user's meals
      */
     public VitalHttpResponse<ClientFacingMealResponse> get(
-            String userId, MealGetRequest request, RequestOptions requestOptions) {
+            String userId, GetMealRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/meal")

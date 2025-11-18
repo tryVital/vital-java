@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -52,16 +55,34 @@ public final class GroupedBodyTemperatureDeltaResponse {
     /**
      * @return The cursor for fetching the next page, or <code>null</code> if there is no more data.
      */
-    @JsonProperty("next")
+    @JsonIgnore
     public Optional<String> getNext() {
+        if (next == null) {
+            return Optional.empty();
+        }
         return next;
     }
 
     /**
      * @return The cursor for fetching the next page, or <code>null</code> if there is no more data.
      */
-    @JsonProperty("next_cursor")
+    @JsonIgnore
     public Optional<String> getNextCursor() {
+        if (nextCursor == null) {
+            return Optional.empty();
+        }
+        return nextCursor;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("next")
+    private Optional<String> _getNext() {
+        return next;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("next_cursor")
+    private Optional<String> _getNextCursor() {
         return nextCursor;
     }
 
@@ -151,6 +172,17 @@ public final class GroupedBodyTemperatureDeltaResponse {
             return this;
         }
 
+        public Builder next(Nullable<String> next) {
+            if (next.isNull()) {
+                this.next = null;
+            } else if (next.isEmpty()) {
+                this.next = Optional.empty();
+            } else {
+                this.next = Optional.of(next.get());
+            }
+            return this;
+        }
+
         /**
          * <p>The cursor for fetching the next page, or <code>null</code> if there is no more data.</p>
          */
@@ -162,6 +194,17 @@ public final class GroupedBodyTemperatureDeltaResponse {
 
         public Builder nextCursor(String nextCursor) {
             this.nextCursor = Optional.ofNullable(nextCursor);
+            return this;
+        }
+
+        public Builder nextCursor(Nullable<String> nextCursor) {
+            if (nextCursor.isNull()) {
+                this.nextCursor = null;
+            } else if (nextCursor.isEmpty()) {
+                this.nextCursor = Optional.empty();
+            } else {
+                this.nextCursor = Optional.of(nextCursor.get());
+            }
             return this;
         }
 

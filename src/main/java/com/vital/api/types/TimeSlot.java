@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -57,8 +60,11 @@ public final class TimeSlot {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("booking_key")
+    @JsonIgnore
     public Optional<String> getBookingKey() {
+        if (bookingKey == null) {
+            return Optional.empty();
+        }
         return bookingKey;
     }
 
@@ -78,8 +84,11 @@ public final class TimeSlot {
         return end;
     }
 
-    @JsonProperty("expires_at")
+    @JsonIgnore
     public Optional<OffsetDateTime> getExpiresAt() {
+        if (expiresAt == null) {
+            return Optional.empty();
+        }
         return expiresAt;
     }
 
@@ -96,6 +105,18 @@ public final class TimeSlot {
     @JsonProperty("num_appointments_available")
     public int getNumAppointmentsAvailable() {
         return numAppointmentsAvailable;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("booking_key")
+    private Optional<String> _getBookingKey() {
+        return bookingKey;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("expires_at")
+    private Optional<OffsetDateTime> _getExpiresAt() {
+        return expiresAt;
     }
 
     @java.lang.Override
@@ -175,9 +196,13 @@ public final class TimeSlot {
 
         _FinalStage bookingKey(String bookingKey);
 
+        _FinalStage bookingKey(Nullable<String> bookingKey);
+
         _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt);
 
         _FinalStage expiresAt(OffsetDateTime expiresAt);
+
+        _FinalStage expiresAt(Nullable<OffsetDateTime> expiresAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -260,6 +285,18 @@ public final class TimeSlot {
         }
 
         @java.lang.Override
+        public _FinalStage expiresAt(Nullable<OffsetDateTime> expiresAt) {
+            if (expiresAt.isNull()) {
+                this.expiresAt = null;
+            } else if (expiresAt.isEmpty()) {
+                this.expiresAt = Optional.empty();
+            } else {
+                this.expiresAt = Optional.of(expiresAt.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage expiresAt(OffsetDateTime expiresAt) {
             this.expiresAt = Optional.ofNullable(expiresAt);
             return this;
@@ -269,6 +306,18 @@ public final class TimeSlot {
         @JsonSetter(value = "expires_at", nulls = Nulls.SKIP)
         public _FinalStage expiresAt(Optional<OffsetDateTime> expiresAt) {
             this.expiresAt = expiresAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage bookingKey(Nullable<String> bookingKey) {
+            if (bookingKey.isNull()) {
+                this.bookingKey = null;
+            } else if (bookingKey.isEmpty()) {
+                this.bookingKey = Optional.empty();
+            } else {
+                this.bookingKey = Optional.of(bookingKey.get());
+            }
             return this;
         }
 

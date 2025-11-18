@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -60,16 +63,22 @@ public final class ClientFacingHeartRateAlertSample {
     /**
      * @return Deprecated
      */
-    @JsonProperty("id")
+    @JsonIgnore
     public Optional<Integer> getId() {
+        if (id == null) {
+            return Optional.empty();
+        }
         return id;
     }
 
     /**
      * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
      */
-    @JsonProperty("timezone_offset")
+    @JsonIgnore
     public Optional<Integer> getTimezoneOffset() {
+        if (timezoneOffset == null) {
+            return Optional.empty();
+        }
         return timezoneOffset;
     }
 
@@ -113,6 +122,18 @@ public final class ClientFacingHeartRateAlertSample {
     @JsonProperty("value")
     public int getValue() {
         return value;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("id")
+    private Optional<Integer> _getId() {
+        return id;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("timezone_offset")
+    private Optional<Integer> _getTimezoneOffset() {
+        return timezoneOffset;
     }
 
     @java.lang.Override
@@ -194,12 +215,16 @@ public final class ClientFacingHeartRateAlertSample {
 
         _FinalStage id(Integer id);
 
+        _FinalStage id(Nullable<Integer> id);
+
         /**
          * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
          */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
+
+        _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -296,6 +321,22 @@ public final class ClientFacingHeartRateAlertSample {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset) {
+            if (timezoneOffset.isNull()) {
+                this.timezoneOffset = null;
+            } else if (timezoneOffset.isEmpty()) {
+                this.timezoneOffset = Optional.empty();
+            } else {
+                this.timezoneOffset = Optional.of(timezoneOffset.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
@@ -308,6 +349,22 @@ public final class ClientFacingHeartRateAlertSample {
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
+            return this;
+        }
+
+        /**
+         * <p>Deprecated</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage id(Nullable<Integer> id) {
+            if (id.isNull()) {
+                this.id = null;
+            } else if (id.isEmpty()) {
+                this.id = Optional.empty();
+            } else {
+                this.id = Optional.of(id.get());
+            }
             return this;
         }
 

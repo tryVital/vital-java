@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -73,13 +76,19 @@ public final class ClientFacingPatientDetailsCompatible {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("first_name")
+    @JsonIgnore
     public Optional<String> getFirstName() {
+        if (firstName == null) {
+            return Optional.empty();
+        }
         return firstName;
     }
 
-    @JsonProperty("last_name")
+    @JsonIgnore
     public Optional<String> getLastName() {
+        if (lastName == null) {
+            return Optional.empty();
+        }
         return lastName;
     }
 
@@ -93,53 +102,128 @@ public final class ClientFacingPatientDetailsCompatible {
         return gender;
     }
 
-    @JsonProperty("phone_number")
+    @JsonIgnore
     public Optional<String> getPhoneNumber() {
+        if (phoneNumber == null) {
+            return Optional.empty();
+        }
         return phoneNumber;
     }
 
-    @JsonProperty("email")
+    @JsonIgnore
     public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
         return email;
     }
 
     /**
      * @return Parent/medical_proxy details. Required if patient is a minor.
      */
-    @JsonProperty("medical_proxy")
+    @JsonIgnore
     public Optional<GuarantorDetails> getMedicalProxy() {
+        if (medicalProxy == null) {
+            return Optional.empty();
+        }
         return medicalProxy;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("race")
+    @JsonIgnore
     public Optional<Race> getRace() {
+        if (race == null) {
+            return Optional.empty();
+        }
         return race;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("ethnicity")
+    @JsonIgnore
     public Optional<Ethnicity> getEthnicity() {
+        if (ethnicity == null) {
+            return Optional.empty();
+        }
         return ethnicity;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("sexual_orientation")
+    @JsonIgnore
     public Optional<SexualOrientation> getSexualOrientation() {
+        if (sexualOrientation == null) {
+            return Optional.empty();
+        }
         return sexualOrientation;
     }
 
     /**
      * @return If not provided, will be set to 'Not Specified'
      */
-    @JsonProperty("gender_identity")
+    @JsonIgnore
     public Optional<GenderIdentity> getGenderIdentity() {
+        if (genderIdentity == null) {
+            return Optional.empty();
+        }
+        return genderIdentity;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("first_name")
+    private Optional<String> _getFirstName() {
+        return firstName;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("last_name")
+    private Optional<String> _getLastName() {
+        return lastName;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("phone_number")
+    private Optional<String> _getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
+        return email;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("medical_proxy")
+    private Optional<GuarantorDetails> _getMedicalProxy() {
+        return medicalProxy;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("race")
+    private Optional<Race> _getRace() {
+        return race;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("ethnicity")
+    private Optional<Ethnicity> _getEthnicity() {
+        return ethnicity;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sexual_orientation")
+    private Optional<SexualOrientation> _getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("gender_identity")
+    private Optional<GenderIdentity> _getGenderIdentity() {
         return genderIdentity;
     }
 
@@ -211,17 +295,25 @@ public final class ClientFacingPatientDetailsCompatible {
 
         _FinalStage firstName(String firstName);
 
+        _FinalStage firstName(Nullable<String> firstName);
+
         _FinalStage lastName(Optional<String> lastName);
 
         _FinalStage lastName(String lastName);
+
+        _FinalStage lastName(Nullable<String> lastName);
 
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
         _FinalStage phoneNumber(String phoneNumber);
 
+        _FinalStage phoneNumber(Nullable<String> phoneNumber);
+
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
+
+        _FinalStage email(Nullable<String> email);
 
         /**
          * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
@@ -230,12 +322,16 @@ public final class ClientFacingPatientDetailsCompatible {
 
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
 
+        _FinalStage medicalProxy(Nullable<GuarantorDetails> medicalProxy);
+
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
          */
         _FinalStage race(Optional<Race> race);
 
         _FinalStage race(Race race);
+
+        _FinalStage race(Nullable<Race> race);
 
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
@@ -244,6 +340,8 @@ public final class ClientFacingPatientDetailsCompatible {
 
         _FinalStage ethnicity(Ethnicity ethnicity);
 
+        _FinalStage ethnicity(Nullable<Ethnicity> ethnicity);
+
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
          */
@@ -251,12 +349,16 @@ public final class ClientFacingPatientDetailsCompatible {
 
         _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
 
+        _FinalStage sexualOrientation(Nullable<SexualOrientation> sexualOrientation);
+
         /**
          * <p>If not provided, will be set to 'Not Specified'</p>
          */
         _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
 
         _FinalStage genderIdentity(GenderIdentity genderIdentity);
+
+        _FinalStage genderIdentity(Nullable<GenderIdentity> genderIdentity);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -323,6 +425,22 @@ public final class ClientFacingPatientDetailsCompatible {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage genderIdentity(Nullable<GenderIdentity> genderIdentity) {
+            if (genderIdentity.isNull()) {
+                this.genderIdentity = null;
+            } else if (genderIdentity.isEmpty()) {
+                this.genderIdentity = Optional.empty();
+            } else {
+                this.genderIdentity = Optional.of(genderIdentity.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
             this.genderIdentity = Optional.ofNullable(genderIdentity);
             return this;
@@ -335,6 +453,22 @@ public final class ClientFacingPatientDetailsCompatible {
         @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
         public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
             this.genderIdentity = genderIdentity;
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage sexualOrientation(Nullable<SexualOrientation> sexualOrientation) {
+            if (sexualOrientation.isNull()) {
+                this.sexualOrientation = null;
+            } else if (sexualOrientation.isEmpty()) {
+                this.sexualOrientation = Optional.empty();
+            } else {
+                this.sexualOrientation = Optional.of(sexualOrientation.get());
+            }
             return this;
         }
 
@@ -363,6 +497,22 @@ public final class ClientFacingPatientDetailsCompatible {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage ethnicity(Nullable<Ethnicity> ethnicity) {
+            if (ethnicity.isNull()) {
+                this.ethnicity = null;
+            } else if (ethnicity.isEmpty()) {
+                this.ethnicity = Optional.empty();
+            } else {
+                this.ethnicity = Optional.of(ethnicity.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage ethnicity(Ethnicity ethnicity) {
             this.ethnicity = Optional.ofNullable(ethnicity);
             return this;
@@ -375,6 +525,22 @@ public final class ClientFacingPatientDetailsCompatible {
         @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
         public _FinalStage ethnicity(Optional<Ethnicity> ethnicity) {
             this.ethnicity = ethnicity;
+            return this;
+        }
+
+        /**
+         * <p>If not provided, will be set to 'Not Specified'</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage race(Nullable<Race> race) {
+            if (race.isNull()) {
+                this.race = null;
+            } else if (race.isEmpty()) {
+                this.race = Optional.empty();
+            } else {
+                this.race = Optional.of(race.get());
+            }
             return this;
         }
 
@@ -403,6 +569,22 @@ public final class ClientFacingPatientDetailsCompatible {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage medicalProxy(Nullable<GuarantorDetails> medicalProxy) {
+            if (medicalProxy.isNull()) {
+                this.medicalProxy = null;
+            } else if (medicalProxy.isEmpty()) {
+                this.medicalProxy = Optional.empty();
+            } else {
+                this.medicalProxy = Optional.of(medicalProxy.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage medicalProxy(GuarantorDetails medicalProxy) {
             this.medicalProxy = Optional.ofNullable(medicalProxy);
             return this;
@@ -415,6 +597,18 @@ public final class ClientFacingPatientDetailsCompatible {
         @JsonSetter(value = "medical_proxy", nulls = Nulls.SKIP)
         public _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy) {
             this.medicalProxy = medicalProxy;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
             return this;
         }
 
@@ -432,6 +626,18 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage phoneNumber(Nullable<String> phoneNumber) {
+            if (phoneNumber.isNull()) {
+                this.phoneNumber = null;
+            } else if (phoneNumber.isEmpty()) {
+                this.phoneNumber = Optional.empty();
+            } else {
+                this.phoneNumber = Optional.of(phoneNumber.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
@@ -445,6 +651,18 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         @java.lang.Override
+        public _FinalStage lastName(Nullable<String> lastName) {
+            if (lastName.isNull()) {
+                this.lastName = null;
+            } else if (lastName.isEmpty()) {
+                this.lastName = Optional.empty();
+            } else {
+                this.lastName = Optional.of(lastName.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage lastName(String lastName) {
             this.lastName = Optional.ofNullable(lastName);
             return this;
@@ -454,6 +672,18 @@ public final class ClientFacingPatientDetailsCompatible {
         @JsonSetter(value = "last_name", nulls = Nulls.SKIP)
         public _FinalStage lastName(Optional<String> lastName) {
             this.lastName = lastName;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage firstName(Nullable<String> firstName) {
+            if (firstName.isNull()) {
+                this.firstName = null;
+            } else if (firstName.isEmpty()) {
+                this.firstName = Optional.empty();
+            } else {
+                this.firstName = Optional.of(firstName.get());
+            }
             return this;
         }
 

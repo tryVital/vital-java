@@ -12,8 +12,9 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
-import com.vital.api.resources.sleep.requests.SleepGetRequest;
+import com.vital.api.resources.sleep.requests.GetRawSleepRequest;
+import com.vital.api.resources.sleep.requests.GetSleepRequest;
+import com.vital.api.resources.sleep.requests.GetStreamBySleepIdSleepRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.HttpValidationError;
@@ -36,7 +37,7 @@ public class RawSleepClient {
     /**
      * Get sleep summary for user_id
      */
-    public VitalHttpResponse<ClientSleepResponse> get(String userId, SleepGetRequest request) {
+    public VitalHttpResponse<ClientSleepResponse> get(String userId, GetSleepRequest request) {
         return get(userId, request, null);
     }
 
@@ -44,7 +45,7 @@ public class RawSleepClient {
      * Get sleep summary for user_id
      */
     public VitalHttpResponse<ClientSleepResponse> get(
-            String userId, SleepGetRequest request, RequestOptions requestOptions) {
+            String userId, GetSleepRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep")
@@ -98,7 +99,7 @@ public class RawSleepClient {
     /**
      * Get raw sleep summary for user_id
      */
-    public VitalHttpResponse<RawSleep> getRaw(String userId, SleepGetRawRequest request) {
+    public VitalHttpResponse<RawSleep> getRaw(String userId, GetRawSleepRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -106,7 +107,7 @@ public class RawSleepClient {
      * Get raw sleep summary for user_id
      */
     public VitalHttpResponse<RawSleep> getRaw(
-            String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawSleepRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep")
@@ -161,26 +162,35 @@ public class RawSleepClient {
      * Get Sleep stream for a user_id
      */
     public VitalHttpResponse<ClientFacingSleepStream> getStreamBySleepId(String sleepId) {
-        return getStreamBySleepId(sleepId, null);
+        return getStreamBySleepId(
+                sleepId, GetStreamBySleepIdSleepRequest.builder().build());
     }
 
     /**
      * Get Sleep stream for a user_id
      */
     public VitalHttpResponse<ClientFacingSleepStream> getStreamBySleepId(
-            String sleepId, RequestOptions requestOptions) {
+            String sleepId, GetStreamBySleepIdSleepRequest request) {
+        return getStreamBySleepId(sleepId, request, null);
+    }
+
+    /**
+     * Get Sleep stream for a user_id
+     */
+    public VitalHttpResponse<ClientFacingSleepStream> getStreamBySleepId(
+            String sleepId, GetStreamBySleepIdSleepRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries/sleep")
                 .addPathSegment(sleepId)
                 .addPathSegments("stream")
                 .build();
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

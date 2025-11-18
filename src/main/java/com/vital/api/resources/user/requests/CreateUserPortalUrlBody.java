@@ -5,12 +5,15 @@ package com.vital.api.resources.user.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.resources.user.types.CreateUserPortalUrlBodyContext;
 import java.util.HashMap;
@@ -53,8 +56,17 @@ public final class CreateUserPortalUrlBody {
     /**
      * @return If specified, the generated URL will deeplink to the specified Order.
      */
-    @JsonProperty("order_id")
+    @JsonIgnore
     public Optional<String> getOrderId() {
+        if (orderId == null) {
+            return Optional.empty();
+        }
+        return orderId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("order_id")
+    private Optional<String> _getOrderId() {
         return orderId;
     }
 
@@ -110,6 +122,8 @@ public final class CreateUserPortalUrlBody {
         _FinalStage orderId(Optional<String> orderId);
 
         _FinalStage orderId(String orderId);
+
+        _FinalStage orderId(Nullable<String> orderId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -149,6 +163,22 @@ public final class CreateUserPortalUrlBody {
         @JsonSetter("context")
         public _FinalStage context(@NotNull CreateUserPortalUrlBodyContext context) {
             this.context = Objects.requireNonNull(context, "context must not be null");
+            return this;
+        }
+
+        /**
+         * <p>If specified, the generated URL will deeplink to the specified Order.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage orderId(Nullable<String> orderId) {
+            if (orderId.isNull()) {
+                this.orderId = null;
+            } else if (orderId.isEmpty()) {
+                this.orderId = Optional.empty();
+            } else {
+                this.orderId = Optional.of(orderId.get());
+            }
             return this;
         }
 

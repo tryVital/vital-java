@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,8 +62,17 @@ public final class Query {
      * <li>Parentheses is supported.</li>
      * </ul>
      */
-    @JsonProperty("where")
+    @JsonIgnore
     public Optional<String> getWhere() {
+        if (where == null) {
+            return Optional.empty();
+        }
+        return where;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("where")
+    private Optional<String> _getWhere() {
         return where;
     }
 
@@ -159,6 +171,17 @@ public final class Query {
 
         public Builder where(String where) {
             this.where = Optional.ofNullable(where);
+            return this;
+        }
+
+        public Builder where(Nullable<String> where) {
+            if (where.isNull()) {
+                this.where = null;
+            } else if (where.isEmpty()) {
+                this.where = Optional.empty();
+            } else {
+                this.where = Optional.of(where.get());
+            }
             return this;
         }
 

@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -63,8 +66,11 @@ public final class PhysicianCreateRequest {
         return lastName;
     }
 
-    @JsonProperty("email")
+    @JsonIgnore
     public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
         return email;
     }
 
@@ -81,8 +87,23 @@ public final class PhysicianCreateRequest {
     /**
      * @return An image of the physician signature for health insurance billing
      */
-    @JsonProperty("signature_image")
+    @JsonIgnore
     public Optional<PhysicianCreateRequestSignatureImage> getSignatureImage() {
+        if (signatureImage == null) {
+            return Optional.empty();
+        }
+        return signatureImage;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
+        return email;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("signature_image")
+    private Optional<PhysicianCreateRequestSignatureImage> _getSignatureImage() {
         return signatureImage;
     }
 
@@ -142,6 +163,8 @@ public final class PhysicianCreateRequest {
 
         _FinalStage email(String email);
 
+        _FinalStage email(Nullable<String> email);
+
         _FinalStage licensedStates(Optional<List<String>> licensedStates);
 
         _FinalStage licensedStates(List<String> licensedStates);
@@ -152,6 +175,8 @@ public final class PhysicianCreateRequest {
         _FinalStage signatureImage(Optional<PhysicianCreateRequestSignatureImage> signatureImage);
 
         _FinalStage signatureImage(PhysicianCreateRequestSignatureImage signatureImage);
+
+        _FinalStage signatureImage(Nullable<PhysicianCreateRequestSignatureImage> signatureImage);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -210,6 +235,22 @@ public final class PhysicianCreateRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage signatureImage(Nullable<PhysicianCreateRequestSignatureImage> signatureImage) {
+            if (signatureImage.isNull()) {
+                this.signatureImage = null;
+            } else if (signatureImage.isEmpty()) {
+                this.signatureImage = Optional.empty();
+            } else {
+                this.signatureImage = Optional.of(signatureImage.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>An image of the physician signature for health insurance billing</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage signatureImage(PhysicianCreateRequestSignatureImage signatureImage) {
             this.signatureImage = Optional.ofNullable(signatureImage);
             return this;
@@ -235,6 +276,18 @@ public final class PhysicianCreateRequest {
         @JsonSetter(value = "licensed_states", nulls = Nulls.SKIP)
         public _FinalStage licensedStates(Optional<List<String>> licensedStates) {
             this.licensedStates = licensedStates;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
             return this;
         }
 

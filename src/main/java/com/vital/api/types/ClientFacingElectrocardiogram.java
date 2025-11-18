@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -125,39 +128,57 @@ public final class ClientFacingElectrocardiogram {
         return voltageSampleCount;
     }
 
-    @JsonProperty("heart_rate_mean")
+    @JsonIgnore
     public Optional<Integer> getHeartRateMean() {
+        if (heartRateMean == null) {
+            return Optional.empty();
+        }
         return heartRateMean;
     }
 
-    @JsonProperty("sampling_frequency_hz")
+    @JsonIgnore
     public Optional<Double> getSamplingFrequencyHz() {
+        if (samplingFrequencyHz == null) {
+            return Optional.empty();
+        }
         return samplingFrequencyHz;
     }
 
     /**
      * @return ℹ️ This enum is non-exhaustive.
      */
-    @JsonProperty("classification")
+    @JsonIgnore
     public Optional<ClientFacingElectrocardiogramClassification> getClassification() {
+        if (classification == null) {
+            return Optional.empty();
+        }
         return classification;
     }
 
     /**
      * @return ℹ️ This enum is non-exhaustive.
      */
-    @JsonProperty("inconclusive_cause")
+    @JsonIgnore
     public Optional<ClientFacingElectrocardiogramInconclusiveCause> getInconclusiveCause() {
+        if (inconclusiveCause == null) {
+            return Optional.empty();
+        }
         return inconclusiveCause;
     }
 
-    @JsonProperty("algorithm_version")
+    @JsonIgnore
     public Optional<String> getAlgorithmVersion() {
+        if (algorithmVersion == null) {
+            return Optional.empty();
+        }
         return algorithmVersion;
     }
 
-    @JsonProperty("time_zone")
+    @JsonIgnore
     public Optional<String> getTimeZone() {
+        if (timeZone == null) {
+            return Optional.empty();
+        }
         return timeZone;
     }
 
@@ -174,18 +195,27 @@ public final class ClientFacingElectrocardiogram {
         return sourceType;
     }
 
-    @JsonProperty("source_app_id")
+    @JsonIgnore
     public Optional<String> getSourceAppId() {
+        if (sourceAppId == null) {
+            return Optional.empty();
+        }
         return sourceAppId;
     }
 
-    @JsonProperty("source_device_model")
+    @JsonIgnore
     public Optional<String> getSourceDeviceModel() {
+        if (sourceDeviceModel == null) {
+            return Optional.empty();
+        }
         return sourceDeviceModel;
     }
 
-    @JsonProperty("source_device_id")
+    @JsonIgnore
     public Optional<String> getSourceDeviceId() {
+        if (sourceDeviceId == null) {
+            return Optional.empty();
+        }
         return sourceDeviceId;
     }
 
@@ -207,6 +237,60 @@ public final class ClientFacingElectrocardiogram {
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("heart_rate_mean")
+    private Optional<Integer> _getHeartRateMean() {
+        return heartRateMean;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("sampling_frequency_hz")
+    private Optional<Double> _getSamplingFrequencyHz() {
+        return samplingFrequencyHz;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("classification")
+    private Optional<ClientFacingElectrocardiogramClassification> _getClassification() {
+        return classification;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("inconclusive_cause")
+    private Optional<ClientFacingElectrocardiogramInconclusiveCause> _getInconclusiveCause() {
+        return inconclusiveCause;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("algorithm_version")
+    private Optional<String> _getAlgorithmVersion() {
+        return algorithmVersion;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("time_zone")
+    private Optional<String> _getTimeZone() {
+        return timeZone;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_app_id")
+    private Optional<String> _getSourceAppId() {
+        return sourceAppId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_device_model")
+    private Optional<String> _getSourceDeviceModel() {
+        return sourceDeviceModel;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_device_id")
+    private Optional<String> _getSourceDeviceId() {
+        return sourceDeviceId;
     }
 
     @java.lang.Override
@@ -327,9 +411,13 @@ public final class ClientFacingElectrocardiogram {
 
         _FinalStage heartRateMean(Integer heartRateMean);
 
+        _FinalStage heartRateMean(Nullable<Integer> heartRateMean);
+
         _FinalStage samplingFrequencyHz(Optional<Double> samplingFrequencyHz);
 
         _FinalStage samplingFrequencyHz(Double samplingFrequencyHz);
+
+        _FinalStage samplingFrequencyHz(Nullable<Double> samplingFrequencyHz);
 
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
@@ -338,6 +426,8 @@ public final class ClientFacingElectrocardiogram {
 
         _FinalStage classification(ClientFacingElectrocardiogramClassification classification);
 
+        _FinalStage classification(Nullable<ClientFacingElectrocardiogramClassification> classification);
+
         /**
          * <p>ℹ️ This enum is non-exhaustive.</p>
          */
@@ -345,25 +435,37 @@ public final class ClientFacingElectrocardiogram {
 
         _FinalStage inconclusiveCause(ClientFacingElectrocardiogramInconclusiveCause inconclusiveCause);
 
+        _FinalStage inconclusiveCause(Nullable<ClientFacingElectrocardiogramInconclusiveCause> inconclusiveCause);
+
         _FinalStage algorithmVersion(Optional<String> algorithmVersion);
 
         _FinalStage algorithmVersion(String algorithmVersion);
+
+        _FinalStage algorithmVersion(Nullable<String> algorithmVersion);
 
         _FinalStage timeZone(Optional<String> timeZone);
 
         _FinalStage timeZone(String timeZone);
 
+        _FinalStage timeZone(Nullable<String> timeZone);
+
         _FinalStage sourceAppId(Optional<String> sourceAppId);
 
         _FinalStage sourceAppId(String sourceAppId);
+
+        _FinalStage sourceAppId(Nullable<String> sourceAppId);
 
         _FinalStage sourceDeviceModel(Optional<String> sourceDeviceModel);
 
         _FinalStage sourceDeviceModel(String sourceDeviceModel);
 
+        _FinalStage sourceDeviceModel(Nullable<String> sourceDeviceModel);
+
         _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
 
         _FinalStage sourceDeviceId(String sourceDeviceId);
+
+        _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -522,6 +624,18 @@ public final class ClientFacingElectrocardiogram {
         }
 
         @java.lang.Override
+        public _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId) {
+            if (sourceDeviceId.isNull()) {
+                this.sourceDeviceId = null;
+            } else if (sourceDeviceId.isEmpty()) {
+                this.sourceDeviceId = Optional.empty();
+            } else {
+                this.sourceDeviceId = Optional.of(sourceDeviceId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
             this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
@@ -531,6 +645,18 @@ public final class ClientFacingElectrocardiogram {
         @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
         public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
             this.sourceDeviceId = sourceDeviceId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceDeviceModel(Nullable<String> sourceDeviceModel) {
+            if (sourceDeviceModel.isNull()) {
+                this.sourceDeviceModel = null;
+            } else if (sourceDeviceModel.isEmpty()) {
+                this.sourceDeviceModel = Optional.empty();
+            } else {
+                this.sourceDeviceModel = Optional.of(sourceDeviceModel.get());
+            }
             return this;
         }
 
@@ -548,6 +674,18 @@ public final class ClientFacingElectrocardiogram {
         }
 
         @java.lang.Override
+        public _FinalStage sourceAppId(Nullable<String> sourceAppId) {
+            if (sourceAppId.isNull()) {
+                this.sourceAppId = null;
+            } else if (sourceAppId.isEmpty()) {
+                this.sourceAppId = Optional.empty();
+            } else {
+                this.sourceAppId = Optional.of(sourceAppId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
             this.sourceAppId = Optional.ofNullable(sourceAppId);
             return this;
@@ -557,6 +695,18 @@ public final class ClientFacingElectrocardiogram {
         @JsonSetter(value = "source_app_id", nulls = Nulls.SKIP)
         public _FinalStage sourceAppId(Optional<String> sourceAppId) {
             this.sourceAppId = sourceAppId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage timeZone(Nullable<String> timeZone) {
+            if (timeZone.isNull()) {
+                this.timeZone = null;
+            } else if (timeZone.isEmpty()) {
+                this.timeZone = Optional.empty();
+            } else {
+                this.timeZone = Optional.of(timeZone.get());
+            }
             return this;
         }
 
@@ -574,6 +724,18 @@ public final class ClientFacingElectrocardiogram {
         }
 
         @java.lang.Override
+        public _FinalStage algorithmVersion(Nullable<String> algorithmVersion) {
+            if (algorithmVersion.isNull()) {
+                this.algorithmVersion = null;
+            } else if (algorithmVersion.isEmpty()) {
+                this.algorithmVersion = Optional.empty();
+            } else {
+                this.algorithmVersion = Optional.of(algorithmVersion.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage algorithmVersion(String algorithmVersion) {
             this.algorithmVersion = Optional.ofNullable(algorithmVersion);
             return this;
@@ -583,6 +745,23 @@ public final class ClientFacingElectrocardiogram {
         @JsonSetter(value = "algorithm_version", nulls = Nulls.SKIP)
         public _FinalStage algorithmVersion(Optional<String> algorithmVersion) {
             this.algorithmVersion = algorithmVersion;
+            return this;
+        }
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage inconclusiveCause(
+                Nullable<ClientFacingElectrocardiogramInconclusiveCause> inconclusiveCause) {
+            if (inconclusiveCause.isNull()) {
+                this.inconclusiveCause = null;
+            } else if (inconclusiveCause.isEmpty()) {
+                this.inconclusiveCause = Optional.empty();
+            } else {
+                this.inconclusiveCause = Optional.of(inconclusiveCause.get());
+            }
             return this;
         }
 
@@ -612,6 +791,22 @@ public final class ClientFacingElectrocardiogram {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage classification(Nullable<ClientFacingElectrocardiogramClassification> classification) {
+            if (classification.isNull()) {
+                this.classification = null;
+            } else if (classification.isEmpty()) {
+                this.classification = Optional.empty();
+            } else {
+                this.classification = Optional.of(classification.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage classification(ClientFacingElectrocardiogramClassification classification) {
             this.classification = Optional.ofNullable(classification);
             return this;
@@ -628,6 +823,18 @@ public final class ClientFacingElectrocardiogram {
         }
 
         @java.lang.Override
+        public _FinalStage samplingFrequencyHz(Nullable<Double> samplingFrequencyHz) {
+            if (samplingFrequencyHz.isNull()) {
+                this.samplingFrequencyHz = null;
+            } else if (samplingFrequencyHz.isEmpty()) {
+                this.samplingFrequencyHz = Optional.empty();
+            } else {
+                this.samplingFrequencyHz = Optional.of(samplingFrequencyHz.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage samplingFrequencyHz(Double samplingFrequencyHz) {
             this.samplingFrequencyHz = Optional.ofNullable(samplingFrequencyHz);
             return this;
@@ -637,6 +844,18 @@ public final class ClientFacingElectrocardiogram {
         @JsonSetter(value = "sampling_frequency_hz", nulls = Nulls.SKIP)
         public _FinalStage samplingFrequencyHz(Optional<Double> samplingFrequencyHz) {
             this.samplingFrequencyHz = samplingFrequencyHz;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage heartRateMean(Nullable<Integer> heartRateMean) {
+            if (heartRateMean.isNull()) {
+                this.heartRateMean = null;
+            } else if (heartRateMean.isEmpty()) {
+                this.heartRateMean = Optional.empty();
+            } else {
+                this.heartRateMean = Optional.of(heartRateMean.get());
+            }
             return this;
         }
 

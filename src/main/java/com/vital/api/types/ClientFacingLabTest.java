@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -168,16 +171,22 @@ public final class ClientFacingLabTest {
     /**
      * @return
      */
-    @JsonProperty("lab")
+    @JsonIgnore
     public Optional<ClientFacingLab> getLab() {
+        if (lab == null) {
+            return Optional.empty();
+        }
         return lab;
     }
 
     /**
      * @return
      */
-    @JsonProperty("markers")
+    @JsonIgnore
     public Optional<List<ClientFacingMarker>> getMarkers() {
+        if (markers == null) {
+            return Optional.empty();
+        }
         return markers;
     }
 
@@ -200,24 +209,63 @@ public final class ClientFacingLabTest {
     /**
      * @return Whether or not the lab test has collection instructions.
      */
-    @JsonProperty("has_collection_instructions")
+    @JsonIgnore
     public Optional<Boolean> getHasCollectionInstructions() {
+        if (hasCollectionInstructions == null) {
+            return Optional.empty();
+        }
         return hasCollectionInstructions;
     }
 
     /**
      * @return The common turnaround time in days for the lab test. This is the expected time for the lab to process the test and return results.
      */
-    @JsonProperty("common_tat_days")
+    @JsonIgnore
     public Optional<Integer> getCommonTatDays() {
+        if (commonTatDays == null) {
+            return Optional.empty();
+        }
         return commonTatDays;
     }
 
     /**
      * @return The worst-case turnaround time in days for the lab test. This is the maximum time the lab may take to process the test and return results.
      */
-    @JsonProperty("worst_case_tat_days")
+    @JsonIgnore
     public Optional<Integer> getWorstCaseTatDays() {
+        if (worstCaseTatDays == null) {
+            return Optional.empty();
+        }
+        return worstCaseTatDays;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("lab")
+    private Optional<ClientFacingLab> _getLab() {
+        return lab;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("markers")
+    private Optional<List<ClientFacingMarker>> _getMarkers() {
+        return markers;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("has_collection_instructions")
+    private Optional<Boolean> _getHasCollectionInstructions() {
+        return hasCollectionInstructions;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("common_tat_days")
+    private Optional<Integer> _getCommonTatDays() {
+        return commonTatDays;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("worst_case_tat_days")
+    private Optional<Integer> _getWorstCaseTatDays() {
         return worstCaseTatDays;
     }
 
@@ -332,9 +380,13 @@ public final class ClientFacingLabTest {
 
         _FinalStage lab(ClientFacingLab lab);
 
+        _FinalStage lab(Nullable<ClientFacingLab> lab);
+
         _FinalStage markers(Optional<List<ClientFacingMarker>> markers);
 
         _FinalStage markers(List<ClientFacingMarker> markers);
+
+        _FinalStage markers(Nullable<List<ClientFacingMarker>> markers);
 
         /**
          * <p>Denotes whether a lab test requires using non-Vital physician networks. If it does then it's delegated - no otherwise.</p>
@@ -357,6 +409,8 @@ public final class ClientFacingLabTest {
 
         _FinalStage hasCollectionInstructions(Boolean hasCollectionInstructions);
 
+        _FinalStage hasCollectionInstructions(Nullable<Boolean> hasCollectionInstructions);
+
         /**
          * <p>The common turnaround time in days for the lab test. This is the expected time for the lab to process the test and return results.</p>
          */
@@ -364,12 +418,16 @@ public final class ClientFacingLabTest {
 
         _FinalStage commonTatDays(Integer commonTatDays);
 
+        _FinalStage commonTatDays(Nullable<Integer> commonTatDays);
+
         /**
          * <p>The worst-case turnaround time in days for the lab test. This is the maximum time the lab may take to process the test and return results.</p>
          */
         _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays);
 
         _FinalStage worstCaseTatDays(Integer worstCaseTatDays);
+
+        _FinalStage worstCaseTatDays(Nullable<Integer> worstCaseTatDays);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -528,6 +586,22 @@ public final class ClientFacingLabTest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage worstCaseTatDays(Nullable<Integer> worstCaseTatDays) {
+            if (worstCaseTatDays.isNull()) {
+                this.worstCaseTatDays = null;
+            } else if (worstCaseTatDays.isEmpty()) {
+                this.worstCaseTatDays = Optional.empty();
+            } else {
+                this.worstCaseTatDays = Optional.of(worstCaseTatDays.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>The worst-case turnaround time in days for the lab test. This is the maximum time the lab may take to process the test and return results.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage worstCaseTatDays(Integer worstCaseTatDays) {
             this.worstCaseTatDays = Optional.ofNullable(worstCaseTatDays);
             return this;
@@ -548,6 +622,22 @@ public final class ClientFacingLabTest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage commonTatDays(Nullable<Integer> commonTatDays) {
+            if (commonTatDays.isNull()) {
+                this.commonTatDays = null;
+            } else if (commonTatDays.isEmpty()) {
+                this.commonTatDays = Optional.empty();
+            } else {
+                this.commonTatDays = Optional.of(commonTatDays.get());
+            }
+            return this;
+        }
+
+        /**
+         * <p>The common turnaround time in days for the lab test. This is the expected time for the lab to process the test and return results.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage commonTatDays(Integer commonTatDays) {
             this.commonTatDays = Optional.ofNullable(commonTatDays);
             return this;
@@ -560,6 +650,22 @@ public final class ClientFacingLabTest {
         @JsonSetter(value = "common_tat_days", nulls = Nulls.SKIP)
         public _FinalStage commonTatDays(Optional<Integer> commonTatDays) {
             this.commonTatDays = commonTatDays;
+            return this;
+        }
+
+        /**
+         * <p>Whether or not the lab test has collection instructions.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage hasCollectionInstructions(Nullable<Boolean> hasCollectionInstructions) {
+            if (hasCollectionInstructions.isNull()) {
+                this.hasCollectionInstructions = null;
+            } else if (hasCollectionInstructions.isEmpty()) {
+                this.hasCollectionInstructions = Optional.empty();
+            } else {
+                this.hasCollectionInstructions = Optional.of(hasCollectionInstructions.get());
+            }
             return this;
         }
 
@@ -627,6 +733,21 @@ public final class ClientFacingLabTest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
+        public _FinalStage markers(Nullable<List<ClientFacingMarker>> markers) {
+            if (markers.isNull()) {
+                this.markers = null;
+            } else if (markers.isEmpty()) {
+                this.markers = Optional.empty();
+            } else {
+                this.markers = Optional.of(markers.get());
+            }
+            return this;
+        }
+
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
         public _FinalStage markers(List<ClientFacingMarker> markers) {
             this.markers = Optional.ofNullable(markers);
             return this;
@@ -636,6 +757,21 @@ public final class ClientFacingLabTest {
         @JsonSetter(value = "markers", nulls = Nulls.SKIP)
         public _FinalStage markers(Optional<List<ClientFacingMarker>> markers) {
             this.markers = markers;
+            return this;
+        }
+
+        /**
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage lab(Nullable<ClientFacingLab> lab) {
+            if (lab.isNull()) {
+                this.lab = null;
+            } else if (lab.isEmpty()) {
+                this.lab = Optional.empty();
+            } else {
+                this.lab = Optional.of(lab.get());
+            }
             return this;
         }
 

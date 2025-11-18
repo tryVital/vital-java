@@ -5,8 +5,8 @@ package com.vital.api.resources.activity;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
-import com.vital.api.resources.activity.requests.ActivityGetRequest;
+import com.vital.api.resources.activity.requests.GetActivityRequest;
+import com.vital.api.resources.activity.requests.GetRawActivityRequest;
 import com.vital.api.types.ClientActivityResponse;
 import com.vital.api.types.RawActivity;
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +31,7 @@ public class AsyncActivityClient {
     /**
      * Get activity summary for user_id
      */
-    public CompletableFuture<ClientActivityResponse> get(String userId, ActivityGetRequest request) {
+    public CompletableFuture<ClientActivityResponse> get(String userId, GetActivityRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -39,14 +39,14 @@ public class AsyncActivityClient {
      * Get activity summary for user_id
      */
     public CompletableFuture<ClientActivityResponse> get(
-            String userId, ActivityGetRequest request, RequestOptions requestOptions) {
+            String userId, GetActivityRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Get raw activity summary for user_id
      */
-    public CompletableFuture<RawActivity> getRaw(String userId, ActivityGetRawRequest request) {
+    public CompletableFuture<RawActivity> getRaw(String userId, GetRawActivityRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
@@ -54,7 +54,7 @@ public class AsyncActivityClient {
      * Get raw activity summary for user_id
      */
     public CompletableFuture<RawActivity> getRaw(
-            String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
+            String userId, GetRawActivityRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

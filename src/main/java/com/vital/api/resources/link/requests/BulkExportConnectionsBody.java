@@ -5,14 +5,17 @@ package com.vital.api.resources.link.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.link.types.LinkBulkExportRequestTeamId;
+import com.vital.api.resources.link.types.BulkExportLinkRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkExportConnectionsBody.Builder.class)
 public final class BulkExportConnectionsBody {
-    private final Optional<LinkBulkExportRequestTeamId> teamId;
+    private final Optional<BulkExportLinkRequestTeamId> teamId;
 
     private final Optional<List<String>> userIds;
 
@@ -35,7 +38,7 @@ public final class BulkExportConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkExportConnectionsBody(
-            Optional<LinkBulkExportRequestTeamId> teamId,
+            Optional<BulkExportLinkRequestTeamId> teamId,
             Optional<List<String>> userIds,
             OAuthProviders provider,
             Optional<String> nextToken,
@@ -48,12 +51,15 @@ public final class BulkExportConnectionsBody {
     }
 
     @JsonProperty("team_id")
-    public Optional<LinkBulkExportRequestTeamId> getTeamId() {
+    public Optional<BulkExportLinkRequestTeamId> getTeamId() {
         return teamId;
     }
 
-    @JsonProperty("user_ids")
+    @JsonIgnore
     public Optional<List<String>> getUserIds() {
+        if (userIds == null) {
+            return Optional.empty();
+        }
         return userIds;
     }
 
@@ -62,8 +68,23 @@ public final class BulkExportConnectionsBody {
         return provider;
     }
 
-    @JsonProperty("next_token")
+    @JsonIgnore
     public Optional<String> getNextToken() {
+        if (nextToken == null) {
+            return Optional.empty();
+        }
+        return nextToken;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("user_ids")
+    private Optional<List<String>> _getUserIds() {
+        return userIds;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("next_token")
+    private Optional<String> _getNextToken() {
         return nextToken;
     }
 
@@ -108,17 +129,21 @@ public final class BulkExportConnectionsBody {
     public interface _FinalStage {
         BulkExportConnectionsBody build();
 
-        _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId);
+        _FinalStage teamId(Optional<BulkExportLinkRequestTeamId> teamId);
 
-        _FinalStage teamId(LinkBulkExportRequestTeamId teamId);
+        _FinalStage teamId(BulkExportLinkRequestTeamId teamId);
 
         _FinalStage userIds(Optional<List<String>> userIds);
 
         _FinalStage userIds(List<String> userIds);
 
+        _FinalStage userIds(Nullable<List<String>> userIds);
+
         _FinalStage nextToken(Optional<String> nextToken);
 
         _FinalStage nextToken(String nextToken);
+
+        _FinalStage nextToken(Nullable<String> nextToken);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -129,7 +154,7 @@ public final class BulkExportConnectionsBody {
 
         private Optional<List<String>> userIds = Optional.empty();
 
-        private Optional<LinkBulkExportRequestTeamId> teamId = Optional.empty();
+        private Optional<BulkExportLinkRequestTeamId> teamId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -153,6 +178,18 @@ public final class BulkExportConnectionsBody {
         }
 
         @java.lang.Override
+        public _FinalStage nextToken(Nullable<String> nextToken) {
+            if (nextToken.isNull()) {
+                this.nextToken = null;
+            } else if (nextToken.isEmpty()) {
+                this.nextToken = Optional.empty();
+            } else {
+                this.nextToken = Optional.of(nextToken.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage nextToken(String nextToken) {
             this.nextToken = Optional.ofNullable(nextToken);
             return this;
@@ -162,6 +199,18 @@ public final class BulkExportConnectionsBody {
         @JsonSetter(value = "next_token", nulls = Nulls.SKIP)
         public _FinalStage nextToken(Optional<String> nextToken) {
             this.nextToken = nextToken;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage userIds(Nullable<List<String>> userIds) {
+            if (userIds.isNull()) {
+                this.userIds = null;
+            } else if (userIds.isEmpty()) {
+                this.userIds = Optional.empty();
+            } else {
+                this.userIds = Optional.of(userIds.get());
+            }
             return this;
         }
 
@@ -179,14 +228,14 @@ public final class BulkExportConnectionsBody {
         }
 
         @java.lang.Override
-        public _FinalStage teamId(LinkBulkExportRequestTeamId teamId) {
+        public _FinalStage teamId(BulkExportLinkRequestTeamId teamId) {
             this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
-        public _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId) {
+        public _FinalStage teamId(Optional<BulkExportLinkRequestTeamId> teamId) {
             this.teamId = teamId;
             return this;
         }

@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -59,8 +62,11 @@ public final class PhysicianCreateRequestBase {
         return lastName;
     }
 
-    @JsonProperty("email")
+    @JsonIgnore
     public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
         return email;
     }
 
@@ -72,6 +78,12 @@ public final class PhysicianCreateRequestBase {
     @JsonProperty("licensed_states")
     public Optional<List<String>> getLicensedStates() {
         return licensedStates;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
+        return email;
     }
 
     @java.lang.Override
@@ -127,6 +139,8 @@ public final class PhysicianCreateRequestBase {
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
+
+        _FinalStage email(Nullable<String> email);
 
         _FinalStage licensedStates(Optional<List<String>> licensedStates);
 
@@ -191,6 +205,18 @@ public final class PhysicianCreateRequestBase {
         @JsonSetter(value = "licensed_states", nulls = Nulls.SKIP)
         public _FinalStage licensedStates(Optional<List<String>> licensedStates) {
             this.licensedStates = licensedStates;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
             return this;
         }
 

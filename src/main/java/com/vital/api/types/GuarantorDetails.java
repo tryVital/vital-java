@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,18 +79,45 @@ public final class GuarantorDetails {
         return phoneNumber;
     }
 
-    @JsonProperty("household_income")
+    @JsonIgnore
     public Optional<Integer> getHouseholdIncome() {
+        if (householdIncome == null) {
+            return Optional.empty();
+        }
         return householdIncome;
     }
 
-    @JsonProperty("household_size")
+    @JsonIgnore
     public Optional<Integer> getHouseholdSize() {
+        if (householdSize == null) {
+            return Optional.empty();
+        }
         return householdSize;
     }
 
-    @JsonProperty("email")
+    @JsonIgnore
     public Optional<String> getEmail() {
+        if (email == null) {
+            return Optional.empty();
+        }
+        return email;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("household_income")
+    private Optional<Integer> _getHouseholdIncome() {
+        return householdIncome;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("household_size")
+    private Optional<Integer> _getHouseholdSize() {
+        return householdSize;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
+    private Optional<String> _getEmail() {
         return email;
     }
 
@@ -158,13 +188,19 @@ public final class GuarantorDetails {
 
         _FinalStage householdIncome(Integer householdIncome);
 
+        _FinalStage householdIncome(Nullable<Integer> householdIncome);
+
         _FinalStage householdSize(Optional<Integer> householdSize);
 
         _FinalStage householdSize(Integer householdSize);
 
+        _FinalStage householdSize(Nullable<Integer> householdSize);
+
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
+
+        _FinalStage email(Nullable<String> email);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -230,6 +266,18 @@ public final class GuarantorDetails {
         }
 
         @java.lang.Override
+        public _FinalStage email(Nullable<String> email) {
+            if (email.isNull()) {
+                this.email = null;
+            } else if (email.isEmpty()) {
+                this.email = Optional.empty();
+            } else {
+                this.email = Optional.of(email.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage email(String email) {
             this.email = Optional.ofNullable(email);
             return this;
@@ -243,6 +291,18 @@ public final class GuarantorDetails {
         }
 
         @java.lang.Override
+        public _FinalStage householdSize(Nullable<Integer> householdSize) {
+            if (householdSize.isNull()) {
+                this.householdSize = null;
+            } else if (householdSize.isEmpty()) {
+                this.householdSize = Optional.empty();
+            } else {
+                this.householdSize = Optional.of(householdSize.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage householdSize(Integer householdSize) {
             this.householdSize = Optional.ofNullable(householdSize);
             return this;
@@ -252,6 +312,18 @@ public final class GuarantorDetails {
         @JsonSetter(value = "household_size", nulls = Nulls.SKIP)
         public _FinalStage householdSize(Optional<Integer> householdSize) {
             this.householdSize = householdSize;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage householdIncome(Nullable<Integer> householdIncome) {
+            if (householdIncome.isNull()) {
+                this.householdIncome = null;
+            } else if (householdIncome.isEmpty()) {
+                this.householdIncome = Optional.empty();
+            } else {
+                this.householdIncome = Optional.of(householdIncome.get());
+            }
             return this;
         }
 

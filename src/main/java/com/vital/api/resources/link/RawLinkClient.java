@@ -19,20 +19,20 @@ import com.vital.api.resources.link.requests.BulkExportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkImportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkPauseConnectionsBody;
 import com.vital.api.resources.link.requests.BulkTriggerHistoricalPullBody;
+import com.vital.api.resources.link.requests.CodeCreateLinkRequest;
 import com.vital.api.resources.link.requests.CompletePasswordProviderMfaBody;
 import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
 import com.vital.api.resources.link.requests.EmailAuthLink;
 import com.vital.api.resources.link.requests.EmailProviderAuthLink;
+import com.vital.api.resources.link.requests.GenerateOauthLinkLinkRequest;
+import com.vital.api.resources.link.requests.GetAllProvidersLinkRequest;
 import com.vital.api.resources.link.requests.IndividualProviderData;
-import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
-import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
-import com.vital.api.resources.link.requests.LinkGetAllProvidersRequest;
-import com.vital.api.resources.link.requests.LinkListBulkOpsRequest;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.resources.link.requests.LinkTokenStateRequest;
 import com.vital.api.resources.link.requests.LinkTokenValidationRequest;
+import com.vital.api.resources.link.requests.ListBulkOpsLinkRequest;
 import com.vital.api.resources.link.requests.ManualConnectionData;
 import com.vital.api.resources.link.requests.PasswordAuthLink;
+import com.vital.api.resources.link.requests.TokenStateLinkRequest;
 import com.vital.api.types.BulkExportConnectionsResponse;
 import com.vital.api.types.BulkImportConnectionsResponse;
 import com.vital.api.types.BulkOpsResponse;
@@ -66,15 +66,15 @@ public class RawLinkClient {
     }
 
     public VitalHttpResponse<BulkOpsResponse> listBulkOps() {
-        return listBulkOps(LinkListBulkOpsRequest.builder().build());
+        return listBulkOps(ListBulkOpsLinkRequest.builder().build());
     }
 
-    public VitalHttpResponse<BulkOpsResponse> listBulkOps(LinkListBulkOpsRequest request) {
+    public VitalHttpResponse<BulkOpsResponse> listBulkOps(ListBulkOpsLinkRequest request) {
         return listBulkOps(request, null);
     }
 
     public VitalHttpResponse<BulkOpsResponse> listBulkOps(
-            LinkListBulkOpsRequest request, RequestOptions requestOptions) {
+            ListBulkOpsLinkRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/bulk_op");
@@ -508,7 +508,7 @@ public class RawLinkClient {
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
-    public VitalHttpResponse<VitalTokenCreatedResponse> codeCreate(LinkCodeCreateRequest request) {
+    public VitalHttpResponse<VitalTokenCreatedResponse> codeCreate(CodeCreateLinkRequest request) {
         return codeCreate(request, null);
     }
 
@@ -516,7 +516,7 @@ public class RawLinkClient {
      * Generate a token to invite a user of Vital mobile app to your team
      */
     public VitalHttpResponse<VitalTokenCreatedResponse> codeCreate(
-            LinkCodeCreateRequest request, RequestOptions requestOptions) {
+            CodeCreateLinkRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/code/create");
@@ -631,14 +631,14 @@ public class RawLinkClient {
      * Check link token state - can be hit continuously used as heartbeat
      */
     public VitalHttpResponse<Map<String, Object>> tokenState() {
-        return tokenState(LinkTokenStateRequest.builder().build());
+        return tokenState(TokenStateLinkRequest.builder().build());
     }
 
     /**
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
-    public VitalHttpResponse<Map<String, Object>> tokenState(LinkTokenStateRequest request) {
+    public VitalHttpResponse<Map<String, Object>> tokenState(TokenStateLinkRequest request) {
         return tokenState(request, null);
     }
 
@@ -647,7 +647,7 @@ public class RawLinkClient {
      * Check link token state - can be hit continuously used as heartbeat
      */
     public VitalHttpResponse<Map<String, Object>> tokenState(
-            LinkTokenStateRequest request, RequestOptions requestOptions) {
+            TokenStateLinkRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/state")
@@ -837,14 +837,14 @@ public class RawLinkClient {
      */
     public VitalHttpResponse<Source> generateOauthLink(OAuthProviders oauthProvider) {
         return generateOauthLink(
-                oauthProvider, LinkGenerateOauthLinkRequest.builder().build());
+                oauthProvider, GenerateOauthLinkLinkRequest.builder().build());
     }
 
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
     public VitalHttpResponse<Source> generateOauthLink(
-            OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request) {
+            OAuthProviders oauthProvider, GenerateOauthLinkLinkRequest request) {
         return generateOauthLink(oauthProvider, request, null);
     }
 
@@ -852,7 +852,7 @@ public class RawLinkClient {
      * This endpoint generates an OAuth link for oauth provider
      */
     public VitalHttpResponse<Source> generateOauthLink(
-            OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request, RequestOptions requestOptions) {
+            OAuthProviders oauthProvider, GenerateOauthLinkLinkRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/oauth")
@@ -1118,13 +1118,13 @@ public class RawLinkClient {
      * GET List of all available providers given the generated link token.
      */
     public VitalHttpResponse<List<SourceLink>> getAllProviders() {
-        return getAllProviders(LinkGetAllProvidersRequest.builder().build());
+        return getAllProviders(GetAllProvidersLinkRequest.builder().build());
     }
 
     /**
      * GET List of all available providers given the generated link token.
      */
-    public VitalHttpResponse<List<SourceLink>> getAllProviders(LinkGetAllProvidersRequest request) {
+    public VitalHttpResponse<List<SourceLink>> getAllProviders(GetAllProvidersLinkRequest request) {
         return getAllProviders(request, null);
     }
 
@@ -1132,7 +1132,7 @@ public class RawLinkClient {
      * GET List of all available providers given the generated link token.
      */
     public VitalHttpResponse<List<SourceLink>> getAllProviders(
-            LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
+            GetAllProvidersLinkRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/providers")

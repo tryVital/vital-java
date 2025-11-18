@@ -5,12 +5,15 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -26,8 +29,6 @@ public final class BiomarkerResult {
     private final String name;
 
     private final Optional<String> slug;
-
-    private final Optional<Double> value;
 
     private final String result;
 
@@ -68,7 +69,6 @@ public final class BiomarkerResult {
     private BiomarkerResult(
             String name,
             Optional<String> slug,
-            Optional<Double> value,
             String result,
             ResultType type,
             Optional<String> unit,
@@ -89,7 +89,6 @@ public final class BiomarkerResult {
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.slug = slug;
-        this.value = value;
         this.result = result;
         this.type = type;
         this.unit = unit;
@@ -120,14 +119,6 @@ public final class BiomarkerResult {
         return slug;
     }
 
-    /**
-     * @return Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.
-     */
-    @JsonProperty("value")
-    public Optional<Double> getValue() {
-        return value;
-    }
-
     @JsonProperty("result")
     public String getResult() {
         return result;
@@ -138,43 +129,67 @@ public final class BiomarkerResult {
         return type;
     }
 
-    @JsonProperty("unit")
+    @JsonIgnore
     public Optional<String> getUnit() {
+        if (unit == null) {
+            return Optional.empty();
+        }
         return unit;
     }
 
-    @JsonProperty("timestamp")
+    @JsonIgnore
     public Optional<OffsetDateTime> getTimestamp() {
+        if (timestamp == null) {
+            return Optional.empty();
+        }
         return timestamp;
     }
 
-    @JsonProperty("notes")
+    @JsonIgnore
     public Optional<String> getNotes() {
+        if (notes == null) {
+            return Optional.empty();
+        }
         return notes;
     }
 
-    @JsonProperty("reference_range")
+    @JsonIgnore
     public Optional<String> getReferenceRange() {
+        if (referenceRange == null) {
+            return Optional.empty();
+        }
         return referenceRange;
     }
 
-    @JsonProperty("min_range_value")
+    @JsonIgnore
     public Optional<Double> getMinRangeValue() {
+        if (minRangeValue == null) {
+            return Optional.empty();
+        }
         return minRangeValue;
     }
 
-    @JsonProperty("max_range_value")
+    @JsonIgnore
     public Optional<Double> getMaxRangeValue() {
+        if (maxRangeValue == null) {
+            return Optional.empty();
+        }
         return maxRangeValue;
     }
 
-    @JsonProperty("is_above_max_range")
+    @JsonIgnore
     public Optional<Boolean> getIsAboveMaxRange() {
+        if (isAboveMaxRange == null) {
+            return Optional.empty();
+        }
         return isAboveMaxRange;
     }
 
-    @JsonProperty("is_below_min_range")
+    @JsonIgnore
     public Optional<Boolean> getIsBelowMinRange() {
+        if (isBelowMinRange == null) {
+            return Optional.empty();
+        }
         return isBelowMinRange;
     }
 
@@ -183,33 +198,135 @@ public final class BiomarkerResult {
         return interpretation;
     }
 
-    @JsonProperty("loinc")
+    @JsonIgnore
     public Optional<String> getLoinc() {
+        if (loinc == null) {
+            return Optional.empty();
+        }
         return loinc;
     }
 
-    @JsonProperty("loinc_slug")
+    @JsonIgnore
     public Optional<String> getLoincSlug() {
+        if (loincSlug == null) {
+            return Optional.empty();
+        }
         return loincSlug;
     }
 
-    @JsonProperty("provider_id")
+    @JsonIgnore
     public Optional<String> getProviderId() {
+        if (providerId == null) {
+            return Optional.empty();
+        }
         return providerId;
     }
 
-    @JsonProperty("source_markers")
+    @JsonIgnore
     public Optional<List<ParentBiomarkerData>> getSourceMarkers() {
+        if (sourceMarkers == null) {
+            return Optional.empty();
+        }
         return sourceMarkers;
     }
 
-    @JsonProperty("performing_laboratory")
+    @JsonIgnore
     public Optional<String> getPerformingLaboratory() {
+        if (performingLaboratory == null) {
+            return Optional.empty();
+        }
         return performingLaboratory;
     }
 
-    @JsonProperty("source_sample_id")
+    @JsonIgnore
     public Optional<String> getSourceSampleId() {
+        if (sourceSampleId == null) {
+            return Optional.empty();
+        }
+        return sourceSampleId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("unit")
+    private Optional<String> _getUnit() {
+        return unit;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("timestamp")
+    private Optional<OffsetDateTime> _getTimestamp() {
+        return timestamp;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("notes")
+    private Optional<String> _getNotes() {
+        return notes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("reference_range")
+    private Optional<String> _getReferenceRange() {
+        return referenceRange;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("min_range_value")
+    private Optional<Double> _getMinRangeValue() {
+        return minRangeValue;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("max_range_value")
+    private Optional<Double> _getMaxRangeValue() {
+        return maxRangeValue;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("is_above_max_range")
+    private Optional<Boolean> _getIsAboveMaxRange() {
+        return isAboveMaxRange;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("is_below_min_range")
+    private Optional<Boolean> _getIsBelowMinRange() {
+        return isBelowMinRange;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("loinc")
+    private Optional<String> _getLoinc() {
+        return loinc;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("loinc_slug")
+    private Optional<String> _getLoincSlug() {
+        return loincSlug;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("provider_id")
+    private Optional<String> _getProviderId() {
+        return providerId;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_markers")
+    private Optional<List<ParentBiomarkerData>> _getSourceMarkers() {
+        return sourceMarkers;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("performing_laboratory")
+    private Optional<String> _getPerformingLaboratory() {
+        return performingLaboratory;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("source_sample_id")
+    private Optional<String> _getSourceSampleId() {
         return sourceSampleId;
     }
 
@@ -227,7 +344,6 @@ public final class BiomarkerResult {
     private boolean equalTo(BiomarkerResult other) {
         return name.equals(other.name)
                 && slug.equals(other.slug)
-                && value.equals(other.value)
                 && result.equals(other.result)
                 && type.equals(other.type)
                 && unit.equals(other.unit)
@@ -252,7 +368,6 @@ public final class BiomarkerResult {
         return Objects.hash(
                 this.name,
                 this.slug,
-                this.value,
                 this.result,
                 this.type,
                 this.unit,
@@ -302,44 +417,53 @@ public final class BiomarkerResult {
 
         _FinalStage slug(String slug);
 
-        /**
-         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
-         */
-        _FinalStage value(Optional<Double> value);
-
-        _FinalStage value(Double value);
-
         _FinalStage unit(Optional<String> unit);
 
         _FinalStage unit(String unit);
+
+        _FinalStage unit(Nullable<String> unit);
 
         _FinalStage timestamp(Optional<OffsetDateTime> timestamp);
 
         _FinalStage timestamp(OffsetDateTime timestamp);
 
+        _FinalStage timestamp(Nullable<OffsetDateTime> timestamp);
+
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
+
+        _FinalStage notes(Nullable<String> notes);
 
         _FinalStage referenceRange(Optional<String> referenceRange);
 
         _FinalStage referenceRange(String referenceRange);
 
+        _FinalStage referenceRange(Nullable<String> referenceRange);
+
         _FinalStage minRangeValue(Optional<Double> minRangeValue);
 
         _FinalStage minRangeValue(Double minRangeValue);
+
+        _FinalStage minRangeValue(Nullable<Double> minRangeValue);
 
         _FinalStage maxRangeValue(Optional<Double> maxRangeValue);
 
         _FinalStage maxRangeValue(Double maxRangeValue);
 
+        _FinalStage maxRangeValue(Nullable<Double> maxRangeValue);
+
         _FinalStage isAboveMaxRange(Optional<Boolean> isAboveMaxRange);
 
         _FinalStage isAboveMaxRange(Boolean isAboveMaxRange);
 
+        _FinalStage isAboveMaxRange(Nullable<Boolean> isAboveMaxRange);
+
         _FinalStage isBelowMinRange(Optional<Boolean> isBelowMinRange);
 
         _FinalStage isBelowMinRange(Boolean isBelowMinRange);
+
+        _FinalStage isBelowMinRange(Nullable<Boolean> isBelowMinRange);
 
         _FinalStage interpretation(Optional<String> interpretation);
 
@@ -349,25 +473,37 @@ public final class BiomarkerResult {
 
         _FinalStage loinc(String loinc);
 
+        _FinalStage loinc(Nullable<String> loinc);
+
         _FinalStage loincSlug(Optional<String> loincSlug);
 
         _FinalStage loincSlug(String loincSlug);
+
+        _FinalStage loincSlug(Nullable<String> loincSlug);
 
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
 
+        _FinalStage providerId(Nullable<String> providerId);
+
         _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers);
 
         _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers);
+
+        _FinalStage sourceMarkers(Nullable<List<ParentBiomarkerData>> sourceMarkers);
 
         _FinalStage performingLaboratory(Optional<String> performingLaboratory);
 
         _FinalStage performingLaboratory(String performingLaboratory);
 
+        _FinalStage performingLaboratory(Nullable<String> performingLaboratory);
+
         _FinalStage sourceSampleId(Optional<String> sourceSampleId);
 
         _FinalStage sourceSampleId(String sourceSampleId);
+
+        _FinalStage sourceSampleId(Nullable<String> sourceSampleId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -408,8 +544,6 @@ public final class BiomarkerResult {
 
         private Optional<String> unit = Optional.empty();
 
-        private Optional<Double> value = Optional.empty();
-
         private Optional<String> slug = Optional.empty();
 
         @JsonAnySetter
@@ -421,7 +555,6 @@ public final class BiomarkerResult {
         public Builder from(BiomarkerResult other) {
             name(other.getName());
             slug(other.getSlug());
-            value(other.getValue());
             result(other.getResult());
             type(other.getType());
             unit(other.getUnit());
@@ -464,6 +597,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage sourceSampleId(Nullable<String> sourceSampleId) {
+            if (sourceSampleId.isNull()) {
+                this.sourceSampleId = null;
+            } else if (sourceSampleId.isEmpty()) {
+                this.sourceSampleId = Optional.empty();
+            } else {
+                this.sourceSampleId = Optional.of(sourceSampleId.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceSampleId(String sourceSampleId) {
             this.sourceSampleId = Optional.ofNullable(sourceSampleId);
             return this;
@@ -473,6 +618,18 @@ public final class BiomarkerResult {
         @JsonSetter(value = "source_sample_id", nulls = Nulls.SKIP)
         public _FinalStage sourceSampleId(Optional<String> sourceSampleId) {
             this.sourceSampleId = sourceSampleId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage performingLaboratory(Nullable<String> performingLaboratory) {
+            if (performingLaboratory.isNull()) {
+                this.performingLaboratory = null;
+            } else if (performingLaboratory.isEmpty()) {
+                this.performingLaboratory = Optional.empty();
+            } else {
+                this.performingLaboratory = Optional.of(performingLaboratory.get());
+            }
             return this;
         }
 
@@ -490,6 +647,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage sourceMarkers(Nullable<List<ParentBiomarkerData>> sourceMarkers) {
+            if (sourceMarkers.isNull()) {
+                this.sourceMarkers = null;
+            } else if (sourceMarkers.isEmpty()) {
+                this.sourceMarkers = Optional.empty();
+            } else {
+                this.sourceMarkers = Optional.of(sourceMarkers.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage sourceMarkers(List<ParentBiomarkerData> sourceMarkers) {
             this.sourceMarkers = Optional.ofNullable(sourceMarkers);
             return this;
@@ -499,6 +668,18 @@ public final class BiomarkerResult {
         @JsonSetter(value = "source_markers", nulls = Nulls.SKIP)
         public _FinalStage sourceMarkers(Optional<List<ParentBiomarkerData>> sourceMarkers) {
             this.sourceMarkers = sourceMarkers;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage providerId(Nullable<String> providerId) {
+            if (providerId.isNull()) {
+                this.providerId = null;
+            } else if (providerId.isEmpty()) {
+                this.providerId = Optional.empty();
+            } else {
+                this.providerId = Optional.of(providerId.get());
+            }
             return this;
         }
 
@@ -516,6 +697,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage loincSlug(Nullable<String> loincSlug) {
+            if (loincSlug.isNull()) {
+                this.loincSlug = null;
+            } else if (loincSlug.isEmpty()) {
+                this.loincSlug = Optional.empty();
+            } else {
+                this.loincSlug = Optional.of(loincSlug.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage loincSlug(String loincSlug) {
             this.loincSlug = Optional.ofNullable(loincSlug);
             return this;
@@ -525,6 +718,18 @@ public final class BiomarkerResult {
         @JsonSetter(value = "loinc_slug", nulls = Nulls.SKIP)
         public _FinalStage loincSlug(Optional<String> loincSlug) {
             this.loincSlug = loincSlug;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage loinc(Nullable<String> loinc) {
+            if (loinc.isNull()) {
+                this.loinc = null;
+            } else if (loinc.isEmpty()) {
+                this.loinc = Optional.empty();
+            } else {
+                this.loinc = Optional.of(loinc.get());
+            }
             return this;
         }
 
@@ -555,6 +760,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage isBelowMinRange(Nullable<Boolean> isBelowMinRange) {
+            if (isBelowMinRange.isNull()) {
+                this.isBelowMinRange = null;
+            } else if (isBelowMinRange.isEmpty()) {
+                this.isBelowMinRange = Optional.empty();
+            } else {
+                this.isBelowMinRange = Optional.of(isBelowMinRange.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage isBelowMinRange(Boolean isBelowMinRange) {
             this.isBelowMinRange = Optional.ofNullable(isBelowMinRange);
             return this;
@@ -564,6 +781,18 @@ public final class BiomarkerResult {
         @JsonSetter(value = "is_below_min_range", nulls = Nulls.SKIP)
         public _FinalStage isBelowMinRange(Optional<Boolean> isBelowMinRange) {
             this.isBelowMinRange = isBelowMinRange;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage isAboveMaxRange(Nullable<Boolean> isAboveMaxRange) {
+            if (isAboveMaxRange.isNull()) {
+                this.isAboveMaxRange = null;
+            } else if (isAboveMaxRange.isEmpty()) {
+                this.isAboveMaxRange = Optional.empty();
+            } else {
+                this.isAboveMaxRange = Optional.of(isAboveMaxRange.get());
+            }
             return this;
         }
 
@@ -581,6 +810,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage maxRangeValue(Nullable<Double> maxRangeValue) {
+            if (maxRangeValue.isNull()) {
+                this.maxRangeValue = null;
+            } else if (maxRangeValue.isEmpty()) {
+                this.maxRangeValue = Optional.empty();
+            } else {
+                this.maxRangeValue = Optional.of(maxRangeValue.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage maxRangeValue(Double maxRangeValue) {
             this.maxRangeValue = Optional.ofNullable(maxRangeValue);
             return this;
@@ -590,6 +831,18 @@ public final class BiomarkerResult {
         @JsonSetter(value = "max_range_value", nulls = Nulls.SKIP)
         public _FinalStage maxRangeValue(Optional<Double> maxRangeValue) {
             this.maxRangeValue = maxRangeValue;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage minRangeValue(Nullable<Double> minRangeValue) {
+            if (minRangeValue.isNull()) {
+                this.minRangeValue = null;
+            } else if (minRangeValue.isEmpty()) {
+                this.minRangeValue = Optional.empty();
+            } else {
+                this.minRangeValue = Optional.of(minRangeValue.get());
+            }
             return this;
         }
 
@@ -607,6 +860,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage referenceRange(Nullable<String> referenceRange) {
+            if (referenceRange.isNull()) {
+                this.referenceRange = null;
+            } else if (referenceRange.isEmpty()) {
+                this.referenceRange = Optional.empty();
+            } else {
+                this.referenceRange = Optional.of(referenceRange.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage referenceRange(String referenceRange) {
             this.referenceRange = Optional.ofNullable(referenceRange);
             return this;
@@ -616,6 +881,18 @@ public final class BiomarkerResult {
         @JsonSetter(value = "reference_range", nulls = Nulls.SKIP)
         public _FinalStage referenceRange(Optional<String> referenceRange) {
             this.referenceRange = referenceRange;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage notes(Nullable<String> notes) {
+            if (notes.isNull()) {
+                this.notes = null;
+            } else if (notes.isEmpty()) {
+                this.notes = Optional.empty();
+            } else {
+                this.notes = Optional.of(notes.get());
+            }
             return this;
         }
 
@@ -633,6 +910,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage timestamp(Nullable<OffsetDateTime> timestamp) {
+            if (timestamp.isNull()) {
+                this.timestamp = null;
+            } else if (timestamp.isEmpty()) {
+                this.timestamp = Optional.empty();
+            } else {
+                this.timestamp = Optional.of(timestamp.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage timestamp(OffsetDateTime timestamp) {
             this.timestamp = Optional.ofNullable(timestamp);
             return this;
@@ -646,6 +935,18 @@ public final class BiomarkerResult {
         }
 
         @java.lang.Override
+        public _FinalStage unit(Nullable<String> unit) {
+            if (unit.isNull()) {
+                this.unit = null;
+            } else if (unit.isEmpty()) {
+                this.unit = Optional.empty();
+            } else {
+                this.unit = Optional.of(unit.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.ofNullable(unit);
             return this;
@@ -655,26 +956,6 @@ public final class BiomarkerResult {
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
-            return this;
-        }
-
-        /**
-         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage value(Double value) {
-            this.value = Optional.ofNullable(value);
-            return this;
-        }
-
-        /**
-         * <p>Deprecated: Use 'result' (string) and <code>type</code> (enum) instead.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "value", nulls = Nulls.SKIP)
-        public _FinalStage value(Optional<Double> value) {
-            this.value = value;
             return this;
         }
 
@@ -696,7 +977,6 @@ public final class BiomarkerResult {
             return new BiomarkerResult(
                     name,
                     slug,
-                    value,
                     result,
                     type,
                     unit,

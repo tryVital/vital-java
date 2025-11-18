@@ -5,12 +5,15 @@ package com.vital.api.resources.link.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vital.api.core.Nullable;
+import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,14 +37,23 @@ public final class CompletePasswordProviderMfaBody {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("x-vital-link-token")
+    @JsonIgnore
     public Optional<String> getVitalLinkToken() {
+        if (vitalLinkToken == null) {
+            return Optional.empty();
+        }
         return vitalLinkToken;
     }
 
     @JsonProperty("mfa_code")
     public String getMfaCode() {
         return mfaCode;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("x-vital-link-token")
+    private Optional<String> _getVitalLinkToken() {
+        return vitalLinkToken;
     }
 
     @java.lang.Override
@@ -85,6 +97,8 @@ public final class CompletePasswordProviderMfaBody {
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
+
+        _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -109,6 +123,18 @@ public final class CompletePasswordProviderMfaBody {
         @JsonSetter("mfa_code")
         public _FinalStage mfaCode(@NotNull String mfaCode) {
             this.mfaCode = Objects.requireNonNull(mfaCode, "mfaCode must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken) {
+            if (vitalLinkToken.isNull()) {
+                this.vitalLinkToken = null;
+            } else if (vitalLinkToken.isEmpty()) {
+                this.vitalLinkToken = Optional.empty();
+            } else {
+                this.vitalLinkToken = Optional.of(vitalLinkToken.get());
+            }
             return this;
         }
 

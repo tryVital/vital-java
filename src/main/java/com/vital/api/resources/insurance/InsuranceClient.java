@@ -5,9 +5,9 @@ package com.vital.api.resources.insurance;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
-import com.vital.api.resources.insurance.requests.InsuranceSearchGetPayorInfoRequest;
 import com.vital.api.resources.insurance.requests.PayorSearchRequest;
+import com.vital.api.resources.insurance.requests.SearchDiagnosisInsuranceRequest;
+import com.vital.api.resources.insurance.requests.SearchGetPayorInfoInsuranceRequest;
 import com.vital.api.types.ClientFacingDiagnosisInformation;
 import com.vital.api.types.ClientFacingPayorSearchResponse;
 import com.vital.api.types.ClientFacingPayorSearchResponseDeprecated;
@@ -34,12 +34,12 @@ public class InsuranceClient {
         return this.rawClient.searchGetPayorInfo().body();
     }
 
-    public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest request) {
+    public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(SearchGetPayorInfoInsuranceRequest request) {
         return this.rawClient.searchGetPayorInfo(request).body();
     }
 
     public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(
-            InsuranceSearchGetPayorInfoRequest request, RequestOptions requestOptions) {
+            SearchGetPayorInfoInsuranceRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchGetPayorInfo(request, requestOptions).body();
     }
 
@@ -56,12 +56,12 @@ public class InsuranceClient {
         return this.rawClient.searchPayorInfo(request, requestOptions).body();
     }
 
-    public List<ClientFacingDiagnosisInformation> searchDiagnosis(InsuranceSearchDiagnosisRequest request) {
+    public List<ClientFacingDiagnosisInformation> searchDiagnosis(SearchDiagnosisInsuranceRequest request) {
         return this.rawClient.searchDiagnosis(request).body();
     }
 
     public List<ClientFacingDiagnosisInformation> searchDiagnosis(
-            InsuranceSearchDiagnosisRequest request, RequestOptions requestOptions) {
+            SearchDiagnosisInsuranceRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchDiagnosis(request, requestOptions).body();
     }
 }
