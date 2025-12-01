@@ -12,6 +12,7 @@ import com.vital.api.resources.devices.AsyncDevicesClient;
 import com.vital.api.resources.electrocardiogram.AsyncElectrocardiogramClient;
 import com.vital.api.resources.insurance.AsyncInsuranceClient;
 import com.vital.api.resources.introspect.AsyncIntrospectClient;
+import com.vital.api.resources.labreport.AsyncLabReportClient;
 import com.vital.api.resources.labtests.AsyncLabTestsClient;
 import com.vital.api.resources.link.AsyncLinkClient;
 import com.vital.api.resources.meal.AsyncMealClient;
@@ -74,6 +75,8 @@ public class AsyncVital {
 
     protected final Supplier<AsyncPayorClient> payorClient;
 
+    protected final Supplier<AsyncLabReportClient> labReportClient;
+
     protected final Supplier<AsyncAggregateClient> aggregateClient;
 
     public AsyncVital(ClientOptions clientOptions) {
@@ -99,6 +102,7 @@ public class AsyncVital {
         this.orderClient = Suppliers.memoize(() -> new AsyncOrderClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new AsyncInsuranceClient(clientOptions));
         this.payorClient = Suppliers.memoize(() -> new AsyncPayorClient(clientOptions));
+        this.labReportClient = Suppliers.memoize(() -> new AsyncLabReportClient(clientOptions));
         this.aggregateClient = Suppliers.memoize(() -> new AsyncAggregateClient(clientOptions));
     }
 
@@ -184,6 +188,10 @@ public class AsyncVital {
 
     public AsyncPayorClient payor() {
         return this.payorClient.get();
+    }
+
+    public AsyncLabReportClient labReport() {
+        return this.labReportClient.get();
     }
 
     public AsyncAggregateClient aggregate() {

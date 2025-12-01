@@ -5,18 +5,18 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Interpretation {
-    NORMAL("normal"),
+public enum ParsingJobStatus {
+    UPLOAD_PENDING("upload_pending"),
 
-    ABNORMAL("abnormal"),
+    STARTED("started"),
 
-    CRITICAL("critical"),
+    COMPLETED("completed"),
 
-    UNKNOWN("unknown");
+    FAILED("failed");
 
     private final String value;
 
-    Interpretation(String value) {
+    ParsingJobStatus(String value) {
         this.value = value;
     }
 

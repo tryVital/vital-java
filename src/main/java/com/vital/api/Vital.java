@@ -12,6 +12,7 @@ import com.vital.api.resources.devices.DevicesClient;
 import com.vital.api.resources.electrocardiogram.ElectrocardiogramClient;
 import com.vital.api.resources.insurance.InsuranceClient;
 import com.vital.api.resources.introspect.IntrospectClient;
+import com.vital.api.resources.labreport.LabReportClient;
 import com.vital.api.resources.labtests.LabTestsClient;
 import com.vital.api.resources.link.LinkClient;
 import com.vital.api.resources.meal.MealClient;
@@ -74,6 +75,8 @@ public class Vital {
 
     protected final Supplier<PayorClient> payorClient;
 
+    protected final Supplier<LabReportClient> labReportClient;
+
     protected final Supplier<AggregateClient> aggregateClient;
 
     public Vital(ClientOptions clientOptions) {
@@ -99,6 +102,7 @@ public class Vital {
         this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
         this.payorClient = Suppliers.memoize(() -> new PayorClient(clientOptions));
+        this.labReportClient = Suppliers.memoize(() -> new LabReportClient(clientOptions));
         this.aggregateClient = Suppliers.memoize(() -> new AggregateClient(clientOptions));
     }
 
@@ -184,6 +188,10 @@ public class Vital {
 
     public PayorClient payor() {
         return this.payorClient.get();
+    }
+
+    public LabReportClient labReport() {
+        return this.labReportClient.get();
     }
 
     public AggregateClient aggregate() {

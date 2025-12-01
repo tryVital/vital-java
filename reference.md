@@ -14579,6 +14579,113 @@ client.payor().createPayor(
 </dl>
 </details>
 
+## LabReport
+<details><summary><code>client.labReport.parserCreateJob(request) -> ParsingJob</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a parse job, uploads the file to provider, persists the job row,
+and starts the ParseLabReport. Returns a generated job_id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.labReport().parserCreateJob(
+    BodyCreateLabReportParserJob
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.labReport.parserGetJob(jobId) -> ParsingJob</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves the parse job status and stored result if completed.
+
+Returns:
+    ParseLabResultJobResponse with job status and parsed data (if complete)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.labReport().parserGetJob(
+    "job_id",
+    ParserGetJobLabReportRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**jobId:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Aggregate
 <details><summary><code>client.aggregate.queryOne(userId, request) -> AggregationResponse</code></summary>
 <dl>

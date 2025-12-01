@@ -5,18 +5,24 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Interpretation {
-    NORMAL("normal"),
+public enum LabReportResultType {
+    NUMERIC("numeric"),
 
-    ABNORMAL("abnormal"),
+    RANGE("range"),
 
-    CRITICAL("critical"),
+    COMMENT("comment"),
 
-    UNKNOWN("unknown");
+    BOOLEAN("boolean"),
+
+    DURATION("duration"),
+
+    PERCENTAGE("percentage"),
+
+    RATIO("ratio");
 
     private final String value;
 
-    Interpretation(String value) {
+    LabReportResultType(String value) {
         this.value = value;
     }
 
