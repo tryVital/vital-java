@@ -191,7 +191,7 @@ public final class ClientFacingLabTest {
     }
 
     /**
-     * @return Denotes whether a lab test requires using non-Vital physician networks. If it does then it's delegated - no otherwise.
+     * @return Deprecated and always false. Delegation is now at the lab account level. Used to denote whether a lab test requires using non-Vital physician networks.
      */
     @JsonProperty("is_delegated")
     public Optional<Boolean> getIsDelegated() {
@@ -389,7 +389,7 @@ public final class ClientFacingLabTest {
         _FinalStage markers(Nullable<List<ClientFacingMarker>> markers);
 
         /**
-         * <p>Denotes whether a lab test requires using non-Vital physician networks. If it does then it's delegated - no otherwise.</p>
+         * <p>Deprecated and always false. Delegation is now at the lab account level. Used to denote whether a lab test requires using non-Vital physician networks.</p>
          */
         _FinalStage isDelegated(Optional<Boolean> isDelegated);
 
@@ -710,7 +710,7 @@ public final class ClientFacingLabTest {
         }
 
         /**
-         * <p>Denotes whether a lab test requires using non-Vital physician networks. If it does then it's delegated - no otherwise.</p>
+         * <p>Deprecated and always false. Delegation is now at the lab account level. Used to denote whether a lab test requires using non-Vital physician networks.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -720,7 +720,7 @@ public final class ClientFacingLabTest {
         }
 
         /**
-         * <p>Denotes whether a lab test requires using non-Vital physician networks. If it does then it's delegated - no otherwise.</p>
+         * <p>Deprecated and always false. Delegation is now at the lab account level. Used to denote whether a lab test requires using non-Vital physician networks.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "is_delegated", nulls = Nulls.SKIP)
