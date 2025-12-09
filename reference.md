@@ -14611,6 +14611,7 @@ and starts the ParseLabReport. Returns a generated job_id.
 client.labReport().parserCreateJob(
     BodyCreateLabReportParserJob
         .builder()
+        .userId("user_id")
         .build()
 );
 ```

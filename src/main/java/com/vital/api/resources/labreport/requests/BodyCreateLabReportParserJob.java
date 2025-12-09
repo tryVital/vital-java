@@ -16,17 +16,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BodyCreateLabReportParserJob.Builder.class)
 public final class BodyCreateLabReportParserJob {
+    private final String userId;
+
     private final Optional<Boolean> needsHumanReview;
 
     private final Map<String, Object> additionalProperties;
 
-    private BodyCreateLabReportParserJob(Optional<Boolean> needsHumanReview, Map<String, Object> additionalProperties) {
+    private BodyCreateLabReportParserJob(
+            String userId, Optional<Boolean> needsHumanReview, Map<String, Object> additionalProperties) {
+        this.userId = userId;
         this.needsHumanReview = needsHumanReview;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("user_id")
+    public String getUserId() {
+        return userId;
     }
 
     @JsonProperty("needs_human_review")
@@ -46,12 +56,12 @@ public final class BodyCreateLabReportParserJob {
     }
 
     private boolean equalTo(BodyCreateLabReportParserJob other) {
-        return needsHumanReview.equals(other.needsHumanReview);
+        return userId.equals(other.userId) && needsHumanReview.equals(other.needsHumanReview);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.needsHumanReview);
+        return Objects.hash(this.userId, this.needsHumanReview);
     }
 
     @java.lang.Override
@@ -59,12 +69,28 @@ public final class BodyCreateLabReportParserJob {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static UserIdStage builder() {
         return new Builder();
     }
 
+    public interface UserIdStage {
+        _FinalStage userId(@NotNull String userId);
+
+        Builder from(BodyCreateLabReportParserJob other);
+    }
+
+    public interface _FinalStage {
+        BodyCreateLabReportParserJob build();
+
+        _FinalStage needsHumanReview(Optional<Boolean> needsHumanReview);
+
+        _FinalStage needsHumanReview(Boolean needsHumanReview);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
+    public static final class Builder implements UserIdStage, _FinalStage {
+        private String userId;
+
         private Optional<Boolean> needsHumanReview = Optional.empty();
 
         @JsonAnySetter
@@ -72,24 +98,36 @@ public final class BodyCreateLabReportParserJob {
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(BodyCreateLabReportParserJob other) {
+            userId(other.getUserId());
             needsHumanReview(other.getNeedsHumanReview());
             return this;
         }
 
-        @JsonSetter(value = "needs_human_review", nulls = Nulls.SKIP)
-        public Builder needsHumanReview(Optional<Boolean> needsHumanReview) {
-            this.needsHumanReview = needsHumanReview;
+        @java.lang.Override
+        @JsonSetter("user_id")
+        public _FinalStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
-        public Builder needsHumanReview(Boolean needsHumanReview) {
+        @java.lang.Override
+        public _FinalStage needsHumanReview(Boolean needsHumanReview) {
             this.needsHumanReview = Optional.ofNullable(needsHumanReview);
             return this;
         }
 
+        @java.lang.Override
+        @JsonSetter(value = "needs_human_review", nulls = Nulls.SKIP)
+        public _FinalStage needsHumanReview(Optional<Boolean> needsHumanReview) {
+            this.needsHumanReview = needsHumanReview;
+            return this;
+        }
+
+        @java.lang.Override
         public BodyCreateLabReportParserJob build() {
-            return new BodyCreateLabReportParserJob(needsHumanReview, additionalProperties);
+            return new BodyCreateLabReportParserJob(userId, needsHumanReview, additionalProperties);
         }
     }
 }
