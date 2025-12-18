@@ -42,28 +42,30 @@ public final class AggregateExprArg {
         } else if (this.type == 4) {
             return visitor.visit((MealColumnExpr) this.value);
         } else if (this.type == 5) {
-            return visitor.visit((SleepScoreValueMacroExpr) this.value);
+            return visitor.visit((ProfileColumnExpr) this.value);
         } else if (this.type == 6) {
-            return visitor.visit((ChronotypeValueMacroExpr) this.value);
+            return visitor.visit((SleepScoreValueMacroExpr) this.value);
         } else if (this.type == 7) {
-            return visitor.visit((AsleepAtValueMacroExpr) this.value);
+            return visitor.visit((ChronotypeValueMacroExpr) this.value);
         } else if (this.type == 8) {
-            return visitor.visit((AwakeAtValueMacroExpr) this.value);
+            return visitor.visit((AsleepAtValueMacroExpr) this.value);
         } else if (this.type == 9) {
-            return visitor.visit((UnrecognizedValueMacroExpr) this.value);
+            return visitor.visit((AwakeAtValueMacroExpr) this.value);
         } else if (this.type == 10) {
-            return visitor.visit((DiscreteTimeseriesExpr) this.value);
+            return visitor.visit((UnrecognizedValueMacroExpr) this.value);
         } else if (this.type == 11) {
-            return visitor.visit((IntervalTimeseriesExpr) this.value);
+            return visitor.visit((DiscreteTimeseriesExpr) this.value);
         } else if (this.type == 12) {
-            return visitor.visit((BloodPressureTimeseriesExpr) this.value);
+            return visitor.visit((IntervalTimeseriesExpr) this.value);
         } else if (this.type == 13) {
-            return visitor.visit((TemperatureTimeseriesExpr) this.value);
+            return visitor.visit((BloodPressureTimeseriesExpr) this.value);
         } else if (this.type == 14) {
-            return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
+            return visitor.visit((TemperatureTimeseriesExpr) this.value);
         } else if (this.type == 15) {
-            return visitor.visit((NoteTimeseriesExpr) this.value);
+            return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
         } else if (this.type == 16) {
+            return visitor.visit((NoteTimeseriesExpr) this.value);
+        } else if (this.type == 17) {
             return visitor.visit((IndexColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -109,52 +111,56 @@ public final class AggregateExprArg {
         return new AggregateExprArg(value, 4);
     }
 
-    public static AggregateExprArg of(SleepScoreValueMacroExpr value) {
+    public static AggregateExprArg of(ProfileColumnExpr value) {
         return new AggregateExprArg(value, 5);
     }
 
-    public static AggregateExprArg of(ChronotypeValueMacroExpr value) {
+    public static AggregateExprArg of(SleepScoreValueMacroExpr value) {
         return new AggregateExprArg(value, 6);
     }
 
-    public static AggregateExprArg of(AsleepAtValueMacroExpr value) {
+    public static AggregateExprArg of(ChronotypeValueMacroExpr value) {
         return new AggregateExprArg(value, 7);
     }
 
-    public static AggregateExprArg of(AwakeAtValueMacroExpr value) {
+    public static AggregateExprArg of(AsleepAtValueMacroExpr value) {
         return new AggregateExprArg(value, 8);
     }
 
-    public static AggregateExprArg of(UnrecognizedValueMacroExpr value) {
+    public static AggregateExprArg of(AwakeAtValueMacroExpr value) {
         return new AggregateExprArg(value, 9);
     }
 
-    public static AggregateExprArg of(DiscreteTimeseriesExpr value) {
+    public static AggregateExprArg of(UnrecognizedValueMacroExpr value) {
         return new AggregateExprArg(value, 10);
     }
 
-    public static AggregateExprArg of(IntervalTimeseriesExpr value) {
+    public static AggregateExprArg of(DiscreteTimeseriesExpr value) {
         return new AggregateExprArg(value, 11);
     }
 
-    public static AggregateExprArg of(BloodPressureTimeseriesExpr value) {
+    public static AggregateExprArg of(IntervalTimeseriesExpr value) {
         return new AggregateExprArg(value, 12);
     }
 
-    public static AggregateExprArg of(TemperatureTimeseriesExpr value) {
+    public static AggregateExprArg of(BloodPressureTimeseriesExpr value) {
         return new AggregateExprArg(value, 13);
     }
 
-    public static AggregateExprArg of(WorkoutDurationTimeseriesExpr value) {
+    public static AggregateExprArg of(TemperatureTimeseriesExpr value) {
         return new AggregateExprArg(value, 14);
     }
 
-    public static AggregateExprArg of(NoteTimeseriesExpr value) {
+    public static AggregateExprArg of(WorkoutDurationTimeseriesExpr value) {
         return new AggregateExprArg(value, 15);
     }
 
-    public static AggregateExprArg of(IndexColumnExpr value) {
+    public static AggregateExprArg of(NoteTimeseriesExpr value) {
         return new AggregateExprArg(value, 16);
+    }
+
+    public static AggregateExprArg of(IndexColumnExpr value) {
+        return new AggregateExprArg(value, 17);
     }
 
     public interface Visitor<T> {
@@ -167,6 +173,8 @@ public final class AggregateExprArg {
         T visit(BodyColumnExpr value);
 
         T visit(MealColumnExpr value);
+
+        T visit(ProfileColumnExpr value);
 
         T visit(SleepScoreValueMacroExpr value);
 
@@ -219,6 +227,10 @@ public final class AggregateExprArg {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, MealColumnExpr.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ProfileColumnExpr.class));
             } catch (RuntimeException e) {
             }
             try {
