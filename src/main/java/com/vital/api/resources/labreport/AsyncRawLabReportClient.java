@@ -65,6 +65,8 @@ public class AsyncRawLabReportClient {
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
             multipartBodyBuilder.addFormDataPart(
                     "file", file.getName(), RequestBody.create(file, fileMimeTypeMediaType));
+            multipartBodyBuilder.addFormDataPart(
+                    "user_id", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getUserId()));
             if (request.getNeedsHumanReview().isPresent()) {
                 multipartBodyBuilder.addFormDataPart(
                         "needs_human_review",

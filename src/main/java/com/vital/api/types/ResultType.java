@@ -10,7 +10,9 @@ public enum ResultType {
 
     RANGE("range"),
 
-    COMMENT("comment");
+    COMMENT("comment"),
+
+    CODED_VALUE("coded_value");
 
     private final String value;
 

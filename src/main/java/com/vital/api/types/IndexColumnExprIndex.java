@@ -16,6 +16,8 @@ public enum IndexColumnExprIndex {
 
     MEAL("meal"),
 
+    PROFILE("profile"),
+
     TIMESERIES("timeseries");
 
     private final String value;
