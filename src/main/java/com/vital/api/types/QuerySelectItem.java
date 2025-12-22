@@ -46,32 +46,30 @@ public final class QuerySelectItem {
         } else if (this.type == 6) {
             return visitor.visit((MealColumnExpr) this.value);
         } else if (this.type == 7) {
-            return visitor.visit((ProfileColumnExpr) this.value);
-        } else if (this.type == 8) {
             return visitor.visit((SleepScoreValueMacroExpr) this.value);
-        } else if (this.type == 9) {
+        } else if (this.type == 8) {
             return visitor.visit((ChronotypeValueMacroExpr) this.value);
-        } else if (this.type == 10) {
+        } else if (this.type == 9) {
             return visitor.visit((AsleepAtValueMacroExpr) this.value);
-        } else if (this.type == 11) {
+        } else if (this.type == 10) {
             return visitor.visit((AwakeAtValueMacroExpr) this.value);
-        } else if (this.type == 12) {
+        } else if (this.type == 11) {
             return visitor.visit((UnrecognizedValueMacroExpr) this.value);
-        } else if (this.type == 13) {
+        } else if (this.type == 12) {
             return visitor.visit((DiscreteTimeseriesExpr) this.value);
-        } else if (this.type == 14) {
+        } else if (this.type == 13) {
             return visitor.visit((IntervalTimeseriesExpr) this.value);
-        } else if (this.type == 15) {
+        } else if (this.type == 14) {
             return visitor.visit((BloodPressureTimeseriesExpr) this.value);
-        } else if (this.type == 16) {
+        } else if (this.type == 15) {
             return visitor.visit((TemperatureTimeseriesExpr) this.value);
-        } else if (this.type == 17) {
+        } else if (this.type == 16) {
             return visitor.visit((WorkoutDurationTimeseriesExpr) this.value);
-        } else if (this.type == 18) {
+        } else if (this.type == 17) {
             return visitor.visit((NoteTimeseriesExpr) this.value);
-        } else if (this.type == 19) {
+        } else if (this.type == 18) {
             return visitor.visit((IndexColumnExpr) this.value);
-        } else if (this.type == 20) {
+        } else if (this.type == 19) {
             return visitor.visit((SourceColumnExpr) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
@@ -125,60 +123,56 @@ public final class QuerySelectItem {
         return new QuerySelectItem(value, 6);
     }
 
-    public static QuerySelectItem of(ProfileColumnExpr value) {
+    public static QuerySelectItem of(SleepScoreValueMacroExpr value) {
         return new QuerySelectItem(value, 7);
     }
 
-    public static QuerySelectItem of(SleepScoreValueMacroExpr value) {
+    public static QuerySelectItem of(ChronotypeValueMacroExpr value) {
         return new QuerySelectItem(value, 8);
     }
 
-    public static QuerySelectItem of(ChronotypeValueMacroExpr value) {
+    public static QuerySelectItem of(AsleepAtValueMacroExpr value) {
         return new QuerySelectItem(value, 9);
     }
 
-    public static QuerySelectItem of(AsleepAtValueMacroExpr value) {
+    public static QuerySelectItem of(AwakeAtValueMacroExpr value) {
         return new QuerySelectItem(value, 10);
     }
 
-    public static QuerySelectItem of(AwakeAtValueMacroExpr value) {
+    public static QuerySelectItem of(UnrecognizedValueMacroExpr value) {
         return new QuerySelectItem(value, 11);
     }
 
-    public static QuerySelectItem of(UnrecognizedValueMacroExpr value) {
+    public static QuerySelectItem of(DiscreteTimeseriesExpr value) {
         return new QuerySelectItem(value, 12);
     }
 
-    public static QuerySelectItem of(DiscreteTimeseriesExpr value) {
+    public static QuerySelectItem of(IntervalTimeseriesExpr value) {
         return new QuerySelectItem(value, 13);
     }
 
-    public static QuerySelectItem of(IntervalTimeseriesExpr value) {
+    public static QuerySelectItem of(BloodPressureTimeseriesExpr value) {
         return new QuerySelectItem(value, 14);
     }
 
-    public static QuerySelectItem of(BloodPressureTimeseriesExpr value) {
+    public static QuerySelectItem of(TemperatureTimeseriesExpr value) {
         return new QuerySelectItem(value, 15);
     }
 
-    public static QuerySelectItem of(TemperatureTimeseriesExpr value) {
+    public static QuerySelectItem of(WorkoutDurationTimeseriesExpr value) {
         return new QuerySelectItem(value, 16);
     }
 
-    public static QuerySelectItem of(WorkoutDurationTimeseriesExpr value) {
+    public static QuerySelectItem of(NoteTimeseriesExpr value) {
         return new QuerySelectItem(value, 17);
     }
 
-    public static QuerySelectItem of(NoteTimeseriesExpr value) {
+    public static QuerySelectItem of(IndexColumnExpr value) {
         return new QuerySelectItem(value, 18);
     }
 
-    public static QuerySelectItem of(IndexColumnExpr value) {
-        return new QuerySelectItem(value, 19);
-    }
-
     public static QuerySelectItem of(SourceColumnExpr value) {
-        return new QuerySelectItem(value, 20);
+        return new QuerySelectItem(value, 19);
     }
 
     public interface Visitor<T> {
@@ -195,8 +189,6 @@ public final class QuerySelectItem {
         T visit(BodyColumnExpr value);
 
         T visit(MealColumnExpr value);
-
-        T visit(ProfileColumnExpr value);
 
         T visit(SleepScoreValueMacroExpr value);
 
@@ -259,10 +251,6 @@ public final class QuerySelectItem {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, MealColumnExpr.class));
-            } catch (RuntimeException e) {
-            }
-            try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, ProfileColumnExpr.class));
             } catch (RuntimeException e) {
             }
             try {

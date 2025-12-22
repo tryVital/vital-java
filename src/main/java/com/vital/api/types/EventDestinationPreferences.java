@@ -146,7 +146,9 @@ public final class EventDestinationPreferences {
         @JsonSetter(value = "enabled", nulls = Nulls.SKIP)
         public _FinalStage enabled(List<EventDestinationPreferencesEnabledItem> enabled) {
             this.enabled.clear();
-            this.enabled.addAll(enabled);
+            if (enabled != null) {
+                this.enabled.addAll(enabled);
+            }
             return this;
         }
 

@@ -26,9 +26,9 @@ public final class LoincMatch {
 
     private final String loincName;
 
-    private final Optional<String> displayName;
+    private final String loincComponent;
 
-    private final Optional<List<String>> aliases;
+    private final Optional<List<String>> sampleType;
 
     private final double confidenceScore;
 
@@ -37,14 +37,14 @@ public final class LoincMatch {
     private LoincMatch(
             String loincCode,
             String loincName,
-            Optional<String> displayName,
-            Optional<List<String>> aliases,
+            String loincComponent,
+            Optional<List<String>> sampleType,
             double confidenceScore,
             Map<String, Object> additionalProperties) {
         this.loincCode = loincCode;
         this.loincName = loincName;
-        this.displayName = displayName;
-        this.aliases = aliases;
+        this.loincComponent = loincComponent;
+        this.sampleType = sampleType;
         this.confidenceScore = confidenceScore;
         this.additionalProperties = additionalProperties;
     }
@@ -59,14 +59,14 @@ public final class LoincMatch {
         return loincName;
     }
 
-    @JsonProperty("display_name")
-    public Optional<String> getDisplayName() {
-        return displayName;
+    @JsonProperty("loinc_component")
+    public String getLoincComponent() {
+        return loincComponent;
     }
 
-    @JsonProperty("aliases")
-    public Optional<List<String>> getAliases() {
-        return aliases;
+    @JsonProperty("sample_type")
+    public Optional<List<String>> getSampleType() {
+        return sampleType;
     }
 
     @JsonProperty("confidence_score")
@@ -88,14 +88,14 @@ public final class LoincMatch {
     private boolean equalTo(LoincMatch other) {
         return loincCode.equals(other.loincCode)
                 && loincName.equals(other.loincName)
-                && displayName.equals(other.displayName)
-                && aliases.equals(other.aliases)
+                && loincComponent.equals(other.loincComponent)
+                && sampleType.equals(other.sampleType)
                 && confidenceScore == other.confidenceScore;
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.loincCode, this.loincName, this.displayName, this.aliases, this.confidenceScore);
+        return Objects.hash(this.loincCode, this.loincName, this.loincComponent, this.sampleType, this.confidenceScore);
     }
 
     @java.lang.Override
@@ -114,7 +114,11 @@ public final class LoincMatch {
     }
 
     public interface LoincNameStage {
-        ConfidenceScoreStage loincName(@NotNull String loincName);
+        LoincComponentStage loincName(@NotNull String loincName);
+    }
+
+    public interface LoincComponentStage {
+        ConfidenceScoreStage loincComponent(@NotNull String loincComponent);
     }
 
     public interface ConfidenceScoreStage {
@@ -124,26 +128,23 @@ public final class LoincMatch {
     public interface _FinalStage {
         LoincMatch build();
 
-        _FinalStage displayName(Optional<String> displayName);
+        _FinalStage sampleType(Optional<List<String>> sampleType);
 
-        _FinalStage displayName(String displayName);
-
-        _FinalStage aliases(Optional<List<String>> aliases);
-
-        _FinalStage aliases(List<String> aliases);
+        _FinalStage sampleType(List<String> sampleType);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements LoincCodeStage, LoincNameStage, ConfidenceScoreStage, _FinalStage {
+    public static final class Builder
+            implements LoincCodeStage, LoincNameStage, LoincComponentStage, ConfidenceScoreStage, _FinalStage {
         private String loincCode;
 
         private String loincName;
 
+        private String loincComponent;
+
         private double confidenceScore;
 
-        private Optional<List<String>> aliases = Optional.empty();
-
-        private Optional<String> displayName = Optional.empty();
+        private Optional<List<String>> sampleType = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -154,8 +155,8 @@ public final class LoincMatch {
         public Builder from(LoincMatch other) {
             loincCode(other.getLoincCode());
             loincName(other.getLoincName());
-            displayName(other.getDisplayName());
-            aliases(other.getAliases());
+            loincComponent(other.getLoincComponent());
+            sampleType(other.getSampleType());
             confidenceScore(other.getConfidenceScore());
             return this;
         }
@@ -169,8 +170,15 @@ public final class LoincMatch {
 
         @java.lang.Override
         @JsonSetter("loinc_name")
-        public ConfidenceScoreStage loincName(@NotNull String loincName) {
+        public LoincComponentStage loincName(@NotNull String loincName) {
             this.loincName = Objects.requireNonNull(loincName, "loincName must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("loinc_component")
+        public ConfidenceScoreStage loincComponent(@NotNull String loincComponent) {
+            this.loincComponent = Objects.requireNonNull(loincComponent, "loincComponent must not be null");
             return this;
         }
 
@@ -182,34 +190,22 @@ public final class LoincMatch {
         }
 
         @java.lang.Override
-        public _FinalStage aliases(List<String> aliases) {
-            this.aliases = Optional.ofNullable(aliases);
+        public _FinalStage sampleType(List<String> sampleType) {
+            this.sampleType = Optional.ofNullable(sampleType);
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "aliases", nulls = Nulls.SKIP)
-        public _FinalStage aliases(Optional<List<String>> aliases) {
-            this.aliases = aliases;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage displayName(String displayName) {
-            this.displayName = Optional.ofNullable(displayName);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "display_name", nulls = Nulls.SKIP)
-        public _FinalStage displayName(Optional<String> displayName) {
-            this.displayName = displayName;
+        @JsonSetter(value = "sample_type", nulls = Nulls.SKIP)
+        public _FinalStage sampleType(Optional<List<String>> sampleType) {
+            this.sampleType = sampleType;
             return this;
         }
 
         @java.lang.Override
         public LoincMatch build() {
-            return new LoincMatch(loincCode, loincName, displayName, aliases, confidenceScore, additionalProperties);
+            return new LoincMatch(
+                    loincCode, loincName, loincComponent, sampleType, confidenceScore, additionalProperties);
         }
     }
 }

@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -117,17 +114,8 @@ public final class TeamConfig {
         return edsPreferences;
     }
 
-    @JsonIgnore
-    public Optional<List<String>> getEventTypePrefixes() {
-        if (eventTypePrefixes == null) {
-            return Optional.empty();
-        }
-        return eventTypePrefixes;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("event_type_prefixes")
-    private Optional<List<String>> _getEventTypePrefixes() {
+    public Optional<List<String>> getEventTypePrefixes() {
         return eventTypePrefixes;
     }
 
@@ -223,8 +211,6 @@ public final class TeamConfig {
         _FinalStage eventTypePrefixes(Optional<List<String>> eventTypePrefixes);
 
         _FinalStage eventTypePrefixes(List<String> eventTypePrefixes);
-
-        _FinalStage eventTypePrefixes(Nullable<List<String>> eventTypePrefixes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -273,18 +259,6 @@ public final class TeamConfig {
         @JsonSetter("libreview")
         public _FinalStage libreview(@NotNull LibreConfig libreview) {
             this.libreview = Objects.requireNonNull(libreview, "libreview must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage eventTypePrefixes(Nullable<List<String>> eventTypePrefixes) {
-            if (eventTypePrefixes.isNull()) {
-                this.eventTypePrefixes = null;
-            } else if (eventTypePrefixes.isEmpty()) {
-                this.eventTypePrefixes = Optional.empty();
-            } else {
-                this.eventTypePrefixes = Optional.of(eventTypePrefixes.get());
-            }
             return this;
         }
 

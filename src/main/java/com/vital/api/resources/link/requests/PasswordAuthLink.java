@@ -10,10 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AuthType;
 import com.vital.api.types.Providers;
@@ -55,9 +52,6 @@ public final class PasswordAuthLink {
 
     @JsonIgnore
     public Optional<String> getVitalLinkToken() {
-        if (vitalLinkToken == null) {
-            return Optional.empty();
-        }
         return vitalLinkToken;
     }
 
@@ -79,12 +73,6 @@ public final class PasswordAuthLink {
     @JsonProperty("auth_type")
     public AuthType getAuthType() {
         return authType;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("x-vital-link-token")
-    private Optional<String> _getVitalLinkToken() {
-        return vitalLinkToken;
     }
 
     @java.lang.Override
@@ -144,8 +132,6 @@ public final class PasswordAuthLink {
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
-
-        _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -205,25 +191,12 @@ public final class PasswordAuthLink {
         }
 
         @java.lang.Override
-        public _FinalStage vitalLinkToken(Nullable<String> vitalLinkToken) {
-            if (vitalLinkToken.isNull()) {
-                this.vitalLinkToken = null;
-            } else if (vitalLinkToken.isEmpty()) {
-                this.vitalLinkToken = Optional.empty();
-            } else {
-                this.vitalLinkToken = Optional.of(vitalLinkToken.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage vitalLinkToken(String vitalLinkToken) {
             this.vitalLinkToken = Optional.ofNullable(vitalLinkToken);
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "x-vital-link-token", nulls = Nulls.SKIP)
         public _FinalStage vitalLinkToken(Optional<String> vitalLinkToken) {
             this.vitalLinkToken = vitalLinkToken;
             return this;

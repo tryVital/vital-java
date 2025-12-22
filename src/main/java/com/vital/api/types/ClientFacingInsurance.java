@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,31 +81,13 @@ public final class ClientFacingInsurance {
         return company;
     }
 
-    @JsonIgnore
-    public Optional<String> getGroupId() {
-        if (groupId == null) {
-            return Optional.empty();
-        }
-        return groupId;
-    }
-
-    @JsonIgnore
-    public Optional<GuarantorDetails> getGuarantor() {
-        if (guarantor == null) {
-            return Optional.empty();
-        }
-        return guarantor;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("group_id")
-    private Optional<String> _getGroupId() {
+    public Optional<String> getGroupId() {
         return groupId;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("guarantor")
-    private Optional<GuarantorDetails> _getGuarantor() {
+    public Optional<GuarantorDetails> getGuarantor() {
         return guarantor;
     }
 
@@ -183,13 +162,9 @@ public final class ClientFacingInsurance {
 
         _FinalStage groupId(String groupId);
 
-        _FinalStage groupId(Nullable<String> groupId);
-
         _FinalStage guarantor(Optional<GuarantorDetails> guarantor);
 
         _FinalStage guarantor(GuarantorDetails guarantor);
-
-        _FinalStage guarantor(Nullable<GuarantorDetails> guarantor);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -262,18 +237,6 @@ public final class ClientFacingInsurance {
         }
 
         @java.lang.Override
-        public _FinalStage guarantor(Nullable<GuarantorDetails> guarantor) {
-            if (guarantor.isNull()) {
-                this.guarantor = null;
-            } else if (guarantor.isEmpty()) {
-                this.guarantor = Optional.empty();
-            } else {
-                this.guarantor = Optional.of(guarantor.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage guarantor(GuarantorDetails guarantor) {
             this.guarantor = Optional.ofNullable(guarantor);
             return this;
@@ -283,18 +246,6 @@ public final class ClientFacingInsurance {
         @JsonSetter(value = "guarantor", nulls = Nulls.SKIP)
         public _FinalStage guarantor(Optional<GuarantorDetails> guarantor) {
             this.guarantor = guarantor;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage groupId(Nullable<String> groupId) {
-            if (groupId.isNull()) {
-                this.groupId = null;
-            } else if (groupId.isEmpty()) {
-                this.groupId = Optional.empty();
-            } else {
-                this.groupId = Optional.of(groupId.get());
-            }
             return this;
         }
 

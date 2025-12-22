@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,45 +76,18 @@ public final class ResultMetadata {
         return labName;
     }
 
-    @JsonIgnore
-    public Optional<String> getDateReported() {
-        if (dateReported == null) {
-            return Optional.empty();
-        }
-        return dateReported;
-    }
-
-    @JsonIgnore
-    public Optional<String> getDateCollected() {
-        if (dateCollected == null) {
-            return Optional.empty();
-        }
-        return dateCollected;
-    }
-
-    @JsonIgnore
-    public Optional<String> getSpecimenNumber() {
-        if (specimenNumber == null) {
-            return Optional.empty();
-        }
-        return specimenNumber;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("date_reported")
-    private Optional<String> _getDateReported() {
+    public Optional<String> getDateReported() {
         return dateReported;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("date_collected")
-    private Optional<String> _getDateCollected() {
+    public Optional<String> getDateCollected() {
         return dateCollected;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("specimen_number")
-    private Optional<String> _getSpecimenNumber() {
+    public Optional<String> getSpecimenNumber() {
         return specimenNumber;
     }
 
@@ -188,19 +158,13 @@ public final class ResultMetadata {
 
         _FinalStage dateReported(String dateReported);
 
-        _FinalStage dateReported(Nullable<String> dateReported);
-
         _FinalStage dateCollected(Optional<String> dateCollected);
 
         _FinalStage dateCollected(String dateCollected);
 
-        _FinalStage dateCollected(Nullable<String> dateCollected);
-
         _FinalStage specimenNumber(Optional<String> specimenNumber);
 
         _FinalStage specimenNumber(String specimenNumber);
-
-        _FinalStage specimenNumber(Nullable<String> specimenNumber);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -266,18 +230,6 @@ public final class ResultMetadata {
         }
 
         @java.lang.Override
-        public _FinalStage specimenNumber(Nullable<String> specimenNumber) {
-            if (specimenNumber.isNull()) {
-                this.specimenNumber = null;
-            } else if (specimenNumber.isEmpty()) {
-                this.specimenNumber = Optional.empty();
-            } else {
-                this.specimenNumber = Optional.of(specimenNumber.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage specimenNumber(String specimenNumber) {
             this.specimenNumber = Optional.ofNullable(specimenNumber);
             return this;
@@ -291,18 +243,6 @@ public final class ResultMetadata {
         }
 
         @java.lang.Override
-        public _FinalStage dateCollected(Nullable<String> dateCollected) {
-            if (dateCollected.isNull()) {
-                this.dateCollected = null;
-            } else if (dateCollected.isEmpty()) {
-                this.dateCollected = Optional.empty();
-            } else {
-                this.dateCollected = Optional.of(dateCollected.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage dateCollected(String dateCollected) {
             this.dateCollected = Optional.ofNullable(dateCollected);
             return this;
@@ -312,18 +252,6 @@ public final class ResultMetadata {
         @JsonSetter(value = "date_collected", nulls = Nulls.SKIP)
         public _FinalStage dateCollected(Optional<String> dateCollected) {
             this.dateCollected = dateCollected;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage dateReported(Nullable<String> dateReported) {
-            if (dateReported.isNull()) {
-                this.dateReported = null;
-            } else if (dateReported.isEmpty()) {
-                this.dateReported = Optional.empty();
-            } else {
-                this.dateReported = Optional.of(dateReported.get());
-            }
             return this;
         }
 

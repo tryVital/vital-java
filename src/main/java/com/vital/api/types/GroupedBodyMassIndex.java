@@ -135,7 +135,9 @@ public final class GroupedBodyMassIndex {
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingBodyMassIndexSample> data) {
             this.data.clear();
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

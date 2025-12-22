@@ -5,15 +5,12 @@ package com.vital.api.resources.labtests.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,17 +39,8 @@ public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCa
         return cancellationReasonId;
     }
 
-    @JsonIgnore
-    public Optional<String> getNotes() {
-        if (notes == null) {
-            return Optional.empty();
-        }
-        return notes;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("notes")
-    private Optional<String> _getNotes() {
+    public Optional<String> getNotes() {
         return notes;
     }
 
@@ -98,8 +86,6 @@ public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCa
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
-
-        _FinalStage notes(Nullable<String> notes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -125,18 +111,6 @@ public final class ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCa
         public _FinalStage cancellationReasonId(@NotNull String cancellationReasonId) {
             this.cancellationReasonId =
                     Objects.requireNonNull(cancellationReasonId, "cancellationReasonId must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage notes(Nullable<String> notes) {
-            if (notes.isNull()) {
-                this.notes = null;
-            } else if (notes.isEmpty()) {
-                this.notes = Optional.empty();
-            } else {
-                this.notes = Optional.of(notes.get());
-            }
             return this;
         }
 

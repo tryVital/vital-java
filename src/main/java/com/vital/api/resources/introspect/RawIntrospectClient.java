@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.introspect.requests.GetUserHistoricalPullsIntrospectRequest;
-import com.vital.api.resources.introspect.requests.GetUserResourcesIntrospectRequest;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserHistoricalPullsRequest;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserResourcesRequest;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.UserHistoricalPullsResponse;
 import com.vital.api.types.UserResourcesResponse;
@@ -33,15 +33,15 @@ public class RawIntrospectClient {
     }
 
     public VitalHttpResponse<UserResourcesResponse> getUserResources() {
-        return getUserResources(GetUserResourcesIntrospectRequest.builder().build());
+        return getUserResources(IntrospectGetUserResourcesRequest.builder().build());
     }
 
-    public VitalHttpResponse<UserResourcesResponse> getUserResources(GetUserResourcesIntrospectRequest request) {
+    public VitalHttpResponse<UserResourcesResponse> getUserResources(IntrospectGetUserResourcesRequest request) {
         return getUserResources(request, null);
     }
 
     public VitalHttpResponse<UserResourcesResponse> getUserResources(
-            GetUserResourcesIntrospectRequest request, RequestOptions requestOptions) {
+            IntrospectGetUserResourcesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/introspect/resources");
@@ -77,12 +77,11 @@ public class RawIntrospectClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserResourcesResponse.class),
-                        response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserResourcesResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -92,11 +91,8 @@ public class RawIntrospectClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -104,16 +100,16 @@ public class RawIntrospectClient {
 
     public VitalHttpResponse<UserHistoricalPullsResponse> getUserHistoricalPulls() {
         return getUserHistoricalPulls(
-                GetUserHistoricalPullsIntrospectRequest.builder().build());
+                IntrospectGetUserHistoricalPullsRequest.builder().build());
     }
 
     public VitalHttpResponse<UserHistoricalPullsResponse> getUserHistoricalPulls(
-            GetUserHistoricalPullsIntrospectRequest request) {
+            IntrospectGetUserHistoricalPullsRequest request) {
         return getUserHistoricalPulls(request, null);
     }
 
     public VitalHttpResponse<UserHistoricalPullsResponse> getUserHistoricalPulls(
-            GetUserHistoricalPullsIntrospectRequest request, RequestOptions requestOptions) {
+            IntrospectGetUserHistoricalPullsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/introspect/historical_pull");
@@ -149,12 +145,12 @@ public class RawIntrospectClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), UserHistoricalPullsResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UserHistoricalPullsResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -164,11 +160,8 @@ public class RawIntrospectClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

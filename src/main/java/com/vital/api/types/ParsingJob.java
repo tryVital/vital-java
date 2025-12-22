@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +21,6 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ParsingJob.Builder.class)
 public final class ParsingJob {
-    private final String id;
-
     private final String jobId;
 
     private final ParsingJobStatus status;
@@ -39,25 +34,18 @@ public final class ParsingJob {
     private final Map<String, Object> additionalProperties;
 
     private ParsingJob(
-            String id,
             String jobId,
             ParsingJobStatus status,
             Optional<ParsedLabReportData> data,
             boolean needsHumanReview,
             boolean isReviewed,
             Map<String, Object> additionalProperties) {
-        this.id = id;
         this.jobId = jobId;
         this.status = status;
         this.data = data;
         this.needsHumanReview = needsHumanReview;
         this.isReviewed = isReviewed;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("id")
-    public String getId() {
-        return id;
     }
 
     @JsonProperty("job_id")
@@ -70,11 +58,8 @@ public final class ParsingJob {
         return status;
     }
 
-    @JsonIgnore
+    @JsonProperty("data")
     public Optional<ParsedLabReportData> getData() {
-        if (data == null) {
-            return Optional.empty();
-        }
         return data;
     }
 
@@ -86,12 +71,6 @@ public final class ParsingJob {
     @JsonProperty("is_reviewed")
     public boolean getIsReviewed() {
         return isReviewed;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("data")
-    private Optional<ParsedLabReportData> _getData() {
-        return data;
     }
 
     @java.lang.Override
@@ -106,8 +85,7 @@ public final class ParsingJob {
     }
 
     private boolean equalTo(ParsingJob other) {
-        return id.equals(other.id)
-                && jobId.equals(other.jobId)
+        return jobId.equals(other.jobId)
                 && status.equals(other.status)
                 && data.equals(other.data)
                 && needsHumanReview == other.needsHumanReview
@@ -116,7 +94,7 @@ public final class ParsingJob {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.jobId, this.status, this.data, this.needsHumanReview, this.isReviewed);
+        return Objects.hash(this.jobId, this.status, this.data, this.needsHumanReview, this.isReviewed);
     }
 
     @java.lang.Override
@@ -124,18 +102,14 @@ public final class ParsingJob {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdStage builder() {
+    public static JobIdStage builder() {
         return new Builder();
-    }
-
-    public interface IdStage {
-        JobIdStage id(@NotNull String id);
-
-        Builder from(ParsingJob other);
     }
 
     public interface JobIdStage {
         StatusStage jobId(@NotNull String jobId);
+
+        Builder from(ParsingJob other);
     }
 
     public interface StatusStage {
@@ -156,15 +130,11 @@ public final class ParsingJob {
         _FinalStage data(Optional<ParsedLabReportData> data);
 
         _FinalStage data(ParsedLabReportData data);
-
-        _FinalStage data(Nullable<ParsedLabReportData> data);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, JobIdStage, StatusStage, NeedsHumanReviewStage, IsReviewedStage, _FinalStage {
-        private String id;
-
+            implements JobIdStage, StatusStage, NeedsHumanReviewStage, IsReviewedStage, _FinalStage {
         private String jobId;
 
         private ParsingJobStatus status;
@@ -182,19 +152,11 @@ public final class ParsingJob {
 
         @java.lang.Override
         public Builder from(ParsingJob other) {
-            id(other.getId());
             jobId(other.getJobId());
             status(other.getStatus());
             data(other.getData());
             needsHumanReview(other.getNeedsHumanReview());
             isReviewed(other.getIsReviewed());
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("id")
-        public JobIdStage id(@NotNull String id) {
-            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -227,18 +189,6 @@ public final class ParsingJob {
         }
 
         @java.lang.Override
-        public _FinalStage data(Nullable<ParsedLabReportData> data) {
-            if (data.isNull()) {
-                this.data = null;
-            } else if (data.isEmpty()) {
-                this.data = Optional.empty();
-            } else {
-                this.data = Optional.of(data.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage data(ParsedLabReportData data) {
             this.data = Optional.ofNullable(data);
             return this;
@@ -253,7 +203,7 @@ public final class ParsingJob {
 
         @java.lang.Override
         public ParsingJob build() {
-            return new ParsingJob(id, jobId, status, data, needsHumanReview, isReviewed, additionalProperties);
+            return new ParsingJob(jobId, status, data, needsHumanReview, isReviewed, additionalProperties);
         }
     }
 }

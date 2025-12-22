@@ -14,8 +14,11 @@
 
 ```java
 client.link().listBulkOps(
-    ListBulkOpsLinkRequest
+    LinkListBulkOpsRequest
         .builder()
+        .nextCursor("next_cursor")
+        .pageSize(1)
+        .teamId(LinkListBulkOpsRequestTeamId.INFER_FROM_CONTEXT)
         .build()
 );
 ```
@@ -48,7 +51,7 @@ client.link().listBulkOps(
 <dl>
 <dd>
 
-**teamId:** `Optional<ListBulkOpsLinkRequestTeamId>` 
+**teamId:** `Optional<LinkListBulkOpsRequestTeamId>` 
     
 </dd>
 </dl>
@@ -77,18 +80,17 @@ client.link().bulkImport(
     BulkImportConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
+        .teamId(LinkBulkImportRequestTeamId.INFER_FROM_CONTEXT)
         .connections(
-            new ArrayList<ConnectionRecipe>(
-                Arrays.asList(
-                    ConnectionRecipe
-                        .builder()
-                        .userId("user_id")
-                        .accessToken("access_token")
-                        .refreshToken("refresh_token")
-                        .providerId("provider_id")
-                        .expiresAt(1)
-                        .build()
-                )
+            Arrays.asList(
+                ConnectionRecipe
+                    .builder()
+                    .userId("user_id")
+                    .accessToken("access_token")
+                    .refreshToken("refresh_token")
+                    .providerId("provider_id")
+                    .expiresAt(1)
+                    .build()
             )
         )
         .build()
@@ -107,7 +109,7 @@ client.link().bulkImport(
 <dl>
 <dd>
 
-**teamId:** `Optional<BulkImportLinkRequestTeamId>` 
+**teamId:** `Optional<LinkBulkImportRequestTeamId>` 
     
 </dd>
 </dl>
@@ -167,12 +169,11 @@ the [List Bulk Ops](https://docs.tryvital.io/api-reference/link/list-bulk-ops) e
 client.link().bulkTriggerHistoricalPull(
     BulkTriggerHistoricalPullBody
         .builder()
-        .userIds(
-            new ArrayList<String>(
-                Arrays.asList("user_ids")
-            )
-        )
         .provider(OAuthProviders.OURA)
+        .teamId(LinkBulkTriggerHistoricalPullRequestTeamId.INFER_FROM_CONTEXT)
+        .userIds(
+            Arrays.asList("user_ids")
+        )
         .build()
 );
 ```
@@ -189,7 +190,7 @@ client.link().bulkTriggerHistoricalPull(
 <dl>
 <dd>
 
-**teamId:** `Optional<BulkTriggerHistoricalPullLinkRequestTeamId>` 
+**teamId:** `Optional<LinkBulkTriggerHistoricalPullRequestTeamId>` 
     
 </dd>
 </dl>
@@ -250,6 +251,7 @@ client.link().bulkExport(
     BulkExportConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
+        .teamId(LinkBulkExportRequestTeamId.INFER_FROM_CONTEXT)
         .build()
 );
 ```
@@ -266,7 +268,7 @@ client.link().bulkExport(
 <dl>
 <dd>
 
-**teamId:** `Optional<BulkExportLinkRequestTeamId>` 
+**teamId:** `Optional<LinkBulkExportRequestTeamId>` 
     
 </dd>
 </dl>
@@ -318,12 +320,11 @@ client.link().bulkExport(
 client.link().bulkPause(
     BulkPauseConnectionsBody
         .builder()
-        .userIds(
-            new ArrayList<String>(
-                Arrays.asList("user_ids")
-            )
-        )
         .provider(OAuthProviders.OURA)
+        .teamId(LinkBulkPauseRequestTeamId.INFER_FROM_CONTEXT)
+        .userIds(
+            Arrays.asList("user_ids")
+        )
         .build()
 );
 ```
@@ -340,7 +341,7 @@ client.link().bulkPause(
 <dl>
 <dd>
 
-**teamId:** `Optional<BulkPauseLinkRequestTeamId>` 
+**teamId:** `Optional<LinkBulkPauseRequestTeamId>` 
     
 </dd>
 </dl>
@@ -565,9 +566,10 @@ Generate a token to invite a user of Vital mobile app to your team
 
 ```java
 client.link().codeCreate(
-    CodeCreateLinkRequest
+    LinkCodeCreateRequest
         .builder()
         .userId("user_id")
+        .expiresAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .build()
 );
 ```
@@ -702,8 +704,9 @@ Check link token state - can be hit continuously used as heartbeat
 
 ```java
 client.link().tokenState(
-    TokenStateLinkRequest
+    LinkTokenStateRequest
         .builder()
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -765,6 +768,7 @@ client.link().emailAuth(
         .email("email")
         .provider(Providers.OURA)
         .authType(AuthType.PASSWORD)
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -859,6 +863,7 @@ client.link().passwordAuth(
         .password("password")
         .provider(Providers.OURA)
         .authType(AuthType.PASSWORD)
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -948,8 +953,9 @@ This endpoint generates an OAuth link for oauth provider
 ```java
 client.link().generateOauthLink(
     OAuthProviders.OURA,
-    GenerateOauthLinkLinkRequest
+    LinkGenerateOauthLinkRequest
         .builder()
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1019,6 +1025,7 @@ client.link().connectPasswordProvider(
         .builder()
         .username("username")
         .password("password")
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1111,6 +1118,7 @@ client.link().completePasswordProviderMfa(
     CompletePasswordProviderMfaBody
         .builder()
         .mfaCode("mfa_code")
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1187,6 +1195,7 @@ client.link().connectEmailAuthProvider(
     EmailProviderAuthLink
         .builder()
         .email("email")
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1275,8 +1284,9 @@ GET List of all available providers given the generated link token.
 
 ```java
 client.link().getAllProviders(
-    GetAllProvidersLinkRequest
+    LinkGetAllProvidersRequest
         .builder()
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1465,9 +1475,11 @@ Get electrocardiogram summary for user_id
 ```java
 client.electrocardiogram().get(
     "user_id",
-    GetElectrocardiogramRequest
+    ElectrocardiogramGetRequest
         .builder()
-        .startDate("2023-01-15")
+        .startDate("start_date")
+        .endDate("end_date")
+        .provider("provider")
         .build()
 );
 ```
@@ -1550,9 +1562,11 @@ Get sleep cycle for user_id
 ```java
 client.sleepCycle().get(
     "user_id",
-    GetSleepCycleRequest
+    SleepCycleGetRequest
         .builder()
-        .startDate("2023-01-15")
+        .startDate("start_date")
+        .endDate("end_date")
+        .provider("provider")
         .build()
 );
 ```
@@ -1635,8 +1649,9 @@ Get profile for user_id
 ```java
 client.profile().get(
     "user_id",
-    GetProfileRequest
+    ProfileGetRequest
         .builder()
+        .provider("provider")
         .build()
 );
 ```
@@ -1702,8 +1717,9 @@ Get raw profile for user_id
 ```java
 client.profile().getRaw(
     "user_id",
-    GetRawProfileRequest
+    ProfileGetRawRequest
         .builder()
+        .provider("provider")
         .build()
 );
 ```
@@ -1770,8 +1786,9 @@ Get Devices for user_id
 ```java
 client.devices().getRaw(
     "user_id",
-    GetRawDevicesRequest
+    DevicesGetRawRequest
         .builder()
+        .provider("provider")
         .build()
 );
 ```
@@ -1838,9 +1855,11 @@ Get activity summary for user_id
 ```java
 client.activity().get(
     "user_id",
-    GetActivityRequest
+    ActivityGetRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -1922,9 +1941,11 @@ Get raw activity summary for user_id
 ```java
 client.activity().getRaw(
     "user_id",
-    GetRawActivityRequest
+    ActivityGetRawRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2007,9 +2028,11 @@ Get workout summary for user_id
 ```java
 client.workouts().get(
     "user_id",
-    GetWorkoutsRequest
+    WorkoutsGetRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2091,9 +2114,11 @@ Get raw workout summary for user_id
 ```java
 client.workouts().getRaw(
     "user_id",
-    GetRawWorkoutsRequest
+    WorkoutsGetRawRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2159,12 +2184,7 @@ client.workouts().getRaw(
 <dd>
 
 ```java
-client.workouts().getByWorkoutId(
-    "workout_id",
-    GetByWorkoutIdWorkoutsRequest
-        .builder()
-        .build()
-);
+client.workouts().getByWorkoutId("workout_id");
 ```
 </dd>
 </dl>
@@ -2221,9 +2241,11 @@ Get sleep summary for user_id
 ```java
 client.sleep().get(
     "user_id",
-    GetSleepRequest
+    SleepGetRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2305,9 +2327,11 @@ Get raw sleep summary for user_id
 ```java
 client.sleep().getRaw(
     "user_id",
-    GetRawSleepRequest
+    SleepGetRawRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2387,12 +2411,7 @@ Get Sleep stream for a user_id
 <dd>
 
 ```java
-client.sleep().getStreamBySleepId(
-    "sleep_id",
-    GetStreamBySleepIdSleepRequest
-        .builder()
-        .build()
-);
+client.sleep().getStreamBySleepId("sleep_id");
 ```
 </dd>
 </dl>
@@ -2449,9 +2468,11 @@ Get Body summary for user_id
 ```java
 client.body().get(
     "user_id",
-    GetBodyRequest
+    BodyGetRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2533,9 +2554,11 @@ Get raw Body summary for user_id
 ```java
 client.body().getRaw(
     "user_id",
-    GetRawBodyRequest
+    BodyGetRawRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2618,9 +2641,11 @@ Get user's meals
 ```java
 client.meal().get(
     "user_id",
-    GetMealRequest
+    MealGetRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2689,9 +2714,11 @@ client.meal().get(
 ```java
 client.menstrualCycle().get(
     "user_id",
-    GetMenstrualCycleRequest
+    MenstrualCycleGetRequest
         .builder()
-        .startDate("2023-01-15")
+        .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2760,9 +2787,13 @@ client.menstrualCycle().get(
 ```java
 client.vitals().workoutSwimmingStrokeGrouped(
     "user_id",
-    WorkoutSwimmingStrokeGroupedVitalsRequest
+    VitalsWorkoutSwimmingStrokeGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2846,9 +2877,13 @@ client.vitals().workoutSwimmingStrokeGrouped(
 ```java
 client.vitals().workoutDistanceGrouped(
     "user_id",
-    WorkoutDistanceGroupedVitalsRequest
+    VitalsWorkoutDistanceGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -2932,9 +2967,13 @@ client.vitals().workoutDistanceGrouped(
 ```java
 client.vitals().heartRateRecoveryOneMinuteGrouped(
     "user_id",
-    HeartRateRecoveryOneMinuteGroupedVitalsRequest
+    VitalsHeartRateRecoveryOneMinuteGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3018,9 +3057,13 @@ client.vitals().heartRateRecoveryOneMinuteGrouped(
 ```java
 client.vitals().waistCircumferenceGrouped(
     "user_id",
-    WaistCircumferenceGroupedVitalsRequest
+    VitalsWaistCircumferenceGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3104,9 +3147,13 @@ client.vitals().waistCircumferenceGrouped(
 ```java
 client.vitals().leanBodyMassGrouped(
     "user_id",
-    LeanBodyMassGroupedVitalsRequest
+    VitalsLeanBodyMassGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3190,9 +3237,13 @@ client.vitals().leanBodyMassGrouped(
 ```java
 client.vitals().bodyMassIndexGrouped(
     "user_id",
-    BodyMassIndexGroupedVitalsRequest
+    VitalsBodyMassIndexGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3276,9 +3327,13 @@ client.vitals().bodyMassIndexGrouped(
 ```java
 client.vitals().basalBodyTemperatureGrouped(
     "user_id",
-    BasalBodyTemperatureGroupedVitalsRequest
+    VitalsBasalBodyTemperatureGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3362,9 +3417,13 @@ client.vitals().basalBodyTemperatureGrouped(
 ```java
 client.vitals().handwashingGrouped(
     "user_id",
-    HandwashingGroupedVitalsRequest
+    VitalsHandwashingGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3448,9 +3507,13 @@ client.vitals().handwashingGrouped(
 ```java
 client.vitals().daylightExposureGrouped(
     "user_id",
-    DaylightExposureGroupedVitalsRequest
+    VitalsDaylightExposureGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3534,9 +3597,13 @@ client.vitals().daylightExposureGrouped(
 ```java
 client.vitals().uvExposureGrouped(
     "user_id",
-    UvExposureGroupedVitalsRequest
+    VitalsUvExposureGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3620,9 +3687,13 @@ client.vitals().uvExposureGrouped(
 ```java
 client.vitals().fallGrouped(
     "user_id",
-    FallGroupedVitalsRequest
+    VitalsFallGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3706,9 +3777,13 @@ client.vitals().fallGrouped(
 ```java
 client.vitals().inhalerUsageGrouped(
     "user_id",
-    InhalerUsageGroupedVitalsRequest
+    VitalsInhalerUsageGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3792,9 +3867,13 @@ client.vitals().inhalerUsageGrouped(
 ```java
 client.vitals().peakExpiratoryFlowRateGrouped(
     "user_id",
-    PeakExpiratoryFlowRateGroupedVitalsRequest
+    VitalsPeakExpiratoryFlowRateGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3878,9 +3957,13 @@ client.vitals().peakExpiratoryFlowRateGrouped(
 ```java
 client.vitals().forcedVitalCapacityGrouped(
     "user_id",
-    ForcedVitalCapacityGroupedVitalsRequest
+    VitalsForcedVitalCapacityGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -3964,9 +4047,13 @@ client.vitals().forcedVitalCapacityGrouped(
 ```java
 client.vitals().forcedExpiratoryVolume1Grouped(
     "user_id",
-    ForcedExpiratoryVolume1GroupedVitalsRequest
+    VitalsForcedExpiratoryVolume1GroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4050,9 +4137,13 @@ client.vitals().forcedExpiratoryVolume1Grouped(
 ```java
 client.vitals().wheelchairPushGrouped(
     "user_id",
-    WheelchairPushGroupedVitalsRequest
+    VitalsWheelchairPushGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4136,9 +4227,13 @@ client.vitals().wheelchairPushGrouped(
 ```java
 client.vitals().sleepBreathingDisturbanceGrouped(
     "user_id",
-    SleepBreathingDisturbanceGroupedVitalsRequest
+    VitalsSleepBreathingDisturbanceGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4222,9 +4317,13 @@ client.vitals().sleepBreathingDisturbanceGrouped(
 ```java
 client.vitals().sleepApneaAlertGrouped(
     "user_id",
-    SleepApneaAlertGroupedVitalsRequest
+    VitalsSleepApneaAlertGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4308,9 +4407,13 @@ client.vitals().sleepApneaAlertGrouped(
 ```java
 client.vitals().standDurationGrouped(
     "user_id",
-    StandDurationGroupedVitalsRequest
+    VitalsStandDurationGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4394,9 +4497,13 @@ client.vitals().standDurationGrouped(
 ```java
 client.vitals().standHourGrouped(
     "user_id",
-    StandHourGroupedVitalsRequest
+    VitalsStandHourGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4480,9 +4587,13 @@ client.vitals().standHourGrouped(
 ```java
 client.vitals().heartRateAlertGrouped(
     "user_id",
-    HeartRateAlertGroupedVitalsRequest
+    VitalsHeartRateAlertGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4566,9 +4677,13 @@ client.vitals().heartRateAlertGrouped(
 ```java
 client.vitals().afibBurdenGrouped(
     "user_id",
-    AfibBurdenGroupedVitalsRequest
+    VitalsAfibBurdenGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4652,9 +4767,13 @@ client.vitals().afibBurdenGrouped(
 ```java
 client.vitals().workoutDurationGrouped(
     "user_id",
-    WorkoutDurationGroupedVitalsRequest
+    VitalsWorkoutDurationGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4738,9 +4857,13 @@ client.vitals().workoutDurationGrouped(
 ```java
 client.vitals().vo2MaxGrouped(
     "user_id",
-    Vo2MaxGroupedVitalsRequest
+    VitalsVo2MaxGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4824,9 +4947,13 @@ client.vitals().vo2MaxGrouped(
 ```java
 client.vitals().stressLevelGrouped(
     "user_id",
-    StressLevelGroupedVitalsRequest
+    VitalsStressLevelGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4910,9 +5037,13 @@ client.vitals().stressLevelGrouped(
 ```java
 client.vitals().mindfulnessMinutesGrouped(
     "user_id",
-    MindfulnessMinutesGroupedVitalsRequest
+    VitalsMindfulnessMinutesGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -4996,9 +5127,13 @@ client.vitals().mindfulnessMinutesGrouped(
 ```java
 client.vitals().caffeineGrouped(
     "user_id",
-    CaffeineGroupedVitalsRequest
+    VitalsCaffeineGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5082,9 +5217,13 @@ client.vitals().caffeineGrouped(
 ```java
 client.vitals().waterGrouped(
     "user_id",
-    WaterGroupedVitalsRequest
+    VitalsWaterGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5168,9 +5307,13 @@ client.vitals().waterGrouped(
 ```java
 client.vitals().stepsGrouped(
     "user_id",
-    StepsGroupedVitalsRequest
+    VitalsStepsGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5254,9 +5397,13 @@ client.vitals().stepsGrouped(
 ```java
 client.vitals().floorsClimbedGrouped(
     "user_id",
-    FloorsClimbedGroupedVitalsRequest
+    VitalsFloorsClimbedGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5340,9 +5487,13 @@ client.vitals().floorsClimbedGrouped(
 ```java
 client.vitals().distanceGrouped(
     "user_id",
-    DistanceGroupedVitalsRequest
+    VitalsDistanceGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5426,9 +5577,13 @@ client.vitals().distanceGrouped(
 ```java
 client.vitals().caloriesBasalGrouped(
     "user_id",
-    CaloriesBasalGroupedVitalsRequest
+    VitalsCaloriesBasalGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5512,9 +5667,13 @@ client.vitals().caloriesBasalGrouped(
 ```java
 client.vitals().caloriesActiveGrouped(
     "user_id",
-    CaloriesActiveGroupedVitalsRequest
+    VitalsCaloriesActiveGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5598,9 +5757,13 @@ client.vitals().caloriesActiveGrouped(
 ```java
 client.vitals().respiratoryRateGrouped(
     "user_id",
-    RespiratoryRateGroupedVitalsRequest
+    VitalsRespiratoryRateGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5684,9 +5847,13 @@ client.vitals().respiratoryRateGrouped(
 ```java
 client.vitals().noteGrouped(
     "user_id",
-    NoteGroupedVitalsRequest
+    VitalsNoteGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5770,9 +5937,13 @@ client.vitals().noteGrouped(
 ```java
 client.vitals().insulinInjectionGrouped(
     "user_id",
-    InsulinInjectionGroupedVitalsRequest
+    VitalsInsulinInjectionGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5856,9 +6027,13 @@ client.vitals().insulinInjectionGrouped(
 ```java
 client.vitals().igeGrouped(
     "user_id",
-    IgeGroupedVitalsRequest
+    VitalsIgeGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -5942,9 +6117,13 @@ client.vitals().igeGrouped(
 ```java
 client.vitals().iggGrouped(
     "user_id",
-    IggGroupedVitalsRequest
+    VitalsIggGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6028,9 +6207,13 @@ client.vitals().iggGrouped(
 ```java
 client.vitals().hypnogramGrouped(
     "user_id",
-    HypnogramGroupedVitalsRequest
+    VitalsHypnogramGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6114,9 +6297,13 @@ client.vitals().hypnogramGrouped(
 ```java
 client.vitals().hrvGrouped(
     "user_id",
-    HrvGroupedVitalsRequest
+    VitalsHrvGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6200,9 +6387,13 @@ client.vitals().hrvGrouped(
 ```java
 client.vitals().heartrateGrouped(
     "user_id",
-    HeartrateGroupedVitalsRequest
+    VitalsHeartrateGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6286,9 +6477,13 @@ client.vitals().heartrateGrouped(
 ```java
 client.vitals().glucoseGrouped(
     "user_id",
-    GlucoseGroupedVitalsRequest
+    VitalsGlucoseGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6372,9 +6567,13 @@ client.vitals().glucoseGrouped(
 ```java
 client.vitals().cholesterolGrouped(
     "user_id",
-    CholesterolGroupedVitalsRequest
+    VitalsCholesterolGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6458,9 +6657,13 @@ client.vitals().cholesterolGrouped(
 ```java
 client.vitals().carbohydratesGrouped(
     "user_id",
-    CarbohydratesGroupedVitalsRequest
+    VitalsCarbohydratesGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6544,9 +6747,13 @@ client.vitals().carbohydratesGrouped(
 ```java
 client.vitals().bodyTemperatureDeltaGrouped(
     "user_id",
-    BodyTemperatureDeltaGroupedVitalsRequest
+    VitalsBodyTemperatureDeltaGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6630,9 +6837,13 @@ client.vitals().bodyTemperatureDeltaGrouped(
 ```java
 client.vitals().bodyTemperatureGrouped(
     "user_id",
-    BodyTemperatureGroupedVitalsRequest
+    VitalsBodyTemperatureGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6716,9 +6927,13 @@ client.vitals().bodyTemperatureGrouped(
 ```java
 client.vitals().bodyWeightGrouped(
     "user_id",
-    BodyWeightGroupedVitalsRequest
+    VitalsBodyWeightGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6802,9 +7017,13 @@ client.vitals().bodyWeightGrouped(
 ```java
 client.vitals().bodyFatGrouped(
     "user_id",
-    BodyFatGroupedVitalsRequest
+    VitalsBodyFatGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6888,9 +7107,13 @@ client.vitals().bodyFatGrouped(
 ```java
 client.vitals().bloodOxygenGrouped(
     "user_id",
-    BloodOxygenGroupedVitalsRequest
+    VitalsBloodOxygenGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -6974,9 +7197,13 @@ client.vitals().bloodOxygenGrouped(
 ```java
 client.vitals().electrocardiogramVoltageGrouped(
     "user_id",
-    ElectrocardiogramVoltageGroupedVitalsRequest
+    VitalsElectrocardiogramVoltageGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7060,9 +7287,13 @@ client.vitals().electrocardiogramVoltageGrouped(
 ```java
 client.vitals().bloodPressureGrouped(
     "user_id",
-    BloodPressureGroupedVitalsRequest
+    VitalsBloodPressureGroupedRequest
         .builder()
         .startDate("start_date")
+        .cursor("cursor")
+        .nextCursor("next_cursor")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7146,9 +7377,11 @@ client.vitals().bloodPressureGrouped(
 ```java
 client.vitals().vo2Max(
     "user_id",
-    Vo2MaxVitalsRequest
+    VitalsVo2MaxRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7216,9 +7449,11 @@ client.vitals().vo2Max(
 ```java
 client.vitals().stressLevel(
     "user_id",
-    StressLevelVitalsRequest
+    VitalsStressLevelRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7286,9 +7521,11 @@ client.vitals().stressLevel(
 ```java
 client.vitals().mindfulnessMinutes(
     "user_id",
-    MindfulnessMinutesVitalsRequest
+    VitalsMindfulnessMinutesRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7356,9 +7593,11 @@ client.vitals().mindfulnessMinutes(
 ```java
 client.vitals().caffeine(
     "user_id",
-    CaffeineVitalsRequest
+    VitalsCaffeineRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7426,9 +7665,11 @@ client.vitals().caffeine(
 ```java
 client.vitals().water(
     "user_id",
-    WaterVitalsRequest
+    VitalsWaterRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7496,9 +7737,11 @@ client.vitals().water(
 ```java
 client.vitals().steps(
     "user_id",
-    StepsVitalsRequest
+    VitalsStepsRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7566,9 +7809,11 @@ client.vitals().steps(
 ```java
 client.vitals().floorsClimbed(
     "user_id",
-    FloorsClimbedVitalsRequest
+    VitalsFloorsClimbedRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7636,9 +7881,11 @@ client.vitals().floorsClimbed(
 ```java
 client.vitals().distance(
     "user_id",
-    DistanceVitalsRequest
+    VitalsDistanceRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7706,9 +7953,11 @@ client.vitals().distance(
 ```java
 client.vitals().caloriesBasal(
     "user_id",
-    CaloriesBasalVitalsRequest
+    VitalsCaloriesBasalRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7776,9 +8025,11 @@ client.vitals().caloriesBasal(
 ```java
 client.vitals().caloriesActive(
     "user_id",
-    CaloriesActiveVitalsRequest
+    VitalsCaloriesActiveRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7846,9 +8097,11 @@ client.vitals().caloriesActive(
 ```java
 client.vitals().respiratoryRate(
     "user_id",
-    RespiratoryRateVitalsRequest
+    VitalsRespiratoryRateRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7916,9 +8169,11 @@ client.vitals().respiratoryRate(
 ```java
 client.vitals().ige(
     "user_id",
-    IgeVitalsRequest
+    VitalsIgeRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -7986,9 +8241,11 @@ client.vitals().ige(
 ```java
 client.vitals().igg(
     "user_id",
-    IggVitalsRequest
+    VitalsIggRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8056,9 +8313,11 @@ client.vitals().igg(
 ```java
 client.vitals().hypnogram(
     "user_id",
-    HypnogramVitalsRequest
+    VitalsHypnogramRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8126,9 +8385,11 @@ client.vitals().hypnogram(
 ```java
 client.vitals().hrv(
     "user_id",
-    HrvVitalsRequest
+    VitalsHrvRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8196,9 +8457,11 @@ client.vitals().hrv(
 ```java
 client.vitals().heartrate(
     "user_id",
-    HeartrateVitalsRequest
+    VitalsHeartrateRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8266,9 +8529,11 @@ client.vitals().heartrate(
 ```java
 client.vitals().glucose(
     "user_id",
-    GlucoseVitalsRequest
+    VitalsGlucoseRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8336,9 +8601,11 @@ client.vitals().glucose(
 ```java
 client.vitals().cholesterolTriglycerides(
     "user_id",
-    CholesterolTriglyceridesVitalsRequest
+    VitalsCholesterolTriglyceridesRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8406,9 +8673,11 @@ client.vitals().cholesterolTriglycerides(
 ```java
 client.vitals().cholesterolTotal(
     "user_id",
-    CholesterolTotalVitalsRequest
+    VitalsCholesterolTotalRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8476,9 +8745,11 @@ client.vitals().cholesterolTotal(
 ```java
 client.vitals().cholesterolLdl(
     "user_id",
-    CholesterolLdlVitalsRequest
+    VitalsCholesterolLdlRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8546,9 +8817,11 @@ client.vitals().cholesterolLdl(
 ```java
 client.vitals().cholesterolHdl(
     "user_id",
-    CholesterolHdlVitalsRequest
+    VitalsCholesterolHdlRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8616,9 +8889,11 @@ client.vitals().cholesterolHdl(
 ```java
 client.vitals().cholesterol(
     "user_id",
-    CholesterolVitalsRequest
+    VitalsCholesterolRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8686,9 +8961,11 @@ client.vitals().cholesterol(
 ```java
 client.vitals().bodyWeight(
     "user_id",
-    BodyWeightVitalsRequest
+    VitalsBodyWeightRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8756,9 +9033,11 @@ client.vitals().bodyWeight(
 ```java
 client.vitals().bodyFat(
     "user_id",
-    BodyFatVitalsRequest
+    VitalsBodyFatRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8826,9 +9105,11 @@ client.vitals().bodyFat(
 ```java
 client.vitals().bloodOxygen(
     "user_id",
-    BloodOxygenVitalsRequest
+    VitalsBloodOxygenRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8896,9 +9177,11 @@ client.vitals().bloodOxygen(
 ```java
 client.vitals().electrocardiogramVoltage(
     "user_id",
-    ElectrocardiogramVoltageVitalsRequest
+    VitalsElectrocardiogramVoltageRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -8966,9 +9249,11 @@ client.vitals().electrocardiogramVoltage(
 ```java
 client.vitals().bloodPressure(
     "user_id",
-    BloodPressureVitalsRequest
+    VitalsBloodPressureRequest
         .builder()
         .startDate("start_date")
+        .provider("provider")
+        .endDate("end_date")
         .build()
 );
 ```
@@ -9050,8 +9335,10 @@ GET All users for team.
 
 ```java
 client.user().getAll(
-    GetAllUserRequest
+    UserGetAllRequest
         .builder()
+        .offset(1)
+        .limit(1)
         .build()
 );
 ```
@@ -9250,12 +9537,7 @@ GET Users connected providers
 <dd>
 
 ```java
-client.user().getConnectedProviders(
-    "user_id",
-    GetConnectedProvidersUserRequest
-        .builder()
-        .build()
-);
+client.user().getConnectedProviders("user_id");
 ```
 </dd>
 </dl>
@@ -9295,12 +9577,7 @@ client.user().getConnectedProviders(
 <dd>
 
 ```java
-client.user().getLatestUserInfo(
-    "user_id",
-    GetLatestUserInfoUserRequest
-        .builder()
-        .build()
-);
+client.user().getLatestUserInfo("user_id");
 ```
 </dd>
 </dl>
@@ -9363,7 +9640,7 @@ client.user().createInsurance(
                         .state("state")
                         .build()
                 )
-                .dob("2023-01-15")
+                .dob("dob")
                 .email("email")
                 .phoneNumber("phone_number")
                 .build()
@@ -9457,12 +9734,7 @@ client.user().createInsurance(
 <dd>
 
 ```java
-client.user().getLatestInsurance(
-    "user_id",
-    GetLatestInsuranceUserRequest
-        .builder()
-        .build()
-);
+client.user().getLatestInsurance("user_id");
 ```
 </dd>
 </dl>
@@ -9511,7 +9783,7 @@ client.user().upsertUserInfo(
         .email("email")
         .phoneNumber("phone_number")
         .gender("gender")
-        .dob("2023-01-15")
+        .dob("dob")
         .address(
             Address
                 .builder()
@@ -9673,12 +9945,7 @@ GET user_id from client_user_id.
 <dd>
 
 ```java
-client.user().getByClientUserId(
-    "client_user_id",
-    GetByClientUserIdUserRequest
-        .builder()
-        .build()
-);
+client.user().getByClientUserId("client_user_id");
 ```
 </dd>
 </dl>
@@ -9718,13 +9985,7 @@ client.user().getByClientUserId(
 <dd>
 
 ```java
-client.user().deregisterProvider(
-    "user_id",
-    Providers.OURA,
-    DeregisterProviderUserRequest
-        .builder()
-        .build()
-);
+client.user().deregisterProvider("user_id", Providers.OURA);
 ```
 </dd>
 </dl>
@@ -9772,12 +10033,7 @@ client.user().deregisterProvider(
 <dd>
 
 ```java
-client.user().get(
-    "user_id",
-    GetUserRequest
-        .builder()
-        .build()
-);
+client.user().get("user_id");
 ```
 </dd>
 </dl>
@@ -9817,12 +10073,7 @@ client.user().get(
 <dd>
 
 ```java
-client.user().delete(
-    "user_id",
-    DeleteUserRequest
-        .builder()
-        .build()
-);
+client.user().delete("user_id");
 ```
 </dd>
 </dl>
@@ -9953,8 +10204,10 @@ client.user().patch(
 
 ```java
 client.user().undoDelete(
-    UndoDeleteUserRequest
+    UserUndoDeleteRequest
         .builder()
+        .userId("user_id")
+        .clientUserId("client_user_id")
         .build()
 );
 ```
@@ -10020,8 +10273,9 @@ Trigger a manual refresh for a specific user
 ```java
 client.user().refresh(
     "user_id",
-    RefreshUserRequest
+    UserRefreshRequest
         .builder()
+        .timeout(1.1)
         .build()
 );
 ```
@@ -10046,7 +10300,7 @@ client.user().refresh(
 <dl>
 <dd>
 
-**timeout:** `Optional<Float>` 
+**timeout:** `Optional<Double>` 
     
 </dd>
 </dl>
@@ -10071,12 +10325,7 @@ client.user().refresh(
 <dd>
 
 ```java
-client.user().getDevices(
-    "user_id",
-    GetDevicesUserRequest
-        .builder()
-        .build()
-);
+client.user().getDevices("user_id");
 ```
 </dd>
 </dl>
@@ -10116,13 +10365,7 @@ client.user().getDevices(
 <dd>
 
 ```java
-client.user().getDevice(
-    "user_id",
-    "device_id",
-    GetDeviceUserRequest
-        .builder()
-        .build()
-);
+client.user().getDevice("user_id", "device_id");
 ```
 </dd>
 </dl>
@@ -10170,12 +10413,7 @@ client.user().getDevice(
 <dd>
 
 ```java
-client.user().getUserSignInToken(
-    "user_id",
-    GetUserSignInTokenUserRequest
-        .builder()
-        .build()
-);
+client.user().getUserSignInToken("user_id");
 ```
 </dd>
 </dl>
@@ -10301,8 +10539,9 @@ Post teams.
 
 ```java
 client.team().getLinkConfig(
-    GetLinkConfigTeamRequest
+    TeamGetLinkConfigRequest
         .builder()
+        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -10358,12 +10597,7 @@ Get team.
 <dd>
 
 ```java
-client.team().get(
-    "team_id",
-    GetTeamRequest
-        .builder()
-        .build()
-);
+client.team().get("team_id");
 ```
 </dd>
 </dl>
@@ -10418,8 +10652,9 @@ Search team users by user_id
 
 ```java
 client.team().getUserById(
-    GetUserByIdTeamRequest
+    TeamGetUserByIdRequest
         .builder()
+        .queryId("query_id")
         .build()
 );
 ```
@@ -10501,8 +10736,9 @@ GET source priorities.
 
 ```java
 client.team().getSourcePriorities(
-    GetSourcePrioritiesTeamRequest
+    TeamGetSourcePrioritiesRequest
         .builder()
+        .dataType(PriorityResource.WORKOUTS)
         .build()
 );
 ```
@@ -10583,12 +10819,7 @@ client.team().updateSourcePriorities();
 <dd>
 
 ```java
-client.team().getPhysicians(
-    "team_id",
-    GetPhysiciansTeamRequest
-        .builder()
-        .build()
-);
+client.team().getPhysicians("team_id");
 ```
 </dd>
 </dl>
@@ -10644,8 +10875,9 @@ Get Provider list
 
 ```java
 client.providers().getAll(
-    GetAllProvidersRequest
+    ProvidersGetAllRequest
         .builder()
+        .sourceType("source_type")
         .build()
 );
 ```
@@ -10689,8 +10921,13 @@ client.providers().getAll(
 
 ```java
 client.introspect().getUserResources(
-    GetUserResourcesIntrospectRequest
+    IntrospectGetUserResourcesRequest
         .builder()
+        .userId("user_id")
+        .provider(Providers.OURA)
+        .userLimit(1)
+        .cursor("cursor")
+        .nextCursor("next_cursor")
         .build()
 );
 ```
@@ -10765,8 +11002,13 @@ client.introspect().getUserResources(
 
 ```java
 client.introspect().getUserHistoricalPulls(
-    GetUserHistoricalPullsIntrospectRequest
+    IntrospectGetUserHistoricalPullsRequest
         .builder()
+        .userId("user_id")
+        .provider(Providers.OURA)
+        .userLimit(1)
+        .cursor("cursor")
+        .nextCursor("next_cursor")
         .build()
 );
 ```
@@ -10791,7 +11033,7 @@ client.introspect().getUserHistoricalPulls(
 <dl>
 <dd>
 
-**provider:** `Optional<GetUserHistoricalPullsIntrospectRequestProvider>` 
+**provider:** `Optional<Providers>` 
     
 </dd>
 </dl>
@@ -10856,8 +11098,15 @@ GET all the lab tests the team has access to.
 
 ```java
 client.labTests().get(
-    GetLabTestsRequest
+    LabTestsGetRequest
         .builder()
+        .generationMethod(LabTestGenerationMethodFilter.AUTO)
+        .labSlug("lab_slug")
+        .collectionMethod(LabTestCollectionMethod.TESTKIT)
+        .status(LabTestStatus.ACTIVE)
+        .name("name")
+        .orderKey(LabTestsGetRequestOrderKey.PRICE)
+        .orderDirection(LabTestsGetRequestOrderDirection.ASC)
         .build()
 );
 ```
@@ -10906,7 +11155,7 @@ client.labTests().get(
 <dl>
 <dd>
 
-**markerIds:** `Optional<List<Integer>>` — Filter to only include lab tests containing these marker IDs.
+**markerIds:** `Optional<Integer>` — Filter to only include lab tests containing these marker IDs.
     
 </dd>
 </dl>
@@ -10914,7 +11163,7 @@ client.labTests().get(
 <dl>
 <dd>
 
-**providerIds:** `Optional<List<String>>` — Filter to only include lab tests containing these provider IDs.
+**providerIds:** `Optional<String>` — Filter to only include lab tests containing these provider IDs.
     
 </dd>
 </dl>
@@ -10930,7 +11179,7 @@ client.labTests().get(
 <dl>
 <dd>
 
-**orderKey:** `Optional<GetLabTestsRequestOrderKey>` 
+**orderKey:** `Optional<LabTestsGetRequestOrderKey>` 
     
 </dd>
 </dl>
@@ -10938,7 +11187,7 @@ client.labTests().get(
 <dl>
 <dd>
 
-**orderDirection:** `Optional<GetLabTestsRequestOrderDirection>` 
+**orderDirection:** `Optional<LabTestsGetRequestOrderDirection>` 
     
 </dd>
 </dl>
@@ -11066,8 +11315,9 @@ GET all the lab tests the team has access to.
 ```java
 client.labTests().getById(
     "lab_test_id",
-    GetByIdLabTestsRequest
+    LabTestsGetByIdRequest
         .builder()
+        .labAccountId("lab_account_id")
         .build()
 );
 ```
@@ -11193,8 +11443,13 @@ GET all the markers for the given lab.
 
 ```java
 client.labTests().getMarkers(
-    GetMarkersLabTestsRequest
+    LabTestsGetMarkersRequest
         .builder()
+        .name("name")
+        .aLaCarteEnabled(true)
+        .labAccountId("lab_account_id")
+        .page(1)
+        .size(1)
         .build()
 );
 ```
@@ -11211,7 +11466,7 @@ client.labTests().getMarkers(
 <dl>
 <dd>
 
-**labId:** `Optional<List<Integer>>` — The identifier Vital assigned to a lab partner.
+**labId:** `Optional<Integer>` — The identifier Vital assigned to a lab partner.
     
 </dd>
 </dl>
@@ -11277,13 +11532,15 @@ client.labTests().getMarkers(
 
 ```java
 client.labTests().getMarkersForOrderSet(
-    GetMarkersForOrderSetLabTestsRequest
+    LabTestsGetMarkersForOrderSetRequest
         .builder()
         .body(
             OrderSetRequest
                 .builder()
                 .build()
         )
+        .page(1)
+        .size(1)
         .build()
 );
 ```
@@ -11343,8 +11600,11 @@ client.labTests().getMarkersForOrderSet(
 ```java
 client.labTests().getMarkersForLabTest(
     "lab_test_id",
-    GetMarkersForLabTestLabTestsRequest
+    LabTestsGetMarkersForLabTestRequest
         .builder()
+        .labAccountId("lab_account_id")
+        .page(1)
+        .size(1)
         .build()
 );
 ```
@@ -11427,8 +11687,9 @@ GET a specific marker for the given lab and provider_id
 client.labTests().getMarkersByLabAndProviderId(
     1,
     "provider_id",
-    GetMarkersByLabAndProviderIdLabTestsRequest
+    LabTestsGetMarkersByLabAndProviderIdRequest
         .builder()
+        .labAccountId("lab_account_id")
         .build()
 );
 ```
@@ -11540,8 +11801,17 @@ GET lab tests the team has access to as a paginated list.
 
 ```java
 client.labTests().getPaginated(
-    GetPaginatedLabTestsRequest
+    LabTestsGetPaginatedRequest
         .builder()
+        .labTestLimit(1)
+        .nextCursor("next_cursor")
+        .generationMethod(LabTestGenerationMethodFilter.AUTO)
+        .labSlug("lab_slug")
+        .collectionMethod(LabTestCollectionMethod.TESTKIT)
+        .status(LabTestStatus.ACTIVE)
+        .name("name")
+        .orderKey(LabTestsGetPaginatedRequestOrderKey.PRICE)
+        .orderDirection(LabTestsGetPaginatedRequestOrderDirection.ASC)
         .build()
 );
 ```
@@ -11606,7 +11876,7 @@ client.labTests().getPaginated(
 <dl>
 <dd>
 
-**markerIds:** `Optional<List<Integer>>` — Filter to only include lab tests containing these marker IDs.
+**markerIds:** `Optional<Integer>` — Filter to only include lab tests containing these marker IDs.
     
 </dd>
 </dl>
@@ -11614,7 +11884,7 @@ client.labTests().getPaginated(
 <dl>
 <dd>
 
-**providerIds:** `Optional<List<String>>` — Filter to only include lab tests containing these provider IDs.
+**providerIds:** `Optional<String>` — Filter to only include lab tests containing these provider IDs.
     
 </dd>
 </dl>
@@ -11630,7 +11900,7 @@ client.labTests().getPaginated(
 <dl>
 <dd>
 
-**orderKey:** `Optional<GetPaginatedLabTestsRequestOrderKey>` 
+**orderKey:** `Optional<LabTestsGetPaginatedRequestOrderKey>` 
     
 </dd>
 </dl>
@@ -11638,7 +11908,7 @@ client.labTests().getPaginated(
 <dl>
 <dd>
 
-**orderDirection:** `Optional<GetPaginatedLabTestsRequestOrderDirection>` 
+**orderDirection:** `Optional<LabTestsGetPaginatedRequestOrderDirection>` 
     
 </dd>
 </dl>
@@ -11663,12 +11933,7 @@ client.labTests().getPaginated(
 <dd>
 
 ```java
-client.labTests().getLabTestCollectionInstructionPdf(
-    "lab_test_id",
-    GetLabTestCollectionInstructionPdfLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getLabTestCollectionInstructionPdf("lab_test_id");
 ```
 </dd>
 </dl>
@@ -11723,8 +11988,22 @@ GET many orders with filters.
 
 ```java
 client.labTests().getOrders(
-    GetOrdersLabTestsRequest
+    LabTestsGetOrdersRequest
         .builder()
+        .searchInput("search_input")
+        .startDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+        .endDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+        .updatedStartDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+        .updatedEndDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+        .orderKey(LabTestsGetOrdersRequestOrderKey.CREATED_AT)
+        .orderDirection(LabTestsGetOrdersRequestOrderDirection.ASC)
+        .isCritical(true)
+        .interpretation(Interpretation.NORMAL)
+        .userId("user_id")
+        .patientName("patient_name")
+        .shippingRecipientName("shipping_recipient_name")
+        .page(1)
+        .size(1)
         .build()
 );
 ```
@@ -11781,7 +12060,7 @@ client.labTests().getOrders(
 <dl>
 <dd>
 
-**status:** `Optional<List<OrderLowLevelStatus>>` — Filter by low level status.
+**status:** `Optional<OrderLowLevelStatus>` — Filter by low level status.
     
 </dd>
 </dl>
@@ -11789,7 +12068,7 @@ client.labTests().getOrders(
 <dl>
 <dd>
 
-**orderKey:** `Optional<GetOrdersLabTestsRequestOrderKey>` — Order key to sort by.
+**orderKey:** `Optional<LabTestsGetOrdersRequestOrderKey>` — Order key to sort by.
     
 </dd>
 </dl>
@@ -11797,7 +12076,7 @@ client.labTests().getOrders(
 <dl>
 <dd>
 
-**orderDirection:** `Optional<GetOrdersLabTestsRequestOrderDirection>` — Order direction to sort by.
+**orderDirection:** `Optional<LabTestsGetOrdersRequestOrderDirection>` — Order direction to sort by.
     
 </dd>
 </dl>
@@ -11805,7 +12084,7 @@ client.labTests().getOrders(
 <dl>
 <dd>
 
-**orderType:** `Optional<List<LabTestCollectionMethod>>` — Filter by method used to perform the lab test.
+**orderType:** `Optional<LabTestCollectionMethod>` — Filter by method used to perform the lab test.
     
 </dd>
 </dl>
@@ -11829,7 +12108,7 @@ client.labTests().getOrders(
 <dl>
 <dd>
 
-**orderActivationTypes:** `Optional<List<OrderActivationType>>` — Filter by activation type.
+**orderActivationTypes:** `Optional<OrderActivationType>` — Filter by activation type.
     
 </dd>
 </dl>
@@ -11861,7 +12140,7 @@ client.labTests().getOrders(
 <dl>
 <dd>
 
-**orderIds:** `Optional<List<String>>` — Filter by order ids.
+**orderIds:** `Optional<String>` — Filter by order ids.
     
 </dd>
 </dl>
@@ -11918,7 +12197,7 @@ for the given address and order.
 
 ```java
 client.labTests().getPhlebotomyAppointmentAvailability(
-    GetPhlebotomyAppointmentAvailabilityLabTestsRequest
+    LabTestsGetPhlebotomyAppointmentAvailabilityRequest
         .builder()
         .body(
             UsAddress
@@ -11929,6 +12208,7 @@ client.labTests().getPhlebotomyAppointmentAvailability(
                 .zipCode("zip_code")
                 .build()
         )
+        .startDate("start_date")
         .build()
 );
 ```
@@ -11994,14 +12274,9 @@ Book an at-home phlebotomy appointment.
 ```java
 client.labTests().bookPhlebotomyAppointment(
     "order_id",
-    BookPhlebotomyAppointmentLabTestsRequest
+    AppointmentBookingRequest
         .builder()
-        .body(
-            AppointmentBookingRequest
-                .builder()
-                .bookingKey("booking_key")
-                .build()
-        )
+        .bookingKey("booking_key")
         .build()
 );
 ```
@@ -12152,14 +12427,9 @@ Reschedule a previously booked at-home phlebotomy appointment.
 ```java
 client.labTests().reschedulePhlebotomyAppointment(
     "order_id",
-    ReschedulePhlebotomyAppointmentLabTestsRequest
+    AppointmentRescheduleRequest
         .builder()
-        .body(
-            AppointmentRescheduleRequest
-                .builder()
-                .bookingKey("booking_key")
-                .build()
-        )
+        .bookingKey("booking_key")
         .build()
 );
 ```
@@ -12338,12 +12608,7 @@ Get the appointment associated with an order.
 <dd>
 
 ```java
-client.labTests().getPhlebotomyAppointment(
-    "order_id",
-    GetPhlebotomyAppointmentLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getPhlebotomyAppointment("order_id");
 ```
 </dd>
 </dl>
@@ -12402,9 +12667,12 @@ Information returned:
 
 ```java
 client.labTests().getAreaInfo(
-    GetAreaInfoLabTestsRequest
+    LabTestsGetAreaInfoRequest
         .builder()
         .zipCode("zip_code")
+        .radius(AllowedRadius.TEN)
+        .lab(ClientFacingLabs.QUEST)
+        .labAccountId("lab_account_id")
         .build()
 );
 ```
@@ -12445,7 +12713,7 @@ client.labTests().getAreaInfo(
 <dl>
 <dd>
 
-**labs:** `Optional<List<ClientFacingLabs>>` — List of labs to check for PSCs
+**labs:** `Optional<ClientFacingLabs>` — List of labs to check for PSCs
     
 </dd>
 </dl>
@@ -12479,10 +12747,12 @@ client.labTests().getAreaInfo(
 
 ```java
 client.labTests().getPscInfo(
-    GetPscInfoLabTestsRequest
+    LabTestsGetPscInfoRequest
         .builder()
         .zipCode("zip_code")
         .labId(1)
+        .radius(AllowedRadius.TEN)
+        .labAccountId("lab_account_id")
         .build()
 );
 ```
@@ -12523,7 +12793,7 @@ client.labTests().getPscInfo(
 <dl>
 <dd>
 
-**capabilities:** `Optional<List<LabLocationCapability>>` — Filter for only locations with certain capabilities
+**capabilities:** `Optional<LabLocationCapability>` — Filter for only locations with certain capabilities
     
 </dd>
 </dl>
@@ -12558,8 +12828,9 @@ client.labTests().getPscInfo(
 ```java
 client.labTests().getOrderPscInfo(
     "order_id",
-    GetOrderPscInfoLabTestsRequest
+    LabTestsGetOrderPscInfoRequest
         .builder()
+        .radius(AllowedRadius.TEN)
         .build()
 );
 ```
@@ -12592,7 +12863,7 @@ client.labTests().getOrderPscInfo(
 <dl>
 <dd>
 
-**capabilities:** `Optional<List<LabLocationCapability>>` — Filter for only locations with certain capabilities
+**capabilities:** `Optional<LabLocationCapability>` — Filter for only locations with certain capabilities
     
 </dd>
 </dl>
@@ -12631,12 +12902,7 @@ This endpoint returns the lab results for the order.
 <dd>
 
 ```java
-client.labTests().getResultPdf(
-    "order_id",
-    GetResultPdfLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getResultPdf("order_id");
 ```
 </dd>
 </dl>
@@ -12691,12 +12957,7 @@ provider and sample dates.
 <dd>
 
 ```java
-client.labTests().getResultMetadata(
-    "order_id",
-    GetResultMetadataLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getResultMetadata("order_id");
 ```
 </dd>
 </dl>
@@ -12750,12 +13011,7 @@ Return both metadata and raw json test data
 <dd>
 
 ```java
-client.labTests().getResultRaw(
-    "order_id",
-    GetResultRawLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getResultRaw("order_id");
 ```
 </dd>
 </dl>
@@ -12811,7 +13067,7 @@ This endpoint returns the printed labels for the order.
 ```java
 client.labTests().getLabelsPdf(
     "order_id",
-    GetLabelsPdfLabTestsRequest
+    LabTestsGetLabelsPdfRequest
         .builder()
         .collectionDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .build()
@@ -12872,9 +13128,12 @@ client.labTests().getLabelsPdf(
 
 ```java
 client.labTests().getPscAppointmentAvailability(
-    GetPscAppointmentAvailabilityLabTestsRequest
+    LabTestsGetPscAppointmentAvailabilityRequest
         .builder()
         .lab("quest")
+        .startDate("start_date")
+        .zipCode("zip_code")
+        .radius(AllowedRadius.TEN)
         .build()
 );
 ```
@@ -12907,7 +13166,7 @@ client.labTests().getPscAppointmentAvailability(
 <dl>
 <dd>
 
-**siteCodes:** `Optional<List<String>>` — List of site codes to fetch availability for
+**siteCodes:** `Optional<String>` — List of site codes to fetch availability for
     
 </dd>
 </dl>
@@ -12950,14 +13209,9 @@ client.labTests().getPscAppointmentAvailability(
 ```java
 client.labTests().bookPscAppointment(
     "order_id",
-    BookPscAppointmentLabTestsRequest
+    AppointmentBookingRequest
         .builder()
-        .body(
-            AppointmentBookingRequest
-                .builder()
-                .bookingKey("booking_key")
-                .build()
-        )
+        .bookingKey("booking_key")
         .build()
 );
 ```
@@ -13009,14 +13263,9 @@ client.labTests().bookPscAppointment(
 ```java
 client.labTests().reschedulePscAppointment(
     "order_id",
-    ReschedulePscAppointmentLabTestsRequest
+    AppointmentRescheduleRequest
         .builder()
-        .body(
-            AppointmentRescheduleRequest
-                .builder()
-                .bookingKey("booking_key")
-                .build()
-        )
+        .bookingKey("booking_key")
         .build()
 );
 ```
@@ -13167,12 +13416,7 @@ Get the appointment associated with an order.
 <dd>
 
 ```java
-client.labTests().getPscAppointment(
-    "order_id",
-    GetPscAppointmentLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getPscAppointment("order_id");
 ```
 </dd>
 </dl>
@@ -13226,12 +13470,7 @@ GET collection instructions for an order
 <dd>
 
 ```java
-client.labTests().getOrderCollectionInstructionPdf(
-    "order_id",
-    GetOrderCollectionInstructionPdfLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getOrderCollectionInstructionPdf("order_id");
 ```
 </dd>
 </dl>
@@ -13285,12 +13524,7 @@ GET requisition pdf for an order
 <dd>
 
 ```java
-client.labTests().getOrderRequistionPdf(
-    "order_id",
-    GetOrderRequistionPdfLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getOrderRequistionPdf("order_id");
 ```
 </dd>
 </dl>
@@ -13344,12 +13578,7 @@ GET ABN pdf for an order
 <dd>
 
 ```java
-client.labTests().getOrderAbnPdf(
-    "order_id",
-    GetOrderAbnPdfLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getOrderAbnPdf("order_id");
 ```
 </dd>
 </dl>
@@ -13403,12 +13632,7 @@ GET individual order by ID.
 <dd>
 
 ```java
-client.labTests().getOrder(
-    "order_id",
-    GetOrderLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().getOrder("order_id");
 ```
 </dd>
 </dl>
@@ -13457,7 +13681,7 @@ client.labTests().createOrder(
                 .builder()
                 .firstName("first_name")
                 .lastName("last_name")
-                .dob("2023-01-15")
+                .dob("dob")
                 .gender(Gender.FEMALE)
                 .phoneNumber("phone_number")
                 .email("email")
@@ -13473,6 +13697,8 @@ client.labTests().createOrder(
                 .country("country")
                 .build()
         )
+        .idempotencyKey("X-Idempotency-Key")
+        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13674,7 +13900,7 @@ client.labTests().importOrder(
                 .builder()
                 .firstName("first_name")
                 .lastName("last_name")
-                .dob("2023-01-15")
+                .dob("dob")
                 .gender(Gender.FEMALE)
                 .phoneNumber("phone_number")
                 .email("email")
@@ -13811,12 +14037,7 @@ POST cancel order
 <dd>
 
 ```java
-client.labTests().cancelOrder(
-    "order_id",
-    CancelOrderLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().cancelOrder("order_id");
 ```
 </dd>
 </dl>
@@ -13872,13 +14093,13 @@ Get available test kits.
 ```java
 client.labTests().simulateOrderProcess(
     "order_id",
-    SimulateOrderProcessLabTestsRequest
+    LabTestsSimulateOrderProcessRequest
         .builder()
         .body(
-            SimulationFlags
-                .builder()
-                .build()
+            Optional.empty()
         )
+        .finalStatus(OrderStatus.RECEIVED_WALK_IN_TEST_ORDERED)
+        .delay(1)
         .build()
 );
 ```
@@ -13958,12 +14179,7 @@ PATCH update on site collection order when draw is completed
 <dd>
 
 ```java
-client.labTests().updateOnSiteCollectionOrderDrawCompleted(
-    "order_id",
-    UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest
-        .builder()
-        .build()
-);
+client.labTests().updateOnSiteCollectionOrderDrawCompleted("order_id");
 ```
 </dd>
 </dl>
@@ -14007,9 +14223,7 @@ client.labTests().validateIcdCodes(
     ValidateIcdCodesBody
         .builder()
         .codes(
-            new ArrayList<String>(
-                Arrays.asList("codes")
-            )
+            Arrays.asList("codes")
         )
         .build()
 );
@@ -14062,7 +14276,7 @@ client.testkit().register(
                 .builder()
                 .firstName("first_name")
                 .lastName("last_name")
-                .dob("2023-01-15")
+                .dob("dob")
                 .gender(Gender.FEMALE)
                 .phoneNumber("phone_number")
                 .email("email")
@@ -14348,8 +14562,11 @@ client.order().resendEvents(
 
 ```java
 client.insurance().searchGetPayorInfo(
-    SearchGetPayorInfoInsuranceRequest
+    InsuranceSearchGetPayorInfoRequest
         .builder()
+        .insuranceName("insurance_name")
+        .provider(PayorCodeExternalProvider.CHANGE_HEALTHCARE)
+        .providerPayorId("provider_payor_id")
         .build()
 );
 ```
@@ -14468,7 +14685,7 @@ client.insurance().searchPayorInfo(
 
 ```java
 client.insurance().searchDiagnosis(
-    SearchDiagnosisInsuranceRequest
+    InsuranceSearchDiagnosisRequest
         .builder()
         .diagnosisQuery("diagnosis_query")
         .build()
@@ -14611,7 +14828,6 @@ and starts the ParseLabReport. Returns a generated job_id.
 client.labReport().parserCreateJob(
     BodyCreateLabReportParserJob
         .builder()
-        .userId("user_id")
         .build()
 );
 ```
@@ -14655,12 +14871,7 @@ Returns:
 <dd>
 
 ```java
-client.labReport().parserGetJob(
-    "job_id",
-    ParserGetJobLabReportRequest
-        .builder()
-        .build()
-);
+client.labReport().parserGetJob("job_id");
 ```
 </dd>
 </dl>
@@ -14705,13 +14916,12 @@ client.aggregate().queryOne(
     "user_id",
     QueryBatch
         .builder()
-        .accept("*/*")
         .timeframe(
-            QueryBatchTimeframe.ofRelativeTimeframe(
+            QueryBatchTimeframe.of(
                 RelativeTimeframe
                     .builder()
                     .type("relative")
-                    .anchor("2023-01-15")
+                    .anchor("anchor")
                     .past(
                         Period
                             .builder()
@@ -14722,32 +14932,28 @@ client.aggregate().queryOne(
             )
         )
         .queries(
-            new ArrayList<Query>(
-                Arrays.asList(
-                    Query
-                        .builder()
-                        .select(
-                            new ArrayList<QuerySelectItem>(
-                                Arrays.asList(
-                                    QuerySelectItem.ofAggregateExpr(
-                                        AggregateExpr
-                                            .builder()
-                                            .arg(
-                                                AggregateExprArg.ofSleepColumnExpr(
-                                                    SleepColumnExpr
-                                                        .builder()
-                                                        .sleep(SleepColumnExprSleep.ID)
-                                                        .build()
-                                                )
-                                            )
-                                            .func(AggregateExprFunc.MEAN)
-                                            .build()
+            Arrays.asList(
+                Query
+                    .builder()
+                    .select(
+                        Arrays.asList(
+                            QuerySelectItem.of(
+                                AggregateExpr
+                                    .builder()
+                                    .arg(
+                                        AggregateExprArg.of(
+                                            SleepColumnExpr
+                                                .builder()
+                                                .sleep(SleepColumnExprSleep.ID)
+                                                .build()
+                                        )
                                     )
-                                )
+                                    .func(AggregateExprFunc.MEAN)
+                                    .build()
                             )
                         )
-                        .build()
-                )
+                    )
+                    .build()
             )
         )
         .build()
@@ -14823,14 +15029,7 @@ client.aggregate().queryOne(
 <dd>
 
 ```java
-client.aggregate().getResultTableForContinuousQuery(
-    "user_id",
-    "query_id_or_slug",
-    GetResultTableForContinuousQueryAggregateRequest
-        .builder()
-        .accept("*/*")
-        .build()
-);
+client.aggregate().getResultTableForContinuousQuery("user_id", "query_id_or_slug");
 ```
 </dd>
 </dl>
@@ -14889,8 +15088,10 @@ client.aggregate().getResultTableForContinuousQuery(
 client.aggregate().getTaskHistoryForContinuousQuery(
     "user_id",
     "query_id_or_slug",
-    GetTaskHistoryForContinuousQueryAggregateRequest
+    AggregateGetTaskHistoryForContinuousQueryRequest
         .builder()
+        .nextCursor("next_cursor")
+        .limit(1)
         .build()
 );
 ```

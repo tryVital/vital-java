@@ -35,7 +35,7 @@ public final class ClientFacingStreamHeartrate {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visitListOfNullableInteger((List<Optional<Integer>>) this.value);
+            return visitor.visitListOfOptionalInteger((List<Optional<Integer>>) this.value);
         } else if (this.type == 1) {
             return visitor.visitListOfInteger((List<Integer>) this.value);
         }
@@ -62,7 +62,7 @@ public final class ClientFacingStreamHeartrate {
         return this.value.toString();
     }
 
-    public static ClientFacingStreamHeartrate ofListOfNullableInteger(List<Optional<Integer>> value) {
+    public static ClientFacingStreamHeartrate ofListOfOptionalInteger(List<Optional<Integer>> value) {
         return new ClientFacingStreamHeartrate(value, 0);
     }
 
@@ -71,7 +71,7 @@ public final class ClientFacingStreamHeartrate {
     }
 
     public interface Visitor<T> {
-        T visitListOfNullableInteger(List<Optional<Integer>> value);
+        T visitListOfOptionalInteger(List<Optional<Integer>> value);
 
         T visitListOfInteger(List<Integer> value);
     }
@@ -86,7 +86,7 @@ public final class ClientFacingStreamHeartrate {
                 throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return ofListOfNullableInteger(
+                return ofListOfOptionalInteger(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Integer>>>() {}));
             } catch (RuntimeException e) {
             }

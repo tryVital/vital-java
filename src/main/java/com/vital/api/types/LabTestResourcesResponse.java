@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,17 +43,8 @@ public final class LabTestResourcesResponse {
     /**
      * @return The cursor for fetching the next page, or <code>null</code> to fetch the first page.
      */
-    @JsonIgnore
-    public Optional<String> getNextCursor() {
-        if (nextCursor == null) {
-            return Optional.empty();
-        }
-        return nextCursor;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("next_cursor")
-    private Optional<String> _getNextCursor() {
+    public Optional<String> getNextCursor() {
         return nextCursor;
     }
 
@@ -109,7 +97,9 @@ public final class LabTestResourcesResponse {
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public Builder data(List<ClientFacingLabTest> data) {
             this.data.clear();
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
@@ -136,17 +126,6 @@ public final class LabTestResourcesResponse {
 
         public Builder nextCursor(String nextCursor) {
             this.nextCursor = Optional.ofNullable(nextCursor);
-            return this;
-        }
-
-        public Builder nextCursor(Nullable<String> nextCursor) {
-            if (nextCursor.isNull()) {
-                this.nextCursor = null;
-            } else if (nextCursor.isEmpty()) {
-                this.nextCursor = Optional.empty();
-            } else {
-                this.nextCursor = Optional.of(nextCursor.get());
-            }
             return this;
         }
 
