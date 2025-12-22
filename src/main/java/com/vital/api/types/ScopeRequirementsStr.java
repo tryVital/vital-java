@@ -93,7 +93,9 @@ public final class ScopeRequirementsStr {
         @JsonSetter(value = "required", nulls = Nulls.SKIP)
         public Builder required(List<String> required) {
             this.required.clear();
-            this.required.addAll(required);
+            if (required != null) {
+                this.required.addAll(required);
+            }
             return this;
         }
 
@@ -112,7 +114,9 @@ public final class ScopeRequirementsStr {
         @JsonSetter(value = "optional", nulls = Nulls.SKIP)
         public Builder optional(List<String> optional) {
             this.optional.clear();
-            this.optional.addAll(optional);
+            if (optional != null) {
+                this.optional.addAll(optional);
+            }
             return this;
         }
 

@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,119 +71,56 @@ public final class ClientFacingShipment {
     /**
      * @return Tracking number for delivery to customer
      */
-    @JsonIgnore
+    @JsonProperty("outbound_tracking_number")
     public Optional<String> getOutboundTrackingNumber() {
-        if (outboundTrackingNumber == null) {
-            return Optional.empty();
-        }
         return outboundTrackingNumber;
     }
 
     /**
      * @return Tracking url for delivery to customer
      */
-    @JsonIgnore
+    @JsonProperty("outbound_tracking_url")
     public Optional<String> getOutboundTrackingUrl() {
-        if (outboundTrackingUrl == null) {
-            return Optional.empty();
-        }
         return outboundTrackingUrl;
     }
 
     /**
      * @return Tracking number for delivery to lab
      */
-    @JsonIgnore
+    @JsonProperty("inbound_tracking_number")
     public Optional<String> getInboundTrackingNumber() {
-        if (inboundTrackingNumber == null) {
-            return Optional.empty();
-        }
         return inboundTrackingNumber;
     }
 
     /**
      * @return Tracking url for delivery to lab
      */
-    @JsonIgnore
+    @JsonProperty("inbound_tracking_url")
     public Optional<String> getInboundTrackingUrl() {
-        if (inboundTrackingUrl == null) {
-            return Optional.empty();
-        }
         return inboundTrackingUrl;
     }
 
     /**
      * @return Courier used for delivery to customer
      */
-    @JsonIgnore
+    @JsonProperty("outbound_courier")
     public Optional<String> getOutboundCourier() {
-        if (outboundCourier == null) {
-            return Optional.empty();
-        }
         return outboundCourier;
     }
 
     /**
      * @return Courier used for delivery to lab
      */
-    @JsonIgnore
+    @JsonProperty("inbound_courier")
     public Optional<String> getInboundCourier() {
-        if (inboundCourier == null) {
-            return Optional.empty();
-        }
         return inboundCourier;
     }
 
     /**
      * @return Notes associated to the Vital shipment
      */
-    @JsonIgnore
-    public Optional<String> getNotes() {
-        if (notes == null) {
-            return Optional.empty();
-        }
-        return notes;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("outbound_tracking_number")
-    private Optional<String> _getOutboundTrackingNumber() {
-        return outboundTrackingNumber;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("outbound_tracking_url")
-    private Optional<String> _getOutboundTrackingUrl() {
-        return outboundTrackingUrl;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("inbound_tracking_number")
-    private Optional<String> _getInboundTrackingNumber() {
-        return inboundTrackingNumber;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("inbound_tracking_url")
-    private Optional<String> _getInboundTrackingUrl() {
-        return inboundTrackingUrl;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("outbound_courier")
-    private Optional<String> _getOutboundCourier() {
-        return outboundCourier;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("inbound_courier")
-    private Optional<String> _getInboundCourier() {
-        return inboundCourier;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("notes")
-    private Optional<String> _getNotes() {
+    public Optional<String> getNotes() {
         return notes;
     }
 
@@ -253,16 +187,12 @@ public final class ClientFacingShipment {
 
         _FinalStage outboundTrackingNumber(String outboundTrackingNumber);
 
-        _FinalStage outboundTrackingNumber(Nullable<String> outboundTrackingNumber);
-
         /**
          * <p>Tracking url for delivery to customer</p>
          */
         _FinalStage outboundTrackingUrl(Optional<String> outboundTrackingUrl);
 
         _FinalStage outboundTrackingUrl(String outboundTrackingUrl);
-
-        _FinalStage outboundTrackingUrl(Nullable<String> outboundTrackingUrl);
 
         /**
          * <p>Tracking number for delivery to lab</p>
@@ -271,16 +201,12 @@ public final class ClientFacingShipment {
 
         _FinalStage inboundTrackingNumber(String inboundTrackingNumber);
 
-        _FinalStage inboundTrackingNumber(Nullable<String> inboundTrackingNumber);
-
         /**
          * <p>Tracking url for delivery to lab</p>
          */
         _FinalStage inboundTrackingUrl(Optional<String> inboundTrackingUrl);
 
         _FinalStage inboundTrackingUrl(String inboundTrackingUrl);
-
-        _FinalStage inboundTrackingUrl(Nullable<String> inboundTrackingUrl);
 
         /**
          * <p>Courier used for delivery to customer</p>
@@ -289,8 +215,6 @@ public final class ClientFacingShipment {
 
         _FinalStage outboundCourier(String outboundCourier);
 
-        _FinalStage outboundCourier(Nullable<String> outboundCourier);
-
         /**
          * <p>Courier used for delivery to lab</p>
          */
@@ -298,16 +222,12 @@ public final class ClientFacingShipment {
 
         _FinalStage inboundCourier(String inboundCourier);
 
-        _FinalStage inboundCourier(Nullable<String> inboundCourier);
-
         /**
          * <p>Notes associated to the Vital shipment</p>
          */
         _FinalStage notes(Optional<String> notes);
 
         _FinalStage notes(String notes);
-
-        _FinalStage notes(Nullable<String> notes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -363,22 +283,6 @@ public final class ClientFacingShipment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage notes(Nullable<String> notes) {
-            if (notes.isNull()) {
-                this.notes = null;
-            } else if (notes.isEmpty()) {
-                this.notes = Optional.empty();
-            } else {
-                this.notes = Optional.of(notes.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Notes associated to the Vital shipment</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage notes(String notes) {
             this.notes = Optional.ofNullable(notes);
             return this;
@@ -391,22 +295,6 @@ public final class ClientFacingShipment {
         @JsonSetter(value = "notes", nulls = Nulls.SKIP)
         public _FinalStage notes(Optional<String> notes) {
             this.notes = notes;
-            return this;
-        }
-
-        /**
-         * <p>Courier used for delivery to lab</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage inboundCourier(Nullable<String> inboundCourier) {
-            if (inboundCourier.isNull()) {
-                this.inboundCourier = null;
-            } else if (inboundCourier.isEmpty()) {
-                this.inboundCourier = Optional.empty();
-            } else {
-                this.inboundCourier = Optional.of(inboundCourier.get());
-            }
             return this;
         }
 
@@ -435,22 +323,6 @@ public final class ClientFacingShipment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage outboundCourier(Nullable<String> outboundCourier) {
-            if (outboundCourier.isNull()) {
-                this.outboundCourier = null;
-            } else if (outboundCourier.isEmpty()) {
-                this.outboundCourier = Optional.empty();
-            } else {
-                this.outboundCourier = Optional.of(outboundCourier.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Courier used for delivery to customer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage outboundCourier(String outboundCourier) {
             this.outboundCourier = Optional.ofNullable(outboundCourier);
             return this;
@@ -463,22 +335,6 @@ public final class ClientFacingShipment {
         @JsonSetter(value = "outbound_courier", nulls = Nulls.SKIP)
         public _FinalStage outboundCourier(Optional<String> outboundCourier) {
             this.outboundCourier = outboundCourier;
-            return this;
-        }
-
-        /**
-         * <p>Tracking url for delivery to lab</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage inboundTrackingUrl(Nullable<String> inboundTrackingUrl) {
-            if (inboundTrackingUrl.isNull()) {
-                this.inboundTrackingUrl = null;
-            } else if (inboundTrackingUrl.isEmpty()) {
-                this.inboundTrackingUrl = Optional.empty();
-            } else {
-                this.inboundTrackingUrl = Optional.of(inboundTrackingUrl.get());
-            }
             return this;
         }
 
@@ -507,22 +363,6 @@ public final class ClientFacingShipment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage inboundTrackingNumber(Nullable<String> inboundTrackingNumber) {
-            if (inboundTrackingNumber.isNull()) {
-                this.inboundTrackingNumber = null;
-            } else if (inboundTrackingNumber.isEmpty()) {
-                this.inboundTrackingNumber = Optional.empty();
-            } else {
-                this.inboundTrackingNumber = Optional.of(inboundTrackingNumber.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Tracking number for delivery to lab</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage inboundTrackingNumber(String inboundTrackingNumber) {
             this.inboundTrackingNumber = Optional.ofNullable(inboundTrackingNumber);
             return this;
@@ -543,22 +383,6 @@ public final class ClientFacingShipment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage outboundTrackingUrl(Nullable<String> outboundTrackingUrl) {
-            if (outboundTrackingUrl.isNull()) {
-                this.outboundTrackingUrl = null;
-            } else if (outboundTrackingUrl.isEmpty()) {
-                this.outboundTrackingUrl = Optional.empty();
-            } else {
-                this.outboundTrackingUrl = Optional.of(outboundTrackingUrl.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Tracking url for delivery to customer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage outboundTrackingUrl(String outboundTrackingUrl) {
             this.outboundTrackingUrl = Optional.ofNullable(outboundTrackingUrl);
             return this;
@@ -571,22 +395,6 @@ public final class ClientFacingShipment {
         @JsonSetter(value = "outbound_tracking_url", nulls = Nulls.SKIP)
         public _FinalStage outboundTrackingUrl(Optional<String> outboundTrackingUrl) {
             this.outboundTrackingUrl = outboundTrackingUrl;
-            return this;
-        }
-
-        /**
-         * <p>Tracking number for delivery to customer</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage outboundTrackingNumber(Nullable<String> outboundTrackingNumber) {
-            if (outboundTrackingNumber.isNull()) {
-                this.outboundTrackingNumber = null;
-            } else if (outboundTrackingNumber.isEmpty()) {
-                this.outboundTrackingNumber = Optional.empty();
-            } else {
-                this.outboundTrackingNumber = Optional.of(outboundTrackingNumber.get());
-            }
             return this;
         }
 

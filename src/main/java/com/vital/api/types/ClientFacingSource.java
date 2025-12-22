@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,22 +83,16 @@ public final class ClientFacingSource {
     /**
      * @return The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
      */
-    @JsonIgnore
+    @JsonProperty("app_id")
     public Optional<String> getAppId() {
-        if (appId == null) {
-            return Optional.empty();
-        }
         return appId;
     }
 
     /**
      * @return The identifier of the device which recorded this summary.
      */
-    @JsonIgnore
+    @JsonProperty("device_id")
     public Optional<String> getDeviceId() {
-        if (deviceId == null) {
-            return Optional.empty();
-        }
         return deviceId;
     }
 
@@ -110,11 +101,8 @@ public final class ClientFacingSource {
      * <p>For the <code>distance</code> timeseries, this is <code>wheelchair_pushing</code> if the user is a wheelchair user, or <code>null</code> otherwise.</p>
      * <p>For all summary types and non-workout timeseries, this is always <code>null</code>.</p>
      */
-    @JsonIgnore
+    @JsonProperty("sport")
     public Optional<String> getSport() {
-        if (sport == null) {
-            return Optional.empty();
-        }
         return sport;
     }
 
@@ -122,11 +110,8 @@ public final class ClientFacingSource {
      * @return For workout stream timeseries, this is the workout ID with which the timeseries data are associated.
      * <p>For all other types, this is always <code>null</code>.</p>
      */
-    @JsonIgnore
+    @JsonProperty("workout_id")
     public Optional<String> getWorkoutId() {
-        if (workoutId == null) {
-            return Optional.empty();
-        }
         return workoutId;
     }
 
@@ -152,30 +137,6 @@ public final class ClientFacingSource {
     @JsonProperty("logo")
     public Optional<String> getLogo() {
         return logo;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("app_id")
-    private Optional<String> _getAppId() {
-        return appId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("device_id")
-    private Optional<String> _getDeviceId() {
-        return deviceId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("sport")
-    private Optional<String> _getSport() {
-        return sport;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("workout_id")
-    private Optional<String> _getWorkoutId() {
-        return workoutId;
     }
 
     @java.lang.Override
@@ -250,16 +211,12 @@ public final class ClientFacingSource {
 
         _FinalStage appId(String appId);
 
-        _FinalStage appId(Nullable<String> appId);
-
         /**
          * <p>The identifier of the device which recorded this summary.</p>
          */
         _FinalStage deviceId(Optional<String> deviceId);
 
         _FinalStage deviceId(String deviceId);
-
-        _FinalStage deviceId(Nullable<String> deviceId);
 
         /**
          * <p>For workout stream timeseries, this is the standard sport slug of the workout with which the timeseries data are associated.</p>
@@ -270,8 +227,6 @@ public final class ClientFacingSource {
 
         _FinalStage sport(String sport);
 
-        _FinalStage sport(Nullable<String> sport);
-
         /**
          * <p>For workout stream timeseries, this is the workout ID with which the timeseries data are associated.</p>
          * <p>For all other types, this is always <code>null</code>.</p>
@@ -279,8 +234,6 @@ public final class ClientFacingSource {
         _FinalStage workoutId(Optional<String> workoutId);
 
         _FinalStage workoutId(String workoutId);
-
-        _FinalStage workoutId(Nullable<String> workoutId);
 
         /**
          * <p>Deprecated. Subject to removal after 1 Jan 2024.</p>
@@ -421,23 +374,6 @@ public final class ClientFacingSource {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage workoutId(Nullable<String> workoutId) {
-            if (workoutId.isNull()) {
-                this.workoutId = null;
-            } else if (workoutId.isEmpty()) {
-                this.workoutId = Optional.empty();
-            } else {
-                this.workoutId = Optional.of(workoutId.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>For workout stream timeseries, this is the workout ID with which the timeseries data are associated.</p>
-         * <p>For all other types, this is always <code>null</code>.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage workoutId(String workoutId) {
             this.workoutId = Optional.ofNullable(workoutId);
             return this;
@@ -451,24 +387,6 @@ public final class ClientFacingSource {
         @JsonSetter(value = "workout_id", nulls = Nulls.SKIP)
         public _FinalStage workoutId(Optional<String> workoutId) {
             this.workoutId = workoutId;
-            return this;
-        }
-
-        /**
-         * <p>For workout stream timeseries, this is the standard sport slug of the workout with which the timeseries data are associated.</p>
-         * <p>For the <code>distance</code> timeseries, this is <code>wheelchair_pushing</code> if the user is a wheelchair user, or <code>null</code> otherwise.</p>
-         * <p>For all summary types and non-workout timeseries, this is always <code>null</code>.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage sport(Nullable<String> sport) {
-            if (sport.isNull()) {
-                this.sport = null;
-            } else if (sport.isEmpty()) {
-                this.sport = Optional.empty();
-            } else {
-                this.sport = Optional.of(sport.get());
-            }
             return this;
         }
 
@@ -501,22 +419,6 @@ public final class ClientFacingSource {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage deviceId(Nullable<String> deviceId) {
-            if (deviceId.isNull()) {
-                this.deviceId = null;
-            } else if (deviceId.isEmpty()) {
-                this.deviceId = Optional.empty();
-            } else {
-                this.deviceId = Optional.of(deviceId.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>The identifier of the device which recorded this summary.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage deviceId(String deviceId) {
             this.deviceId = Optional.ofNullable(deviceId);
             return this;
@@ -529,22 +431,6 @@ public final class ClientFacingSource {
         @JsonSetter(value = "device_id", nulls = Nulls.SKIP)
         public _FinalStage deviceId(Optional<String> deviceId) {
             this.deviceId = deviceId;
-            return this;
-        }
-
-        /**
-         * <p>The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage appId(Nullable<String> appId) {
-            if (appId.isNull()) {
-                this.appId = null;
-            } else if (appId.isEmpty()) {
-                this.appId = Optional.empty();
-            } else {
-                this.appId = Optional.of(appId.get());
-            }
             return this;
         }
 

@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -59,11 +56,8 @@ public final class ClientFacingTestkitOrder {
     /**
      * @return Shipment object
      */
-    @JsonIgnore
+    @JsonProperty("shipment")
     public Optional<ClientFacingShipment> getShipment() {
-        if (shipment == null) {
-            return Optional.empty();
-        }
         return shipment;
     }
 
@@ -75,12 +69,6 @@ public final class ClientFacingTestkitOrder {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("shipment")
-    private Optional<ClientFacingShipment> _getShipment() {
-        return shipment;
     }
 
     @java.lang.Override
@@ -141,8 +129,6 @@ public final class ClientFacingTestkitOrder {
         _FinalStage shipment(Optional<ClientFacingShipment> shipment);
 
         _FinalStage shipment(ClientFacingShipment shipment);
-
-        _FinalStage shipment(Nullable<ClientFacingShipment> shipment);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -192,22 +178,6 @@ public final class ClientFacingTestkitOrder {
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
             this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
-            return this;
-        }
-
-        /**
-         * <p>Shipment object</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage shipment(Nullable<ClientFacingShipment> shipment) {
-            if (shipment.isNull()) {
-                this.shipment = null;
-            } else if (shipment.isEmpty()) {
-                this.shipment = Optional.empty();
-            } else {
-                this.shipment = Optional.of(shipment.get());
-            }
             return this;
         }
 

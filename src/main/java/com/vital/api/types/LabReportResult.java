@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -86,129 +83,48 @@ public final class LabReportResult {
         return value;
     }
 
-    @JsonIgnore
-    public Optional<LabReportResultType> getType() {
-        if (type == null) {
-            return Optional.empty();
-        }
-        return type;
-    }
-
-    @JsonIgnore
-    public Optional<String> getUnits() {
-        if (units == null) {
-            return Optional.empty();
-        }
-        return units;
-    }
-
-    @JsonIgnore
-    public Optional<Double> getMaxReferenceRange() {
-        if (maxReferenceRange == null) {
-            return Optional.empty();
-        }
-        return maxReferenceRange;
-    }
-
-    @JsonIgnore
-    public Optional<Double> getMinReferenceRange() {
-        if (minReferenceRange == null) {
-            return Optional.empty();
-        }
-        return minReferenceRange;
-    }
-
-    @JsonIgnore
-    public Optional<String> getSourcePanelName() {
-        if (sourcePanelName == null) {
-            return Optional.empty();
-        }
-        return sourcePanelName;
-    }
-
-    @JsonIgnore
-    public Optional<List<LoincMatch>> getLoincMatches() {
-        if (loincMatches == null) {
-            return Optional.empty();
-        }
-        return loincMatches;
-    }
-
-    @JsonIgnore
-    public Optional<Interpretation> getInterpretation() {
-        if (interpretation == null) {
-            return Optional.empty();
-        }
-        return interpretation;
-    }
-
-    @JsonIgnore
-    public Optional<Boolean> getIsAboveMaxRange() {
-        if (isAboveMaxRange == null) {
-            return Optional.empty();
-        }
-        return isAboveMaxRange;
-    }
-
-    @JsonIgnore
-    public Optional<Boolean> getIsBelowMinRange() {
-        if (isBelowMinRange == null) {
-            return Optional.empty();
-        }
-        return isBelowMinRange;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("type")
-    private Optional<LabReportResultType> _getType() {
+    public Optional<LabReportResultType> getType() {
         return type;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("units")
-    private Optional<String> _getUnits() {
+    public Optional<String> getUnits() {
         return units;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("max_reference_range")
-    private Optional<Double> _getMaxReferenceRange() {
+    public Optional<Double> getMaxReferenceRange() {
         return maxReferenceRange;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("min_reference_range")
-    private Optional<Double> _getMinReferenceRange() {
+    public Optional<Double> getMinReferenceRange() {
         return minReferenceRange;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("source_panel_name")
-    private Optional<String> _getSourcePanelName() {
+    public Optional<String> getSourcePanelName() {
         return sourcePanelName;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("loinc_matches")
-    private Optional<List<LoincMatch>> _getLoincMatches() {
+    public Optional<List<LoincMatch>> getLoincMatches() {
         return loincMatches;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("interpretation")
-    private Optional<Interpretation> _getInterpretation() {
+    public Optional<Interpretation> getInterpretation() {
         return interpretation;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("is_above_max_range")
-    private Optional<Boolean> _getIsAboveMaxRange() {
+    public Optional<Boolean> getIsAboveMaxRange() {
         return isAboveMaxRange;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("is_below_min_range")
-    private Optional<Boolean> _getIsBelowMinRange() {
+    public Optional<Boolean> getIsBelowMinRange() {
         return isBelowMinRange;
     }
 
@@ -279,55 +195,37 @@ public final class LabReportResult {
 
         _FinalStage type(LabReportResultType type);
 
-        _FinalStage type(Nullable<LabReportResultType> type);
-
         _FinalStage units(Optional<String> units);
 
         _FinalStage units(String units);
-
-        _FinalStage units(Nullable<String> units);
 
         _FinalStage maxReferenceRange(Optional<Double> maxReferenceRange);
 
         _FinalStage maxReferenceRange(Double maxReferenceRange);
 
-        _FinalStage maxReferenceRange(Nullable<Double> maxReferenceRange);
-
         _FinalStage minReferenceRange(Optional<Double> minReferenceRange);
 
         _FinalStage minReferenceRange(Double minReferenceRange);
-
-        _FinalStage minReferenceRange(Nullable<Double> minReferenceRange);
 
         _FinalStage sourcePanelName(Optional<String> sourcePanelName);
 
         _FinalStage sourcePanelName(String sourcePanelName);
 
-        _FinalStage sourcePanelName(Nullable<String> sourcePanelName);
-
         _FinalStage loincMatches(Optional<List<LoincMatch>> loincMatches);
 
         _FinalStage loincMatches(List<LoincMatch> loincMatches);
-
-        _FinalStage loincMatches(Nullable<List<LoincMatch>> loincMatches);
 
         _FinalStage interpretation(Optional<Interpretation> interpretation);
 
         _FinalStage interpretation(Interpretation interpretation);
 
-        _FinalStage interpretation(Nullable<Interpretation> interpretation);
-
         _FinalStage isAboveMaxRange(Optional<Boolean> isAboveMaxRange);
 
         _FinalStage isAboveMaxRange(Boolean isAboveMaxRange);
 
-        _FinalStage isAboveMaxRange(Nullable<Boolean> isAboveMaxRange);
-
         _FinalStage isBelowMinRange(Optional<Boolean> isBelowMinRange);
 
         _FinalStage isBelowMinRange(Boolean isBelowMinRange);
-
-        _FinalStage isBelowMinRange(Nullable<Boolean> isBelowMinRange);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -390,18 +288,6 @@ public final class LabReportResult {
         }
 
         @java.lang.Override
-        public _FinalStage isBelowMinRange(Nullable<Boolean> isBelowMinRange) {
-            if (isBelowMinRange.isNull()) {
-                this.isBelowMinRange = null;
-            } else if (isBelowMinRange.isEmpty()) {
-                this.isBelowMinRange = Optional.empty();
-            } else {
-                this.isBelowMinRange = Optional.of(isBelowMinRange.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage isBelowMinRange(Boolean isBelowMinRange) {
             this.isBelowMinRange = Optional.ofNullable(isBelowMinRange);
             return this;
@@ -411,18 +297,6 @@ public final class LabReportResult {
         @JsonSetter(value = "is_below_min_range", nulls = Nulls.SKIP)
         public _FinalStage isBelowMinRange(Optional<Boolean> isBelowMinRange) {
             this.isBelowMinRange = isBelowMinRange;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage isAboveMaxRange(Nullable<Boolean> isAboveMaxRange) {
-            if (isAboveMaxRange.isNull()) {
-                this.isAboveMaxRange = null;
-            } else if (isAboveMaxRange.isEmpty()) {
-                this.isAboveMaxRange = Optional.empty();
-            } else {
-                this.isAboveMaxRange = Optional.of(isAboveMaxRange.get());
-            }
             return this;
         }
 
@@ -440,18 +314,6 @@ public final class LabReportResult {
         }
 
         @java.lang.Override
-        public _FinalStage interpretation(Nullable<Interpretation> interpretation) {
-            if (interpretation.isNull()) {
-                this.interpretation = null;
-            } else if (interpretation.isEmpty()) {
-                this.interpretation = Optional.empty();
-            } else {
-                this.interpretation = Optional.of(interpretation.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage interpretation(Interpretation interpretation) {
             this.interpretation = Optional.ofNullable(interpretation);
             return this;
@@ -461,18 +323,6 @@ public final class LabReportResult {
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public _FinalStage interpretation(Optional<Interpretation> interpretation) {
             this.interpretation = interpretation;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage loincMatches(Nullable<List<LoincMatch>> loincMatches) {
-            if (loincMatches.isNull()) {
-                this.loincMatches = null;
-            } else if (loincMatches.isEmpty()) {
-                this.loincMatches = Optional.empty();
-            } else {
-                this.loincMatches = Optional.of(loincMatches.get());
-            }
             return this;
         }
 
@@ -490,18 +340,6 @@ public final class LabReportResult {
         }
 
         @java.lang.Override
-        public _FinalStage sourcePanelName(Nullable<String> sourcePanelName) {
-            if (sourcePanelName.isNull()) {
-                this.sourcePanelName = null;
-            } else if (sourcePanelName.isEmpty()) {
-                this.sourcePanelName = Optional.empty();
-            } else {
-                this.sourcePanelName = Optional.of(sourcePanelName.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage sourcePanelName(String sourcePanelName) {
             this.sourcePanelName = Optional.ofNullable(sourcePanelName);
             return this;
@@ -511,18 +349,6 @@ public final class LabReportResult {
         @JsonSetter(value = "source_panel_name", nulls = Nulls.SKIP)
         public _FinalStage sourcePanelName(Optional<String> sourcePanelName) {
             this.sourcePanelName = sourcePanelName;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage minReferenceRange(Nullable<Double> minReferenceRange) {
-            if (minReferenceRange.isNull()) {
-                this.minReferenceRange = null;
-            } else if (minReferenceRange.isEmpty()) {
-                this.minReferenceRange = Optional.empty();
-            } else {
-                this.minReferenceRange = Optional.of(minReferenceRange.get());
-            }
             return this;
         }
 
@@ -540,18 +366,6 @@ public final class LabReportResult {
         }
 
         @java.lang.Override
-        public _FinalStage maxReferenceRange(Nullable<Double> maxReferenceRange) {
-            if (maxReferenceRange.isNull()) {
-                this.maxReferenceRange = null;
-            } else if (maxReferenceRange.isEmpty()) {
-                this.maxReferenceRange = Optional.empty();
-            } else {
-                this.maxReferenceRange = Optional.of(maxReferenceRange.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage maxReferenceRange(Double maxReferenceRange) {
             this.maxReferenceRange = Optional.ofNullable(maxReferenceRange);
             return this;
@@ -565,18 +379,6 @@ public final class LabReportResult {
         }
 
         @java.lang.Override
-        public _FinalStage units(Nullable<String> units) {
-            if (units.isNull()) {
-                this.units = null;
-            } else if (units.isEmpty()) {
-                this.units = Optional.empty();
-            } else {
-                this.units = Optional.of(units.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage units(String units) {
             this.units = Optional.ofNullable(units);
             return this;
@@ -586,18 +388,6 @@ public final class LabReportResult {
         @JsonSetter(value = "units", nulls = Nulls.SKIP)
         public _FinalStage units(Optional<String> units) {
             this.units = units;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage type(Nullable<LabReportResultType> type) {
-            if (type.isNull()) {
-                this.type = null;
-            } else if (type.isEmpty()) {
-                this.type = Optional.empty();
-            } else {
-                this.type = Optional.of(type.get());
-            }
             return this;
         }
 

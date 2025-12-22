@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.link.types.BulkTriggerHistoricalPullLinkRequestTeamId;
+import com.vital.api.resources.link.types.LinkBulkTriggerHistoricalPullRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkTriggerHistoricalPullBody.Builder.class)
 public final class BulkTriggerHistoricalPullBody {
-    private final Optional<BulkTriggerHistoricalPullLinkRequestTeamId> teamId;
+    private final Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId;
 
     private final List<String> userIds;
 
@@ -36,7 +36,7 @@ public final class BulkTriggerHistoricalPullBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkTriggerHistoricalPullBody(
-            Optional<BulkTriggerHistoricalPullLinkRequestTeamId> teamId,
+            Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId,
             List<String> userIds,
             OAuthProviders provider,
             Optional<Boolean> waitForCompletion,
@@ -49,7 +49,7 @@ public final class BulkTriggerHistoricalPullBody {
     }
 
     @JsonProperty("team_id")
-    public Optional<BulkTriggerHistoricalPullLinkRequestTeamId> getTeamId() {
+    public Optional<LinkBulkTriggerHistoricalPullRequestTeamId> getTeamId() {
         return teamId;
     }
 
@@ -115,9 +115,9 @@ public final class BulkTriggerHistoricalPullBody {
     public interface _FinalStage {
         BulkTriggerHistoricalPullBody build();
 
-        _FinalStage teamId(Optional<BulkTriggerHistoricalPullLinkRequestTeamId> teamId);
+        _FinalStage teamId(Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId);
 
-        _FinalStage teamId(BulkTriggerHistoricalPullLinkRequestTeamId teamId);
+        _FinalStage teamId(LinkBulkTriggerHistoricalPullRequestTeamId teamId);
 
         _FinalStage userIds(List<String> userIds);
 
@@ -144,7 +144,7 @@ public final class BulkTriggerHistoricalPullBody {
 
         private List<String> userIds = new ArrayList<>();
 
-        private Optional<BulkTriggerHistoricalPullLinkRequestTeamId> teamId = Optional.empty();
+        private Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -211,19 +211,21 @@ public final class BulkTriggerHistoricalPullBody {
         @JsonSetter(value = "user_ids", nulls = Nulls.SKIP)
         public _FinalStage userIds(List<String> userIds) {
             this.userIds.clear();
-            this.userIds.addAll(userIds);
+            if (userIds != null) {
+                this.userIds.addAll(userIds);
+            }
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage teamId(BulkTriggerHistoricalPullLinkRequestTeamId teamId) {
+        public _FinalStage teamId(LinkBulkTriggerHistoricalPullRequestTeamId teamId) {
             this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
-        public _FinalStage teamId(Optional<BulkTriggerHistoricalPullLinkRequestTeamId> teamId) {
+        public _FinalStage teamId(Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId) {
             this.teamId = teamId;
             return this;
         }

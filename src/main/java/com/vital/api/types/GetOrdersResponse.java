@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,45 +50,18 @@ public final class GetOrdersResponse {
         return orders;
     }
 
-    @JsonIgnore
-    public Optional<Integer> getTotal() {
-        if (total == null) {
-            return Optional.empty();
-        }
-        return total;
-    }
-
-    @JsonIgnore
-    public Optional<Integer> getPage() {
-        if (page == null) {
-            return Optional.empty();
-        }
-        return page;
-    }
-
-    @JsonIgnore
-    public Optional<Integer> getSize() {
-        if (size == null) {
-            return Optional.empty();
-        }
-        return size;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("total")
-    private Optional<Integer> _getTotal() {
+    public Optional<Integer> getTotal() {
         return total;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("page")
-    private Optional<Integer> _getPage() {
+    public Optional<Integer> getPage() {
         return page;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("size")
-    private Optional<Integer> _getSize() {
+    public Optional<Integer> getSize() {
         return size;
     }
 
@@ -153,7 +123,9 @@ public final class GetOrdersResponse {
         @JsonSetter(value = "orders", nulls = Nulls.SKIP)
         public Builder orders(List<ClientFacingOrder> orders) {
             this.orders.clear();
-            this.orders.addAll(orders);
+            if (orders != null) {
+                this.orders.addAll(orders);
+            }
             return this;
         }
 
@@ -180,17 +152,6 @@ public final class GetOrdersResponse {
             return this;
         }
 
-        public Builder total(Nullable<Integer> total) {
-            if (total.isNull()) {
-                this.total = null;
-            } else if (total.isEmpty()) {
-                this.total = Optional.empty();
-            } else {
-                this.total = Optional.of(total.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -202,17 +163,6 @@ public final class GetOrdersResponse {
             return this;
         }
 
-        public Builder page(Nullable<Integer> page) {
-            if (page.isNull()) {
-                this.page = null;
-            } else if (page.isEmpty()) {
-                this.page = Optional.empty();
-            } else {
-                this.page = Optional.of(page.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "size", nulls = Nulls.SKIP)
         public Builder size(Optional<Integer> size) {
             this.size = size;
@@ -221,17 +171,6 @@ public final class GetOrdersResponse {
 
         public Builder size(Integer size) {
             this.size = Optional.ofNullable(size);
-            return this;
-        }
-
-        public Builder size(Nullable<Integer> size) {
-            if (size.isNull()) {
-                this.size = null;
-            } else if (size.isEmpty()) {
-                this.size = Optional.empty();
-            } else {
-                this.size = Optional.of(size.get());
-            }
             return this;
         }
 

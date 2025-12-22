@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.sleepcycle.requests.GetSleepCycleRequest;
+import com.vital.api.resources.sleepcycle.requests.SleepCycleGetRequest;
 import com.vital.api.types.ClientSleepCycleResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class RawSleepCycleClient {
     /**
      * Get sleep cycle for user_id
      */
-    public VitalHttpResponse<ClientSleepCycleResponse> get(String userId, GetSleepCycleRequest request) {
+    public VitalHttpResponse<ClientSleepCycleResponse> get(String userId, SleepCycleGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -41,7 +41,7 @@ public class RawSleepCycleClient {
      * Get sleep cycle for user_id
      */
     public VitalHttpResponse<ClientSleepCycleResponse> get(
-            String userId, GetSleepCycleRequest request, RequestOptions requestOptions) {
+            String userId, SleepCycleGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep_cycle")
@@ -67,12 +67,12 @@ public class RawSleepCycleClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientSleepCycleResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientSleepCycleResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -82,11 +82,8 @@ public class RawSleepCycleClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

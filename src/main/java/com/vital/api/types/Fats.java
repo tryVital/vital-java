@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,102 +54,48 @@ public final class Fats {
     /**
      * @return Amount of saturated fats in grams (g)
      */
-    @JsonIgnore
+    @JsonProperty("saturated")
     public Optional<Double> getSaturated() {
-        if (saturated == null) {
-            return Optional.empty();
-        }
         return saturated;
     }
 
     /**
      * @return Amount of monounsaturated fats in grams (g)
      */
-    @JsonIgnore
+    @JsonProperty("monounsaturated")
     public Optional<Double> getMonounsaturated() {
-        if (monounsaturated == null) {
-            return Optional.empty();
-        }
         return monounsaturated;
     }
 
     /**
      * @return Amount of polyunsaturated fats in grams (g)
      */
-    @JsonIgnore
+    @JsonProperty("polyunsaturated")
     public Optional<Double> getPolyunsaturated() {
-        if (polyunsaturated == null) {
-            return Optional.empty();
-        }
         return polyunsaturated;
     }
 
     /**
      * @return Amount of Omega-3 fatty acids in grams (g)
      */
-    @JsonIgnore
+    @JsonProperty("omega3")
     public Optional<Double> getOmega3() {
-        if (omega3 == null) {
-            return Optional.empty();
-        }
         return omega3;
     }
 
     /**
      * @return Amount of Omega-6 fatty acids in grams (g)
      */
-    @JsonIgnore
+    @JsonProperty("omega6")
     public Optional<Double> getOmega6() {
-        if (omega6 == null) {
-            return Optional.empty();
-        }
         return omega6;
     }
 
     /**
      * @return Total amount of fats in grams (g)
      */
-    @JsonIgnore
-    public Optional<Double> getTotal() {
-        if (total == null) {
-            return Optional.empty();
-        }
-        return total;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("saturated")
-    private Optional<Double> _getSaturated() {
-        return saturated;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("monounsaturated")
-    private Optional<Double> _getMonounsaturated() {
-        return monounsaturated;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("polyunsaturated")
-    private Optional<Double> _getPolyunsaturated() {
-        return polyunsaturated;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("omega3")
-    private Optional<Double> _getOmega3() {
-        return omega3;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("omega6")
-    private Optional<Double> _getOmega6() {
-        return omega6;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("total")
-    private Optional<Double> _getTotal() {
+    public Optional<Double> getTotal() {
         return total;
     }
 
@@ -234,17 +177,6 @@ public final class Fats {
             return this;
         }
 
-        public Builder saturated(Nullable<Double> saturated) {
-            if (saturated.isNull()) {
-                this.saturated = null;
-            } else if (saturated.isEmpty()) {
-                this.saturated = Optional.empty();
-            } else {
-                this.saturated = Optional.of(saturated.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Amount of monounsaturated fats in grams (g)</p>
          */
@@ -256,17 +188,6 @@ public final class Fats {
 
         public Builder monounsaturated(Double monounsaturated) {
             this.monounsaturated = Optional.ofNullable(monounsaturated);
-            return this;
-        }
-
-        public Builder monounsaturated(Nullable<Double> monounsaturated) {
-            if (monounsaturated.isNull()) {
-                this.monounsaturated = null;
-            } else if (monounsaturated.isEmpty()) {
-                this.monounsaturated = Optional.empty();
-            } else {
-                this.monounsaturated = Optional.of(monounsaturated.get());
-            }
             return this;
         }
 
@@ -284,17 +205,6 @@ public final class Fats {
             return this;
         }
 
-        public Builder polyunsaturated(Nullable<Double> polyunsaturated) {
-            if (polyunsaturated.isNull()) {
-                this.polyunsaturated = null;
-            } else if (polyunsaturated.isEmpty()) {
-                this.polyunsaturated = Optional.empty();
-            } else {
-                this.polyunsaturated = Optional.of(polyunsaturated.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Amount of Omega-3 fatty acids in grams (g)</p>
          */
@@ -306,17 +216,6 @@ public final class Fats {
 
         public Builder omega3(Double omega3) {
             this.omega3 = Optional.ofNullable(omega3);
-            return this;
-        }
-
-        public Builder omega3(Nullable<Double> omega3) {
-            if (omega3.isNull()) {
-                this.omega3 = null;
-            } else if (omega3.isEmpty()) {
-                this.omega3 = Optional.empty();
-            } else {
-                this.omega3 = Optional.of(omega3.get());
-            }
             return this;
         }
 
@@ -334,17 +233,6 @@ public final class Fats {
             return this;
         }
 
-        public Builder omega6(Nullable<Double> omega6) {
-            if (omega6.isNull()) {
-                this.omega6 = null;
-            } else if (omega6.isEmpty()) {
-                this.omega6 = Optional.empty();
-            } else {
-                this.omega6 = Optional.of(omega6.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Total amount of fats in grams (g)</p>
          */
@@ -356,17 +244,6 @@ public final class Fats {
 
         public Builder total(Double total) {
             this.total = Optional.ofNullable(total);
-            return this;
-        }
-
-        public Builder total(Nullable<Double> total) {
-            if (total.isNull()) {
-                this.total = null;
-            } else if (total.isEmpty()) {
-                this.total = Optional.empty();
-            } else {
-                this.total = Optional.of(total.get());
-            }
             return this;
         }
 

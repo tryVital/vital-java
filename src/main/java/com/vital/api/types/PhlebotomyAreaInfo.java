@@ -132,7 +132,9 @@ public final class PhlebotomyAreaInfo {
         @JsonSetter(value = "providers", nulls = Nulls.SKIP)
         public _FinalStage providers(List<PhlebotomyProviderInfo> providers) {
             this.providers.clear();
-            this.providers.addAll(providers);
+            if (providers != null) {
+                this.providers.addAll(providers);
+            }
             return this;
         }
 

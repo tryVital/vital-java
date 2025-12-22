@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -96,17 +93,8 @@ public final class BulkOp {
         return startedAt;
     }
 
-    @JsonIgnore
-    public Optional<OffsetDateTime> getEndedAt() {
-        if (endedAt == null) {
-            return Optional.empty();
-        }
-        return endedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("ended_at")
-    private Optional<OffsetDateTime> _getEndedAt() {
+    public Optional<OffsetDateTime> getEndedAt() {
         return endedAt;
     }
 
@@ -184,8 +172,6 @@ public final class BulkOp {
         _FinalStage endedAt(Optional<OffsetDateTime> endedAt);
 
         _FinalStage endedAt(OffsetDateTime endedAt);
-
-        _FinalStage endedAt(Nullable<OffsetDateTime> endedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -277,18 +263,6 @@ public final class BulkOp {
         @JsonSetter("started_at")
         public _FinalStage startedAt(@NotNull OffsetDateTime startedAt) {
             this.startedAt = Objects.requireNonNull(startedAt, "startedAt must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage endedAt(Nullable<OffsetDateTime> endedAt) {
-            if (endedAt.isNull()) {
-                this.endedAt = null;
-            } else if (endedAt.isEmpty()) {
-                this.endedAt = Optional.empty();
-            } else {
-                this.endedAt = Optional.of(endedAt.get());
-            }
             return this;
         }
 

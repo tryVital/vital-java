@@ -5,8 +5,8 @@ package com.vital.api.resources.activity;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.activity.requests.GetActivityRequest;
-import com.vital.api.resources.activity.requests.GetRawActivityRequest;
+import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
+import com.vital.api.resources.activity.requests.ActivityGetRequest;
 import com.vital.api.types.ClientActivityResponse;
 import com.vital.api.types.RawActivity;
 
@@ -30,28 +30,28 @@ public class ActivityClient {
     /**
      * Get activity summary for user_id
      */
-    public ClientActivityResponse get(String userId, GetActivityRequest request) {
+    public ClientActivityResponse get(String userId, ActivityGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get activity summary for user_id
      */
-    public ClientActivityResponse get(String userId, GetActivityRequest request, RequestOptions requestOptions) {
+    public ClientActivityResponse get(String userId, ActivityGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 
     /**
      * Get raw activity summary for user_id
      */
-    public RawActivity getRaw(String userId, GetRawActivityRequest request) {
+    public RawActivity getRaw(String userId, ActivityGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw activity summary for user_id
      */
-    public RawActivity getRaw(String userId, GetRawActivityRequest request, RequestOptions requestOptions) {
+    public RawActivity getRaw(String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 }

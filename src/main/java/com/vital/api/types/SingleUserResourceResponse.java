@@ -134,7 +134,9 @@ public final class SingleUserResourceResponse {
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Map<String, Map<String, SingleResourceStatistics>> provider) {
             this.provider.clear();
-            this.provider.putAll(provider);
+            if (provider != null) {
+                this.provider.putAll(provider);
+            }
             return this;
         }
 

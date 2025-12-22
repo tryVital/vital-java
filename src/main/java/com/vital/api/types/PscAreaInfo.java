@@ -161,7 +161,9 @@ public final class PscAreaInfo {
         @JsonSetter(value = "supported_bill_types", nulls = Nulls.SKIP)
         public _FinalStage supportedBillTypes(List<Billing> supportedBillTypes) {
             this.supportedBillTypes.clear();
-            this.supportedBillTypes.addAll(supportedBillTypes);
+            if (supportedBillTypes != null) {
+                this.supportedBillTypes.addAll(supportedBillTypes);
+            }
             return this;
         }
 

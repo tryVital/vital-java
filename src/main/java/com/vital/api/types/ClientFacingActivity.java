@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -148,88 +145,64 @@ public final class ClientFacingActivity {
     /**
      * @return Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories
      */
-    @JsonIgnore
+    @JsonProperty("calories_total")
     public Optional<Double> getCaloriesTotal() {
-        if (caloriesTotal == null) {
-            return Optional.empty();
-        }
         return caloriesTotal;
     }
 
     /**
      * @return Energy consumption caused by the physical activity of the day in kilocalories::kilocalories
      */
-    @JsonIgnore
+    @JsonProperty("calories_active")
     public Optional<Double> getCaloriesActive() {
-        if (caloriesActive == null) {
-            return Optional.empty();
-        }
         return caloriesActive;
     }
 
     /**
      * @return Total number of steps registered during the day::steps
      */
-    @JsonIgnore
+    @JsonProperty("steps")
     public Optional<Integer> getSteps() {
-        if (steps == null) {
-            return Optional.empty();
-        }
         return steps;
     }
 
     /**
      * @return Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
      */
-    @JsonIgnore
+    @JsonProperty("daily_movement")
     public Optional<Double> getDailyMovement() {
-        if (dailyMovement == null) {
-            return Optional.empty();
-        }
         return dailyMovement;
     }
 
     /**
      * @return Distance traveled during activities throughout the day::meters
      */
-    @JsonIgnore
+    @JsonProperty("distance")
     public Optional<Double> getDistance() {
-        if (distance == null) {
-            return Optional.empty();
-        }
         return distance;
     }
 
     /**
      * @return Number of minutes during the day with low intensity activity (e.g. household work)::minutes
      */
-    @JsonIgnore
+    @JsonProperty("low")
     public Optional<Double> getLow() {
-        if (low == null) {
-            return Optional.empty();
-        }
         return low;
     }
 
     /**
      * @return Number of minutes during the day with medium intensity activity (e.g. walking)::minutes
      */
-    @JsonIgnore
+    @JsonProperty("medium")
     public Optional<Double> getMedium() {
-        if (medium == null) {
-            return Optional.empty();
-        }
         return medium;
     }
 
     /**
      * @return Number of minutes during the day with high intensity activity (e.g. running)::minutes
      */
-    @JsonIgnore
+    @JsonProperty("high")
     public Optional<Double> getHigh() {
-        if (high == null) {
-            return Optional.empty();
-        }
         return high;
     }
 
@@ -244,60 +217,42 @@ public final class ClientFacingActivity {
     /**
      * @return Number of floors climbed by the user::count
      */
-    @JsonIgnore
+    @JsonProperty("floors_climbed")
     public Optional<Integer> getFloorsClimbed() {
-        if (floorsClimbed == null) {
-            return Optional.empty();
-        }
         return floorsClimbed;
     }
 
     /**
      * @return The IANA time zone identifier. Example: 'Europe/London'.
      */
-    @JsonIgnore
+    @JsonProperty("time_zone")
     public Optional<String> getTimeZone() {
-        if (timeZone == null) {
-            return Optional.empty();
-        }
         return timeZone;
     }
 
     /**
      * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
      */
-    @JsonIgnore
+    @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
-        if (timezoneOffset == null) {
-            return Optional.empty();
-        }
         return timezoneOffset;
     }
 
     /**
      * @return Heart rate daily summary.
      */
-    @JsonIgnore
+    @JsonProperty("heart_rate")
     public Optional<ClientFacingHeartRate> getHeartRate() {
-        if (heartRate == null) {
-            return Optional.empty();
-        }
         return heartRate;
     }
 
-    @JsonIgnore
+    @JsonProperty("wheelchair_use")
     public Optional<Boolean> getWheelchairUse() {
-        if (wheelchairUse == null) {
-            return Optional.empty();
-        }
         return wheelchairUse;
     }
 
-    @JsonIgnore
+    @JsonProperty("wheelchair_push")
     public Optional<Integer> getWheelchairPush() {
-        if (wheelchairPush == null) {
-            return Optional.empty();
-        }
         return wheelchairPush;
     }
 
@@ -309,90 +264,6 @@ public final class ClientFacingActivity {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("calories_total")
-    private Optional<Double> _getCaloriesTotal() {
-        return caloriesTotal;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("calories_active")
-    private Optional<Double> _getCaloriesActive() {
-        return caloriesActive;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("steps")
-    private Optional<Integer> _getSteps() {
-        return steps;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("daily_movement")
-    private Optional<Double> _getDailyMovement() {
-        return dailyMovement;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("distance")
-    private Optional<Double> _getDistance() {
-        return distance;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("low")
-    private Optional<Double> _getLow() {
-        return low;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("medium")
-    private Optional<Double> _getMedium() {
-        return medium;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("high")
-    private Optional<Double> _getHigh() {
-        return high;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("floors_climbed")
-    private Optional<Integer> _getFloorsClimbed() {
-        return floorsClimbed;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("time_zone")
-    private Optional<String> _getTimeZone() {
-        return timeZone;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("timezone_offset")
-    private Optional<Integer> _getTimezoneOffset() {
-        return timezoneOffset;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("heart_rate")
-    private Optional<ClientFacingHeartRate> _getHeartRate() {
-        return heartRate;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("wheelchair_use")
-    private Optional<Boolean> _getWheelchairUse() {
-        return wheelchairUse;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("wheelchair_push")
-    private Optional<Integer> _getWheelchairPush() {
-        return wheelchairPush;
     }
 
     @java.lang.Override
@@ -517,16 +388,12 @@ public final class ClientFacingActivity {
 
         _FinalStage caloriesTotal(Double caloriesTotal);
 
-        _FinalStage caloriesTotal(Nullable<Double> caloriesTotal);
-
         /**
          * <p>Energy consumption caused by the physical activity of the day in kilocalories::kilocalories</p>
          */
         _FinalStage caloriesActive(Optional<Double> caloriesActive);
 
         _FinalStage caloriesActive(Double caloriesActive);
-
-        _FinalStage caloriesActive(Nullable<Double> caloriesActive);
 
         /**
          * <p>Total number of steps registered during the day::steps</p>
@@ -535,16 +402,12 @@ public final class ClientFacingActivity {
 
         _FinalStage steps(Integer steps);
 
-        _FinalStage steps(Nullable<Integer> steps);
-
         /**
          * <p>Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters</p>
          */
         _FinalStage dailyMovement(Optional<Double> dailyMovement);
 
         _FinalStage dailyMovement(Double dailyMovement);
-
-        _FinalStage dailyMovement(Nullable<Double> dailyMovement);
 
         /**
          * <p>Distance traveled during activities throughout the day::meters</p>
@@ -553,16 +416,12 @@ public final class ClientFacingActivity {
 
         _FinalStage distance(Double distance);
 
-        _FinalStage distance(Nullable<Double> distance);
-
         /**
          * <p>Number of minutes during the day with low intensity activity (e.g. household work)::minutes</p>
          */
         _FinalStage low(Optional<Double> low);
 
         _FinalStage low(Double low);
-
-        _FinalStage low(Nullable<Double> low);
 
         /**
          * <p>Number of minutes during the day with medium intensity activity (e.g. walking)::minutes</p>
@@ -571,16 +430,12 @@ public final class ClientFacingActivity {
 
         _FinalStage medium(Double medium);
 
-        _FinalStage medium(Nullable<Double> medium);
-
         /**
          * <p>Number of minutes during the day with high intensity activity (e.g. running)::minutes</p>
          */
         _FinalStage high(Optional<Double> high);
 
         _FinalStage high(Double high);
-
-        _FinalStage high(Nullable<Double> high);
 
         /**
          * <p>Number of floors climbed by the user::count</p>
@@ -589,16 +444,12 @@ public final class ClientFacingActivity {
 
         _FinalStage floorsClimbed(Integer floorsClimbed);
 
-        _FinalStage floorsClimbed(Nullable<Integer> floorsClimbed);
-
         /**
          * <p>The IANA time zone identifier. Example: 'Europe/London'.</p>
          */
         _FinalStage timeZone(Optional<String> timeZone);
 
         _FinalStage timeZone(String timeZone);
-
-        _FinalStage timeZone(Nullable<String> timeZone);
 
         /**
          * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
@@ -607,8 +458,6 @@ public final class ClientFacingActivity {
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
 
-        _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset);
-
         /**
          * <p>Heart rate daily summary.</p>
          */
@@ -616,19 +465,13 @@ public final class ClientFacingActivity {
 
         _FinalStage heartRate(ClientFacingHeartRate heartRate);
 
-        _FinalStage heartRate(Nullable<ClientFacingHeartRate> heartRate);
-
         _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse);
 
         _FinalStage wheelchairUse(Boolean wheelchairUse);
 
-        _FinalStage wheelchairUse(Nullable<Boolean> wheelchairUse);
-
         _FinalStage wheelchairPush(Optional<Integer> wheelchairPush);
 
         _FinalStage wheelchairPush(Integer wheelchairPush);
-
-        _FinalStage wheelchairPush(Nullable<Integer> wheelchairPush);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -784,18 +627,6 @@ public final class ClientFacingActivity {
         }
 
         @java.lang.Override
-        public _FinalStage wheelchairPush(Nullable<Integer> wheelchairPush) {
-            if (wheelchairPush.isNull()) {
-                this.wheelchairPush = null;
-            } else if (wheelchairPush.isEmpty()) {
-                this.wheelchairPush = Optional.empty();
-            } else {
-                this.wheelchairPush = Optional.of(wheelchairPush.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage wheelchairPush(Integer wheelchairPush) {
             this.wheelchairPush = Optional.ofNullable(wheelchairPush);
             return this;
@@ -809,18 +640,6 @@ public final class ClientFacingActivity {
         }
 
         @java.lang.Override
-        public _FinalStage wheelchairUse(Nullable<Boolean> wheelchairUse) {
-            if (wheelchairUse.isNull()) {
-                this.wheelchairUse = null;
-            } else if (wheelchairUse.isEmpty()) {
-                this.wheelchairUse = Optional.empty();
-            } else {
-                this.wheelchairUse = Optional.of(wheelchairUse.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage wheelchairUse(Boolean wheelchairUse) {
             this.wheelchairUse = Optional.ofNullable(wheelchairUse);
             return this;
@@ -830,22 +649,6 @@ public final class ClientFacingActivity {
         @JsonSetter(value = "wheelchair_use", nulls = Nulls.SKIP)
         public _FinalStage wheelchairUse(Optional<Boolean> wheelchairUse) {
             this.wheelchairUse = wheelchairUse;
-            return this;
-        }
-
-        /**
-         * <p>Heart rate daily summary.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage heartRate(Nullable<ClientFacingHeartRate> heartRate) {
-            if (heartRate.isNull()) {
-                this.heartRate = null;
-            } else if (heartRate.isEmpty()) {
-                this.heartRate = Optional.empty();
-            } else {
-                this.heartRate = Optional.of(heartRate.get());
-            }
             return this;
         }
 
@@ -874,22 +677,6 @@ public final class ClientFacingActivity {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset) {
-            if (timezoneOffset.isNull()) {
-                this.timezoneOffset = null;
-            } else if (timezoneOffset.isEmpty()) {
-                this.timezoneOffset = Optional.empty();
-            } else {
-                this.timezoneOffset = Optional.of(timezoneOffset.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
@@ -902,22 +689,6 @@ public final class ClientFacingActivity {
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
-            return this;
-        }
-
-        /**
-         * <p>The IANA time zone identifier. Example: 'Europe/London'.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage timeZone(Nullable<String> timeZone) {
-            if (timeZone.isNull()) {
-                this.timeZone = null;
-            } else if (timeZone.isEmpty()) {
-                this.timeZone = Optional.empty();
-            } else {
-                this.timeZone = Optional.of(timeZone.get());
-            }
             return this;
         }
 
@@ -946,22 +717,6 @@ public final class ClientFacingActivity {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage floorsClimbed(Nullable<Integer> floorsClimbed) {
-            if (floorsClimbed.isNull()) {
-                this.floorsClimbed = null;
-            } else if (floorsClimbed.isEmpty()) {
-                this.floorsClimbed = Optional.empty();
-            } else {
-                this.floorsClimbed = Optional.of(floorsClimbed.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Number of floors climbed by the user::count</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage floorsClimbed(Integer floorsClimbed) {
             this.floorsClimbed = Optional.ofNullable(floorsClimbed);
             return this;
@@ -974,22 +729,6 @@ public final class ClientFacingActivity {
         @JsonSetter(value = "floors_climbed", nulls = Nulls.SKIP)
         public _FinalStage floorsClimbed(Optional<Integer> floorsClimbed) {
             this.floorsClimbed = floorsClimbed;
-            return this;
-        }
-
-        /**
-         * <p>Number of minutes during the day with high intensity activity (e.g. running)::minutes</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage high(Nullable<Double> high) {
-            if (high.isNull()) {
-                this.high = null;
-            } else if (high.isEmpty()) {
-                this.high = Optional.empty();
-            } else {
-                this.high = Optional.of(high.get());
-            }
             return this;
         }
 
@@ -1018,22 +757,6 @@ public final class ClientFacingActivity {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage medium(Nullable<Double> medium) {
-            if (medium.isNull()) {
-                this.medium = null;
-            } else if (medium.isEmpty()) {
-                this.medium = Optional.empty();
-            } else {
-                this.medium = Optional.of(medium.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Number of minutes during the day with medium intensity activity (e.g. walking)::minutes</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage medium(Double medium) {
             this.medium = Optional.ofNullable(medium);
             return this;
@@ -1046,22 +769,6 @@ public final class ClientFacingActivity {
         @JsonSetter(value = "medium", nulls = Nulls.SKIP)
         public _FinalStage medium(Optional<Double> medium) {
             this.medium = medium;
-            return this;
-        }
-
-        /**
-         * <p>Number of minutes during the day with low intensity activity (e.g. household work)::minutes</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage low(Nullable<Double> low) {
-            if (low.isNull()) {
-                this.low = null;
-            } else if (low.isEmpty()) {
-                this.low = Optional.empty();
-            } else {
-                this.low = Optional.of(low.get());
-            }
             return this;
         }
 
@@ -1090,22 +797,6 @@ public final class ClientFacingActivity {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage distance(Nullable<Double> distance) {
-            if (distance.isNull()) {
-                this.distance = null;
-            } else if (distance.isEmpty()) {
-                this.distance = Optional.empty();
-            } else {
-                this.distance = Optional.of(distance.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Distance traveled during activities throughout the day::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage distance(Double distance) {
             this.distance = Optional.ofNullable(distance);
             return this;
@@ -1118,22 +809,6 @@ public final class ClientFacingActivity {
         @JsonSetter(value = "distance", nulls = Nulls.SKIP)
         public _FinalStage distance(Optional<Double> distance) {
             this.distance = distance;
-            return this;
-        }
-
-        /**
-         * <p>Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage dailyMovement(Nullable<Double> dailyMovement) {
-            if (dailyMovement.isNull()) {
-                this.dailyMovement = null;
-            } else if (dailyMovement.isEmpty()) {
-                this.dailyMovement = Optional.empty();
-            } else {
-                this.dailyMovement = Optional.of(dailyMovement.get());
-            }
             return this;
         }
 
@@ -1162,22 +837,6 @@ public final class ClientFacingActivity {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage steps(Nullable<Integer> steps) {
-            if (steps.isNull()) {
-                this.steps = null;
-            } else if (steps.isEmpty()) {
-                this.steps = Optional.empty();
-            } else {
-                this.steps = Optional.of(steps.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Total number of steps registered during the day::steps</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage steps(Integer steps) {
             this.steps = Optional.ofNullable(steps);
             return this;
@@ -1198,22 +857,6 @@ public final class ClientFacingActivity {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage caloriesActive(Nullable<Double> caloriesActive) {
-            if (caloriesActive.isNull()) {
-                this.caloriesActive = null;
-            } else if (caloriesActive.isEmpty()) {
-                this.caloriesActive = Optional.empty();
-            } else {
-                this.caloriesActive = Optional.of(caloriesActive.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Energy consumption caused by the physical activity of the day in kilocalories::kilocalories</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage caloriesActive(Double caloriesActive) {
             this.caloriesActive = Optional.ofNullable(caloriesActive);
             return this;
@@ -1226,22 +869,6 @@ public final class ClientFacingActivity {
         @JsonSetter(value = "calories_active", nulls = Nulls.SKIP)
         public _FinalStage caloriesActive(Optional<Double> caloriesActive) {
             this.caloriesActive = caloriesActive;
-            return this;
-        }
-
-        /**
-         * <p>Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage caloriesTotal(Nullable<Double> caloriesTotal) {
-            if (caloriesTotal.isNull()) {
-                this.caloriesTotal = null;
-            } else if (caloriesTotal.isEmpty()) {
-                this.caloriesTotal = Optional.empty();
-            } else {
-                this.caloriesTotal = Optional.of(caloriesTotal.get());
-            }
             return this;
         }
 

@@ -5,7 +5,7 @@ package com.vital.api.resources.sleepcycle;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.sleepcycle.requests.GetSleepCycleRequest;
+import com.vital.api.resources.sleepcycle.requests.SleepCycleGetRequest;
 import com.vital.api.types.ClientSleepCycleResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -29,7 +29,7 @@ public class AsyncSleepCycleClient {
     /**
      * Get sleep cycle for user_id
      */
-    public CompletableFuture<ClientSleepCycleResponse> get(String userId, GetSleepCycleRequest request) {
+    public CompletableFuture<ClientSleepCycleResponse> get(String userId, SleepCycleGetRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -37,7 +37,7 @@ public class AsyncSleepCycleClient {
      * Get sleep cycle for user_id
      */
     public CompletableFuture<ClientSleepCycleResponse> get(
-            String userId, GetSleepCycleRequest request, RequestOptions requestOptions) {
+            String userId, SleepCycleGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

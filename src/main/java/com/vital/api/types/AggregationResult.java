@@ -87,7 +87,9 @@ public final class AggregationResult {
         @JsonSetter(value = "table", nulls = Nulls.SKIP)
         public Builder table(Map<String, List<Object>> table) {
             this.table.clear();
-            this.table.putAll(table);
+            if (table != null) {
+                this.table.putAll(table);
+            }
             return this;
         }
 

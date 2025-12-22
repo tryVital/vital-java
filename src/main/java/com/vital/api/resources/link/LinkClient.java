@@ -10,20 +10,20 @@ import com.vital.api.resources.link.requests.BulkExportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkImportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkPauseConnectionsBody;
 import com.vital.api.resources.link.requests.BulkTriggerHistoricalPullBody;
-import com.vital.api.resources.link.requests.CodeCreateLinkRequest;
 import com.vital.api.resources.link.requests.CompletePasswordProviderMfaBody;
 import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
 import com.vital.api.resources.link.requests.EmailAuthLink;
 import com.vital.api.resources.link.requests.EmailProviderAuthLink;
-import com.vital.api.resources.link.requests.GenerateOauthLinkLinkRequest;
-import com.vital.api.resources.link.requests.GetAllProvidersLinkRequest;
 import com.vital.api.resources.link.requests.IndividualProviderData;
+import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
+import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
+import com.vital.api.resources.link.requests.LinkGetAllProvidersRequest;
+import com.vital.api.resources.link.requests.LinkListBulkOpsRequest;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.resources.link.requests.LinkTokenStateRequest;
 import com.vital.api.resources.link.requests.LinkTokenValidationRequest;
-import com.vital.api.resources.link.requests.ListBulkOpsLinkRequest;
 import com.vital.api.resources.link.requests.ManualConnectionData;
 import com.vital.api.resources.link.requests.PasswordAuthLink;
-import com.vital.api.resources.link.requests.TokenStateLinkRequest;
 import com.vital.api.types.BulkExportConnectionsResponse;
 import com.vital.api.types.BulkImportConnectionsResponse;
 import com.vital.api.types.BulkOpsResponse;
@@ -60,11 +60,11 @@ public class LinkClient {
         return this.rawClient.listBulkOps().body();
     }
 
-    public BulkOpsResponse listBulkOps(ListBulkOpsLinkRequest request) {
+    public BulkOpsResponse listBulkOps(LinkListBulkOpsRequest request) {
         return this.rawClient.listBulkOps(request).body();
     }
 
-    public BulkOpsResponse listBulkOps(ListBulkOpsLinkRequest request, RequestOptions requestOptions) {
+    public BulkOpsResponse listBulkOps(LinkListBulkOpsRequest request, RequestOptions requestOptions) {
         return this.rawClient.listBulkOps(request, requestOptions).body();
     }
 
@@ -135,14 +135,14 @@ public class LinkClient {
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
-    public VitalTokenCreatedResponse codeCreate(CodeCreateLinkRequest request) {
+    public VitalTokenCreatedResponse codeCreate(LinkCodeCreateRequest request) {
         return this.rawClient.codeCreate(request).body();
     }
 
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
-    public VitalTokenCreatedResponse codeCreate(CodeCreateLinkRequest request, RequestOptions requestOptions) {
+    public VitalTokenCreatedResponse codeCreate(LinkCodeCreateRequest request, RequestOptions requestOptions) {
         return this.rawClient.codeCreate(request, requestOptions).body();
     }
 
@@ -174,7 +174,7 @@ public class LinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
-    public Map<String, Object> tokenState(TokenStateLinkRequest request) {
+    public Map<String, Object> tokenState(LinkTokenStateRequest request) {
         return this.rawClient.tokenState(request).body();
     }
 
@@ -182,7 +182,7 @@ public class LinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
-    public Map<String, Object> tokenState(TokenStateLinkRequest request, RequestOptions requestOptions) {
+    public Map<String, Object> tokenState(LinkTokenStateRequest request, RequestOptions requestOptions) {
         return this.rawClient.tokenState(request, requestOptions).body();
     }
 
@@ -224,7 +224,7 @@ public class LinkClient {
     /**
      * This endpoint generates an OAuth link for oauth provider
      */
-    public Source generateOauthLink(OAuthProviders oauthProvider, GenerateOauthLinkLinkRequest request) {
+    public Source generateOauthLink(OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request) {
         return this.rawClient.generateOauthLink(oauthProvider, request).body();
     }
 
@@ -232,7 +232,7 @@ public class LinkClient {
      * This endpoint generates an OAuth link for oauth provider
      */
     public Source generateOauthLink(
-            OAuthProviders oauthProvider, GenerateOauthLinkLinkRequest request, RequestOptions requestOptions) {
+            OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .generateOauthLink(oauthProvider, request, requestOptions)
                 .body();
@@ -300,14 +300,14 @@ public class LinkClient {
     /**
      * GET List of all available providers given the generated link token.
      */
-    public List<SourceLink> getAllProviders(GetAllProvidersLinkRequest request) {
+    public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request) {
         return this.rawClient.getAllProviders(request).body();
     }
 
     /**
      * GET List of all available providers given the generated link token.
      */
-    public List<SourceLink> getAllProviders(GetAllProvidersLinkRequest request, RequestOptions requestOptions) {
+    public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAllProviders(request, requestOptions).body();
     }
 

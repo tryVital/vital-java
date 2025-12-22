@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,11 +42,8 @@ public final class DaySlots {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
+    @JsonProperty("location")
     public Optional<AppointmentLocation> getLocation() {
-        if (location == null) {
-            return Optional.empty();
-        }
         return location;
     }
 
@@ -61,12 +55,6 @@ public final class DaySlots {
     @JsonProperty("slots")
     public List<TimeSlot> getSlots() {
         return slots;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("location")
-    private Optional<AppointmentLocation> _getLocation() {
-        return location;
     }
 
     @java.lang.Override
@@ -110,8 +98,6 @@ public final class DaySlots {
         _FinalStage location(Optional<AppointmentLocation> location);
 
         _FinalStage location(AppointmentLocation location);
-
-        _FinalStage location(Nullable<AppointmentLocation> location);
 
         _FinalStage slots(List<TimeSlot> slots);
 
@@ -166,18 +152,8 @@ public final class DaySlots {
         @JsonSetter(value = "slots", nulls = Nulls.SKIP)
         public _FinalStage slots(List<TimeSlot> slots) {
             this.slots.clear();
-            this.slots.addAll(slots);
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage location(Nullable<AppointmentLocation> location) {
-            if (location.isNull()) {
-                this.location = null;
-            } else if (location.isEmpty()) {
-                this.location = Optional.empty();
-            } else {
-                this.location = Optional.of(location.get());
+            if (slots != null) {
+                this.slots.addAll(slots);
             }
             return this;
         }

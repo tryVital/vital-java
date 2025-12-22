@@ -5,7 +5,7 @@ package com.vital.api.resources.sleepcycle;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.sleepcycle.requests.GetSleepCycleRequest;
+import com.vital.api.resources.sleepcycle.requests.SleepCycleGetRequest;
 import com.vital.api.types.ClientSleepCycleResponse;
 
 public class SleepCycleClient {
@@ -28,14 +28,14 @@ public class SleepCycleClient {
     /**
      * Get sleep cycle for user_id
      */
-    public ClientSleepCycleResponse get(String userId, GetSleepCycleRequest request) {
+    public ClientSleepCycleResponse get(String userId, SleepCycleGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get sleep cycle for user_id
      */
-    public ClientSleepCycleResponse get(String userId, GetSleepCycleRequest request, RequestOptions requestOptions) {
+    public ClientSleepCycleResponse get(String userId, SleepCycleGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 }

@@ -5,9 +5,8 @@ package com.vital.api.resources.sleep;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.sleep.requests.GetRawSleepRequest;
-import com.vital.api.resources.sleep.requests.GetSleepRequest;
-import com.vital.api.resources.sleep.requests.GetStreamBySleepIdSleepRequest;
+import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
+import com.vital.api.resources.sleep.requests.SleepGetRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.RawSleep;
@@ -32,28 +31,28 @@ public class SleepClient {
     /**
      * Get sleep summary for user_id
      */
-    public ClientSleepResponse get(String userId, GetSleepRequest request) {
+    public ClientSleepResponse get(String userId, SleepGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get sleep summary for user_id
      */
-    public ClientSleepResponse get(String userId, GetSleepRequest request, RequestOptions requestOptions) {
+    public ClientSleepResponse get(String userId, SleepGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 
     /**
      * Get raw sleep summary for user_id
      */
-    public RawSleep getRaw(String userId, GetRawSleepRequest request) {
+    public RawSleep getRaw(String userId, SleepGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw sleep summary for user_id
      */
-    public RawSleep getRaw(String userId, GetRawSleepRequest request, RequestOptions requestOptions) {
+    public RawSleep getRaw(String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 
@@ -67,17 +66,7 @@ public class SleepClient {
     /**
      * Get Sleep stream for a user_id
      */
-    public ClientFacingSleepStream getStreamBySleepId(String sleepId, GetStreamBySleepIdSleepRequest request) {
-        return this.rawClient.getStreamBySleepId(sleepId, request).body();
-    }
-
-    /**
-     * Get Sleep stream for a user_id
-     */
-    public ClientFacingSleepStream getStreamBySleepId(
-            String sleepId, GetStreamBySleepIdSleepRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getStreamBySleepId(sleepId, request, requestOptions)
-                .body();
+    public ClientFacingSleepStream getStreamBySleepId(String sleepId, RequestOptions requestOptions) {
+        return this.rawClient.getStreamBySleepId(sleepId, requestOptions).body();
     }
 }

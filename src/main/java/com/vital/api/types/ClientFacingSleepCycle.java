@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -142,11 +139,8 @@ public final class ClientFacingSleepCycle {
         return stageType;
     }
 
-    @JsonIgnore
+    @JsonProperty("time_zone")
     public Optional<String> getTimeZone() {
-        if (timeZone == null) {
-            return Optional.empty();
-        }
         return timeZone;
     }
 
@@ -163,19 +157,13 @@ public final class ClientFacingSleepCycle {
         return sourceType;
     }
 
-    @JsonIgnore
+    @JsonProperty("source_app_id")
     public Optional<String> getSourceAppId() {
-        if (sourceAppId == null) {
-            return Optional.empty();
-        }
         return sourceAppId;
     }
 
-    @JsonIgnore
+    @JsonProperty("source_device_id")
     public Optional<String> getSourceDeviceId() {
-        if (sourceDeviceId == null) {
-            return Optional.empty();
-        }
         return sourceDeviceId;
     }
 
@@ -197,24 +185,6 @@ public final class ClientFacingSleepCycle {
     @JsonProperty("source")
     public ClientFacingSource getSource() {
         return source;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("time_zone")
-    private Optional<String> _getTimeZone() {
-        return timeZone;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("source_app_id")
-    private Optional<String> _getSourceAppId() {
-        return sourceAppId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("source_device_id")
-    private Optional<String> _getSourceDeviceId() {
-        return sourceDeviceId;
     }
 
     @java.lang.Override
@@ -356,19 +326,13 @@ public final class ClientFacingSleepCycle {
 
         _FinalStage timeZone(String timeZone);
 
-        _FinalStage timeZone(Nullable<String> timeZone);
-
         _FinalStage sourceAppId(Optional<String> sourceAppId);
 
         _FinalStage sourceAppId(String sourceAppId);
 
-        _FinalStage sourceAppId(Nullable<String> sourceAppId);
-
         _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
 
         _FinalStage sourceDeviceId(String sourceDeviceId);
-
-        _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -518,18 +482,6 @@ public final class ClientFacingSleepCycle {
         }
 
         @java.lang.Override
-        public _FinalStage sourceDeviceId(Nullable<String> sourceDeviceId) {
-            if (sourceDeviceId.isNull()) {
-                this.sourceDeviceId = null;
-            } else if (sourceDeviceId.isEmpty()) {
-                this.sourceDeviceId = Optional.empty();
-            } else {
-                this.sourceDeviceId = Optional.of(sourceDeviceId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage sourceDeviceId(String sourceDeviceId) {
             this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
             return this;
@@ -543,18 +495,6 @@ public final class ClientFacingSleepCycle {
         }
 
         @java.lang.Override
-        public _FinalStage sourceAppId(Nullable<String> sourceAppId) {
-            if (sourceAppId.isNull()) {
-                this.sourceAppId = null;
-            } else if (sourceAppId.isEmpty()) {
-                this.sourceAppId = Optional.empty();
-            } else {
-                this.sourceAppId = Optional.of(sourceAppId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage sourceAppId(String sourceAppId) {
             this.sourceAppId = Optional.ofNullable(sourceAppId);
             return this;
@@ -564,18 +504,6 @@ public final class ClientFacingSleepCycle {
         @JsonSetter(value = "source_app_id", nulls = Nulls.SKIP)
         public _FinalStage sourceAppId(Optional<String> sourceAppId) {
             this.sourceAppId = sourceAppId;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage timeZone(Nullable<String> timeZone) {
-            if (timeZone.isNull()) {
-                this.timeZone = null;
-            } else if (timeZone.isEmpty()) {
-                this.timeZone = Optional.empty();
-            } else {
-                this.timeZone = Optional.of(timeZone.get());
-            }
             return this;
         }
 
@@ -639,7 +567,9 @@ public final class ClientFacingSleepCycle {
         @JsonSetter(value = "stage_type", nulls = Nulls.SKIP)
         public _FinalStage stageType(List<Integer> stageType) {
             this.stageType.clear();
-            this.stageType.addAll(stageType);
+            if (stageType != null) {
+                this.stageType.addAll(stageType);
+            }
             return this;
         }
 
@@ -661,7 +591,9 @@ public final class ClientFacingSleepCycle {
         @JsonSetter(value = "stage_end_offset_second", nulls = Nulls.SKIP)
         public _FinalStage stageEndOffsetSecond(List<Integer> stageEndOffsetSecond) {
             this.stageEndOffsetSecond.clear();
-            this.stageEndOffsetSecond.addAll(stageEndOffsetSecond);
+            if (stageEndOffsetSecond != null) {
+                this.stageEndOffsetSecond.addAll(stageEndOffsetSecond);
+            }
             return this;
         }
 
@@ -683,7 +615,9 @@ public final class ClientFacingSleepCycle {
         @JsonSetter(value = "stage_start_offset_second", nulls = Nulls.SKIP)
         public _FinalStage stageStartOffsetSecond(List<Integer> stageStartOffsetSecond) {
             this.stageStartOffsetSecond.clear();
-            this.stageStartOffsetSecond.addAll(stageStartOffsetSecond);
+            if (stageStartOffsetSecond != null) {
+                this.stageStartOffsetSecond.addAll(stageStartOffsetSecond);
+            }
             return this;
         }
 

@@ -97,7 +97,9 @@ public final class SingleProviderHistoricalPullResponse {
         @JsonSetter(value = "pulled", nulls = Nulls.SKIP)
         public Builder pulled(Map<String, SingleHistoricalPullStatistics> pulled) {
             this.pulled.clear();
-            this.pulled.putAll(pulled);
+            if (pulled != null) {
+                this.pulled.putAll(pulled);
+            }
             return this;
         }
 
@@ -116,7 +118,9 @@ public final class SingleProviderHistoricalPullResponse {
         @JsonSetter(value = "not_pulled", nulls = Nulls.SKIP)
         public Builder notPulled(List<ClientFacingResource> notPulled) {
             this.notPulled.clear();
-            this.notPulled.addAll(notPulled);
+            if (notPulled != null) {
+                this.notPulled.addAll(notPulled);
+            }
             return this;
         }
 

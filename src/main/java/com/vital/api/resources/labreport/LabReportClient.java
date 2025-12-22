@@ -6,9 +6,10 @@ package com.vital.api.resources.labreport;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.labreport.requests.BodyCreateLabReportParserJob;
-import com.vital.api.resources.labreport.requests.ParserGetJobLabReportRequest;
 import com.vital.api.types.ParsingJob;
 import java.io.File;
+import java.io.InputStream;
+import okhttp3.MediaType;
 
 public class LabReportClient {
     protected final ClientOptions clientOptions;
@@ -43,6 +44,25 @@ public class LabReportClient {
         return this.rawClient.parserCreateJob(file, request, requestOptions).body();
     }
 
+    public ParsingJob parserCreateJob(InputStream stream, String filename) {
+        return this.rawClient.parserCreateJob(stream, filename).body();
+    }
+
+    public ParsingJob parserCreateJob(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.parserCreateJob(stream, filename, mediaType).body();
+    }
+
+    public ParsingJob parserCreateJob(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.parserCreateJob(stream, filename, requestOptions).body();
+    }
+
+    public ParsingJob parserCreateJob(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .parserCreateJob(stream, filename, mediaType, requestOptions)
+                .body();
+    }
+
     /**
      * Retrieves the parse job status and stored result if completed.
      * <p>Returns:
@@ -57,16 +77,7 @@ public class LabReportClient {
      * <p>Returns:
      * ParseLabResultJobResponse with job status and parsed data (if complete)</p>
      */
-    public ParsingJob parserGetJob(String jobId, ParserGetJobLabReportRequest request) {
-        return this.rawClient.parserGetJob(jobId, request).body();
-    }
-
-    /**
-     * Retrieves the parse job status and stored result if completed.
-     * <p>Returns:
-     * ParseLabResultJobResponse with job status and parsed data (if complete)</p>
-     */
-    public ParsingJob parserGetJob(String jobId, ParserGetJobLabReportRequest request, RequestOptions requestOptions) {
-        return this.rawClient.parserGetJob(jobId, request, requestOptions).body();
+    public ParsingJob parserGetJob(String jobId, RequestOptions requestOptions) {
+        return this.rawClient.parserGetJob(jobId, requestOptions).body();
     }
 }

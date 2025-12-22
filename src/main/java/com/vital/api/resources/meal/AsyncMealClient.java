@@ -5,7 +5,7 @@ package com.vital.api.resources.meal;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.meal.requests.GetMealRequest;
+import com.vital.api.resources.meal.requests.MealGetRequest;
 import com.vital.api.types.ClientFacingMealResponse;
 import java.util.concurrent.CompletableFuture;
 
@@ -29,7 +29,7 @@ public class AsyncMealClient {
     /**
      * Get user's meals
      */
-    public CompletableFuture<ClientFacingMealResponse> get(String userId, GetMealRequest request) {
+    public CompletableFuture<ClientFacingMealResponse> get(String userId, MealGetRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -37,7 +37,7 @@ public class AsyncMealClient {
      * Get user's meals
      */
     public CompletableFuture<ClientFacingMealResponse> get(
-            String userId, GetMealRequest request, RequestOptions requestOptions) {
+            String userId, MealGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

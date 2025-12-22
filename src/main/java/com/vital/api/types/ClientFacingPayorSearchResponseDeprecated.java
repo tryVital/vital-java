@@ -270,7 +270,9 @@ public final class ClientFacingPayorSearchResponseDeprecated {
         @JsonSetter(value = "aliases", nulls = Nulls.SKIP)
         public _FinalStage aliases(List<String> aliases) {
             this.aliases.clear();
-            this.aliases.addAll(aliases);
+            if (aliases != null) {
+                this.aliases.addAll(aliases);
+            }
             return this;
         }
 

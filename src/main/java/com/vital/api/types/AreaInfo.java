@@ -159,7 +159,9 @@ public final class AreaInfo {
         @JsonSetter(value = "central_labs", nulls = Nulls.SKIP)
         public _FinalStage centralLabs(Map<String, PscAreaInfo> centralLabs) {
             this.centralLabs.clear();
-            this.centralLabs.putAll(centralLabs);
+            if (centralLabs != null) {
+                this.centralLabs.putAll(centralLabs);
+            }
             return this;
         }
 

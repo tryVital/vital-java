@@ -12,9 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.workouts.requests.GetByWorkoutIdWorkoutsRequest;
-import com.vital.api.resources.workouts.requests.GetRawWorkoutsRequest;
-import com.vital.api.resources.workouts.requests.GetWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.HttpValidationError;
@@ -41,7 +40,7 @@ public class AsyncRawWorkoutsClient {
     /**
      * Get workout summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<ClientWorkoutResponse>> get(String userId, GetWorkoutsRequest request) {
+    public CompletableFuture<VitalHttpResponse<ClientWorkoutResponse>> get(String userId, WorkoutsGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -49,7 +48,7 @@ public class AsyncRawWorkoutsClient {
      * Get workout summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientWorkoutResponse>> get(
-            String userId, GetWorkoutsRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/workouts")
@@ -78,13 +77,13 @@ public class AsyncRawWorkoutsClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientWorkoutResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientWorkoutResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -95,11 +94,9 @@ public class AsyncRawWorkoutsClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
@@ -117,7 +114,7 @@ public class AsyncRawWorkoutsClient {
     /**
      * Get raw workout summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawWorkout>> getRaw(String userId, GetRawWorkoutsRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawWorkout>> getRaw(String userId, WorkoutsGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -125,7 +122,7 @@ public class AsyncRawWorkoutsClient {
      * Get raw workout summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawWorkout>> getRaw(
-            String userId, GetRawWorkoutsRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/workouts")
@@ -155,13 +152,12 @@ public class AsyncRawWorkoutsClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawWorkout.class),
-                                response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawWorkout.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -172,11 +168,9 @@ public class AsyncRawWorkoutsClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
@@ -192,28 +186,23 @@ public class AsyncRawWorkoutsClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingStream>> getByWorkoutId(String workoutId) {
-        return getByWorkoutId(workoutId, GetByWorkoutIdWorkoutsRequest.builder().build());
+        return getByWorkoutId(workoutId, null);
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingStream>> getByWorkoutId(
-            String workoutId, GetByWorkoutIdWorkoutsRequest request) {
-        return getByWorkoutId(workoutId, request, null);
-    }
-
-    public CompletableFuture<VitalHttpResponse<ClientFacingStream>> getByWorkoutId(
-            String workoutId, GetByWorkoutIdWorkoutsRequest request, RequestOptions requestOptions) {
+            String workoutId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries/workouts")
                 .addPathSegment(workoutId)
                 .addPathSegments("stream")
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -223,13 +212,13 @@ public class AsyncRawWorkoutsClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingStream.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientFacingStream.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -240,11 +229,9 @@ public class AsyncRawWorkoutsClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));

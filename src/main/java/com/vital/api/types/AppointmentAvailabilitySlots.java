@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,17 +40,8 @@ public final class AppointmentAvailabilitySlots {
         return slots;
     }
 
-    @JsonIgnore
-    public Optional<String> getTimezone() {
-        if (timezone == null) {
-            return Optional.empty();
-        }
-        return timezone;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("timezone")
-    private Optional<String> _getTimezone() {
+    public Optional<String> getTimezone() {
         return timezone;
     }
 
@@ -106,7 +94,9 @@ public final class AppointmentAvailabilitySlots {
         @JsonSetter(value = "slots", nulls = Nulls.SKIP)
         public Builder slots(List<DaySlots> slots) {
             this.slots.clear();
-            this.slots.addAll(slots);
+            if (slots != null) {
+                this.slots.addAll(slots);
+            }
             return this;
         }
 
@@ -130,17 +120,6 @@ public final class AppointmentAvailabilitySlots {
 
         public Builder timezone(String timezone) {
             this.timezone = Optional.ofNullable(timezone);
-            return this;
-        }
-
-        public Builder timezone(Nullable<String> timezone) {
-            if (timezone.isNull()) {
-                this.timezone = null;
-            } else if (timezone.isEmpty()) {
-                this.timezone = Optional.empty();
-            } else {
-                this.timezone = Optional.of(timezone.get());
-            }
             return this;
         }
 

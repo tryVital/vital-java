@@ -93,7 +93,9 @@ public final class LibreConfig {
         @JsonSetter(value = "practice_id", nulls = Nulls.SKIP)
         public Builder practiceId(Map<String, Object> practiceId) {
             this.practiceId.clear();
-            this.practiceId.putAll(practiceId);
+            if (practiceId != null) {
+                this.practiceId.putAll(practiceId);
+            }
             return this;
         }
 

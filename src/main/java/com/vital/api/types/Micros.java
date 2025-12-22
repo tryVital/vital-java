@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,51 +42,24 @@ public final class Micros {
     /**
      * @return Amount of each mineral in their respective units. Most minerals are measured in mg (milligrams), while sodium and potassium are in g (grams).
      */
-    @JsonIgnore
+    @JsonProperty("minerals")
     public Optional<Map<String, Optional<Double>>> getMinerals() {
-        if (minerals == null) {
-            return Optional.empty();
-        }
         return minerals;
     }
 
     /**
      * @return Amount of each trace element in their respective units, most measured in μg (micrograms), while copper and manganese are in mg (milligrams).
      */
-    @JsonIgnore
+    @JsonProperty("trace_elements")
     public Optional<Map<String, Optional<Double>>> getTraceElements() {
-        if (traceElements == null) {
-            return Optional.empty();
-        }
         return traceElements;
     }
 
     /**
      * @return Amount of each vitamin in their respective units. A, B12, D and K in μg (micrograms), while B1, B2, B3, B5, B6, C and folic acid are in mg (milligrams).
      */
-    @JsonIgnore
-    public Optional<Map<String, Optional<Double>>> getVitamins() {
-        if (vitamins == null) {
-            return Optional.empty();
-        }
-        return vitamins;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("minerals")
-    private Optional<Map<String, Optional<Double>>> _getMinerals() {
-        return minerals;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("trace_elements")
-    private Optional<Map<String, Optional<Double>>> _getTraceElements() {
-        return traceElements;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("vitamins")
-    private Optional<Map<String, Optional<Double>>> _getVitamins() {
+    public Optional<Map<String, Optional<Double>>> getVitamins() {
         return vitamins;
     }
 
@@ -158,17 +128,6 @@ public final class Micros {
             return this;
         }
 
-        public Builder minerals(Nullable<Map<String, Optional<Double>>> minerals) {
-            if (minerals.isNull()) {
-                this.minerals = null;
-            } else if (minerals.isEmpty()) {
-                this.minerals = Optional.empty();
-            } else {
-                this.minerals = Optional.of(minerals.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Amount of each trace element in their respective units, most measured in μg (micrograms), while copper and manganese are in mg (milligrams).</p>
          */
@@ -183,17 +142,6 @@ public final class Micros {
             return this;
         }
 
-        public Builder traceElements(Nullable<Map<String, Optional<Double>>> traceElements) {
-            if (traceElements.isNull()) {
-                this.traceElements = null;
-            } else if (traceElements.isEmpty()) {
-                this.traceElements = Optional.empty();
-            } else {
-                this.traceElements = Optional.of(traceElements.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Amount of each vitamin in their respective units. A, B12, D and K in μg (micrograms), while B1, B2, B3, B5, B6, C and folic acid are in mg (milligrams).</p>
          */
@@ -205,17 +153,6 @@ public final class Micros {
 
         public Builder vitamins(Map<String, Optional<Double>> vitamins) {
             this.vitamins = Optional.ofNullable(vitamins);
-            return this;
-        }
-
-        public Builder vitamins(Nullable<Map<String, Optional<Double>>> vitamins) {
-            if (vitamins.isNull()) {
-                this.vitamins = null;
-            } else if (vitamins.isEmpty()) {
-                this.vitamins = Optional.empty();
-            } else {
-                this.vitamins = Optional.of(vitamins.get());
-            }
             return this;
         }
 

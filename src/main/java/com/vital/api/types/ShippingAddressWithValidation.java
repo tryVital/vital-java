@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,11 +70,8 @@ public final class ShippingAddressWithValidation {
         return firstLine;
     }
 
-    @JsonIgnore
+    @JsonProperty("second_line")
     public Optional<String> getSecondLine() {
-        if (secondLine == null) {
-            return Optional.empty();
-        }
         return secondLine;
     }
 
@@ -104,12 +98,6 @@ public final class ShippingAddressWithValidation {
     @JsonProperty("phone_number")
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("second_line")
-    private Optional<String> _getSecondLine() {
-        return secondLine;
     }
 
     @java.lang.Override
@@ -192,8 +180,6 @@ public final class ShippingAddressWithValidation {
         _FinalStage secondLine(Optional<String> secondLine);
 
         _FinalStage secondLine(String secondLine);
-
-        _FinalStage secondLine(Nullable<String> secondLine);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -286,18 +272,6 @@ public final class ShippingAddressWithValidation {
         @JsonSetter("phone_number")
         public _FinalStage phoneNumber(@NotNull String phoneNumber) {
             this.phoneNumber = Objects.requireNonNull(phoneNumber, "phoneNumber must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage secondLine(Nullable<String> secondLine) {
-            if (secondLine.isNull()) {
-                this.secondLine = null;
-            } else if (secondLine.isEmpty()) {
-                this.secondLine = Optional.empty();
-            } else {
-                this.secondLine = Optional.of(secondLine.get());
-            }
             return this;
         }
 

@@ -82,7 +82,9 @@ public final class ClientFacingMealResponse {
         @JsonSetter(value = "meals", nulls = Nulls.SKIP)
         public Builder meals(List<MealInDbBaseClientFacingSource> meals) {
             this.meals.clear();
-            this.meals.addAll(meals);
+            if (meals != null) {
+                this.meals.addAll(meals);
+            }
             return this;
         }
 

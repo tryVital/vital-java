@@ -5,8 +5,8 @@ package com.vital.api.resources.body;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.body.requests.GetBodyRequest;
-import com.vital.api.resources.body.requests.GetRawBodyRequest;
+import com.vital.api.resources.body.requests.BodyGetRawRequest;
+import com.vital.api.resources.body.requests.BodyGetRequest;
 import com.vital.api.types.ClientBodyResponse;
 import com.vital.api.types.RawBody;
 
@@ -30,28 +30,28 @@ public class BodyClient {
     /**
      * Get Body summary for user_id
      */
-    public ClientBodyResponse get(String userId, GetBodyRequest request) {
+    public ClientBodyResponse get(String userId, BodyGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get Body summary for user_id
      */
-    public ClientBodyResponse get(String userId, GetBodyRequest request, RequestOptions requestOptions) {
+    public ClientBodyResponse get(String userId, BodyGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public RawBody getRaw(String userId, GetRawBodyRequest request) {
+    public RawBody getRaw(String userId, BodyGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public RawBody getRaw(String userId, GetRawBodyRequest request, RequestOptions requestOptions) {
+    public RawBody getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 }

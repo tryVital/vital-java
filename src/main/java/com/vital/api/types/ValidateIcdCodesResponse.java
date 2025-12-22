@@ -173,7 +173,9 @@ public final class ValidateIcdCodesResponse {
         @JsonSetter(value = "warnings", nulls = Nulls.SKIP)
         public _FinalStage warnings(List<IcdExcludesWarning> warnings) {
             this.warnings.clear();
-            this.warnings.addAll(warnings);
+            if (warnings != null) {
+                this.warnings.addAll(warnings);
+            }
             return this;
         }
 
@@ -195,7 +197,9 @@ public final class ValidateIcdCodesResponse {
         @JsonSetter(value = "violations", nulls = Nulls.SKIP)
         public _FinalStage violations(List<IcdExcludesViolation> violations) {
             this.violations.clear();
-            this.violations.addAll(violations);
+            if (violations != null) {
+                this.violations.addAll(violations);
+            }
             return this;
         }
 
@@ -217,7 +221,9 @@ public final class ValidateIcdCodesResponse {
         @JsonSetter(value = "errors", nulls = Nulls.SKIP)
         public _FinalStage errors(List<String> errors) {
             this.errors.clear();
-            this.errors.addAll(errors);
+            if (errors != null) {
+                this.errors.addAll(errors);
+            }
             return this;
         }
 

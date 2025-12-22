@@ -12,9 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.workouts.requests.GetByWorkoutIdWorkoutsRequest;
-import com.vital.api.resources.workouts.requests.GetRawWorkoutsRequest;
-import com.vital.api.resources.workouts.requests.GetWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.HttpValidationError;
@@ -37,7 +36,7 @@ public class RawWorkoutsClient {
     /**
      * Get workout summary for user_id
      */
-    public VitalHttpResponse<ClientWorkoutResponse> get(String userId, GetWorkoutsRequest request) {
+    public VitalHttpResponse<ClientWorkoutResponse> get(String userId, WorkoutsGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -45,7 +44,7 @@ public class RawWorkoutsClient {
      * Get workout summary for user_id
      */
     public VitalHttpResponse<ClientWorkoutResponse> get(
-            String userId, GetWorkoutsRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/workouts")
@@ -71,12 +70,11 @@ public class RawWorkoutsClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientWorkoutResponse.class),
-                        response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientWorkoutResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -86,11 +84,8 @@ public class RawWorkoutsClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -99,7 +94,7 @@ public class RawWorkoutsClient {
     /**
      * Get raw workout summary for user_id
      */
-    public VitalHttpResponse<RawWorkout> getRaw(String userId, GetRawWorkoutsRequest request) {
+    public VitalHttpResponse<RawWorkout> getRaw(String userId, WorkoutsGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -107,7 +102,7 @@ public class RawWorkoutsClient {
      * Get raw workout summary for user_id
      */
     public VitalHttpResponse<RawWorkout> getRaw(
-            String userId, GetRawWorkoutsRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/workouts")
@@ -134,11 +129,11 @@ public class RawWorkoutsClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawWorkout.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawWorkout.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -148,50 +143,41 @@ public class RawWorkoutsClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     public VitalHttpResponse<ClientFacingStream> getByWorkoutId(String workoutId) {
-        return getByWorkoutId(workoutId, GetByWorkoutIdWorkoutsRequest.builder().build());
+        return getByWorkoutId(workoutId, null);
     }
 
-    public VitalHttpResponse<ClientFacingStream> getByWorkoutId(
-            String workoutId, GetByWorkoutIdWorkoutsRequest request) {
-        return getByWorkoutId(workoutId, request, null);
-    }
-
-    public VitalHttpResponse<ClientFacingStream> getByWorkoutId(
-            String workoutId, GetByWorkoutIdWorkoutsRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<ClientFacingStream> getByWorkoutId(String workoutId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries/workouts")
                 .addPathSegment(workoutId)
                 .addPathSegments("stream")
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingStream.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientFacingStream.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -201,11 +187,8 @@ public class RawWorkoutsClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

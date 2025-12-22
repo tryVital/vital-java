@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -130,30 +127,21 @@ public final class ClientFacingAppointment {
     /**
      * @return Time is in UTC
      */
-    @JsonIgnore
+    @JsonProperty("start_at")
     public Optional<OffsetDateTime> getStartAt() {
-        if (startAt == null) {
-            return Optional.empty();
-        }
         return startAt;
     }
 
     /**
      * @return Time is in UTC
      */
-    @JsonIgnore
+    @JsonProperty("end_at")
     public Optional<OffsetDateTime> getEndAt() {
-        if (endAt == null) {
-            return Optional.empty();
-        }
         return endAt;
     }
 
-    @JsonIgnore
+    @JsonProperty("iana_timezone")
     public Optional<String> getIanaTimezone() {
-        if (ianaTimezone == null) {
-            return Optional.empty();
-        }
         return ianaTimezone;
     }
 
@@ -177,11 +165,8 @@ public final class ClientFacingAppointment {
         return providerId;
     }
 
-    @JsonIgnore
+    @JsonProperty("external_id")
     public Optional<String> getExternalId() {
-        if (externalId == null) {
-            return Optional.empty();
-        }
         return externalId;
     }
 
@@ -195,47 +180,14 @@ public final class ClientFacingAppointment {
         return eventStatus;
     }
 
-    @JsonIgnore
+    @JsonProperty("event_data")
     public Optional<Map<String, Object>> getEventData() {
-        if (eventData == null) {
-            return Optional.empty();
-        }
         return eventData;
     }
 
     @JsonProperty("events")
     public List<ClientFacingAppointmentEvent> getEvents() {
         return events;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("start_at")
-    private Optional<OffsetDateTime> _getStartAt() {
-        return startAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("end_at")
-    private Optional<OffsetDateTime> _getEndAt() {
-        return endAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("iana_timezone")
-    private Optional<String> _getIanaTimezone() {
-        return ianaTimezone;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("external_id")
-    private Optional<String> _getExternalId() {
-        return externalId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("event_data")
-    private Optional<Map<String, Object>> _getEventData() {
-        return eventData;
     }
 
     @java.lang.Override
@@ -356,8 +308,6 @@ public final class ClientFacingAppointment {
 
         _FinalStage startAt(OffsetDateTime startAt);
 
-        _FinalStage startAt(Nullable<OffsetDateTime> startAt);
-
         /**
          * <p>Time is in UTC</p>
          */
@@ -365,25 +315,17 @@ public final class ClientFacingAppointment {
 
         _FinalStage endAt(OffsetDateTime endAt);
 
-        _FinalStage endAt(Nullable<OffsetDateTime> endAt);
-
         _FinalStage ianaTimezone(Optional<String> ianaTimezone);
 
         _FinalStage ianaTimezone(String ianaTimezone);
-
-        _FinalStage ianaTimezone(Nullable<String> ianaTimezone);
 
         _FinalStage externalId(Optional<String> externalId);
 
         _FinalStage externalId(String externalId);
 
-        _FinalStage externalId(Nullable<String> externalId);
-
         _FinalStage eventData(Optional<Map<String, Object>> eventData);
 
         _FinalStage eventData(Map<String, Object> eventData);
-
-        _FinalStage eventData(Nullable<Map<String, Object>> eventData);
 
         _FinalStage events(List<ClientFacingAppointmentEvent> events);
 
@@ -562,18 +504,8 @@ public final class ClientFacingAppointment {
         @JsonSetter(value = "events", nulls = Nulls.SKIP)
         public _FinalStage events(List<ClientFacingAppointmentEvent> events) {
             this.events.clear();
-            this.events.addAll(events);
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage eventData(Nullable<Map<String, Object>> eventData) {
-            if (eventData.isNull()) {
-                this.eventData = null;
-            } else if (eventData.isEmpty()) {
-                this.eventData = Optional.empty();
-            } else {
-                this.eventData = Optional.of(eventData.get());
+            if (events != null) {
+                this.events.addAll(events);
             }
             return this;
         }
@@ -592,18 +524,6 @@ public final class ClientFacingAppointment {
         }
 
         @java.lang.Override
-        public _FinalStage externalId(Nullable<String> externalId) {
-            if (externalId.isNull()) {
-                this.externalId = null;
-            } else if (externalId.isEmpty()) {
-                this.externalId = Optional.empty();
-            } else {
-                this.externalId = Optional.of(externalId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage externalId(String externalId) {
             this.externalId = Optional.ofNullable(externalId);
             return this;
@@ -613,18 +533,6 @@ public final class ClientFacingAppointment {
         @JsonSetter(value = "external_id", nulls = Nulls.SKIP)
         public _FinalStage externalId(Optional<String> externalId) {
             this.externalId = externalId;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage ianaTimezone(Nullable<String> ianaTimezone) {
-            if (ianaTimezone.isNull()) {
-                this.ianaTimezone = null;
-            } else if (ianaTimezone.isEmpty()) {
-                this.ianaTimezone = Optional.empty();
-            } else {
-                this.ianaTimezone = Optional.of(ianaTimezone.get());
-            }
             return this;
         }
 
@@ -646,22 +554,6 @@ public final class ClientFacingAppointment {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage endAt(Nullable<OffsetDateTime> endAt) {
-            if (endAt.isNull()) {
-                this.endAt = null;
-            } else if (endAt.isEmpty()) {
-                this.endAt = Optional.empty();
-            } else {
-                this.endAt = Optional.of(endAt.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Time is in UTC</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage endAt(OffsetDateTime endAt) {
             this.endAt = Optional.ofNullable(endAt);
             return this;
@@ -674,22 +566,6 @@ public final class ClientFacingAppointment {
         @JsonSetter(value = "end_at", nulls = Nulls.SKIP)
         public _FinalStage endAt(Optional<OffsetDateTime> endAt) {
             this.endAt = endAt;
-            return this;
-        }
-
-        /**
-         * <p>Time is in UTC</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage startAt(Nullable<OffsetDateTime> startAt) {
-            if (startAt.isNull()) {
-                this.startAt = null;
-            } else if (startAt.isEmpty()) {
-                this.startAt = Optional.empty();
-            } else {
-                this.startAt = Optional.of(startAt.get());
-            }
             return this;
         }
 

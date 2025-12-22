@@ -160,7 +160,9 @@ public final class PscInfo {
         @JsonSetter(value = "patient_service_centers", nulls = Nulls.SKIP)
         public _FinalStage patientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters) {
             this.patientServiceCenters.clear();
-            this.patientServiceCenters.addAll(patientServiceCenters);
+            if (patientServiceCenters != null) {
+                this.patientServiceCenters.addAll(patientServiceCenters);
+            }
             return this;
         }
 

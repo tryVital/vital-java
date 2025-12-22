@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,45 +48,18 @@ public final class ClinicalInformation {
         return fasting;
     }
 
-    @JsonIgnore
-    public Optional<String> getNotes() {
-        if (notes == null) {
-            return Optional.empty();
-        }
-        return notes;
-    }
-
-    @JsonIgnore
-    public Optional<String> getInformation() {
-        if (information == null) {
-            return Optional.empty();
-        }
-        return information;
-    }
-
-    @JsonIgnore
-    public Optional<String> getTotalVolume() {
-        if (totalVolume == null) {
-            return Optional.empty();
-        }
-        return totalVolume;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("notes")
-    private Optional<String> _getNotes() {
+    public Optional<String> getNotes() {
         return notes;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("information")
-    private Optional<String> _getInformation() {
+    public Optional<String> getInformation() {
         return information;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("total_volume")
-    private Optional<String> _getTotalVolume() {
+    public Optional<String> getTotalVolume() {
         return totalVolume;
     }
 
@@ -170,17 +140,6 @@ public final class ClinicalInformation {
             return this;
         }
 
-        public Builder notes(Nullable<String> notes) {
-            if (notes.isNull()) {
-                this.notes = null;
-            } else if (notes.isEmpty()) {
-                this.notes = Optional.empty();
-            } else {
-                this.notes = Optional.of(notes.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "information", nulls = Nulls.SKIP)
         public Builder information(Optional<String> information) {
             this.information = information;
@@ -192,17 +151,6 @@ public final class ClinicalInformation {
             return this;
         }
 
-        public Builder information(Nullable<String> information) {
-            if (information.isNull()) {
-                this.information = null;
-            } else if (information.isEmpty()) {
-                this.information = Optional.empty();
-            } else {
-                this.information = Optional.of(information.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "total_volume", nulls = Nulls.SKIP)
         public Builder totalVolume(Optional<String> totalVolume) {
             this.totalVolume = totalVolume;
@@ -211,17 +159,6 @@ public final class ClinicalInformation {
 
         public Builder totalVolume(String totalVolume) {
             this.totalVolume = Optional.ofNullable(totalVolume);
-            return this;
-        }
-
-        public Builder totalVolume(Nullable<String> totalVolume) {
-            if (totalVolume.isNull()) {
-                this.totalVolume = null;
-            } else if (totalVolume.isEmpty()) {
-                this.totalVolume = Optional.empty();
-            } else {
-                this.totalVolume = Optional.of(totalVolume.get());
-            }
             return this;
         }
 

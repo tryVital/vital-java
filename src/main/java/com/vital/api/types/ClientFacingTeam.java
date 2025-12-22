@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -123,75 +120,48 @@ public final class ClientFacingTeam {
         return name;
     }
 
-    @JsonIgnore
+    @JsonProperty("svix_app_id")
     public Optional<String> getSvixAppId() {
-        if (svixAppId == null) {
-            return Optional.empty();
-        }
         return svixAppId;
     }
 
-    @JsonIgnore
+    @JsonProperty("client_id")
     public Optional<String> getClientId() {
-        if (clientId == null) {
-            return Optional.empty();
-        }
         return clientId;
     }
 
-    @JsonIgnore
+    @JsonProperty("client_secret")
     public Optional<String> getClientSecret() {
-        if (clientSecret == null) {
-            return Optional.empty();
-        }
         return clientSecret;
     }
 
-    @JsonIgnore
+    @JsonProperty("airtable_api_key")
     public Optional<String> getAirtableApiKey() {
-        if (airtableApiKey == null) {
-            return Optional.empty();
-        }
         return airtableApiKey;
     }
 
-    @JsonIgnore
+    @JsonProperty("airtable_base_id")
     public Optional<String> getAirtableBaseId() {
-        if (airtableBaseId == null) {
-            return Optional.empty();
-        }
         return airtableBaseId;
     }
 
-    @JsonIgnore
+    @JsonProperty("webhook_secret")
     public Optional<String> getWebhookSecret() {
-        if (webhookSecret == null) {
-            return Optional.empty();
-        }
         return webhookSecret;
     }
 
-    @JsonIgnore
+    @JsonProperty("api_key")
     public Optional<String> getApiKey() {
-        if (apiKey == null) {
-            return Optional.empty();
-        }
         return apiKey;
     }
 
-    @JsonIgnore
+    @JsonProperty("api_keys")
     public Optional<List<ClientFacingApiKey>> getApiKeys() {
-        if (apiKeys == null) {
-            return Optional.empty();
-        }
         return apiKeys;
     }
 
-    @JsonIgnore
+    @JsonProperty("configuration")
     public Optional<TeamConfig> getConfiguration() {
-        if (configuration == null) {
-            return Optional.empty();
-        }
         return configuration;
     }
 
@@ -215,11 +185,8 @@ public final class ClientFacingTeam {
         return labTestsPatientEmailCommunicationEnabled;
     }
 
-    @JsonIgnore
+    @JsonProperty("logo_url")
     public Optional<String> getLogoUrl() {
-        if (logoUrl == null) {
-            return Optional.empty();
-        }
         return logoUrl;
     }
 
@@ -228,77 +195,8 @@ public final class ClientFacingTeam {
         return delegatedFlow;
     }
 
-    @JsonIgnore
-    public Optional<String> getCriticalResultNotificationEmail() {
-        if (criticalResultNotificationEmail == null) {
-            return Optional.empty();
-        }
-        return criticalResultNotificationEmail;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("svix_app_id")
-    private Optional<String> _getSvixAppId() {
-        return svixAppId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("client_id")
-    private Optional<String> _getClientId() {
-        return clientId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("client_secret")
-    private Optional<String> _getClientSecret() {
-        return clientSecret;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("airtable_api_key")
-    private Optional<String> _getAirtableApiKey() {
-        return airtableApiKey;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("airtable_base_id")
-    private Optional<String> _getAirtableBaseId() {
-        return airtableBaseId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("webhook_secret")
-    private Optional<String> _getWebhookSecret() {
-        return webhookSecret;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("api_key")
-    private Optional<String> _getApiKey() {
-        return apiKey;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("api_keys")
-    private Optional<List<ClientFacingApiKey>> _getApiKeys() {
-        return apiKeys;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("configuration")
-    private Optional<TeamConfig> _getConfiguration() {
-        return configuration;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("logo_url")
-    private Optional<String> _getLogoUrl() {
-        return logoUrl;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("critical_result_notification_email")
-    private Optional<String> _getCriticalResultNotificationEmail() {
+    public Optional<String> getCriticalResultNotificationEmail() {
         return criticalResultNotificationEmail;
     }
 
@@ -411,67 +309,45 @@ public final class ClientFacingTeam {
 
         _FinalStage svixAppId(String svixAppId);
 
-        _FinalStage svixAppId(Nullable<String> svixAppId);
-
         _FinalStage clientId(Optional<String> clientId);
 
         _FinalStage clientId(String clientId);
-
-        _FinalStage clientId(Nullable<String> clientId);
 
         _FinalStage clientSecret(Optional<String> clientSecret);
 
         _FinalStage clientSecret(String clientSecret);
 
-        _FinalStage clientSecret(Nullable<String> clientSecret);
-
         _FinalStage airtableApiKey(Optional<String> airtableApiKey);
 
         _FinalStage airtableApiKey(String airtableApiKey);
-
-        _FinalStage airtableApiKey(Nullable<String> airtableApiKey);
 
         _FinalStage airtableBaseId(Optional<String> airtableBaseId);
 
         _FinalStage airtableBaseId(String airtableBaseId);
 
-        _FinalStage airtableBaseId(Nullable<String> airtableBaseId);
-
         _FinalStage webhookSecret(Optional<String> webhookSecret);
 
         _FinalStage webhookSecret(String webhookSecret);
-
-        _FinalStage webhookSecret(Nullable<String> webhookSecret);
 
         _FinalStage apiKey(Optional<String> apiKey);
 
         _FinalStage apiKey(String apiKey);
 
-        _FinalStage apiKey(Nullable<String> apiKey);
-
         _FinalStage apiKeys(Optional<List<ClientFacingApiKey>> apiKeys);
 
         _FinalStage apiKeys(List<ClientFacingApiKey> apiKeys);
-
-        _FinalStage apiKeys(Nullable<List<ClientFacingApiKey>> apiKeys);
 
         _FinalStage configuration(Optional<TeamConfig> configuration);
 
         _FinalStage configuration(TeamConfig configuration);
 
-        _FinalStage configuration(Nullable<TeamConfig> configuration);
-
         _FinalStage logoUrl(Optional<String> logoUrl);
 
         _FinalStage logoUrl(String logoUrl);
 
-        _FinalStage logoUrl(Nullable<String> logoUrl);
-
         _FinalStage criticalResultNotificationEmail(Optional<String> criticalResultNotificationEmail);
 
         _FinalStage criticalResultNotificationEmail(String criticalResultNotificationEmail);
-
-        _FinalStage criticalResultNotificationEmail(Nullable<String> criticalResultNotificationEmail);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -612,18 +488,6 @@ public final class ClientFacingTeam {
         }
 
         @java.lang.Override
-        public _FinalStage criticalResultNotificationEmail(Nullable<String> criticalResultNotificationEmail) {
-            if (criticalResultNotificationEmail.isNull()) {
-                this.criticalResultNotificationEmail = null;
-            } else if (criticalResultNotificationEmail.isEmpty()) {
-                this.criticalResultNotificationEmail = Optional.empty();
-            } else {
-                this.criticalResultNotificationEmail = Optional.of(criticalResultNotificationEmail.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage criticalResultNotificationEmail(String criticalResultNotificationEmail) {
             this.criticalResultNotificationEmail = Optional.ofNullable(criticalResultNotificationEmail);
             return this;
@@ -633,18 +497,6 @@ public final class ClientFacingTeam {
         @JsonSetter(value = "critical_result_notification_email", nulls = Nulls.SKIP)
         public _FinalStage criticalResultNotificationEmail(Optional<String> criticalResultNotificationEmail) {
             this.criticalResultNotificationEmail = criticalResultNotificationEmail;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage logoUrl(Nullable<String> logoUrl) {
-            if (logoUrl.isNull()) {
-                this.logoUrl = null;
-            } else if (logoUrl.isEmpty()) {
-                this.logoUrl = Optional.empty();
-            } else {
-                this.logoUrl = Optional.of(logoUrl.get());
-            }
             return this;
         }
 
@@ -662,18 +514,6 @@ public final class ClientFacingTeam {
         }
 
         @java.lang.Override
-        public _FinalStage configuration(Nullable<TeamConfig> configuration) {
-            if (configuration.isNull()) {
-                this.configuration = null;
-            } else if (configuration.isEmpty()) {
-                this.configuration = Optional.empty();
-            } else {
-                this.configuration = Optional.of(configuration.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage configuration(TeamConfig configuration) {
             this.configuration = Optional.ofNullable(configuration);
             return this;
@@ -683,18 +523,6 @@ public final class ClientFacingTeam {
         @JsonSetter(value = "configuration", nulls = Nulls.SKIP)
         public _FinalStage configuration(Optional<TeamConfig> configuration) {
             this.configuration = configuration;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage apiKeys(Nullable<List<ClientFacingApiKey>> apiKeys) {
-            if (apiKeys.isNull()) {
-                this.apiKeys = null;
-            } else if (apiKeys.isEmpty()) {
-                this.apiKeys = Optional.empty();
-            } else {
-                this.apiKeys = Optional.of(apiKeys.get());
-            }
             return this;
         }
 
@@ -712,18 +540,6 @@ public final class ClientFacingTeam {
         }
 
         @java.lang.Override
-        public _FinalStage apiKey(Nullable<String> apiKey) {
-            if (apiKey.isNull()) {
-                this.apiKey = null;
-            } else if (apiKey.isEmpty()) {
-                this.apiKey = Optional.empty();
-            } else {
-                this.apiKey = Optional.of(apiKey.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage apiKey(String apiKey) {
             this.apiKey = Optional.ofNullable(apiKey);
             return this;
@@ -733,18 +549,6 @@ public final class ClientFacingTeam {
         @JsonSetter(value = "api_key", nulls = Nulls.SKIP)
         public _FinalStage apiKey(Optional<String> apiKey) {
             this.apiKey = apiKey;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage webhookSecret(Nullable<String> webhookSecret) {
-            if (webhookSecret.isNull()) {
-                this.webhookSecret = null;
-            } else if (webhookSecret.isEmpty()) {
-                this.webhookSecret = Optional.empty();
-            } else {
-                this.webhookSecret = Optional.of(webhookSecret.get());
-            }
             return this;
         }
 
@@ -762,18 +566,6 @@ public final class ClientFacingTeam {
         }
 
         @java.lang.Override
-        public _FinalStage airtableBaseId(Nullable<String> airtableBaseId) {
-            if (airtableBaseId.isNull()) {
-                this.airtableBaseId = null;
-            } else if (airtableBaseId.isEmpty()) {
-                this.airtableBaseId = Optional.empty();
-            } else {
-                this.airtableBaseId = Optional.of(airtableBaseId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage airtableBaseId(String airtableBaseId) {
             this.airtableBaseId = Optional.ofNullable(airtableBaseId);
             return this;
@@ -783,18 +575,6 @@ public final class ClientFacingTeam {
         @JsonSetter(value = "airtable_base_id", nulls = Nulls.SKIP)
         public _FinalStage airtableBaseId(Optional<String> airtableBaseId) {
             this.airtableBaseId = airtableBaseId;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage airtableApiKey(Nullable<String> airtableApiKey) {
-            if (airtableApiKey.isNull()) {
-                this.airtableApiKey = null;
-            } else if (airtableApiKey.isEmpty()) {
-                this.airtableApiKey = Optional.empty();
-            } else {
-                this.airtableApiKey = Optional.of(airtableApiKey.get());
-            }
             return this;
         }
 
@@ -812,18 +592,6 @@ public final class ClientFacingTeam {
         }
 
         @java.lang.Override
-        public _FinalStage clientSecret(Nullable<String> clientSecret) {
-            if (clientSecret.isNull()) {
-                this.clientSecret = null;
-            } else if (clientSecret.isEmpty()) {
-                this.clientSecret = Optional.empty();
-            } else {
-                this.clientSecret = Optional.of(clientSecret.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage clientSecret(String clientSecret) {
             this.clientSecret = Optional.ofNullable(clientSecret);
             return this;
@@ -837,18 +605,6 @@ public final class ClientFacingTeam {
         }
 
         @java.lang.Override
-        public _FinalStage clientId(Nullable<String> clientId) {
-            if (clientId.isNull()) {
-                this.clientId = null;
-            } else if (clientId.isEmpty()) {
-                this.clientId = Optional.empty();
-            } else {
-                this.clientId = Optional.of(clientId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage clientId(String clientId) {
             this.clientId = Optional.ofNullable(clientId);
             return this;
@@ -858,18 +614,6 @@ public final class ClientFacingTeam {
         @JsonSetter(value = "client_id", nulls = Nulls.SKIP)
         public _FinalStage clientId(Optional<String> clientId) {
             this.clientId = clientId;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage svixAppId(Nullable<String> svixAppId) {
-            if (svixAppId.isNull()) {
-                this.svixAppId = null;
-            } else if (svixAppId.isEmpty()) {
-                this.svixAppId = Optional.empty();
-            } else {
-                this.svixAppId = Optional.of(svixAppId.get());
-            }
             return this;
         }
 

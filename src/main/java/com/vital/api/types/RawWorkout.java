@@ -81,7 +81,9 @@ public final class RawWorkout {
         @JsonSetter(value = "workouts", nulls = Nulls.SKIP)
         public Builder workouts(List<WorkoutV2InDb> workouts) {
             this.workouts.clear();
-            this.workouts.addAll(workouts);
+            if (workouts != null) {
+                this.workouts.addAll(workouts);
+            }
             return this;
         }
 

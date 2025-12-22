@@ -81,7 +81,9 @@ public final class ClientWorkoutResponse {
         @JsonSetter(value = "workouts", nulls = Nulls.SKIP)
         public Builder workouts(List<ClientFacingWorkout> workouts) {
             this.workouts.clear();
-            this.workouts.addAll(workouts);
+            if (workouts != null) {
+                this.workouts.addAll(workouts);
+            }
             return this;
         }
 

@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.activity.requests.GetActivityRequest;
-import com.vital.api.resources.activity.requests.GetRawActivityRequest;
+import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
+import com.vital.api.resources.activity.requests.ActivityGetRequest;
 import com.vital.api.types.ClientActivityResponse;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawActivity;
@@ -35,7 +35,7 @@ public class RawActivityClient {
     /**
      * Get activity summary for user_id
      */
-    public VitalHttpResponse<ClientActivityResponse> get(String userId, GetActivityRequest request) {
+    public VitalHttpResponse<ClientActivityResponse> get(String userId, ActivityGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -43,7 +43,7 @@ public class RawActivityClient {
      * Get activity summary for user_id
      */
     public VitalHttpResponse<ClientActivityResponse> get(
-            String userId, GetActivityRequest request, RequestOptions requestOptions) {
+            String userId, ActivityGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/activity")
@@ -69,12 +69,12 @@ public class RawActivityClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientActivityResponse.class),
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientActivityResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -84,11 +84,8 @@ public class RawActivityClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -97,7 +94,7 @@ public class RawActivityClient {
     /**
      * Get raw activity summary for user_id
      */
-    public VitalHttpResponse<RawActivity> getRaw(String userId, GetRawActivityRequest request) {
+    public VitalHttpResponse<RawActivity> getRaw(String userId, ActivityGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -105,7 +102,7 @@ public class RawActivityClient {
      * Get raw activity summary for user_id
      */
     public VitalHttpResponse<RawActivity> getRaw(
-            String userId, GetRawActivityRequest request, RequestOptions requestOptions) {
+            String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/activity")
@@ -132,11 +129,11 @@ public class RawActivityClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawActivity.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawActivity.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -146,11 +143,8 @@ public class RawActivityClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

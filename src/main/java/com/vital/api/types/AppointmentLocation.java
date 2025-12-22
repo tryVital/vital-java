@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,11 +57,8 @@ public final class AppointmentLocation {
         return location;
     }
 
-    @JsonIgnore
+    @JsonProperty("distance")
     public Optional<Integer> getDistance() {
-        if (distance == null) {
-            return Optional.empty();
-        }
         return distance;
     }
 
@@ -83,23 +77,8 @@ public final class AppointmentLocation {
         return name;
     }
 
-    @JsonIgnore
-    public Optional<String> getIanaTimezone() {
-        if (ianaTimezone == null) {
-            return Optional.empty();
-        }
-        return ianaTimezone;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("distance")
-    private Optional<Integer> _getDistance() {
-        return distance;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("iana_timezone")
-    private Optional<String> _getIanaTimezone() {
+    public Optional<String> getIanaTimezone() {
         return ianaTimezone;
     }
 
@@ -162,13 +141,9 @@ public final class AppointmentLocation {
 
         _FinalStage distance(Integer distance);
 
-        _FinalStage distance(Nullable<Integer> distance);
-
         _FinalStage ianaTimezone(Optional<String> ianaTimezone);
 
         _FinalStage ianaTimezone(String ianaTimezone);
-
-        _FinalStage ianaTimezone(Nullable<String> ianaTimezone);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -230,18 +205,6 @@ public final class AppointmentLocation {
         }
 
         @java.lang.Override
-        public _FinalStage ianaTimezone(Nullable<String> ianaTimezone) {
-            if (ianaTimezone.isNull()) {
-                this.ianaTimezone = null;
-            } else if (ianaTimezone.isEmpty()) {
-                this.ianaTimezone = Optional.empty();
-            } else {
-                this.ianaTimezone = Optional.of(ianaTimezone.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage ianaTimezone(String ianaTimezone) {
             this.ianaTimezone = Optional.ofNullable(ianaTimezone);
             return this;
@@ -251,18 +214,6 @@ public final class AppointmentLocation {
         @JsonSetter(value = "iana_timezone", nulls = Nulls.SKIP)
         public _FinalStage ianaTimezone(Optional<String> ianaTimezone) {
             this.ianaTimezone = ianaTimezone;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage distance(Nullable<Integer> distance) {
-            if (distance.isNull()) {
-                this.distance = null;
-            } else if (distance.isEmpty()) {
-                this.distance = Optional.empty();
-            } else {
-                this.distance = Optional.of(distance.get());
-            }
             return this;
         }
 

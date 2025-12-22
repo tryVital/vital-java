@@ -81,7 +81,9 @@ public final class RawDevices {
         @JsonSetter(value = "devices", nulls = Nulls.SKIP)
         public Builder devices(List<DeviceV2InDb> devices) {
             this.devices.clear();
-            this.devices.addAll(devices);
+            if (devices != null) {
+                this.devices.addAll(devices);
+            }
             return this;
         }
 

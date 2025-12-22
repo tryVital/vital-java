@@ -81,7 +81,9 @@ public final class AoE {
         @JsonSetter(value = "questions", nulls = Nulls.SKIP)
         public Builder questions(List<Question> questions) {
             this.questions.clear();
-            this.questions.addAll(questions);
+            if (questions != null) {
+                this.questions.addAll(questions);
+            }
             return this;
         }
 

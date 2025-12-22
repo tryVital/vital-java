@@ -82,7 +82,9 @@ public final class MenstrualCycleResponse {
         @JsonSetter(value = "menstrual_cycle", nulls = Nulls.SKIP)
         public Builder menstrualCycle(List<ClientFacingMenstrualCycle> menstrualCycle) {
             this.menstrualCycle.clear();
-            this.menstrualCycle.addAll(menstrualCycle);
+            if (menstrualCycle != null) {
+                this.menstrualCycle.addAll(menstrualCycle);
+            }
             return this;
         }
 

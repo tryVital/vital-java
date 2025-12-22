@@ -83,7 +83,9 @@ public final class ClientFacingElectrocardiogramResponse {
         @JsonSetter(value = "electrocardiogram", nulls = Nulls.SKIP)
         public Builder electrocardiogram(List<ClientFacingElectrocardiogram> electrocardiogram) {
             this.electrocardiogram.clear();
-            this.electrocardiogram.addAll(electrocardiogram);
+            if (electrocardiogram != null) {
+                this.electrocardiogram.addAll(electrocardiogram);
+            }
             return this;
         }
 

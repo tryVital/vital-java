@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -67,33 +64,24 @@ public final class ClientFacingWorkoutDurationSample {
     /**
      * @return Deprecated
      */
-    @JsonIgnore
+    @JsonProperty("id")
     public Optional<Integer> getId() {
-        if (id == null) {
-            return Optional.empty();
-        }
         return id;
     }
 
     /**
      * @return Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
      */
-    @JsonIgnore
+    @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
-        if (timezoneOffset == null) {
-            return Optional.empty();
-        }
         return timezoneOffset;
     }
 
     /**
      * @return Type is always null for this resource.
      */
-    @JsonIgnore
+    @JsonProperty("type")
     public Optional<String> getType() {
-        if (type == null) {
-            return Optional.empty();
-        }
         return type;
     }
 
@@ -137,35 +125,8 @@ public final class ClientFacingWorkoutDurationSample {
     /**
      * @return Workout intensity. ℹ️ This enum is non-exhaustive.
      */
-    @JsonIgnore
-    public Optional<ClientFacingWorkoutDurationSampleIntensity> getIntensity() {
-        if (intensity == null) {
-            return Optional.empty();
-        }
-        return intensity;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("id")
-    private Optional<Integer> _getId() {
-        return id;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("timezone_offset")
-    private Optional<Integer> _getTimezoneOffset() {
-        return timezoneOffset;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("type")
-    private Optional<String> _getType() {
-        return type;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("intensity")
-    private Optional<ClientFacingWorkoutDurationSampleIntensity> _getIntensity() {
+    public Optional<ClientFacingWorkoutDurationSampleIntensity> getIntensity() {
         return intensity;
     }
 
@@ -253,16 +214,12 @@ public final class ClientFacingWorkoutDurationSample {
 
         _FinalStage id(Integer id);
 
-        _FinalStage id(Nullable<Integer> id);
-
         /**
          * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
          */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
-
-        _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset);
 
         /**
          * <p>Type is always null for this resource.</p>
@@ -271,16 +228,12 @@ public final class ClientFacingWorkoutDurationSample {
 
         _FinalStage type(String type);
 
-        _FinalStage type(Nullable<String> type);
-
         /**
          * <p>Workout intensity. ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage intensity(Optional<ClientFacingWorkoutDurationSampleIntensity> intensity);
 
         _FinalStage intensity(ClientFacingWorkoutDurationSampleIntensity intensity);
-
-        _FinalStage intensity(Nullable<ClientFacingWorkoutDurationSampleIntensity> intensity);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -372,22 +325,6 @@ public final class ClientFacingWorkoutDurationSample {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage intensity(Nullable<ClientFacingWorkoutDurationSampleIntensity> intensity) {
-            if (intensity.isNull()) {
-                this.intensity = null;
-            } else if (intensity.isEmpty()) {
-                this.intensity = Optional.empty();
-            } else {
-                this.intensity = Optional.of(intensity.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Workout intensity. ℹ️ This enum is non-exhaustive.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage intensity(ClientFacingWorkoutDurationSampleIntensity intensity) {
             this.intensity = Optional.ofNullable(intensity);
             return this;
@@ -400,22 +337,6 @@ public final class ClientFacingWorkoutDurationSample {
         @JsonSetter(value = "intensity", nulls = Nulls.SKIP)
         public _FinalStage intensity(Optional<ClientFacingWorkoutDurationSampleIntensity> intensity) {
             this.intensity = intensity;
-            return this;
-        }
-
-        /**
-         * <p>Type is always null for this resource.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage type(Nullable<String> type) {
-            if (type.isNull()) {
-                this.type = null;
-            } else if (type.isEmpty()) {
-                this.type = Optional.empty();
-            } else {
-                this.type = Optional.of(type.get());
-            }
             return this;
         }
 
@@ -444,22 +365,6 @@ public final class ClientFacingWorkoutDurationSample {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset) {
-            if (timezoneOffset.isNull()) {
-                this.timezoneOffset = null;
-            } else if (timezoneOffset.isEmpty()) {
-                this.timezoneOffset = Optional.empty();
-            } else {
-                this.timezoneOffset = Optional.of(timezoneOffset.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
@@ -472,22 +377,6 @@ public final class ClientFacingWorkoutDurationSample {
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
-            return this;
-        }
-
-        /**
-         * <p>Deprecated</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage id(Nullable<Integer> id) {
-            if (id.isNull()) {
-                this.id = null;
-            } else if (id.isEmpty()) {
-                this.id = Optional.empty();
-            } else {
-                this.id = Optional.of(id.get());
-            }
             return this;
         }
 

@@ -6,45 +6,31 @@ package com.vital.api.resources.labtests;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest;
-import com.vital.api.resources.labtests.requests.BookPhlebotomyAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.BookPscAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.CancelOrderLabTestsRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
-import com.vital.api.resources.labtests.requests.GetAreaInfoLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetByIdLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetLabTestCollectionInstructionPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetLabelsPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersByLabAndProviderIdLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersForLabTestLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersForOrderSetLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderAbnPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderCollectionInstructionPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderPscInfoLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderRequistionPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrdersLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPaginatedLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPhlebotomyAppointmentAvailabilityLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPhlebotomyAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPscAppointmentAvailabilityLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPscAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPscInfoLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetResultMetadataLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetResultPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetResultRawLabTestsRequest;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
+import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersByLabAndProviderIdRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForOrderSetRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPaginatedRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPhlebotomyAppointmentAvailabilityRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscAppointmentAvailabilityRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetRequest;
+import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
-import com.vital.api.resources.labtests.requests.ReschedulePhlebotomyAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.ReschedulePscAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.SimulateOrderProcessLabTestsRequest;
 import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
-import com.vital.api.resources.labtests.requests.UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest;
 import com.vital.api.resources.labtests.requests.ValidateIcdCodesBody;
 import com.vital.api.resources.labtests.requests.VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
+import com.vital.api.types.AppointmentBookingRequest;
+import com.vital.api.types.AppointmentRescheduleRequest;
 import com.vital.api.types.AreaInfo;
 import com.vital.api.types.ClientFacingAppointment;
 import com.vital.api.types.ClientFacingAppointmentCancellationReason;
@@ -91,14 +77,14 @@ public class AsyncLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
-    public CompletableFuture<List<ClientFacingLabTest>> get(GetLabTestsRequest request) {
+    public CompletableFuture<List<ClientFacingLabTest>> get(LabTestsGetRequest request) {
         return this.rawClient.get(request).thenApply(response -> response.body());
     }
 
     /**
      * GET all the lab tests the team has access to.
      */
-    public CompletableFuture<List<ClientFacingLabTest>> get(GetLabTestsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<List<ClientFacingLabTest>> get(LabTestsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -120,7 +106,7 @@ public class AsyncLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
-    public CompletableFuture<ClientFacingLabTest> getById(String labTestId, GetByIdLabTestsRequest request) {
+    public CompletableFuture<ClientFacingLabTest> getById(String labTestId, LabTestsGetByIdRequest request) {
         return this.rawClient.getById(labTestId, request).thenApply(response -> response.body());
     }
 
@@ -128,7 +114,7 @@ public class AsyncLabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public CompletableFuture<ClientFacingLabTest> getById(
-            String labTestId, GetByIdLabTestsRequest request, RequestOptions requestOptions) {
+            String labTestId, LabTestsGetByIdRequest request, RequestOptions requestOptions) {
         return this.rawClient.getById(labTestId, request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -155,7 +141,7 @@ public class AsyncLabTestsClient {
     /**
      * GET all the markers for the given lab.
      */
-    public CompletableFuture<GetMarkersResponse> getMarkers(GetMarkersLabTestsRequest request) {
+    public CompletableFuture<GetMarkersResponse> getMarkers(LabTestsGetMarkersRequest request) {
         return this.rawClient.getMarkers(request).thenApply(response -> response.body());
     }
 
@@ -163,16 +149,16 @@ public class AsyncLabTestsClient {
      * GET all the markers for the given lab.
      */
     public CompletableFuture<GetMarkersResponse> getMarkers(
-            GetMarkersLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMarkers(request, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<GetMarkersResponse> getMarkersForOrderSet(GetMarkersForOrderSetLabTestsRequest request) {
+    public CompletableFuture<GetMarkersResponse> getMarkersForOrderSet(LabTestsGetMarkersForOrderSetRequest request) {
         return this.rawClient.getMarkersForOrderSet(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<GetMarkersResponse> getMarkersForOrderSet(
-            GetMarkersForOrderSetLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetMarkersForOrderSetRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMarkersForOrderSet(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -181,12 +167,12 @@ public class AsyncLabTestsClient {
     }
 
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(
-            String labTestId, GetMarkersForLabTestLabTestsRequest request) {
+            String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return this.rawClient.getMarkersForLabTest(labTestId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(
-            String labTestId, GetMarkersForLabTestLabTestsRequest request, RequestOptions requestOptions) {
+            String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getMarkersForLabTest(labTestId, request, requestOptions)
                 .thenApply(response -> response.body());
@@ -203,7 +189,7 @@ public class AsyncLabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(
-            int labId, String providerId, GetMarkersByLabAndProviderIdLabTestsRequest request) {
+            int labId, String providerId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
         return this.rawClient
                 .getMarkersByLabAndProviderId(labId, providerId, request)
                 .thenApply(response -> response.body());
@@ -215,7 +201,7 @@ public class AsyncLabTestsClient {
     public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(
             int labId,
             String providerId,
-            GetMarkersByLabAndProviderIdLabTestsRequest request,
+            LabTestsGetMarkersByLabAndProviderIdRequest request,
             RequestOptions requestOptions) {
         return this.rawClient
                 .getMarkersByLabAndProviderId(labId, providerId, request, requestOptions)
@@ -246,7 +232,7 @@ public class AsyncLabTestsClient {
     /**
      * GET lab tests the team has access to as a paginated list.
      */
-    public CompletableFuture<LabTestResourcesResponse> getPaginated(GetPaginatedLabTestsRequest request) {
+    public CompletableFuture<LabTestResourcesResponse> getPaginated(LabTestsGetPaginatedRequest request) {
         return this.rawClient.getPaginated(request).thenApply(response -> response.body());
     }
 
@@ -254,7 +240,7 @@ public class AsyncLabTestsClient {
      * GET lab tests the team has access to as a paginated list.
      */
     public CompletableFuture<LabTestResourcesResponse> getPaginated(
-            GetPaginatedLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetPaginatedRequest request, RequestOptions requestOptions) {
         return this.rawClient.getPaginated(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -263,18 +249,9 @@ public class AsyncLabTestsClient {
     }
 
     public CompletableFuture<InputStream> getLabTestCollectionInstructionPdf(
-            String labTestId, GetLabTestCollectionInstructionPdfLabTestsRequest request) {
+            String labTestId, RequestOptions requestOptions) {
         return this.rawClient
-                .getLabTestCollectionInstructionPdf(labTestId, request)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<InputStream> getLabTestCollectionInstructionPdf(
-            String labTestId,
-            GetLabTestCollectionInstructionPdfLabTestsRequest request,
-            RequestOptions requestOptions) {
-        return this.rawClient
-                .getLabTestCollectionInstructionPdf(labTestId, request, requestOptions)
+                .getLabTestCollectionInstructionPdf(labTestId, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -288,7 +265,7 @@ public class AsyncLabTestsClient {
     /**
      * GET many orders with filters.
      */
-    public CompletableFuture<GetOrdersResponse> getOrders(GetOrdersLabTestsRequest request) {
+    public CompletableFuture<GetOrdersResponse> getOrders(LabTestsGetOrdersRequest request) {
         return this.rawClient.getOrders(request).thenApply(response -> response.body());
     }
 
@@ -296,7 +273,7 @@ public class AsyncLabTestsClient {
      * GET many orders with filters.
      */
     public CompletableFuture<GetOrdersResponse> getOrders(
-            GetOrdersLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetOrdersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getOrders(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -305,7 +282,7 @@ public class AsyncLabTestsClient {
      * for the given address and order.
      */
     public CompletableFuture<AppointmentAvailabilitySlots> getPhlebotomyAppointmentAvailability(
-            GetPhlebotomyAppointmentAvailabilityLabTestsRequest request) {
+            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request) {
         return this.rawClient.getPhlebotomyAppointmentAvailability(request).thenApply(response -> response.body());
     }
 
@@ -314,7 +291,7 @@ public class AsyncLabTestsClient {
      * for the given address and order.
      */
     public CompletableFuture<AppointmentAvailabilitySlots> getPhlebotomyAppointmentAvailability(
-            GetPhlebotomyAppointmentAvailabilityLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getPhlebotomyAppointmentAvailability(request, requestOptions)
                 .thenApply(response -> response.body());
@@ -324,7 +301,7 @@ public class AsyncLabTestsClient {
      * Book an at-home phlebotomy appointment.
      */
     public CompletableFuture<ClientFacingAppointment> bookPhlebotomyAppointment(
-            String orderId, BookPhlebotomyAppointmentLabTestsRequest request) {
+            String orderId, AppointmentBookingRequest request) {
         return this.rawClient.bookPhlebotomyAppointment(orderId, request).thenApply(response -> response.body());
     }
 
@@ -332,7 +309,7 @@ public class AsyncLabTestsClient {
      * Book an at-home phlebotomy appointment.
      */
     public CompletableFuture<ClientFacingAppointment> bookPhlebotomyAppointment(
-            String orderId, BookPhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .bookPhlebotomyAppointment(orderId, request, requestOptions)
                 .thenApply(response -> response.body());
@@ -360,7 +337,7 @@ public class AsyncLabTestsClient {
      * Reschedule a previously booked at-home phlebotomy appointment.
      */
     public CompletableFuture<ClientFacingAppointment> reschedulePhlebotomyAppointment(
-            String orderId, ReschedulePhlebotomyAppointmentLabTestsRequest request) {
+            String orderId, AppointmentRescheduleRequest request) {
         return this.rawClient.reschedulePhlebotomyAppointment(orderId, request).thenApply(response -> response.body());
     }
 
@@ -368,7 +345,7 @@ public class AsyncLabTestsClient {
      * Reschedule a previously booked at-home phlebotomy appointment.
      */
     public CompletableFuture<ClientFacingAppointment> reschedulePhlebotomyAppointment(
-            String orderId, ReschedulePhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .reschedulePhlebotomyAppointment(orderId, request, requestOptions)
                 .thenApply(response -> response.body());
@@ -423,18 +400,8 @@ public class AsyncLabTestsClient {
      * Get the appointment associated with an order.
      */
     public CompletableFuture<ClientFacingAppointment> getPhlebotomyAppointment(
-            String orderId, GetPhlebotomyAppointmentLabTestsRequest request) {
-        return this.rawClient.getPhlebotomyAppointment(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Get the appointment associated with an order.
-     */
-    public CompletableFuture<ClientFacingAppointment> getPhlebotomyAppointment(
-            String orderId, GetPhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getPhlebotomyAppointment(orderId, request, requestOptions)
-                .thenApply(response -> response.body());
+            String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getPhlebotomyAppointment(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -445,7 +412,7 @@ public class AsyncLabTestsClient {
      * <li>List of Lab locations in the area.</li>
      * </ul>
      */
-    public CompletableFuture<AreaInfo> getAreaInfo(GetAreaInfoLabTestsRequest request) {
+    public CompletableFuture<AreaInfo> getAreaInfo(LabTestsGetAreaInfoRequest request) {
         return this.rawClient.getAreaInfo(request).thenApply(response -> response.body());
     }
 
@@ -457,15 +424,15 @@ public class AsyncLabTestsClient {
      * <li>List of Lab locations in the area.</li>
      * </ul>
      */
-    public CompletableFuture<AreaInfo> getAreaInfo(GetAreaInfoLabTestsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<AreaInfo> getAreaInfo(LabTestsGetAreaInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAreaInfo(request, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<PscInfo> getPscInfo(GetPscInfoLabTestsRequest request) {
+    public CompletableFuture<PscInfo> getPscInfo(LabTestsGetPscInfoRequest request) {
         return this.rawClient.getPscInfo(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<PscInfo> getPscInfo(GetPscInfoLabTestsRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<PscInfo> getPscInfo(LabTestsGetPscInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.getPscInfo(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -473,12 +440,12 @@ public class AsyncLabTestsClient {
         return this.rawClient.getOrderPscInfo(orderId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<PscInfo> getOrderPscInfo(String orderId, GetOrderPscInfoLabTestsRequest request) {
+    public CompletableFuture<PscInfo> getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
         return this.rawClient.getOrderPscInfo(orderId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<PscInfo> getOrderPscInfo(
-            String orderId, GetOrderPscInfoLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsGetOrderPscInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.getOrderPscInfo(orderId, request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -492,16 +459,8 @@ public class AsyncLabTestsClient {
     /**
      * This endpoint returns the lab results for the order.
      */
-    public CompletableFuture<InputStream> getResultPdf(String orderId, GetResultPdfLabTestsRequest request) {
-        return this.rawClient.getResultPdf(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * This endpoint returns the lab results for the order.
-     */
-    public CompletableFuture<InputStream> getResultPdf(
-            String orderId, GetResultPdfLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getResultPdf(orderId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<InputStream> getResultPdf(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getResultPdf(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -516,20 +475,8 @@ public class AsyncLabTestsClient {
      * Return metadata related to order results, such as lab metadata,
      * provider and sample dates.
      */
-    public CompletableFuture<LabResultsMetadata> getResultMetadata(
-            String orderId, GetResultMetadataLabTestsRequest request) {
-        return this.rawClient.getResultMetadata(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Return metadata related to order results, such as lab metadata,
-     * provider and sample dates.
-     */
-    public CompletableFuture<LabResultsMetadata> getResultMetadata(
-            String orderId, GetResultMetadataLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getResultMetadata(orderId, request, requestOptions)
-                .thenApply(response -> response.body());
+    public CompletableFuture<LabResultsMetadata> getResultMetadata(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getResultMetadata(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -542,22 +489,14 @@ public class AsyncLabTestsClient {
     /**
      * Return both metadata and raw json test data
      */
-    public CompletableFuture<LabResultsRaw> getResultRaw(String orderId, GetResultRawLabTestsRequest request) {
-        return this.rawClient.getResultRaw(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Return both metadata and raw json test data
-     */
-    public CompletableFuture<LabResultsRaw> getResultRaw(
-            String orderId, GetResultRawLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getResultRaw(orderId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<LabResultsRaw> getResultRaw(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getResultRaw(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * This endpoint returns the printed labels for the order.
      */
-    public CompletableFuture<InputStream> getLabelsPdf(String orderId, GetLabelsPdfLabTestsRequest request) {
+    public CompletableFuture<InputStream> getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
         return this.rawClient.getLabelsPdf(orderId, request).thenApply(response -> response.body());
     }
 
@@ -565,41 +504,41 @@ public class AsyncLabTestsClient {
      * This endpoint returns the printed labels for the order.
      */
     public CompletableFuture<InputStream> getLabelsPdf(
-            String orderId, GetLabelsPdfLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsGetLabelsPdfRequest request, RequestOptions requestOptions) {
         return this.rawClient.getLabelsPdf(orderId, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<AppointmentAvailabilitySlots> getPscAppointmentAvailability(
-            GetPscAppointmentAvailabilityLabTestsRequest request) {
+            LabTestsGetPscAppointmentAvailabilityRequest request) {
         return this.rawClient.getPscAppointmentAvailability(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<AppointmentAvailabilitySlots> getPscAppointmentAvailability(
-            GetPscAppointmentAvailabilityLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetPscAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getPscAppointmentAvailability(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingAppointment> bookPscAppointment(
-            String orderId, BookPscAppointmentLabTestsRequest request) {
+            String orderId, AppointmentBookingRequest request) {
         return this.rawClient.bookPscAppointment(orderId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingAppointment> bookPscAppointment(
-            String orderId, BookPscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .bookPscAppointment(orderId, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingAppointment> reschedulePscAppointment(
-            String orderId, ReschedulePscAppointmentLabTestsRequest request) {
+            String orderId, AppointmentRescheduleRequest request) {
         return this.rawClient.reschedulePscAppointment(orderId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingAppointment> reschedulePscAppointment(
-            String orderId, ReschedulePscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .reschedulePscAppointment(orderId, request, requestOptions)
                 .thenApply(response -> response.body());
@@ -640,19 +579,8 @@ public class AsyncLabTestsClient {
     /**
      * Get the appointment associated with an order.
      */
-    public CompletableFuture<ClientFacingAppointment> getPscAppointment(
-            String orderId, GetPscAppointmentLabTestsRequest request) {
-        return this.rawClient.getPscAppointment(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Get the appointment associated with an order.
-     */
-    public CompletableFuture<ClientFacingAppointment> getPscAppointment(
-            String orderId, GetPscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getPscAppointment(orderId, request, requestOptions)
-                .thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingAppointment> getPscAppointment(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getPscAppointment(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -666,17 +594,9 @@ public class AsyncLabTestsClient {
      * GET collection instructions for an order
      */
     public CompletableFuture<InputStream> getOrderCollectionInstructionPdf(
-            String orderId, GetOrderCollectionInstructionPdfLabTestsRequest request) {
-        return this.rawClient.getOrderCollectionInstructionPdf(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * GET collection instructions for an order
-     */
-    public CompletableFuture<InputStream> getOrderCollectionInstructionPdf(
-            String orderId, GetOrderCollectionInstructionPdfLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, RequestOptions requestOptions) {
         return this.rawClient
-                .getOrderCollectionInstructionPdf(orderId, request, requestOptions)
+                .getOrderCollectionInstructionPdf(orderId, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -690,19 +610,8 @@ public class AsyncLabTestsClient {
     /**
      * GET requisition pdf for an order
      */
-    public CompletableFuture<InputStream> getOrderRequistionPdf(
-            String orderId, GetOrderRequistionPdfLabTestsRequest request) {
-        return this.rawClient.getOrderRequistionPdf(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * GET requisition pdf for an order
-     */
-    public CompletableFuture<InputStream> getOrderRequistionPdf(
-            String orderId, GetOrderRequistionPdfLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getOrderRequistionPdf(orderId, request, requestOptions)
-                .thenApply(response -> response.body());
+    public CompletableFuture<InputStream> getOrderRequistionPdf(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderRequistionPdf(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -715,16 +624,8 @@ public class AsyncLabTestsClient {
     /**
      * GET ABN pdf for an order
      */
-    public CompletableFuture<InputStream> getOrderAbnPdf(String orderId, GetOrderAbnPdfLabTestsRequest request) {
-        return this.rawClient.getOrderAbnPdf(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * GET ABN pdf for an order
-     */
-    public CompletableFuture<InputStream> getOrderAbnPdf(
-            String orderId, GetOrderAbnPdfLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getOrderAbnPdf(orderId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<InputStream> getOrderAbnPdf(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderAbnPdf(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -737,16 +638,8 @@ public class AsyncLabTestsClient {
     /**
      * GET individual order by ID.
      */
-    public CompletableFuture<ClientFacingOrder> getOrder(String orderId, GetOrderLabTestsRequest request) {
-        return this.rawClient.getOrder(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * GET individual order by ID.
-     */
-    public CompletableFuture<ClientFacingOrder> getOrder(
-            String orderId, GetOrderLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getOrder(orderId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingOrder> getOrder(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrder(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<PostOrderResponse> createOrder(CreateOrderRequestCompatible request) {
@@ -776,22 +669,21 @@ public class AsyncLabTestsClient {
     /**
      * POST cancel order
      */
-    public CompletableFuture<PostOrderResponse> cancelOrder(String orderId, CancelOrderLabTestsRequest request) {
-        return this.rawClient.cancelOrder(orderId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * POST cancel order
-     */
-    public CompletableFuture<PostOrderResponse> cancelOrder(
-            String orderId, CancelOrderLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.cancelOrder(orderId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<PostOrderResponse> cancelOrder(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.cancelOrder(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Get available test kits.
      */
-    public CompletableFuture<Object> simulateOrderProcess(String orderId, SimulateOrderProcessLabTestsRequest request) {
+    public CompletableFuture<Object> simulateOrderProcess(String orderId) {
+        return this.rawClient.simulateOrderProcess(orderId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public CompletableFuture<Object> simulateOrderProcess(String orderId, LabTestsSimulateOrderProcessRequest request) {
         return this.rawClient.simulateOrderProcess(orderId, request).thenApply(response -> response.body());
     }
 
@@ -799,7 +691,7 @@ public class AsyncLabTestsClient {
      * Get available test kits.
      */
     public CompletableFuture<Object> simulateOrderProcess(
-            String orderId, SimulateOrderProcessLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsSimulateOrderProcessRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .simulateOrderProcess(orderId, request, requestOptions)
                 .thenApply(response -> response.body());
@@ -816,21 +708,9 @@ public class AsyncLabTestsClient {
      * PATCH update on site collection order when draw is completed
      */
     public CompletableFuture<PostOrderResponse> updateOnSiteCollectionOrderDrawCompleted(
-            String orderId, UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest request) {
+            String orderId, RequestOptions requestOptions) {
         return this.rawClient
-                .updateOnSiteCollectionOrderDrawCompleted(orderId, request)
-                .thenApply(response -> response.body());
-    }
-
-    /**
-     * PATCH update on site collection order when draw is completed
-     */
-    public CompletableFuture<PostOrderResponse> updateOnSiteCollectionOrderDrawCompleted(
-            String orderId,
-            UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest request,
-            RequestOptions requestOptions) {
-        return this.rawClient
-                .updateOnSiteCollectionOrderDrawCompleted(orderId, request, requestOptions)
+                .updateOnSiteCollectionOrderDrawCompleted(orderId, requestOptions)
                 .thenApply(response -> response.body());
     }
 

@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,45 +39,18 @@ public final class ClientFacingFood {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
-    public Optional<Energy> getEnergy() {
-        if (energy == null) {
-            return Optional.empty();
-        }
-        return energy;
-    }
-
-    @JsonIgnore
-    public Optional<Macros> getMacros() {
-        if (macros == null) {
-            return Optional.empty();
-        }
-        return macros;
-    }
-
-    @JsonIgnore
-    public Optional<Micros> getMicros() {
-        if (micros == null) {
-            return Optional.empty();
-        }
-        return micros;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("energy")
-    private Optional<Energy> _getEnergy() {
+    public Optional<Energy> getEnergy() {
         return energy;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("macros")
-    private Optional<Macros> _getMacros() {
+    public Optional<Macros> getMacros() {
         return macros;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("micros")
-    private Optional<Micros> _getMicros() {
+    public Optional<Micros> getMicros() {
         return micros;
     }
 
@@ -144,17 +114,6 @@ public final class ClientFacingFood {
             return this;
         }
 
-        public Builder energy(Nullable<Energy> energy) {
-            if (energy.isNull()) {
-                this.energy = null;
-            } else if (energy.isEmpty()) {
-                this.energy = Optional.empty();
-            } else {
-                this.energy = Optional.of(energy.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "macros", nulls = Nulls.SKIP)
         public Builder macros(Optional<Macros> macros) {
             this.macros = macros;
@@ -166,17 +125,6 @@ public final class ClientFacingFood {
             return this;
         }
 
-        public Builder macros(Nullable<Macros> macros) {
-            if (macros.isNull()) {
-                this.macros = null;
-            } else if (macros.isEmpty()) {
-                this.macros = Optional.empty();
-            } else {
-                this.macros = Optional.of(macros.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "micros", nulls = Nulls.SKIP)
         public Builder micros(Optional<Micros> micros) {
             this.micros = micros;
@@ -185,17 +133,6 @@ public final class ClientFacingFood {
 
         public Builder micros(Micros micros) {
             this.micros = Optional.ofNullable(micros);
-            return this;
-        }
-
-        public Builder micros(Nullable<Micros> micros) {
-            if (micros.isNull()) {
-                this.micros = null;
-            } else if (micros.isEmpty()) {
-                this.micros = Optional.empty();
-            } else {
-                this.micros = Optional.of(micros.get());
-            }
             return this;
         }
 

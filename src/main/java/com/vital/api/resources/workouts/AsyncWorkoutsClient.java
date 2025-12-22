@@ -5,9 +5,8 @@ package com.vital.api.resources.workouts;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.workouts.requests.GetByWorkoutIdWorkoutsRequest;
-import com.vital.api.resources.workouts.requests.GetRawWorkoutsRequest;
-import com.vital.api.resources.workouts.requests.GetWorkoutsRequest;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.RawWorkout;
@@ -33,7 +32,7 @@ public class AsyncWorkoutsClient {
     /**
      * Get workout summary for user_id
      */
-    public CompletableFuture<ClientWorkoutResponse> get(String userId, GetWorkoutsRequest request) {
+    public CompletableFuture<ClientWorkoutResponse> get(String userId, WorkoutsGetRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -41,14 +40,14 @@ public class AsyncWorkoutsClient {
      * Get workout summary for user_id
      */
     public CompletableFuture<ClientWorkoutResponse> get(
-            String userId, GetWorkoutsRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Get raw workout summary for user_id
      */
-    public CompletableFuture<RawWorkout> getRaw(String userId, GetRawWorkoutsRequest request) {
+    public CompletableFuture<RawWorkout> getRaw(String userId, WorkoutsGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
@@ -56,7 +55,7 @@ public class AsyncWorkoutsClient {
      * Get raw workout summary for user_id
      */
     public CompletableFuture<RawWorkout> getRaw(
-            String userId, GetRawWorkoutsRequest request, RequestOptions requestOptions) {
+            String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -64,13 +63,7 @@ public class AsyncWorkoutsClient {
         return this.rawClient.getByWorkoutId(workoutId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ClientFacingStream> getByWorkoutId(
-            String workoutId, GetByWorkoutIdWorkoutsRequest request) {
-        return this.rawClient.getByWorkoutId(workoutId, request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<ClientFacingStream> getByWorkoutId(
-            String workoutId, GetByWorkoutIdWorkoutsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getByWorkoutId(workoutId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingStream> getByWorkoutId(String workoutId, RequestOptions requestOptions) {
+        return this.rawClient.getByWorkoutId(workoutId, requestOptions).thenApply(response -> response.body());
     }
 }
