@@ -32,10 +32,10 @@ public final class ClientOptions {
         this.headers.putAll(headers);
         this.headers.putAll(new HashMap<String, String>() {
             {
-                put("User-Agent", "io.tryvital:vital-java/1.2.564");
+                put("User-Agent", "io.tryvital:vital-java/1.2.565");
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.vital.fern:api-sdk");
-                put("X-Fern-SDK-Version", "1.2.564");
+                put("X-Fern-SDK-Version", "1.2.565");
             }
         });
         this.headerSuppliers = headerSuppliers;
