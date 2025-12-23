@@ -9436,6 +9436,14 @@ client.user().createInsurance(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**isPrimary:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -9478,6 +9486,14 @@ client.user().getLatestInsurance(
 <dd>
 
 **userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isPrimary:** `Optional<Boolean>` 
     
 </dd>
 </dl>

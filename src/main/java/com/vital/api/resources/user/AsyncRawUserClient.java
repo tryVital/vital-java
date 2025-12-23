@@ -522,14 +522,17 @@ public class AsyncRawUserClient {
 
     public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(
             String userId, GetLatestInsuranceUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
-                .addPathSegments("insurance/latest")
-                .build();
+                .addPathSegments("insurance/latest");
+        if (request.getIsPrimary().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "is_primary", request.getIsPrimary().get(), false);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");

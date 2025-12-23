@@ -38,6 +38,8 @@ public final class ClientFacingInsurance {
 
     private final Optional<GuarantorDetails> guarantor;
 
+    private final Optional<Boolean> isPrimary;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingInsurance(
@@ -48,6 +50,7 @@ public final class ClientFacingInsurance {
             CompanyDetails company,
             Optional<String> groupId,
             Optional<GuarantorDetails> guarantor,
+            Optional<Boolean> isPrimary,
             Map<String, Object> additionalProperties) {
         this.memberId = memberId;
         this.payorCode = payorCode;
@@ -56,6 +59,7 @@ public final class ClientFacingInsurance {
         this.company = company;
         this.groupId = groupId;
         this.guarantor = guarantor;
+        this.isPrimary = isPrimary;
         this.additionalProperties = additionalProperties;
     }
 
@@ -100,6 +104,11 @@ public final class ClientFacingInsurance {
         return guarantor;
     }
 
+    @JsonProperty("is_primary")
+    public Optional<Boolean> getIsPrimary() {
+        return isPrimary;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("group_id")
     private Optional<String> _getGroupId() {
@@ -130,7 +139,8 @@ public final class ClientFacingInsurance {
                 && insured.equals(other.insured)
                 && company.equals(other.company)
                 && groupId.equals(other.groupId)
-                && guarantor.equals(other.guarantor);
+                && guarantor.equals(other.guarantor)
+                && isPrimary.equals(other.isPrimary);
     }
 
     @java.lang.Override
@@ -142,7 +152,8 @@ public final class ClientFacingInsurance {
                 this.insured,
                 this.company,
                 this.groupId,
-                this.guarantor);
+                this.guarantor,
+                this.isPrimary);
     }
 
     @java.lang.Override
@@ -190,6 +201,10 @@ public final class ClientFacingInsurance {
         _FinalStage guarantor(GuarantorDetails guarantor);
 
         _FinalStage guarantor(Nullable<GuarantorDetails> guarantor);
+
+        _FinalStage isPrimary(Optional<Boolean> isPrimary);
+
+        _FinalStage isPrimary(Boolean isPrimary);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -204,6 +219,8 @@ public final class ClientFacingInsurance {
         private VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured;
 
         private CompanyDetails company;
+
+        private Optional<Boolean> isPrimary = Optional.empty();
 
         private Optional<GuarantorDetails> guarantor = Optional.empty();
 
@@ -223,6 +240,7 @@ public final class ClientFacingInsurance {
             company(other.getCompany());
             groupId(other.getGroupId());
             guarantor(other.getGuarantor());
+            isPrimary(other.getIsPrimary());
             return this;
         }
 
@@ -258,6 +276,19 @@ public final class ClientFacingInsurance {
         @JsonSetter("company")
         public _FinalStage company(@NotNull CompanyDetails company) {
             this.company = Objects.requireNonNull(company, "company must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage isPrimary(Boolean isPrimary) {
+            this.isPrimary = Optional.ofNullable(isPrimary);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "is_primary", nulls = Nulls.SKIP)
+        public _FinalStage isPrimary(Optional<Boolean> isPrimary) {
+            this.isPrimary = isPrimary;
             return this;
         }
 
@@ -314,7 +345,15 @@ public final class ClientFacingInsurance {
         @java.lang.Override
         public ClientFacingInsurance build() {
             return new ClientFacingInsurance(
-                    memberId, payorCode, relationship, insured, company, groupId, guarantor, additionalProperties);
+                    memberId,
+                    payorCode,
+                    relationship,
+                    insured,
+                    company,
+                    groupId,
+                    guarantor,
+                    isPrimary,
+                    additionalProperties);
         }
     }
 }

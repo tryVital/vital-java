@@ -39,6 +39,8 @@ public final class CreateInsuranceRequest {
 
     private final Optional<GuarantorDetails> guarantor;
 
+    private final Optional<Boolean> isPrimary;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateInsuranceRequest(
@@ -48,6 +50,7 @@ public final class CreateInsuranceRequest {
             ResponsibleRelationship relationship,
             VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured,
             Optional<GuarantorDetails> guarantor,
+            Optional<Boolean> isPrimary,
             Map<String, Object> additionalProperties) {
         this.payorCode = payorCode;
         this.memberId = memberId;
@@ -55,6 +58,7 @@ public final class CreateInsuranceRequest {
         this.relationship = relationship;
         this.insured = insured;
         this.guarantor = guarantor;
+        this.isPrimary = isPrimary;
         this.additionalProperties = additionalProperties;
     }
 
@@ -94,6 +98,11 @@ public final class CreateInsuranceRequest {
         return guarantor;
     }
 
+    @JsonProperty("is_primary")
+    public Optional<Boolean> getIsPrimary() {
+        return isPrimary;
+    }
+
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("group_id")
     private Optional<String> _getGroupId() {
@@ -123,13 +132,20 @@ public final class CreateInsuranceRequest {
                 && groupId.equals(other.groupId)
                 && relationship.equals(other.relationship)
                 && insured.equals(other.insured)
-                && guarantor.equals(other.guarantor);
+                && guarantor.equals(other.guarantor)
+                && isPrimary.equals(other.isPrimary);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.payorCode, this.memberId, this.groupId, this.relationship, this.insured, this.guarantor);
+                this.payorCode,
+                this.memberId,
+                this.groupId,
+                this.relationship,
+                this.insured,
+                this.guarantor,
+                this.isPrimary);
     }
 
     @java.lang.Override
@@ -173,6 +189,10 @@ public final class CreateInsuranceRequest {
         _FinalStage guarantor(GuarantorDetails guarantor);
 
         _FinalStage guarantor(Nullable<GuarantorDetails> guarantor);
+
+        _FinalStage isPrimary(Optional<Boolean> isPrimary);
+
+        _FinalStage isPrimary(Boolean isPrimary);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -185,6 +205,8 @@ public final class CreateInsuranceRequest {
         private ResponsibleRelationship relationship;
 
         private VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured;
+
+        private Optional<Boolean> isPrimary = Optional.empty();
 
         private Optional<GuarantorDetails> guarantor = Optional.empty();
 
@@ -203,6 +225,7 @@ public final class CreateInsuranceRequest {
             relationship(other.getRelationship());
             insured(other.getInsured());
             guarantor(other.getGuarantor());
+            isPrimary(other.getIsPrimary());
             return this;
         }
 
@@ -231,6 +254,19 @@ public final class CreateInsuranceRequest {
         @JsonSetter("insured")
         public _FinalStage insured(@NotNull VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails insured) {
             this.insured = Objects.requireNonNull(insured, "insured must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage isPrimary(Boolean isPrimary) {
+            this.isPrimary = Optional.ofNullable(isPrimary);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "is_primary", nulls = Nulls.SKIP)
+        public _FinalStage isPrimary(Optional<Boolean> isPrimary) {
+            this.isPrimary = isPrimary;
             return this;
         }
 
@@ -287,7 +323,7 @@ public final class CreateInsuranceRequest {
         @java.lang.Override
         public CreateInsuranceRequest build() {
             return new CreateInsuranceRequest(
-                    payorCode, memberId, groupId, relationship, insured, guarantor, additionalProperties);
+                    payorCode, memberId, groupId, relationship, insured, guarantor, isPrimary, additionalProperties);
         }
     }
 }
