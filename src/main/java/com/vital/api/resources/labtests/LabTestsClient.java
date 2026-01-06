@@ -6,45 +6,31 @@ package com.vital.api.resources.labtests;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest;
-import com.vital.api.resources.labtests.requests.BookPhlebotomyAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.BookPscAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.CancelOrderLabTestsRequest;
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
-import com.vital.api.resources.labtests.requests.GetAreaInfoLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetByIdLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetLabTestCollectionInstructionPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetLabelsPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersByLabAndProviderIdLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersForLabTestLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersForOrderSetLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetMarkersLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderAbnPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderCollectionInstructionPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderPscInfoLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrderRequistionPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetOrdersLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPaginatedLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPhlebotomyAppointmentAvailabilityLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPhlebotomyAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPscAppointmentAvailabilityLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPscAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetPscInfoLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetResultMetadataLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetResultPdfLabTestsRequest;
-import com.vital.api.resources.labtests.requests.GetResultRawLabTestsRequest;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
+import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersByLabAndProviderIdRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForLabTestRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersForOrderSetRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetMarkersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetOrderPscInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetOrdersRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPaginatedRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPhlebotomyAppointmentAvailabilityRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscAppointmentAvailabilityRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetRequest;
+import com.vital.api.resources.labtests.requests.LabTestsSimulateOrderProcessRequest;
 import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
-import com.vital.api.resources.labtests.requests.ReschedulePhlebotomyAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.ReschedulePscAppointmentLabTestsRequest;
-import com.vital.api.resources.labtests.requests.SimulateOrderProcessLabTestsRequest;
 import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
-import com.vital.api.resources.labtests.requests.UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest;
 import com.vital.api.resources.labtests.requests.ValidateIcdCodesBody;
 import com.vital.api.resources.labtests.requests.VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest;
 import com.vital.api.types.AppointmentAvailabilitySlots;
+import com.vital.api.types.AppointmentBookingRequest;
+import com.vital.api.types.AppointmentRescheduleRequest;
 import com.vital.api.types.AreaInfo;
 import com.vital.api.types.ClientFacingAppointment;
 import com.vital.api.types.ClientFacingAppointmentCancellationReason;
@@ -90,14 +76,21 @@ public class LabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
-    public List<ClientFacingLabTest> get(GetLabTestsRequest request) {
+    public List<ClientFacingLabTest> get(RequestOptions requestOptions) {
+        return this.rawClient.get(requestOptions).body();
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public List<ClientFacingLabTest> get(LabTestsGetRequest request) {
         return this.rawClient.get(request).body();
     }
 
     /**
      * GET all the lab tests the team has access to.
      */
-    public List<ClientFacingLabTest> get(GetLabTestsRequest request, RequestOptions requestOptions) {
+    public List<ClientFacingLabTest> get(LabTestsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(request, requestOptions).body();
     }
 
@@ -119,7 +112,14 @@ public class LabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
-    public ClientFacingLabTest getById(String labTestId, GetByIdLabTestsRequest request) {
+    public ClientFacingLabTest getById(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.getById(labTestId, requestOptions).body();
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public ClientFacingLabTest getById(String labTestId, LabTestsGetByIdRequest request) {
         return this.rawClient.getById(labTestId, request).body();
     }
 
@@ -127,12 +127,16 @@ public class LabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public ClientFacingLabTest getById(
-            String labTestId, GetByIdLabTestsRequest request, RequestOptions requestOptions) {
+            String labTestId, LabTestsGetByIdRequest request, RequestOptions requestOptions) {
         return this.rawClient.getById(labTestId, request, requestOptions).body();
     }
 
     public ClientFacingLabTest updateLabTest(String labTestId) {
         return this.rawClient.updateLabTest(labTestId).body();
+    }
+
+    public ClientFacingLabTest updateLabTest(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.updateLabTest(labTestId, requestOptions).body();
     }
 
     public ClientFacingLabTest updateLabTest(String labTestId, UpdateLabTestRequest request) {
@@ -154,23 +158,30 @@ public class LabTestsClient {
     /**
      * GET all the markers for the given lab.
      */
-    public GetMarkersResponse getMarkers(GetMarkersLabTestsRequest request) {
+    public GetMarkersResponse getMarkers(RequestOptions requestOptions) {
+        return this.rawClient.getMarkers(requestOptions).body();
+    }
+
+    /**
+     * GET all the markers for the given lab.
+     */
+    public GetMarkersResponse getMarkers(LabTestsGetMarkersRequest request) {
         return this.rawClient.getMarkers(request).body();
     }
 
     /**
      * GET all the markers for the given lab.
      */
-    public GetMarkersResponse getMarkers(GetMarkersLabTestsRequest request, RequestOptions requestOptions) {
+    public GetMarkersResponse getMarkers(LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMarkers(request, requestOptions).body();
     }
 
-    public GetMarkersResponse getMarkersForOrderSet(GetMarkersForOrderSetLabTestsRequest request) {
+    public GetMarkersResponse getMarkersForOrderSet(LabTestsGetMarkersForOrderSetRequest request) {
         return this.rawClient.getMarkersForOrderSet(request).body();
     }
 
     public GetMarkersResponse getMarkersForOrderSet(
-            GetMarkersForOrderSetLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetMarkersForOrderSetRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMarkersForOrderSet(request, requestOptions).body();
     }
 
@@ -178,12 +189,16 @@ public class LabTestsClient {
         return this.rawClient.getMarkersForLabTest(labTestId).body();
     }
 
-    public GetMarkersResponse getMarkersForLabTest(String labTestId, GetMarkersForLabTestLabTestsRequest request) {
+    public GetMarkersResponse getMarkersForLabTest(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.getMarkersForLabTest(labTestId, requestOptions).body();
+    }
+
+    public GetMarkersResponse getMarkersForLabTest(String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return this.rawClient.getMarkersForLabTest(labTestId, request).body();
     }
 
     public GetMarkersResponse getMarkersForLabTest(
-            String labTestId, GetMarkersForLabTestLabTestsRequest request, RequestOptions requestOptions) {
+            String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getMarkersForLabTest(labTestId, request, requestOptions)
                 .body();
@@ -200,7 +215,17 @@ public class LabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public ClientFacingMarker getMarkersByLabAndProviderId(
-            int labId, String providerId, GetMarkersByLabAndProviderIdLabTestsRequest request) {
+            int labId, String providerId, RequestOptions requestOptions) {
+        return this.rawClient
+                .getMarkersByLabAndProviderId(labId, providerId, requestOptions)
+                .body();
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public ClientFacingMarker getMarkersByLabAndProviderId(
+            int labId, String providerId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
         return this.rawClient
                 .getMarkersByLabAndProviderId(labId, providerId, request)
                 .body();
@@ -212,7 +237,7 @@ public class LabTestsClient {
     public ClientFacingMarker getMarkersByLabAndProviderId(
             int labId,
             String providerId,
-            GetMarkersByLabAndProviderIdLabTestsRequest request,
+            LabTestsGetMarkersByLabAndProviderIdRequest request,
             RequestOptions requestOptions) {
         return this.rawClient
                 .getMarkersByLabAndProviderId(labId, providerId, request, requestOptions)
@@ -243,14 +268,21 @@ public class LabTestsClient {
     /**
      * GET lab tests the team has access to as a paginated list.
      */
-    public LabTestResourcesResponse getPaginated(GetPaginatedLabTestsRequest request) {
+    public LabTestResourcesResponse getPaginated(RequestOptions requestOptions) {
+        return this.rawClient.getPaginated(requestOptions).body();
+    }
+
+    /**
+     * GET lab tests the team has access to as a paginated list.
+     */
+    public LabTestResourcesResponse getPaginated(LabTestsGetPaginatedRequest request) {
         return this.rawClient.getPaginated(request).body();
     }
 
     /**
      * GET lab tests the team has access to as a paginated list.
      */
-    public LabTestResourcesResponse getPaginated(GetPaginatedLabTestsRequest request, RequestOptions requestOptions) {
+    public LabTestResourcesResponse getPaginated(LabTestsGetPaginatedRequest request, RequestOptions requestOptions) {
         return this.rawClient.getPaginated(request, requestOptions).body();
     }
 
@@ -258,19 +290,9 @@ public class LabTestsClient {
         return this.rawClient.getLabTestCollectionInstructionPdf(labTestId).body();
     }
 
-    public InputStream getLabTestCollectionInstructionPdf(
-            String labTestId, GetLabTestCollectionInstructionPdfLabTestsRequest request) {
+    public InputStream getLabTestCollectionInstructionPdf(String labTestId, RequestOptions requestOptions) {
         return this.rawClient
-                .getLabTestCollectionInstructionPdf(labTestId, request)
-                .body();
-    }
-
-    public InputStream getLabTestCollectionInstructionPdf(
-            String labTestId,
-            GetLabTestCollectionInstructionPdfLabTestsRequest request,
-            RequestOptions requestOptions) {
-        return this.rawClient
-                .getLabTestCollectionInstructionPdf(labTestId, request, requestOptions)
+                .getLabTestCollectionInstructionPdf(labTestId, requestOptions)
                 .body();
     }
 
@@ -284,14 +306,21 @@ public class LabTestsClient {
     /**
      * GET many orders with filters.
      */
-    public GetOrdersResponse getOrders(GetOrdersLabTestsRequest request) {
+    public GetOrdersResponse getOrders(RequestOptions requestOptions) {
+        return this.rawClient.getOrders(requestOptions).body();
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request) {
         return this.rawClient.getOrders(request).body();
     }
 
     /**
      * GET many orders with filters.
      */
-    public GetOrdersResponse getOrders(GetOrdersLabTestsRequest request, RequestOptions requestOptions) {
+    public GetOrdersResponse getOrders(LabTestsGetOrdersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getOrders(request, requestOptions).body();
     }
 
@@ -300,7 +329,7 @@ public class LabTestsClient {
      * for the given address and order.
      */
     public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(
-            GetPhlebotomyAppointmentAvailabilityLabTestsRequest request) {
+            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request) {
         return this.rawClient.getPhlebotomyAppointmentAvailability(request).body();
     }
 
@@ -309,7 +338,7 @@ public class LabTestsClient {
      * for the given address and order.
      */
     public AppointmentAvailabilitySlots getPhlebotomyAppointmentAvailability(
-            GetPhlebotomyAppointmentAvailabilityLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetPhlebotomyAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getPhlebotomyAppointmentAvailability(request, requestOptions)
                 .body();
@@ -318,8 +347,7 @@ public class LabTestsClient {
     /**
      * Book an at-home phlebotomy appointment.
      */
-    public ClientFacingAppointment bookPhlebotomyAppointment(
-            String orderId, BookPhlebotomyAppointmentLabTestsRequest request) {
+    public ClientFacingAppointment bookPhlebotomyAppointment(String orderId, AppointmentBookingRequest request) {
         return this.rawClient.bookPhlebotomyAppointment(orderId, request).body();
     }
 
@@ -327,7 +355,7 @@ public class LabTestsClient {
      * Book an at-home phlebotomy appointment.
      */
     public ClientFacingAppointment bookPhlebotomyAppointment(
-            String orderId, BookPhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .bookPhlebotomyAppointment(orderId, request, requestOptions)
                 .body();
@@ -354,7 +382,7 @@ public class LabTestsClient {
      * Reschedule a previously booked at-home phlebotomy appointment.
      */
     public ClientFacingAppointment reschedulePhlebotomyAppointment(
-            String orderId, ReschedulePhlebotomyAppointmentLabTestsRequest request) {
+            String orderId, AppointmentRescheduleRequest request) {
         return this.rawClient.reschedulePhlebotomyAppointment(orderId, request).body();
     }
 
@@ -362,7 +390,7 @@ public class LabTestsClient {
      * Reschedule a previously booked at-home phlebotomy appointment.
      */
     public ClientFacingAppointment reschedulePhlebotomyAppointment(
-            String orderId, ReschedulePhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .reschedulePhlebotomyAppointment(orderId, request, requestOptions)
                 .body();
@@ -415,19 +443,8 @@ public class LabTestsClient {
     /**
      * Get the appointment associated with an order.
      */
-    public ClientFacingAppointment getPhlebotomyAppointment(
-            String orderId, GetPhlebotomyAppointmentLabTestsRequest request) {
-        return this.rawClient.getPhlebotomyAppointment(orderId, request).body();
-    }
-
-    /**
-     * Get the appointment associated with an order.
-     */
-    public ClientFacingAppointment getPhlebotomyAppointment(
-            String orderId, GetPhlebotomyAppointmentLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getPhlebotomyAppointment(orderId, request, requestOptions)
-                .body();
+    public ClientFacingAppointment getPhlebotomyAppointment(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getPhlebotomyAppointment(orderId, requestOptions).body();
     }
 
     /**
@@ -438,7 +455,7 @@ public class LabTestsClient {
      * <li>List of Lab locations in the area.</li>
      * </ul>
      */
-    public AreaInfo getAreaInfo(GetAreaInfoLabTestsRequest request) {
+    public AreaInfo getAreaInfo(LabTestsGetAreaInfoRequest request) {
         return this.rawClient.getAreaInfo(request).body();
     }
 
@@ -450,15 +467,15 @@ public class LabTestsClient {
      * <li>List of Lab locations in the area.</li>
      * </ul>
      */
-    public AreaInfo getAreaInfo(GetAreaInfoLabTestsRequest request, RequestOptions requestOptions) {
+    public AreaInfo getAreaInfo(LabTestsGetAreaInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAreaInfo(request, requestOptions).body();
     }
 
-    public PscInfo getPscInfo(GetPscInfoLabTestsRequest request) {
+    public PscInfo getPscInfo(LabTestsGetPscInfoRequest request) {
         return this.rawClient.getPscInfo(request).body();
     }
 
-    public PscInfo getPscInfo(GetPscInfoLabTestsRequest request, RequestOptions requestOptions) {
+    public PscInfo getPscInfo(LabTestsGetPscInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.getPscInfo(request, requestOptions).body();
     }
 
@@ -466,12 +483,16 @@ public class LabTestsClient {
         return this.rawClient.getOrderPscInfo(orderId).body();
     }
 
-    public PscInfo getOrderPscInfo(String orderId, GetOrderPscInfoLabTestsRequest request) {
+    public PscInfo getOrderPscInfo(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderPscInfo(orderId, requestOptions).body();
+    }
+
+    public PscInfo getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
         return this.rawClient.getOrderPscInfo(orderId, request).body();
     }
 
     public PscInfo getOrderPscInfo(
-            String orderId, GetOrderPscInfoLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsGetOrderPscInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.getOrderPscInfo(orderId, request, requestOptions).body();
     }
 
@@ -485,16 +506,8 @@ public class LabTestsClient {
     /**
      * This endpoint returns the lab results for the order.
      */
-    public InputStream getResultPdf(String orderId, GetResultPdfLabTestsRequest request) {
-        return this.rawClient.getResultPdf(orderId, request).body();
-    }
-
-    /**
-     * This endpoint returns the lab results for the order.
-     */
-    public InputStream getResultPdf(
-            String orderId, GetResultPdfLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getResultPdf(orderId, request, requestOptions).body();
+    public InputStream getResultPdf(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getResultPdf(orderId, requestOptions).body();
     }
 
     /**
@@ -509,19 +522,8 @@ public class LabTestsClient {
      * Return metadata related to order results, such as lab metadata,
      * provider and sample dates.
      */
-    public LabResultsMetadata getResultMetadata(String orderId, GetResultMetadataLabTestsRequest request) {
-        return this.rawClient.getResultMetadata(orderId, request).body();
-    }
-
-    /**
-     * Return metadata related to order results, such as lab metadata,
-     * provider and sample dates.
-     */
-    public LabResultsMetadata getResultMetadata(
-            String orderId, GetResultMetadataLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getResultMetadata(orderId, request, requestOptions)
-                .body();
+    public LabResultsMetadata getResultMetadata(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getResultMetadata(orderId, requestOptions).body();
     }
 
     /**
@@ -534,22 +536,14 @@ public class LabTestsClient {
     /**
      * Return both metadata and raw json test data
      */
-    public LabResultsRaw getResultRaw(String orderId, GetResultRawLabTestsRequest request) {
-        return this.rawClient.getResultRaw(orderId, request).body();
-    }
-
-    /**
-     * Return both metadata and raw json test data
-     */
-    public LabResultsRaw getResultRaw(
-            String orderId, GetResultRawLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getResultRaw(orderId, request, requestOptions).body();
+    public LabResultsRaw getResultRaw(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getResultRaw(orderId, requestOptions).body();
     }
 
     /**
      * This endpoint returns the printed labels for the order.
      */
-    public InputStream getLabelsPdf(String orderId, GetLabelsPdfLabTestsRequest request) {
+    public InputStream getLabelsPdf(String orderId, LabTestsGetLabelsPdfRequest request) {
         return this.rawClient.getLabelsPdf(orderId, request).body();
     }
 
@@ -557,40 +551,39 @@ public class LabTestsClient {
      * This endpoint returns the printed labels for the order.
      */
     public InputStream getLabelsPdf(
-            String orderId, GetLabelsPdfLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsGetLabelsPdfRequest request, RequestOptions requestOptions) {
         return this.rawClient.getLabelsPdf(orderId, request, requestOptions).body();
     }
 
     public AppointmentAvailabilitySlots getPscAppointmentAvailability(
-            GetPscAppointmentAvailabilityLabTestsRequest request) {
+            LabTestsGetPscAppointmentAvailabilityRequest request) {
         return this.rawClient.getPscAppointmentAvailability(request).body();
     }
 
     public AppointmentAvailabilitySlots getPscAppointmentAvailability(
-            GetPscAppointmentAvailabilityLabTestsRequest request, RequestOptions requestOptions) {
+            LabTestsGetPscAppointmentAvailabilityRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .getPscAppointmentAvailability(request, requestOptions)
                 .body();
     }
 
-    public ClientFacingAppointment bookPscAppointment(String orderId, BookPscAppointmentLabTestsRequest request) {
+    public ClientFacingAppointment bookPscAppointment(String orderId, AppointmentBookingRequest request) {
         return this.rawClient.bookPscAppointment(orderId, request).body();
     }
 
     public ClientFacingAppointment bookPscAppointment(
-            String orderId, BookPscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .bookPscAppointment(orderId, request, requestOptions)
                 .body();
     }
 
-    public ClientFacingAppointment reschedulePscAppointment(
-            String orderId, ReschedulePscAppointmentLabTestsRequest request) {
+    public ClientFacingAppointment reschedulePscAppointment(String orderId, AppointmentRescheduleRequest request) {
         return this.rawClient.reschedulePscAppointment(orderId, request).body();
     }
 
     public ClientFacingAppointment reschedulePscAppointment(
-            String orderId, ReschedulePscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .reschedulePscAppointment(orderId, request, requestOptions)
                 .body();
@@ -631,18 +624,8 @@ public class LabTestsClient {
     /**
      * Get the appointment associated with an order.
      */
-    public ClientFacingAppointment getPscAppointment(String orderId, GetPscAppointmentLabTestsRequest request) {
-        return this.rawClient.getPscAppointment(orderId, request).body();
-    }
-
-    /**
-     * Get the appointment associated with an order.
-     */
-    public ClientFacingAppointment getPscAppointment(
-            String orderId, GetPscAppointmentLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getPscAppointment(orderId, request, requestOptions)
-                .body();
+    public ClientFacingAppointment getPscAppointment(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getPscAppointment(orderId, requestOptions).body();
     }
 
     /**
@@ -655,18 +638,9 @@ public class LabTestsClient {
     /**
      * GET collection instructions for an order
      */
-    public InputStream getOrderCollectionInstructionPdf(
-            String orderId, GetOrderCollectionInstructionPdfLabTestsRequest request) {
-        return this.rawClient.getOrderCollectionInstructionPdf(orderId, request).body();
-    }
-
-    /**
-     * GET collection instructions for an order
-     */
-    public InputStream getOrderCollectionInstructionPdf(
-            String orderId, GetOrderCollectionInstructionPdfLabTestsRequest request, RequestOptions requestOptions) {
+    public InputStream getOrderCollectionInstructionPdf(String orderId, RequestOptions requestOptions) {
         return this.rawClient
-                .getOrderCollectionInstructionPdf(orderId, request, requestOptions)
+                .getOrderCollectionInstructionPdf(orderId, requestOptions)
                 .body();
     }
 
@@ -680,18 +654,8 @@ public class LabTestsClient {
     /**
      * GET requisition pdf for an order
      */
-    public InputStream getOrderRequistionPdf(String orderId, GetOrderRequistionPdfLabTestsRequest request) {
-        return this.rawClient.getOrderRequistionPdf(orderId, request).body();
-    }
-
-    /**
-     * GET requisition pdf for an order
-     */
-    public InputStream getOrderRequistionPdf(
-            String orderId, GetOrderRequistionPdfLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getOrderRequistionPdf(orderId, request, requestOptions)
-                .body();
+    public InputStream getOrderRequistionPdf(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderRequistionPdf(orderId, requestOptions).body();
     }
 
     /**
@@ -704,16 +668,8 @@ public class LabTestsClient {
     /**
      * GET ABN pdf for an order
      */
-    public InputStream getOrderAbnPdf(String orderId, GetOrderAbnPdfLabTestsRequest request) {
-        return this.rawClient.getOrderAbnPdf(orderId, request).body();
-    }
-
-    /**
-     * GET ABN pdf for an order
-     */
-    public InputStream getOrderAbnPdf(
-            String orderId, GetOrderAbnPdfLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getOrderAbnPdf(orderId, request, requestOptions).body();
+    public InputStream getOrderAbnPdf(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderAbnPdf(orderId, requestOptions).body();
     }
 
     /**
@@ -726,15 +682,8 @@ public class LabTestsClient {
     /**
      * GET individual order by ID.
      */
-    public ClientFacingOrder getOrder(String orderId, GetOrderLabTestsRequest request) {
-        return this.rawClient.getOrder(orderId, request).body();
-    }
-
-    /**
-     * GET individual order by ID.
-     */
-    public ClientFacingOrder getOrder(String orderId, GetOrderLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getOrder(orderId, request, requestOptions).body();
+    public ClientFacingOrder getOrder(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrder(orderId, requestOptions).body();
     }
 
     public PostOrderResponse createOrder(CreateOrderRequestCompatible request) {
@@ -763,22 +712,28 @@ public class LabTestsClient {
     /**
      * POST cancel order
      */
-    public PostOrderResponse cancelOrder(String orderId, CancelOrderLabTestsRequest request) {
-        return this.rawClient.cancelOrder(orderId, request).body();
-    }
-
-    /**
-     * POST cancel order
-     */
-    public PostOrderResponse cancelOrder(
-            String orderId, CancelOrderLabTestsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.cancelOrder(orderId, request, requestOptions).body();
+    public PostOrderResponse cancelOrder(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.cancelOrder(orderId, requestOptions).body();
     }
 
     /**
      * Get available test kits.
      */
-    public Object simulateOrderProcess(String orderId, SimulateOrderProcessLabTestsRequest request) {
+    public Object simulateOrderProcess(String orderId) {
+        return this.rawClient.simulateOrderProcess(orderId).body();
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.simulateOrderProcess(orderId, requestOptions).body();
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(String orderId, LabTestsSimulateOrderProcessRequest request) {
         return this.rawClient.simulateOrderProcess(orderId, request).body();
     }
 
@@ -786,7 +741,7 @@ public class LabTestsClient {
      * Get available test kits.
      */
     public Object simulateOrderProcess(
-            String orderId, SimulateOrderProcessLabTestsRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsSimulateOrderProcessRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .simulateOrderProcess(orderId, request, requestOptions)
                 .body();
@@ -802,22 +757,9 @@ public class LabTestsClient {
     /**
      * PATCH update on site collection order when draw is completed
      */
-    public PostOrderResponse updateOnSiteCollectionOrderDrawCompleted(
-            String orderId, UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest request) {
+    public PostOrderResponse updateOnSiteCollectionOrderDrawCompleted(String orderId, RequestOptions requestOptions) {
         return this.rawClient
-                .updateOnSiteCollectionOrderDrawCompleted(orderId, request)
-                .body();
-    }
-
-    /**
-     * PATCH update on site collection order when draw is completed
-     */
-    public PostOrderResponse updateOnSiteCollectionOrderDrawCompleted(
-            String orderId,
-            UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest request,
-            RequestOptions requestOptions) {
-        return this.rawClient
-                .updateOnSiteCollectionOrderDrawCompleted(orderId, request, requestOptions)
+                .updateOnSiteCollectionOrderDrawCompleted(orderId, requestOptions)
                 .body();
     }
 

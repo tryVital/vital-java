@@ -5,8 +5,8 @@ package com.vital.api.resources.profile;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.profile.requests.GetProfileRequest;
-import com.vital.api.resources.profile.requests.GetRawProfileRequest;
+import com.vital.api.resources.profile.requests.ProfileGetRawRequest;
+import com.vital.api.resources.profile.requests.ProfileGetRequest;
 import com.vital.api.types.ClientFacingProfile;
 import com.vital.api.types.RawProfile;
 import java.util.concurrent.CompletableFuture;
@@ -38,7 +38,14 @@ public class AsyncProfileClient {
     /**
      * Get profile for user_id
      */
-    public CompletableFuture<ClientFacingProfile> get(String userId, GetProfileRequest request) {
+    public CompletableFuture<ClientFacingProfile> get(String userId, RequestOptions requestOptions) {
+        return this.rawClient.get(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get profile for user_id
+     */
+    public CompletableFuture<ClientFacingProfile> get(String userId, ProfileGetRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -46,7 +53,7 @@ public class AsyncProfileClient {
      * Get profile for user_id
      */
     public CompletableFuture<ClientFacingProfile> get(
-            String userId, GetProfileRequest request, RequestOptions requestOptions) {
+            String userId, ProfileGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -60,7 +67,14 @@ public class AsyncProfileClient {
     /**
      * Get raw profile for user_id
      */
-    public CompletableFuture<RawProfile> getRaw(String userId, GetRawProfileRequest request) {
+    public CompletableFuture<RawProfile> getRaw(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getRaw(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get raw profile for user_id
+     */
+    public CompletableFuture<RawProfile> getRaw(String userId, ProfileGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
@@ -68,7 +82,7 @@ public class AsyncProfileClient {
      * Get raw profile for user_id
      */
     public CompletableFuture<RawProfile> getRaw(
-            String userId, GetRawProfileRequest request, RequestOptions requestOptions) {
+            String userId, ProfileGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

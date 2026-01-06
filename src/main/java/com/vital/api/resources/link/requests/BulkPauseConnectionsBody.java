@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.link.types.BulkPauseLinkRequestTeamId;
+import com.vital.api.resources.link.types.LinkBulkPauseRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkPauseConnectionsBody.Builder.class)
 public final class BulkPauseConnectionsBody {
-    private final Optional<BulkPauseLinkRequestTeamId> teamId;
+    private final Optional<LinkBulkPauseRequestTeamId> teamId;
 
     private final List<String> userIds;
 
@@ -34,7 +34,7 @@ public final class BulkPauseConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkPauseConnectionsBody(
-            Optional<BulkPauseLinkRequestTeamId> teamId,
+            Optional<LinkBulkPauseRequestTeamId> teamId,
             List<String> userIds,
             OAuthProviders provider,
             Map<String, Object> additionalProperties) {
@@ -45,7 +45,7 @@ public final class BulkPauseConnectionsBody {
     }
 
     @JsonProperty("team_id")
-    public Optional<BulkPauseLinkRequestTeamId> getTeamId() {
+    public Optional<LinkBulkPauseRequestTeamId> getTeamId() {
         return teamId;
     }
 
@@ -97,9 +97,9 @@ public final class BulkPauseConnectionsBody {
     public interface _FinalStage {
         BulkPauseConnectionsBody build();
 
-        _FinalStage teamId(Optional<BulkPauseLinkRequestTeamId> teamId);
+        _FinalStage teamId(Optional<LinkBulkPauseRequestTeamId> teamId);
 
-        _FinalStage teamId(BulkPauseLinkRequestTeamId teamId);
+        _FinalStage teamId(LinkBulkPauseRequestTeamId teamId);
 
         _FinalStage userIds(List<String> userIds);
 
@@ -114,7 +114,7 @@ public final class BulkPauseConnectionsBody {
 
         private List<String> userIds = new ArrayList<>();
 
-        private Optional<BulkPauseLinkRequestTeamId> teamId = Optional.empty();
+        private Optional<LinkBulkPauseRequestTeamId> teamId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -154,19 +154,21 @@ public final class BulkPauseConnectionsBody {
         @JsonSetter(value = "user_ids", nulls = Nulls.SKIP)
         public _FinalStage userIds(List<String> userIds) {
             this.userIds.clear();
-            this.userIds.addAll(userIds);
+            if (userIds != null) {
+                this.userIds.addAll(userIds);
+            }
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage teamId(BulkPauseLinkRequestTeamId teamId) {
+        public _FinalStage teamId(LinkBulkPauseRequestTeamId teamId) {
             this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
-        public _FinalStage teamId(Optional<BulkPauseLinkRequestTeamId> teamId) {
+        public _FinalStage teamId(Optional<LinkBulkPauseRequestTeamId> teamId) {
             this.teamId = teamId;
             return this;
         }

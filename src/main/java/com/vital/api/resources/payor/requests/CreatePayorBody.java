@@ -5,15 +5,12 @@ package com.vital.api.resources.payor.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Address;
 import com.vital.api.types.PayorCodeExternalProvider;
@@ -59,31 +56,13 @@ public final class CreatePayorBody {
         return address;
     }
 
-    @JsonIgnore
-    public Optional<PayorCodeExternalProvider> getProvider() {
-        if (provider == null) {
-            return Optional.empty();
-        }
-        return provider;
-    }
-
-    @JsonIgnore
-    public Optional<String> getProviderPayorId() {
-        if (providerPayorId == null) {
-            return Optional.empty();
-        }
-        return providerPayorId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("provider")
-    private Optional<PayorCodeExternalProvider> _getProvider() {
+    public Optional<PayorCodeExternalProvider> getProvider() {
         return provider;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("provider_payor_id")
-    private Optional<String> _getProviderPayorId() {
+    public Optional<String> getProviderPayorId() {
         return providerPayorId;
     }
 
@@ -136,13 +115,9 @@ public final class CreatePayorBody {
 
         _FinalStage provider(PayorCodeExternalProvider provider);
 
-        _FinalStage provider(Nullable<PayorCodeExternalProvider> provider);
-
         _FinalStage providerPayorId(Optional<String> providerPayorId);
 
         _FinalStage providerPayorId(String providerPayorId);
-
-        _FinalStage providerPayorId(Nullable<String> providerPayorId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -184,18 +159,6 @@ public final class CreatePayorBody {
         }
 
         @java.lang.Override
-        public _FinalStage providerPayorId(Nullable<String> providerPayorId) {
-            if (providerPayorId.isNull()) {
-                this.providerPayorId = null;
-            } else if (providerPayorId.isEmpty()) {
-                this.providerPayorId = Optional.empty();
-            } else {
-                this.providerPayorId = Optional.of(providerPayorId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage providerPayorId(String providerPayorId) {
             this.providerPayorId = Optional.ofNullable(providerPayorId);
             return this;
@@ -205,18 +168,6 @@ public final class CreatePayorBody {
         @JsonSetter(value = "provider_payor_id", nulls = Nulls.SKIP)
         public _FinalStage providerPayorId(Optional<String> providerPayorId) {
             this.providerPayorId = providerPayorId;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage provider(Nullable<PayorCodeExternalProvider> provider) {
-            if (provider.isNull()) {
-                this.provider = null;
-            } else if (provider.isEmpty()) {
-                this.provider = Optional.empty();
-            } else {
-                this.provider = Optional.of(provider.get());
-            }
             return this;
         }
 

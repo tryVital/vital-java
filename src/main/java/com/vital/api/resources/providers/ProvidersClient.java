@@ -5,7 +5,7 @@ package com.vital.api.resources.providers;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.providers.requests.GetAllProvidersRequest;
+import com.vital.api.resources.providers.requests.ProvidersGetAllRequest;
 import com.vital.api.types.ClientFacingProviderDetailed;
 import java.util.List;
 
@@ -36,14 +36,21 @@ public class ProvidersClient {
     /**
      * Get Provider list
      */
-    public List<ClientFacingProviderDetailed> getAll(GetAllProvidersRequest request) {
+    public List<ClientFacingProviderDetailed> getAll(RequestOptions requestOptions) {
+        return this.rawClient.getAll(requestOptions).body();
+    }
+
+    /**
+     * Get Provider list
+     */
+    public List<ClientFacingProviderDetailed> getAll(ProvidersGetAllRequest request) {
         return this.rawClient.getAll(request).body();
     }
 
     /**
      * Get Provider list
      */
-    public List<ClientFacingProviderDetailed> getAll(GetAllProvidersRequest request, RequestOptions requestOptions) {
+    public List<ClientFacingProviderDetailed> getAll(ProvidersGetAllRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAll(request, requestOptions).body();
     }
 }

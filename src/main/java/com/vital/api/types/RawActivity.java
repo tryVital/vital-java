@@ -81,7 +81,9 @@ public final class RawActivity {
         @JsonSetter(value = "activity", nulls = Nulls.SKIP)
         public Builder activity(List<ActivityV2InDb> activity) {
             this.activity.clear();
-            this.activity.addAll(activity);
+            if (activity != null) {
+                this.activity.addAll(activity);
+            }
             return this;
         }
 

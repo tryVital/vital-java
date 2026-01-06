@@ -81,7 +81,9 @@ public final class RawBody {
         @JsonSetter(value = "body", nulls = Nulls.SKIP)
         public Builder body(List<BodyV2InDb> body) {
             this.body.clear();
-            this.body.addAll(body);
+            if (body != null) {
+                this.body.addAll(body);
+            }
             return this;
         }
 
