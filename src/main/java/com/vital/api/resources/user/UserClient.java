@@ -9,6 +9,7 @@ import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
 import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
+import com.vital.api.resources.user.requests.UserGetLatestInsuranceRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
 import com.vital.api.resources.user.requests.UserRefreshRequest;
@@ -131,8 +132,15 @@ public class UserClient {
         return this.rawClient.getLatestInsurance(userId).body();
     }
 
-    public ClientFacingInsurance getLatestInsurance(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestInsurance(userId, requestOptions).body();
+    public ClientFacingInsurance getLatestInsurance(String userId, UserGetLatestInsuranceRequest request) {
+        return this.rawClient.getLatestInsurance(userId, request).body();
+    }
+
+    public ClientFacingInsurance getLatestInsurance(
+            String userId, UserGetLatestInsuranceRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getLatestInsurance(userId, request, requestOptions)
+                .body();
     }
 
     public UserInfo upsertUserInfo(String userId, UserInfoCreateRequest request) {

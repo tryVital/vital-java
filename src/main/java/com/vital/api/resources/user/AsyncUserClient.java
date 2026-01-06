@@ -9,6 +9,7 @@ import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
 import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
+import com.vital.api.resources.user.requests.UserGetLatestInsuranceRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
 import com.vital.api.resources.user.requests.UserRefreshRequest;
@@ -132,8 +133,16 @@ public class AsyncUserClient {
         return this.rawClient.getLatestInsurance(userId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestInsurance(userId, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(
+            String userId, UserGetLatestInsuranceRequest request) {
+        return this.rawClient.getLatestInsurance(userId, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(
+            String userId, UserGetLatestInsuranceRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getLatestInsurance(userId, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserInfo> upsertUserInfo(String userId, UserInfoCreateRequest request) {

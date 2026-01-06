@@ -19,6 +19,7 @@ import com.vital.api.resources.user.requests.CreateInsuranceRequest;
 import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
 import com.vital.api.resources.user.requests.UserCreateBody;
 import com.vital.api.resources.user.requests.UserGetAllRequest;
+import com.vital.api.resources.user.requests.UserGetLatestInsuranceRequest;
 import com.vital.api.resources.user.requests.UserInfoCreateRequest;
 import com.vital.api.resources.user.requests.UserPatchBody;
 import com.vital.api.resources.user.requests.UserRefreshRequest;
@@ -474,24 +475,33 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(String userId) {
-        return getLatestInsurance(userId, null);
+        return getLatestInsurance(
+                userId, UserGetLatestInsuranceRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(
-            String userId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+            String userId, UserGetLatestInsuranceRequest request) {
+        return getLatestInsurance(userId, request, null);
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingInsurance>> getLatestInsurance(
+            String userId, UserGetLatestInsuranceRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/user")
                 .addPathSegment(userId)
                 .addPathSegments("insurance")
-                .addPathSegments("latest")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .addPathSegments("latest");
+        if (request.getIsPrimary().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "is_primary", request.getIsPrimary().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

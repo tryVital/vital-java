@@ -9713,6 +9713,14 @@ client.user().createInsurance(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**isPrimary:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -9734,7 +9742,13 @@ client.user().createInsurance(
 <dd>
 
 ```java
-client.user().getLatestInsurance("user_id");
+client.user().getLatestInsurance(
+    "user_id",
+    UserGetLatestInsuranceRequest
+        .builder()
+        .isPrimary(true)
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -9750,6 +9764,14 @@ client.user().getLatestInsurance("user_id");
 <dd>
 
 **userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isPrimary:** `Optional<Boolean>` 
     
 </dd>
 </dl>
