@@ -82,7 +82,9 @@ public final class ClientSleepCycleResponse {
         @JsonSetter(value = "sleep_cycle", nulls = Nulls.SKIP)
         public Builder sleepCycle(List<ClientFacingSleepCycle> sleepCycle) {
             this.sleepCycle.clear();
-            this.sleepCycle.addAll(sleepCycle);
+            if (sleepCycle != null) {
+                this.sleepCycle.addAll(sleepCycle);
+            }
             return this;
         }
 

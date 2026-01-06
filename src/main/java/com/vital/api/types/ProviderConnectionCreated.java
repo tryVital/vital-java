@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -79,23 +76,14 @@ public final class ProviderConnectionCreated {
      * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
      * </ul>
      */
-    @JsonIgnore
+    @JsonProperty("external_user_id")
     public Optional<String> getExternalUserId() {
-        if (externalUserId == null) {
-            return Optional.empty();
-        }
         return externalUserId;
     }
 
     @JsonProperty("resource_availability")
     public Map<String, ResourceAvailability> getResourceAvailability() {
         return resourceAvailability;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("external_user_id")
-    private Optional<String> _getExternalUserId() {
-        return externalUserId;
     }
 
     @java.lang.Override
@@ -163,8 +151,6 @@ public final class ProviderConnectionCreated {
         _FinalStage externalUserId(Optional<String> externalUserId);
 
         _FinalStage externalUserId(String externalUserId);
-
-        _FinalStage externalUserId(Nullable<String> externalUserId);
 
         _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability);
 
@@ -244,28 +230,8 @@ public final class ProviderConnectionCreated {
         @JsonSetter(value = "resource_availability", nulls = Nulls.SKIP)
         public _FinalStage resourceAvailability(Map<String, ResourceAvailability> resourceAvailability) {
             this.resourceAvailability.clear();
-            this.resourceAvailability.putAll(resourceAvailability);
-            return this;
-        }
-
-        /**
-         * <p>The unique identifier of the associated external data provider user.</p>
-         * <ul>
-         * <li>OAuth Providers: User unique identifier; provider-specific formats</li>
-         * <li>Password Providers: Username</li>
-         * <li>Email Providers: Email</li>
-         * <li>Junction Mobile SDK Providers: <code>null</code> (not available)</li>
-         * </ul>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage externalUserId(Nullable<String> externalUserId) {
-            if (externalUserId.isNull()) {
-                this.externalUserId = null;
-            } else if (externalUserId.isEmpty()) {
-                this.externalUserId = Optional.empty();
-            } else {
-                this.externalUserId = Optional.of(externalUserId.get());
+            if (resourceAvailability != null) {
+                this.resourceAvailability.putAll(resourceAvailability);
             }
             return this;
         }

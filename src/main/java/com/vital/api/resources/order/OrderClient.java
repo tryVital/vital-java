@@ -35,6 +35,13 @@ public class OrderClient {
     /**
      * Replay a webhook for a given set of orders
      */
+    public ResendWebhookResponse resendEvents(RequestOptions requestOptions) {
+        return this.rawClient.resendEvents(requestOptions).body();
+    }
+
+    /**
+     * Replay a webhook for a given set of orders
+     */
     public ResendWebhookResponse resendEvents(ResendWebhookBody request) {
         return this.rawClient.resendEvents(request).body();
     }

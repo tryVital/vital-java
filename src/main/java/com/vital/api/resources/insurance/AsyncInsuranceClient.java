@@ -5,9 +5,9 @@ package com.vital.api.resources.insurance;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
+import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
+import com.vital.api.resources.insurance.requests.InsuranceSearchGetPayorInfoRequest;
 import com.vital.api.resources.insurance.requests.PayorSearchRequest;
-import com.vital.api.resources.insurance.requests.SearchDiagnosisInsuranceRequest;
-import com.vital.api.resources.insurance.requests.SearchGetPayorInfoInsuranceRequest;
 import com.vital.api.types.ClientFacingDiagnosisInformation;
 import com.vital.api.types.ClientFacingPayorSearchResponse;
 import com.vital.api.types.ClientFacingPayorSearchResponseDeprecated;
@@ -35,18 +35,27 @@ public class AsyncInsuranceClient {
         return this.rawClient.searchGetPayorInfo().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(RequestOptions requestOptions) {
+        return this.rawClient.searchGetPayorInfo(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
-            SearchGetPayorInfoInsuranceRequest request) {
+            InsuranceSearchGetPayorInfoRequest request) {
         return this.rawClient.searchGetPayorInfo(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
-            SearchGetPayorInfoInsuranceRequest request, RequestOptions requestOptions) {
+            InsuranceSearchGetPayorInfoRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchGetPayorInfo(request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo() {
         return this.rawClient.searchPayorInfo().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
+            RequestOptions requestOptions) {
+        return this.rawClient.searchPayorInfo(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
@@ -60,12 +69,12 @@ public class AsyncInsuranceClient {
     }
 
     public CompletableFuture<List<ClientFacingDiagnosisInformation>> searchDiagnosis(
-            SearchDiagnosisInsuranceRequest request) {
+            InsuranceSearchDiagnosisRequest request) {
         return this.rawClient.searchDiagnosis(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<ClientFacingDiagnosisInformation>> searchDiagnosis(
-            SearchDiagnosisInsuranceRequest request, RequestOptions requestOptions) {
+            InsuranceSearchDiagnosisRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchDiagnosis(request, requestOptions).thenApply(response -> response.body());
     }
 }

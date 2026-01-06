@@ -81,7 +81,9 @@ public final class ClientActivityResponse {
         @JsonSetter(value = "activity", nulls = Nulls.SKIP)
         public Builder activity(List<ClientFacingActivity> activity) {
             this.activity.clear();
-            this.activity.addAll(activity);
+            if (activity != null) {
+                this.activity.addAll(activity);
+            }
             return this;
         }
 

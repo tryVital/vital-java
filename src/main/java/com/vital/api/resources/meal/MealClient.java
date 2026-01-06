@@ -5,7 +5,7 @@ package com.vital.api.resources.meal;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.meal.requests.GetMealRequest;
+import com.vital.api.resources.meal.requests.MealGetRequest;
 import com.vital.api.types.ClientFacingMealResponse;
 
 public class MealClient {
@@ -28,14 +28,14 @@ public class MealClient {
     /**
      * Get user's meals
      */
-    public ClientFacingMealResponse get(String userId, GetMealRequest request) {
+    public ClientFacingMealResponse get(String userId, MealGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
     /**
      * Get user's meals
      */
-    public ClientFacingMealResponse get(String userId, GetMealRequest request, RequestOptions requestOptions) {
+    public ClientFacingMealResponse get(String userId, MealGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 }

@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.electrocardiogram.requests.GetElectrocardiogramRequest;
+import com.vital.api.resources.electrocardiogram.requests.ElectrocardiogramGetRequest;
 import com.vital.api.types.ClientFacingElectrocardiogramResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class RawElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public VitalHttpResponse<ClientFacingElectrocardiogramResponse> get(
-            String userId, GetElectrocardiogramRequest request) {
+            String userId, ElectrocardiogramGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -42,7 +42,7 @@ public class RawElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public VitalHttpResponse<ClientFacingElectrocardiogramResponse> get(
-            String userId, GetElectrocardiogramRequest request, RequestOptions requestOptions) {
+            String userId, ElectrocardiogramGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/electrocardiogram")
@@ -68,13 +68,13 @@ public class RawElectrocardiogramClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ClientFacingElectrocardiogramResponse.class),
+                                responseBodyString, ClientFacingElectrocardiogramResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -84,11 +84,8 @@ public class RawElectrocardiogramClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

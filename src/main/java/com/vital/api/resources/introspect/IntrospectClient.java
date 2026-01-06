@@ -5,8 +5,8 @@ package com.vital.api.resources.introspect;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.introspect.requests.GetUserHistoricalPullsIntrospectRequest;
-import com.vital.api.resources.introspect.requests.GetUserResourcesIntrospectRequest;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserHistoricalPullsRequest;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserResourcesRequest;
 import com.vital.api.types.UserHistoricalPullsResponse;
 import com.vital.api.types.UserResourcesResponse;
 
@@ -31,12 +31,16 @@ public class IntrospectClient {
         return this.rawClient.getUserResources().body();
     }
 
-    public UserResourcesResponse getUserResources(GetUserResourcesIntrospectRequest request) {
+    public UserResourcesResponse getUserResources(RequestOptions requestOptions) {
+        return this.rawClient.getUserResources(requestOptions).body();
+    }
+
+    public UserResourcesResponse getUserResources(IntrospectGetUserResourcesRequest request) {
         return this.rawClient.getUserResources(request).body();
     }
 
     public UserResourcesResponse getUserResources(
-            GetUserResourcesIntrospectRequest request, RequestOptions requestOptions) {
+            IntrospectGetUserResourcesRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUserResources(request, requestOptions).body();
     }
 
@@ -44,12 +48,16 @@ public class IntrospectClient {
         return this.rawClient.getUserHistoricalPulls().body();
     }
 
-    public UserHistoricalPullsResponse getUserHistoricalPulls(GetUserHistoricalPullsIntrospectRequest request) {
+    public UserHistoricalPullsResponse getUserHistoricalPulls(RequestOptions requestOptions) {
+        return this.rawClient.getUserHistoricalPulls(requestOptions).body();
+    }
+
+    public UserHistoricalPullsResponse getUserHistoricalPulls(IntrospectGetUserHistoricalPullsRequest request) {
         return this.rawClient.getUserHistoricalPulls(request).body();
     }
 
     public UserHistoricalPullsResponse getUserHistoricalPulls(
-            GetUserHistoricalPullsIntrospectRequest request, RequestOptions requestOptions) {
+            IntrospectGetUserHistoricalPullsRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUserHistoricalPulls(request, requestOptions).body();
     }
 }
