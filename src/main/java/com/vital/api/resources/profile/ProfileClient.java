@@ -37,6 +37,13 @@ public class ProfileClient {
     /**
      * Get profile for user_id
      */
+    public ClientFacingProfile get(String userId, RequestOptions requestOptions) {
+        return this.rawClient.get(userId, requestOptions).body();
+    }
+
+    /**
+     * Get profile for user_id
+     */
     public ClientFacingProfile get(String userId, ProfileGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
@@ -53,6 +60,13 @@ public class ProfileClient {
      */
     public RawProfile getRaw(String userId) {
         return this.rawClient.getRaw(userId).body();
+    }
+
+    /**
+     * Get raw profile for user_id
+     */
+    public RawProfile getRaw(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getRaw(userId, requestOptions).body();
     }
 
     /**

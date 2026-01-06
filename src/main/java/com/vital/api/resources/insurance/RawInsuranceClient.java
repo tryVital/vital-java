@@ -42,6 +42,10 @@ public class RawInsuranceClient {
         return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build());
     }
 
+    public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(RequestOptions requestOptions) {
+        return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build(), requestOptions);
+    }
+
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
             InsuranceSearchGetPayorInfoRequest request) {
         return searchGetPayorInfo(request, null);
@@ -101,6 +105,11 @@ public class RawInsuranceClient {
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo() {
         return searchPayorInfo(PayorSearchRequest.builder().build());
+    }
+
+    public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
+            RequestOptions requestOptions) {
+        return searchPayorInfo(PayorSearchRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(

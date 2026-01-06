@@ -11679,7 +11679,7 @@ client.labTests().getMarkersForLabTest(
 </dl>
 </details>
 
-<details><summary><code>client.labTests.getMarkersByLabAndProviderId(labId, providerId) -> ClientFacingMarker</code></summary>
+<details><summary><code>client.labTests.getMarkersByLabAndProviderId(providerId, labId) -> ClientFacingMarker</code></summary>
 <dl>
 <dd>
 
@@ -11707,8 +11707,8 @@ GET a specific marker for the given lab and provider_id
 
 ```java
 client.labTests().getMarkersByLabAndProviderId(
-    1,
     "provider_id",
+    1,
     LabTestsGetMarkersByLabAndProviderIdRequest
         .builder()
         .labAccountId("lab_account_id")
@@ -11728,7 +11728,7 @@ client.labTests().getMarkersByLabAndProviderId(
 <dl>
 <dd>
 
-**labId:** `Integer` 
+**providerId:** `String` 
     
 </dd>
 </dl>
@@ -11736,7 +11736,7 @@ client.labTests().getMarkersByLabAndProviderId(
 <dl>
 <dd>
 
-**providerId:** `String` 
+**labId:** `Integer` 
     
 </dd>
 </dl>

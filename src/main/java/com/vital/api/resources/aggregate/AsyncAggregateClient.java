@@ -59,6 +59,13 @@ public class AsyncAggregateClient {
     }
 
     public CompletableFuture<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
+            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+        return this.rawClient
+                .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
             String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
         return this.rawClient
                 .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request)

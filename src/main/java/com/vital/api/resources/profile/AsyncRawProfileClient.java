@@ -46,6 +46,13 @@ public class AsyncRawProfileClient {
     /**
      * Get profile for user_id
      */
+    public CompletableFuture<VitalHttpResponse<ClientFacingProfile>> get(String userId, RequestOptions requestOptions) {
+        return get(userId, ProfileGetRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get profile for user_id
+     */
     public CompletableFuture<VitalHttpResponse<ClientFacingProfile>> get(String userId, ProfileGetRequest request) {
         return get(userId, request, null);
     }
@@ -117,6 +124,13 @@ public class AsyncRawProfileClient {
      */
     public CompletableFuture<VitalHttpResponse<RawProfile>> getRaw(String userId) {
         return getRaw(userId, ProfileGetRawRequest.builder().build());
+    }
+
+    /**
+     * Get raw profile for user_id
+     */
+    public CompletableFuture<VitalHttpResponse<RawProfile>> getRaw(String userId, RequestOptions requestOptions) {
+        return getRaw(userId, ProfileGetRawRequest.builder().build(), requestOptions);
     }
 
     /**

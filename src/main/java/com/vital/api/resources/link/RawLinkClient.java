@@ -68,6 +68,10 @@ public class RawLinkClient {
         return listBulkOps(LinkListBulkOpsRequest.builder().build());
     }
 
+    public VitalHttpResponse<BulkOpsResponse> listBulkOps(RequestOptions requestOptions) {
+        return listBulkOps(LinkListBulkOpsRequest.builder().build(), requestOptions);
+    }
+
     public VitalHttpResponse<BulkOpsResponse> listBulkOps(LinkListBulkOpsRequest request) {
         return listBulkOps(request, null);
     }
@@ -587,6 +591,14 @@ public class RawLinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
+    public VitalHttpResponse<Map<String, Object>> tokenState(RequestOptions requestOptions) {
+        return tokenState(LinkTokenStateRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * REQUEST_SOURCE: VITAL-LINK
+     * Check link token state - can be hit continuously used as heartbeat
+     */
     public VitalHttpResponse<Map<String, Object>> tokenState(LinkTokenStateRequest request) {
         return tokenState(request, null);
     }
@@ -766,6 +778,14 @@ public class RawLinkClient {
     public VitalHttpResponse<Source> generateOauthLink(OAuthProviders oauthProvider) {
         return generateOauthLink(
                 oauthProvider, LinkGenerateOauthLinkRequest.builder().build());
+    }
+
+    /**
+     * This endpoint generates an OAuth link for oauth provider
+     */
+    public VitalHttpResponse<Source> generateOauthLink(OAuthProviders oauthProvider, RequestOptions requestOptions) {
+        return generateOauthLink(
+                oauthProvider, LinkGenerateOauthLinkRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -1017,6 +1037,13 @@ public class RawLinkClient {
      */
     public VitalHttpResponse<List<SourceLink>> getAllProviders() {
         return getAllProviders(LinkGetAllProvidersRequest.builder().build());
+    }
+
+    /**
+     * GET List of all available providers given the generated link token.
+     */
+    public VitalHttpResponse<List<SourceLink>> getAllProviders(RequestOptions requestOptions) {
+        return getAllProviders(LinkGetAllProvidersRequest.builder().build(), requestOptions);
     }
 
     /**

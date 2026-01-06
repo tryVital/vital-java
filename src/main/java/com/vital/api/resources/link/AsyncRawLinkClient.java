@@ -72,6 +72,10 @@ public class AsyncRawLinkClient {
         return listBulkOps(LinkListBulkOpsRequest.builder().build());
     }
 
+    public CompletableFuture<VitalHttpResponse<BulkOpsResponse>> listBulkOps(RequestOptions requestOptions) {
+        return listBulkOps(LinkListBulkOpsRequest.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<VitalHttpResponse<BulkOpsResponse>> listBulkOps(LinkListBulkOpsRequest request) {
         return listBulkOps(request, null);
     }
@@ -735,6 +739,14 @@ public class AsyncRawLinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
+    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState(RequestOptions requestOptions) {
+        return tokenState(LinkTokenStateRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * REQUEST_SOURCE: VITAL-LINK
+     * Check link token state - can be hit continuously used as heartbeat
+     */
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState(LinkTokenStateRequest request) {
         return tokenState(request, null);
     }
@@ -961,6 +973,15 @@ public class AsyncRawLinkClient {
     public CompletableFuture<VitalHttpResponse<Source>> generateOauthLink(OAuthProviders oauthProvider) {
         return generateOauthLink(
                 oauthProvider, LinkGenerateOauthLinkRequest.builder().build());
+    }
+
+    /**
+     * This endpoint generates an OAuth link for oauth provider
+     */
+    public CompletableFuture<VitalHttpResponse<Source>> generateOauthLink(
+            OAuthProviders oauthProvider, RequestOptions requestOptions) {
+        return generateOauthLink(
+                oauthProvider, LinkGenerateOauthLinkRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -1275,6 +1296,13 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<List<SourceLink>>> getAllProviders() {
         return getAllProviders(LinkGetAllProvidersRequest.builder().build());
+    }
+
+    /**
+     * GET List of all available providers given the generated link token.
+     */
+    public CompletableFuture<VitalHttpResponse<List<SourceLink>>> getAllProviders(RequestOptions requestOptions) {
+        return getAllProviders(LinkGetAllProvidersRequest.builder().build(), requestOptions);
     }
 
     /**

@@ -51,6 +51,13 @@ public class AsyncRawTeamClient {
     /**
      * Post teams.
      */
+    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> getLinkConfig(RequestOptions requestOptions) {
+        return getLinkConfig(TeamGetLinkConfigRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Post teams.
+     */
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> getLinkConfig(TeamGetLinkConfigRequest request) {
         return getLinkConfig(request, null);
     }
@@ -193,6 +200,13 @@ public class AsyncRawTeamClient {
     /**
      * Search team users by user_id
      */
+    public CompletableFuture<VitalHttpResponse<List<ClientFacingUser>>> getUserById(RequestOptions requestOptions) {
+        return getUserById(TeamGetUserByIdRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Search team users by user_id
+     */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingUser>>> getUserById(TeamGetUserByIdRequest request) {
         return getUserById(request, null);
     }
@@ -313,6 +327,14 @@ public class AsyncRawTeamClient {
      */
     public CompletableFuture<VitalHttpResponse<List<Map<String, Object>>>> getSourcePriorities() {
         return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build());
+    }
+
+    /**
+     * GET source priorities.
+     */
+    public CompletableFuture<VitalHttpResponse<List<Map<String, Object>>>> getSourcePriorities(
+            RequestOptions requestOptions) {
+        return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build(), requestOptions);
     }
 
     /**

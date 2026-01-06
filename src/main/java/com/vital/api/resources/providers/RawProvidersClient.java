@@ -42,6 +42,13 @@ public class RawProvidersClient {
     /**
      * Get Provider list
      */
+    public VitalHttpResponse<List<ClientFacingProviderDetailed>> getAll(RequestOptions requestOptions) {
+        return getAll(ProvidersGetAllRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get Provider list
+     */
     public VitalHttpResponse<List<ClientFacingProviderDetailed>> getAll(ProvidersGetAllRequest request) {
         return getAll(request, null);
     }

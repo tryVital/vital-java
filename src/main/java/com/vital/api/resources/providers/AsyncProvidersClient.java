@@ -37,6 +37,13 @@ public class AsyncProvidersClient {
     /**
      * Get Provider list
      */
+    public CompletableFuture<List<ClientFacingProviderDetailed>> getAll(RequestOptions requestOptions) {
+        return this.rawClient.getAll(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get Provider list
+     */
     public CompletableFuture<List<ClientFacingProviderDetailed>> getAll(ProvidersGetAllRequest request) {
         return this.rawClient.getAll(request).thenApply(response -> response.body());
     }

@@ -36,6 +36,13 @@ public class AsyncDevicesClient {
     /**
      * Get Devices for user_id
      */
+    public CompletableFuture<RawDevices> getRaw(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getRaw(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get Devices for user_id
+     */
     public CompletableFuture<RawDevices> getRaw(String userId, DevicesGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }

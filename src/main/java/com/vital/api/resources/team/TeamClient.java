@@ -41,6 +41,13 @@ public class TeamClient {
     /**
      * Post teams.
      */
+    public Map<String, Object> getLinkConfig(RequestOptions requestOptions) {
+        return this.rawClient.getLinkConfig(requestOptions).body();
+    }
+
+    /**
+     * Post teams.
+     */
     public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request) {
         return this.rawClient.getLinkConfig(request).body();
     }
@@ -76,6 +83,13 @@ public class TeamClient {
     /**
      * Search team users by user_id
      */
+    public List<ClientFacingUser> getUserById(RequestOptions requestOptions) {
+        return this.rawClient.getUserById(requestOptions).body();
+    }
+
+    /**
+     * Search team users by user_id
+     */
     public List<ClientFacingUser> getUserById(TeamGetUserByIdRequest request) {
         return this.rawClient.getUserById(request).body();
     }
@@ -100,6 +114,13 @@ public class TeamClient {
      */
     public List<Map<String, Object>> getSourcePriorities() {
         return this.rawClient.getSourcePriorities().body();
+    }
+
+    /**
+     * GET source priorities.
+     */
+    public List<Map<String, Object>> getSourcePriorities(RequestOptions requestOptions) {
+        return this.rawClient.getSourcePriorities(requestOptions).body();
     }
 
     /**

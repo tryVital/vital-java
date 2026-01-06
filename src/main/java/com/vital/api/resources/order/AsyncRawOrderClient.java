@@ -45,6 +45,13 @@ public class AsyncRawOrderClient {
     /**
      * Replay a webhook for a given set of orders
      */
+    public CompletableFuture<VitalHttpResponse<ResendWebhookResponse>> resendEvents(RequestOptions requestOptions) {
+        return resendEvents(ResendWebhookBody.builder().build(), requestOptions);
+    }
+
+    /**
+     * Replay a webhook for a given set of orders
+     */
     public CompletableFuture<VitalHttpResponse<ResendWebhookResponse>> resendEvents(ResendWebhookBody request) {
         return resendEvents(request, null);
     }

@@ -35,6 +35,10 @@ public class AsyncInsuranceClient {
         return this.rawClient.searchGetPayorInfo().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(RequestOptions requestOptions) {
+        return this.rawClient.searchGetPayorInfo(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
             InsuranceSearchGetPayorInfoRequest request) {
         return this.rawClient.searchGetPayorInfo(request).thenApply(response -> response.body());
@@ -47,6 +51,11 @@ public class AsyncInsuranceClient {
 
     public CompletableFuture<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo() {
         return this.rawClient.searchPayorInfo().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
+            RequestOptions requestOptions) {
+        return this.rawClient.searchPayorInfo(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(

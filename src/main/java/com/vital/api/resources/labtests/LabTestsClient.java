@@ -76,6 +76,13 @@ public class LabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public List<ClientFacingLabTest> get(RequestOptions requestOptions) {
+        return this.rawClient.get(requestOptions).body();
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public List<ClientFacingLabTest> get(LabTestsGetRequest request) {
         return this.rawClient.get(request).body();
     }
@@ -105,6 +112,13 @@ public class LabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public ClientFacingLabTest getById(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.getById(labTestId, requestOptions).body();
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public ClientFacingLabTest getById(String labTestId, LabTestsGetByIdRequest request) {
         return this.rawClient.getById(labTestId, request).body();
     }
@@ -121,6 +135,10 @@ public class LabTestsClient {
         return this.rawClient.updateLabTest(labTestId).body();
     }
 
+    public ClientFacingLabTest updateLabTest(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.updateLabTest(labTestId, requestOptions).body();
+    }
+
     public ClientFacingLabTest updateLabTest(String labTestId, UpdateLabTestRequest request) {
         return this.rawClient.updateLabTest(labTestId, request).body();
     }
@@ -135,6 +153,13 @@ public class LabTestsClient {
      */
     public GetMarkersResponse getMarkers() {
         return this.rawClient.getMarkers().body();
+    }
+
+    /**
+     * GET all the markers for the given lab.
+     */
+    public GetMarkersResponse getMarkers(RequestOptions requestOptions) {
+        return this.rawClient.getMarkers(requestOptions).body();
     }
 
     /**
@@ -164,6 +189,10 @@ public class LabTestsClient {
         return this.rawClient.getMarkersForLabTest(labTestId).body();
     }
 
+    public GetMarkersResponse getMarkersForLabTest(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.getMarkersForLabTest(labTestId, requestOptions).body();
+    }
+
     public GetMarkersResponse getMarkersForLabTest(String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return this.rawClient.getMarkersForLabTest(labTestId, request).body();
     }
@@ -178,17 +207,17 @@ public class LabTestsClient {
     /**
      * GET a specific marker for the given lab and provider_id
      */
-    public ClientFacingMarker getMarkersByLabAndProviderId(int labId, String providerId) {
-        return this.rawClient.getMarkersByLabAndProviderId(labId, providerId).body();
+    public ClientFacingMarker getMarkersByLabAndProviderId(String providerId, int labId) {
+        return this.rawClient.getMarkersByLabAndProviderId(providerId, labId).body();
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public ClientFacingMarker getMarkersByLabAndProviderId(
-            int labId, String providerId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+            String providerId, int labId, RequestOptions requestOptions) {
         return this.rawClient
-                .getMarkersByLabAndProviderId(labId, providerId, request)
+                .getMarkersByLabAndProviderId(providerId, labId, requestOptions)
                 .body();
     }
 
@@ -196,12 +225,22 @@ public class LabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public ClientFacingMarker getMarkersByLabAndProviderId(
-            int labId,
+            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+        return this.rawClient
+                .getMarkersByLabAndProviderId(providerId, labId, request)
+                .body();
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public ClientFacingMarker getMarkersByLabAndProviderId(
             String providerId,
+            int labId,
             LabTestsGetMarkersByLabAndProviderIdRequest request,
             RequestOptions requestOptions) {
         return this.rawClient
-                .getMarkersByLabAndProviderId(labId, providerId, request, requestOptions)
+                .getMarkersByLabAndProviderId(providerId, labId, request, requestOptions)
                 .body();
     }
 
@@ -224,6 +263,13 @@ public class LabTestsClient {
      */
     public LabTestResourcesResponse getPaginated() {
         return this.rawClient.getPaginated().body();
+    }
+
+    /**
+     * GET lab tests the team has access to as a paginated list.
+     */
+    public LabTestResourcesResponse getPaginated(RequestOptions requestOptions) {
+        return this.rawClient.getPaginated(requestOptions).body();
     }
 
     /**
@@ -255,6 +301,13 @@ public class LabTestsClient {
      */
     public GetOrdersResponse getOrders() {
         return this.rawClient.getOrders().body();
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public GetOrdersResponse getOrders(RequestOptions requestOptions) {
+        return this.rawClient.getOrders(requestOptions).body();
     }
 
     /**
@@ -428,6 +481,10 @@ public class LabTestsClient {
 
     public PscInfo getOrderPscInfo(String orderId) {
         return this.rawClient.getOrderPscInfo(orderId).body();
+    }
+
+    public PscInfo getOrderPscInfo(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderPscInfo(orderId, requestOptions).body();
     }
 
     public PscInfo getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
@@ -664,6 +721,13 @@ public class LabTestsClient {
      */
     public Object simulateOrderProcess(String orderId) {
         return this.rawClient.simulateOrderProcess(orderId).body();
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public Object simulateOrderProcess(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.simulateOrderProcess(orderId, requestOptions).body();
     }
 
     /**

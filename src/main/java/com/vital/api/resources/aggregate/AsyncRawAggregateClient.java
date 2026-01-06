@@ -182,6 +182,15 @@ public class AsyncRawAggregateClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ContinuousQueryTaskHistoryResponse>> getTaskHistoryForContinuousQuery(
+            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+        return getTaskHistoryForContinuousQuery(
+                userId,
+                queryIdOrSlug,
+                AggregateGetTaskHistoryForContinuousQueryRequest.builder().build(),
+                requestOptions);
+    }
+
+    public CompletableFuture<VitalHttpResponse<ContinuousQueryTaskHistoryResponse>> getTaskHistoryForContinuousQuery(
             String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
         return getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request, null);
     }

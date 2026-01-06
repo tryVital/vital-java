@@ -60,6 +60,10 @@ public class LinkClient {
         return this.rawClient.listBulkOps().body();
     }
 
+    public BulkOpsResponse listBulkOps(RequestOptions requestOptions) {
+        return this.rawClient.listBulkOps(requestOptions).body();
+    }
+
     public BulkOpsResponse listBulkOps(LinkListBulkOpsRequest request) {
         return this.rawClient.listBulkOps(request).body();
     }
@@ -174,6 +178,14 @@ public class LinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
+    public Map<String, Object> tokenState(RequestOptions requestOptions) {
+        return this.rawClient.tokenState(requestOptions).body();
+    }
+
+    /**
+     * REQUEST_SOURCE: VITAL-LINK
+     * Check link token state - can be hit continuously used as heartbeat
+     */
     public Map<String, Object> tokenState(LinkTokenStateRequest request) {
         return this.rawClient.tokenState(request).body();
     }
@@ -219,6 +231,13 @@ public class LinkClient {
      */
     public Source generateOauthLink(OAuthProviders oauthProvider) {
         return this.rawClient.generateOauthLink(oauthProvider).body();
+    }
+
+    /**
+     * This endpoint generates an OAuth link for oauth provider
+     */
+    public Source generateOauthLink(OAuthProviders oauthProvider, RequestOptions requestOptions) {
+        return this.rawClient.generateOauthLink(oauthProvider, requestOptions).body();
     }
 
     /**
@@ -295,6 +314,13 @@ public class LinkClient {
      */
     public List<SourceLink> getAllProviders() {
         return this.rawClient.getAllProviders().body();
+    }
+
+    /**
+     * GET List of all available providers given the generated link token.
+     */
+    public List<SourceLink> getAllProviders(RequestOptions requestOptions) {
+        return this.rawClient.getAllProviders(requestOptions).body();
     }
 
     /**

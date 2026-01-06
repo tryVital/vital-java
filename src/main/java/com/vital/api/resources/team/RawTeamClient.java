@@ -47,6 +47,13 @@ public class RawTeamClient {
     /**
      * Post teams.
      */
+    public VitalHttpResponse<Map<String, Object>> getLinkConfig(RequestOptions requestOptions) {
+        return getLinkConfig(TeamGetLinkConfigRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Post teams.
+     */
     public VitalHttpResponse<Map<String, Object>> getLinkConfig(TeamGetLinkConfigRequest request) {
         return getLinkConfig(request, null);
     }
@@ -158,6 +165,13 @@ public class RawTeamClient {
     /**
      * Search team users by user_id
      */
+    public VitalHttpResponse<List<ClientFacingUser>> getUserById(RequestOptions requestOptions) {
+        return getUserById(TeamGetUserByIdRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Search team users by user_id
+     */
     public VitalHttpResponse<List<ClientFacingUser>> getUserById(TeamGetUserByIdRequest request) {
         return getUserById(request, null);
     }
@@ -249,6 +263,13 @@ public class RawTeamClient {
      */
     public VitalHttpResponse<List<Map<String, Object>>> getSourcePriorities() {
         return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build());
+    }
+
+    /**
+     * GET source priorities.
+     */
+    public VitalHttpResponse<List<Map<String, Object>>> getSourcePriorities(RequestOptions requestOptions) {
+        return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build(), requestOptions);
     }
 
     /**

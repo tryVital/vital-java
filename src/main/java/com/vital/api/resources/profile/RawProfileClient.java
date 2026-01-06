@@ -42,6 +42,13 @@ public class RawProfileClient {
     /**
      * Get profile for user_id
      */
+    public VitalHttpResponse<ClientFacingProfile> get(String userId, RequestOptions requestOptions) {
+        return get(userId, ProfileGetRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get profile for user_id
+     */
     public VitalHttpResponse<ClientFacingProfile> get(String userId, ProfileGetRequest request) {
         return get(userId, request, null);
     }
@@ -97,6 +104,13 @@ public class RawProfileClient {
      */
     public VitalHttpResponse<RawProfile> getRaw(String userId) {
         return getRaw(userId, ProfileGetRawRequest.builder().build());
+    }
+
+    /**
+     * Get raw profile for user_id
+     */
+    public VitalHttpResponse<RawProfile> getRaw(String userId, RequestOptions requestOptions) {
+        return getRaw(userId, ProfileGetRawRequest.builder().build(), requestOptions);
     }
 
     /**

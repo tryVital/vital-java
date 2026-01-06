@@ -36,6 +36,13 @@ public class ProvidersClient {
     /**
      * Get Provider list
      */
+    public List<ClientFacingProviderDetailed> getAll(RequestOptions requestOptions) {
+        return this.rawClient.getAll(requestOptions).body();
+    }
+
+    /**
+     * Get Provider list
+     */
     public List<ClientFacingProviderDetailed> getAll(ProvidersGetAllRequest request) {
         return this.rawClient.getAll(request).body();
     }

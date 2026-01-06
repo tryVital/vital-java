@@ -66,6 +66,13 @@ public class RawUserClient {
     /**
      * GET All users for team.
      */
+    public VitalHttpResponse<PaginatedUsersResponse> getAll(RequestOptions requestOptions) {
+        return getAll(UserGetAllRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * GET All users for team.
+     */
     public VitalHttpResponse<PaginatedUsersResponse> getAll(UserGetAllRequest request) {
         return getAll(request, null);
     }
@@ -374,6 +381,11 @@ public class RawUserClient {
                 userId, UserGetLatestInsuranceRequest.builder().build());
     }
 
+    public VitalHttpResponse<ClientFacingInsurance> getLatestInsurance(String userId, RequestOptions requestOptions) {
+        return getLatestInsurance(
+                userId, UserGetLatestInsuranceRequest.builder().build(), requestOptions);
+    }
+
     public VitalHttpResponse<ClientFacingInsurance> getLatestInsurance(
             String userId, UserGetLatestInsuranceRequest request) {
         return getLatestInsurance(userId, request, null);
@@ -661,6 +673,10 @@ public class RawUserClient {
         return patch(userId, UserPatchBody.builder().build());
     }
 
+    public VitalHttpResponse<Void> patch(String userId, RequestOptions requestOptions) {
+        return patch(userId, UserPatchBody.builder().build(), requestOptions);
+    }
+
     public VitalHttpResponse<Void> patch(String userId, UserPatchBody request) {
         return patch(userId, request, null);
     }
@@ -713,6 +729,10 @@ public class RawUserClient {
 
     public VitalHttpResponse<UserSuccessResponse> undoDelete() {
         return undoDelete(UserUndoDeleteRequest.builder().build());
+    }
+
+    public VitalHttpResponse<UserSuccessResponse> undoDelete(RequestOptions requestOptions) {
+        return undoDelete(UserUndoDeleteRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<UserSuccessResponse> undoDelete(UserUndoDeleteRequest request) {
@@ -770,6 +790,13 @@ public class RawUserClient {
      */
     public VitalHttpResponse<UserRefreshSuccessResponse> refresh(String userId) {
         return refresh(userId, UserRefreshRequest.builder().build());
+    }
+
+    /**
+     * Trigger a manual refresh for a specific user
+     */
+    public VitalHttpResponse<UserRefreshSuccessResponse> refresh(String userId, RequestOptions requestOptions) {
+        return refresh(userId, UserRefreshRequest.builder().build(), requestOptions);
     }
 
     /**

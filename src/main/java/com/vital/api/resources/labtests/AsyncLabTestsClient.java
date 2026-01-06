@@ -77,6 +77,13 @@ public class AsyncLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public CompletableFuture<List<ClientFacingLabTest>> get(RequestOptions requestOptions) {
+        return this.rawClient.get(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public CompletableFuture<List<ClientFacingLabTest>> get(LabTestsGetRequest request) {
         return this.rawClient.get(request).thenApply(response -> response.body());
     }
@@ -106,6 +113,13 @@ public class AsyncLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public CompletableFuture<ClientFacingLabTest> getById(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.getById(labTestId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public CompletableFuture<ClientFacingLabTest> getById(String labTestId, LabTestsGetByIdRequest request) {
         return this.rawClient.getById(labTestId, request).thenApply(response -> response.body());
     }
@@ -122,6 +136,10 @@ public class AsyncLabTestsClient {
         return this.rawClient.updateLabTest(labTestId).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<ClientFacingLabTest> updateLabTest(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.updateLabTest(labTestId, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<ClientFacingLabTest> updateLabTest(String labTestId, UpdateLabTestRequest request) {
         return this.rawClient.updateLabTest(labTestId, request).thenApply(response -> response.body());
     }
@@ -136,6 +154,13 @@ public class AsyncLabTestsClient {
      */
     public CompletableFuture<GetMarkersResponse> getMarkers() {
         return this.rawClient.getMarkers().thenApply(response -> response.body());
+    }
+
+    /**
+     * GET all the markers for the given lab.
+     */
+    public CompletableFuture<GetMarkersResponse> getMarkers(RequestOptions requestOptions) {
+        return this.rawClient.getMarkers(requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -166,6 +191,10 @@ public class AsyncLabTestsClient {
         return this.rawClient.getMarkersForLabTest(labTestId).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(String labTestId, RequestOptions requestOptions) {
+        return this.rawClient.getMarkersForLabTest(labTestId, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return this.rawClient.getMarkersForLabTest(labTestId, request).thenApply(response -> response.body());
@@ -181,17 +210,17 @@ public class AsyncLabTestsClient {
     /**
      * GET a specific marker for the given lab and provider_id
      */
-    public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(int labId, String providerId) {
-        return this.rawClient.getMarkersByLabAndProviderId(labId, providerId).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(String providerId, int labId) {
+        return this.rawClient.getMarkersByLabAndProviderId(providerId, labId).thenApply(response -> response.body());
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(
-            int labId, String providerId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+            String providerId, int labId, RequestOptions requestOptions) {
         return this.rawClient
-                .getMarkersByLabAndProviderId(labId, providerId, request)
+                .getMarkersByLabAndProviderId(providerId, labId, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -199,12 +228,22 @@ public class AsyncLabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(
-            int labId,
+            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+        return this.rawClient
+                .getMarkersByLabAndProviderId(providerId, labId, request)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public CompletableFuture<ClientFacingMarker> getMarkersByLabAndProviderId(
             String providerId,
+            int labId,
             LabTestsGetMarkersByLabAndProviderIdRequest request,
             RequestOptions requestOptions) {
         return this.rawClient
-                .getMarkersByLabAndProviderId(labId, providerId, request, requestOptions)
+                .getMarkersByLabAndProviderId(providerId, labId, request, requestOptions)
                 .thenApply(response -> response.body());
     }
 
@@ -227,6 +266,13 @@ public class AsyncLabTestsClient {
      */
     public CompletableFuture<LabTestResourcesResponse> getPaginated() {
         return this.rawClient.getPaginated().thenApply(response -> response.body());
+    }
+
+    /**
+     * GET lab tests the team has access to as a paginated list.
+     */
+    public CompletableFuture<LabTestResourcesResponse> getPaginated(RequestOptions requestOptions) {
+        return this.rawClient.getPaginated(requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -260,6 +306,13 @@ public class AsyncLabTestsClient {
      */
     public CompletableFuture<GetOrdersResponse> getOrders() {
         return this.rawClient.getOrders().thenApply(response -> response.body());
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public CompletableFuture<GetOrdersResponse> getOrders(RequestOptions requestOptions) {
+        return this.rawClient.getOrders(requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -438,6 +491,10 @@ public class AsyncLabTestsClient {
 
     public CompletableFuture<PscInfo> getOrderPscInfo(String orderId) {
         return this.rawClient.getOrderPscInfo(orderId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<PscInfo> getOrderPscInfo(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.getOrderPscInfo(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<PscInfo> getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
@@ -678,6 +735,13 @@ public class AsyncLabTestsClient {
      */
     public CompletableFuture<Object> simulateOrderProcess(String orderId) {
         return this.rawClient.simulateOrderProcess(orderId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public CompletableFuture<Object> simulateOrderProcess(String orderId, RequestOptions requestOptions) {
+        return this.rawClient.simulateOrderProcess(orderId, requestOptions).thenApply(response -> response.body());
     }
 
     /**

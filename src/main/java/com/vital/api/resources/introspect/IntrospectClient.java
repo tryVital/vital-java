@@ -31,6 +31,10 @@ public class IntrospectClient {
         return this.rawClient.getUserResources().body();
     }
 
+    public UserResourcesResponse getUserResources(RequestOptions requestOptions) {
+        return this.rawClient.getUserResources(requestOptions).body();
+    }
+
     public UserResourcesResponse getUserResources(IntrospectGetUserResourcesRequest request) {
         return this.rawClient.getUserResources(request).body();
     }
@@ -42,6 +46,10 @@ public class IntrospectClient {
 
     public UserHistoricalPullsResponse getUserHistoricalPulls() {
         return this.rawClient.getUserHistoricalPulls().body();
+    }
+
+    public UserHistoricalPullsResponse getUserHistoricalPulls(RequestOptions requestOptions) {
+        return this.rawClient.getUserHistoricalPulls(requestOptions).body();
     }
 
     public UserHistoricalPullsResponse getUserHistoricalPulls(IntrospectGetUserHistoricalPullsRequest request) {

@@ -91,6 +91,13 @@ public class AsyncRawLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public CompletableFuture<VitalHttpResponse<List<ClientFacingLabTest>>> get(RequestOptions requestOptions) {
+        return get(LabTestsGetRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingLabTest>>> get(LabTestsGetRequest request) {
         return get(request, null);
     }
@@ -267,6 +274,14 @@ public class AsyncRawLabTestsClient {
      * GET all the lab tests the team has access to.
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> getById(
+            String labTestId, RequestOptions requestOptions) {
+        return getById(labTestId, LabTestsGetByIdRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
+    public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> getById(
             String labTestId, LabTestsGetByIdRequest request) {
         return getById(labTestId, request, null);
     }
@@ -335,6 +350,11 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> updateLabTest(String labTestId) {
         return updateLabTest(labTestId, UpdateLabTestRequest.builder().build());
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> updateLabTest(
+            String labTestId, RequestOptions requestOptions) {
+        return updateLabTest(labTestId, UpdateLabTestRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> updateLabTest(
@@ -411,6 +431,13 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkers() {
         return getMarkers(LabTestsGetMarkersRequest.builder().build());
+    }
+
+    /**
+     * GET all the markers for the given lab.
+     */
+    public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkers(RequestOptions requestOptions) {
+        return getMarkers(LabTestsGetMarkersRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -582,6 +609,12 @@ public class AsyncRawLabTestsClient {
     }
 
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForLabTest(
+            String labTestId, RequestOptions requestOptions) {
+        return getMarkersForLabTest(
+                labTestId, LabTestsGetMarkersForLabTestRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return getMarkersForLabTest(labTestId, request, null);
     }
@@ -658,10 +691,10 @@ public class AsyncRawLabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
-            int labId, String providerId) {
+            String providerId, int labId) {
         return getMarkersByLabAndProviderId(
-                labId,
                 providerId,
+                labId,
                 LabTestsGetMarkersByLabAndProviderIdRequest.builder().build());
     }
 
@@ -669,16 +702,28 @@ public class AsyncRawLabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
-            int labId, String providerId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
-        return getMarkersByLabAndProviderId(labId, providerId, request, null);
+            String providerId, int labId, RequestOptions requestOptions) {
+        return getMarkersByLabAndProviderId(
+                providerId,
+                labId,
+                LabTestsGetMarkersByLabAndProviderIdRequest.builder().build(),
+                requestOptions);
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
-            int labId,
+            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+        return getMarkersByLabAndProviderId(providerId, labId, request, null);
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public CompletableFuture<VitalHttpResponse<ClientFacingMarker>> getMarkersByLabAndProviderId(
             String providerId,
+            int labId,
             LabTestsGetMarkersByLabAndProviderIdRequest request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -800,6 +845,13 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<LabTestResourcesResponse>> getPaginated() {
         return getPaginated(LabTestsGetPaginatedRequest.builder().build());
+    }
+
+    /**
+     * GET lab tests the team has access to as a paginated list.
+     */
+    public CompletableFuture<VitalHttpResponse<LabTestResourcesResponse>> getPaginated(RequestOptions requestOptions) {
+        return getPaginated(LabTestsGetPaginatedRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -976,6 +1028,13 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<GetOrdersResponse>> getOrders() {
         return getOrders(LabTestsGetOrdersRequest.builder().build());
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public CompletableFuture<VitalHttpResponse<GetOrdersResponse>> getOrders(RequestOptions requestOptions) {
+        return getOrders(LabTestsGetOrdersRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -1799,6 +1858,11 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<PscInfo>> getOrderPscInfo(String orderId) {
         return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build());
+    }
+
+    public CompletableFuture<VitalHttpResponse<PscInfo>> getOrderPscInfo(
+            String orderId, RequestOptions requestOptions) {
+        return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<VitalHttpResponse<PscInfo>> getOrderPscInfo(
@@ -3047,6 +3111,15 @@ public class AsyncRawLabTestsClient {
     public CompletableFuture<VitalHttpResponse<Object>> simulateOrderProcess(String orderId) {
         return simulateOrderProcess(
                 orderId, LabTestsSimulateOrderProcessRequest.builder().build());
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public CompletableFuture<VitalHttpResponse<Object>> simulateOrderProcess(
+            String orderId, RequestOptions requestOptions) {
+        return simulateOrderProcess(
+                orderId, LabTestsSimulateOrderProcessRequest.builder().build(), requestOptions);
     }
 
     /**

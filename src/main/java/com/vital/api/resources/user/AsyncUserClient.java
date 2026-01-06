@@ -58,6 +58,13 @@ public class AsyncUserClient {
     /**
      * GET All users for team.
      */
+    public CompletableFuture<PaginatedUsersResponse> getAll(RequestOptions requestOptions) {
+        return this.rawClient.getAll(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * GET All users for team.
+     */
     public CompletableFuture<PaginatedUsersResponse> getAll(UserGetAllRequest request) {
         return this.rawClient.getAll(request).thenApply(response -> response.body());
     }
@@ -133,6 +140,10 @@ public class AsyncUserClient {
         return this.rawClient.getLatestInsurance(userId).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<ClientFacingInsurance> getLatestInsurance(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getLatestInsurance(userId, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<ClientFacingInsurance> getLatestInsurance(
             String userId, UserGetLatestInsuranceRequest request) {
         return this.rawClient.getLatestInsurance(userId, request).thenApply(response -> response.body());
@@ -199,6 +210,10 @@ public class AsyncUserClient {
         return this.rawClient.patch(userId).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> patch(String userId, RequestOptions requestOptions) {
+        return this.rawClient.patch(userId, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> patch(String userId, UserPatchBody request) {
         return this.rawClient.patch(userId, request).thenApply(response -> response.body());
     }
@@ -209,6 +224,10 @@ public class AsyncUserClient {
 
     public CompletableFuture<UserSuccessResponse> undoDelete() {
         return this.rawClient.undoDelete().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserSuccessResponse> undoDelete(RequestOptions requestOptions) {
+        return this.rawClient.undoDelete(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserSuccessResponse> undoDelete(UserUndoDeleteRequest request) {
@@ -225,6 +244,13 @@ public class AsyncUserClient {
      */
     public CompletableFuture<UserRefreshSuccessResponse> refresh(String userId) {
         return this.rawClient.refresh(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Trigger a manual refresh for a specific user
+     */
+    public CompletableFuture<UserRefreshSuccessResponse> refresh(String userId, RequestOptions requestOptions) {
+        return this.rawClient.refresh(userId, requestOptions).thenApply(response -> response.body());
     }
 
     /**

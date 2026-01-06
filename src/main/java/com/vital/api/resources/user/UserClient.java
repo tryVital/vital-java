@@ -57,6 +57,13 @@ public class UserClient {
     /**
      * GET All users for team.
      */
+    public PaginatedUsersResponse getAll(RequestOptions requestOptions) {
+        return this.rawClient.getAll(requestOptions).body();
+    }
+
+    /**
+     * GET All users for team.
+     */
     public PaginatedUsersResponse getAll(UserGetAllRequest request) {
         return this.rawClient.getAll(request).body();
     }
@@ -132,6 +139,10 @@ public class UserClient {
         return this.rawClient.getLatestInsurance(userId).body();
     }
 
+    public ClientFacingInsurance getLatestInsurance(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getLatestInsurance(userId, requestOptions).body();
+    }
+
     public ClientFacingInsurance getLatestInsurance(String userId, UserGetLatestInsuranceRequest request) {
         return this.rawClient.getLatestInsurance(userId, request).body();
     }
@@ -195,6 +206,10 @@ public class UserClient {
         this.rawClient.patch(userId).body();
     }
 
+    public void patch(String userId, RequestOptions requestOptions) {
+        this.rawClient.patch(userId, requestOptions).body();
+    }
+
     public void patch(String userId, UserPatchBody request) {
         this.rawClient.patch(userId, request).body();
     }
@@ -205,6 +220,10 @@ public class UserClient {
 
     public UserSuccessResponse undoDelete() {
         return this.rawClient.undoDelete().body();
+    }
+
+    public UserSuccessResponse undoDelete(RequestOptions requestOptions) {
+        return this.rawClient.undoDelete(requestOptions).body();
     }
 
     public UserSuccessResponse undoDelete(UserUndoDeleteRequest request) {
@@ -220,6 +239,13 @@ public class UserClient {
      */
     public UserRefreshSuccessResponse refresh(String userId) {
         return this.rawClient.refresh(userId).body();
+    }
+
+    /**
+     * Trigger a manual refresh for a specific user
+     */
+    public UserRefreshSuccessResponse refresh(String userId, RequestOptions requestOptions) {
+        return this.rawClient.refresh(userId, requestOptions).body();
     }
 
     /**

@@ -35,6 +35,13 @@ public class DevicesClient {
     /**
      * Get Devices for user_id
      */
+    public RawDevices getRaw(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getRaw(userId, requestOptions).body();
+    }
+
+    /**
+     * Get Devices for user_id
+     */
     public RawDevices getRaw(String userId, DevicesGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }

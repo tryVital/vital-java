@@ -41,6 +41,13 @@ public class RawOrderClient {
     /**
      * Replay a webhook for a given set of orders
      */
+    public VitalHttpResponse<ResendWebhookResponse> resendEvents(RequestOptions requestOptions) {
+        return resendEvents(ResendWebhookBody.builder().build(), requestOptions);
+    }
+
+    /**
+     * Replay a webhook for a given set of orders
+     */
     public VitalHttpResponse<ResendWebhookResponse> resendEvents(ResendWebhookBody request) {
         return resendEvents(request, null);
     }

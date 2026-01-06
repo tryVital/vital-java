@@ -36,6 +36,10 @@ public class RawIntrospectClient {
         return getUserResources(IntrospectGetUserResourcesRequest.builder().build());
     }
 
+    public VitalHttpResponse<UserResourcesResponse> getUserResources(RequestOptions requestOptions) {
+        return getUserResources(IntrospectGetUserResourcesRequest.builder().build(), requestOptions);
+    }
+
     public VitalHttpResponse<UserResourcesResponse> getUserResources(IntrospectGetUserResourcesRequest request) {
         return getUserResources(request, null);
     }
@@ -101,6 +105,11 @@ public class RawIntrospectClient {
     public VitalHttpResponse<UserHistoricalPullsResponse> getUserHistoricalPulls() {
         return getUserHistoricalPulls(
                 IntrospectGetUserHistoricalPullsRequest.builder().build());
+    }
+
+    public VitalHttpResponse<UserHistoricalPullsResponse> getUserHistoricalPulls(RequestOptions requestOptions) {
+        return getUserHistoricalPulls(
+                IntrospectGetUserHistoricalPullsRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<UserHistoricalPullsResponse> getUserHistoricalPulls(

@@ -87,6 +87,13 @@ public class RawLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public VitalHttpResponse<List<ClientFacingLabTest>> get(RequestOptions requestOptions) {
+        return get(LabTestsGetRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public VitalHttpResponse<List<ClientFacingLabTest>> get(LabTestsGetRequest request) {
         return get(request, null);
     }
@@ -229,6 +236,13 @@ public class RawLabTestsClient {
     /**
      * GET all the lab tests the team has access to.
      */
+    public VitalHttpResponse<ClientFacingLabTest> getById(String labTestId, RequestOptions requestOptions) {
+        return getById(labTestId, LabTestsGetByIdRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * GET all the lab tests the team has access to.
+     */
     public VitalHttpResponse<ClientFacingLabTest> getById(String labTestId, LabTestsGetByIdRequest request) {
         return getById(labTestId, request, null);
     }
@@ -281,6 +295,10 @@ public class RawLabTestsClient {
 
     public VitalHttpResponse<ClientFacingLabTest> updateLabTest(String labTestId) {
         return updateLabTest(labTestId, UpdateLabTestRequest.builder().build());
+    }
+
+    public VitalHttpResponse<ClientFacingLabTest> updateLabTest(String labTestId, RequestOptions requestOptions) {
+        return updateLabTest(labTestId, UpdateLabTestRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<ClientFacingLabTest> updateLabTest(String labTestId, UpdateLabTestRequest request) {
@@ -340,6 +358,13 @@ public class RawLabTestsClient {
      */
     public VitalHttpResponse<GetMarkersResponse> getMarkers() {
         return getMarkers(LabTestsGetMarkersRequest.builder().build());
+    }
+
+    /**
+     * GET all the markers for the given lab.
+     */
+    public VitalHttpResponse<GetMarkersResponse> getMarkers(RequestOptions requestOptions) {
+        return getMarkers(LabTestsGetMarkersRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -477,6 +502,11 @@ public class RawLabTestsClient {
                 labTestId, LabTestsGetMarkersForLabTestRequest.builder().build());
     }
 
+    public VitalHttpResponse<GetMarkersResponse> getMarkersForLabTest(String labTestId, RequestOptions requestOptions) {
+        return getMarkersForLabTest(
+                labTestId, LabTestsGetMarkersForLabTestRequest.builder().build(), requestOptions);
+    }
+
     public VitalHttpResponse<GetMarkersResponse> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return getMarkersForLabTest(labTestId, request, null);
@@ -537,10 +567,10 @@ public class RawLabTestsClient {
     /**
      * GET a specific marker for the given lab and provider_id
      */
-    public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(int labId, String providerId) {
+    public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(String providerId, int labId) {
         return getMarkersByLabAndProviderId(
-                labId,
                 providerId,
+                labId,
                 LabTestsGetMarkersByLabAndProviderIdRequest.builder().build());
     }
 
@@ -548,16 +578,28 @@ public class RawLabTestsClient {
      * GET a specific marker for the given lab and provider_id
      */
     public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(
-            int labId, String providerId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
-        return getMarkersByLabAndProviderId(labId, providerId, request, null);
+            String providerId, int labId, RequestOptions requestOptions) {
+        return getMarkersByLabAndProviderId(
+                providerId,
+                labId,
+                LabTestsGetMarkersByLabAndProviderIdRequest.builder().build(),
+                requestOptions);
     }
 
     /**
      * GET a specific marker for the given lab and provider_id
      */
     public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(
-            int labId,
+            String providerId, int labId, LabTestsGetMarkersByLabAndProviderIdRequest request) {
+        return getMarkersByLabAndProviderId(providerId, labId, request, null);
+    }
+
+    /**
+     * GET a specific marker for the given lab and provider_id
+     */
+    public VitalHttpResponse<ClientFacingMarker> getMarkersByLabAndProviderId(
             String providerId,
+            int labId,
             LabTestsGetMarkersByLabAndProviderIdRequest request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -649,6 +691,13 @@ public class RawLabTestsClient {
      */
     public VitalHttpResponse<LabTestResourcesResponse> getPaginated() {
         return getPaginated(LabTestsGetPaginatedRequest.builder().build());
+    }
+
+    /**
+     * GET lab tests the team has access to as a paginated list.
+     */
+    public VitalHttpResponse<LabTestResourcesResponse> getPaginated(RequestOptions requestOptions) {
+        return getPaginated(LabTestsGetPaginatedRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -794,6 +843,13 @@ public class RawLabTestsClient {
      */
     public VitalHttpResponse<GetOrdersResponse> getOrders() {
         return getOrders(LabTestsGetOrdersRequest.builder().build());
+    }
+
+    /**
+     * GET many orders with filters.
+     */
+    public VitalHttpResponse<GetOrdersResponse> getOrders(RequestOptions requestOptions) {
+        return getOrders(LabTestsGetOrdersRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -1463,6 +1519,10 @@ public class RawLabTestsClient {
 
     public VitalHttpResponse<PscInfo> getOrderPscInfo(String orderId) {
         return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build());
+    }
+
+    public VitalHttpResponse<PscInfo> getOrderPscInfo(String orderId, RequestOptions requestOptions) {
+        return getOrderPscInfo(orderId, LabTestsGetOrderPscInfoRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<PscInfo> getOrderPscInfo(String orderId, LabTestsGetOrderPscInfoRequest request) {
@@ -2419,6 +2479,14 @@ public class RawLabTestsClient {
     public VitalHttpResponse<Object> simulateOrderProcess(String orderId) {
         return simulateOrderProcess(
                 orderId, LabTestsSimulateOrderProcessRequest.builder().build());
+    }
+
+    /**
+     * Get available test kits.
+     */
+    public VitalHttpResponse<Object> simulateOrderProcess(String orderId, RequestOptions requestOptions) {
+        return simulateOrderProcess(
+                orderId, LabTestsSimulateOrderProcessRequest.builder().build(), requestOptions);
     }
 
     /**

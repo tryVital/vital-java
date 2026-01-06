@@ -56,6 +56,13 @@ public class AggregateClient {
     }
 
     public ContinuousQueryTaskHistoryResponse getTaskHistoryForContinuousQuery(
+            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+        return this.rawClient
+                .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, requestOptions)
+                .body();
+    }
+
+    public ContinuousQueryTaskHistoryResponse getTaskHistoryForContinuousQuery(
             String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
         return this.rawClient
                 .getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request)

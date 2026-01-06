@@ -32,6 +32,10 @@ public class AsyncIntrospectClient {
         return this.rawClient.getUserResources().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<UserResourcesResponse> getUserResources(RequestOptions requestOptions) {
+        return this.rawClient.getUserResources(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<UserResourcesResponse> getUserResources(IntrospectGetUserResourcesRequest request) {
         return this.rawClient.getUserResources(request).thenApply(response -> response.body());
     }
@@ -43,6 +47,10 @@ public class AsyncIntrospectClient {
 
     public CompletableFuture<UserHistoricalPullsResponse> getUserHistoricalPulls() {
         return this.rawClient.getUserHistoricalPulls().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserHistoricalPullsResponse> getUserHistoricalPulls(RequestOptions requestOptions) {
+        return this.rawClient.getUserHistoricalPulls(requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserHistoricalPullsResponse> getUserHistoricalPulls(

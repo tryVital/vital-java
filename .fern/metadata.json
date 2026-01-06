@@ -1,7 +1,7 @@
 {
-  "cliVersion": "3.30.3",
+  "cliVersion": "3.35.1",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "3.27.4",
+  "generatorVersion": "3.27.6",
   "generatorConfig": {
     "publish-to": "central",
     "base-api-exception-class-name": "ApiError",

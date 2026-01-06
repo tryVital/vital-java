@@ -47,6 +47,14 @@ public class AsyncRawProvidersClient {
      * Get Provider list
      */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingProviderDetailed>>> getAll(
+            RequestOptions requestOptions) {
+        return getAll(ProvidersGetAllRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get Provider list
+     */
+    public CompletableFuture<VitalHttpResponse<List<ClientFacingProviderDetailed>>> getAll(
             ProvidersGetAllRequest request) {
         return getAll(request, null);
     }

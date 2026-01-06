@@ -38,6 +38,13 @@ public class AsyncProfileClient {
     /**
      * Get profile for user_id
      */
+    public CompletableFuture<ClientFacingProfile> get(String userId, RequestOptions requestOptions) {
+        return this.rawClient.get(userId, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get profile for user_id
+     */
     public CompletableFuture<ClientFacingProfile> get(String userId, ProfileGetRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
@@ -55,6 +62,13 @@ public class AsyncProfileClient {
      */
     public CompletableFuture<RawProfile> getRaw(String userId) {
         return this.rawClient.getRaw(userId).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get raw profile for user_id
+     */
+    public CompletableFuture<RawProfile> getRaw(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getRaw(userId, requestOptions).thenApply(response -> response.body());
     }
 
     /**

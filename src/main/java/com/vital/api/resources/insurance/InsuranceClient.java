@@ -34,6 +34,10 @@ public class InsuranceClient {
         return this.rawClient.searchGetPayorInfo().body();
     }
 
+    public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(RequestOptions requestOptions) {
+        return this.rawClient.searchGetPayorInfo(requestOptions).body();
+    }
+
     public List<ClientFacingPayorSearchResponse> searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest request) {
         return this.rawClient.searchGetPayorInfo(request).body();
     }
@@ -45,6 +49,10 @@ public class InsuranceClient {
 
     public List<ClientFacingPayorSearchResponseDeprecated> searchPayorInfo() {
         return this.rawClient.searchPayorInfo().body();
+    }
+
+    public List<ClientFacingPayorSearchResponseDeprecated> searchPayorInfo(RequestOptions requestOptions) {
+        return this.rawClient.searchPayorInfo(requestOptions).body();
     }
 
     public List<ClientFacingPayorSearchResponseDeprecated> searchPayorInfo(PayorSearchRequest request) {

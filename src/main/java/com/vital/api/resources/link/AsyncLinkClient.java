@@ -61,6 +61,10 @@ public class AsyncLinkClient {
         return this.rawClient.listBulkOps().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<BulkOpsResponse> listBulkOps(RequestOptions requestOptions) {
+        return this.rawClient.listBulkOps(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<BulkOpsResponse> listBulkOps(LinkListBulkOpsRequest request) {
         return this.rawClient.listBulkOps(request).thenApply(response -> response.body());
     }
@@ -183,6 +187,14 @@ public class AsyncLinkClient {
      * REQUEST_SOURCE: VITAL-LINK
      * Check link token state - can be hit continuously used as heartbeat
      */
+    public CompletableFuture<Map<String, Object>> tokenState(RequestOptions requestOptions) {
+        return this.rawClient.tokenState(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * REQUEST_SOURCE: VITAL-LINK
+     * Check link token state - can be hit continuously used as heartbeat
+     */
     public CompletableFuture<Map<String, Object>> tokenState(LinkTokenStateRequest request) {
         return this.rawClient.tokenState(request).thenApply(response -> response.body());
     }
@@ -229,6 +241,13 @@ public class AsyncLinkClient {
      */
     public CompletableFuture<Source> generateOauthLink(OAuthProviders oauthProvider) {
         return this.rawClient.generateOauthLink(oauthProvider).thenApply(response -> response.body());
+    }
+
+    /**
+     * This endpoint generates an OAuth link for oauth provider
+     */
+    public CompletableFuture<Source> generateOauthLink(OAuthProviders oauthProvider, RequestOptions requestOptions) {
+        return this.rawClient.generateOauthLink(oauthProvider, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -307,6 +326,13 @@ public class AsyncLinkClient {
      */
     public CompletableFuture<List<SourceLink>> getAllProviders() {
         return this.rawClient.getAllProviders().thenApply(response -> response.body());
+    }
+
+    /**
+     * GET List of all available providers given the generated link token.
+     */
+    public CompletableFuture<List<SourceLink>> getAllProviders(RequestOptions requestOptions) {
+        return this.rawClient.getAllProviders(requestOptions).thenApply(response -> response.body());
     }
 
     /**

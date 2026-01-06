@@ -44,6 +44,13 @@ public class AsyncRawDevicesClient {
     /**
      * Get Devices for user_id
      */
+    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId, RequestOptions requestOptions) {
+        return getRaw(userId, DevicesGetRawRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get Devices for user_id
+     */
     public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId, DevicesGetRawRequest request) {
         return getRaw(userId, request, null);
     }
