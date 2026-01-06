@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -48,31 +45,13 @@ public final class SimulationFlags {
         return interpretation;
     }
 
-    @JsonIgnore
-    public Optional<List<ResultType>> getResultTypes() {
-        if (resultTypes == null) {
-            return Optional.empty();
-        }
-        return resultTypes;
-    }
-
-    @JsonIgnore
-    public Optional<Boolean> getHasMissingResults() {
-        if (hasMissingResults == null) {
-            return Optional.empty();
-        }
-        return hasMissingResults;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("result_types")
-    private Optional<List<ResultType>> _getResultTypes() {
+    public Optional<List<ResultType>> getResultTypes() {
         return resultTypes;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("has_missing_results")
-    private Optional<Boolean> _getHasMissingResults() {
+    public Optional<Boolean> getHasMissingResults() {
         return hasMissingResults;
     }
 
@@ -149,17 +128,6 @@ public final class SimulationFlags {
             return this;
         }
 
-        public Builder resultTypes(Nullable<List<ResultType>> resultTypes) {
-            if (resultTypes.isNull()) {
-                this.resultTypes = null;
-            } else if (resultTypes.isEmpty()) {
-                this.resultTypes = Optional.empty();
-            } else {
-                this.resultTypes = Optional.of(resultTypes.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "has_missing_results", nulls = Nulls.SKIP)
         public Builder hasMissingResults(Optional<Boolean> hasMissingResults) {
             this.hasMissingResults = hasMissingResults;
@@ -168,17 +136,6 @@ public final class SimulationFlags {
 
         public Builder hasMissingResults(Boolean hasMissingResults) {
             this.hasMissingResults = Optional.ofNullable(hasMissingResults);
-            return this;
-        }
-
-        public Builder hasMissingResults(Nullable<Boolean> hasMissingResults) {
-            if (hasMissingResults.isNull()) {
-                this.hasMissingResults = null;
-            } else if (hasMissingResults.isEmpty()) {
-                this.hasMissingResults = Optional.empty();
-            } else {
-                this.hasMissingResults = Optional.of(hasMissingResults.get());
-            }
             return this;
         }
 

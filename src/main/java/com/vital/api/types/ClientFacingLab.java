@@ -284,7 +284,9 @@ public final class ClientFacingLab {
         @JsonSetter(value = "sample_types", nulls = Nulls.SKIP)
         public _FinalStage sampleTypes(List<LabTestSampleType> sampleTypes) {
             this.sampleTypes.clear();
-            this.sampleTypes.addAll(sampleTypes);
+            if (sampleTypes != null) {
+                this.sampleTypes.addAll(sampleTypes);
+            }
             return this;
         }
 
@@ -306,7 +308,9 @@ public final class ClientFacingLab {
         @JsonSetter(value = "collection_methods", nulls = Nulls.SKIP)
         public _FinalStage collectionMethods(List<LabTestCollectionMethod> collectionMethods) {
             this.collectionMethods.clear();
-            this.collectionMethods.addAll(collectionMethods);
+            if (collectionMethods != null) {
+                this.collectionMethods.addAll(collectionMethods);
+            }
             return this;
         }
 

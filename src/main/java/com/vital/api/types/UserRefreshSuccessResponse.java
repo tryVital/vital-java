@@ -221,7 +221,9 @@ public final class UserRefreshSuccessResponse {
         @JsonSetter(value = "failed_sources", nulls = Nulls.SKIP)
         public _FinalStage failedSources(List<String> failedSources) {
             this.failedSources.clear();
-            this.failedSources.addAll(failedSources);
+            if (failedSources != null) {
+                this.failedSources.addAll(failedSources);
+            }
             return this;
         }
 
@@ -243,7 +245,9 @@ public final class UserRefreshSuccessResponse {
         @JsonSetter(value = "in_progress_sources", nulls = Nulls.SKIP)
         public _FinalStage inProgressSources(List<String> inProgressSources) {
             this.inProgressSources.clear();
-            this.inProgressSources.addAll(inProgressSources);
+            if (inProgressSources != null) {
+                this.inProgressSources.addAll(inProgressSources);
+            }
             return this;
         }
 
@@ -265,7 +269,9 @@ public final class UserRefreshSuccessResponse {
         @JsonSetter(value = "refreshed_sources", nulls = Nulls.SKIP)
         public _FinalStage refreshedSources(List<String> refreshedSources) {
             this.refreshedSources.clear();
-            this.refreshedSources.addAll(refreshedSources);
+            if (refreshedSources != null) {
+                this.refreshedSources.addAll(refreshedSources);
+            }
             return this;
         }
 

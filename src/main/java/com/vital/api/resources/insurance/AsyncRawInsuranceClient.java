@@ -14,9 +14,9 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
+import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
+import com.vital.api.resources.insurance.requests.InsuranceSearchGetPayorInfoRequest;
 import com.vital.api.resources.insurance.requests.PayorSearchRequest;
-import com.vital.api.resources.insurance.requests.SearchDiagnosisInsuranceRequest;
-import com.vital.api.resources.insurance.requests.SearchGetPayorInfoInsuranceRequest;
 import com.vital.api.types.ClientFacingDiagnosisInformation;
 import com.vital.api.types.ClientFacingPayorSearchResponse;
 import com.vital.api.types.ClientFacingPayorSearchResponseDeprecated;
@@ -43,16 +43,16 @@ public class AsyncRawInsuranceClient {
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingPayorSearchResponse>>> searchGetPayorInfo() {
-        return searchGetPayorInfo(SearchGetPayorInfoInsuranceRequest.builder().build());
+        return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build());
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingPayorSearchResponse>>> searchGetPayorInfo(
-            SearchGetPayorInfoInsuranceRequest request) {
+            InsuranceSearchGetPayorInfoRequest request) {
         return searchGetPayorInfo(request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingPayorSearchResponse>>> searchGetPayorInfo(
-            SearchGetPayorInfoInsuranceRequest request, RequestOptions requestOptions) {
+            InsuranceSearchGetPayorInfoRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/payor");
@@ -83,15 +83,15 @@ public class AsyncRawInsuranceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
+                                        responseBodyString,
                                         new TypeReference<List<ClientFacingPayorSearchResponse>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -102,11 +102,9 @@ public class AsyncRawInsuranceClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
@@ -160,15 +158,15 @@ public class AsyncRawInsuranceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
+                                        responseBodyString,
                                         new TypeReference<List<ClientFacingPayorSearchResponseDeprecated>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -179,11 +177,9 @@ public class AsyncRawInsuranceClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
@@ -199,12 +195,12 @@ public class AsyncRawInsuranceClient {
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingDiagnosisInformation>>> searchDiagnosis(
-            SearchDiagnosisInsuranceRequest request) {
+            InsuranceSearchDiagnosisRequest request) {
         return searchDiagnosis(request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingDiagnosisInformation>>> searchDiagnosis(
-            SearchDiagnosisInsuranceRequest request, RequestOptions requestOptions) {
+            InsuranceSearchDiagnosisRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/diagnosis");
@@ -224,15 +220,15 @@ public class AsyncRawInsuranceClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(),
+                                        responseBodyString,
                                         new TypeReference<List<ClientFacingDiagnosisInformation>>() {}),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -243,11 +239,9 @@ public class AsyncRawInsuranceClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));

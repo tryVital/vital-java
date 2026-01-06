@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.link.types.BulkImportLinkRequestTeamId;
+import com.vital.api.resources.link.types.LinkBulkImportRequestTeamId;
 import com.vital.api.types.ConnectionRecipe;
 import com.vital.api.types.OAuthProviders;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkImportConnectionsBody.Builder.class)
 public final class BulkImportConnectionsBody {
-    private final Optional<BulkImportLinkRequestTeamId> teamId;
+    private final Optional<LinkBulkImportRequestTeamId> teamId;
 
     private final OAuthProviders provider;
 
@@ -37,7 +37,7 @@ public final class BulkImportConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkImportConnectionsBody(
-            Optional<BulkImportLinkRequestTeamId> teamId,
+            Optional<LinkBulkImportRequestTeamId> teamId,
             OAuthProviders provider,
             List<ConnectionRecipe> connections,
             Optional<Boolean> waitForCompletion,
@@ -50,7 +50,7 @@ public final class BulkImportConnectionsBody {
     }
 
     @JsonProperty("team_id")
-    public Optional<BulkImportLinkRequestTeamId> getTeamId() {
+    public Optional<LinkBulkImportRequestTeamId> getTeamId() {
         return teamId;
     }
 
@@ -116,9 +116,9 @@ public final class BulkImportConnectionsBody {
     public interface _FinalStage {
         BulkImportConnectionsBody build();
 
-        _FinalStage teamId(Optional<BulkImportLinkRequestTeamId> teamId);
+        _FinalStage teamId(Optional<LinkBulkImportRequestTeamId> teamId);
 
-        _FinalStage teamId(BulkImportLinkRequestTeamId teamId);
+        _FinalStage teamId(LinkBulkImportRequestTeamId teamId);
 
         _FinalStage connections(List<ConnectionRecipe> connections);
 
@@ -145,7 +145,7 @@ public final class BulkImportConnectionsBody {
 
         private List<ConnectionRecipe> connections = new ArrayList<>();
 
-        private Optional<BulkImportLinkRequestTeamId> teamId = Optional.empty();
+        private Optional<LinkBulkImportRequestTeamId> teamId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -212,19 +212,21 @@ public final class BulkImportConnectionsBody {
         @JsonSetter(value = "connections", nulls = Nulls.SKIP)
         public _FinalStage connections(List<ConnectionRecipe> connections) {
             this.connections.clear();
-            this.connections.addAll(connections);
+            if (connections != null) {
+                this.connections.addAll(connections);
+            }
             return this;
         }
 
         @java.lang.Override
-        public _FinalStage teamId(BulkImportLinkRequestTeamId teamId) {
+        public _FinalStage teamId(LinkBulkImportRequestTeamId teamId) {
             this.teamId = Optional.ofNullable(teamId);
             return this;
         }
 
         @java.lang.Override
         @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
-        public _FinalStage teamId(Optional<BulkImportLinkRequestTeamId> teamId) {
+        public _FinalStage teamId(Optional<LinkBulkImportRequestTeamId> teamId) {
             this.teamId = teamId;
             return this;
         }

@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,59 +99,38 @@ public final class ClientFacingMarker {
         return slug;
     }
 
-    @JsonIgnore
+    @JsonProperty("description")
     public Optional<String> getDescription() {
-        if (description == null) {
-            return Optional.empty();
-        }
         return description;
     }
 
-    @JsonIgnore
+    @JsonProperty("lab_id")
     public Optional<Integer> getLabId() {
-        if (labId == null) {
-            return Optional.empty();
-        }
         return labId;
     }
 
-    @JsonIgnore
+    @JsonProperty("provider_id")
     public Optional<String> getProviderId() {
-        if (providerId == null) {
-            return Optional.empty();
-        }
         return providerId;
     }
 
-    @JsonIgnore
+    @JsonProperty("type")
     public Optional<MarkerType> getType() {
-        if (type == null) {
-            return Optional.empty();
-        }
         return type;
     }
 
-    @JsonIgnore
+    @JsonProperty("unit")
     public Optional<String> getUnit() {
-        if (unit == null) {
-            return Optional.empty();
-        }
         return unit;
     }
 
-    @JsonIgnore
+    @JsonProperty("price")
     public Optional<String> getPrice() {
-        if (price == null) {
-            return Optional.empty();
-        }
         return price;
     }
 
-    @JsonIgnore
+    @JsonProperty("aoe")
     public Optional<AoE> getAoe() {
-        if (aoe == null) {
-            return Optional.empty();
-        }
         return aoe;
     }
 
@@ -163,87 +139,18 @@ public final class ClientFacingMarker {
         return aLaCarteEnabled;
     }
 
-    @JsonIgnore
-    public Optional<Integer> getCommonTatDays() {
-        if (commonTatDays == null) {
-            return Optional.empty();
-        }
-        return commonTatDays;
-    }
-
-    @JsonIgnore
-    public Optional<Integer> getWorstCaseTatDays() {
-        if (worstCaseTatDays == null) {
-            return Optional.empty();
-        }
-        return worstCaseTatDays;
-    }
-
-    @JsonIgnore
-    public Optional<Boolean> getIsOrderable() {
-        if (isOrderable == null) {
-            return Optional.empty();
-        }
-        return isOrderable;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("description")
-    private Optional<String> _getDescription() {
-        return description;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("lab_id")
-    private Optional<Integer> _getLabId() {
-        return labId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("provider_id")
-    private Optional<String> _getProviderId() {
-        return providerId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("type")
-    private Optional<MarkerType> _getType() {
-        return type;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("unit")
-    private Optional<String> _getUnit() {
-        return unit;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("price")
-    private Optional<String> _getPrice() {
-        return price;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("aoe")
-    private Optional<AoE> _getAoe() {
-        return aoe;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("common_tat_days")
-    private Optional<Integer> _getCommonTatDays() {
+    public Optional<Integer> getCommonTatDays() {
         return commonTatDays;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("worst_case_tat_days")
-    private Optional<Integer> _getWorstCaseTatDays() {
+    public Optional<Integer> getWorstCaseTatDays() {
         return worstCaseTatDays;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("is_orderable")
-    private Optional<Boolean> _getIsOrderable() {
+    public Optional<Boolean> getIsOrderable() {
         return isOrderable;
     }
 
@@ -324,43 +231,29 @@ public final class ClientFacingMarker {
 
         _FinalStage description(String description);
 
-        _FinalStage description(Nullable<String> description);
-
         _FinalStage labId(Optional<Integer> labId);
 
         _FinalStage labId(Integer labId);
-
-        _FinalStage labId(Nullable<Integer> labId);
 
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
 
-        _FinalStage providerId(Nullable<String> providerId);
-
         _FinalStage type(Optional<MarkerType> type);
 
         _FinalStage type(MarkerType type);
-
-        _FinalStage type(Nullable<MarkerType> type);
 
         _FinalStage unit(Optional<String> unit);
 
         _FinalStage unit(String unit);
 
-        _FinalStage unit(Nullable<String> unit);
-
         _FinalStage price(Optional<String> price);
 
         _FinalStage price(String price);
 
-        _FinalStage price(Nullable<String> price);
-
         _FinalStage aoe(Optional<AoE> aoe);
 
         _FinalStage aoe(AoE aoe);
-
-        _FinalStage aoe(Nullable<AoE> aoe);
 
         _FinalStage aLaCarteEnabled(Optional<Boolean> aLaCarteEnabled);
 
@@ -370,19 +263,13 @@ public final class ClientFacingMarker {
 
         _FinalStage commonTatDays(Integer commonTatDays);
 
-        _FinalStage commonTatDays(Nullable<Integer> commonTatDays);
-
         _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays);
 
         _FinalStage worstCaseTatDays(Integer worstCaseTatDays);
 
-        _FinalStage worstCaseTatDays(Nullable<Integer> worstCaseTatDays);
-
         _FinalStage isOrderable(Optional<Boolean> isOrderable);
 
         _FinalStage isOrderable(Boolean isOrderable);
-
-        _FinalStage isOrderable(Nullable<Boolean> isOrderable);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -461,18 +348,6 @@ public final class ClientFacingMarker {
         }
 
         @java.lang.Override
-        public _FinalStage isOrderable(Nullable<Boolean> isOrderable) {
-            if (isOrderable.isNull()) {
-                this.isOrderable = null;
-            } else if (isOrderable.isEmpty()) {
-                this.isOrderable = Optional.empty();
-            } else {
-                this.isOrderable = Optional.of(isOrderable.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage isOrderable(Boolean isOrderable) {
             this.isOrderable = Optional.ofNullable(isOrderable);
             return this;
@@ -486,18 +361,6 @@ public final class ClientFacingMarker {
         }
 
         @java.lang.Override
-        public _FinalStage worstCaseTatDays(Nullable<Integer> worstCaseTatDays) {
-            if (worstCaseTatDays.isNull()) {
-                this.worstCaseTatDays = null;
-            } else if (worstCaseTatDays.isEmpty()) {
-                this.worstCaseTatDays = Optional.empty();
-            } else {
-                this.worstCaseTatDays = Optional.of(worstCaseTatDays.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage worstCaseTatDays(Integer worstCaseTatDays) {
             this.worstCaseTatDays = Optional.ofNullable(worstCaseTatDays);
             return this;
@@ -507,18 +370,6 @@ public final class ClientFacingMarker {
         @JsonSetter(value = "worst_case_tat_days", nulls = Nulls.SKIP)
         public _FinalStage worstCaseTatDays(Optional<Integer> worstCaseTatDays) {
             this.worstCaseTatDays = worstCaseTatDays;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage commonTatDays(Nullable<Integer> commonTatDays) {
-            if (commonTatDays.isNull()) {
-                this.commonTatDays = null;
-            } else if (commonTatDays.isEmpty()) {
-                this.commonTatDays = Optional.empty();
-            } else {
-                this.commonTatDays = Optional.of(commonTatDays.get());
-            }
             return this;
         }
 
@@ -549,18 +400,6 @@ public final class ClientFacingMarker {
         }
 
         @java.lang.Override
-        public _FinalStage aoe(Nullable<AoE> aoe) {
-            if (aoe.isNull()) {
-                this.aoe = null;
-            } else if (aoe.isEmpty()) {
-                this.aoe = Optional.empty();
-            } else {
-                this.aoe = Optional.of(aoe.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage aoe(AoE aoe) {
             this.aoe = Optional.ofNullable(aoe);
             return this;
@@ -570,18 +409,6 @@ public final class ClientFacingMarker {
         @JsonSetter(value = "aoe", nulls = Nulls.SKIP)
         public _FinalStage aoe(Optional<AoE> aoe) {
             this.aoe = aoe;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage price(Nullable<String> price) {
-            if (price.isNull()) {
-                this.price = null;
-            } else if (price.isEmpty()) {
-                this.price = Optional.empty();
-            } else {
-                this.price = Optional.of(price.get());
-            }
             return this;
         }
 
@@ -599,18 +426,6 @@ public final class ClientFacingMarker {
         }
 
         @java.lang.Override
-        public _FinalStage unit(Nullable<String> unit) {
-            if (unit.isNull()) {
-                this.unit = null;
-            } else if (unit.isEmpty()) {
-                this.unit = Optional.empty();
-            } else {
-                this.unit = Optional.of(unit.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage unit(String unit) {
             this.unit = Optional.ofNullable(unit);
             return this;
@@ -620,18 +435,6 @@ public final class ClientFacingMarker {
         @JsonSetter(value = "unit", nulls = Nulls.SKIP)
         public _FinalStage unit(Optional<String> unit) {
             this.unit = unit;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage type(Nullable<MarkerType> type) {
-            if (type.isNull()) {
-                this.type = null;
-            } else if (type.isEmpty()) {
-                this.type = Optional.empty();
-            } else {
-                this.type = Optional.of(type.get());
-            }
             return this;
         }
 
@@ -649,18 +452,6 @@ public final class ClientFacingMarker {
         }
 
         @java.lang.Override
-        public _FinalStage providerId(Nullable<String> providerId) {
-            if (providerId.isNull()) {
-                this.providerId = null;
-            } else if (providerId.isEmpty()) {
-                this.providerId = Optional.empty();
-            } else {
-                this.providerId = Optional.of(providerId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.ofNullable(providerId);
             return this;
@@ -674,18 +465,6 @@ public final class ClientFacingMarker {
         }
 
         @java.lang.Override
-        public _FinalStage labId(Nullable<Integer> labId) {
-            if (labId.isNull()) {
-                this.labId = null;
-            } else if (labId.isEmpty()) {
-                this.labId = Optional.empty();
-            } else {
-                this.labId = Optional.of(labId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage labId(Integer labId) {
             this.labId = Optional.ofNullable(labId);
             return this;
@@ -695,18 +474,6 @@ public final class ClientFacingMarker {
         @JsonSetter(value = "lab_id", nulls = Nulls.SKIP)
         public _FinalStage labId(Optional<Integer> labId) {
             this.labId = labId;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage description(Nullable<String> description) {
-            if (description.isNull()) {
-                this.description = null;
-            } else if (description.isEmpty()) {
-                this.description = Optional.empty();
-            } else {
-                this.description = Optional.of(description.get());
-            }
             return this;
         }
 

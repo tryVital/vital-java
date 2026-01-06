@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.menstrualcycle.requests.GetMenstrualCycleRequest;
+import com.vital.api.resources.menstrualcycle.requests.MenstrualCycleGetRequest;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.MenstrualCycleResponse;
 import java.io.IOException;
@@ -35,12 +35,12 @@ public class AsyncRawMenstrualCycleClient {
     }
 
     public CompletableFuture<VitalHttpResponse<MenstrualCycleResponse>> get(
-            String userId, GetMenstrualCycleRequest request) {
+            String userId, MenstrualCycleGetRequest request) {
         return get(userId, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<MenstrualCycleResponse>> get(
-            String userId, GetMenstrualCycleRequest request, RequestOptions requestOptions) {
+            String userId, MenstrualCycleGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/menstrual_cycle")
@@ -69,14 +69,13 @@ public class AsyncRawMenstrualCycleClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), MenstrualCycleResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, MenstrualCycleResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -87,11 +86,9 @@ public class AsyncRawMenstrualCycleClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));

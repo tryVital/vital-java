@@ -5,8 +5,8 @@ package com.vital.api.resources.body;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.body.requests.GetBodyRequest;
-import com.vital.api.resources.body.requests.GetRawBodyRequest;
+import com.vital.api.resources.body.requests.BodyGetRawRequest;
+import com.vital.api.resources.body.requests.BodyGetRequest;
 import com.vital.api.types.ClientBodyResponse;
 import com.vital.api.types.RawBody;
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +31,7 @@ public class AsyncBodyClient {
     /**
      * Get Body summary for user_id
      */
-    public CompletableFuture<ClientBodyResponse> get(String userId, GetBodyRequest request) {
+    public CompletableFuture<ClientBodyResponse> get(String userId, BodyGetRequest request) {
         return this.rawClient.get(userId, request).thenApply(response -> response.body());
     }
 
@@ -39,21 +39,21 @@ public class AsyncBodyClient {
      * Get Body summary for user_id
      */
     public CompletableFuture<ClientBodyResponse> get(
-            String userId, GetBodyRequest request, RequestOptions requestOptions) {
+            String userId, BodyGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public CompletableFuture<RawBody> getRaw(String userId, GetRawBodyRequest request) {
+    public CompletableFuture<RawBody> getRaw(String userId, BodyGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public CompletableFuture<RawBody> getRaw(String userId, GetRawBodyRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<RawBody> getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

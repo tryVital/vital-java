@@ -13,11 +13,9 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.team.requests.GetLinkConfigTeamRequest;
-import com.vital.api.resources.team.requests.GetPhysiciansTeamRequest;
-import com.vital.api.resources.team.requests.GetSourcePrioritiesTeamRequest;
-import com.vital.api.resources.team.requests.GetTeamRequest;
-import com.vital.api.resources.team.requests.GetUserByIdTeamRequest;
+import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
+import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
+import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.types.ClientFacingPhysician;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
@@ -43,13 +41,13 @@ public class RawTeamClient {
      * Post teams.
      */
     public VitalHttpResponse<Map<String, Object>> getLinkConfig() {
-        return getLinkConfig(GetLinkConfigTeamRequest.builder().build());
+        return getLinkConfig(TeamGetLinkConfigRequest.builder().build());
     }
 
     /**
      * Post teams.
      */
-    public VitalHttpResponse<Map<String, Object>> getLinkConfig(GetLinkConfigTeamRequest request) {
+    public VitalHttpResponse<Map<String, Object>> getLinkConfig(TeamGetLinkConfigRequest request) {
         return getLinkConfig(request, null);
     }
 
@@ -57,7 +55,7 @@ public class RawTeamClient {
      * Post teams.
      */
     public VitalHttpResponse<Map<String, Object>> getLinkConfig(
-            GetLinkConfigTeamRequest request, RequestOptions requestOptions) {
+            TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/link/config")
@@ -78,13 +76,13 @@ public class RawTeamClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Map<String, Object>>() {}),
+                                responseBodyString, new TypeReference<Map<String, Object>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -94,11 +92,8 @@ public class RawTeamClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -108,43 +103,35 @@ public class RawTeamClient {
      * Get team.
      */
     public VitalHttpResponse<ClientFacingTeam> get(String teamId) {
-        return get(teamId, GetTeamRequest.builder().build());
+        return get(teamId, null);
     }
 
     /**
      * Get team.
      */
-    public VitalHttpResponse<ClientFacingTeam> get(String teamId, GetTeamRequest request) {
-        return get(teamId, request, null);
-    }
-
-    /**
-     * Get team.
-     */
-    public VitalHttpResponse<ClientFacingTeam> get(
-            String teamId, GetTeamRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<ClientFacingTeam> get(String teamId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team")
                 .addPathSegment(teamId)
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingTeam.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientFacingTeam.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -154,11 +141,8 @@ public class RawTeamClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -168,13 +152,13 @@ public class RawTeamClient {
      * Search team users by user_id
      */
     public VitalHttpResponse<List<ClientFacingUser>> getUserById() {
-        return getUserById(GetUserByIdTeamRequest.builder().build());
+        return getUserById(TeamGetUserByIdRequest.builder().build());
     }
 
     /**
      * Search team users by user_id
      */
-    public VitalHttpResponse<List<ClientFacingUser>> getUserById(GetUserByIdTeamRequest request) {
+    public VitalHttpResponse<List<ClientFacingUser>> getUserById(TeamGetUserByIdRequest request) {
         return getUserById(request, null);
     }
 
@@ -182,7 +166,7 @@ public class RawTeamClient {
      * Search team users by user_id
      */
     public VitalHttpResponse<List<ClientFacingUser>> getUserById(
-            GetUserByIdTeamRequest request, RequestOptions requestOptions) {
+            TeamGetUserByIdRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/users/search");
@@ -202,13 +186,13 @@ public class RawTeamClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<ClientFacingUser>>() {}),
+                                responseBodyString, new TypeReference<List<ClientFacingUser>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -218,11 +202,8 @@ public class RawTeamClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -249,18 +230,15 @@ public class RawTeamClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<Map<String, Object>>() {}),
+                                responseBodyString, new TypeReference<Map<String, Object>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -270,13 +248,13 @@ public class RawTeamClient {
      * GET source priorities.
      */
     public VitalHttpResponse<List<Map<String, Object>>> getSourcePriorities() {
-        return getSourcePriorities(GetSourcePrioritiesTeamRequest.builder().build());
+        return getSourcePriorities(TeamGetSourcePrioritiesRequest.builder().build());
     }
 
     /**
      * GET source priorities.
      */
-    public VitalHttpResponse<List<Map<String, Object>>> getSourcePriorities(GetSourcePrioritiesTeamRequest request) {
+    public VitalHttpResponse<List<Map<String, Object>>> getSourcePriorities(TeamGetSourcePrioritiesRequest request) {
         return getSourcePriorities(request, null);
     }
 
@@ -284,7 +262,7 @@ public class RawTeamClient {
      * GET source priorities.
      */
     public VitalHttpResponse<List<Map<String, Object>>> getSourcePriorities(
-            GetSourcePrioritiesTeamRequest request, RequestOptions requestOptions) {
+            TeamGetSourcePrioritiesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team/source/priorities");
@@ -304,13 +282,13 @@ public class RawTeamClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<Map<String, Object>>>() {}),
+                                responseBodyString, new TypeReference<List<Map<String, Object>>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -320,11 +298,8 @@ public class RawTeamClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -357,59 +332,50 @@ public class RawTeamClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<Map<String, Object>>>() {}),
+                                responseBodyString, new TypeReference<List<Map<String, Object>>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     public VitalHttpResponse<List<ClientFacingPhysician>> getPhysicians(String teamId) {
-        return getPhysicians(teamId, GetPhysiciansTeamRequest.builder().build());
+        return getPhysicians(teamId, null);
     }
 
-    public VitalHttpResponse<List<ClientFacingPhysician>> getPhysicians(
-            String teamId, GetPhysiciansTeamRequest request) {
-        return getPhysicians(teamId, request, null);
-    }
-
-    public VitalHttpResponse<List<ClientFacingPhysician>> getPhysicians(
-            String teamId, GetPhysiciansTeamRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<List<ClientFacingPhysician>> getPhysicians(String teamId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/team")
                 .addPathSegment(teamId)
                 .addPathSegments("physicians")
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<ClientFacingPhysician>>() {}),
+                                responseBodyString, new TypeReference<List<ClientFacingPhysician>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -419,11 +385,8 @@ public class RawTeamClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
