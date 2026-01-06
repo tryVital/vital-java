@@ -36,6 +36,13 @@ public class AsyncOrderClient {
     /**
      * Replay a webhook for a given set of orders
      */
+    public CompletableFuture<ResendWebhookResponse> resendEvents(RequestOptions requestOptions) {
+        return this.rawClient.resendEvents(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Replay a webhook for a given set of orders
+     */
     public CompletableFuture<ResendWebhookResponse> resendEvents(ResendWebhookBody request) {
         return this.rawClient.resendEvents(request).thenApply(response -> response.body());
     }

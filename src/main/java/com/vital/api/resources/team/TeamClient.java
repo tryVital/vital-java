@@ -5,11 +5,9 @@ package com.vital.api.resources.team;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.team.requests.GetLinkConfigTeamRequest;
-import com.vital.api.resources.team.requests.GetPhysiciansTeamRequest;
-import com.vital.api.resources.team.requests.GetSourcePrioritiesTeamRequest;
-import com.vital.api.resources.team.requests.GetTeamRequest;
-import com.vital.api.resources.team.requests.GetUserByIdTeamRequest;
+import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
+import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
+import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.types.ClientFacingPhysician;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
@@ -43,14 +41,21 @@ public class TeamClient {
     /**
      * Post teams.
      */
-    public Map<String, Object> getLinkConfig(GetLinkConfigTeamRequest request) {
+    public Map<String, Object> getLinkConfig(RequestOptions requestOptions) {
+        return this.rawClient.getLinkConfig(requestOptions).body();
+    }
+
+    /**
+     * Post teams.
+     */
+    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request) {
         return this.rawClient.getLinkConfig(request).body();
     }
 
     /**
      * Post teams.
      */
-    public Map<String, Object> getLinkConfig(GetLinkConfigTeamRequest request, RequestOptions requestOptions) {
+    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
         return this.rawClient.getLinkConfig(request, requestOptions).body();
     }
 
@@ -64,15 +69,8 @@ public class TeamClient {
     /**
      * Get team.
      */
-    public ClientFacingTeam get(String teamId, GetTeamRequest request) {
-        return this.rawClient.get(teamId, request).body();
-    }
-
-    /**
-     * Get team.
-     */
-    public ClientFacingTeam get(String teamId, GetTeamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(teamId, request, requestOptions).body();
+    public ClientFacingTeam get(String teamId, RequestOptions requestOptions) {
+        return this.rawClient.get(teamId, requestOptions).body();
     }
 
     /**
@@ -85,14 +83,21 @@ public class TeamClient {
     /**
      * Search team users by user_id
      */
-    public List<ClientFacingUser> getUserById(GetUserByIdTeamRequest request) {
+    public List<ClientFacingUser> getUserById(RequestOptions requestOptions) {
+        return this.rawClient.getUserById(requestOptions).body();
+    }
+
+    /**
+     * Search team users by user_id
+     */
+    public List<ClientFacingUser> getUserById(TeamGetUserByIdRequest request) {
         return this.rawClient.getUserById(request).body();
     }
 
     /**
      * Search team users by user_id
      */
-    public List<ClientFacingUser> getUserById(GetUserByIdTeamRequest request, RequestOptions requestOptions) {
+    public List<ClientFacingUser> getUserById(TeamGetUserByIdRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUserById(request, requestOptions).body();
     }
 
@@ -114,7 +119,14 @@ public class TeamClient {
     /**
      * GET source priorities.
      */
-    public List<Map<String, Object>> getSourcePriorities(GetSourcePrioritiesTeamRequest request) {
+    public List<Map<String, Object>> getSourcePriorities(RequestOptions requestOptions) {
+        return this.rawClient.getSourcePriorities(requestOptions).body();
+    }
+
+    /**
+     * GET source priorities.
+     */
+    public List<Map<String, Object>> getSourcePriorities(TeamGetSourcePrioritiesRequest request) {
         return this.rawClient.getSourcePriorities(request).body();
     }
 
@@ -122,7 +134,7 @@ public class TeamClient {
      * GET source priorities.
      */
     public List<Map<String, Object>> getSourcePriorities(
-            GetSourcePrioritiesTeamRequest request, RequestOptions requestOptions) {
+            TeamGetSourcePrioritiesRequest request, RequestOptions requestOptions) {
         return this.rawClient.getSourcePriorities(request, requestOptions).body();
     }
 
@@ -144,12 +156,7 @@ public class TeamClient {
         return this.rawClient.getPhysicians(teamId).body();
     }
 
-    public List<ClientFacingPhysician> getPhysicians(String teamId, GetPhysiciansTeamRequest request) {
-        return this.rawClient.getPhysicians(teamId, request).body();
-    }
-
-    public List<ClientFacingPhysician> getPhysicians(
-            String teamId, GetPhysiciansTeamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getPhysicians(teamId, request, requestOptions).body();
+    public List<ClientFacingPhysician> getPhysicians(String teamId, RequestOptions requestOptions) {
+        return this.rawClient.getPhysicians(teamId, requestOptions).body();
     }
 }

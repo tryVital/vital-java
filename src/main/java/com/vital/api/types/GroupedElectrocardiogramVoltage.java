@@ -135,7 +135,9 @@ public final class GroupedElectrocardiogramVoltage {
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public _FinalStage data(List<ClientFacingElectrocardiogramVoltageTimeseries> data) {
             this.data.clear();
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 

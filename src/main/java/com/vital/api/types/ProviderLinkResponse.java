@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,44 +71,32 @@ public final class ProviderLinkResponse {
     /**
      * @return The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).
      */
-    @JsonIgnore
+    @JsonProperty("redirect_url")
     public Optional<String> getRedirectUrl() {
-        if (redirectUrl == null) {
-            return Optional.empty();
-        }
         return redirectUrl;
     }
 
     /**
      * @return The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.
      */
-    @JsonIgnore
+    @JsonProperty("error_type")
     public Optional<ProviderLinkResponseErrorType> getErrorType() {
-        if (errorType == null) {
-            return Optional.empty();
-        }
         return errorType;
     }
 
     /**
      * @return A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.
      */
-    @JsonIgnore
+    @JsonProperty("error")
     public Optional<String> getError() {
-        if (error == null) {
-            return Optional.empty();
-        }
         return error;
     }
 
     /**
      * @return The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.
      */
-    @JsonIgnore
+    @JsonProperty("provider_mfa")
     public Optional<ProviderMfaRequest> getProviderMfa() {
-        if (providerMfa == null) {
-            return Optional.empty();
-        }
         return providerMfa;
     }
 
@@ -125,41 +110,8 @@ public final class ProviderLinkResponse {
         return connected;
     }
 
-    @JsonIgnore
-    public Optional<String> getProviderId() {
-        if (providerId == null) {
-            return Optional.empty();
-        }
-        return providerId;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("redirect_url")
-    private Optional<String> _getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("error_type")
-    private Optional<ProviderLinkResponseErrorType> _getErrorType() {
-        return errorType;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("error")
-    private Optional<String> _getError() {
-        return error;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("provider_mfa")
-    private Optional<ProviderMfaRequest> _getProviderMfa() {
-        return providerMfa;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("provider_id")
-    private Optional<String> _getProviderId() {
+    public Optional<String> getProviderId() {
         return providerId;
     }
 
@@ -234,16 +186,12 @@ public final class ProviderLinkResponse {
 
         _FinalStage redirectUrl(String redirectUrl);
 
-        _FinalStage redirectUrl(Nullable<String> redirectUrl);
-
         /**
          * <p>The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage errorType(Optional<ProviderLinkResponseErrorType> errorType);
 
         _FinalStage errorType(ProviderLinkResponseErrorType errorType);
-
-        _FinalStage errorType(Nullable<ProviderLinkResponseErrorType> errorType);
 
         /**
          * <p>A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.</p>
@@ -252,8 +200,6 @@ public final class ProviderLinkResponse {
 
         _FinalStage error(String error);
 
-        _FinalStage error(Nullable<String> error);
-
         /**
          * <p>The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.</p>
          */
@@ -261,13 +207,9 @@ public final class ProviderLinkResponse {
 
         _FinalStage providerMfa(ProviderMfaRequest providerMfa);
 
-        _FinalStage providerMfa(Nullable<ProviderMfaRequest> providerMfa);
-
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
-
-        _FinalStage providerId(Nullable<String> providerId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -333,18 +275,6 @@ public final class ProviderLinkResponse {
         }
 
         @java.lang.Override
-        public _FinalStage providerId(Nullable<String> providerId) {
-            if (providerId.isNull()) {
-                this.providerId = null;
-            } else if (providerId.isEmpty()) {
-                this.providerId = Optional.empty();
-            } else {
-                this.providerId = Optional.of(providerId.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage providerId(String providerId) {
             this.providerId = Optional.ofNullable(providerId);
             return this;
@@ -354,22 +284,6 @@ public final class ProviderLinkResponse {
         @JsonSetter(value = "provider_id", nulls = Nulls.SKIP)
         public _FinalStage providerId(Optional<String> providerId) {
             this.providerId = providerId;
-            return this;
-        }
-
-        /**
-         * <p>The provider MFA request. This field is populated only when state is <code>pending_provider_mfa</code>.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage providerMfa(Nullable<ProviderMfaRequest> providerMfa) {
-            if (providerMfa.isNull()) {
-                this.providerMfa = null;
-            } else if (providerMfa.isEmpty()) {
-                this.providerMfa = Optional.empty();
-            } else {
-                this.providerMfa = Optional.of(providerMfa.get());
-            }
             return this;
         }
 
@@ -398,22 +312,6 @@ public final class ProviderLinkResponse {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage error(Nullable<String> error) {
-            if (error.isNull()) {
-                this.error = null;
-            } else if (error.isEmpty()) {
-                this.error = Optional.empty();
-            } else {
-                this.error = Optional.of(error.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>A developer-readable debug description of the Link Error. This field is populated only when state is <code>error</code>.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage error(String error) {
             this.error = Optional.ofNullable(error);
             return this;
@@ -434,22 +332,6 @@ public final class ProviderLinkResponse {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage errorType(Nullable<ProviderLinkResponseErrorType> errorType) {
-            if (errorType.isNull()) {
-                this.errorType = null;
-            } else if (errorType.isEmpty()) {
-                this.errorType = Optional.empty();
-            } else {
-                this.errorType = Optional.of(errorType.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>The Link Error Type. This field is populated only when state is <code>error</code>. ℹ️ This enum is non-exhaustive.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage errorType(ProviderLinkResponseErrorType errorType) {
             this.errorType = Optional.ofNullable(errorType);
             return this;
@@ -462,22 +344,6 @@ public final class ProviderLinkResponse {
         @JsonSetter(value = "error_type", nulls = Nulls.SKIP)
         public _FinalStage errorType(Optional<ProviderLinkResponseErrorType> errorType) {
             this.errorType = errorType;
-            return this;
-        }
-
-        /**
-         * <p>The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage redirectUrl(Nullable<String> redirectUrl) {
-            if (redirectUrl.isNull()) {
-                this.redirectUrl = null;
-            } else if (redirectUrl.isEmpty()) {
-                this.redirectUrl = Optional.empty();
-            } else {
-                this.redirectUrl = Optional.of(redirectUrl.get());
-            }
             return this;
         }
 

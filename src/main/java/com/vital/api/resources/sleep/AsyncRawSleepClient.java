@@ -12,9 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.sleep.requests.GetRawSleepRequest;
-import com.vital.api.resources.sleep.requests.GetSleepRequest;
-import com.vital.api.resources.sleep.requests.GetStreamBySleepIdSleepRequest;
+import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
+import com.vital.api.resources.sleep.requests.SleepGetRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.HttpValidationError;
@@ -41,7 +40,7 @@ public class AsyncRawSleepClient {
     /**
      * Get sleep summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<ClientSleepResponse>> get(String userId, GetSleepRequest request) {
+    public CompletableFuture<VitalHttpResponse<ClientSleepResponse>> get(String userId, SleepGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -49,7 +48,7 @@ public class AsyncRawSleepClient {
      * Get sleep summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientSleepResponse>> get(
-            String userId, GetSleepRequest request, RequestOptions requestOptions) {
+            String userId, SleepGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep")
@@ -78,13 +77,13 @@ public class AsyncRawSleepClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientSleepResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientSleepResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -95,11 +94,9 @@ public class AsyncRawSleepClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
@@ -117,7 +114,7 @@ public class AsyncRawSleepClient {
     /**
      * Get raw sleep summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawSleep>> getRaw(String userId, GetRawSleepRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawSleep>> getRaw(String userId, SleepGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -125,7 +122,7 @@ public class AsyncRawSleepClient {
      * Get raw sleep summary for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawSleep>> getRaw(
-            String userId, GetRawSleepRequest request, RequestOptions requestOptions) {
+            String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/sleep")
@@ -155,12 +152,12 @@ public class AsyncRawSleepClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawSleep.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawSleep.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -171,11 +168,9 @@ public class AsyncRawSleepClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
@@ -194,35 +189,26 @@ public class AsyncRawSleepClient {
      * Get Sleep stream for a user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingSleepStream>> getStreamBySleepId(String sleepId) {
-        return getStreamBySleepId(
-                sleepId, GetStreamBySleepIdSleepRequest.builder().build());
+        return getStreamBySleepId(sleepId, null);
     }
 
     /**
      * Get Sleep stream for a user_id
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingSleepStream>> getStreamBySleepId(
-            String sleepId, GetStreamBySleepIdSleepRequest request) {
-        return getStreamBySleepId(sleepId, request, null);
-    }
-
-    /**
-     * Get Sleep stream for a user_id
-     */
-    public CompletableFuture<VitalHttpResponse<ClientFacingSleepStream>> getStreamBySleepId(
-            String sleepId, GetStreamBySleepIdSleepRequest request, RequestOptions requestOptions) {
+            String sleepId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries/sleep")
                 .addPathSegment(sleepId)
                 .addPathSegments("stream")
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -232,14 +218,13 @@ public class AsyncRawSleepClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBody.string(), ClientFacingSleepStream.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientFacingSleepStream.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -250,11 +235,9 @@ public class AsyncRawSleepClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));

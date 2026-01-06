@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.profile.requests.GetProfileRequest;
-import com.vital.api.resources.profile.requests.GetRawProfileRequest;
+import com.vital.api.resources.profile.requests.ProfileGetRawRequest;
+import com.vital.api.resources.profile.requests.ProfileGetRequest;
 import com.vital.api.types.ClientFacingProfile;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawProfile;
@@ -36,13 +36,20 @@ public class RawProfileClient {
      * Get profile for user_id
      */
     public VitalHttpResponse<ClientFacingProfile> get(String userId) {
-        return get(userId, GetProfileRequest.builder().build());
+        return get(userId, ProfileGetRequest.builder().build());
     }
 
     /**
      * Get profile for user_id
      */
-    public VitalHttpResponse<ClientFacingProfile> get(String userId, GetProfileRequest request) {
+    public VitalHttpResponse<ClientFacingProfile> get(String userId, RequestOptions requestOptions) {
+        return get(userId, ProfileGetRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get profile for user_id
+     */
+    public VitalHttpResponse<ClientFacingProfile> get(String userId, ProfileGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -50,7 +57,7 @@ public class RawProfileClient {
      * Get profile for user_id
      */
     public VitalHttpResponse<ClientFacingProfile> get(
-            String userId, GetProfileRequest request, RequestOptions requestOptions) {
+            String userId, ProfileGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/profile")
@@ -71,12 +78,11 @@ public class RawProfileClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientFacingProfile.class),
-                        response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientFacingProfile.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -86,11 +92,8 @@ public class RawProfileClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -100,13 +103,20 @@ public class RawProfileClient {
      * Get raw profile for user_id
      */
     public VitalHttpResponse<RawProfile> getRaw(String userId) {
-        return getRaw(userId, GetRawProfileRequest.builder().build());
+        return getRaw(userId, ProfileGetRawRequest.builder().build());
     }
 
     /**
      * Get raw profile for user_id
      */
-    public VitalHttpResponse<RawProfile> getRaw(String userId, GetRawProfileRequest request) {
+    public VitalHttpResponse<RawProfile> getRaw(String userId, RequestOptions requestOptions) {
+        return getRaw(userId, ProfileGetRawRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get raw profile for user_id
+     */
+    public VitalHttpResponse<RawProfile> getRaw(String userId, ProfileGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -114,7 +124,7 @@ public class RawProfileClient {
      * Get raw profile for user_id
      */
     public VitalHttpResponse<RawProfile> getRaw(
-            String userId, GetRawProfileRequest request, RequestOptions requestOptions) {
+            String userId, ProfileGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/profile")
@@ -136,11 +146,11 @@ public class RawProfileClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawProfile.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawProfile.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -150,11 +160,8 @@ public class RawProfileClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

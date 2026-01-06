@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -47,59 +44,23 @@ public final class SingleResourceStatistics {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
-    public Optional<LastAttempt> getLastAttempt() {
-        if (lastAttempt == null) {
-            return Optional.empty();
-        }
-        return lastAttempt;
-    }
-
-    @JsonIgnore
-    public Optional<OffsetDateTime> getOldestData() {
-        if (oldestData == null) {
-            return Optional.empty();
-        }
-        return oldestData;
-    }
-
-    @JsonIgnore
-    public Optional<OffsetDateTime> getNewestData() {
-        if (newestData == null) {
-            return Optional.empty();
-        }
-        return newestData;
-    }
-
-    @JsonIgnore
-    public Optional<Integer> getSentCount() {
-        if (sentCount == null) {
-            return Optional.empty();
-        }
-        return sentCount;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("last_attempt")
-    private Optional<LastAttempt> _getLastAttempt() {
+    public Optional<LastAttempt> getLastAttempt() {
         return lastAttempt;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("oldest_data")
-    private Optional<OffsetDateTime> _getOldestData() {
+    public Optional<OffsetDateTime> getOldestData() {
         return oldestData;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("newest_data")
-    private Optional<OffsetDateTime> _getNewestData() {
+    public Optional<OffsetDateTime> getNewestData() {
         return newestData;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("sent_count")
-    private Optional<Integer> _getSentCount() {
+    public Optional<Integer> getSentCount() {
         return sentCount;
     }
 
@@ -169,17 +130,6 @@ public final class SingleResourceStatistics {
             return this;
         }
 
-        public Builder lastAttempt(Nullable<LastAttempt> lastAttempt) {
-            if (lastAttempt.isNull()) {
-                this.lastAttempt = null;
-            } else if (lastAttempt.isEmpty()) {
-                this.lastAttempt = Optional.empty();
-            } else {
-                this.lastAttempt = Optional.of(lastAttempt.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "oldest_data", nulls = Nulls.SKIP)
         public Builder oldestData(Optional<OffsetDateTime> oldestData) {
             this.oldestData = oldestData;
@@ -188,17 +138,6 @@ public final class SingleResourceStatistics {
 
         public Builder oldestData(OffsetDateTime oldestData) {
             this.oldestData = Optional.ofNullable(oldestData);
-            return this;
-        }
-
-        public Builder oldestData(Nullable<OffsetDateTime> oldestData) {
-            if (oldestData.isNull()) {
-                this.oldestData = null;
-            } else if (oldestData.isEmpty()) {
-                this.oldestData = Optional.empty();
-            } else {
-                this.oldestData = Optional.of(oldestData.get());
-            }
             return this;
         }
 
@@ -213,17 +152,6 @@ public final class SingleResourceStatistics {
             return this;
         }
 
-        public Builder newestData(Nullable<OffsetDateTime> newestData) {
-            if (newestData.isNull()) {
-                this.newestData = null;
-            } else if (newestData.isEmpty()) {
-                this.newestData = Optional.empty();
-            } else {
-                this.newestData = Optional.of(newestData.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "sent_count", nulls = Nulls.SKIP)
         public Builder sentCount(Optional<Integer> sentCount) {
             this.sentCount = sentCount;
@@ -232,17 +160,6 @@ public final class SingleResourceStatistics {
 
         public Builder sentCount(Integer sentCount) {
             this.sentCount = Optional.ofNullable(sentCount);
-            return this;
-        }
-
-        public Builder sentCount(Nullable<Integer> sentCount) {
-            if (sentCount.isNull()) {
-                this.sentCount = null;
-            } else if (sentCount.isEmpty()) {
-                this.sentCount = Optional.empty();
-            } else {
-                this.sentCount = Optional.of(sentCount.get());
-            }
             return this;
         }
 

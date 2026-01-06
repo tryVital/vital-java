@@ -81,7 +81,9 @@ public final class ClientSleepResponse {
         @JsonSetter(value = "sleep", nulls = Nulls.SKIP)
         public Builder sleep(List<ClientFacingSleep> sleep) {
             this.sleep.clear();
-            this.sleep.addAll(sleep);
+            if (sleep != null) {
+                this.sleep.addAll(sleep);
+            }
             return this;
         }
 

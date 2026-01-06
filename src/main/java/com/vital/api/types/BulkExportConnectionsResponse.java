@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,17 +40,8 @@ public final class BulkExportConnectionsResponse {
         return data;
     }
 
-    @JsonIgnore
-    public Optional<String> getNextToken() {
-        if (nextToken == null) {
-            return Optional.empty();
-        }
-        return nextToken;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("next_token")
-    private Optional<String> _getNextToken() {
+    public Optional<String> getNextToken() {
         return nextToken;
     }
 
@@ -106,7 +94,9 @@ public final class BulkExportConnectionsResponse {
         @JsonSetter(value = "data", nulls = Nulls.SKIP)
         public Builder data(List<ConnectionRecipe> data) {
             this.data.clear();
-            this.data.addAll(data);
+            if (data != null) {
+                this.data.addAll(data);
+            }
             return this;
         }
 
@@ -130,17 +120,6 @@ public final class BulkExportConnectionsResponse {
 
         public Builder nextToken(String nextToken) {
             this.nextToken = Optional.ofNullable(nextToken);
-            return this;
-        }
-
-        public Builder nextToken(Nullable<String> nextToken) {
-            if (nextToken.isNull()) {
-                this.nextToken = null;
-            } else if (nextToken.isEmpty()) {
-                this.nextToken = Optional.empty();
-            } else {
-                this.nextToken = Optional.of(nextToken.get());
-            }
             return this;
         }
 

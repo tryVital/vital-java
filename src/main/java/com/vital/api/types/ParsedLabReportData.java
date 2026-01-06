@@ -133,7 +133,9 @@ public final class ParsedLabReportData {
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
         public _FinalStage results(List<LabReportResult> results) {
             this.results.clear();
-            this.results.addAll(results);
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

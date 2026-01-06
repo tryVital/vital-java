@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -128,90 +125,63 @@ public final class ClientFacingBody {
     /**
      * @return Weight in kg::kg
      */
-    @JsonIgnore
+    @JsonProperty("weight")
     public Optional<Double> getWeight() {
-        if (weight == null) {
-            return Optional.empty();
-        }
         return weight;
     }
 
     /**
      * @return Total body fat percentage::perc
      */
-    @JsonIgnore
+    @JsonProperty("fat")
     public Optional<Double> getFat() {
-        if (fat == null) {
-            return Optional.empty();
-        }
         return fat;
     }
 
     /**
      * @return Water percentage in the body::perc
      */
-    @JsonIgnore
+    @JsonProperty("water_percentage")
     public Optional<Double> getWaterPercentage() {
-        if (waterPercentage == null) {
-            return Optional.empty();
-        }
         return waterPercentage;
     }
 
     /**
      * @return Muscle mass percentage in the body::perc
      */
-    @JsonIgnore
+    @JsonProperty("muscle_mass_percentage")
     public Optional<Double> getMuscleMassPercentage() {
-        if (muscleMassPercentage == null) {
-            return Optional.empty();
-        }
         return muscleMassPercentage;
     }
 
     /**
      * @return Visceral fat index::scalar
      */
-    @JsonIgnore
+    @JsonProperty("visceral_fat_index")
     public Optional<Double> getVisceralFatIndex() {
-        if (visceralFatIndex == null) {
-            return Optional.empty();
-        }
         return visceralFatIndex;
     }
 
     /**
      * @return Bone mass percentage in the body::perc
      */
-    @JsonIgnore
+    @JsonProperty("bone_mass_percentage")
     public Optional<Double> getBoneMassPercentage() {
-        if (boneMassPercentage == null) {
-            return Optional.empty();
-        }
         return boneMassPercentage;
     }
 
-    @JsonIgnore
+    @JsonProperty("body_mass_index")
     public Optional<Double> getBodyMassIndex() {
-        if (bodyMassIndex == null) {
-            return Optional.empty();
-        }
         return bodyMassIndex;
     }
 
-    @JsonIgnore
+    @JsonProperty("lean_body_mass_kilogram")
     public Optional<Double> getLeanBodyMassKilogram() {
-        if (leanBodyMassKilogram == null) {
-            return Optional.empty();
-        }
         return leanBodyMassKilogram;
     }
 
-    @JsonIgnore
+    @JsonProperty("waist_circumference_centimeter")
     public Optional<Double> getWaistCircumferenceCentimeter() {
-        if (waistCircumferenceCentimeter == null) {
-            return Optional.empty();
-        }
         return waistCircumferenceCentimeter;
     }
 
@@ -228,60 +198,6 @@ public final class ClientFacingBody {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("weight")
-    private Optional<Double> _getWeight() {
-        return weight;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("fat")
-    private Optional<Double> _getFat() {
-        return fat;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("water_percentage")
-    private Optional<Double> _getWaterPercentage() {
-        return waterPercentage;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("muscle_mass_percentage")
-    private Optional<Double> _getMuscleMassPercentage() {
-        return muscleMassPercentage;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("visceral_fat_index")
-    private Optional<Double> _getVisceralFatIndex() {
-        return visceralFatIndex;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("bone_mass_percentage")
-    private Optional<Double> _getBoneMassPercentage() {
-        return boneMassPercentage;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("body_mass_index")
-    private Optional<Double> _getBodyMassIndex() {
-        return bodyMassIndex;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("lean_body_mass_kilogram")
-    private Optional<Double> _getLeanBodyMassKilogram() {
-        return leanBodyMassKilogram;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("waist_circumference_centimeter")
-    private Optional<Double> _getWaistCircumferenceCentimeter() {
-        return waistCircumferenceCentimeter;
     }
 
     @java.lang.Override
@@ -393,16 +309,12 @@ public final class ClientFacingBody {
 
         _FinalStage weight(Double weight);
 
-        _FinalStage weight(Nullable<Double> weight);
-
         /**
          * <p>Total body fat percentage::perc</p>
          */
         _FinalStage fat(Optional<Double> fat);
 
         _FinalStage fat(Double fat);
-
-        _FinalStage fat(Nullable<Double> fat);
 
         /**
          * <p>Water percentage in the body::perc</p>
@@ -411,16 +323,12 @@ public final class ClientFacingBody {
 
         _FinalStage waterPercentage(Double waterPercentage);
 
-        _FinalStage waterPercentage(Nullable<Double> waterPercentage);
-
         /**
          * <p>Muscle mass percentage in the body::perc</p>
          */
         _FinalStage muscleMassPercentage(Optional<Double> muscleMassPercentage);
 
         _FinalStage muscleMassPercentage(Double muscleMassPercentage);
-
-        _FinalStage muscleMassPercentage(Nullable<Double> muscleMassPercentage);
 
         /**
          * <p>Visceral fat index::scalar</p>
@@ -429,8 +337,6 @@ public final class ClientFacingBody {
 
         _FinalStage visceralFatIndex(Double visceralFatIndex);
 
-        _FinalStage visceralFatIndex(Nullable<Double> visceralFatIndex);
-
         /**
          * <p>Bone mass percentage in the body::perc</p>
          */
@@ -438,25 +344,17 @@ public final class ClientFacingBody {
 
         _FinalStage boneMassPercentage(Double boneMassPercentage);
 
-        _FinalStage boneMassPercentage(Nullable<Double> boneMassPercentage);
-
         _FinalStage bodyMassIndex(Optional<Double> bodyMassIndex);
 
         _FinalStage bodyMassIndex(Double bodyMassIndex);
-
-        _FinalStage bodyMassIndex(Nullable<Double> bodyMassIndex);
 
         _FinalStage leanBodyMassKilogram(Optional<Double> leanBodyMassKilogram);
 
         _FinalStage leanBodyMassKilogram(Double leanBodyMassKilogram);
 
-        _FinalStage leanBodyMassKilogram(Nullable<Double> leanBodyMassKilogram);
-
         _FinalStage waistCircumferenceCentimeter(Optional<Double> waistCircumferenceCentimeter);
 
         _FinalStage waistCircumferenceCentimeter(Double waistCircumferenceCentimeter);
-
-        _FinalStage waistCircumferenceCentimeter(Nullable<Double> waistCircumferenceCentimeter);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -592,18 +490,6 @@ public final class ClientFacingBody {
         }
 
         @java.lang.Override
-        public _FinalStage waistCircumferenceCentimeter(Nullable<Double> waistCircumferenceCentimeter) {
-            if (waistCircumferenceCentimeter.isNull()) {
-                this.waistCircumferenceCentimeter = null;
-            } else if (waistCircumferenceCentimeter.isEmpty()) {
-                this.waistCircumferenceCentimeter = Optional.empty();
-            } else {
-                this.waistCircumferenceCentimeter = Optional.of(waistCircumferenceCentimeter.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage waistCircumferenceCentimeter(Double waistCircumferenceCentimeter) {
             this.waistCircumferenceCentimeter = Optional.ofNullable(waistCircumferenceCentimeter);
             return this;
@@ -613,18 +499,6 @@ public final class ClientFacingBody {
         @JsonSetter(value = "waist_circumference_centimeter", nulls = Nulls.SKIP)
         public _FinalStage waistCircumferenceCentimeter(Optional<Double> waistCircumferenceCentimeter) {
             this.waistCircumferenceCentimeter = waistCircumferenceCentimeter;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage leanBodyMassKilogram(Nullable<Double> leanBodyMassKilogram) {
-            if (leanBodyMassKilogram.isNull()) {
-                this.leanBodyMassKilogram = null;
-            } else if (leanBodyMassKilogram.isEmpty()) {
-                this.leanBodyMassKilogram = Optional.empty();
-            } else {
-                this.leanBodyMassKilogram = Optional.of(leanBodyMassKilogram.get());
-            }
             return this;
         }
 
@@ -642,18 +516,6 @@ public final class ClientFacingBody {
         }
 
         @java.lang.Override
-        public _FinalStage bodyMassIndex(Nullable<Double> bodyMassIndex) {
-            if (bodyMassIndex.isNull()) {
-                this.bodyMassIndex = null;
-            } else if (bodyMassIndex.isEmpty()) {
-                this.bodyMassIndex = Optional.empty();
-            } else {
-                this.bodyMassIndex = Optional.of(bodyMassIndex.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage bodyMassIndex(Double bodyMassIndex) {
             this.bodyMassIndex = Optional.ofNullable(bodyMassIndex);
             return this;
@@ -663,22 +525,6 @@ public final class ClientFacingBody {
         @JsonSetter(value = "body_mass_index", nulls = Nulls.SKIP)
         public _FinalStage bodyMassIndex(Optional<Double> bodyMassIndex) {
             this.bodyMassIndex = bodyMassIndex;
-            return this;
-        }
-
-        /**
-         * <p>Bone mass percentage in the body::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage boneMassPercentage(Nullable<Double> boneMassPercentage) {
-            if (boneMassPercentage.isNull()) {
-                this.boneMassPercentage = null;
-            } else if (boneMassPercentage.isEmpty()) {
-                this.boneMassPercentage = Optional.empty();
-            } else {
-                this.boneMassPercentage = Optional.of(boneMassPercentage.get());
-            }
             return this;
         }
 
@@ -707,22 +553,6 @@ public final class ClientFacingBody {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage visceralFatIndex(Nullable<Double> visceralFatIndex) {
-            if (visceralFatIndex.isNull()) {
-                this.visceralFatIndex = null;
-            } else if (visceralFatIndex.isEmpty()) {
-                this.visceralFatIndex = Optional.empty();
-            } else {
-                this.visceralFatIndex = Optional.of(visceralFatIndex.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Visceral fat index::scalar</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage visceralFatIndex(Double visceralFatIndex) {
             this.visceralFatIndex = Optional.ofNullable(visceralFatIndex);
             return this;
@@ -735,22 +565,6 @@ public final class ClientFacingBody {
         @JsonSetter(value = "visceral_fat_index", nulls = Nulls.SKIP)
         public _FinalStage visceralFatIndex(Optional<Double> visceralFatIndex) {
             this.visceralFatIndex = visceralFatIndex;
-            return this;
-        }
-
-        /**
-         * <p>Muscle mass percentage in the body::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage muscleMassPercentage(Nullable<Double> muscleMassPercentage) {
-            if (muscleMassPercentage.isNull()) {
-                this.muscleMassPercentage = null;
-            } else if (muscleMassPercentage.isEmpty()) {
-                this.muscleMassPercentage = Optional.empty();
-            } else {
-                this.muscleMassPercentage = Optional.of(muscleMassPercentage.get());
-            }
             return this;
         }
 
@@ -779,22 +593,6 @@ public final class ClientFacingBody {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage waterPercentage(Nullable<Double> waterPercentage) {
-            if (waterPercentage.isNull()) {
-                this.waterPercentage = null;
-            } else if (waterPercentage.isEmpty()) {
-                this.waterPercentage = Optional.empty();
-            } else {
-                this.waterPercentage = Optional.of(waterPercentage.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Water percentage in the body::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage waterPercentage(Double waterPercentage) {
             this.waterPercentage = Optional.ofNullable(waterPercentage);
             return this;
@@ -815,22 +613,6 @@ public final class ClientFacingBody {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage fat(Nullable<Double> fat) {
-            if (fat.isNull()) {
-                this.fat = null;
-            } else if (fat.isEmpty()) {
-                this.fat = Optional.empty();
-            } else {
-                this.fat = Optional.of(fat.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Total body fat percentage::perc</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage fat(Double fat) {
             this.fat = Optional.ofNullable(fat);
             return this;
@@ -843,22 +625,6 @@ public final class ClientFacingBody {
         @JsonSetter(value = "fat", nulls = Nulls.SKIP)
         public _FinalStage fat(Optional<Double> fat) {
             this.fat = fat;
-            return this;
-        }
-
-        /**
-         * <p>Weight in kg::kg</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage weight(Nullable<Double> weight) {
-            if (weight.isNull()) {
-                this.weight = null;
-            } else if (weight.isEmpty()) {
-                this.weight = Optional.empty();
-            } else {
-                this.weight = Optional.of(weight.get());
-            }
             return this;
         }
 

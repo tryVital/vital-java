@@ -5,8 +5,8 @@ package com.vital.api.resources.introspect;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.introspect.requests.GetUserHistoricalPullsIntrospectRequest;
-import com.vital.api.resources.introspect.requests.GetUserResourcesIntrospectRequest;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserHistoricalPullsRequest;
+import com.vital.api.resources.introspect.requests.IntrospectGetUserResourcesRequest;
 import com.vital.api.types.UserHistoricalPullsResponse;
 import com.vital.api.types.UserResourcesResponse;
 import java.util.concurrent.CompletableFuture;
@@ -32,12 +32,16 @@ public class AsyncIntrospectClient {
         return this.rawClient.getUserResources().thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UserResourcesResponse> getUserResources(GetUserResourcesIntrospectRequest request) {
+    public CompletableFuture<UserResourcesResponse> getUserResources(RequestOptions requestOptions) {
+        return this.rawClient.getUserResources(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<UserResourcesResponse> getUserResources(IntrospectGetUserResourcesRequest request) {
         return this.rawClient.getUserResources(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserResourcesResponse> getUserResources(
-            GetUserResourcesIntrospectRequest request, RequestOptions requestOptions) {
+            IntrospectGetUserResourcesRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUserResources(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -45,13 +49,17 @@ public class AsyncIntrospectClient {
         return this.rawClient.getUserHistoricalPulls().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<UserHistoricalPullsResponse> getUserHistoricalPulls(RequestOptions requestOptions) {
+        return this.rawClient.getUserHistoricalPulls(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<UserHistoricalPullsResponse> getUserHistoricalPulls(
-            GetUserHistoricalPullsIntrospectRequest request) {
+            IntrospectGetUserHistoricalPullsRequest request) {
         return this.rawClient.getUserHistoricalPulls(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<UserHistoricalPullsResponse> getUserHistoricalPulls(
-            GetUserHistoricalPullsIntrospectRequest request, RequestOptions requestOptions) {
+            IntrospectGetUserHistoricalPullsRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUserHistoricalPulls(request, requestOptions).thenApply(response -> response.body());
     }
 }

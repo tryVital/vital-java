@@ -14,9 +14,9 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
+import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
+import com.vital.api.resources.insurance.requests.InsuranceSearchGetPayorInfoRequest;
 import com.vital.api.resources.insurance.requests.PayorSearchRequest;
-import com.vital.api.resources.insurance.requests.SearchDiagnosisInsuranceRequest;
-import com.vital.api.resources.insurance.requests.SearchGetPayorInfoInsuranceRequest;
 import com.vital.api.types.ClientFacingDiagnosisInformation;
 import com.vital.api.types.ClientFacingPayorSearchResponse;
 import com.vital.api.types.ClientFacingPayorSearchResponseDeprecated;
@@ -39,16 +39,20 @@ public class RawInsuranceClient {
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo() {
-        return searchGetPayorInfo(SearchGetPayorInfoInsuranceRequest.builder().build());
+        return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build());
+    }
+
+    public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(RequestOptions requestOptions) {
+        return searchGetPayorInfo(InsuranceSearchGetPayorInfoRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
-            SearchGetPayorInfoInsuranceRequest request) {
+            InsuranceSearchGetPayorInfoRequest request) {
         return searchGetPayorInfo(request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponse>> searchGetPayorInfo(
-            SearchGetPayorInfoInsuranceRequest request, RequestOptions requestOptions) {
+            InsuranceSearchGetPayorInfoRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/payor");
@@ -76,13 +80,13 @@ public class RawInsuranceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<ClientFacingPayorSearchResponse>>() {}),
+                                responseBodyString, new TypeReference<List<ClientFacingPayorSearchResponse>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -92,11 +96,8 @@ public class RawInsuranceClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -104,6 +105,11 @@ public class RawInsuranceClient {
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo() {
         return searchPayorInfo(PayorSearchRequest.builder().build());
+    }
+
+    public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
+            RequestOptions requestOptions) {
+        return searchPayorInfo(PayorSearchRequest.builder().build(), requestOptions);
     }
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
@@ -137,14 +143,14 @@ public class RawInsuranceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(),
+                                responseBodyString,
                                 new TypeReference<List<ClientFacingPayorSearchResponseDeprecated>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -154,23 +160,20 @@ public class RawInsuranceClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
     public VitalHttpResponse<List<ClientFacingDiagnosisInformation>> searchDiagnosis(
-            SearchDiagnosisInsuranceRequest request) {
+            InsuranceSearchDiagnosisRequest request) {
         return searchDiagnosis(request, null);
     }
 
     public VitalHttpResponse<List<ClientFacingDiagnosisInformation>> searchDiagnosis(
-            SearchDiagnosisInsuranceRequest request, RequestOptions requestOptions) {
+            InsuranceSearchDiagnosisRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/diagnosis");
@@ -187,13 +190,13 @@ public class RawInsuranceClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), new TypeReference<List<ClientFacingDiagnosisInformation>>() {}),
+                                responseBodyString, new TypeReference<List<ClientFacingDiagnosisInformation>>() {}),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -203,11 +206,8 @@ public class RawInsuranceClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

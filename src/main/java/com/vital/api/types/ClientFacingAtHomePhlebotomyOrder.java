@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -56,11 +53,8 @@ public final class ClientFacingAtHomePhlebotomyOrder {
         return id;
     }
 
-    @JsonIgnore
+    @JsonProperty("appointment_id")
     public Optional<String> getAppointmentId() {
-        if (appointmentId == null) {
-            return Optional.empty();
-        }
         return appointmentId;
     }
 
@@ -72,12 +66,6 @@ public final class ClientFacingAtHomePhlebotomyOrder {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("appointment_id")
-    private Optional<String> _getAppointmentId() {
-        return appointmentId;
     }
 
     @java.lang.Override
@@ -135,8 +123,6 @@ public final class ClientFacingAtHomePhlebotomyOrder {
         _FinalStage appointmentId(Optional<String> appointmentId);
 
         _FinalStage appointmentId(String appointmentId);
-
-        _FinalStage appointmentId(Nullable<String> appointmentId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -186,18 +172,6 @@ public final class ClientFacingAtHomePhlebotomyOrder {
         @JsonSetter("updated_at")
         public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
             this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage appointmentId(Nullable<String> appointmentId) {
-            if (appointmentId.isNull()) {
-                this.appointmentId = null;
-            } else if (appointmentId.isEmpty()) {
-                this.appointmentId = Optional.empty();
-            } else {
-                this.appointmentId = Optional.of(appointmentId.get());
-            }
             return this;
         }
 
