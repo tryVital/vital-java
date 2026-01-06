@@ -81,7 +81,9 @@ public final class RawSleep {
         @JsonSetter(value = "sleep", nulls = Nulls.SKIP)
         public Builder sleep(List<SleepV2InDb> sleep) {
             this.sleep.clear();
-            this.sleep.addAll(sleep);
+            if (sleep != null) {
+                this.sleep.addAll(sleep);
+            }
             return this;
         }
 

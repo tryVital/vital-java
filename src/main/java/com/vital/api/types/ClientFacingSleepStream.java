@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -47,59 +44,23 @@ public final class ClientFacingSleepStream {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonIgnore
-    public Optional<List<ClientFacingHrvTimeseries>> getHrv() {
-        if (hrv == null) {
-            return Optional.empty();
-        }
-        return hrv;
-    }
-
-    @JsonIgnore
-    public Optional<List<ClientFacingHeartRateTimeseries>> getHeartrate() {
-        if (heartrate == null) {
-            return Optional.empty();
-        }
-        return heartrate;
-    }
-
-    @JsonIgnore
-    public Optional<List<ClientFacingHypnogramTimeseries>> getHypnogram() {
-        if (hypnogram == null) {
-            return Optional.empty();
-        }
-        return hypnogram;
-    }
-
-    @JsonIgnore
-    public Optional<List<ClientFacingRespiratoryRateTimeseries>> getRespiratoryRate() {
-        if (respiratoryRate == null) {
-            return Optional.empty();
-        }
-        return respiratoryRate;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("hrv")
-    private Optional<List<ClientFacingHrvTimeseries>> _getHrv() {
+    public Optional<List<ClientFacingHrvTimeseries>> getHrv() {
         return hrv;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("heartrate")
-    private Optional<List<ClientFacingHeartRateTimeseries>> _getHeartrate() {
+    public Optional<List<ClientFacingHeartRateTimeseries>> getHeartrate() {
         return heartrate;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("hypnogram")
-    private Optional<List<ClientFacingHypnogramTimeseries>> _getHypnogram() {
+    public Optional<List<ClientFacingHypnogramTimeseries>> getHypnogram() {
         return hypnogram;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("respiratory_rate")
-    private Optional<List<ClientFacingRespiratoryRateTimeseries>> _getRespiratoryRate() {
+    public Optional<List<ClientFacingRespiratoryRateTimeseries>> getRespiratoryRate() {
         return respiratoryRate;
     }
 
@@ -169,17 +130,6 @@ public final class ClientFacingSleepStream {
             return this;
         }
 
-        public Builder hrv(Nullable<List<ClientFacingHrvTimeseries>> hrv) {
-            if (hrv.isNull()) {
-                this.hrv = null;
-            } else if (hrv.isEmpty()) {
-                this.hrv = Optional.empty();
-            } else {
-                this.hrv = Optional.of(hrv.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "heartrate", nulls = Nulls.SKIP)
         public Builder heartrate(Optional<List<ClientFacingHeartRateTimeseries>> heartrate) {
             this.heartrate = heartrate;
@@ -188,17 +138,6 @@ public final class ClientFacingSleepStream {
 
         public Builder heartrate(List<ClientFacingHeartRateTimeseries> heartrate) {
             this.heartrate = Optional.ofNullable(heartrate);
-            return this;
-        }
-
-        public Builder heartrate(Nullable<List<ClientFacingHeartRateTimeseries>> heartrate) {
-            if (heartrate.isNull()) {
-                this.heartrate = null;
-            } else if (heartrate.isEmpty()) {
-                this.heartrate = Optional.empty();
-            } else {
-                this.heartrate = Optional.of(heartrate.get());
-            }
             return this;
         }
 
@@ -213,17 +152,6 @@ public final class ClientFacingSleepStream {
             return this;
         }
 
-        public Builder hypnogram(Nullable<List<ClientFacingHypnogramTimeseries>> hypnogram) {
-            if (hypnogram.isNull()) {
-                this.hypnogram = null;
-            } else if (hypnogram.isEmpty()) {
-                this.hypnogram = Optional.empty();
-            } else {
-                this.hypnogram = Optional.of(hypnogram.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "respiratory_rate", nulls = Nulls.SKIP)
         public Builder respiratoryRate(Optional<List<ClientFacingRespiratoryRateTimeseries>> respiratoryRate) {
             this.respiratoryRate = respiratoryRate;
@@ -232,17 +160,6 @@ public final class ClientFacingSleepStream {
 
         public Builder respiratoryRate(List<ClientFacingRespiratoryRateTimeseries> respiratoryRate) {
             this.respiratoryRate = Optional.ofNullable(respiratoryRate);
-            return this;
-        }
-
-        public Builder respiratoryRate(Nullable<List<ClientFacingRespiratoryRateTimeseries>> respiratoryRate) {
-            if (respiratoryRate.isNull()) {
-                this.respiratoryRate = null;
-            } else if (respiratoryRate.isEmpty()) {
-                this.respiratoryRate = Optional.empty();
-            } else {
-                this.respiratoryRate = Optional.of(respiratoryRate.get());
-            }
             return this;
         }
 

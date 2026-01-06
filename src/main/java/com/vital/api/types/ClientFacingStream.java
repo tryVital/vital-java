@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.List;
@@ -78,187 +75,88 @@ public final class ClientFacingStream {
     /**
      * @return RPM for cycling, Steps per minute for running
      */
-    @JsonIgnore
+    @JsonProperty("cadence")
     public Optional<ClientFacingStreamCadence> getCadence() {
-        if (cadence == null) {
-            return Optional.empty();
-        }
         return cadence;
     }
 
     /**
      * @return Corresponding time stamp in unix time for datapoint
      */
-    @JsonIgnore
+    @JsonProperty("time")
     public Optional<List<Integer>> getTime() {
-        if (time == null) {
-            return Optional.empty();
-        }
         return time;
     }
 
     /**
      * @return Data points for altitude
      */
-    @JsonIgnore
+    @JsonProperty("altitude")
     public Optional<ClientFacingStreamAltitude> getAltitude() {
-        if (altitude == null) {
-            return Optional.empty();
-        }
         return altitude;
     }
 
     /**
      * @return Velocity in m/s
      */
-    @JsonIgnore
+    @JsonProperty("velocity_smooth")
     public Optional<ClientFacingStreamVelocitySmooth> getVelocitySmooth() {
-        if (velocitySmooth == null) {
-            return Optional.empty();
-        }
         return velocitySmooth;
     }
 
     /**
      * @return Heart rate in bpm
      */
-    @JsonIgnore
+    @JsonProperty("heartrate")
     public Optional<ClientFacingStreamHeartrate> getHeartrate() {
-        if (heartrate == null) {
-            return Optional.empty();
-        }
         return heartrate;
     }
 
     /**
      * @return Latitude for data point
      */
-    @JsonIgnore
+    @JsonProperty("lat")
     public Optional<ClientFacingStreamLat> getLat() {
-        if (lat == null) {
-            return Optional.empty();
-        }
         return lat;
     }
 
     /**
      * @return Longitude for data point
      */
-    @JsonIgnore
+    @JsonProperty("lng")
     public Optional<ClientFacingStreamLng> getLng() {
-        if (lng == null) {
-            return Optional.empty();
-        }
         return lng;
     }
 
     /**
      * @return Cumulated distance for exercise
      */
-    @JsonIgnore
+    @JsonProperty("distance")
     public Optional<ClientFacingStreamDistance> getDistance() {
-        if (distance == null) {
-            return Optional.empty();
-        }
         return distance;
     }
 
     /**
      * @return Power in watts
      */
-    @JsonIgnore
+    @JsonProperty("power")
     public Optional<ClientFacingStreamPower> getPower() {
-        if (power == null) {
-            return Optional.empty();
-        }
         return power;
     }
 
     /**
      * @return Resistance on bike
      */
-    @JsonIgnore
+    @JsonProperty("resistance")
     public Optional<ClientFacingStreamResistance> getResistance() {
-        if (resistance == null) {
-            return Optional.empty();
-        }
         return resistance;
     }
 
     /**
      * @return Temperature stream measured by device in Celsius
      */
-    @JsonIgnore
-    public Optional<ClientFacingStreamTemperature> getTemperature() {
-        if (temperature == null) {
-            return Optional.empty();
-        }
-        return temperature;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("cadence")
-    private Optional<ClientFacingStreamCadence> _getCadence() {
-        return cadence;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("time")
-    private Optional<List<Integer>> _getTime() {
-        return time;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("altitude")
-    private Optional<ClientFacingStreamAltitude> _getAltitude() {
-        return altitude;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("velocity_smooth")
-    private Optional<ClientFacingStreamVelocitySmooth> _getVelocitySmooth() {
-        return velocitySmooth;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("heartrate")
-    private Optional<ClientFacingStreamHeartrate> _getHeartrate() {
-        return heartrate;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("lat")
-    private Optional<ClientFacingStreamLat> _getLat() {
-        return lat;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("lng")
-    private Optional<ClientFacingStreamLng> _getLng() {
-        return lng;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("distance")
-    private Optional<ClientFacingStreamDistance> _getDistance() {
-        return distance;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("power")
-    private Optional<ClientFacingStreamPower> _getPower() {
-        return power;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("resistance")
-    private Optional<ClientFacingStreamResistance> _getResistance() {
-        return resistance;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("temperature")
-    private Optional<ClientFacingStreamTemperature> _getTemperature() {
+    public Optional<ClientFacingStreamTemperature> getTemperature() {
         return temperature;
     }
 
@@ -370,17 +268,6 @@ public final class ClientFacingStream {
             return this;
         }
 
-        public Builder cadence(Nullable<ClientFacingStreamCadence> cadence) {
-            if (cadence.isNull()) {
-                this.cadence = null;
-            } else if (cadence.isEmpty()) {
-                this.cadence = Optional.empty();
-            } else {
-                this.cadence = Optional.of(cadence.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Corresponding time stamp in unix time for datapoint</p>
          */
@@ -392,17 +279,6 @@ public final class ClientFacingStream {
 
         public Builder time(List<Integer> time) {
             this.time = Optional.ofNullable(time);
-            return this;
-        }
-
-        public Builder time(Nullable<List<Integer>> time) {
-            if (time.isNull()) {
-                this.time = null;
-            } else if (time.isEmpty()) {
-                this.time = Optional.empty();
-            } else {
-                this.time = Optional.of(time.get());
-            }
             return this;
         }
 
@@ -420,17 +296,6 @@ public final class ClientFacingStream {
             return this;
         }
 
-        public Builder altitude(Nullable<ClientFacingStreamAltitude> altitude) {
-            if (altitude.isNull()) {
-                this.altitude = null;
-            } else if (altitude.isEmpty()) {
-                this.altitude = Optional.empty();
-            } else {
-                this.altitude = Optional.of(altitude.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Velocity in m/s</p>
          */
@@ -442,17 +307,6 @@ public final class ClientFacingStream {
 
         public Builder velocitySmooth(ClientFacingStreamVelocitySmooth velocitySmooth) {
             this.velocitySmooth = Optional.ofNullable(velocitySmooth);
-            return this;
-        }
-
-        public Builder velocitySmooth(Nullable<ClientFacingStreamVelocitySmooth> velocitySmooth) {
-            if (velocitySmooth.isNull()) {
-                this.velocitySmooth = null;
-            } else if (velocitySmooth.isEmpty()) {
-                this.velocitySmooth = Optional.empty();
-            } else {
-                this.velocitySmooth = Optional.of(velocitySmooth.get());
-            }
             return this;
         }
 
@@ -470,17 +324,6 @@ public final class ClientFacingStream {
             return this;
         }
 
-        public Builder heartrate(Nullable<ClientFacingStreamHeartrate> heartrate) {
-            if (heartrate.isNull()) {
-                this.heartrate = null;
-            } else if (heartrate.isEmpty()) {
-                this.heartrate = Optional.empty();
-            } else {
-                this.heartrate = Optional.of(heartrate.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Latitude for data point</p>
          */
@@ -492,17 +335,6 @@ public final class ClientFacingStream {
 
         public Builder lat(ClientFacingStreamLat lat) {
             this.lat = Optional.ofNullable(lat);
-            return this;
-        }
-
-        public Builder lat(Nullable<ClientFacingStreamLat> lat) {
-            if (lat.isNull()) {
-                this.lat = null;
-            } else if (lat.isEmpty()) {
-                this.lat = Optional.empty();
-            } else {
-                this.lat = Optional.of(lat.get());
-            }
             return this;
         }
 
@@ -520,17 +352,6 @@ public final class ClientFacingStream {
             return this;
         }
 
-        public Builder lng(Nullable<ClientFacingStreamLng> lng) {
-            if (lng.isNull()) {
-                this.lng = null;
-            } else if (lng.isEmpty()) {
-                this.lng = Optional.empty();
-            } else {
-                this.lng = Optional.of(lng.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Cumulated distance for exercise</p>
          */
@@ -542,17 +363,6 @@ public final class ClientFacingStream {
 
         public Builder distance(ClientFacingStreamDistance distance) {
             this.distance = Optional.ofNullable(distance);
-            return this;
-        }
-
-        public Builder distance(Nullable<ClientFacingStreamDistance> distance) {
-            if (distance.isNull()) {
-                this.distance = null;
-            } else if (distance.isEmpty()) {
-                this.distance = Optional.empty();
-            } else {
-                this.distance = Optional.of(distance.get());
-            }
             return this;
         }
 
@@ -570,17 +380,6 @@ public final class ClientFacingStream {
             return this;
         }
 
-        public Builder power(Nullable<ClientFacingStreamPower> power) {
-            if (power.isNull()) {
-                this.power = null;
-            } else if (power.isEmpty()) {
-                this.power = Optional.empty();
-            } else {
-                this.power = Optional.of(power.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Resistance on bike</p>
          */
@@ -595,17 +394,6 @@ public final class ClientFacingStream {
             return this;
         }
 
-        public Builder resistance(Nullable<ClientFacingStreamResistance> resistance) {
-            if (resistance.isNull()) {
-                this.resistance = null;
-            } else if (resistance.isEmpty()) {
-                this.resistance = Optional.empty();
-            } else {
-                this.resistance = Optional.of(resistance.get());
-            }
-            return this;
-        }
-
         /**
          * <p>Temperature stream measured by device in Celsius</p>
          */
@@ -617,17 +405,6 @@ public final class ClientFacingStream {
 
         public Builder temperature(ClientFacingStreamTemperature temperature) {
             this.temperature = Optional.ofNullable(temperature);
-            return this;
-        }
-
-        public Builder temperature(Nullable<ClientFacingStreamTemperature> temperature) {
-            if (temperature.isNull()) {
-                this.temperature = null;
-            } else if (temperature.isEmpty()) {
-                this.temperature = Optional.empty();
-            } else {
-                this.temperature = Optional.of(temperature.get());
-            }
             return this;
         }
 

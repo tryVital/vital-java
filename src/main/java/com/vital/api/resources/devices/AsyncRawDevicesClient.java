@@ -12,7 +12,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.devices.requests.GetRawDevicesRequest;
+import com.vital.api.resources.devices.requests.DevicesGetRawRequest;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawDevices;
 import java.io.IOException;
@@ -38,13 +38,13 @@ public class AsyncRawDevicesClient {
      * Get Devices for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId) {
-        return getRaw(userId, GetRawDevicesRequest.builder().build());
+        return getRaw(userId, DevicesGetRawRequest.builder().build());
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId, GetRawDevicesRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId, DevicesGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
@@ -52,7 +52,7 @@ public class AsyncRawDevicesClient {
      * Get Devices for user_id
      */
     public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(
-            String userId, GetRawDevicesRequest request, RequestOptions requestOptions) {
+            String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/devices")
@@ -77,13 +77,12 @@ public class AsyncRawDevicesClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawDevices.class),
-                                response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawDevices.class), response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     try {
                         if (response.code() == 422) {
                             future.completeExceptionally(new UnprocessableEntityError(
@@ -94,11 +93,9 @@ public class AsyncRawDevicesClient {
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
                     }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(new VitalException("Network error executing HTTP request", e));

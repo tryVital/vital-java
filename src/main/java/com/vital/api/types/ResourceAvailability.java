@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,17 +41,8 @@ public final class ResourceAvailability {
         return status;
     }
 
-    @JsonIgnore
-    public Optional<ScopeRequirementsGrants> getScopeRequirements() {
-        if (scopeRequirements == null) {
-            return Optional.empty();
-        }
-        return scopeRequirements;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("scope_requirements")
-    private Optional<ScopeRequirementsGrants> _getScopeRequirements() {
+    public Optional<ScopeRequirementsGrants> getScopeRequirements() {
         return scopeRequirements;
     }
 
@@ -99,8 +87,6 @@ public final class ResourceAvailability {
         _FinalStage scopeRequirements(Optional<ScopeRequirementsGrants> scopeRequirements);
 
         _FinalStage scopeRequirements(ScopeRequirementsGrants scopeRequirements);
-
-        _FinalStage scopeRequirements(Nullable<ScopeRequirementsGrants> scopeRequirements);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -125,18 +111,6 @@ public final class ResourceAvailability {
         @JsonSetter("status")
         public _FinalStage status(@NotNull Availability status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage scopeRequirements(Nullable<ScopeRequirementsGrants> scopeRequirements) {
-            if (scopeRequirements.isNull()) {
-                this.scopeRequirements = null;
-            } else if (scopeRequirements.isEmpty()) {
-                this.scopeRequirements = Optional.empty();
-            } else {
-                this.scopeRequirements = Optional.of(scopeRequirements.get());
-            }
             return this;
         }
 

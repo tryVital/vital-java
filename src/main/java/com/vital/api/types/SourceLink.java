@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,37 +85,19 @@ public final class SourceLink {
         return logo;
     }
 
-    @JsonIgnore
+    @JsonProperty("oauth_url")
     public Optional<String> getOauthUrl() {
-        if (oauthUrl == null) {
-            return Optional.empty();
-        }
         return oauthUrl;
     }
 
-    @JsonIgnore
+    @JsonProperty("auth_type")
     public Optional<SourceAuthType> getAuthType() {
-        if (authType == null) {
-            return Optional.empty();
-        }
         return authType;
     }
 
     @JsonProperty("form_components")
     public Optional<Map<String, Object>> getFormComponents() {
         return formComponents;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("oauth_url")
-    private Optional<String> _getOauthUrl() {
-        return oauthUrl;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("auth_type")
-    private Optional<SourceAuthType> _getAuthType() {
-        return authType;
     }
 
     @java.lang.Override
@@ -194,13 +173,9 @@ public final class SourceLink {
 
         _FinalStage oauthUrl(String oauthUrl);
 
-        _FinalStage oauthUrl(Nullable<String> oauthUrl);
-
         _FinalStage authType(Optional<SourceAuthType> authType);
 
         _FinalStage authType(SourceAuthType authType);
-
-        _FinalStage authType(Nullable<SourceAuthType> authType);
 
         _FinalStage formComponents(Optional<Map<String, Object>> formComponents);
 
@@ -293,18 +268,6 @@ public final class SourceLink {
         }
 
         @java.lang.Override
-        public _FinalStage authType(Nullable<SourceAuthType> authType) {
-            if (authType.isNull()) {
-                this.authType = null;
-            } else if (authType.isEmpty()) {
-                this.authType = Optional.empty();
-            } else {
-                this.authType = Optional.of(authType.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.ofNullable(authType);
             return this;
@@ -314,18 +277,6 @@ public final class SourceLink {
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
             this.authType = authType;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage oauthUrl(Nullable<String> oauthUrl) {
-            if (oauthUrl.isNull()) {
-                this.oauthUrl = null;
-            } else if (oauthUrl.isEmpty()) {
-                this.oauthUrl = Optional.empty();
-            } else {
-                this.oauthUrl = Optional.of(oauthUrl.get());
-            }
             return this;
         }
 

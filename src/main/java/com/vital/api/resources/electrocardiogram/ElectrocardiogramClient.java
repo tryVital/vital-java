@@ -5,7 +5,7 @@ package com.vital.api.resources.electrocardiogram;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.electrocardiogram.requests.GetElectrocardiogramRequest;
+import com.vital.api.resources.electrocardiogram.requests.ElectrocardiogramGetRequest;
 import com.vital.api.types.ClientFacingElectrocardiogramResponse;
 
 public class ElectrocardiogramClient {
@@ -28,7 +28,7 @@ public class ElectrocardiogramClient {
     /**
      * Get electrocardiogram summary for user_id
      */
-    public ClientFacingElectrocardiogramResponse get(String userId, GetElectrocardiogramRequest request) {
+    public ClientFacingElectrocardiogramResponse get(String userId, ElectrocardiogramGetRequest request) {
         return this.rawClient.get(userId, request).body();
     }
 
@@ -36,7 +36,7 @@ public class ElectrocardiogramClient {
      * Get electrocardiogram summary for user_id
      */
     public ClientFacingElectrocardiogramResponse get(
-            String userId, GetElectrocardiogramRequest request, RequestOptions requestOptions) {
+            String userId, ElectrocardiogramGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(userId, request, requestOptions).body();
     }
 }

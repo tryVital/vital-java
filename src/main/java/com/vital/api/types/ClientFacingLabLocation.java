@@ -229,7 +229,9 @@ public final class ClientFacingLabLocation {
         @JsonSetter(value = "capabilities", nulls = Nulls.SKIP)
         public _FinalStage capabilities(List<LabLocationCapability> capabilities) {
             this.capabilities.clear();
-            this.capabilities.addAll(capabilities);
+            if (capabilities != null) {
+                this.capabilities.addAll(capabilities);
+            }
             return this;
         }
 
@@ -251,7 +253,9 @@ public final class ClientFacingLabLocation {
         @JsonSetter(value = "supported_bill_types", nulls = Nulls.SKIP)
         public _FinalStage supportedBillTypes(List<Billing> supportedBillTypes) {
             this.supportedBillTypes.clear();
-            this.supportedBillTypes.addAll(supportedBillTypes);
+            if (supportedBillTypes != null) {
+                this.supportedBillTypes.addAll(supportedBillTypes);
+            }
             return this;
         }
 

@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -165,55 +162,40 @@ public final class ClientFacingWorkout {
     /**
      * @return Title given for the workout
      */
-    @JsonIgnore
+    @JsonProperty("title")
     public Optional<String> getTitle() {
-        if (title == null) {
-            return Optional.empty();
-        }
         return title;
     }
 
     /**
      * @return Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
      */
-    @JsonIgnore
+    @JsonProperty("timezone_offset")
     public Optional<Integer> getTimezoneOffset() {
-        if (timezoneOffset == null) {
-            return Optional.empty();
-        }
         return timezoneOffset;
     }
 
     /**
      * @return Average heart rate during workout::bpm
      */
-    @JsonIgnore
+    @JsonProperty("average_hr")
     public Optional<Integer> getAverageHr() {
-        if (averageHr == null) {
-            return Optional.empty();
-        }
         return averageHr;
     }
 
     /**
      * @return Max heart rate during workout::bpm
      */
-    @JsonIgnore
+    @JsonProperty("max_hr")
     public Optional<Integer> getMaxHr() {
-        if (maxHr == null) {
-            return Optional.empty();
-        }
         return maxHr;
     }
 
     /**
      * @return Distance travelled during workout::meters
      */
-    @JsonIgnore
+    @JsonProperty("distance")
     public Optional<Double> getDistance() {
-        if (distance == null) {
-            return Optional.empty();
-        }
         return distance;
     }
 
@@ -244,11 +226,8 @@ public final class ClientFacingWorkout {
     /**
      * @return Calories burned during the workout::kCal
      */
-    @JsonIgnore
+    @JsonProperty("calories")
     public Optional<Double> getCalories() {
-        if (calories == null) {
-            return Optional.empty();
-        }
         return calories;
     }
 
@@ -263,143 +242,104 @@ public final class ClientFacingWorkout {
     /**
      * @return Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers::seconds
      */
-    @JsonIgnore
+    @JsonProperty("hr_zones")
     public Optional<List<Integer>> getHrZones() {
-        if (hrZones == null) {
-            return Optional.empty();
-        }
         return hrZones;
     }
 
     /**
      * @return Time spent active during the workout::seconds
      */
-    @JsonIgnore
+    @JsonProperty("moving_time")
     public Optional<Integer> getMovingTime() {
-        if (movingTime == null) {
-            return Optional.empty();
-        }
         return movingTime;
     }
 
     /**
      * @return Elevation gain during the workout::meters
      */
-    @JsonIgnore
+    @JsonProperty("total_elevation_gain")
     public Optional<Double> getTotalElevationGain() {
-        if (totalElevationGain == null) {
-            return Optional.empty();
-        }
         return totalElevationGain;
     }
 
     /**
      * @return Highest point of elevation::meters
      */
-    @JsonIgnore
+    @JsonProperty("elev_high")
     public Optional<Double> getElevHigh() {
-        if (elevHigh == null) {
-            return Optional.empty();
-        }
         return elevHigh;
     }
 
     /**
      * @return Lowest point of elevation::meters
      */
-    @JsonIgnore
+    @JsonProperty("elev_low")
     public Optional<Double> getElevLow() {
-        if (elevLow == null) {
-            return Optional.empty();
-        }
         return elevLow;
     }
 
     /**
      * @return Average speed during workout in m/s::meters/sec
      */
-    @JsonIgnore
+    @JsonProperty("average_speed")
     public Optional<Double> getAverageSpeed() {
-        if (averageSpeed == null) {
-            return Optional.empty();
-        }
         return averageSpeed;
     }
 
     /**
      * @return Max speed during workout in m/s::meters/sec
      */
-    @JsonIgnore
+    @JsonProperty("max_speed")
     public Optional<Double> getMaxSpeed() {
-        if (maxSpeed == null) {
-            return Optional.empty();
-        }
         return maxSpeed;
     }
 
     /**
      * @return Average watts burned during exercise::watts
      */
-    @JsonIgnore
+    @JsonProperty("average_watts")
     public Optional<Double> getAverageWatts() {
-        if (averageWatts == null) {
-            return Optional.empty();
-        }
         return averageWatts;
     }
 
     /**
      * @return Watts burned during exercise::watts
      */
-    @JsonIgnore
+    @JsonProperty("device_watts")
     public Optional<Double> getDeviceWatts() {
-        if (deviceWatts == null) {
-            return Optional.empty();
-        }
         return deviceWatts;
     }
 
     /**
      * @return Max watts burned during exercise::watts
      */
-    @JsonIgnore
+    @JsonProperty("max_watts")
     public Optional<Double> getMaxWatts() {
-        if (maxWatts == null) {
-            return Optional.empty();
-        }
         return maxWatts;
     }
 
     /**
      * @return Weighted average watts burned during exercise::watts
      */
-    @JsonIgnore
+    @JsonProperty("weighted_average_watts")
     public Optional<Double> getWeightedAverageWatts() {
-        if (weightedAverageWatts == null) {
-            return Optional.empty();
-        }
         return weightedAverageWatts;
     }
 
     /**
      * @return Number of steps accumulated during this workout::count
      */
-    @JsonIgnore
+    @JsonProperty("steps")
     public Optional<Integer> getSteps() {
-        if (steps == null) {
-            return Optional.empty();
-        }
         return steps;
     }
 
     /**
      * @return Map of the workout
      */
-    @JsonIgnore
+    @JsonProperty("map")
     public Optional<ClientFacingWorkoutMap> getMap() {
-        if (map == null) {
-            return Optional.empty();
-        }
         return map;
     }
 
@@ -427,120 +367,6 @@ public final class ClientFacingWorkout {
     @JsonProperty("updated_at")
     public OffsetDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("title")
-    private Optional<String> _getTitle() {
-        return title;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("timezone_offset")
-    private Optional<Integer> _getTimezoneOffset() {
-        return timezoneOffset;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("average_hr")
-    private Optional<Integer> _getAverageHr() {
-        return averageHr;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("max_hr")
-    private Optional<Integer> _getMaxHr() {
-        return maxHr;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("distance")
-    private Optional<Double> _getDistance() {
-        return distance;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("calories")
-    private Optional<Double> _getCalories() {
-        return calories;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("hr_zones")
-    private Optional<List<Integer>> _getHrZones() {
-        return hrZones;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("moving_time")
-    private Optional<Integer> _getMovingTime() {
-        return movingTime;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("total_elevation_gain")
-    private Optional<Double> _getTotalElevationGain() {
-        return totalElevationGain;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("elev_high")
-    private Optional<Double> _getElevHigh() {
-        return elevHigh;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("elev_low")
-    private Optional<Double> _getElevLow() {
-        return elevLow;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("average_speed")
-    private Optional<Double> _getAverageSpeed() {
-        return averageSpeed;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("max_speed")
-    private Optional<Double> _getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("average_watts")
-    private Optional<Double> _getAverageWatts() {
-        return averageWatts;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("device_watts")
-    private Optional<Double> _getDeviceWatts() {
-        return deviceWatts;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("max_watts")
-    private Optional<Double> _getMaxWatts() {
-        return maxWatts;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("weighted_average_watts")
-    private Optional<Double> _getWeightedAverageWatts() {
-        return weightedAverageWatts;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("steps")
-    private Optional<Integer> _getSteps() {
-        return steps;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("map")
-    private Optional<ClientFacingWorkoutMap> _getMap() {
-        return map;
     }
 
     @java.lang.Override
@@ -695,16 +521,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage title(String title);
 
-        _FinalStage title(Nullable<String> title);
-
         /**
          * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
          */
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
-
-        _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset);
 
         /**
          * <p>Average heart rate during workout::bpm</p>
@@ -713,16 +535,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage averageHr(Integer averageHr);
 
-        _FinalStage averageHr(Nullable<Integer> averageHr);
-
         /**
          * <p>Max heart rate during workout::bpm</p>
          */
         _FinalStage maxHr(Optional<Integer> maxHr);
 
         _FinalStage maxHr(Integer maxHr);
-
-        _FinalStage maxHr(Nullable<Integer> maxHr);
 
         /**
          * <p>Distance travelled during workout::meters</p>
@@ -731,16 +549,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage distance(Double distance);
 
-        _FinalStage distance(Nullable<Double> distance);
-
         /**
          * <p>Calories burned during the workout::kCal</p>
          */
         _FinalStage calories(Optional<Double> calories);
 
         _FinalStage calories(Double calories);
-
-        _FinalStage calories(Nullable<Double> calories);
 
         /**
          * <p>Sport's name</p>
@@ -756,16 +570,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage hrZones(List<Integer> hrZones);
 
-        _FinalStage hrZones(Nullable<List<Integer>> hrZones);
-
         /**
          * <p>Time spent active during the workout::seconds</p>
          */
         _FinalStage movingTime(Optional<Integer> movingTime);
 
         _FinalStage movingTime(Integer movingTime);
-
-        _FinalStage movingTime(Nullable<Integer> movingTime);
 
         /**
          * <p>Elevation gain during the workout::meters</p>
@@ -774,16 +584,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage totalElevationGain(Double totalElevationGain);
 
-        _FinalStage totalElevationGain(Nullable<Double> totalElevationGain);
-
         /**
          * <p>Highest point of elevation::meters</p>
          */
         _FinalStage elevHigh(Optional<Double> elevHigh);
 
         _FinalStage elevHigh(Double elevHigh);
-
-        _FinalStage elevHigh(Nullable<Double> elevHigh);
 
         /**
          * <p>Lowest point of elevation::meters</p>
@@ -792,16 +598,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage elevLow(Double elevLow);
 
-        _FinalStage elevLow(Nullable<Double> elevLow);
-
         /**
          * <p>Average speed during workout in m/s::meters/sec</p>
          */
         _FinalStage averageSpeed(Optional<Double> averageSpeed);
 
         _FinalStage averageSpeed(Double averageSpeed);
-
-        _FinalStage averageSpeed(Nullable<Double> averageSpeed);
 
         /**
          * <p>Max speed during workout in m/s::meters/sec</p>
@@ -810,16 +612,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage maxSpeed(Double maxSpeed);
 
-        _FinalStage maxSpeed(Nullable<Double> maxSpeed);
-
         /**
          * <p>Average watts burned during exercise::watts</p>
          */
         _FinalStage averageWatts(Optional<Double> averageWatts);
 
         _FinalStage averageWatts(Double averageWatts);
-
-        _FinalStage averageWatts(Nullable<Double> averageWatts);
 
         /**
          * <p>Watts burned during exercise::watts</p>
@@ -828,16 +626,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage deviceWatts(Double deviceWatts);
 
-        _FinalStage deviceWatts(Nullable<Double> deviceWatts);
-
         /**
          * <p>Max watts burned during exercise::watts</p>
          */
         _FinalStage maxWatts(Optional<Double> maxWatts);
 
         _FinalStage maxWatts(Double maxWatts);
-
-        _FinalStage maxWatts(Nullable<Double> maxWatts);
 
         /**
          * <p>Weighted average watts burned during exercise::watts</p>
@@ -846,8 +640,6 @@ public final class ClientFacingWorkout {
 
         _FinalStage weightedAverageWatts(Double weightedAverageWatts);
 
-        _FinalStage weightedAverageWatts(Nullable<Double> weightedAverageWatts);
-
         /**
          * <p>Number of steps accumulated during this workout::count</p>
          */
@@ -855,16 +647,12 @@ public final class ClientFacingWorkout {
 
         _FinalStage steps(Integer steps);
 
-        _FinalStage steps(Nullable<Integer> steps);
-
         /**
          * <p>Map of the workout</p>
          */
         _FinalStage map(Optional<ClientFacingWorkoutMap> map);
 
         _FinalStage map(ClientFacingWorkoutMap map);
-
-        _FinalStage map(Nullable<ClientFacingWorkoutMap> map);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1074,22 +862,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage map(Nullable<ClientFacingWorkoutMap> map) {
-            if (map.isNull()) {
-                this.map = null;
-            } else if (map.isEmpty()) {
-                this.map = Optional.empty();
-            } else {
-                this.map = Optional.of(map.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Map of the workout</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage map(ClientFacingWorkoutMap map) {
             this.map = Optional.ofNullable(map);
             return this;
@@ -1102,22 +874,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "map", nulls = Nulls.SKIP)
         public _FinalStage map(Optional<ClientFacingWorkoutMap> map) {
             this.map = map;
-            return this;
-        }
-
-        /**
-         * <p>Number of steps accumulated during this workout::count</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage steps(Nullable<Integer> steps) {
-            if (steps.isNull()) {
-                this.steps = null;
-            } else if (steps.isEmpty()) {
-                this.steps = Optional.empty();
-            } else {
-                this.steps = Optional.of(steps.get());
-            }
             return this;
         }
 
@@ -1146,22 +902,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage weightedAverageWatts(Nullable<Double> weightedAverageWatts) {
-            if (weightedAverageWatts.isNull()) {
-                this.weightedAverageWatts = null;
-            } else if (weightedAverageWatts.isEmpty()) {
-                this.weightedAverageWatts = Optional.empty();
-            } else {
-                this.weightedAverageWatts = Optional.of(weightedAverageWatts.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Weighted average watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage weightedAverageWatts(Double weightedAverageWatts) {
             this.weightedAverageWatts = Optional.ofNullable(weightedAverageWatts);
             return this;
@@ -1174,22 +914,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "weighted_average_watts", nulls = Nulls.SKIP)
         public _FinalStage weightedAverageWatts(Optional<Double> weightedAverageWatts) {
             this.weightedAverageWatts = weightedAverageWatts;
-            return this;
-        }
-
-        /**
-         * <p>Max watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage maxWatts(Nullable<Double> maxWatts) {
-            if (maxWatts.isNull()) {
-                this.maxWatts = null;
-            } else if (maxWatts.isEmpty()) {
-                this.maxWatts = Optional.empty();
-            } else {
-                this.maxWatts = Optional.of(maxWatts.get());
-            }
             return this;
         }
 
@@ -1218,22 +942,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage deviceWatts(Nullable<Double> deviceWatts) {
-            if (deviceWatts.isNull()) {
-                this.deviceWatts = null;
-            } else if (deviceWatts.isEmpty()) {
-                this.deviceWatts = Optional.empty();
-            } else {
-                this.deviceWatts = Optional.of(deviceWatts.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage deviceWatts(Double deviceWatts) {
             this.deviceWatts = Optional.ofNullable(deviceWatts);
             return this;
@@ -1246,22 +954,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "device_watts", nulls = Nulls.SKIP)
         public _FinalStage deviceWatts(Optional<Double> deviceWatts) {
             this.deviceWatts = deviceWatts;
-            return this;
-        }
-
-        /**
-         * <p>Average watts burned during exercise::watts</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage averageWatts(Nullable<Double> averageWatts) {
-            if (averageWatts.isNull()) {
-                this.averageWatts = null;
-            } else if (averageWatts.isEmpty()) {
-                this.averageWatts = Optional.empty();
-            } else {
-                this.averageWatts = Optional.of(averageWatts.get());
-            }
             return this;
         }
 
@@ -1290,22 +982,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage maxSpeed(Nullable<Double> maxSpeed) {
-            if (maxSpeed.isNull()) {
-                this.maxSpeed = null;
-            } else if (maxSpeed.isEmpty()) {
-                this.maxSpeed = Optional.empty();
-            } else {
-                this.maxSpeed = Optional.of(maxSpeed.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Max speed during workout in m/s::meters/sec</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage maxSpeed(Double maxSpeed) {
             this.maxSpeed = Optional.ofNullable(maxSpeed);
             return this;
@@ -1318,22 +994,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "max_speed", nulls = Nulls.SKIP)
         public _FinalStage maxSpeed(Optional<Double> maxSpeed) {
             this.maxSpeed = maxSpeed;
-            return this;
-        }
-
-        /**
-         * <p>Average speed during workout in m/s::meters/sec</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage averageSpeed(Nullable<Double> averageSpeed) {
-            if (averageSpeed.isNull()) {
-                this.averageSpeed = null;
-            } else if (averageSpeed.isEmpty()) {
-                this.averageSpeed = Optional.empty();
-            } else {
-                this.averageSpeed = Optional.of(averageSpeed.get());
-            }
             return this;
         }
 
@@ -1362,22 +1022,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage elevLow(Nullable<Double> elevLow) {
-            if (elevLow.isNull()) {
-                this.elevLow = null;
-            } else if (elevLow.isEmpty()) {
-                this.elevLow = Optional.empty();
-            } else {
-                this.elevLow = Optional.of(elevLow.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Lowest point of elevation::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage elevLow(Double elevLow) {
             this.elevLow = Optional.ofNullable(elevLow);
             return this;
@@ -1390,22 +1034,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "elev_low", nulls = Nulls.SKIP)
         public _FinalStage elevLow(Optional<Double> elevLow) {
             this.elevLow = elevLow;
-            return this;
-        }
-
-        /**
-         * <p>Highest point of elevation::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage elevHigh(Nullable<Double> elevHigh) {
-            if (elevHigh.isNull()) {
-                this.elevHigh = null;
-            } else if (elevHigh.isEmpty()) {
-                this.elevHigh = Optional.empty();
-            } else {
-                this.elevHigh = Optional.of(elevHigh.get());
-            }
             return this;
         }
 
@@ -1434,22 +1062,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage totalElevationGain(Nullable<Double> totalElevationGain) {
-            if (totalElevationGain.isNull()) {
-                this.totalElevationGain = null;
-            } else if (totalElevationGain.isEmpty()) {
-                this.totalElevationGain = Optional.empty();
-            } else {
-                this.totalElevationGain = Optional.of(totalElevationGain.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Elevation gain during the workout::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage totalElevationGain(Double totalElevationGain) {
             this.totalElevationGain = Optional.ofNullable(totalElevationGain);
             return this;
@@ -1470,22 +1082,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage movingTime(Nullable<Integer> movingTime) {
-            if (movingTime.isNull()) {
-                this.movingTime = null;
-            } else if (movingTime.isEmpty()) {
-                this.movingTime = Optional.empty();
-            } else {
-                this.movingTime = Optional.of(movingTime.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Time spent active during the workout::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage movingTime(Integer movingTime) {
             this.movingTime = Optional.ofNullable(movingTime);
             return this;
@@ -1498,22 +1094,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "moving_time", nulls = Nulls.SKIP)
         public _FinalStage movingTime(Optional<Integer> movingTime) {
             this.movingTime = movingTime;
-            return this;
-        }
-
-        /**
-         * <p>Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage hrZones(Nullable<List<Integer>> hrZones) {
-            if (hrZones.isNull()) {
-                this.hrZones = null;
-            } else if (hrZones.isEmpty()) {
-                this.hrZones = Optional.empty();
-            } else {
-                this.hrZones = Optional.of(hrZones.get());
-            }
             return this;
         }
 
@@ -1562,22 +1142,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage calories(Nullable<Double> calories) {
-            if (calories.isNull()) {
-                this.calories = null;
-            } else if (calories.isEmpty()) {
-                this.calories = Optional.empty();
-            } else {
-                this.calories = Optional.of(calories.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Calories burned during the workout::kCal</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage calories(Double calories) {
             this.calories = Optional.ofNullable(calories);
             return this;
@@ -1590,22 +1154,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "calories", nulls = Nulls.SKIP)
         public _FinalStage calories(Optional<Double> calories) {
             this.calories = calories;
-            return this;
-        }
-
-        /**
-         * <p>Distance travelled during workout::meters</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage distance(Nullable<Double> distance) {
-            if (distance.isNull()) {
-                this.distance = null;
-            } else if (distance.isEmpty()) {
-                this.distance = Optional.empty();
-            } else {
-                this.distance = Optional.of(distance.get());
-            }
             return this;
         }
 
@@ -1634,22 +1182,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage maxHr(Nullable<Integer> maxHr) {
-            if (maxHr.isNull()) {
-                this.maxHr = null;
-            } else if (maxHr.isEmpty()) {
-                this.maxHr = Optional.empty();
-            } else {
-                this.maxHr = Optional.of(maxHr.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Max heart rate during workout::bpm</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage maxHr(Integer maxHr) {
             this.maxHr = Optional.ofNullable(maxHr);
             return this;
@@ -1662,22 +1194,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "max_hr", nulls = Nulls.SKIP)
         public _FinalStage maxHr(Optional<Integer> maxHr) {
             this.maxHr = maxHr;
-            return this;
-        }
-
-        /**
-         * <p>Average heart rate during workout::bpm</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage averageHr(Nullable<Integer> averageHr) {
-            if (averageHr.isNull()) {
-                this.averageHr = null;
-            } else if (averageHr.isEmpty()) {
-                this.averageHr = Optional.empty();
-            } else {
-                this.averageHr = Optional.of(averageHr.get());
-            }
             return this;
         }
 
@@ -1706,22 +1222,6 @@ public final class ClientFacingWorkout {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage timezoneOffset(Nullable<Integer> timezoneOffset) {
-            if (timezoneOffset.isNull()) {
-                this.timezoneOffset = null;
-            } else if (timezoneOffset.isEmpty()) {
-                this.timezoneOffset = Optional.empty();
-            } else {
-                this.timezoneOffset = Optional.of(timezoneOffset.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage timezoneOffset(Integer timezoneOffset) {
             this.timezoneOffset = Optional.ofNullable(timezoneOffset);
             return this;
@@ -1734,22 +1234,6 @@ public final class ClientFacingWorkout {
         @JsonSetter(value = "timezone_offset", nulls = Nulls.SKIP)
         public _FinalStage timezoneOffset(Optional<Integer> timezoneOffset) {
             this.timezoneOffset = timezoneOffset;
-            return this;
-        }
-
-        /**
-         * <p>Title given for the workout</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage title(Nullable<String> title) {
-            if (title.isNull()) {
-                this.title = null;
-            } else if (title.isEmpty()) {
-                this.title = Optional.empty();
-            } else {
-                this.title = Optional.of(title.get());
-            }
             return this;
         }
 
