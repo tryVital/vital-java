@@ -5,11 +5,9 @@ package com.vital.api.resources.team;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.team.requests.GetLinkConfigTeamRequest;
-import com.vital.api.resources.team.requests.GetPhysiciansTeamRequest;
-import com.vital.api.resources.team.requests.GetSourcePrioritiesTeamRequest;
-import com.vital.api.resources.team.requests.GetTeamRequest;
-import com.vital.api.resources.team.requests.GetUserByIdTeamRequest;
+import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
+import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
+import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.types.ClientFacingPhysician;
 import com.vital.api.types.ClientFacingTeam;
 import com.vital.api.types.ClientFacingUser;
@@ -44,7 +42,7 @@ public class AsyncTeamClient {
     /**
      * Post teams.
      */
-    public CompletableFuture<Map<String, Object>> getLinkConfig(GetLinkConfigTeamRequest request) {
+    public CompletableFuture<Map<String, Object>> getLinkConfig(TeamGetLinkConfigRequest request) {
         return this.rawClient.getLinkConfig(request).thenApply(response -> response.body());
     }
 
@@ -52,7 +50,7 @@ public class AsyncTeamClient {
      * Post teams.
      */
     public CompletableFuture<Map<String, Object>> getLinkConfig(
-            GetLinkConfigTeamRequest request, RequestOptions requestOptions) {
+            TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
         return this.rawClient.getLinkConfig(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -66,16 +64,8 @@ public class AsyncTeamClient {
     /**
      * Get team.
      */
-    public CompletableFuture<ClientFacingTeam> get(String teamId, GetTeamRequest request) {
-        return this.rawClient.get(teamId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Get team.
-     */
-    public CompletableFuture<ClientFacingTeam> get(
-            String teamId, GetTeamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(teamId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ClientFacingTeam> get(String teamId, RequestOptions requestOptions) {
+        return this.rawClient.get(teamId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
@@ -88,7 +78,7 @@ public class AsyncTeamClient {
     /**
      * Search team users by user_id
      */
-    public CompletableFuture<List<ClientFacingUser>> getUserById(GetUserByIdTeamRequest request) {
+    public CompletableFuture<List<ClientFacingUser>> getUserById(TeamGetUserByIdRequest request) {
         return this.rawClient.getUserById(request).thenApply(response -> response.body());
     }
 
@@ -96,7 +86,7 @@ public class AsyncTeamClient {
      * Search team users by user_id
      */
     public CompletableFuture<List<ClientFacingUser>> getUserById(
-            GetUserByIdTeamRequest request, RequestOptions requestOptions) {
+            TeamGetUserByIdRequest request, RequestOptions requestOptions) {
         return this.rawClient.getUserById(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -118,7 +108,7 @@ public class AsyncTeamClient {
     /**
      * GET source priorities.
      */
-    public CompletableFuture<List<Map<String, Object>>> getSourcePriorities(GetSourcePrioritiesTeamRequest request) {
+    public CompletableFuture<List<Map<String, Object>>> getSourcePriorities(TeamGetSourcePrioritiesRequest request) {
         return this.rawClient.getSourcePriorities(request).thenApply(response -> response.body());
     }
 
@@ -126,7 +116,7 @@ public class AsyncTeamClient {
      * GET source priorities.
      */
     public CompletableFuture<List<Map<String, Object>>> getSourcePriorities(
-            GetSourcePrioritiesTeamRequest request, RequestOptions requestOptions) {
+            TeamGetSourcePrioritiesRequest request, RequestOptions requestOptions) {
         return this.rawClient.getSourcePriorities(request, requestOptions).thenApply(response -> response.body());
     }
 
@@ -148,13 +138,7 @@ public class AsyncTeamClient {
         return this.rawClient.getPhysicians(teamId).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<List<ClientFacingPhysician>> getPhysicians(
-            String teamId, GetPhysiciansTeamRequest request) {
-        return this.rawClient.getPhysicians(teamId, request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<List<ClientFacingPhysician>> getPhysicians(
-            String teamId, GetPhysiciansTeamRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getPhysicians(teamId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<List<ClientFacingPhysician>> getPhysicians(String teamId, RequestOptions requestOptions) {
+        return this.rawClient.getPhysicians(teamId, requestOptions).thenApply(response -> response.body());
     }
 }

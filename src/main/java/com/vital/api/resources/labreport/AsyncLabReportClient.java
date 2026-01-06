@@ -6,10 +6,11 @@ package com.vital.api.resources.labreport;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.labreport.requests.BodyCreateLabReportParserJob;
-import com.vital.api.resources.labreport.requests.ParserGetJobLabReportRequest;
 import com.vital.api.types.ParsingJob;
 import java.io.File;
+import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
+import okhttp3.MediaType;
 
 public class AsyncLabReportClient {
     protected final ClientOptions clientOptions;
@@ -45,6 +46,26 @@ public class AsyncLabReportClient {
         return this.rawClient.parserCreateJob(file, request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<ParsingJob> parserCreateJob(InputStream stream, String filename) {
+        return this.rawClient.parserCreateJob(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ParsingJob> parserCreateJob(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.parserCreateJob(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ParsingJob> parserCreateJob(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.parserCreateJob(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ParsingJob> parserCreateJob(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .parserCreateJob(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     /**
      * Retrieves the parse job status and stored result if completed.
      * <p>Returns:
@@ -59,17 +80,7 @@ public class AsyncLabReportClient {
      * <p>Returns:
      * ParseLabResultJobResponse with job status and parsed data (if complete)</p>
      */
-    public CompletableFuture<ParsingJob> parserGetJob(String jobId, ParserGetJobLabReportRequest request) {
-        return this.rawClient.parserGetJob(jobId, request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Retrieves the parse job status and stored result if completed.
-     * <p>Returns:
-     * ParseLabResultJobResponse with job status and parsed data (if complete)</p>
-     */
-    public CompletableFuture<ParsingJob> parserGetJob(
-            String jobId, ParserGetJobLabReportRequest request, RequestOptions requestOptions) {
-        return this.rawClient.parserGetJob(jobId, request, requestOptions).thenApply(response -> response.body());
+    public CompletableFuture<ParsingJob> parserGetJob(String jobId, RequestOptions requestOptions) {
+        return this.rawClient.parserGetJob(jobId, requestOptions).thenApply(response -> response.body());
     }
 }

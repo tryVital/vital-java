@@ -12,8 +12,8 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.body.requests.GetBodyRequest;
-import com.vital.api.resources.body.requests.GetRawBodyRequest;
+import com.vital.api.resources.body.requests.BodyGetRawRequest;
+import com.vital.api.resources.body.requests.BodyGetRequest;
 import com.vital.api.types.ClientBodyResponse;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.RawBody;
@@ -35,7 +35,7 @@ public class RawBodyClient {
     /**
      * Get Body summary for user_id
      */
-    public VitalHttpResponse<ClientBodyResponse> get(String userId, GetBodyRequest request) {
+    public VitalHttpResponse<ClientBodyResponse> get(String userId, BodyGetRequest request) {
         return get(userId, request, null);
     }
 
@@ -43,7 +43,7 @@ public class RawBodyClient {
      * Get Body summary for user_id
      */
     public VitalHttpResponse<ClientBodyResponse> get(
-            String userId, GetBodyRequest request, RequestOptions requestOptions) {
+            String userId, BodyGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/body")
@@ -69,11 +69,11 @@ public class RawBodyClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ClientBodyResponse.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ClientBodyResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -83,11 +83,8 @@ public class RawBodyClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -96,14 +93,14 @@ public class RawBodyClient {
     /**
      * Get raw Body summary for user_id
      */
-    public VitalHttpResponse<RawBody> getRaw(String userId, GetRawBodyRequest request) {
+    public VitalHttpResponse<RawBody> getRaw(String userId, BodyGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public VitalHttpResponse<RawBody> getRaw(String userId, GetRawBodyRequest request, RequestOptions requestOptions) {
+    public VitalHttpResponse<RawBody> getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/summary/body")
@@ -130,11 +127,11 @@ public class RawBodyClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), RawBody.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawBody.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -144,11 +141,8 @@ public class RawBodyClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

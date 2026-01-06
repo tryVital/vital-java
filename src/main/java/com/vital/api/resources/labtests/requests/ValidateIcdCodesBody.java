@@ -81,7 +81,9 @@ public final class ValidateIcdCodesBody {
         @JsonSetter(value = "codes", nulls = Nulls.SKIP)
         public Builder codes(List<String> codes) {
             this.codes.clear();
-            this.codes.addAll(codes);
+            if (codes != null) {
+                this.codes.addAll(codes);
+            }
             return this;
         }
 

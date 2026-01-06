@@ -135,7 +135,9 @@ public final class PhlebotomyProviderInfo {
         @JsonSetter(value = "service_types", nulls = Nulls.SKIP)
         public _FinalStage serviceTypes(List<AppointmentServiceType> serviceTypes) {
             this.serviceTypes.clear();
-            this.serviceTypes.addAll(serviceTypes);
+            if (serviceTypes != null) {
+                this.serviceTypes.addAll(serviceTypes);
+            }
             return this;
         }
 
