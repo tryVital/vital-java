@@ -81,7 +81,9 @@ public final class AggregationResponse {
         @JsonSetter(value = "results", nulls = Nulls.SKIP)
         public Builder results(List<AggregationResult> results) {
             this.results.clear();
-            this.results.addAll(results);
+            if (results != null) {
+                this.results.addAll(results);
+            }
             return this;
         }
 

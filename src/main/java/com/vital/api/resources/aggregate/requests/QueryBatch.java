@@ -5,6 +5,7 @@ package com.vital.api.resources.aggregate.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -45,7 +46,7 @@ public final class QueryBatch {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("accept")
+    @JsonIgnore
     public String getAccept() {
         return "*/*";
     }
@@ -173,7 +174,9 @@ public final class QueryBatch {
         @JsonSetter(value = "queries", nulls = Nulls.SKIP)
         public _FinalStage queries(List<Query> queries) {
             this.queries.clear();
-            this.queries.addAll(queries);
+            if (queries != null) {
+                this.queries.addAll(queries);
+            }
             return this;
         }
 

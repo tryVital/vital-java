@@ -5,15 +5,12 @@ package com.vital.api.resources.link.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.Providers;
 import java.util.HashMap;
@@ -65,19 +62,13 @@ public final class LinkTokenExchange {
         return userId;
     }
 
-    @JsonIgnore
+    @JsonProperty("provider")
     public Optional<Providers> getProvider() {
-        if (provider == null) {
-            return Optional.empty();
-        }
         return provider;
     }
 
-    @JsonIgnore
+    @JsonProperty("redirect_url")
     public Optional<String> getRedirectUrl() {
-        if (redirectUrl == null) {
-            return Optional.empty();
-        }
         return redirectUrl;
     }
 
@@ -86,11 +77,8 @@ public final class LinkTokenExchange {
      * If unspecified, all linkable providers are shown.
      * <p>This has no effect on programmatic Vital Link API usage.</p>
      */
-    @JsonIgnore
+    @JsonProperty("filter_on_providers")
     public Optional<List<Providers>> getFilterOnProviders() {
-        if (filterOnProviders == null) {
-            return Optional.empty();
-        }
         return filterOnProviders;
     }
 
@@ -101,11 +89,8 @@ public final class LinkTokenExchange {
      * <p>This has no effect on OAuth providers — they always redirect to your <code>redirect_url</code>. This also has
      * no effect on programmatic Vital Link API usage.</p>
      */
-    @JsonIgnore
+    @JsonProperty("on_error")
     public Optional<String> getOnError() {
-        if (onError == null) {
-            return Optional.empty();
-        }
         return onError;
     }
 
@@ -115,41 +100,8 @@ public final class LinkTokenExchange {
      * with the <code>user_cancelled</code> error specified.</p>
      * <p>This has no effect on programmatic Vital Link API usage.</p>
      */
-    @JsonIgnore
-    public Optional<String> getOnClose() {
-        if (onClose == null) {
-            return Optional.empty();
-        }
-        return onClose;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("provider")
-    private Optional<Providers> _getProvider() {
-        return provider;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("redirect_url")
-    private Optional<String> _getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("filter_on_providers")
-    private Optional<List<Providers>> _getFilterOnProviders() {
-        return filterOnProviders;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("on_error")
-    private Optional<String> _getOnError() {
-        return onError;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("on_close")
-    private Optional<String> _getOnClose() {
+    public Optional<String> getOnClose() {
         return onClose;
     }
 
@@ -204,13 +156,9 @@ public final class LinkTokenExchange {
 
         _FinalStage provider(Providers provider);
 
-        _FinalStage provider(Nullable<Providers> provider);
-
         _FinalStage redirectUrl(Optional<String> redirectUrl);
 
         _FinalStage redirectUrl(String redirectUrl);
-
-        _FinalStage redirectUrl(Nullable<String> redirectUrl);
 
         /**
          * <p>An allowlist of providers dictating what Vital Link Widget should show to the end user.
@@ -220,8 +168,6 @@ public final class LinkTokenExchange {
         _FinalStage filterOnProviders(Optional<List<Providers>> filterOnProviders);
 
         _FinalStage filterOnProviders(List<Providers> filterOnProviders);
-
-        _FinalStage filterOnProviders(Nullable<List<Providers>> filterOnProviders);
 
         /**
          * <p>By default, Vital Link Widget input forms for password and email providers have in-built error handling.</p>
@@ -234,8 +180,6 @@ public final class LinkTokenExchange {
 
         _FinalStage onError(String onError);
 
-        _FinalStage onError(Nullable<String> onError);
-
         /**
          * <p>By default, Vital Link Widget closes the window or tab when the user taps the Close button.</p>
          * <p>Specifying <code>on_close=redirect</code> would change the Close button behaviour to redirect to your <code>redirect_url</code>
@@ -245,8 +189,6 @@ public final class LinkTokenExchange {
         _FinalStage onClose(Optional<String> onClose);
 
         _FinalStage onClose(String onClose);
-
-        _FinalStage onClose(Nullable<String> onClose);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -299,25 +241,6 @@ public final class LinkTokenExchange {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage onClose(Nullable<String> onClose) {
-            if (onClose.isNull()) {
-                this.onClose = null;
-            } else if (onClose.isEmpty()) {
-                this.onClose = Optional.empty();
-            } else {
-                this.onClose = Optional.of(onClose.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>By default, Vital Link Widget closes the window or tab when the user taps the Close button.</p>
-         * <p>Specifying <code>on_close=redirect</code> would change the Close button behaviour to redirect to your <code>redirect_url</code>
-         * with the <code>user_cancelled</code> error specified.</p>
-         * <p>This has no effect on programmatic Vital Link API usage.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage onClose(String onClose) {
             this.onClose = Optional.ofNullable(onClose);
             return this;
@@ -333,26 +256,6 @@ public final class LinkTokenExchange {
         @JsonSetter(value = "on_close", nulls = Nulls.SKIP)
         public _FinalStage onClose(Optional<String> onClose) {
             this.onClose = onClose;
-            return this;
-        }
-
-        /**
-         * <p>By default, Vital Link Widget input forms for password and email providers have in-built error handling.</p>
-         * <p>Specifying <code>on_error=redirect</code> disables this Vital Link Widget UI behaviour — it would
-         * instead redirect to your <code>redirect_url</code>, with Link Error parameters injected.</p>
-         * <p>This has no effect on OAuth providers — they always redirect to your <code>redirect_url</code>. This also has
-         * no effect on programmatic Vital Link API usage.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage onError(Nullable<String> onError) {
-            if (onError.isNull()) {
-                this.onError = null;
-            } else if (onError.isEmpty()) {
-                this.onError = Optional.empty();
-            } else {
-                this.onError = Optional.of(onError.get());
-            }
             return this;
         }
 
@@ -391,24 +294,6 @@ public final class LinkTokenExchange {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        public _FinalStage filterOnProviders(Nullable<List<Providers>> filterOnProviders) {
-            if (filterOnProviders.isNull()) {
-                this.filterOnProviders = null;
-            } else if (filterOnProviders.isEmpty()) {
-                this.filterOnProviders = Optional.empty();
-            } else {
-                this.filterOnProviders = Optional.of(filterOnProviders.get());
-            }
-            return this;
-        }
-
-        /**
-         * <p>An allowlist of providers dictating what Vital Link Widget should show to the end user.
-         * If unspecified, all linkable providers are shown.</p>
-         * <p>This has no effect on programmatic Vital Link API usage.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
         public _FinalStage filterOnProviders(List<Providers> filterOnProviders) {
             this.filterOnProviders = Optional.ofNullable(filterOnProviders);
             return this;
@@ -427,18 +312,6 @@ public final class LinkTokenExchange {
         }
 
         @java.lang.Override
-        public _FinalStage redirectUrl(Nullable<String> redirectUrl) {
-            if (redirectUrl.isNull()) {
-                this.redirectUrl = null;
-            } else if (redirectUrl.isEmpty()) {
-                this.redirectUrl = Optional.empty();
-            } else {
-                this.redirectUrl = Optional.of(redirectUrl.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage redirectUrl(String redirectUrl) {
             this.redirectUrl = Optional.ofNullable(redirectUrl);
             return this;
@@ -448,18 +321,6 @@ public final class LinkTokenExchange {
         @JsonSetter(value = "redirect_url", nulls = Nulls.SKIP)
         public _FinalStage redirectUrl(Optional<String> redirectUrl) {
             this.redirectUrl = redirectUrl;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage provider(Nullable<Providers> provider) {
-            if (provider.isNull()) {
-                this.provider = null;
-            } else if (provider.isEmpty()) {
-                this.provider = Optional.empty();
-            } else {
-                this.provider = Optional.of(provider.get());
-            }
             return this;
         }
 

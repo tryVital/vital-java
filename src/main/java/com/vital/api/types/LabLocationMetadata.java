@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,59 +89,23 @@ public final class LabLocationMetadata {
         return firstLine;
     }
 
-    @JsonIgnore
-    public Optional<String> getSecondLine() {
-        if (secondLine == null) {
-            return Optional.empty();
-        }
-        return secondLine;
-    }
-
-    @JsonIgnore
-    public Optional<String> getPhoneNumber() {
-        if (phoneNumber == null) {
-            return Optional.empty();
-        }
-        return phoneNumber;
-    }
-
-    @JsonIgnore
-    public Optional<String> getFaxNumber() {
-        if (faxNumber == null) {
-            return Optional.empty();
-        }
-        return faxNumber;
-    }
-
-    @JsonIgnore
-    public Optional<Map<String, Object>> getHours() {
-        if (hours == null) {
-            return Optional.empty();
-        }
-        return hours;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("second_line")
-    private Optional<String> _getSecondLine() {
+    public Optional<String> getSecondLine() {
         return secondLine;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("phone_number")
-    private Optional<String> _getPhoneNumber() {
+    public Optional<String> getPhoneNumber() {
         return phoneNumber;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("fax_number")
-    private Optional<String> _getFaxNumber() {
+    public Optional<String> getFaxNumber() {
         return faxNumber;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("hours")
-    private Optional<Map<String, Object>> _getHours() {
+    public Optional<Map<String, Object>> getHours() {
         return hours;
     }
 
@@ -223,25 +184,17 @@ public final class LabLocationMetadata {
 
         _FinalStage secondLine(String secondLine);
 
-        _FinalStage secondLine(Nullable<String> secondLine);
-
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
         _FinalStage phoneNumber(String phoneNumber);
-
-        _FinalStage phoneNumber(Nullable<String> phoneNumber);
 
         _FinalStage faxNumber(Optional<String> faxNumber);
 
         _FinalStage faxNumber(String faxNumber);
 
-        _FinalStage faxNumber(Nullable<String> faxNumber);
-
         _FinalStage hours(Optional<Map<String, Object>> hours);
 
         _FinalStage hours(Map<String, Object> hours);
-
-        _FinalStage hours(Nullable<Map<String, Object>> hours);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -320,18 +273,6 @@ public final class LabLocationMetadata {
         }
 
         @java.lang.Override
-        public _FinalStage hours(Nullable<Map<String, Object>> hours) {
-            if (hours.isNull()) {
-                this.hours = null;
-            } else if (hours.isEmpty()) {
-                this.hours = Optional.empty();
-            } else {
-                this.hours = Optional.of(hours.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage hours(Map<String, Object> hours) {
             this.hours = Optional.ofNullable(hours);
             return this;
@@ -341,18 +282,6 @@ public final class LabLocationMetadata {
         @JsonSetter(value = "hours", nulls = Nulls.SKIP)
         public _FinalStage hours(Optional<Map<String, Object>> hours) {
             this.hours = hours;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage faxNumber(Nullable<String> faxNumber) {
-            if (faxNumber.isNull()) {
-                this.faxNumber = null;
-            } else if (faxNumber.isEmpty()) {
-                this.faxNumber = Optional.empty();
-            } else {
-                this.faxNumber = Optional.of(faxNumber.get());
-            }
             return this;
         }
 
@@ -370,18 +299,6 @@ public final class LabLocationMetadata {
         }
 
         @java.lang.Override
-        public _FinalStage phoneNumber(Nullable<String> phoneNumber) {
-            if (phoneNumber.isNull()) {
-                this.phoneNumber = null;
-            } else if (phoneNumber.isEmpty()) {
-                this.phoneNumber = Optional.empty();
-            } else {
-                this.phoneNumber = Optional.of(phoneNumber.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage phoneNumber(String phoneNumber) {
             this.phoneNumber = Optional.ofNullable(phoneNumber);
             return this;
@@ -391,18 +308,6 @@ public final class LabLocationMetadata {
         @JsonSetter(value = "phone_number", nulls = Nulls.SKIP)
         public _FinalStage phoneNumber(Optional<String> phoneNumber) {
             this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage secondLine(Nullable<String> secondLine) {
-            if (secondLine.isNull()) {
-                this.secondLine = null;
-            } else if (secondLine.isEmpty()) {
-                this.secondLine = Optional.empty();
-            } else {
-                this.secondLine = Optional.of(secondLine.get());
-            }
             return this;
         }
 
