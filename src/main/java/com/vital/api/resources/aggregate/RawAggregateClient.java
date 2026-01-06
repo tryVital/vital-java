@@ -13,16 +13,13 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.aggregate.requests.GetResultTableForContinuousQueryAggregateRequest;
-import com.vital.api.resources.aggregate.requests.GetTaskHistoryForContinuousQueryAggregateRequest;
+import com.vital.api.resources.aggregate.requests.AggregateGetTaskHistoryForContinuousQueryRequest;
 import com.vital.api.resources.aggregate.requests.QueryBatch;
 import com.vital.api.types.AggregationResponse;
 import com.vital.api.types.AggregationResult;
 import com.vital.api.types.ContinuousQueryTaskHistoryResponse;
 import com.vital.api.types.HttpValidationError;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -50,16 +47,10 @@ public class RawAggregateClient {
                 .addPathSegment(userId)
                 .addPathSegments("query")
                 .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("timeframe", request.getTimeframe());
-        properties.put("queries", request.getQueries());
-        if (request.getConfig().isPresent()) {
-            properties.put("config", request.getConfig());
-        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -77,12 +68,11 @@ public class RawAggregateClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), AggregationResponse.class),
-                        response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, AggregationResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -92,26 +82,19 @@ public class RawAggregateClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
     }
 
-    public VitalHttpResponse<AggregationResult> getResultTableForContinuousQuery(
-            String userId, String queryIdOrSlug, GetResultTableForContinuousQueryAggregateRequest request) {
-        return getResultTableForContinuousQuery(userId, queryIdOrSlug, request, null);
+    public VitalHttpResponse<AggregationResult> getResultTableForContinuousQuery(String userId, String queryIdOrSlug) {
+        return getResultTableForContinuousQuery(userId, queryIdOrSlug, null);
     }
 
     public VitalHttpResponse<AggregationResult> getResultTableForContinuousQuery(
-            String userId,
-            String queryIdOrSlug,
-            GetResultTableForContinuousQueryAggregateRequest request,
-            RequestOptions requestOptions) {
+            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("aggregate/v1/user")
@@ -120,24 +103,23 @@ public class RawAggregateClient {
                 .addPathSegment(queryIdOrSlug)
                 .addPathSegments("result_table")
                 .build();
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        _requestBuilder.addHeader("accept", request.getAccept());
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), AggregationResult.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, AggregationResult.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -147,11 +129,8 @@ public class RawAggregateClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
@@ -162,18 +141,27 @@ public class RawAggregateClient {
         return getTaskHistoryForContinuousQuery(
                 userId,
                 queryIdOrSlug,
-                GetTaskHistoryForContinuousQueryAggregateRequest.builder().build());
+                AggregateGetTaskHistoryForContinuousQueryRequest.builder().build());
     }
 
     public VitalHttpResponse<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
-            String userId, String queryIdOrSlug, GetTaskHistoryForContinuousQueryAggregateRequest request) {
+            String userId, String queryIdOrSlug, RequestOptions requestOptions) {
+        return getTaskHistoryForContinuousQuery(
+                userId,
+                queryIdOrSlug,
+                AggregateGetTaskHistoryForContinuousQueryRequest.builder().build(),
+                requestOptions);
+    }
+
+    public VitalHttpResponse<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
+            String userId, String queryIdOrSlug, AggregateGetTaskHistoryForContinuousQueryRequest request) {
         return getTaskHistoryForContinuousQuery(userId, queryIdOrSlug, request, null);
     }
 
     public VitalHttpResponse<ContinuousQueryTaskHistoryResponse> getTaskHistoryForContinuousQuery(
             String userId,
             String queryIdOrSlug,
-            GetTaskHistoryForContinuousQueryAggregateRequest request,
+            AggregateGetTaskHistoryForContinuousQueryRequest request,
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -202,13 +190,13 @@ public class RawAggregateClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(
-                                responseBody.string(), ContinuousQueryTaskHistoryResponse.class),
+                                responseBodyString, ContinuousQueryTaskHistoryResponse.class),
                         response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -218,11 +206,8 @@ public class RawAggregateClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }

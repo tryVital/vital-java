@@ -93,7 +93,9 @@ public final class BulkImportConnectionsResponse {
         @JsonSetter(value = "user_ids_imported", nulls = Nulls.SKIP)
         public Builder userIdsImported(List<String> userIdsImported) {
             this.userIdsImported.clear();
-            this.userIdsImported.addAll(userIdsImported);
+            if (userIdsImported != null) {
+                this.userIdsImported.addAll(userIdsImported);
+            }
             return this;
         }
 
@@ -112,7 +114,9 @@ public final class BulkImportConnectionsResponse {
         @JsonSetter(value = "user_ids_failed", nulls = Nulls.SKIP)
         public Builder userIdsFailed(List<String> userIdsFailed) {
             this.userIdsFailed.clear();
-            this.userIdsFailed.addAll(userIdsFailed);
+            if (userIdsFailed != null) {
+                this.userIdsFailed.addAll(userIdsFailed);
+            }
             return this;
         }
 

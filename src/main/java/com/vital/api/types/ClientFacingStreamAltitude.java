@@ -35,7 +35,7 @@ public final class ClientFacingStreamAltitude {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visitListOfNullableDouble((List<Optional<Double>>) this.value);
+            return visitor.visitListOfOptionalDouble((List<Optional<Double>>) this.value);
         } else if (this.type == 1) {
             return visitor.visitListOfDouble((List<Double>) this.value);
         }
@@ -62,7 +62,7 @@ public final class ClientFacingStreamAltitude {
         return this.value.toString();
     }
 
-    public static ClientFacingStreamAltitude ofListOfNullableDouble(List<Optional<Double>> value) {
+    public static ClientFacingStreamAltitude ofListOfOptionalDouble(List<Optional<Double>> value) {
         return new ClientFacingStreamAltitude(value, 0);
     }
 
@@ -71,7 +71,7 @@ public final class ClientFacingStreamAltitude {
     }
 
     public interface Visitor<T> {
-        T visitListOfNullableDouble(List<Optional<Double>> value);
+        T visitListOfOptionalDouble(List<Optional<Double>> value);
 
         T visitListOfDouble(List<Double> value);
     }
@@ -85,7 +85,7 @@ public final class ClientFacingStreamAltitude {
         public ClientFacingStreamAltitude deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return ofListOfNullableDouble(
+                return ofListOfOptionalDouble(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Optional<Double>>>() {}));
             } catch (RuntimeException e) {
             }

@@ -155,7 +155,9 @@ public final class ValidationError {
         @JsonSetter(value = "loc", nulls = Nulls.SKIP)
         public _FinalStage loc(List<ValidationErrorLocItem> loc) {
             this.loc.clear();
-            this.loc.addAll(loc);
+            if (loc != null) {
+                this.loc.addAll(loc);
+            }
             return this;
         }
 

@@ -5,7 +5,7 @@ package com.vital.api.resources.providers;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.providers.requests.GetAllProvidersRequest;
+import com.vital.api.resources.providers.requests.ProvidersGetAllRequest;
 import com.vital.api.types.ClientFacingProviderDetailed;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -37,7 +37,14 @@ public class AsyncProvidersClient {
     /**
      * Get Provider list
      */
-    public CompletableFuture<List<ClientFacingProviderDetailed>> getAll(GetAllProvidersRequest request) {
+    public CompletableFuture<List<ClientFacingProviderDetailed>> getAll(RequestOptions requestOptions) {
+        return this.rawClient.getAll(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Get Provider list
+     */
+    public CompletableFuture<List<ClientFacingProviderDetailed>> getAll(ProvidersGetAllRequest request) {
         return this.rawClient.getAll(request).thenApply(response -> response.body());
     }
 
@@ -45,7 +52,7 @@ public class AsyncProvidersClient {
      * Get Provider list
      */
     public CompletableFuture<List<ClientFacingProviderDetailed>> getAll(
-            GetAllProvidersRequest request, RequestOptions requestOptions) {
+            ProvidersGetAllRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAll(request, requestOptions).thenApply(response -> response.body());
     }
 }

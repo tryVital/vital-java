@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,31 +101,13 @@ public final class Question {
         return answers;
     }
 
-    @JsonIgnore
-    public Optional<String> getConstraint() {
-        if (constraint == null) {
-            return Optional.empty();
-        }
-        return constraint;
-    }
-
-    @JsonIgnore
-    public Optional<String> getDefault() {
-        if (default_ == null) {
-            return Optional.empty();
-        }
-        return default_;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("constraint")
-    private Optional<String> _getConstraint() {
+    public Optional<String> getConstraint() {
         return constraint;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("default")
-    private Optional<String> _getDefault() {
+    public Optional<String> getDefault() {
         return default_;
     }
 
@@ -217,13 +196,9 @@ public final class Question {
 
         _FinalStage constraint(String constraint);
 
-        _FinalStage constraint(Nullable<String> constraint);
-
         _FinalStage default_(Optional<String> default_);
 
         _FinalStage default_(String default_);
-
-        _FinalStage default_(Nullable<String> default_);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -309,18 +284,6 @@ public final class Question {
         }
 
         @java.lang.Override
-        public _FinalStage default_(Nullable<String> default_) {
-            if (default_.isNull()) {
-                this.default_ = null;
-            } else if (default_.isEmpty()) {
-                this.default_ = Optional.empty();
-            } else {
-                this.default_ = Optional.of(default_.get());
-            }
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage default_(String default_) {
             this.default_ = Optional.ofNullable(default_);
             return this;
@@ -330,18 +293,6 @@ public final class Question {
         @JsonSetter(value = "default", nulls = Nulls.SKIP)
         public _FinalStage default_(Optional<String> default_) {
             this.default_ = default_;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage constraint(Nullable<String> constraint) {
-            if (constraint.isNull()) {
-                this.constraint = null;
-            } else if (constraint.isEmpty()) {
-                this.constraint = Optional.empty();
-            } else {
-                this.constraint = Optional.of(constraint.get());
-            }
             return this;
         }
 
@@ -376,7 +327,9 @@ public final class Question {
         @JsonSetter(value = "answers", nulls = Nulls.SKIP)
         public _FinalStage answers(List<Answer> answers) {
             this.answers.clear();
-            this.answers.addAll(answers);
+            if (answers != null) {
+                this.answers.addAll(answers);
+            }
             return this;
         }
 

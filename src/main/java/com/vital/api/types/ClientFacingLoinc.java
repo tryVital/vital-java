@@ -5,15 +5,12 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.vital.api.core.Nullable;
-import com.vital.api.core.NullableNonemptyFilter;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,17 +68,8 @@ public final class ClientFacingLoinc {
         return code;
     }
 
-    @JsonIgnore
-    public Optional<String> getUnit() {
-        if (unit == null) {
-            return Optional.empty();
-        }
-        return unit;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("unit")
-    private Optional<String> _getUnit() {
+    public Optional<String> getUnit() {
         return unit;
     }
 
@@ -142,8 +130,6 @@ public final class ClientFacingLoinc {
         _FinalStage unit(Optional<String> unit);
 
         _FinalStage unit(String unit);
-
-        _FinalStage unit(Nullable<String> unit);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -198,18 +184,6 @@ public final class ClientFacingLoinc {
         @JsonSetter("code")
         public _FinalStage code(@NotNull String code) {
             this.code = Objects.requireNonNull(code, "code must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage unit(Nullable<String> unit) {
-            if (unit.isNull()) {
-                this.unit = null;
-            } else if (unit.isEmpty()) {
-                this.unit = Optional.empty();
-            } else {
-                this.unit = Optional.of(unit.get());
-            }
             return this;
         }
 

@@ -41,6 +41,13 @@ public class RawOrderClient {
     /**
      * Replay a webhook for a given set of orders
      */
+    public VitalHttpResponse<ResendWebhookResponse> resendEvents(RequestOptions requestOptions) {
+        return resendEvents(ResendWebhookBody.builder().build(), requestOptions);
+    }
+
+    /**
+     * Replay a webhook for a given set of orders
+     */
     public VitalHttpResponse<ResendWebhookResponse> resendEvents(ResendWebhookBody request) {
         return resendEvents(request, null);
     }
@@ -74,12 +81,11 @@ public class RawOrderClient {
         }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ResendWebhookResponse.class),
-                        response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ResendWebhookResponse.class), response);
             }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {
                 if (response.code() == 422) {
                     throw new UnprocessableEntityError(
@@ -89,11 +95,8 @@ public class RawOrderClient {
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
             }
-            throw new ApiError(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new VitalException("Network error executing HTTP request", e);
         }
