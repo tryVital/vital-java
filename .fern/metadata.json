@@ -1,5 +1,5 @@
 {
-  "cliVersion": "3.35.1",
+  "cliVersion": "3.39.4",
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "3.27.6",
   "generatorConfig": {
@@ -8,5 +8,5 @@
     "client-class-name": "Vital",
     "enable-forward-compatible-enums": false
   },
-  "sdkVersion": "1.2.585"
+  "sdkVersion": "1.2.593"
 }
