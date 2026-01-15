@@ -16,18 +16,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ResultMetadata.Builder.class)
 public final class ResultMetadata {
-    private final String patientFirstName;
+    private final Optional<String> patientFirstName;
 
-    private final String patientLastName;
+    private final Optional<String> patientLastName;
 
-    private final String dob;
+    private final Optional<String> dob;
 
-    private final String labName;
+    private final Optional<String> labName;
 
     private final Optional<String> dateReported;
 
@@ -38,10 +37,10 @@ public final class ResultMetadata {
     private final Map<String, Object> additionalProperties;
 
     private ResultMetadata(
-            String patientFirstName,
-            String patientLastName,
-            String dob,
-            String labName,
+            Optional<String> patientFirstName,
+            Optional<String> patientLastName,
+            Optional<String> dob,
+            Optional<String> labName,
             Optional<String> dateReported,
             Optional<String> dateCollected,
             Optional<String> specimenNumber,
@@ -57,22 +56,22 @@ public final class ResultMetadata {
     }
 
     @JsonProperty("patient_first_name")
-    public String getPatientFirstName() {
+    public Optional<String> getPatientFirstName() {
         return patientFirstName;
     }
 
     @JsonProperty("patient_last_name")
-    public String getPatientLastName() {
+    public Optional<String> getPatientLastName() {
         return patientLastName;
     }
 
     @JsonProperty("dob")
-    public String getDob() {
+    public Optional<String> getDob() {
         return dob;
     }
 
     @JsonProperty("lab_name")
-    public String getLabName() {
+    public Optional<String> getLabName() {
         return labName;
     }
 
@@ -129,67 +128,31 @@ public final class ResultMetadata {
         return ObjectMappers.stringify(this);
     }
 
-    public static PatientFirstNameStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface PatientFirstNameStage {
-        PatientLastNameStage patientFirstName(@NotNull String patientFirstName);
-
-        Builder from(ResultMetadata other);
-    }
-
-    public interface PatientLastNameStage {
-        DobStage patientLastName(@NotNull String patientLastName);
-    }
-
-    public interface DobStage {
-        LabNameStage dob(@NotNull String dob);
-    }
-
-    public interface LabNameStage {
-        _FinalStage labName(@NotNull String labName);
-    }
-
-    public interface _FinalStage {
-        ResultMetadata build();
-
-        _FinalStage dateReported(Optional<String> dateReported);
-
-        _FinalStage dateReported(String dateReported);
-
-        _FinalStage dateCollected(Optional<String> dateCollected);
-
-        _FinalStage dateCollected(String dateCollected);
-
-        _FinalStage specimenNumber(Optional<String> specimenNumber);
-
-        _FinalStage specimenNumber(String specimenNumber);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements PatientFirstNameStage, PatientLastNameStage, DobStage, LabNameStage, _FinalStage {
-        private String patientFirstName;
+    public static final class Builder {
+        private Optional<String> patientFirstName = Optional.empty();
 
-        private String patientLastName;
+        private Optional<String> patientLastName = Optional.empty();
 
-        private String dob;
+        private Optional<String> dob = Optional.empty();
 
-        private String labName;
+        private Optional<String> labName = Optional.empty();
 
-        private Optional<String> specimenNumber = Optional.empty();
+        private Optional<String> dateReported = Optional.empty();
 
         private Optional<String> dateCollected = Optional.empty();
 
-        private Optional<String> dateReported = Optional.empty();
+        private Optional<String> specimenNumber = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(ResultMetadata other) {
             patientFirstName(other.getPatientFirstName());
             patientLastName(other.getPatientLastName());
@@ -201,74 +164,83 @@ public final class ResultMetadata {
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("patient_first_name")
-        public PatientLastNameStage patientFirstName(@NotNull String patientFirstName) {
-            this.patientFirstName = Objects.requireNonNull(patientFirstName, "patientFirstName must not be null");
+        @JsonSetter(value = "patient_first_name", nulls = Nulls.SKIP)
+        public Builder patientFirstName(Optional<String> patientFirstName) {
+            this.patientFirstName = patientFirstName;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("patient_last_name")
-        public DobStage patientLastName(@NotNull String patientLastName) {
-            this.patientLastName = Objects.requireNonNull(patientLastName, "patientLastName must not be null");
+        public Builder patientFirstName(String patientFirstName) {
+            this.patientFirstName = Optional.ofNullable(patientFirstName);
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("dob")
-        public LabNameStage dob(@NotNull String dob) {
-            this.dob = Objects.requireNonNull(dob, "dob must not be null");
+        @JsonSetter(value = "patient_last_name", nulls = Nulls.SKIP)
+        public Builder patientLastName(Optional<String> patientLastName) {
+            this.patientLastName = patientLastName;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("lab_name")
-        public _FinalStage labName(@NotNull String labName) {
-            this.labName = Objects.requireNonNull(labName, "labName must not be null");
+        public Builder patientLastName(String patientLastName) {
+            this.patientLastName = Optional.ofNullable(patientLastName);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage specimenNumber(String specimenNumber) {
-            this.specimenNumber = Optional.ofNullable(specimenNumber);
+        @JsonSetter(value = "dob", nulls = Nulls.SKIP)
+        public Builder dob(Optional<String> dob) {
+            this.dob = dob;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter(value = "specimen_number", nulls = Nulls.SKIP)
-        public _FinalStage specimenNumber(Optional<String> specimenNumber) {
-            this.specimenNumber = specimenNumber;
+        public Builder dob(String dob) {
+            this.dob = Optional.ofNullable(dob);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage dateCollected(String dateCollected) {
-            this.dateCollected = Optional.ofNullable(dateCollected);
+        @JsonSetter(value = "lab_name", nulls = Nulls.SKIP)
+        public Builder labName(Optional<String> labName) {
+            this.labName = labName;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter(value = "date_collected", nulls = Nulls.SKIP)
-        public _FinalStage dateCollected(Optional<String> dateCollected) {
-            this.dateCollected = dateCollected;
+        public Builder labName(String labName) {
+            this.labName = Optional.ofNullable(labName);
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage dateReported(String dateReported) {
-            this.dateReported = Optional.ofNullable(dateReported);
-            return this;
-        }
-
-        @java.lang.Override
         @JsonSetter(value = "date_reported", nulls = Nulls.SKIP)
-        public _FinalStage dateReported(Optional<String> dateReported) {
+        public Builder dateReported(Optional<String> dateReported) {
             this.dateReported = dateReported;
             return this;
         }
 
-        @java.lang.Override
+        public Builder dateReported(String dateReported) {
+            this.dateReported = Optional.ofNullable(dateReported);
+            return this;
+        }
+
+        @JsonSetter(value = "date_collected", nulls = Nulls.SKIP)
+        public Builder dateCollected(Optional<String> dateCollected) {
+            this.dateCollected = dateCollected;
+            return this;
+        }
+
+        public Builder dateCollected(String dateCollected) {
+            this.dateCollected = Optional.ofNullable(dateCollected);
+            return this;
+        }
+
+        @JsonSetter(value = "specimen_number", nulls = Nulls.SKIP)
+        public Builder specimenNumber(Optional<String> specimenNumber) {
+            this.specimenNumber = specimenNumber;
+            return this;
+        }
+
+        public Builder specimenNumber(String specimenNumber) {
+            this.specimenNumber = Optional.ofNullable(specimenNumber);
+            return this;
+        }
+
         public ResultMetadata build() {
             return new ResultMetadata(
                     patientFirstName,
