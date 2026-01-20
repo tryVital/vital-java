@@ -9,6 +9,7 @@ import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTes
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
+import com.vital.api.resources.labtests.requests.LabTestsBookPscAppointmentRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
@@ -567,12 +568,12 @@ public class LabTestsClient {
                 .body();
     }
 
-    public ClientFacingAppointment bookPscAppointment(String orderId, AppointmentBookingRequest request) {
+    public ClientFacingAppointment bookPscAppointment(String orderId, LabTestsBookPscAppointmentRequest request) {
         return this.rawClient.bookPscAppointment(orderId, request).body();
     }
 
     public ClientFacingAppointment bookPscAppointment(
-            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsBookPscAppointmentRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .bookPscAppointment(orderId, request, requestOptions)
                 .body();

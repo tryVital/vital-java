@@ -27,6 +27,8 @@ public final class ParsingJob {
 
     private final ParsingJobStatus status;
 
+    private final Optional<ParsingJobFailureReason> failureReason;
+
     private final Optional<ParsedLabReportData> data;
 
     private final boolean needsHumanReview;
@@ -39,6 +41,7 @@ public final class ParsingJob {
             String id,
             String jobId,
             ParsingJobStatus status,
+            Optional<ParsingJobFailureReason> failureReason,
             Optional<ParsedLabReportData> data,
             boolean needsHumanReview,
             boolean isReviewed,
@@ -46,6 +49,7 @@ public final class ParsingJob {
         this.id = id;
         this.jobId = jobId;
         this.status = status;
+        this.failureReason = failureReason;
         this.data = data;
         this.needsHumanReview = needsHumanReview;
         this.isReviewed = isReviewed;
@@ -65,6 +69,11 @@ public final class ParsingJob {
     @JsonProperty("status")
     public ParsingJobStatus getStatus() {
         return status;
+    }
+
+    @JsonProperty("failure_reason")
+    public Optional<ParsingJobFailureReason> getFailureReason() {
+        return failureReason;
     }
 
     @JsonProperty("data")
@@ -97,6 +106,7 @@ public final class ParsingJob {
         return id.equals(other.id)
                 && jobId.equals(other.jobId)
                 && status.equals(other.status)
+                && failureReason.equals(other.failureReason)
                 && data.equals(other.data)
                 && needsHumanReview == other.needsHumanReview
                 && isReviewed == other.isReviewed;
@@ -104,7 +114,14 @@ public final class ParsingJob {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.jobId, this.status, this.data, this.needsHumanReview, this.isReviewed);
+        return Objects.hash(
+                this.id,
+                this.jobId,
+                this.status,
+                this.failureReason,
+                this.data,
+                this.needsHumanReview,
+                this.isReviewed);
     }
 
     @java.lang.Override
@@ -141,6 +158,10 @@ public final class ParsingJob {
     public interface _FinalStage {
         ParsingJob build();
 
+        _FinalStage failureReason(Optional<ParsingJobFailureReason> failureReason);
+
+        _FinalStage failureReason(ParsingJobFailureReason failureReason);
+
         _FinalStage data(Optional<ParsedLabReportData> data);
 
         _FinalStage data(ParsedLabReportData data);
@@ -161,6 +182,8 @@ public final class ParsingJob {
 
         private Optional<ParsedLabReportData> data = Optional.empty();
 
+        private Optional<ParsingJobFailureReason> failureReason = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -171,6 +194,7 @@ public final class ParsingJob {
             id(other.getId());
             jobId(other.getJobId());
             status(other.getStatus());
+            failureReason(other.getFailureReason());
             data(other.getData());
             needsHumanReview(other.getNeedsHumanReview());
             isReviewed(other.getIsReviewed());
@@ -226,8 +250,22 @@ public final class ParsingJob {
         }
 
         @java.lang.Override
+        public _FinalStage failureReason(ParsingJobFailureReason failureReason) {
+            this.failureReason = Optional.ofNullable(failureReason);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "failure_reason", nulls = Nulls.SKIP)
+        public _FinalStage failureReason(Optional<ParsingJobFailureReason> failureReason) {
+            this.failureReason = failureReason;
+            return this;
+        }
+
+        @java.lang.Override
         public ParsingJob build() {
-            return new ParsingJob(id, jobId, status, data, needsHumanReview, isReviewed, additionalProperties);
+            return new ParsingJob(
+                    id, jobId, status, failureReason, data, needsHumanReview, isReviewed, additionalProperties);
         }
     }
 }
