@@ -13156,6 +13156,7 @@ client.labTests().getPscAppointmentAvailability(
         .startDate("start_date")
         .zipCode("zip_code")
         .radius(AllowedRadius.TEN)
+        .allowStale(true)
         .build()
 );
 ```
@@ -13208,6 +13209,14 @@ client.labTests().getPscAppointmentAvailability(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**allowStale:** `Optional<Boolean>` — [Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -13231,9 +13240,15 @@ client.labTests().getPscAppointmentAvailability(
 ```java
 client.labTests().bookPscAppointment(
     "order_id",
-    AppointmentBookingRequest
+    LabTestsBookPscAppointmentRequest
         .builder()
-        .bookingKey("booking_key")
+        .body(
+            AppointmentBookingRequest
+                .builder()
+                .bookingKey("booking_key")
+                .build()
+        )
+        .idempotencyKey("x-idempotency-key")
         .build()
 );
 ```
@@ -13251,6 +13266,14 @@ client.labTests().bookPscAppointment(
 <dd>
 
 **orderId:** `String` — Your Order ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyKey:** `Optional<String>` — [!] This feature (Idempotency Key) is under closed beta. Idempotency Key support for booking PSC appointment.
     
 </dd>
 </dl>

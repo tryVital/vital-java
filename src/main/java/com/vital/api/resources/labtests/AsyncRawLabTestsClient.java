@@ -20,6 +20,7 @@ import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTes
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
+import com.vital.api.resources.labtests.requests.LabTestsBookPscAppointmentRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
@@ -2233,6 +2234,10 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "radius", request.getRadius().get(), false);
         }
+        if (request.getAllowStale().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "allow_stale", request.getAllowStale().get(), false);
+        }
         if (request.getSiteCodes().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "site_codes", request.getSiteCodes().get(), true);
@@ -2296,12 +2301,12 @@ public class AsyncRawLabTestsClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request) {
+            String orderId, LabTestsBookPscAppointmentRequest request) {
         return bookPscAppointment(orderId, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsBookPscAppointmentRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
@@ -2312,17 +2317,21 @@ public class AsyncRawLabTestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        if (request.getIdempotencyKey().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-idempotency-key", request.getIdempotencyKey().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
