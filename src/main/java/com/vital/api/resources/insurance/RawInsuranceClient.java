@@ -68,6 +68,11 @@ public class RawInsuranceClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "provider_payor_id", request.getProviderPayorId().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -119,10 +124,14 @@ public class RawInsuranceClient {
 
     public VitalHttpResponse<List<ClientFacingPayorSearchResponseDeprecated>> searchPayorInfo(
             PayorSearchRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/insurance/search/payor")
-                .build();
+                .addPathSegments("v3/insurance/search/payor");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -131,7 +140,7 @@ public class RawInsuranceClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -178,6 +187,11 @@ public class RawInsuranceClient {
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/diagnosis");
         QueryStringMapper.addQueryParameter(httpUrl, "diagnosis_query", request.getDiagnosisQuery(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

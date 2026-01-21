@@ -57,6 +57,11 @@ public class RawActivityClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -116,6 +121,11 @@ public class RawActivityClient {
         if (request.getEndDate().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "end_date", request.getEndDate().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

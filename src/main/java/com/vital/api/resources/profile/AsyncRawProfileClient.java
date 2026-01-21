@@ -70,6 +70,11 @@ public class AsyncRawProfileClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "provider", request.getProvider().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -153,6 +158,11 @@ public class AsyncRawProfileClient {
         if (request.getProvider().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "provider", request.getProvider().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
