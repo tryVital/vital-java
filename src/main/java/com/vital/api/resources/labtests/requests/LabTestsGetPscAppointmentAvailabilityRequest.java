@@ -34,6 +34,8 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
 
     private final Optional<AllowedRadius> radius;
 
+    private final Optional<Boolean> allowStale;
+
     private final Map<String, Object> additionalProperties;
 
     private LabTestsGetPscAppointmentAvailabilityRequest(
@@ -42,12 +44,14 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
             Optional<String> startDate,
             Optional<String> zipCode,
             Optional<AllowedRadius> radius,
+            Optional<Boolean> allowStale,
             Map<String, Object> additionalProperties) {
         this.siteCodes = siteCodes;
         this.lab = lab;
         this.startDate = startDate;
         this.zipCode = zipCode;
         this.radius = radius;
+        this.allowStale = allowStale;
         this.additionalProperties = additionalProperties;
     }
 
@@ -91,6 +95,14 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         return radius;
     }
 
+    /**
+     * @return [Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.
+     */
+    @JsonProperty("allow_stale")
+    public Optional<Boolean> getAllowStale() {
+        return allowStale;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -108,12 +120,13 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
                 && lab.equals(other.lab)
                 && startDate.equals(other.startDate)
                 && zipCode.equals(other.zipCode)
-                && radius.equals(other.radius);
+                && radius.equals(other.radius)
+                && allowStale.equals(other.allowStale);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.siteCodes, this.lab, this.startDate, this.zipCode, this.radius);
+        return Objects.hash(this.siteCodes, this.lab, this.startDate, this.zipCode, this.radius, this.allowStale);
     }
 
     @java.lang.Override
@@ -166,11 +179,20 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         _FinalStage radius(Optional<AllowedRadius> radius);
 
         _FinalStage radius(AllowedRadius radius);
+
+        /**
+         * <p>[Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.</p>
+         */
+        _FinalStage allowStale(Optional<Boolean> allowStale);
+
+        _FinalStage allowStale(Boolean allowStale);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements LabStage, _FinalStage {
         private String lab;
+
+        private Optional<Boolean> allowStale = Optional.empty();
 
         private Optional<AllowedRadius> radius = Optional.empty();
 
@@ -192,6 +214,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
             startDate(other.getStartDate());
             zipCode(other.getZipCode());
             radius(other.getRadius());
+            allowStale(other.getAllowStale());
             return this;
         }
 
@@ -204,6 +227,26 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         @JsonSetter("lab")
         public _FinalStage lab(@NotNull String lab) {
             this.lab = Objects.requireNonNull(lab, "lab must not be null");
+            return this;
+        }
+
+        /**
+         * <p>[Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage allowStale(Boolean allowStale) {
+            this.allowStale = Optional.ofNullable(allowStale);
+            return this;
+        }
+
+        /**
+         * <p>[Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "allow_stale", nulls = Nulls.SKIP)
+        public _FinalStage allowStale(Optional<Boolean> allowStale) {
+            this.allowStale = allowStale;
             return this;
         }
 
@@ -296,7 +339,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         @java.lang.Override
         public LabTestsGetPscAppointmentAvailabilityRequest build() {
             return new LabTestsGetPscAppointmentAvailabilityRequest(
-                    siteCodes, lab, startDate, zipCode, radius, additionalProperties);
+                    siteCodes, lab, startDate, zipCode, radius, allowStale, additionalProperties);
         }
     }
 }
