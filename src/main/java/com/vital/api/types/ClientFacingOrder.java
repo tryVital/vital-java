@@ -78,6 +78,12 @@ public final class ClientFacingOrder {
 
     private final Optional<String> worstCaseResultByDate;
 
+    private final Optional<OrderOrigin> origin;
+
+    private final Optional<String> parentId;
+
+    private final Optional<ClientFacingOrderTransaction> orderTransaction;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrder(
@@ -108,6 +114,9 @@ public final class ClientFacingOrder {
             Optional<Boolean> hasMissingResults,
             Optional<String> expectedResultByDate,
             Optional<String> worstCaseResultByDate,
+            Optional<OrderOrigin> origin,
+            Optional<String> parentId,
+            Optional<ClientFacingOrderTransaction> orderTransaction,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.id = id;
@@ -136,6 +145,9 @@ public final class ClientFacingOrder {
         this.hasMissingResults = hasMissingResults;
         this.expectedResultByDate = expectedResultByDate;
         this.worstCaseResultByDate = worstCaseResultByDate;
+        this.origin = origin;
+        this.parentId = parentId;
+        this.orderTransaction = orderTransaction;
         this.additionalProperties = additionalProperties;
     }
 
@@ -334,6 +346,21 @@ public final class ClientFacingOrder {
         return worstCaseResultByDate;
     }
 
+    @JsonProperty("origin")
+    public Optional<OrderOrigin> getOrigin() {
+        return origin;
+    }
+
+    @JsonProperty("parent_id")
+    public Optional<String> getParentId() {
+        return parentId;
+    }
+
+    @JsonProperty("order_transaction")
+    public Optional<ClientFacingOrderTransaction> getOrderTransaction() {
+        return orderTransaction;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -372,7 +399,10 @@ public final class ClientFacingOrder {
                 && interpretation.equals(other.interpretation)
                 && hasMissingResults.equals(other.hasMissingResults)
                 && expectedResultByDate.equals(other.expectedResultByDate)
-                && worstCaseResultByDate.equals(other.worstCaseResultByDate);
+                && worstCaseResultByDate.equals(other.worstCaseResultByDate)
+                && origin.equals(other.origin)
+                && parentId.equals(other.parentId)
+                && orderTransaction.equals(other.orderTransaction);
     }
 
     @java.lang.Override
@@ -404,7 +434,10 @@ public final class ClientFacingOrder {
                 this.interpretation,
                 this.hasMissingResults,
                 this.expectedResultByDate,
-                this.worstCaseResultByDate);
+                this.worstCaseResultByDate,
+                this.origin,
+                this.parentId,
+                this.orderTransaction);
     }
 
     @java.lang.Override
@@ -590,6 +623,18 @@ public final class ClientFacingOrder {
         _FinalStage worstCaseResultByDate(Optional<String> worstCaseResultByDate);
 
         _FinalStage worstCaseResultByDate(String worstCaseResultByDate);
+
+        _FinalStage origin(Optional<OrderOrigin> origin);
+
+        _FinalStage origin(OrderOrigin origin);
+
+        _FinalStage parentId(Optional<String> parentId);
+
+        _FinalStage parentId(String parentId);
+
+        _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction);
+
+        _FinalStage orderTransaction(ClientFacingOrderTransaction orderTransaction);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -618,6 +663,12 @@ public final class ClientFacingOrder {
         private OffsetDateTime updatedAt;
 
         private boolean hasAbn;
+
+        private Optional<ClientFacingOrderTransaction> orderTransaction = Optional.empty();
+
+        private Optional<String> parentId = Optional.empty();
+
+        private Optional<OrderOrigin> origin = Optional.empty();
 
         private Optional<String> worstCaseResultByDate = Optional.empty();
 
@@ -691,6 +742,9 @@ public final class ClientFacingOrder {
             hasMissingResults(other.getHasMissingResults());
             expectedResultByDate(other.getExpectedResultByDate());
             worstCaseResultByDate(other.getWorstCaseResultByDate());
+            origin(other.getOrigin());
+            parentId(other.getParentId());
+            orderTransaction(other.getOrderTransaction());
             return this;
         }
 
@@ -782,6 +836,45 @@ public final class ClientFacingOrder {
         @JsonSetter("has_abn")
         public _FinalStage hasAbn(boolean hasAbn) {
             this.hasAbn = hasAbn;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage orderTransaction(ClientFacingOrderTransaction orderTransaction) {
+            this.orderTransaction = Optional.ofNullable(orderTransaction);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "order_transaction", nulls = Nulls.SKIP)
+        public _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction) {
+            this.orderTransaction = orderTransaction;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage parentId(String parentId) {
+            this.parentId = Optional.ofNullable(parentId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "parent_id", nulls = Nulls.SKIP)
+        public _FinalStage parentId(Optional<String> parentId) {
+            this.parentId = parentId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage origin(OrderOrigin origin) {
+            this.origin = Optional.ofNullable(origin);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "origin", nulls = Nulls.SKIP)
+        public _FinalStage origin(Optional<OrderOrigin> origin) {
+            this.origin = origin;
             return this;
         }
 
@@ -1164,6 +1257,9 @@ public final class ClientFacingOrder {
                     hasMissingResults,
                     expectedResultByDate,
                     worstCaseResultByDate,
+                    origin,
+                    parentId,
+                    orderTransaction,
                     additionalProperties);
         }
     }

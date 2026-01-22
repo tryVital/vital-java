@@ -50,17 +50,7 @@ public final class AppointmentBookingRequest {
     }
 
     /**
-     * @return [!] This feature (Async Confirmation) is under Closed Beta.
-     * <p>If <code>true</code>, when the PSC system fails to confirm the booking within <code>sync_confirmation_timeout_millisecond</code>, this API
-     * endpoint would respond with a <code>pending</code> appointment. The booking attempt will continue asynchronously in background, until either:</p>
-     * <ol>
-     * <li>the appointment moves to the reserved or confirmed state because an acknowledgement from the PSC system has been received; OR</li>
-     * <li>the pending appointment moves to the cancelled state because the <code>async_confirmation_timeout_millisecond</code> timeout is reached.</li>
-     * </ol>
-     * <p>You will receive <code>labtest.appointment.updated</code> webhooks for all the relevant status changes (pending, confirmed, reserved
-     * and cancelled).</p>
-     * <p>If <code>false</code> (default), when the PSC system fails to confirm the booking, this API endpoint would respond with
-     * 500 Internal Server Error.</p>
+     * @return If true, the endpoint attempts to confirm the booking within the <code>sync_confirmation_timeout_millisecond</code> window. If confirmation is not received in time, a pending appointment is returned and booking continues asynchronously. If false (default), the endpoint waits for confirmation or returns a 500 error on failure.
      */
     @JsonProperty("async_confirmation")
     public Optional<Boolean> getAsyncConfirmation() {
@@ -68,10 +58,7 @@ public final class AppointmentBookingRequest {
     }
 
     /**
-     * @return This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.
-     * <p>The maximum amount of time which the Book Appointment endpoint would wait before it responds with a pending appointment.
-     * This timeout does not stop the booking attempt — it will continue asynchronously in background.</p>
-     * <p>Defaults to 2.5 seconds. Must be 1-10 seconds.</p>
+     * @return Maximum time (in milliseconds) to wait for booking confirmation before returning a pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 2500ms. Range: 1000-10000ms.
      */
     @JsonProperty("sync_confirmation_timeout_millisecond")
     public Optional<Integer> getSyncConfirmationTimeoutMillisecond() {
@@ -79,10 +66,7 @@ public final class AppointmentBookingRequest {
     }
 
     /**
-     * @return This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.
-     * <p>The maximum amount of time which Junction would try to asynchronously book in the pending appointment. If this timeout is
-     * reached, the pending appointment would be cancelled.</p>
-     * <p>Defaults to 15 minutes. Must be 1-2880 minutes.</p>
+     * @return Maximum time (in milliseconds) to attempt asynchronous booking before cancelling the pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 15 minutes. Range: 60000-172800000ms.
      */
     @JsonProperty("async_confirmation_timeout_millisecond")
     public Optional<Integer> getAsyncConfirmationTimeoutMillisecond() {
@@ -135,37 +119,21 @@ public final class AppointmentBookingRequest {
         AppointmentBookingRequest build();
 
         /**
-         * <p>[!] This feature (Async Confirmation) is under Closed Beta.</p>
-         * <p>If <code>true</code>, when the PSC system fails to confirm the booking within <code>sync_confirmation_timeout_millisecond</code>, this API
-         * endpoint would respond with a <code>pending</code> appointment. The booking attempt will continue asynchronously in background, until either:</p>
-         * <ol>
-         * <li>the appointment moves to the reserved or confirmed state because an acknowledgement from the PSC system has been received; OR</li>
-         * <li>the pending appointment moves to the cancelled state because the <code>async_confirmation_timeout_millisecond</code> timeout is reached.</li>
-         * </ol>
-         * <p>You will receive <code>labtest.appointment.updated</code> webhooks for all the relevant status changes (pending, confirmed, reserved
-         * and cancelled).</p>
-         * <p>If <code>false</code> (default), when the PSC system fails to confirm the booking, this API endpoint would respond with
-         * 500 Internal Server Error.</p>
+         * <p>If true, the endpoint attempts to confirm the booking within the <code>sync_confirmation_timeout_millisecond</code> window. If confirmation is not received in time, a pending appointment is returned and booking continues asynchronously. If false (default), the endpoint waits for confirmation or returns a 500 error on failure.</p>
          */
         _FinalStage asyncConfirmation(Optional<Boolean> asyncConfirmation);
 
         _FinalStage asyncConfirmation(Boolean asyncConfirmation);
 
         /**
-         * <p>This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.</p>
-         * <p>The maximum amount of time which the Book Appointment endpoint would wait before it responds with a pending appointment.
-         * This timeout does not stop the booking attempt — it will continue asynchronously in background.</p>
-         * <p>Defaults to 2.5 seconds. Must be 1-10 seconds.</p>
+         * <p>Maximum time (in milliseconds) to wait for booking confirmation before returning a pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 2500ms. Range: 1000-10000ms.</p>
          */
         _FinalStage syncConfirmationTimeoutMillisecond(Optional<Integer> syncConfirmationTimeoutMillisecond);
 
         _FinalStage syncConfirmationTimeoutMillisecond(Integer syncConfirmationTimeoutMillisecond);
 
         /**
-         * <p>This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.</p>
-         * <p>The maximum amount of time which Junction would try to asynchronously book in the pending appointment. If this timeout is
-         * reached, the pending appointment would be cancelled.</p>
-         * <p>Defaults to 15 minutes. Must be 1-2880 minutes.</p>
+         * <p>Maximum time (in milliseconds) to attempt asynchronous booking before cancelling the pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 15 minutes. Range: 60000-172800000ms.</p>
          */
         _FinalStage asyncConfirmationTimeoutMillisecond(Optional<Integer> asyncConfirmationTimeoutMillisecond);
 
@@ -204,10 +172,7 @@ public final class AppointmentBookingRequest {
         }
 
         /**
-         * <p>This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.</p>
-         * <p>The maximum amount of time which Junction would try to asynchronously book in the pending appointment. If this timeout is
-         * reached, the pending appointment would be cancelled.</p>
-         * <p>Defaults to 15 minutes. Must be 1-2880 minutes.</p>
+         * <p>Maximum time (in milliseconds) to attempt asynchronous booking before cancelling the pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 15 minutes. Range: 60000-172800000ms.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -217,10 +182,7 @@ public final class AppointmentBookingRequest {
         }
 
         /**
-         * <p>This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.</p>
-         * <p>The maximum amount of time which Junction would try to asynchronously book in the pending appointment. If this timeout is
-         * reached, the pending appointment would be cancelled.</p>
-         * <p>Defaults to 15 minutes. Must be 1-2880 minutes.</p>
+         * <p>Maximum time (in milliseconds) to attempt asynchronous booking before cancelling the pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 15 minutes. Range: 60000-172800000ms.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "async_confirmation_timeout_millisecond", nulls = Nulls.SKIP)
@@ -230,10 +192,7 @@ public final class AppointmentBookingRequest {
         }
 
         /**
-         * <p>This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.</p>
-         * <p>The maximum amount of time which the Book Appointment endpoint would wait before it responds with a pending appointment.
-         * This timeout does not stop the booking attempt — it will continue asynchronously in background.</p>
-         * <p>Defaults to 2.5 seconds. Must be 1-10 seconds.</p>
+         * <p>Maximum time (in milliseconds) to wait for booking confirmation before returning a pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 2500ms. Range: 1000-10000ms.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -243,10 +202,7 @@ public final class AppointmentBookingRequest {
         }
 
         /**
-         * <p>This parameter only takes effect when <code>async_confirmation</code> is <code>true</code>; no-op otherwise.</p>
-         * <p>The maximum amount of time which the Book Appointment endpoint would wait before it responds with a pending appointment.
-         * This timeout does not stop the booking attempt — it will continue asynchronously in background.</p>
-         * <p>Defaults to 2.5 seconds. Must be 1-10 seconds.</p>
+         * <p>Maximum time (in milliseconds) to wait for booking confirmation before returning a pending appointment. Only applies when <code>async_confirmation</code> is true. Defaults to 2500ms. Range: 1000-10000ms.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "sync_confirmation_timeout_millisecond", nulls = Nulls.SKIP)
@@ -256,17 +212,7 @@ public final class AppointmentBookingRequest {
         }
 
         /**
-         * <p>[!] This feature (Async Confirmation) is under Closed Beta.</p>
-         * <p>If <code>true</code>, when the PSC system fails to confirm the booking within <code>sync_confirmation_timeout_millisecond</code>, this API
-         * endpoint would respond with a <code>pending</code> appointment. The booking attempt will continue asynchronously in background, until either:</p>
-         * <ol>
-         * <li>the appointment moves to the reserved or confirmed state because an acknowledgement from the PSC system has been received; OR</li>
-         * <li>the pending appointment moves to the cancelled state because the <code>async_confirmation_timeout_millisecond</code> timeout is reached.</li>
-         * </ol>
-         * <p>You will receive <code>labtest.appointment.updated</code> webhooks for all the relevant status changes (pending, confirmed, reserved
-         * and cancelled).</p>
-         * <p>If <code>false</code> (default), when the PSC system fails to confirm the booking, this API endpoint would respond with
-         * 500 Internal Server Error.</p>
+         * <p>If true, the endpoint attempts to confirm the booking within the <code>sync_confirmation_timeout_millisecond</code> window. If confirmation is not received in time, a pending appointment is returned and booking continues asynchronously. If false (default), the endpoint waits for confirmation or returns a 500 error on failure.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -276,17 +222,7 @@ public final class AppointmentBookingRequest {
         }
 
         /**
-         * <p>[!] This feature (Async Confirmation) is under Closed Beta.</p>
-         * <p>If <code>true</code>, when the PSC system fails to confirm the booking within <code>sync_confirmation_timeout_millisecond</code>, this API
-         * endpoint would respond with a <code>pending</code> appointment. The booking attempt will continue asynchronously in background, until either:</p>
-         * <ol>
-         * <li>the appointment moves to the reserved or confirmed state because an acknowledgement from the PSC system has been received; OR</li>
-         * <li>the pending appointment moves to the cancelled state because the <code>async_confirmation_timeout_millisecond</code> timeout is reached.</li>
-         * </ol>
-         * <p>You will receive <code>labtest.appointment.updated</code> webhooks for all the relevant status changes (pending, confirmed, reserved
-         * and cancelled).</p>
-         * <p>If <code>false</code> (default), when the PSC system fails to confirm the booking, this API endpoint would respond with
-         * 500 Internal Server Error.</p>
+         * <p>If true, the endpoint attempts to confirm the booking within the <code>sync_confirmation_timeout_millisecond</code> window. If confirmation is not received in time, a pending appointment is returned and booking continues asynchronously. If false (default), the endpoint waits for confirmation or returns a 500 error on failure.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "async_confirmation", nulls = Nulls.SKIP)

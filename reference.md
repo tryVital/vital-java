@@ -12024,6 +12024,7 @@ client.labTests().getOrders(
         .userId("user_id")
         .patientName("patient_name")
         .shippingRecipientName("shipping_recipient_name")
+        .orderTransactionId("order_transaction_id")
         .page(1)
         .size(1)
         .build()
@@ -12163,6 +12164,14 @@ client.labTests().getOrders(
 <dd>
 
 **orderIds:** `Optional<String>` — Filter by order ids.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**orderTransactionId:** `Optional<String>` — Filter by order transaction ID
     
 </dd>
 </dl>
@@ -13213,7 +13222,7 @@ client.labTests().getPscAppointmentAvailability(
 <dl>
 <dd>
 
-**allowStale:** `Optional<Boolean>` — [Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.
+**allowStale:** `Optional<Boolean>` — If true, allows cached availability data to be returned.
     
 </dd>
 </dl>

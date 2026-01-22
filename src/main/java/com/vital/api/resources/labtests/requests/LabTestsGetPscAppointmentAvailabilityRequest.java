@@ -96,7 +96,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     }
 
     /**
-     * @return [Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.
+     * @return If true, allows cached availability data to be returned.
      */
     @JsonProperty("allow_stale")
     public Optional<Boolean> getAllowStale() {
@@ -181,7 +181,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         _FinalStage radius(AllowedRadius radius);
 
         /**
-         * <p>[Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.</p>
+         * <p>If true, allows cached availability data to be returned.</p>
          */
         _FinalStage allowStale(Optional<Boolean> allowStale);
 
@@ -231,7 +231,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         }
 
         /**
-         * <p>[Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.</p>
+         * <p>If true, allows cached availability data to be returned.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -241,7 +241,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         }
 
         /**
-         * <p>[Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.</p>
+         * <p>If true, allows cached availability data to be returned.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "allow_stale", nulls = Nulls.SKIP)

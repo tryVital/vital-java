@@ -30,6 +30,8 @@ public final class ClientFacingAppointment {
 
     private final String orderId;
 
+    private final Optional<String> orderTransactionId;
+
     private final UsAddress address;
 
     private final LngLat location;
@@ -64,6 +66,7 @@ public final class ClientFacingAppointment {
             String id,
             String userId,
             String orderId,
+            Optional<String> orderTransactionId,
             UsAddress address,
             LngLat location,
             Optional<OffsetDateTime> startAt,
@@ -82,6 +85,7 @@ public final class ClientFacingAppointment {
         this.id = id;
         this.userId = userId;
         this.orderId = orderId;
+        this.orderTransactionId = orderTransactionId;
         this.address = address;
         this.location = location;
         this.startAt = startAt;
@@ -112,6 +116,11 @@ public final class ClientFacingAppointment {
     @JsonProperty("order_id")
     public String getOrderId() {
         return orderId;
+    }
+
+    @JsonProperty("order_transaction_id")
+    public Optional<String> getOrderTransactionId() {
+        return orderTransactionId;
     }
 
     @JsonProperty("address")
@@ -205,6 +214,7 @@ public final class ClientFacingAppointment {
         return id.equals(other.id)
                 && userId.equals(other.userId)
                 && orderId.equals(other.orderId)
+                && orderTransactionId.equals(other.orderTransactionId)
                 && address.equals(other.address)
                 && location.equals(other.location)
                 && startAt.equals(other.startAt)
@@ -227,6 +237,7 @@ public final class ClientFacingAppointment {
                 this.id,
                 this.userId,
                 this.orderId,
+                this.orderTransactionId,
                 this.address,
                 this.location,
                 this.startAt,
@@ -300,6 +311,10 @@ public final class ClientFacingAppointment {
 
     public interface _FinalStage {
         ClientFacingAppointment build();
+
+        _FinalStage orderTransactionId(Optional<String> orderTransactionId);
+
+        _FinalStage orderTransactionId(String orderTransactionId);
 
         /**
          * <p>Time is in UTC</p>
@@ -382,6 +397,8 @@ public final class ClientFacingAppointment {
 
         private Optional<OffsetDateTime> startAt = Optional.empty();
 
+        private Optional<String> orderTransactionId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -392,6 +409,7 @@ public final class ClientFacingAppointment {
             id(other.getId());
             userId(other.getUserId());
             orderId(other.getOrderId());
+            orderTransactionId(other.getOrderTransactionId());
             address(other.getAddress());
             location(other.getLocation());
             startAt(other.getStartAt());
@@ -590,11 +608,25 @@ public final class ClientFacingAppointment {
         }
 
         @java.lang.Override
+        public _FinalStage orderTransactionId(String orderTransactionId) {
+            this.orderTransactionId = Optional.ofNullable(orderTransactionId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "order_transaction_id", nulls = Nulls.SKIP)
+        public _FinalStage orderTransactionId(Optional<String> orderTransactionId) {
+            this.orderTransactionId = orderTransactionId;
+            return this;
+        }
+
+        @java.lang.Override
         public ClientFacingAppointment build() {
             return new ClientFacingAppointment(
                     id,
                     userId,
                     orderId,
+                    orderTransactionId,
                     address,
                     location,
                     startAt,

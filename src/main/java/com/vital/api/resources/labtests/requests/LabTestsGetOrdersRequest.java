@@ -61,6 +61,8 @@ public final class LabTestsGetOrdersRequest {
 
     private final Optional<String> shippingRecipientName;
 
+    private final Optional<String> orderTransactionId;
+
     private final Optional<Integer> page;
 
     private final Optional<Integer> size;
@@ -84,6 +86,7 @@ public final class LabTestsGetOrdersRequest {
             Optional<String> userId,
             Optional<String> patientName,
             Optional<String> shippingRecipientName,
+            Optional<String> orderTransactionId,
             Optional<Integer> page,
             Optional<Integer> size,
             Map<String, Object> additionalProperties) {
@@ -103,6 +106,7 @@ public final class LabTestsGetOrdersRequest {
         this.userId = userId;
         this.patientName = patientName;
         this.shippingRecipientName = shippingRecipientName;
+        this.orderTransactionId = orderTransactionId;
         this.page = page;
         this.size = size;
         this.additionalProperties = additionalProperties;
@@ -236,6 +240,14 @@ public final class LabTestsGetOrdersRequest {
         return shippingRecipientName;
     }
 
+    /**
+     * @return Filter by order transaction ID
+     */
+    @JsonProperty("order_transaction_id")
+    public Optional<String> getOrderTransactionId() {
+        return orderTransactionId;
+    }
+
     @JsonProperty("page")
     public Optional<Integer> getPage() {
         return page;
@@ -274,6 +286,7 @@ public final class LabTestsGetOrdersRequest {
                 && userId.equals(other.userId)
                 && patientName.equals(other.patientName)
                 && shippingRecipientName.equals(other.shippingRecipientName)
+                && orderTransactionId.equals(other.orderTransactionId)
                 && page.equals(other.page)
                 && size.equals(other.size);
     }
@@ -297,6 +310,7 @@ public final class LabTestsGetOrdersRequest {
                 this.userId,
                 this.patientName,
                 this.shippingRecipientName,
+                this.orderTransactionId,
                 this.page,
                 this.size);
     }
@@ -344,6 +358,8 @@ public final class LabTestsGetOrdersRequest {
 
         private Optional<String> shippingRecipientName = Optional.empty();
 
+        private Optional<String> orderTransactionId = Optional.empty();
+
         private Optional<Integer> page = Optional.empty();
 
         private Optional<Integer> size = Optional.empty();
@@ -370,6 +386,7 @@ public final class LabTestsGetOrdersRequest {
             userId(other.getUserId());
             patientName(other.getPatientName());
             shippingRecipientName(other.getShippingRecipientName());
+            orderTransactionId(other.getOrderTransactionId());
             page(other.getPage());
             size(other.getSize());
             return this;
@@ -619,6 +636,20 @@ public final class LabTestsGetOrdersRequest {
             return this;
         }
 
+        /**
+         * <p>Filter by order transaction ID</p>
+         */
+        @JsonSetter(value = "order_transaction_id", nulls = Nulls.SKIP)
+        public Builder orderTransactionId(Optional<String> orderTransactionId) {
+            this.orderTransactionId = orderTransactionId;
+            return this;
+        }
+
+        public Builder orderTransactionId(String orderTransactionId) {
+            this.orderTransactionId = Optional.ofNullable(orderTransactionId);
+            return this;
+        }
+
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -659,6 +690,7 @@ public final class LabTestsGetOrdersRequest {
                     userId,
                     patientName,
                     shippingRecipientName,
+                    orderTransactionId,
                     page,
                     size,
                     additionalProperties);
