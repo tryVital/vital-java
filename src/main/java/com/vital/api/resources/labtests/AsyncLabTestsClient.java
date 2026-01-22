@@ -9,6 +9,7 @@ import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTes
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
+import com.vital.api.resources.labtests.requests.LabTestsBookPscAppointmentRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
@@ -43,8 +44,10 @@ import com.vital.api.types.GetOrdersResponse;
 import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.LabTestResourcesResponse;
+import com.vital.api.types.OrderSetRequest;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
+import com.vital.api.types.UsAddress;
 import com.vital.api.types.ValidateIcdCodesResponse;
 import java.io.InputStream;
 import java.util.List;
@@ -176,6 +179,15 @@ public class AsyncLabTestsClient {
     public CompletableFuture<GetMarkersResponse> getMarkers(
             LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMarkers(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<GetMarkersResponse> getMarkersForOrderSet(OrderSetRequest body) {
+        return this.rawClient.getMarkersForOrderSet(body).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<GetMarkersResponse> getMarkersForOrderSet(
+            OrderSetRequest body, RequestOptions requestOptions) {
+        return this.rawClient.getMarkersForOrderSet(body, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<GetMarkersResponse> getMarkersForOrderSet(LabTestsGetMarkersForOrderSetRequest request) {
@@ -328,6 +340,25 @@ public class AsyncLabTestsClient {
     public CompletableFuture<GetOrdersResponse> getOrders(
             LabTestsGetOrdersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getOrders(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Return the available time slots to book an appointment with a phlebotomist
+     * for the given address and order.
+     */
+    public CompletableFuture<AppointmentAvailabilitySlots> getPhlebotomyAppointmentAvailability(UsAddress body) {
+        return this.rawClient.getPhlebotomyAppointmentAvailability(body).thenApply(response -> response.body());
+    }
+
+    /**
+     * Return the available time slots to book an appointment with a phlebotomist
+     * for the given address and order.
+     */
+    public CompletableFuture<AppointmentAvailabilitySlots> getPhlebotomyAppointmentAvailability(
+            UsAddress body, RequestOptions requestOptions) {
+        return this.rawClient
+                .getPhlebotomyAppointmentAvailability(body, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     /**
@@ -578,12 +609,22 @@ public class AsyncLabTestsClient {
     }
 
     public CompletableFuture<ClientFacingAppointment> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request) {
+            String orderId, AppointmentBookingRequest body) {
+        return this.rawClient.bookPscAppointment(orderId, body).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingAppointment> bookPscAppointment(
+            String orderId, AppointmentBookingRequest body, RequestOptions requestOptions) {
+        return this.rawClient.bookPscAppointment(orderId, body, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ClientFacingAppointment> bookPscAppointment(
+            String orderId, LabTestsBookPscAppointmentRequest request) {
         return this.rawClient.bookPscAppointment(orderId, request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<ClientFacingAppointment> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
+            String orderId, LabTestsBookPscAppointmentRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .bookPscAppointment(orderId, request, requestOptions)
                 .thenApply(response -> response.body());

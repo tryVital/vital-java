@@ -62,6 +62,11 @@ public class AsyncRawSleepClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -137,6 +142,11 @@ public class AsyncRawSleepClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -197,14 +207,18 @@ public class AsyncRawSleepClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingSleepStream>> getStreamBySleepId(
             String sleepId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/timeseries/sleep")
                 .addPathSegment(sleepId)
-                .addPathSegments("stream")
-                .build();
+                .addPathSegments("stream");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")

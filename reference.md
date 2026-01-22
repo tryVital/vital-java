@@ -493,7 +493,7 @@ This has no effect on programmatic Vital Link API usage.
 </dl>
 </details>
 
-<details><summary><code>client.link.isTokenValid(request) -> Map&lt;String, Object&gt;</code></summary>
+<details><summary><code>client.link.isTokenValid(request) -> Map&amp;lt;String, Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -606,7 +606,7 @@ client.link().codeCreate(
 </dl>
 </details>
 
-<details><summary><code>client.link.startConnect(request) -> Map&lt;String, Object&gt;</code></summary>
+<details><summary><code>client.link.startConnect(request) -> Map&amp;lt;String, Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -675,7 +675,7 @@ client.link().startConnect(
 </dl>
 </details>
 
-<details><summary><code>client.link.tokenState() -> Map&lt;String, Object&gt;</code></summary>
+<details><summary><code>client.link.tokenState() -> Map&amp;lt;String, Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1256,7 +1256,7 @@ client.link().connectEmailAuthProvider(
 </dl>
 </details>
 
-<details><summary><code>client.link.getAllProviders() -> List&lt;SourceLink&gt;</code></summary>
+<details><summary><code>client.link.getAllProviders() -> List&amp;lt;SourceLink&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1315,7 +1315,7 @@ client.link().getAllProviders(
 </dl>
 </details>
 
-<details><summary><code>client.link.connectManualProvider(provider, request) -> Map&lt;String, Boolean&gt;</code></summary>
+<details><summary><code>client.link.connectManualProvider(provider, request) -> Map&amp;lt;String, Boolean&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7362,7 +7362,7 @@ client.vitals().bloodPressureGrouped(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.vo2Max(userId) -> List&lt;ClientFacingVo2MaxTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.vo2Max(userId) -> List&amp;lt;ClientFacingVo2MaxTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7434,7 +7434,7 @@ client.vitals().vo2Max(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.stressLevel(userId) -> List&lt;ClientFacingStressLevelTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.stressLevel(userId) -> List&amp;lt;ClientFacingStressLevelTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7506,7 +7506,7 @@ client.vitals().stressLevel(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.mindfulnessMinutes(userId) -> List&lt;ClientFacingMindfulnessMinutesTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.mindfulnessMinutes(userId) -> List&amp;lt;ClientFacingMindfulnessMinutesTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7578,7 +7578,7 @@ client.vitals().mindfulnessMinutes(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.caffeine(userId) -> List&lt;ClientFacingCaffeineTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.caffeine(userId) -> List&amp;lt;ClientFacingCaffeineTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7650,7 +7650,7 @@ client.vitals().caffeine(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.water(userId) -> List&lt;ClientFacingWaterTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.water(userId) -> List&amp;lt;ClientFacingWaterTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7722,7 +7722,7 @@ client.vitals().water(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.steps(userId) -> List&lt;ClientFacingStepsTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.steps(userId) -> List&amp;lt;ClientFacingStepsTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7794,7 +7794,7 @@ client.vitals().steps(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.floorsClimbed(userId) -> List&lt;ClientFacingFloorsClimbedTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.floorsClimbed(userId) -> List&amp;lt;ClientFacingFloorsClimbedTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7866,7 +7866,7 @@ client.vitals().floorsClimbed(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.distance(userId) -> List&lt;ClientFacingDistanceTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.distance(userId) -> List&amp;lt;ClientFacingDistanceTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -7938,7 +7938,7 @@ client.vitals().distance(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.caloriesBasal(userId) -> List&lt;ClientFacingCaloriesBasalTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.caloriesBasal(userId) -> List&amp;lt;ClientFacingCaloriesBasalTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8010,7 +8010,7 @@ client.vitals().caloriesBasal(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.caloriesActive(userId) -> List&lt;ClientFacingCaloriesActiveTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.caloriesActive(userId) -> List&amp;lt;ClientFacingCaloriesActiveTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8082,7 +8082,7 @@ client.vitals().caloriesActive(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.respiratoryRate(userId) -> List&lt;ClientFacingRespiratoryRateTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.respiratoryRate(userId) -> List&amp;lt;ClientFacingRespiratoryRateTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8154,7 +8154,7 @@ client.vitals().respiratoryRate(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.ige(userId) -> List&lt;ClientFacingIgeTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.ige(userId) -> List&amp;lt;ClientFacingIgeTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8226,7 +8226,7 @@ client.vitals().ige(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.igg(userId) -> List&lt;ClientFacingIggTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.igg(userId) -> List&amp;lt;ClientFacingIggTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8298,7 +8298,7 @@ client.vitals().igg(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.hypnogram(userId) -> List&lt;ClientFacingHypnogramTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.hypnogram(userId) -> List&amp;lt;ClientFacingHypnogramTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8370,7 +8370,7 @@ client.vitals().hypnogram(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.hrv(userId) -> List&lt;ClientFacingHrvTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.hrv(userId) -> List&amp;lt;ClientFacingHrvTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8442,7 +8442,7 @@ client.vitals().hrv(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.heartrate(userId) -> List&lt;ClientFacingHeartRateTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.heartrate(userId) -> List&amp;lt;ClientFacingHeartRateTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8514,7 +8514,7 @@ client.vitals().heartrate(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.glucose(userId) -> List&lt;ClientFacingGlucoseTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.glucose(userId) -> List&amp;lt;ClientFacingGlucoseTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8586,7 +8586,7 @@ client.vitals().glucose(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.cholesterolTriglycerides(userId) -> List&lt;ClientFacingCholesterolTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.cholesterolTriglycerides(userId) -> List&amp;lt;ClientFacingCholesterolTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8658,7 +8658,7 @@ client.vitals().cholesterolTriglycerides(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.cholesterolTotal(userId) -> List&lt;ClientFacingCholesterolTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.cholesterolTotal(userId) -> List&amp;lt;ClientFacingCholesterolTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8730,7 +8730,7 @@ client.vitals().cholesterolTotal(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.cholesterolLdl(userId) -> List&lt;ClientFacingCholesterolTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.cholesterolLdl(userId) -> List&amp;lt;ClientFacingCholesterolTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8802,7 +8802,7 @@ client.vitals().cholesterolLdl(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.cholesterolHdl(userId) -> List&lt;ClientFacingCholesterolTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.cholesterolHdl(userId) -> List&amp;lt;ClientFacingCholesterolTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8874,7 +8874,7 @@ client.vitals().cholesterolHdl(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.cholesterol(userId) -> List&lt;ClientFacingCholesterolTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.cholesterol(userId) -> List&amp;lt;ClientFacingCholesterolTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -8946,7 +8946,7 @@ client.vitals().cholesterol(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.bodyWeight(userId) -> List&lt;ClientFacingBodyWeightTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.bodyWeight(userId) -> List&amp;lt;ClientFacingBodyWeightTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -9018,7 +9018,7 @@ client.vitals().bodyWeight(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.bodyFat(userId) -> List&lt;ClientFacingBodyFatTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.bodyFat(userId) -> List&amp;lt;ClientFacingBodyFatTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -9090,7 +9090,7 @@ client.vitals().bodyFat(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.bloodOxygen(userId) -> List&lt;ClientFacingBloodOxygenTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.bloodOxygen(userId) -> List&amp;lt;ClientFacingBloodOxygenTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -9162,7 +9162,7 @@ client.vitals().bloodOxygen(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.electrocardiogramVoltage(userId) -> List&lt;ClientFacingElectrocardiogramVoltageTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.electrocardiogramVoltage(userId) -> List&amp;lt;ClientFacingElectrocardiogramVoltageTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -9234,7 +9234,7 @@ client.vitals().electrocardiogramVoltage(
 </dl>
 </details>
 
-<details><summary><code>client.vitals.bloodPressure(userId) -> List&lt;ClientFacingBloodPressureTimeseries&gt;</code></summary>
+<details><summary><code>client.vitals.bloodPressure(userId) -> List&amp;lt;ClientFacingBloodPressureTimeseries&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -9510,7 +9510,7 @@ client.user().getTeamMetrics();
 </dl>
 </details>
 
-<details><summary><code>client.user.getConnectedProviders(userId) -> Map&lt;String, List&lt;ClientFacingProviderWithStatus&gt;&gt;</code></summary>
+<details><summary><code>client.user.getConnectedProviders(userId) -> Map&amp;lt;String, List&amp;lt;ClientFacingProviderWithStatus&amp;gt;&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10334,7 +10334,7 @@ client.user().refresh(
 </dl>
 </details>
 
-<details><summary><code>client.user.getDevices(userId) -> List&lt;ClientFacingDevice&gt;</code></summary>
+<details><summary><code>client.user.getDevices(userId) -> List&amp;lt;ClientFacingDevice&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10533,7 +10533,7 @@ authentication, e.g., when they open a short link on a new device. ℹ️ This e
 </details>
 
 ## Team
-<details><summary><code>client.team.getLinkConfig() -> Map&lt;String, Object&gt;</code></summary>
+<details><summary><code>client.team.getLinkConfig() -> Map&amp;lt;String, Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10646,7 +10646,7 @@ client.team().get("team_id");
 </dl>
 </details>
 
-<details><summary><code>client.team.getUserById() -> List&lt;ClientFacingUser&gt;</code></summary>
+<details><summary><code>client.team.getUserById() -> List&amp;lt;ClientFacingUser&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10705,7 +10705,7 @@ client.team().getUserById(
 </dl>
 </details>
 
-<details><summary><code>client.team.getSvixUrl() -> Map&lt;String, Object&gt;</code></summary>
+<details><summary><code>client.team.getSvixUrl() -> Map&amp;lt;String, Object&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10730,7 +10730,7 @@ client.team().getSvixUrl();
 </dl>
 </details>
 
-<details><summary><code>client.team.getSourcePriorities() -> List&lt;Map&lt;String, Object&gt;&gt;</code></summary>
+<details><summary><code>client.team.getSourcePriorities() -> List&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10789,7 +10789,7 @@ client.team().getSourcePriorities(
 </dl>
 </details>
 
-<details><summary><code>client.team.updateSourcePriorities() -> List&lt;Map&lt;String, Object&gt;&gt;</code></summary>
+<details><summary><code>client.team.updateSourcePriorities() -> List&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10828,7 +10828,7 @@ client.team().updateSourcePriorities();
 </dl>
 </details>
 
-<details><summary><code>client.team.getPhysicians(teamId) -> List&lt;ClientFacingPhysician&gt;</code></summary>
+<details><summary><code>client.team.getPhysicians(teamId) -> List&amp;lt;ClientFacingPhysician&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -10869,7 +10869,7 @@ client.team().getPhysicians("team_id");
 </details>
 
 ## Providers
-<details><summary><code>client.providers.getAll() -> List&lt;ClientFacingProviderDetailed&gt;</code></summary>
+<details><summary><code>client.providers.getAll() -> List&amp;lt;ClientFacingProviderDetailed&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -11092,7 +11092,7 @@ client.introspect().getUserHistoricalPulls(
 </details>
 
 ## LabTests
-<details><summary><code>client.labTests.get() -> List&lt;ClientFacingLabTest&gt;</code></summary>
+<details><summary><code>client.labTests.get() -> List&amp;lt;ClientFacingLabTest&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -11756,7 +11756,7 @@ client.labTests().getMarkersByLabAndProviderId(
 </dl>
 </details>
 
-<details><summary><code>client.labTests.getLabs() -> List&lt;ClientFacingLab&gt;</code></summary>
+<details><summary><code>client.labTests.getLabs() -> List&amp;lt;ClientFacingLab&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -12564,7 +12564,7 @@ client.labTests().cancelPhlebotomyAppointment(
 </dl>
 </details>
 
-<details><summary><code>client.labTests.getPhlebotomyAppointmentCancellationReason() -> List&lt;ClientFacingAppointmentCancellationReason&gt;</code></summary>
+<details><summary><code>client.labTests.getPhlebotomyAppointmentCancellationReason() -> List&amp;lt;ClientFacingAppointmentCancellationReason&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13156,6 +13156,7 @@ client.labTests().getPscAppointmentAvailability(
         .startDate("start_date")
         .zipCode("zip_code")
         .radius(AllowedRadius.TEN)
+        .allowStale(true)
         .build()
 );
 ```
@@ -13208,6 +13209,14 @@ client.labTests().getPscAppointmentAvailability(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**allowStale:** `Optional<Boolean>` — [Closed Beta] Serve last known good information when the PSC system is temporarily unavailable.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -13231,9 +13240,15 @@ client.labTests().getPscAppointmentAvailability(
 ```java
 client.labTests().bookPscAppointment(
     "order_id",
-    AppointmentBookingRequest
+    LabTestsBookPscAppointmentRequest
         .builder()
-        .bookingKey("booking_key")
+        .body(
+            AppointmentBookingRequest
+                .builder()
+                .bookingKey("booking_key")
+                .build()
+        )
+        .idempotencyKey("x-idempotency-key")
         .build()
 );
 ```
@@ -13251,6 +13266,14 @@ client.labTests().bookPscAppointment(
 <dd>
 
 **orderId:** `String` — Your Order ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyKey:** `Optional<String>` — [!] This feature (Idempotency Key) is under closed beta. Idempotency Key support for booking PSC appointment.
     
 </dd>
 </dl>
@@ -13386,7 +13409,7 @@ client.labTests().cancelPscAppointment(
 </dl>
 </details>
 
-<details><summary><code>client.labTests.getPscAppointmentCancellationReason() -> List&lt;ClientFacingAppointmentCancellationReason&gt;</code></summary>
+<details><summary><code>client.labTests.getPscAppointmentCancellationReason() -> List&amp;lt;ClientFacingAppointmentCancellationReason&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -14570,7 +14593,7 @@ client.order().resendEvents(
 </details>
 
 ## Insurance
-<details><summary><code>client.insurance.searchGetPayorInfo() -> List&lt;ClientFacingPayorSearchResponse&gt;</code></summary>
+<details><summary><code>client.insurance.searchGetPayorInfo() -> List&amp;lt;ClientFacingPayorSearchResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -14633,7 +14656,7 @@ client.insurance().searchGetPayorInfo(
 </dl>
 </details>
 
-<details><summary><code>client.insurance.searchPayorInfo(request) -> List&lt;ClientFacingPayorSearchResponseDeprecated&gt;</code></summary>
+<details><summary><code>client.insurance.searchPayorInfo(request) -> List&amp;lt;ClientFacingPayorSearchResponseDeprecated&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -14693,7 +14716,7 @@ client.insurance().searchPayorInfo(
 </dl>
 </details>
 
-<details><summary><code>client.insurance.searchDiagnosis() -> List&lt;ClientFacingDiagnosisInformation&gt;</code></summary>
+<details><summary><code>client.insurance.searchDiagnosis() -> List&amp;lt;ClientFacingDiagnosisInformation&amp;gt;</code></summary>
 <dl>
 <dd>
 

@@ -20,6 +20,7 @@ import com.vital.api.resources.labtests.requests.ApiApiV1EndpointsVitalApiLabTes
 import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
 import com.vital.api.resources.labtests.requests.CreateOrderRequestCompatible;
 import com.vital.api.resources.labtests.requests.ImportOrderBody;
+import com.vital.api.resources.labtests.requests.LabTestsBookPscAppointmentRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetByIdRequest;
 import com.vital.api.resources.labtests.requests.LabTestsGetLabelsPdfRequest;
@@ -56,8 +57,10 @@ import com.vital.api.types.LabResultsMetadata;
 import com.vital.api.types.LabResultsRaw;
 import com.vital.api.types.LabTestResourcesResponse;
 import com.vital.api.types.NotFoundErrorBody;
+import com.vital.api.types.OrderSetRequest;
 import com.vital.api.types.PostOrderResponse;
 import com.vital.api.types.PscInfo;
+import com.vital.api.types.UsAddress;
 import com.vital.api.types.ValidateIcdCodesResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -146,6 +149,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "provider_ids", request.getProviderIds().get(), true);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -202,10 +210,14 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> create(
             CreateLabTestRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/lab_tests")
-                .build();
+                .addPathSegments("v3/lab_tests");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -214,7 +226,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -299,6 +311,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -364,11 +381,15 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<ClientFacingLabTest>> updateLabTest(
             String labTestId, UpdateLabTestRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests")
-                .addPathSegment(labTestId)
-                .build();
+                .addPathSegment(labTestId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -377,7 +398,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -479,6 +500,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "lab_id", request.getLabId().get(), true);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -528,6 +554,17 @@ public class AsyncRawLabTestsClient {
         return future;
     }
 
+    public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForOrderSet(OrderSetRequest body) {
+        return getMarkersForOrderSet(
+                LabTestsGetMarkersForOrderSetRequest.builder().body(body).build());
+    }
+
+    public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForOrderSet(
+            OrderSetRequest body, RequestOptions requestOptions) {
+        return getMarkersForOrderSet(
+                LabTestsGetMarkersForOrderSetRequest.builder().body(body).build(), requestOptions);
+    }
+
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForOrderSet(
             LabTestsGetMarkersForOrderSetRequest request) {
         return getMarkersForOrderSet(request, null);
@@ -545,6 +582,11 @@ public class AsyncRawLabTestsClient {
         if (request.getSize().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "size", request.getSize().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         RequestBody body;
         try {
@@ -637,6 +679,11 @@ public class AsyncRawLabTestsClient {
         if (request.getSize().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "size", request.getSize().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -736,6 +783,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -796,12 +848,16 @@ public class AsyncRawLabTestsClient {
      * GET all the labs.
      */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingLab>>> getLabs(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/lab_tests/labs")
-                .build();
+                .addPathSegments("v3/lab_tests/labs");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -914,6 +970,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "provider_ids", request.getProviderIds().get(), true);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -969,14 +1030,18 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<InputStream>> getLabTestCollectionInstructionPdf(
             String labTestId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_test")
                 .addPathSegment(labTestId)
-                .addPathSegments("collection_instruction_pdf")
-                .build();
+                .addPathSegments("collection_instruction_pdf");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -1130,6 +1195,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "order_ids", request.getOrderIds().get(), true);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -1184,6 +1254,30 @@ public class AsyncRawLabTestsClient {
      * for the given address and order.
      */
     public CompletableFuture<VitalHttpResponse<AppointmentAvailabilitySlots>> getPhlebotomyAppointmentAvailability(
+            UsAddress body) {
+        return getPhlebotomyAppointmentAvailability(LabTestsGetPhlebotomyAppointmentAvailabilityRequest.builder()
+                .body(body)
+                .build());
+    }
+
+    /**
+     * Return the available time slots to book an appointment with a phlebotomist
+     * for the given address and order.
+     */
+    public CompletableFuture<VitalHttpResponse<AppointmentAvailabilitySlots>> getPhlebotomyAppointmentAvailability(
+            UsAddress body, RequestOptions requestOptions) {
+        return getPhlebotomyAppointmentAvailability(
+                LabTestsGetPhlebotomyAppointmentAvailabilityRequest.builder()
+                        .body(body)
+                        .build(),
+                requestOptions);
+    }
+
+    /**
+     * Return the available time slots to book an appointment with a phlebotomist
+     * for the given address and order.
+     */
+    public CompletableFuture<VitalHttpResponse<AppointmentAvailabilitySlots>> getPhlebotomyAppointmentAvailability(
             LabTestsGetPhlebotomyAppointmentAvailabilityRequest request) {
         return getPhlebotomyAppointmentAvailability(request, null);
     }
@@ -1200,6 +1294,11 @@ public class AsyncRawLabTestsClient {
         if (request.getStartDate().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "start_date", request.getStartDate().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         RequestBody body;
         try {
@@ -1272,13 +1371,17 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPhlebotomyAppointment(
             String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("phlebotomy/appointment")
-                .addPathSegments("book")
-                .build();
+                .addPathSegments("book");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1287,7 +1390,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1349,13 +1452,17 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> requestPhlebotomyAppointment(
             String orderId, RequestAppointmentRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("phlebotomy/appointment")
-                .addPathSegments("request")
-                .build();
+                .addPathSegments("request");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1364,7 +1471,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1426,13 +1533,17 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> reschedulePhlebotomyAppointment(
             String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("phlebotomy/appointment")
-                .addPathSegments("reschedule")
-                .build();
+                .addPathSegments("reschedule");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1441,7 +1552,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1505,13 +1616,17 @@ public class AsyncRawLabTestsClient {
             String orderId,
             ApiApiV1EndpointsVitalApiLabTestingOrdersHelpersAppointmentCancelRequest request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("phlebotomy/appointment")
-                .addPathSegments("cancel")
-                .build();
+                .addPathSegments("cancel");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1520,7 +1635,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1582,12 +1697,16 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<List<ClientFacingAppointmentCancellationReason>>>
             getPhlebotomyAppointmentCancellationReason(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/order/phlebotomy/appointment/cancellation-reasons")
-                .build();
+                .addPathSegments("v3/order/phlebotomy/appointment/cancellation-reasons");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -1640,15 +1759,19 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> getPhlebotomyAppointment(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("phlebotomy")
-                .addPathSegments("appointment")
-                .build();
+                .addPathSegments("appointment");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -1737,6 +1860,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "labs", request.getLabs().get(), true);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -1807,6 +1935,11 @@ public class AsyncRawLabTestsClient {
         if (request.getCapabilities().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "capabilities", request.getCapabilities().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -1886,6 +2019,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "capabilities", request.getCapabilities().get(), true);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -1946,15 +2084,19 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<InputStream>> getResultPdf(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("result")
-                .addPathSegments("pdf")
-                .build();
+                .addPathSegments("pdf");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2015,15 +2157,19 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<LabResultsMetadata>> getResultMetadata(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("result")
-                .addPathSegments("metadata")
-                .build();
+                .addPathSegments("metadata");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2083,14 +2229,18 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<LabResultsRaw>> getResultRaw(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
-                .addPathSegments("result")
-                .build();
+                .addPathSegments("result");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2162,6 +2312,11 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "number_of_labels", request.getNumberOfLabels().get(), false);
         }
         QueryStringMapper.addQueryParameter(httpUrl, "collection_date", request.getCollectionDate(), false);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -2233,9 +2388,18 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "radius", request.getRadius().get(), false);
         }
+        if (request.getAllowStale().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "allow_stale", request.getAllowStale().get(), false);
+        }
         if (request.getSiteCodes().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "site_codes", request.getSiteCodes().get(), true);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -2296,33 +2460,53 @@ public class AsyncRawLabTestsClient {
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request) {
+            String orderId, AppointmentBookingRequest body) {
+        return bookPscAppointment(
+                orderId, LabTestsBookPscAppointmentRequest.builder().body(body).build());
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPscAppointment(
+            String orderId, AppointmentBookingRequest body, RequestOptions requestOptions) {
+        return bookPscAppointment(
+                orderId, LabTestsBookPscAppointmentRequest.builder().body(body).build(), requestOptions);
+    }
+
+    public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPscAppointment(
+            String orderId, LabTestsBookPscAppointmentRequest request) {
         return bookPscAppointment(orderId, request, null);
     }
 
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> bookPscAppointment(
-            String orderId, AppointmentBookingRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+            String orderId, LabTestsBookPscAppointmentRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("psc/appointment")
-                .addPathSegments("book")
-                .build();
+                .addPathSegments("book");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        if (request.getIdempotencyKey().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-idempotency-key", request.getIdempotencyKey().get());
+        }
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -2373,13 +2557,17 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> reschedulePscAppointment(
             String orderId, AppointmentRescheduleRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("psc/appointment")
-                .addPathSegments("reschedule")
-                .build();
+                .addPathSegments("reschedule");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -2388,7 +2576,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -2446,13 +2634,17 @@ public class AsyncRawLabTestsClient {
             String orderId,
             VitalCoreClientsLabTestGetlabsSchemaAppointmentCancelRequest request,
             RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("psc/appointment")
-                .addPathSegments("cancel")
-                .build();
+                .addPathSegments("cancel");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -2461,7 +2653,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -2517,12 +2709,16 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<List<ClientFacingAppointmentCancellationReason>>>
             getPscAppointmentCancellationReason(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/order/psc/appointment/cancellation-reasons")
-                .build();
+                .addPathSegments("v3/order/psc/appointment/cancellation-reasons");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2575,15 +2771,19 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingAppointment>> getPscAppointment(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("psc")
-                .addPathSegments("appointment")
-                .build();
+                .addPathSegments("appointment");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2643,14 +2843,18 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<InputStream>> getOrderCollectionInstructionPdf(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
-                .addPathSegments("collection_instruction_pdf")
-                .build();
+                .addPathSegments("collection_instruction_pdf");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2709,15 +2913,19 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<InputStream>> getOrderRequistionPdf(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
                 .addPathSegments("requisition")
-                .addPathSegments("pdf")
-                .build();
+                .addPathSegments("pdf");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2776,14 +2984,18 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<InputStream>> getOrderAbnPdf(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
-                .addPathSegments("abn_pdf")
-                .build();
+                .addPathSegments("abn_pdf");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2842,13 +3054,17 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<ClientFacingOrder>> getOrder(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
-                .addPathSegment(orderId)
-                .build();
+                .addPathSegment(orderId);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -2902,10 +3118,14 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<PostOrderResponse>> createOrder(
             CreateOrderRequestCompatible request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/order")
-                .build();
+                .addPathSegments("v3/order");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -2914,7 +3134,7 @@ public class AsyncRawLabTestsClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -2977,10 +3197,14 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<PostOrderResponse>> importOrder(
             ImportOrderBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/order/import")
-                .build();
+                .addPathSegments("v3/order/import");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -2989,7 +3213,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -3050,14 +3274,18 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<PostOrderResponse>> cancelOrder(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
-                .addPathSegments("cancel")
-                .build();
+                .addPathSegments("cancel");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -3148,6 +3376,11 @@ public class AsyncRawLabTestsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "delay", request.getDelay().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create("", null);
@@ -3220,14 +3453,18 @@ public class AsyncRawLabTestsClient {
      */
     public CompletableFuture<VitalHttpResponse<PostOrderResponse>> updateOnSiteCollectionOrderDrawCompleted(
             String orderId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId)
-                .addPathSegments("draw_completed")
-                .build();
+                .addPathSegments("draw_completed");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("PATCH", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
@@ -3282,10 +3519,14 @@ public class AsyncRawLabTestsClient {
 
     public CompletableFuture<VitalHttpResponse<ValidateIcdCodesResponse>> validateIcdCodes(
             ValidateIcdCodesBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v3/insurance/validate_icd_codes")
-                .build();
+                .addPathSegments("v3/insurance/validate_icd_codes");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -3294,7 +3535,7 @@ public class AsyncRawLabTestsClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

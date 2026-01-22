@@ -97,6 +97,11 @@ public class AsyncRawLinkClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "team_id", request.getTeamId().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -159,6 +164,11 @@ public class AsyncRawLinkClient {
         if (request.getTeamId().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "team_id", request.getTeamId().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         RequestBody body;
         try {
@@ -232,6 +242,11 @@ public class AsyncRawLinkClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "team_id", request.getTeamId().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -301,6 +316,11 @@ public class AsyncRawLinkClient {
         if (request.getTeamId().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "team_id", request.getTeamId().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         RequestBody body;
         try {
@@ -372,6 +392,11 @@ public class AsyncRawLinkClient {
         if (request.getTeamId().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "team_id", request.getTeamId().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
         }
         RequestBody body;
         try {
@@ -451,10 +476,14 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<LinkTokenExchangeResponse>> token(
             LinkTokenExchange request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/token")
-                .build();
+                .addPathSegments("v2/link/token");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -463,7 +492,7 @@ public class AsyncRawLinkClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -519,10 +548,14 @@ public class AsyncRawLinkClient {
 
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> isTokenValid(
             LinkTokenValidationRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/token/isValid")
-                .build();
+                .addPathSegments("v2/link/token/isValid");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -531,7 +564,7 @@ public class AsyncRawLinkClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -601,6 +634,11 @@ public class AsyncRawLinkClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "expires_at", request.getExpiresAt().get(), false);
         }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", RequestBody.create("", null))
@@ -665,10 +703,14 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> startConnect(
             BeginLinkTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/start")
-                .build();
+                .addPathSegments("v2/link/start");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -677,7 +719,7 @@ public class AsyncRawLinkClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -757,12 +799,16 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState(
             LinkTokenStateRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/state")
-                .build();
+                .addPathSegments("v2/link/state");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
@@ -827,10 +873,14 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<Object>> emailAuth(
             EmailAuthLink request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/auth/email")
-                .build();
+                .addPathSegments("v2/link/auth/email");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -839,7 +889,7 @@ public class AsyncRawLinkClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -903,10 +953,14 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<Object>> passwordAuth(
             PasswordAuthLink request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/auth")
-                .build();
+                .addPathSegments("v2/link/auth");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -915,7 +969,7 @@ public class AsyncRawLinkClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -997,13 +1051,17 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<Source>> generateOauthLink(
             OAuthProviders oauthProvider, LinkGenerateOauthLinkRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/oauth")
-                .addPathSegment(oauthProvider.toString())
-                .build();
+                .addPathSegment(oauthProvider.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
@@ -1067,11 +1125,15 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<ProviderLinkResponse>> connectPasswordProvider(
             PasswordProviders provider, IndividualProviderData request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/password")
-                .addPathSegment(provider.toString())
-                .build();
+                .addPathSegment(provider.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1080,7 +1142,7 @@ public class AsyncRawLinkClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1146,12 +1208,16 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<ProviderLinkResponse>> completePasswordProviderMfa(
             PasswordProviders provider, CompletePasswordProviderMfaBody request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/password")
                 .addPathSegment(provider.toString())
-                .addPathSegments("complete_mfa")
-                .build();
+                .addPathSegments("complete_mfa");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1160,7 +1226,7 @@ public class AsyncRawLinkClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1226,11 +1292,15 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<Object>> connectEmailAuthProvider(
             String provider, EmailProviderAuthLink request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/email")
-                .addPathSegment(provider)
-                .build();
+                .addPathSegment(provider);
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1239,7 +1309,7 @@ public class AsyncRawLinkClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1317,12 +1387,16 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<List<SourceLink>>> getAllProviders(
             LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/providers")
-                .build();
+                .addPathSegments("v2/link/providers");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
@@ -1382,11 +1456,15 @@ public class AsyncRawLinkClient {
 
     public CompletableFuture<VitalHttpResponse<Map<String, Boolean>>> connectManualProvider(
             ManualProviders provider, ManualConnectionData request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/provider/manual")
-                .addPathSegment(provider.toString())
-                .build();
+                .addPathSegment(provider.toString());
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1395,7 +1473,7 @@ public class AsyncRawLinkClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -1458,10 +1536,14 @@ public class AsyncRawLinkClient {
      */
     public CompletableFuture<VitalHttpResponse<DemoConnectionStatus>> connectDemoProvider(
             DemoConnectionCreationPayload request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("v2/link/connect/demo")
-                .build();
+                .addPathSegments("v2/link/connect/demo");
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((key, value) -> {
+                httpUrl.addQueryParameter(key, value);
+            });
+        }
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -1470,7 +1552,7 @@ public class AsyncRawLinkClient {
             throw new VitalException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
+                .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
