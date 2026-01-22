@@ -1168,6 +1168,13 @@ public class AsyncRawLabTestsClient {
                     request.getShippingRecipientName().get(),
                     false);
         }
+        if (request.getOrderTransactionId().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl,
+                    "order_transaction_id",
+                    request.getOrderTransactionId().get(),
+                    false);
+        }
         if (request.getPage().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page", request.getPage().get(), false);
