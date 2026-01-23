@@ -13258,6 +13258,7 @@ client.labTests().bookPscAppointment(
                 .build()
         )
         .idempotencyKey("x-idempotency-key")
+        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13283,6 +13284,14 @@ client.labTests().bookPscAppointment(
 <dd>
 
 **idempotencyKey:** `Optional<String>` — [!] This feature (Idempotency Key) is under closed beta. Idempotency Key support for booking PSC appointment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyError:** `Optional<String>` — If `no-cache`, applies idempotency only to successful outcomes.
     
 </dd>
 </dl>
