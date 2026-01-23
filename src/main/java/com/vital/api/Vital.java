@@ -18,6 +18,7 @@ import com.vital.api.resources.link.LinkClient;
 import com.vital.api.resources.meal.MealClient;
 import com.vital.api.resources.menstrualcycle.MenstrualCycleClient;
 import com.vital.api.resources.order.OrderClient;
+import com.vital.api.resources.ordertransaction.OrderTransactionClient;
 import com.vital.api.resources.payor.PayorClient;
 import com.vital.api.resources.profile.ProfileClient;
 import com.vital.api.resources.providers.ProvidersClient;
@@ -67,6 +68,8 @@ public class Vital {
 
     protected final Supplier<LabTestsClient> labTestsClient;
 
+    protected final Supplier<OrderTransactionClient> orderTransactionClient;
+
     protected final Supplier<TestkitClient> testkitClient;
 
     protected final Supplier<OrderClient> orderClient;
@@ -98,6 +101,7 @@ public class Vital {
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
+        this.orderTransactionClient = Suppliers.memoize(() -> new OrderTransactionClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new InsuranceClient(clientOptions));
@@ -172,6 +176,10 @@ public class Vital {
 
     public LabTestsClient labTests() {
         return this.labTestsClient.get();
+    }
+
+    public OrderTransactionClient orderTransaction() {
+        return this.orderTransactionClient.get();
     }
 
     public TestkitClient testkit() {

@@ -2513,6 +2513,10 @@ public class AsyncRawLabTestsClient {
             _requestBuilder.addHeader(
                     "x-idempotency-key", request.getIdempotencyKey().get());
         }
+        if (request.getIdempotencyError().isPresent()) {
+            _requestBuilder.addHeader(
+                    "x-idempotency-error", request.getIdempotencyError().get());
+        }
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

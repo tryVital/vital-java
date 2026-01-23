@@ -18,6 +18,7 @@ import com.vital.api.resources.link.AsyncLinkClient;
 import com.vital.api.resources.meal.AsyncMealClient;
 import com.vital.api.resources.menstrualcycle.AsyncMenstrualCycleClient;
 import com.vital.api.resources.order.AsyncOrderClient;
+import com.vital.api.resources.ordertransaction.AsyncOrderTransactionClient;
 import com.vital.api.resources.payor.AsyncPayorClient;
 import com.vital.api.resources.profile.AsyncProfileClient;
 import com.vital.api.resources.providers.AsyncProvidersClient;
@@ -67,6 +68,8 @@ public class AsyncVital {
 
     protected final Supplier<AsyncLabTestsClient> labTestsClient;
 
+    protected final Supplier<AsyncOrderTransactionClient> orderTransactionClient;
+
     protected final Supplier<AsyncTestkitClient> testkitClient;
 
     protected final Supplier<AsyncOrderClient> orderClient;
@@ -98,6 +101,7 @@ public class AsyncVital {
         this.providersClient = Suppliers.memoize(() -> new AsyncProvidersClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new AsyncIntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new AsyncLabTestsClient(clientOptions));
+        this.orderTransactionClient = Suppliers.memoize(() -> new AsyncOrderTransactionClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new AsyncTestkitClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new AsyncOrderClient(clientOptions));
         this.insuranceClient = Suppliers.memoize(() -> new AsyncInsuranceClient(clientOptions));
@@ -172,6 +176,10 @@ public class AsyncVital {
 
     public AsyncLabTestsClient labTests() {
         return this.labTestsClient.get();
+    }
+
+    public AsyncOrderTransactionClient orderTransaction() {
+        return this.orderTransactionClient.get();
     }
 
     public AsyncTestkitClient testkit() {
