@@ -24,13 +24,19 @@ import org.jetbrains.annotations.NotNull;
 public final class LabTestsBookPscAppointmentRequest {
     private final Optional<String> idempotencyKey;
 
+    private final Optional<String> idempotencyError;
+
     private final AppointmentBookingRequest body;
 
     private final Map<String, Object> additionalProperties;
 
     private LabTestsBookPscAppointmentRequest(
-            Optional<String> idempotencyKey, AppointmentBookingRequest body, Map<String, Object> additionalProperties) {
+            Optional<String> idempotencyKey,
+            Optional<String> idempotencyError,
+            AppointmentBookingRequest body,
+            Map<String, Object> additionalProperties) {
         this.idempotencyKey = idempotencyKey;
+        this.idempotencyError = idempotencyError;
         this.body = body;
         this.additionalProperties = additionalProperties;
     }
@@ -41,6 +47,14 @@ public final class LabTestsBookPscAppointmentRequest {
     @JsonIgnore
     public Optional<String> getIdempotencyKey() {
         return idempotencyKey;
+    }
+
+    /**
+     * @return If <code>no-cache</code>, applies idempotency only to successful outcomes.
+     */
+    @JsonIgnore
+    public Optional<String> getIdempotencyError() {
+        return idempotencyError;
     }
 
     @JsonProperty("body")
@@ -60,12 +74,14 @@ public final class LabTestsBookPscAppointmentRequest {
     }
 
     private boolean equalTo(LabTestsBookPscAppointmentRequest other) {
-        return idempotencyKey.equals(other.idempotencyKey) && body.equals(other.body);
+        return idempotencyKey.equals(other.idempotencyKey)
+                && idempotencyError.equals(other.idempotencyError)
+                && body.equals(other.body);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.idempotencyKey, this.body);
+        return Objects.hash(this.idempotencyKey, this.idempotencyError, this.body);
     }
 
     @java.lang.Override
@@ -92,11 +108,20 @@ public final class LabTestsBookPscAppointmentRequest {
         _FinalStage idempotencyKey(Optional<String> idempotencyKey);
 
         _FinalStage idempotencyKey(String idempotencyKey);
+
+        /**
+         * <p>If <code>no-cache</code>, applies idempotency only to successful outcomes.</p>
+         */
+        _FinalStage idempotencyError(Optional<String> idempotencyError);
+
+        _FinalStage idempotencyError(String idempotencyError);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements BodyStage, _FinalStage {
         private AppointmentBookingRequest body;
+
+        private Optional<String> idempotencyError = Optional.empty();
 
         private Optional<String> idempotencyKey = Optional.empty();
 
@@ -108,6 +133,7 @@ public final class LabTestsBookPscAppointmentRequest {
         @java.lang.Override
         public Builder from(LabTestsBookPscAppointmentRequest other) {
             idempotencyKey(other.getIdempotencyKey());
+            idempotencyError(other.getIdempotencyError());
             body(other.getBody());
             return this;
         }
@@ -116,6 +142,25 @@ public final class LabTestsBookPscAppointmentRequest {
         @JsonSetter("body")
         public _FinalStage body(@NotNull AppointmentBookingRequest body) {
             this.body = Objects.requireNonNull(body, "body must not be null");
+            return this;
+        }
+
+        /**
+         * <p>If <code>no-cache</code>, applies idempotency only to successful outcomes.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage idempotencyError(String idempotencyError) {
+            this.idempotencyError = Optional.ofNullable(idempotencyError);
+            return this;
+        }
+
+        /**
+         * <p>If <code>no-cache</code>, applies idempotency only to successful outcomes.</p>
+         */
+        @java.lang.Override
+        public _FinalStage idempotencyError(Optional<String> idempotencyError) {
+            this.idempotencyError = idempotencyError;
             return this;
         }
 
@@ -140,7 +185,7 @@ public final class LabTestsBookPscAppointmentRequest {
 
         @java.lang.Override
         public LabTestsBookPscAppointmentRequest build() {
-            return new LabTestsBookPscAppointmentRequest(idempotencyKey, body, additionalProperties);
+            return new LabTestsBookPscAppointmentRequest(idempotencyKey, idempotencyError, body, additionalProperties);
         }
     }
 }

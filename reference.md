@@ -13258,6 +13258,7 @@ client.labTests().bookPscAppointment(
                 .build()
         )
         .idempotencyKey("x-idempotency-key")
+        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13283,6 +13284,14 @@ client.labTests().bookPscAppointment(
 <dd>
 
 **idempotencyKey:** `Optional<String>` — [!] This feature (Idempotency Key) is under closed beta. Idempotency Key support for booking PSC appointment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotencyError:** `Optional<String>` — If `no-cache`, applies idempotency only to successful outcomes.
     
 </dd>
 </dl>
@@ -14296,6 +14305,127 @@ client.labTests().validateIcdCodes(
 <dd>
 
 **codes:** `List<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## OrderTransaction
+<details><summary><code>client.orderTransaction.getTransaction(transactionId) -> GetOrderTransactionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.orderTransaction().getTransaction("transaction_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transactionId:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.orderTransaction.getTransactionResult(transactionId) -> LabResultsRaw</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.orderTransaction().getTransactionResult("transaction_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transactionId:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.orderTransaction.getTransactionResultPdf(transactionId) -> InputStream</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.orderTransaction().getTransactionResultPdf("transaction_id");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**transactionId:** `String` 
     
 </dd>
 </dl>

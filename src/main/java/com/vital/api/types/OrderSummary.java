@@ -20,56 +20,46 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = ClientFacingOrderInTransaction.Builder.class)
-public final class ClientFacingOrderInTransaction {
+@JsonDeserialize(builder = OrderSummary.Builder.class)
+public final class OrderSummary {
     private final String id;
-
-    private final Optional<OrderLowLevelStatus> lowLevelStatus;
-
-    private final Optional<OffsetDateTime> lowLevelStatusCreatedAt;
 
     private final Optional<OrderOrigin> origin;
 
     private final Optional<String> parentId;
 
-    private final OffsetDateTime createdAt;
+    private final OrderLowLevelStatus lastStatus;
+
+    private final OffsetDateTime lastStatusCreatedAt;
 
     private final OffsetDateTime updatedAt;
 
+    private final OffsetDateTime createdAt;
+
     private final Map<String, Object> additionalProperties;
 
-    private ClientFacingOrderInTransaction(
+    private OrderSummary(
             String id,
-            Optional<OrderLowLevelStatus> lowLevelStatus,
-            Optional<OffsetDateTime> lowLevelStatusCreatedAt,
             Optional<OrderOrigin> origin,
             Optional<String> parentId,
-            OffsetDateTime createdAt,
+            OrderLowLevelStatus lastStatus,
+            OffsetDateTime lastStatusCreatedAt,
             OffsetDateTime updatedAt,
+            OffsetDateTime createdAt,
             Map<String, Object> additionalProperties) {
         this.id = id;
-        this.lowLevelStatus = lowLevelStatus;
-        this.lowLevelStatusCreatedAt = lowLevelStatusCreatedAt;
         this.origin = origin;
         this.parentId = parentId;
-        this.createdAt = createdAt;
+        this.lastStatus = lastStatus;
+        this.lastStatusCreatedAt = lastStatusCreatedAt;
         this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
     public String getId() {
         return id;
-    }
-
-    @JsonProperty("low_level_status")
-    public Optional<OrderLowLevelStatus> getLowLevelStatus() {
-        return lowLevelStatus;
-    }
-
-    @JsonProperty("low_level_status_created_at")
-    public Optional<OffsetDateTime> getLowLevelStatusCreatedAt() {
-        return lowLevelStatusCreatedAt;
     }
 
     @JsonProperty("origin")
@@ -82,9 +72,14 @@ public final class ClientFacingOrderInTransaction {
         return parentId;
     }
 
-    @JsonProperty("created_at")
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
+    @JsonProperty("last_status")
+    public OrderLowLevelStatus getLastStatus() {
+        return lastStatus;
+    }
+
+    @JsonProperty("last_status_created_at")
+    public OffsetDateTime getLastStatusCreatedAt() {
+        return lastStatusCreatedAt;
     }
 
     @JsonProperty("updated_at")
@@ -92,10 +87,15 @@ public final class ClientFacingOrderInTransaction {
         return updatedAt;
     }
 
+    @JsonProperty("created_at")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof ClientFacingOrderInTransaction && equalTo((ClientFacingOrderInTransaction) other);
+        return other instanceof OrderSummary && equalTo((OrderSummary) other);
     }
 
     @JsonAnyGetter
@@ -103,26 +103,26 @@ public final class ClientFacingOrderInTransaction {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(ClientFacingOrderInTransaction other) {
+    private boolean equalTo(OrderSummary other) {
         return id.equals(other.id)
-                && lowLevelStatus.equals(other.lowLevelStatus)
-                && lowLevelStatusCreatedAt.equals(other.lowLevelStatusCreatedAt)
                 && origin.equals(other.origin)
                 && parentId.equals(other.parentId)
-                && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt);
+                && lastStatus.equals(other.lastStatus)
+                && lastStatusCreatedAt.equals(other.lastStatusCreatedAt)
+                && updatedAt.equals(other.updatedAt)
+                && createdAt.equals(other.createdAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
-                this.lowLevelStatus,
-                this.lowLevelStatusCreatedAt,
                 this.origin,
                 this.parentId,
-                this.createdAt,
-                this.updatedAt);
+                this.lastStatus,
+                this.lastStatusCreatedAt,
+                this.updatedAt,
+                this.createdAt);
     }
 
     @java.lang.Override
@@ -135,29 +135,29 @@ public final class ClientFacingOrderInTransaction {
     }
 
     public interface IdStage {
-        CreatedAtStage id(@NotNull String id);
+        LastStatusStage id(@NotNull String id);
 
-        Builder from(ClientFacingOrderInTransaction other);
+        Builder from(OrderSummary other);
     }
 
-    public interface CreatedAtStage {
-        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
+    public interface LastStatusStage {
+        LastStatusCreatedAtStage lastStatus(@NotNull OrderLowLevelStatus lastStatus);
+    }
+
+    public interface LastStatusCreatedAtStage {
+        UpdatedAtStage lastStatusCreatedAt(@NotNull OffsetDateTime lastStatusCreatedAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
+        CreatedAtStage updatedAt(@NotNull OffsetDateTime updatedAt);
+    }
+
+    public interface CreatedAtStage {
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
-        ClientFacingOrderInTransaction build();
-
-        _FinalStage lowLevelStatus(Optional<OrderLowLevelStatus> lowLevelStatus);
-
-        _FinalStage lowLevelStatus(OrderLowLevelStatus lowLevelStatus);
-
-        _FinalStage lowLevelStatusCreatedAt(Optional<OffsetDateTime> lowLevelStatusCreatedAt);
-
-        _FinalStage lowLevelStatusCreatedAt(OffsetDateTime lowLevelStatusCreatedAt);
+        OrderSummary build();
 
         _FinalStage origin(Optional<OrderOrigin> origin);
 
@@ -169,20 +169,21 @@ public final class ClientFacingOrderInTransaction {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, CreatedAtStage, UpdatedAtStage, _FinalStage {
+    public static final class Builder
+            implements IdStage, LastStatusStage, LastStatusCreatedAtStage, UpdatedAtStage, CreatedAtStage, _FinalStage {
         private String id;
 
-        private OffsetDateTime createdAt;
+        private OrderLowLevelStatus lastStatus;
+
+        private OffsetDateTime lastStatusCreatedAt;
 
         private OffsetDateTime updatedAt;
+
+        private OffsetDateTime createdAt;
 
         private Optional<String> parentId = Optional.empty();
 
         private Optional<OrderOrigin> origin = Optional.empty();
-
-        private Optional<OffsetDateTime> lowLevelStatusCreatedAt = Optional.empty();
-
-        private Optional<OrderLowLevelStatus> lowLevelStatus = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -190,35 +191,50 @@ public final class ClientFacingOrderInTransaction {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(ClientFacingOrderInTransaction other) {
+        public Builder from(OrderSummary other) {
             id(other.getId());
-            lowLevelStatus(other.getLowLevelStatus());
-            lowLevelStatusCreatedAt(other.getLowLevelStatusCreatedAt());
             origin(other.getOrigin());
             parentId(other.getParentId());
-            createdAt(other.getCreatedAt());
+            lastStatus(other.getLastStatus());
+            lastStatusCreatedAt(other.getLastStatusCreatedAt());
             updatedAt(other.getUpdatedAt());
+            createdAt(other.getCreatedAt());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(@NotNull String id) {
+        public LastStatusStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("created_at")
-        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
-            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
+        @JsonSetter("last_status")
+        public LastStatusCreatedAtStage lastStatus(@NotNull OrderLowLevelStatus lastStatus) {
+            this.lastStatus = Objects.requireNonNull(lastStatus, "lastStatus must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("last_status_created_at")
+        public UpdatedAtStage lastStatusCreatedAt(@NotNull OffsetDateTime lastStatusCreatedAt) {
+            this.lastStatusCreatedAt =
+                    Objects.requireNonNull(lastStatusCreatedAt, "lastStatusCreatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updated_at")
-        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+        public CreatedAtStage updatedAt(@NotNull OffsetDateTime updatedAt) {
             this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("created_at")
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -249,42 +265,9 @@ public final class ClientFacingOrderInTransaction {
         }
 
         @java.lang.Override
-        public _FinalStage lowLevelStatusCreatedAt(OffsetDateTime lowLevelStatusCreatedAt) {
-            this.lowLevelStatusCreatedAt = Optional.ofNullable(lowLevelStatusCreatedAt);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "low_level_status_created_at", nulls = Nulls.SKIP)
-        public _FinalStage lowLevelStatusCreatedAt(Optional<OffsetDateTime> lowLevelStatusCreatedAt) {
-            this.lowLevelStatusCreatedAt = lowLevelStatusCreatedAt;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage lowLevelStatus(OrderLowLevelStatus lowLevelStatus) {
-            this.lowLevelStatus = Optional.ofNullable(lowLevelStatus);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "low_level_status", nulls = Nulls.SKIP)
-        public _FinalStage lowLevelStatus(Optional<OrderLowLevelStatus> lowLevelStatus) {
-            this.lowLevelStatus = lowLevelStatus;
-            return this;
-        }
-
-        @java.lang.Override
-        public ClientFacingOrderInTransaction build() {
-            return new ClientFacingOrderInTransaction(
-                    id,
-                    lowLevelStatus,
-                    lowLevelStatusCreatedAt,
-                    origin,
-                    parentId,
-                    createdAt,
-                    updatedAt,
-                    additionalProperties);
+        public OrderSummary build() {
+            return new OrderSummary(
+                    id, origin, parentId, lastStatus, lastStatusCreatedAt, updatedAt, createdAt, additionalProperties);
         }
     }
 }
