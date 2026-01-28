@@ -30,6 +30,8 @@ public final class LabResultsRaw {
 
     private final Optional<Map<String, Optional<SampleData>>> sampleInformation;
 
+    private final Optional<ClientFacingOrderTransaction> orderTransaction;
+
     private final Map<String, Object> additionalProperties;
 
     private LabResultsRaw(
@@ -37,11 +39,13 @@ public final class LabResultsRaw {
             LabResultsRawResults results,
             Optional<List<MissingBiomarkerResult>> missingResults,
             Optional<Map<String, Optional<SampleData>>> sampleInformation,
+            Optional<ClientFacingOrderTransaction> orderTransaction,
             Map<String, Object> additionalProperties) {
         this.metadata = metadata;
         this.results = results;
         this.missingResults = missingResults;
         this.sampleInformation = sampleInformation;
+        this.orderTransaction = orderTransaction;
         this.additionalProperties = additionalProperties;
     }
 
@@ -65,6 +69,11 @@ public final class LabResultsRaw {
         return sampleInformation;
     }
 
+    @JsonProperty("order_transaction")
+    public Optional<ClientFacingOrderTransaction> getOrderTransaction() {
+        return orderTransaction;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -80,12 +89,14 @@ public final class LabResultsRaw {
         return metadata.equals(other.metadata)
                 && results.equals(other.results)
                 && missingResults.equals(other.missingResults)
-                && sampleInformation.equals(other.sampleInformation);
+                && sampleInformation.equals(other.sampleInformation)
+                && orderTransaction.equals(other.orderTransaction);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.metadata, this.results, this.missingResults, this.sampleInformation);
+        return Objects.hash(
+                this.metadata, this.results, this.missingResults, this.sampleInformation, this.orderTransaction);
     }
 
     @java.lang.Override
@@ -117,6 +128,10 @@ public final class LabResultsRaw {
         _FinalStage sampleInformation(Optional<Map<String, Optional<SampleData>>> sampleInformation);
 
         _FinalStage sampleInformation(Map<String, Optional<SampleData>> sampleInformation);
+
+        _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction);
+
+        _FinalStage orderTransaction(ClientFacingOrderTransaction orderTransaction);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -124,6 +139,8 @@ public final class LabResultsRaw {
         private LabResultsMetadata metadata;
 
         private LabResultsRawResults results;
+
+        private Optional<ClientFacingOrderTransaction> orderTransaction = Optional.empty();
 
         private Optional<Map<String, Optional<SampleData>>> sampleInformation = Optional.empty();
 
@@ -140,6 +157,7 @@ public final class LabResultsRaw {
             results(other.getResults());
             missingResults(other.getMissingResults());
             sampleInformation(other.getSampleInformation());
+            orderTransaction(other.getOrderTransaction());
             return this;
         }
 
@@ -154,6 +172,19 @@ public final class LabResultsRaw {
         @JsonSetter("results")
         public _FinalStage results(@NotNull LabResultsRawResults results) {
             this.results = Objects.requireNonNull(results, "results must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage orderTransaction(ClientFacingOrderTransaction orderTransaction) {
+            this.orderTransaction = Optional.ofNullable(orderTransaction);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "order_transaction", nulls = Nulls.SKIP)
+        public _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction) {
+            this.orderTransaction = orderTransaction;
             return this;
         }
 
@@ -185,7 +216,8 @@ public final class LabResultsRaw {
 
         @java.lang.Override
         public LabResultsRaw build() {
-            return new LabResultsRaw(metadata, results, missingResults, sampleInformation, additionalProperties);
+            return new LabResultsRaw(
+                    metadata, results, missingResults, sampleInformation, orderTransaction, additionalProperties);
         }
     }
 }
