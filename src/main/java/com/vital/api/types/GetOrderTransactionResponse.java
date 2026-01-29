@@ -26,7 +26,7 @@ public final class GetOrderTransactionResponse {
 
     private final String teamId;
 
-    private final String status;
+    private final OrderTransactionStatus status;
 
     private final Optional<List<OrderSummary>> orders;
 
@@ -35,7 +35,7 @@ public final class GetOrderTransactionResponse {
     private GetOrderTransactionResponse(
             String id,
             String teamId,
-            String status,
+            OrderTransactionStatus status,
             Optional<List<OrderSummary>> orders,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -56,7 +56,7 @@ public final class GetOrderTransactionResponse {
     }
 
     @JsonProperty("status")
-    public String getStatus() {
+    public OrderTransactionStatus getStatus() {
         return status;
     }
 
@@ -108,7 +108,7 @@ public final class GetOrderTransactionResponse {
     }
 
     public interface StatusStage {
-        _FinalStage status(@NotNull String status);
+        _FinalStage status(@NotNull OrderTransactionStatus status);
     }
 
     public interface _FinalStage {
@@ -125,7 +125,7 @@ public final class GetOrderTransactionResponse {
 
         private String teamId;
 
-        private String status;
+        private OrderTransactionStatus status;
 
         private Optional<List<OrderSummary>> orders = Optional.empty();
 
@@ -159,7 +159,7 @@ public final class GetOrderTransactionResponse {
 
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(@NotNull String status) {
+        public _FinalStage status(@NotNull OrderTransactionStatus status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
