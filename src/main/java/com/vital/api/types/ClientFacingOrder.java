@@ -80,8 +80,6 @@ public final class ClientFacingOrder {
 
     private final Optional<OrderOrigin> origin;
 
-    private final Optional<String> parentId;
-
     private final Optional<ClientFacingOrderTransaction> orderTransaction;
 
     private final Map<String, Object> additionalProperties;
@@ -115,7 +113,6 @@ public final class ClientFacingOrder {
             Optional<String> expectedResultByDate,
             Optional<String> worstCaseResultByDate,
             Optional<OrderOrigin> origin,
-            Optional<String> parentId,
             Optional<ClientFacingOrderTransaction> orderTransaction,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -146,7 +143,6 @@ public final class ClientFacingOrder {
         this.expectedResultByDate = expectedResultByDate;
         this.worstCaseResultByDate = worstCaseResultByDate;
         this.origin = origin;
-        this.parentId = parentId;
         this.orderTransaction = orderTransaction;
         this.additionalProperties = additionalProperties;
     }
@@ -351,11 +347,6 @@ public final class ClientFacingOrder {
         return origin;
     }
 
-    @JsonProperty("parent_id")
-    public Optional<String> getParentId() {
-        return parentId;
-    }
-
     @JsonProperty("order_transaction")
     public Optional<ClientFacingOrderTransaction> getOrderTransaction() {
         return orderTransaction;
@@ -401,7 +392,6 @@ public final class ClientFacingOrder {
                 && expectedResultByDate.equals(other.expectedResultByDate)
                 && worstCaseResultByDate.equals(other.worstCaseResultByDate)
                 && origin.equals(other.origin)
-                && parentId.equals(other.parentId)
                 && orderTransaction.equals(other.orderTransaction);
     }
 
@@ -436,7 +426,6 @@ public final class ClientFacingOrder {
                 this.expectedResultByDate,
                 this.worstCaseResultByDate,
                 this.origin,
-                this.parentId,
                 this.orderTransaction);
     }
 
@@ -628,10 +617,6 @@ public final class ClientFacingOrder {
 
         _FinalStage origin(OrderOrigin origin);
 
-        _FinalStage parentId(Optional<String> parentId);
-
-        _FinalStage parentId(String parentId);
-
         _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction);
 
         _FinalStage orderTransaction(ClientFacingOrderTransaction orderTransaction);
@@ -665,8 +650,6 @@ public final class ClientFacingOrder {
         private boolean hasAbn;
 
         private Optional<ClientFacingOrderTransaction> orderTransaction = Optional.empty();
-
-        private Optional<String> parentId = Optional.empty();
 
         private Optional<OrderOrigin> origin = Optional.empty();
 
@@ -743,7 +726,6 @@ public final class ClientFacingOrder {
             expectedResultByDate(other.getExpectedResultByDate());
             worstCaseResultByDate(other.getWorstCaseResultByDate());
             origin(other.getOrigin());
-            parentId(other.getParentId());
             orderTransaction(other.getOrderTransaction());
             return this;
         }
@@ -849,19 +831,6 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "order_transaction", nulls = Nulls.SKIP)
         public _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction) {
             this.orderTransaction = orderTransaction;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage parentId(String parentId) {
-            this.parentId = Optional.ofNullable(parentId);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "parent_id", nulls = Nulls.SKIP)
-        public _FinalStage parentId(Optional<String> parentId) {
-            this.parentId = parentId;
             return this;
         }
 
@@ -1258,7 +1227,6 @@ public final class ClientFacingOrder {
                     expectedResultByDate,
                     worstCaseResultByDate,
                     origin,
-                    parentId,
                     orderTransaction,
                     additionalProperties);
         }
