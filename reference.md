@@ -11467,6 +11467,7 @@ GET all the markers for the given lab.
 client.labTests().getMarkers(
     LabTestsGetMarkersRequest
         .builder()
+        .labSlug("lab_slug")
         .name("name")
         .aLaCarteEnabled(true)
         .labAccountId("lab_account_id")
@@ -11489,6 +11490,14 @@ client.labTests().getMarkers(
 <dd>
 
 **labId:** `Optional<Integer>` — The identifier Vital assigned to a lab partner.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labSlug:** `Optional<String>` — The slug of the lab for these markers. If both lab_id and lab_slug are provided, lab_slug will be used.
     
 </dd>
 </dl>
