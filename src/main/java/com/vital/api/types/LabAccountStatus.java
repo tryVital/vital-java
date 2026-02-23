@@ -5,18 +5,16 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum AppointmentProvider {
-    GETLABS("getlabs"),
+public enum LabAccountStatus {
+    ACTIVE("active"),
 
-    PHLEBFINDERS("phlebfinders"),
+    PENDING("pending"),
 
-    QUEST("quest"),
-
-    SONORA_QUEST("sonora_quest");
+    SUSPENDED("suspended");
 
     private final String value;
 
-    AppointmentProvider(String value) {
+    LabAccountStatus(String value) {
         this.value = value;
     }
 
