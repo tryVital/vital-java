@@ -403,6 +403,10 @@ public class RawLabTestsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests/markers");
+        if (request.getLabSlug().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_slug", request.getLabSlug().get(), false);
+        }
         if (request.getName().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "name", request.getName().get(), false);

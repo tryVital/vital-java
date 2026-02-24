@@ -5,36 +5,18 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Labs {
-    AYUMETRIX("ayumetrix"),
-
-    SPIRIPLEX("spiriplex"),
-
-    USSL("ussl"),
+public enum CompendiumSearchLabs {
+    LABCORP("labcorp"),
 
     QUEST("quest"),
 
-    SONORA_QUEST("sonora_quest"),
-
-    LABCORP("labcorp"),
-
     BIOREFERENCE("bioreference"),
 
-    US_BIOTEK("us_biotek"),
-
-    MANUAL("manual"),
-
-    SANOCARDIO("sanocardio"),
-
-    IHD("ihd"),
-
-    NEXUS("nexus"),
-
-    MY_UTI("my_uti");
+    SONORA_QUEST("sonora_quest");
 
     private final String value;
 
-    Labs(String value) {
+    CompendiumSearchLabs(String value) {
         this.value = value;
     }
 

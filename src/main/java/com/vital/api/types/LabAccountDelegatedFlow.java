@@ -5,18 +5,18 @@ package com.vital.api.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum AppointmentProvider {
-    GETLABS("getlabs"),
+public enum LabAccountDelegatedFlow {
+    ORDER_DELEGATED("order_delegated"),
 
-    PHLEBFINDERS("phlebfinders"),
+    RESULT_DELEGATED("result_delegated"),
 
-    QUEST("quest"),
+    FULLY_DELEGATED("fully_delegated"),
 
-    SONORA_QUEST("sonora_quest");
+    NOT_DELEGATED("not_delegated");
 
     private final String value;
 
-    AppointmentProvider(String value) {
+    LabAccountDelegatedFlow(String value) {
         this.value = value;
     }
 
