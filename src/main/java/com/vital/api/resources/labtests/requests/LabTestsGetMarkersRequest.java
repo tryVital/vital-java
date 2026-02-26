@@ -24,6 +24,8 @@ import java.util.Optional;
 public final class LabTestsGetMarkersRequest {
     private final Optional<List<Integer>> labId;
 
+    private final Optional<String> labSlug;
+
     private final Optional<String> name;
 
     private final Optional<Boolean> aLaCarteEnabled;
@@ -38,6 +40,7 @@ public final class LabTestsGetMarkersRequest {
 
     private LabTestsGetMarkersRequest(
             Optional<List<Integer>> labId,
+            Optional<String> labSlug,
             Optional<String> name,
             Optional<Boolean> aLaCarteEnabled,
             Optional<String> labAccountId,
@@ -45,6 +48,7 @@ public final class LabTestsGetMarkersRequest {
             Optional<Integer> size,
             Map<String, Object> additionalProperties) {
         this.labId = labId;
+        this.labSlug = labSlug;
         this.name = name;
         this.aLaCarteEnabled = aLaCarteEnabled;
         this.labAccountId = labAccountId;
@@ -59,6 +63,14 @@ public final class LabTestsGetMarkersRequest {
     @JsonProperty("lab_id")
     public Optional<List<Integer>> getLabId() {
         return labId;
+    }
+
+    /**
+     * @return The slug of the lab for these markers. If both lab_id and lab_slug are provided, lab_slug will be used.
+     */
+    @JsonProperty("lab_slug")
+    public Optional<String> getLabSlug() {
+        return labSlug;
     }
 
     /**
@@ -105,6 +117,7 @@ public final class LabTestsGetMarkersRequest {
 
     private boolean equalTo(LabTestsGetMarkersRequest other) {
         return labId.equals(other.labId)
+                && labSlug.equals(other.labSlug)
                 && name.equals(other.name)
                 && aLaCarteEnabled.equals(other.aLaCarteEnabled)
                 && labAccountId.equals(other.labAccountId)
@@ -114,7 +127,8 @@ public final class LabTestsGetMarkersRequest {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.labId, this.name, this.aLaCarteEnabled, this.labAccountId, this.page, this.size);
+        return Objects.hash(
+                this.labId, this.labSlug, this.name, this.aLaCarteEnabled, this.labAccountId, this.page, this.size);
     }
 
     @java.lang.Override
@@ -129,6 +143,8 @@ public final class LabTestsGetMarkersRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
         private Optional<List<Integer>> labId = Optional.empty();
+
+        private Optional<String> labSlug = Optional.empty();
 
         private Optional<String> name = Optional.empty();
 
@@ -147,6 +163,7 @@ public final class LabTestsGetMarkersRequest {
 
         public Builder from(LabTestsGetMarkersRequest other) {
             labId(other.getLabId());
+            labSlug(other.getLabSlug());
             name(other.getName());
             aLaCarteEnabled(other.getALaCarteEnabled());
             labAccountId(other.getLabAccountId());
@@ -171,6 +188,20 @@ public final class LabTestsGetMarkersRequest {
 
         public Builder labId(Integer labId) {
             this.labId = Optional.of(Collections.singletonList(labId));
+            return this;
+        }
+
+        /**
+         * <p>The slug of the lab for these markers. If both lab_id and lab_slug are provided, lab_slug will be used.</p>
+         */
+        @JsonSetter(value = "lab_slug", nulls = Nulls.SKIP)
+        public Builder labSlug(Optional<String> labSlug) {
+            this.labSlug = labSlug;
+            return this;
+        }
+
+        public Builder labSlug(String labSlug) {
+            this.labSlug = Optional.ofNullable(labSlug);
             return this;
         }
 
@@ -237,7 +268,7 @@ public final class LabTestsGetMarkersRequest {
 
         public LabTestsGetMarkersRequest build() {
             return new LabTestsGetMarkersRequest(
-                    labId, name, aLaCarteEnabled, labAccountId, page, size, additionalProperties);
+                    labId, labSlug, name, aLaCarteEnabled, labAccountId, page, size, additionalProperties);
         }
     }
 }
