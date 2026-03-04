@@ -138,6 +138,10 @@ public final class ClientFacingApiKey {
     public interface _FinalStage {
         ClientFacingApiKey build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage teamId(Optional<String> teamId);
 
         _FinalStage teamId(String teamId);
@@ -234,6 +238,18 @@ public final class ClientFacingApiKey {
         @java.lang.Override
         public ClientFacingApiKey build() {
             return new ClientFacingApiKey(label, value, teamId, id, createdAt, deletedAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

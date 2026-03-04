@@ -85,6 +85,10 @@ public final class GroupedUvExposure {
     public interface _FinalStage {
         GroupedUvExposure build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingUvExposureSample> data);
 
         _FinalStage addData(ClientFacingUvExposureSample data);
@@ -144,6 +148,18 @@ public final class GroupedUvExposure {
         @java.lang.Override
         public GroupedUvExposure build() {
             return new GroupedUvExposure(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

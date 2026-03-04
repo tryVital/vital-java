@@ -98,6 +98,10 @@ public final class ClientFacingOrderTransaction {
     public interface _FinalStage {
         ClientFacingOrderTransaction build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage orders(List<ClientFacingOrderInTransaction> orders);
 
         _FinalStage addOrders(ClientFacingOrderInTransaction orders);
@@ -167,6 +171,18 @@ public final class ClientFacingOrderTransaction {
         @java.lang.Override
         public ClientFacingOrderTransaction build() {
             return new ClientFacingOrderTransaction(id, status, orders, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

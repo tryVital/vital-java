@@ -162,6 +162,10 @@ public final class SingleHistoricalPullStatistics {
     public interface _FinalStage {
         SingleHistoricalPullStatistics build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage rangeStart(Optional<OffsetDateTime> rangeStart);
 
         _FinalStage rangeStart(OffsetDateTime rangeStart);
@@ -317,6 +321,18 @@ public final class SingleHistoricalPullStatistics {
                     traceId,
                     errorDetails,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
