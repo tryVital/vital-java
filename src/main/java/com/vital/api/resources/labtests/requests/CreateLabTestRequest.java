@@ -35,6 +35,8 @@ public final class CreateLabTestRequest {
 
     private final Optional<Boolean> fasting;
 
+    private final Optional<String> labAccountId;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateLabTestRequest(
@@ -44,6 +46,7 @@ public final class CreateLabTestRequest {
             LabTestCollectionMethod method,
             String description,
             Optional<Boolean> fasting,
+            Optional<String> labAccountId,
             Map<String, Object> additionalProperties) {
         this.markerIds = markerIds;
         this.providerIds = providerIds;
@@ -51,6 +54,7 @@ public final class CreateLabTestRequest {
         this.method = method;
         this.description = description;
         this.fasting = fasting;
+        this.labAccountId = labAccountId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -84,6 +88,11 @@ public final class CreateLabTestRequest {
         return fasting;
     }
 
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -101,12 +110,20 @@ public final class CreateLabTestRequest {
                 && name.equals(other.name)
                 && method.equals(other.method)
                 && description.equals(other.description)
-                && fasting.equals(other.fasting);
+                && fasting.equals(other.fasting)
+                && labAccountId.equals(other.labAccountId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.markerIds, this.providerIds, this.name, this.method, this.description, this.fasting);
+        return Objects.hash(
+                this.markerIds,
+                this.providerIds,
+                this.name,
+                this.method,
+                this.description,
+                this.fasting,
+                this.labAccountId);
     }
 
     @java.lang.Override
@@ -135,6 +152,10 @@ public final class CreateLabTestRequest {
     public interface _FinalStage {
         CreateLabTestRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage markerIds(Optional<List<Integer>> markerIds);
 
         _FinalStage markerIds(List<Integer> markerIds);
@@ -146,6 +167,10 @@ public final class CreateLabTestRequest {
         _FinalStage fasting(Optional<Boolean> fasting);
 
         _FinalStage fasting(Boolean fasting);
+
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -155,6 +180,8 @@ public final class CreateLabTestRequest {
         private LabTestCollectionMethod method;
 
         private String description;
+
+        private Optional<String> labAccountId = Optional.empty();
 
         private Optional<Boolean> fasting = Optional.empty();
 
@@ -175,6 +202,7 @@ public final class CreateLabTestRequest {
             method(other.getMethod());
             description(other.getDescription());
             fasting(other.getFasting());
+            labAccountId(other.getLabAccountId());
             return this;
         }
 
@@ -196,6 +224,19 @@ public final class CreateLabTestRequest {
         @JsonSetter("description")
         public _FinalStage description(@NotNull String description) {
             this.description = Objects.requireNonNull(description, "description must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
             return this;
         }
 
@@ -241,7 +282,19 @@ public final class CreateLabTestRequest {
         @java.lang.Override
         public CreateLabTestRequest build() {
             return new CreateLabTestRequest(
-                    markerIds, providerIds, name, method, description, fasting, additionalProperties);
+                    markerIds, providerIds, name, method, description, fasting, labAccountId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

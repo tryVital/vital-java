@@ -126,5 +126,15 @@ public final class BulkExportConnectionsResponse {
         public BulkExportConnectionsResponse build() {
             return new BulkExportConnectionsResponse(data, nextToken, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

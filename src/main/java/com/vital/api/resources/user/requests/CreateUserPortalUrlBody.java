@@ -104,6 +104,10 @@ public final class CreateUserPortalUrlBody {
     public interface _FinalStage {
         CreateUserPortalUrlBody build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>If specified, the generated URL will deeplink to the specified Order.</p>
          */
@@ -175,6 +179,18 @@ public final class CreateUserPortalUrlBody {
         @java.lang.Override
         public CreateUserPortalUrlBody build() {
             return new CreateUserPortalUrlBody(context, orderId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

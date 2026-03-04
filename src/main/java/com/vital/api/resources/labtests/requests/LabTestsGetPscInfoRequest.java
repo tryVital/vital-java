@@ -144,6 +144,10 @@ public final class LabTestsGetPscInfoRequest {
     public interface _FinalStage {
         LabTestsGetPscInfoRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Filter for only locations with certain capabilities</p>
          */
@@ -289,6 +293,18 @@ public final class LabTestsGetPscInfoRequest {
         public LabTestsGetPscInfoRequest build() {
             return new LabTestsGetPscInfoRequest(
                     capabilities, zipCode, labId, radius, labAccountId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

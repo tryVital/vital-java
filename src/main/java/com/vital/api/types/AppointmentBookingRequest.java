@@ -118,6 +118,10 @@ public final class AppointmentBookingRequest {
     public interface _FinalStage {
         AppointmentBookingRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>If true, the endpoint attempts to confirm the booking within the <code>sync_confirmation_timeout_millisecond</code> window. If confirmation is not received in time, a pending appointment is returned and booking continues asynchronously. If false (default), the endpoint waits for confirmation or returns a 500 error on failure.</p>
          */
@@ -239,6 +243,18 @@ public final class AppointmentBookingRequest {
                     syncConfirmationTimeoutMillisecond,
                     asyncConfirmationTimeoutMillisecond,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
