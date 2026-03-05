@@ -84,6 +84,10 @@ public final class SingleUserResourceResponse {
     public interface _FinalStage {
         SingleUserResourceResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage provider(Map<String, Map<String, SingleResourceStatistics>> provider);
 
         _FinalStage putAllProvider(Map<String, Map<String, SingleResourceStatistics>> provider);
@@ -143,6 +147,18 @@ public final class SingleUserResourceResponse {
         @java.lang.Override
         public SingleUserResourceResponse build() {
             return new SingleUserResourceResponse(userId, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -126,5 +126,15 @@ public final class UserUndoDeleteRequest {
         public UserUndoDeleteRequest build() {
             return new UserUndoDeleteRequest(userId, clientUserId, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

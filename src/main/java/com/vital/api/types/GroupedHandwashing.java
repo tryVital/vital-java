@@ -85,6 +85,10 @@ public final class GroupedHandwashing {
     public interface _FinalStage {
         GroupedHandwashing build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingHandwashingSample> data);
 
         _FinalStage addData(ClientFacingHandwashingSample data);
@@ -144,6 +148,18 @@ public final class GroupedHandwashing {
         @java.lang.Override
         public GroupedHandwashing build() {
             return new GroupedHandwashing(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
