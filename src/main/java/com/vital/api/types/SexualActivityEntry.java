@@ -82,6 +82,10 @@ public final class SexualActivityEntry {
     public interface _FinalStage {
         SexualActivityEntry build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage protectionUsed(Optional<Boolean> protectionUsed);
 
         _FinalStage protectionUsed(Boolean protectionUsed);
@@ -128,6 +132,18 @@ public final class SexualActivityEntry {
         @java.lang.Override
         public SexualActivityEntry build() {
             return new SexualActivityEntry(date, protectionUsed, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
