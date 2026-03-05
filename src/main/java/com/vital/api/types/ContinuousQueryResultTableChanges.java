@@ -98,6 +98,10 @@ public final class ContinuousQueryResultTableChanges {
     public interface _FinalStage {
         ContinuousQueryResultTableChanges build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(Map<String, List<Object>> data);
 
         _FinalStage putAllData(Map<String, List<Object>> data);
@@ -167,6 +171,18 @@ public final class ContinuousQueryResultTableChanges {
         @java.lang.Override
         public ContinuousQueryResultTableChanges build() {
             return new ContinuousQueryResultTableChanges(queryId, querySlug, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
