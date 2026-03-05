@@ -66,6 +66,8 @@ public enum Providers {
 
     HEALTH_CONNECT("health_connect"),
 
+    SAMSUNG_HEALTH("samsung_health"),
+
     POLAR("polar"),
 
     CRONOMETER("cronometer"),

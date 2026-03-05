@@ -169,6 +169,10 @@ public final class PatientAddressWithValidation {
     public interface _FinalStage {
         PatientAddressWithValidation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage receiverName(Optional<String> receiverName);
 
         _FinalStage receiverName(String receiverName);
@@ -297,6 +301,18 @@ public final class PatientAddressWithValidation {
         public PatientAddressWithValidation build() {
             return new PatientAddressWithValidation(
                     receiverName, firstLine, secondLine, city, state, zip, country, phoneNumber, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

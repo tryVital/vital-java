@@ -140,6 +140,10 @@ public final class UsAddress {
     public interface _FinalStage {
         UsAddress build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage secondLine(Optional<String> secondLine);
 
         _FinalStage secondLine(String secondLine);
@@ -246,6 +250,18 @@ public final class UsAddress {
         @java.lang.Override
         public UsAddress build() {
             return new UsAddress(firstLine, secondLine, city, state, zipCode, unit, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
