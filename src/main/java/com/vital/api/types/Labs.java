@@ -14,6 +14,8 @@ public enum Labs {
 
     QUEST("quest"),
 
+    SONORA_QUEST("sonora_quest"),
+
     LABCORP("labcorp"),
 
     BIOREFERENCE("bioreference"),
