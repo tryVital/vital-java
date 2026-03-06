@@ -221,6 +221,10 @@ public final class UserInfo {
     public interface _FinalStage {
         UserInfo build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
 
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
@@ -428,6 +432,18 @@ public final class UserInfo {
                     sexualOrientation,
                     genderIdentity,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

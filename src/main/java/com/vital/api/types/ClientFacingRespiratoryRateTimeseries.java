@@ -162,6 +162,10 @@ public final class ClientFacingRespiratoryRateTimeseries {
     public interface _FinalStage {
         ClientFacingRespiratoryRateTimeseries build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -314,6 +318,18 @@ public final class ClientFacingRespiratoryRateTimeseries {
         public ClientFacingRespiratoryRateTimeseries build() {
             return new ClientFacingRespiratoryRateTimeseries(
                     id, timezoneOffset, type, unit, timestamp, value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
