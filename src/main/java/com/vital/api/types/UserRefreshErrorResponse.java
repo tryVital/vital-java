@@ -22,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserRefreshErrorResponse.Builder.class)
 public final class UserRefreshErrorResponse {
-    private final boolean success;
-
     private final String userId;
 
     private final String error;
@@ -33,12 +31,10 @@ public final class UserRefreshErrorResponse {
     private final Map<String, Object> additionalProperties;
 
     private UserRefreshErrorResponse(
-            boolean success,
             String userId,
             String error,
             Optional<List<String>> failedSources,
             Map<String, Object> additionalProperties) {
-        this.success = success;
         this.userId = userId;
         this.error = error;
         this.failedSources = failedSources;
@@ -49,8 +45,8 @@ public final class UserRefreshErrorResponse {
      * @return Whether operation was successful or not
      */
     @JsonProperty("success")
-    public boolean getSuccess() {
-        return success;
+    public Boolean getSuccess() {
+        return false;
     }
 
     /**
@@ -83,15 +79,12 @@ public final class UserRefreshErrorResponse {
     }
 
     private boolean equalTo(UserRefreshErrorResponse other) {
-        return success == other.success
-                && userId.equals(other.userId)
-                && error.equals(other.error)
-                && failedSources.equals(other.failedSources);
+        return userId.equals(other.userId) && error.equals(other.error) && failedSources.equals(other.failedSources);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.success, this.userId, this.error, this.failedSources);
+        return Objects.hash(this.userId, this.error, this.failedSources);
     }
 
     @java.lang.Override
@@ -99,17 +92,8 @@ public final class UserRefreshErrorResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static SuccessStage builder() {
+    public static UserIdStage builder() {
         return new Builder();
-    }
-
-    public interface SuccessStage {
-        /**
-         * <p>Whether operation was successful or not</p>
-         */
-        UserIdStage success(boolean success);
-
-        Builder from(UserRefreshErrorResponse other);
     }
 
     public interface UserIdStage {
@@ -117,6 +101,8 @@ public final class UserRefreshErrorResponse {
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          */
         ErrorStage userId(@NotNull String userId);
+
+        Builder from(UserRefreshErrorResponse other);
     }
 
     public interface ErrorStage {
@@ -126,15 +112,17 @@ public final class UserRefreshErrorResponse {
     public interface _FinalStage {
         UserRefreshErrorResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage failedSources(Optional<List<String>> failedSources);
 
         _FinalStage failedSources(List<String> failedSources);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SuccessStage, UserIdStage, ErrorStage, _FinalStage {
-        private boolean success;
-
+    public static final class Builder implements UserIdStage, ErrorStage, _FinalStage {
         private String userId;
 
         private String error;
@@ -148,22 +136,9 @@ public final class UserRefreshErrorResponse {
 
         @java.lang.Override
         public Builder from(UserRefreshErrorResponse other) {
-            success(other.getSuccess());
             userId(other.getUserId());
             error(other.getError());
             failedSources(other.getFailedSources());
-            return this;
-        }
-
-        /**
-         * <p>Whether operation was successful or not</p>
-         * <p>Whether operation was successful or not</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("success")
-        public UserIdStage success(boolean success) {
-            this.success = success;
             return this;
         }
 
@@ -201,7 +176,19 @@ public final class UserRefreshErrorResponse {
 
         @java.lang.Override
         public UserRefreshErrorResponse build() {
-            return new UserRefreshErrorResponse(success, userId, error, failedSources, additionalProperties);
+            return new UserRefreshErrorResponse(userId, error, failedSources, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
