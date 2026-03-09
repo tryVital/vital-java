@@ -85,6 +85,10 @@ public final class GroupedHeartRateAlert {
     public interface _FinalStage {
         GroupedHeartRateAlert build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingHeartRateAlertSample> data);
 
         _FinalStage addData(ClientFacingHeartRateAlertSample data);
@@ -144,6 +148,18 @@ public final class GroupedHeartRateAlert {
         @java.lang.Override
         public GroupedHeartRateAlert build() {
             return new GroupedHeartRateAlert(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
