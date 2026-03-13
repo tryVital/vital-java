@@ -96,6 +96,10 @@ public final class VitalTokenCreatedResponse {
 
     public interface _FinalStage {
         VitalTokenCreatedResponse build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -143,6 +147,18 @@ public final class VitalTokenCreatedResponse {
         @java.lang.Override
         public VitalTokenCreatedResponse build() {
             return new VitalTokenCreatedResponse(code, exchangeUrl, expiresAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

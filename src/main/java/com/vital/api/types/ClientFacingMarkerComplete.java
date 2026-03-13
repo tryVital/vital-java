@@ -240,6 +240,10 @@ public final class ClientFacingMarkerComplete {
     public interface _FinalStage {
         ClientFacingMarkerComplete build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage description(Optional<String> description);
 
         _FinalStage description(String description);
@@ -555,6 +559,18 @@ public final class ClientFacingMarkerComplete {
                     isOrderable,
                     expectedResults,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

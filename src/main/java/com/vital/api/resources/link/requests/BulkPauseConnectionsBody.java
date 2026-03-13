@@ -97,6 +97,10 @@ public final class BulkPauseConnectionsBody {
     public interface _FinalStage {
         BulkPauseConnectionsBody build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage teamId(Optional<LinkBulkPauseRequestTeamId> teamId);
 
         _FinalStage teamId(LinkBulkPauseRequestTeamId teamId);
@@ -176,6 +180,18 @@ public final class BulkPauseConnectionsBody {
         @java.lang.Override
         public BulkPauseConnectionsBody build() {
             return new BulkPauseConnectionsBody(teamId, userIds, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

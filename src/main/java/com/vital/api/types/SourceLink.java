@@ -169,6 +169,10 @@ public final class SourceLink {
     public interface _FinalStage {
         SourceLink build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage oauthUrl(Optional<String> oauthUrl);
 
         _FinalStage oauthUrl(String oauthUrl);
@@ -297,6 +301,18 @@ public final class SourceLink {
         public SourceLink build() {
             return new SourceLink(
                     id, name, slug, description, logo, oauthUrl, authType, formComponents, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
