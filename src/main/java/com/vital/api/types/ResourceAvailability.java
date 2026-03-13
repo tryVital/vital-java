@@ -84,6 +84,10 @@ public final class ResourceAvailability {
     public interface _FinalStage {
         ResourceAvailability build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage scopeRequirements(Optional<ScopeRequirementsGrants> scopeRequirements);
 
         _FinalStage scopeRequirements(ScopeRequirementsGrants scopeRequirements);
@@ -130,6 +134,18 @@ public final class ResourceAvailability {
         @java.lang.Override
         public ResourceAvailability build() {
             return new ResourceAvailability(status, scopeRequirements, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

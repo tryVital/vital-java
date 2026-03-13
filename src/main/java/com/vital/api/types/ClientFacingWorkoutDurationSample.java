@@ -207,6 +207,10 @@ public final class ClientFacingWorkoutDurationSample {
     public interface _FinalStage {
         ClientFacingWorkoutDurationSample build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -404,6 +408,18 @@ public final class ClientFacingWorkoutDurationSample {
         public ClientFacingWorkoutDurationSample build() {
             return new ClientFacingWorkoutDurationSample(
                     id, timezoneOffset, type, timestamp, start, end, value, intensity, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

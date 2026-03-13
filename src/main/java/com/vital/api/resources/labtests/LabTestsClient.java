@@ -152,28 +152,28 @@ public class LabTestsClient {
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public GetMarkersResponse getMarkers() {
         return this.rawClient.getMarkers().body();
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public GetMarkersResponse getMarkers(RequestOptions requestOptions) {
         return this.rawClient.getMarkers(requestOptions).body();
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public GetMarkersResponse getMarkers(LabTestsGetMarkersRequest request) {
         return this.rawClient.getMarkers(request).body();
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public GetMarkersResponse getMarkers(LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getMarkers(request, requestOptions).body();
@@ -196,18 +196,30 @@ public class LabTestsClient {
         return this.rawClient.getMarkersForOrderSet(request, requestOptions).body();
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public GetMarkersResponse getMarkersForLabTest(String labTestId) {
         return this.rawClient.getMarkersForLabTest(labTestId).body();
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public GetMarkersResponse getMarkersForLabTest(String labTestId, RequestOptions requestOptions) {
         return this.rawClient.getMarkersForLabTest(labTestId, requestOptions).body();
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public GetMarkersResponse getMarkersForLabTest(String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return this.rawClient.getMarkersForLabTest(labTestId, request).body();
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public GetMarkersResponse getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
         return this.rawClient
