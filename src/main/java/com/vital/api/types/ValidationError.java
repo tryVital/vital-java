@@ -95,6 +95,10 @@ public final class ValidationError {
     public interface _FinalStage {
         ValidationError build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage loc(List<ValidationErrorLocItem> loc);
 
         _FinalStage addLoc(ValidationErrorLocItem loc);
@@ -164,6 +168,18 @@ public final class ValidationError {
         @java.lang.Override
         public ValidationError build() {
             return new ValidationError(loc, msg, type, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
