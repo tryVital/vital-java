@@ -1,12 +1,13 @@
 {
-  "cliVersion": "3.48.2",
+  "cliVersion": "4.33.0",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "3.33.2",
+  "generatorVersion": "3.39.1",
   "generatorConfig": {
     "publish-to": "central",
     "base-api-exception-class-name": "ApiError",
     "client-class-name": "Vital",
     "enable-forward-compatible-enums": false
   },
-  "sdkVersion": "1.2.605"
+  "originGitCommit": "0655a17df2e96ed2d067f2ee0cb5af4545d4cc25",
+  "sdkVersion": "2.0.0"
 }
