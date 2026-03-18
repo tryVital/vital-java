@@ -105,7 +105,15 @@ public enum OrderStatus {
 
     SAMPLE_WITH_LAB_ON_SITE_COLLECTION_PARTIAL_RESULTS("sample_with_lab.on_site_collection.partial_results"),
 
-    FAILED_ON_SITE_COLLECTION_SAMPLE_ERROR("failed.on_site_collection.sample_error");
+    FAILED_ON_SITE_COLLECTION_SAMPLE_ERROR("failed.on_site_collection.sample_error"),
+
+    COMPLETED_WALK_IN_TEST_CORRECTED("completed.walk_in_test.corrected"),
+
+    COMPLETED_AT_HOME_PHLEBOTOMY_CORRECTED("completed.at_home_phlebotomy.corrected"),
+
+    COMPLETED_ON_SITE_COLLECTION_CORRECTED("completed.on_site_collection.corrected"),
+
+    COMPLETED_TESTKIT_CORRECTED("completed.testkit.corrected");
 
     private final String value;
 

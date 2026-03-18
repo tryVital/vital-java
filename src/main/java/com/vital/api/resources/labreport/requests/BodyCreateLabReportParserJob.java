@@ -82,6 +82,10 @@ public final class BodyCreateLabReportParserJob {
     public interface _FinalStage {
         BodyCreateLabReportParserJob build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage needsHumanReview(Optional<Boolean> needsHumanReview);
 
         _FinalStage needsHumanReview(Boolean needsHumanReview);
@@ -128,6 +132,18 @@ public final class BodyCreateLabReportParserJob {
         @java.lang.Override
         public BodyCreateLabReportParserJob build() {
             return new BodyCreateLabReportParserJob(userId, needsHumanReview, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
