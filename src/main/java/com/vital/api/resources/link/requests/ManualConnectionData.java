@@ -5,6 +5,7 @@ package com.vital.api.resources.link.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,16 +23,41 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ManualConnectionData.Builder.class)
 public final class ManualConnectionData {
+    private final Optional<String> vitalIosSdkVersion;
+
+    private final Optional<String> vitalAndroidSdkVersion;
+
     private final String userId;
 
     private final Optional<String> providerId;
 
+    private final Optional<List<String>> grantedPermissions;
+
     private final Map<String, Object> additionalProperties;
 
-    private ManualConnectionData(String userId, Optional<String> providerId, Map<String, Object> additionalProperties) {
+    private ManualConnectionData(
+            Optional<String> vitalIosSdkVersion,
+            Optional<String> vitalAndroidSdkVersion,
+            String userId,
+            Optional<String> providerId,
+            Optional<List<String>> grantedPermissions,
+            Map<String, Object> additionalProperties) {
+        this.vitalIosSdkVersion = vitalIosSdkVersion;
+        this.vitalAndroidSdkVersion = vitalAndroidSdkVersion;
         this.userId = userId;
         this.providerId = providerId;
+        this.grantedPermissions = grantedPermissions;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonIgnore
+    public Optional<String> getVitalIosSdkVersion() {
+        return vitalIosSdkVersion;
+    }
+
+    @JsonIgnore
+    public Optional<String> getVitalAndroidSdkVersion() {
+        return vitalAndroidSdkVersion;
     }
 
     @JsonProperty("user_id")
@@ -41,6 +68,11 @@ public final class ManualConnectionData {
     @JsonProperty("provider_id")
     public Optional<String> getProviderId() {
         return providerId;
+    }
+
+    @JsonProperty("granted_permissions")
+    public Optional<List<String>> getGrantedPermissions() {
+        return grantedPermissions;
     }
 
     @java.lang.Override
@@ -55,12 +87,21 @@ public final class ManualConnectionData {
     }
 
     private boolean equalTo(ManualConnectionData other) {
-        return userId.equals(other.userId) && providerId.equals(other.providerId);
+        return vitalIosSdkVersion.equals(other.vitalIosSdkVersion)
+                && vitalAndroidSdkVersion.equals(other.vitalAndroidSdkVersion)
+                && userId.equals(other.userId)
+                && providerId.equals(other.providerId)
+                && grantedPermissions.equals(other.grantedPermissions);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.providerId);
+        return Objects.hash(
+                this.vitalIosSdkVersion,
+                this.vitalAndroidSdkVersion,
+                this.userId,
+                this.providerId,
+                this.grantedPermissions);
     }
 
     @java.lang.Override
@@ -81,16 +122,38 @@ public final class ManualConnectionData {
     public interface _FinalStage {
         ManualConnectionData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage vitalIosSdkVersion(Optional<String> vitalIosSdkVersion);
+
+        _FinalStage vitalIosSdkVersion(String vitalIosSdkVersion);
+
+        _FinalStage vitalAndroidSdkVersion(Optional<String> vitalAndroidSdkVersion);
+
+        _FinalStage vitalAndroidSdkVersion(String vitalAndroidSdkVersion);
+
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
+
+        _FinalStage grantedPermissions(Optional<List<String>> grantedPermissions);
+
+        _FinalStage grantedPermissions(List<String> grantedPermissions);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements UserIdStage, _FinalStage {
         private String userId;
 
+        private Optional<List<String>> grantedPermissions = Optional.empty();
+
         private Optional<String> providerId = Optional.empty();
+
+        private Optional<String> vitalAndroidSdkVersion = Optional.empty();
+
+        private Optional<String> vitalIosSdkVersion = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -99,8 +162,11 @@ public final class ManualConnectionData {
 
         @java.lang.Override
         public Builder from(ManualConnectionData other) {
+            vitalIosSdkVersion(other.getVitalIosSdkVersion());
+            vitalAndroidSdkVersion(other.getVitalAndroidSdkVersion());
             userId(other.getUserId());
             providerId(other.getProviderId());
+            grantedPermissions(other.getGrantedPermissions());
             return this;
         }
 
@@ -108,6 +174,19 @@ public final class ManualConnectionData {
         @JsonSetter("user_id")
         public _FinalStage userId(@NotNull String userId) {
             this.userId = Objects.requireNonNull(userId, "userId must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage grantedPermissions(List<String> grantedPermissions) {
+            this.grantedPermissions = Optional.ofNullable(grantedPermissions);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "granted_permissions", nulls = Nulls.SKIP)
+        public _FinalStage grantedPermissions(Optional<List<String>> grantedPermissions) {
+            this.grantedPermissions = grantedPermissions;
             return this;
         }
 
@@ -125,8 +204,50 @@ public final class ManualConnectionData {
         }
 
         @java.lang.Override
+        public _FinalStage vitalAndroidSdkVersion(String vitalAndroidSdkVersion) {
+            this.vitalAndroidSdkVersion = Optional.ofNullable(vitalAndroidSdkVersion);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage vitalAndroidSdkVersion(Optional<String> vitalAndroidSdkVersion) {
+            this.vitalAndroidSdkVersion = vitalAndroidSdkVersion;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage vitalIosSdkVersion(String vitalIosSdkVersion) {
+            this.vitalIosSdkVersion = Optional.ofNullable(vitalIosSdkVersion);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage vitalIosSdkVersion(Optional<String> vitalIosSdkVersion) {
+            this.vitalIosSdkVersion = vitalIosSdkVersion;
+            return this;
+        }
+
+        @java.lang.Override
         public ManualConnectionData build() {
-            return new ManualConnectionData(userId, providerId, additionalProperties);
+            return new ManualConnectionData(
+                    vitalIosSdkVersion,
+                    vitalAndroidSdkVersion,
+                    userId,
+                    providerId,
+                    grantedPermissions,
+                    additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
