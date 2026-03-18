@@ -203,6 +203,10 @@ public final class ClientFacingMindfulnessMinutesTimeseries {
     public interface _FinalStage {
         ClientFacingMindfulnessMinutesTimeseries build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -386,6 +390,18 @@ public final class ClientFacingMindfulnessMinutesTimeseries {
         public ClientFacingMindfulnessMinutesTimeseries build() {
             return new ClientFacingMindfulnessMinutesTimeseries(
                     id, timezoneOffset, type, unit, timestamp, start, end, value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
