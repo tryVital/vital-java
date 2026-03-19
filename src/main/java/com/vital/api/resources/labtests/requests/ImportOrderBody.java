@@ -194,6 +194,10 @@ public final class ImportOrderBody {
     public interface _FinalStage {
         ImportOrderBody build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage physician(Optional<PhysicianCreateRequest> physician);
 
         _FinalStage physician(PhysicianCreateRequest physician);
@@ -338,6 +342,18 @@ public final class ImportOrderBody {
                     sampleId,
                     labAccountId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

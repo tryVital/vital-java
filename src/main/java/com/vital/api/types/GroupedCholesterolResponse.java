@@ -169,5 +169,15 @@ public final class GroupedCholesterolResponse {
         public GroupedCholesterolResponse build() {
             return new GroupedCholesterolResponse(groups, next, nextCursor, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }
