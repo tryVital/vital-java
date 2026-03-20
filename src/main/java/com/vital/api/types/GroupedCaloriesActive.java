@@ -85,6 +85,10 @@ public final class GroupedCaloriesActive {
     public interface _FinalStage {
         GroupedCaloriesActive build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingCaloriesActiveTimeseries> data);
 
         _FinalStage addData(ClientFacingCaloriesActiveTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedCaloriesActive {
         @java.lang.Override
         public GroupedCaloriesActive build() {
             return new GroupedCaloriesActive(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
