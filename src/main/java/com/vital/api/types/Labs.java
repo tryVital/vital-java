@@ -14,6 +14,8 @@ public enum Labs {
 
     QUEST("quest"),
 
+    SONORA_QUEST("sonora_quest"),
+
     LABCORP("labcorp"),
 
     BIOREFERENCE("bioreference"),
@@ -28,7 +30,9 @@ public enum Labs {
 
     NEXUS("nexus"),
 
-    MY_UTI("my_uti");
+    MY_UTI("my_uti"),
+
+    CRL("crl");
 
     private final String value;
 
