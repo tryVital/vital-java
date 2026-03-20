@@ -102,6 +102,10 @@ public final class LabTestsBookPscAppointmentRequest {
     public interface _FinalStage {
         LabTestsBookPscAppointmentRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>[!] This feature (Idempotency Key) is under closed beta. Idempotency Key support for booking PSC appointment.</p>
          */
@@ -186,6 +190,18 @@ public final class LabTestsBookPscAppointmentRequest {
         @java.lang.Override
         public LabTestsBookPscAppointmentRequest build() {
             return new LabTestsBookPscAppointmentRequest(idempotencyKey, idempotencyError, body, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
