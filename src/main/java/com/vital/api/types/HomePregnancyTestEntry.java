@@ -89,6 +89,10 @@ public final class HomePregnancyTestEntry {
 
     public interface _FinalStage {
         HomePregnancyTestEntry build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -131,6 +135,18 @@ public final class HomePregnancyTestEntry {
         @java.lang.Override
         public HomePregnancyTestEntry build() {
             return new HomePregnancyTestEntry(date, testResult, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

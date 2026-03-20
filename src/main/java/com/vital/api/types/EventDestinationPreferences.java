@@ -91,6 +91,10 @@ public final class EventDestinationPreferences {
     public interface _FinalStage {
         EventDestinationPreferences build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage enabled(List<EventDestinationPreferencesEnabledItem> enabled);
 
         _FinalStage addEnabled(EventDestinationPreferencesEnabledItem enabled);
@@ -155,6 +159,18 @@ public final class EventDestinationPreferences {
         @java.lang.Override
         public EventDestinationPreferences build() {
             return new EventDestinationPreferences(preferred, enabled, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
