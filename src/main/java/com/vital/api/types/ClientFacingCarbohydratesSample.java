@@ -202,6 +202,10 @@ public final class ClientFacingCarbohydratesSample {
     public interface _FinalStage {
         ClientFacingCarbohydratesSample build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -385,6 +389,18 @@ public final class ClientFacingCarbohydratesSample {
         public ClientFacingCarbohydratesSample build() {
             return new ClientFacingCarbohydratesSample(
                     id, timezoneOffset, type, unit, timestamp, start, end, value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
