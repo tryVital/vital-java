@@ -82,6 +82,10 @@ public final class CompletePasswordProviderMfaBody {
     public interface _FinalStage {
         CompletePasswordProviderMfaBody build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
@@ -127,6 +131,18 @@ public final class CompletePasswordProviderMfaBody {
         @java.lang.Override
         public CompletePasswordProviderMfaBody build() {
             return new CompletePasswordProviderMfaBody(vitalLinkToken, mfaCode, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
