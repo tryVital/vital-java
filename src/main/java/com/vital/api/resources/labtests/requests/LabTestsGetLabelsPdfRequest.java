@@ -92,6 +92,10 @@ public final class LabTestsGetLabelsPdfRequest {
     public interface _FinalStage {
         LabTestsGetLabelsPdfRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Number of labels to generate</p>
          */
@@ -153,6 +157,18 @@ public final class LabTestsGetLabelsPdfRequest {
         @java.lang.Override
         public LabTestsGetLabelsPdfRequest build() {
             return new LabTestsGetLabelsPdfRequest(numberOfLabels, collectionDate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
