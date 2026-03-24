@@ -6,7 +6,6 @@ package com.vital.api.resources.labreport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vital.api.core.ApiError;
 import com.vital.api.core.ClientOptions;
-import com.vital.api.core.FileStream;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
@@ -17,7 +16,6 @@ import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.ParsingJob;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -37,7 +35,7 @@ public class RawLabReportClient {
     }
 
     /**
-     * Creates a parse job, uploads the file to provider, persists the job row,
+     * Creates a parse job, uploads the file(s) to provider, persists the job row,
      * and starts the ParseLabReport. Returns a generated job_id.
      */
     public VitalHttpResponse<ParsingJob> parserCreateJob(File file, BodyCreateLabReportParserJob request) {
@@ -45,7 +43,7 @@ public class RawLabReportClient {
     }
 
     /**
-     * Creates a parse job, uploads the file to provider, persists the job row,
+     * Creates a parse job, uploads the file(s) to provider, persists the job row,
      * and starts the ParseLabReport. Returns a generated job_id.
      */
     public VitalHttpResponse<ParsingJob> parserCreateJob(
@@ -54,8 +52,8 @@ public class RawLabReportClient {
                 .newBuilder()
                 .addPathSegments("lab_report/v1/parser/job");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -108,172 +106,6 @@ public class RawLabReportClient {
         }
     }
 
-    public VitalHttpResponse<ParsingJob> parserCreateJob(InputStream stream, String filename) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("lab_report/v1/parser/job");
-        FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = multipartBodyBuilder.build();
-        Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
-        _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ParsingJob.class), response);
-            }
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                            response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
-    }
-
-    public VitalHttpResponse<ParsingJob> parserCreateJob(InputStream stream, String filename, MediaType mediaType) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("lab_report/v1/parser/job");
-        FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = multipartBodyBuilder.build();
-        Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
-        _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ParsingJob.class), response);
-            }
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                            response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
-    }
-
-    public VitalHttpResponse<ParsingJob> parserCreateJob(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("lab_report/v1/parser/job");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = multipartBodyBuilder.build();
-        Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
-        _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ParsingJob.class), response);
-            }
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                            response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
-    }
-
-    public VitalHttpResponse<ParsingJob> parserCreateJob(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("lab_report/v1/parser/job");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = multipartBodyBuilder.build();
-        Request.Builder _requestBuilder = new Request.Builder();
-        _requestBuilder.url(httpUrl.build());
-        _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ParsingJob.class), response);
-            }
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                            response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
-    }
-
     /**
      * Retrieves the parse job status and stored result if completed.
      * <p>Returns:
@@ -294,8 +126,8 @@ public class RawLabReportClient {
                 .addPathSegments("lab_report/v1/parser/job")
                 .addPathSegment(jobId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
