@@ -156,6 +156,10 @@ public final class ClientFacingPayorSearchResponseDeprecated {
     public interface _FinalStage {
         ClientFacingPayorSearchResponseDeprecated build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Insurance name aliases returned for the insurance information.</p>
          */
@@ -280,6 +284,18 @@ public final class ClientFacingPayorSearchResponseDeprecated {
         public ClientFacingPayorSearchResponseDeprecated build() {
             return new ClientFacingPayorSearchResponseDeprecated(
                     code, name, aliases, orgAddress, source, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
