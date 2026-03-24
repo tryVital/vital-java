@@ -85,6 +85,10 @@ public final class GroupedBodyFat {
     public interface _FinalStage {
         GroupedBodyFat build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingBodyFatTimeseries> data);
 
         _FinalStage addData(ClientFacingBodyFatTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedBodyFat {
         @java.lang.Override
         public GroupedBodyFat build() {
             return new GroupedBodyFat(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -125,6 +125,10 @@ public final class CreateRegistrableTestkitOrderRequest {
     public interface _FinalStage {
         CreateRegistrableTestkitOrderRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage passthrough(Optional<String> passthrough);
 
         _FinalStage passthrough(String passthrough);
@@ -212,6 +216,18 @@ public final class CreateRegistrableTestkitOrderRequest {
         public CreateRegistrableTestkitOrderRequest build() {
             return new CreateRegistrableTestkitOrderRequest(
                     userId, labTestId, shippingDetails, passthrough, labAccountId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
