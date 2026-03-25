@@ -183,6 +183,10 @@ public final class ClientFacingBloodPressureTimeseries {
     public interface _FinalStage {
         ClientFacingBloodPressureTimeseries build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -355,6 +359,18 @@ public final class ClientFacingBloodPressureTimeseries {
         public ClientFacingBloodPressureTimeseries build() {
             return new ClientFacingBloodPressureTimeseries(
                     id, timezoneOffset, type, unit, grouping, timestamp, systolic, diastolic, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
