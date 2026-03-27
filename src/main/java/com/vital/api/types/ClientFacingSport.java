@@ -112,6 +112,10 @@ public final class ClientFacingSport {
 
     public interface _FinalStage {
         ClientFacingSport build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -174,6 +178,18 @@ public final class ClientFacingSport {
         @java.lang.Override
         public ClientFacingSport build() {
             return new ClientFacingSport(id, name, slug, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
