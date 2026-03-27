@@ -120,6 +120,10 @@ public final class ClientFacingContinuousQueryResultTableChanged {
     public interface _FinalStage {
         ClientFacingContinuousQueryResultTableChanged build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ContinuousQueryResultTableChanges> data);
 
         _FinalStage addData(ContinuousQueryResultTableChanges data);
@@ -200,6 +204,18 @@ public final class ClientFacingContinuousQueryResultTableChanged {
         public ClientFacingContinuousQueryResultTableChanged build() {
             return new ClientFacingContinuousQueryResultTableChanged(
                     userId, clientUserId, teamId, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

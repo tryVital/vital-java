@@ -295,6 +295,10 @@ public final class ClientFacingSleepCycle {
     public interface _FinalStage {
         ClientFacingSleepCycle build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage stageStartOffsetSecond(List<Integer> stageStartOffsetSecond);
 
         _FinalStage addStageStartOffsetSecond(Integer stageStartOffsetSecond);
@@ -641,6 +645,18 @@ public final class ClientFacingSleepCycle {
                     userId,
                     source,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
