@@ -138,6 +138,10 @@ public final class PhysicianCreateRequest {
     public interface _FinalStage {
         PhysicianCreateRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage email(Optional<String> email);
 
         _FinalStage email(String email);
@@ -255,6 +259,18 @@ public final class PhysicianCreateRequest {
         public PhysicianCreateRequest build() {
             return new PhysicianCreateRequest(
                     firstName, lastName, email, npi, licensedStates, signatureImage, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

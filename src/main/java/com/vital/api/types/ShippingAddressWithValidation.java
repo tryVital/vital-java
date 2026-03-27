@@ -177,6 +177,10 @@ public final class ShippingAddressWithValidation {
     public interface _FinalStage {
         ShippingAddressWithValidation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage secondLine(Optional<String> secondLine);
 
         _FinalStage secondLine(String secondLine);
@@ -292,6 +296,18 @@ public final class ShippingAddressWithValidation {
         public ShippingAddressWithValidation build() {
             return new ShippingAddressWithValidation(
                     receiverName, firstLine, secondLine, city, state, zip, country, phoneNumber, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

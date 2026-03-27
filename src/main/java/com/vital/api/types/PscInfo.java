@@ -100,6 +100,10 @@ public final class PscInfo {
     public interface _FinalStage {
         PscInfo build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage patientServiceCenters(List<ClientFacingLabLocation> patientServiceCenters);
 
         _FinalStage addPatientServiceCenters(ClientFacingLabLocation patientServiceCenters);
@@ -169,6 +173,18 @@ public final class PscInfo {
         @java.lang.Override
         public PscInfo build() {
             return new PscInfo(labId, slug, patientServiceCenters, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -108,6 +108,10 @@ public final class BulkExportConnectionsBody {
     public interface _FinalStage {
         BulkExportConnectionsBody build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId);
 
         _FinalStage teamId(LinkBulkExportRequestTeamId teamId);
@@ -194,6 +198,18 @@ public final class BulkExportConnectionsBody {
         @java.lang.Override
         public BulkExportConnectionsBody build() {
             return new BulkExportConnectionsBody(teamId, userIds, provider, nextToken, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
