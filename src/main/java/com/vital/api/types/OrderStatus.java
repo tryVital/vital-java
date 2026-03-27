@@ -73,6 +73,8 @@ public enum OrderStatus {
 
     SAMPLE_WITH_LAB_TESTKIT_DELIVERED_TO_LAB("sample_with_lab.testkit.delivered_to_lab"),
 
+    SAMPLE_WITH_LAB_TESTKIT_LAB_PROCESSING_BLOCKED("sample_with_lab.testkit.lab_processing_blocked"),
+
     COMPLETED_TESTKIT_COMPLETED("completed.testkit.completed"),
 
     FAILED_TESTKIT_FAILURE_TO_DELIVER_TO_CUSTOMER("failed.testkit.failure_to_deliver_to_customer"),
@@ -105,7 +107,15 @@ public enum OrderStatus {
 
     SAMPLE_WITH_LAB_ON_SITE_COLLECTION_PARTIAL_RESULTS("sample_with_lab.on_site_collection.partial_results"),
 
-    FAILED_ON_SITE_COLLECTION_SAMPLE_ERROR("failed.on_site_collection.sample_error");
+    FAILED_ON_SITE_COLLECTION_SAMPLE_ERROR("failed.on_site_collection.sample_error"),
+
+    COMPLETED_WALK_IN_TEST_CORRECTED("completed.walk_in_test.corrected"),
+
+    COMPLETED_AT_HOME_PHLEBOTOMY_CORRECTED("completed.at_home_phlebotomy.corrected"),
+
+    COMPLETED_ON_SITE_COLLECTION_CORRECTED("completed.on_site_collection.corrected"),
+
+    COMPLETED_TESTKIT_CORRECTED("completed.testkit.corrected");
 
     private final String value;
 

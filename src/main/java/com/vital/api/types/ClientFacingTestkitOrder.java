@@ -123,6 +123,10 @@ public final class ClientFacingTestkitOrder {
     public interface _FinalStage {
         ClientFacingTestkitOrder build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Shipment object</p>
          */
@@ -204,6 +208,18 @@ public final class ClientFacingTestkitOrder {
         @java.lang.Override
         public ClientFacingTestkitOrder build() {
             return new ClientFacingTestkitOrder(id, shipment, createdAt, updatedAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
