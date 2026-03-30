@@ -33,6 +33,8 @@ public final class UsAddress {
 
     private final Optional<String> unit;
 
+    private final Optional<String> accessNotes;
+
     private final Map<String, Object> additionalProperties;
 
     private UsAddress(
@@ -42,6 +44,7 @@ public final class UsAddress {
             String state,
             String zipCode,
             Optional<String> unit,
+            Optional<String> accessNotes,
             Map<String, Object> additionalProperties) {
         this.firstLine = firstLine;
         this.secondLine = secondLine;
@@ -49,6 +52,7 @@ public final class UsAddress {
         this.state = state;
         this.zipCode = zipCode;
         this.unit = unit;
+        this.accessNotes = accessNotes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -85,6 +89,11 @@ public final class UsAddress {
         return unit;
     }
 
+    @JsonProperty("access_notes")
+    public Optional<String> getAccessNotes() {
+        return accessNotes;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -102,12 +111,14 @@ public final class UsAddress {
                 && city.equals(other.city)
                 && state.equals(other.state)
                 && zipCode.equals(other.zipCode)
-                && unit.equals(other.unit);
+                && unit.equals(other.unit)
+                && accessNotes.equals(other.accessNotes);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.firstLine, this.secondLine, this.city, this.state, this.zipCode, this.unit);
+        return Objects.hash(
+                this.firstLine, this.secondLine, this.city, this.state, this.zipCode, this.unit, this.accessNotes);
     }
 
     @java.lang.Override
@@ -140,6 +151,10 @@ public final class UsAddress {
     public interface _FinalStage {
         UsAddress build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage secondLine(Optional<String> secondLine);
 
         _FinalStage secondLine(String secondLine);
@@ -150,6 +165,10 @@ public final class UsAddress {
         _FinalStage unit(Optional<String> unit);
 
         _FinalStage unit(String unit);
+
+        _FinalStage accessNotes(Optional<String> accessNotes);
+
+        _FinalStage accessNotes(String accessNotes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -161,6 +180,8 @@ public final class UsAddress {
         private String state;
 
         private String zipCode;
+
+        private Optional<String> accessNotes = Optional.empty();
 
         private Optional<String> unit = Optional.empty();
 
@@ -179,6 +200,7 @@ public final class UsAddress {
             state(other.getState());
             zipCode(other.getZipCode());
             unit(other.getUnit());
+            accessNotes(other.getAccessNotes());
             return this;
         }
 
@@ -207,6 +229,19 @@ public final class UsAddress {
         @JsonSetter("zip_code")
         public _FinalStage zipCode(@NotNull String zipCode) {
             this.zipCode = Objects.requireNonNull(zipCode, "zipCode must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage accessNotes(String accessNotes) {
+            this.accessNotes = Optional.ofNullable(accessNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "access_notes", nulls = Nulls.SKIP)
+        public _FinalStage accessNotes(Optional<String> accessNotes) {
+            this.accessNotes = accessNotes;
             return this;
         }
 
@@ -245,7 +280,19 @@ public final class UsAddress {
 
         @java.lang.Override
         public UsAddress build() {
-            return new UsAddress(firstLine, secondLine, city, state, zipCode, unit, additionalProperties);
+            return new UsAddress(firstLine, secondLine, city, state, zipCode, unit, accessNotes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
