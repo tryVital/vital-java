@@ -128,6 +128,10 @@ public final class ClientFacingIggChanged {
 
     public interface _FinalStage {
         ClientFacingIggChanged build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -196,6 +200,18 @@ public final class ClientFacingIggChanged {
         @java.lang.Override
         public ClientFacingIggChanged build() {
             return new ClientFacingIggChanged(eventType, userId, clientUserId, teamId, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

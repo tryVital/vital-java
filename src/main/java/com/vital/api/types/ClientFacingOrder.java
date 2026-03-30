@@ -42,6 +42,8 @@ public final class ClientFacingOrder {
 
     private final Optional<String> notes;
 
+    private final Optional<String> clinicalNotes;
+
     private final OffsetDateTime createdAt;
 
     private final OffsetDateTime updatedAt;
@@ -80,8 +82,6 @@ public final class ClientFacingOrder {
 
     private final Optional<OrderOrigin> origin;
 
-    private final Optional<String> parentId;
-
     private final Optional<ClientFacingOrderTransaction> orderTransaction;
 
     private final Map<String, Object> additionalProperties;
@@ -96,6 +96,7 @@ public final class ClientFacingOrder {
             ClientFacingOrderDetails details,
             Optional<String> sampleId,
             Optional<String> notes,
+            Optional<String> clinicalNotes,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             List<ClientFacingOrderEvent> events,
@@ -115,7 +116,6 @@ public final class ClientFacingOrder {
             Optional<String> expectedResultByDate,
             Optional<String> worstCaseResultByDate,
             Optional<OrderOrigin> origin,
-            Optional<String> parentId,
             Optional<ClientFacingOrderTransaction> orderTransaction,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -127,6 +127,7 @@ public final class ClientFacingOrder {
         this.details = details;
         this.sampleId = sampleId;
         this.notes = notes;
+        this.clinicalNotes = clinicalNotes;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.events = events;
@@ -146,7 +147,6 @@ public final class ClientFacingOrder {
         this.expectedResultByDate = expectedResultByDate;
         this.worstCaseResultByDate = worstCaseResultByDate;
         this.origin = origin;
-        this.parentId = parentId;
         this.orderTransaction = orderTransaction;
         this.additionalProperties = additionalProperties;
     }
@@ -220,6 +220,11 @@ public final class ClientFacingOrder {
         return notes;
     }
 
+    @JsonProperty("clinical_notes")
+    public Optional<String> getClinicalNotes() {
+        return clinicalNotes;
+    }
+
     /**
      * @return When your order was created
      */
@@ -241,6 +246,9 @@ public final class ClientFacingOrder {
         return events;
     }
 
+    /**
+     * @return The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead.
+     */
     @JsonProperty("status")
     public Optional<OrderTopLevelStatus> getStatus() {
         return status;
@@ -351,11 +359,6 @@ public final class ClientFacingOrder {
         return origin;
     }
 
-    @JsonProperty("parent_id")
-    public Optional<String> getParentId() {
-        return parentId;
-    }
-
     @JsonProperty("order_transaction")
     public Optional<ClientFacingOrderTransaction> getOrderTransaction() {
         return orderTransaction;
@@ -382,6 +385,7 @@ public final class ClientFacingOrder {
                 && details.equals(other.details)
                 && sampleId.equals(other.sampleId)
                 && notes.equals(other.notes)
+                && clinicalNotes.equals(other.clinicalNotes)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
                 && events.equals(other.events)
@@ -401,7 +405,6 @@ public final class ClientFacingOrder {
                 && expectedResultByDate.equals(other.expectedResultByDate)
                 && worstCaseResultByDate.equals(other.worstCaseResultByDate)
                 && origin.equals(other.origin)
-                && parentId.equals(other.parentId)
                 && orderTransaction.equals(other.orderTransaction);
     }
 
@@ -417,6 +420,7 @@ public final class ClientFacingOrder {
                 this.details,
                 this.sampleId,
                 this.notes,
+                this.clinicalNotes,
                 this.createdAt,
                 this.updatedAt,
                 this.events,
@@ -436,7 +440,6 @@ public final class ClientFacingOrder {
                 this.expectedResultByDate,
                 this.worstCaseResultByDate,
                 this.origin,
-                this.parentId,
                 this.orderTransaction);
     }
 
@@ -507,6 +510,10 @@ public final class ClientFacingOrder {
     public interface _FinalStage {
         ClientFacingOrder build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Patient Details</p>
          */
@@ -535,12 +542,19 @@ public final class ClientFacingOrder {
 
         _FinalStage notes(String notes);
 
+        _FinalStage clinicalNotes(Optional<String> clinicalNotes);
+
+        _FinalStage clinicalNotes(String clinicalNotes);
+
         _FinalStage events(List<ClientFacingOrderEvent> events);
 
         _FinalStage addEvents(ClientFacingOrderEvent events);
 
         _FinalStage addAllEvents(List<ClientFacingOrderEvent> events);
 
+        /**
+         * <p>The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead.</p>
+         */
         _FinalStage status(Optional<OrderTopLevelStatus> status);
 
         _FinalStage status(OrderTopLevelStatus status);
@@ -628,10 +642,6 @@ public final class ClientFacingOrder {
 
         _FinalStage origin(OrderOrigin origin);
 
-        _FinalStage parentId(Optional<String> parentId);
-
-        _FinalStage parentId(String parentId);
-
         _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction);
 
         _FinalStage orderTransaction(ClientFacingOrderTransaction orderTransaction);
@@ -666,8 +676,6 @@ public final class ClientFacingOrder {
 
         private Optional<ClientFacingOrderTransaction> orderTransaction = Optional.empty();
 
-        private Optional<String> parentId = Optional.empty();
-
         private Optional<OrderOrigin> origin = Optional.empty();
 
         private Optional<String> worstCaseResultByDate = Optional.empty();
@@ -700,6 +708,8 @@ public final class ClientFacingOrder {
 
         private List<ClientFacingOrderEvent> events = new ArrayList<>();
 
+        private Optional<String> clinicalNotes = Optional.empty();
+
         private Optional<String> notes = Optional.empty();
 
         private Optional<String> sampleId = Optional.empty();
@@ -724,6 +734,7 @@ public final class ClientFacingOrder {
             details(other.getDetails());
             sampleId(other.getSampleId());
             notes(other.getNotes());
+            clinicalNotes(other.getClinicalNotes());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             events(other.getEvents());
@@ -743,7 +754,6 @@ public final class ClientFacingOrder {
             expectedResultByDate(other.getExpectedResultByDate());
             worstCaseResultByDate(other.getWorstCaseResultByDate());
             origin(other.getOrigin());
-            parentId(other.getParentId());
             orderTransaction(other.getOrderTransaction());
             return this;
         }
@@ -849,19 +859,6 @@ public final class ClientFacingOrder {
         @JsonSetter(value = "order_transaction", nulls = Nulls.SKIP)
         public _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction) {
             this.orderTransaction = orderTransaction;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage parentId(String parentId) {
-            this.parentId = Optional.ofNullable(parentId);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "parent_id", nulls = Nulls.SKIP)
-        public _FinalStage parentId(Optional<String> parentId) {
-            this.parentId = parentId;
             return this;
         }
 
@@ -1110,12 +1107,19 @@ public final class ClientFacingOrder {
             return this;
         }
 
+        /**
+         * <p>The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage status(OrderTopLevelStatus status) {
             this.status = Optional.ofNullable(status);
             return this;
         }
 
+        /**
+         * <p>The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
         public _FinalStage status(Optional<OrderTopLevelStatus> status) {
@@ -1144,6 +1148,19 @@ public final class ClientFacingOrder {
             if (events != null) {
                 this.events.addAll(events);
             }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage clinicalNotes(String clinicalNotes) {
+            this.clinicalNotes = Optional.ofNullable(clinicalNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "clinical_notes", nulls = Nulls.SKIP)
+        public _FinalStage clinicalNotes(Optional<String> clinicalNotes) {
+            this.clinicalNotes = clinicalNotes;
             return this;
         }
 
@@ -1239,6 +1256,7 @@ public final class ClientFacingOrder {
                     details,
                     sampleId,
                     notes,
+                    clinicalNotes,
                     createdAt,
                     updatedAt,
                     events,
@@ -1258,9 +1276,20 @@ public final class ClientFacingOrder {
                     expectedResultByDate,
                     worstCaseResultByDate,
                     origin,
-                    parentId,
                     orderTransaction,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
