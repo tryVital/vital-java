@@ -249,6 +249,10 @@ public final class PatientDetailsWithValidation {
     public interface _FinalStage {
         PatientDetailsWithValidation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Parent/medical_proxy details. Required if patient is a minor.</p>
          */
@@ -550,6 +554,18 @@ public final class PatientDetailsWithValidation {
                     householdIncome,
                     householdSize,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

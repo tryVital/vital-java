@@ -85,6 +85,10 @@ public final class GroupedWater {
     public interface _FinalStage {
         GroupedWater build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingWaterTimeseries> data);
 
         _FinalStage addData(ClientFacingWaterTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedWater {
         @java.lang.Override
         public GroupedWater build() {
             return new GroupedWater(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
