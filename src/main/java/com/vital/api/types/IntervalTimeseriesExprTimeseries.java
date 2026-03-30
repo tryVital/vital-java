@@ -18,8 +18,6 @@ public enum IntervalTimeseriesExprTimeseries {
 
     SLEEP_BREATHING_DISTURBANCE("sleep_breathing_disturbance"),
 
-    INSULIN_INJECTION("insulin_injection"),
-
     WATER("water"),
 
     CAFFEINE("caffeine"),
