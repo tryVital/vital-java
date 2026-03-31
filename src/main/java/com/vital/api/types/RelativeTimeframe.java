@@ -87,6 +87,10 @@ public final class RelativeTimeframe {
 
     public interface _FinalStage {
         RelativeTimeframe build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -124,6 +128,18 @@ public final class RelativeTimeframe {
         @java.lang.Override
         public RelativeTimeframe build() {
             return new RelativeTimeframe(anchor, past, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

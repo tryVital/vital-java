@@ -151,6 +151,10 @@ public final class ClientFacingOrderInTransaction {
     public interface _FinalStage {
         ClientFacingOrderInTransaction build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage lowLevelStatus(Optional<OrderLowLevelStatus> lowLevelStatus);
 
         _FinalStage lowLevelStatus(OrderLowLevelStatus lowLevelStatus);
@@ -285,6 +289,18 @@ public final class ClientFacingOrderInTransaction {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
