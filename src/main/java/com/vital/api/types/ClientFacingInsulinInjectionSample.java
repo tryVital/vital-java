@@ -36,6 +36,12 @@ public final class ClientFacingInsulinInjectionSample {
 
     private final double value;
 
+    private final Optional<ClientFacingInsulinInjectionSampleDeliveryMode> deliveryMode;
+
+    private final Optional<ClientFacingInsulinInjectionSampleDeliveryForm> deliveryForm;
+
+    private final Optional<ClientFacingInsulinInjectionSampleBolusPurpose> bolusPurpose;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingInsulinInjectionSample(
@@ -46,6 +52,9 @@ public final class ClientFacingInsulinInjectionSample {
             OffsetDateTime start,
             OffsetDateTime end,
             double value,
+            Optional<ClientFacingInsulinInjectionSampleDeliveryMode> deliveryMode,
+            Optional<ClientFacingInsulinInjectionSampleDeliveryForm> deliveryForm,
+            Optional<ClientFacingInsulinInjectionSampleBolusPurpose> bolusPurpose,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.timezoneOffset = timezoneOffset;
@@ -54,6 +63,9 @@ public final class ClientFacingInsulinInjectionSample {
         this.start = start;
         this.end = end;
         this.value = value;
+        this.deliveryMode = deliveryMode;
+        this.deliveryForm = deliveryForm;
+        this.bolusPurpose = bolusPurpose;
         this.additionalProperties = additionalProperties;
     }
 
@@ -74,7 +86,7 @@ public final class ClientFacingInsulinInjectionSample {
     }
 
     /**
-     * @return The type of insulin injection. ℹ️ This enum is non-exhaustive.
+     * @return The insulin formulation type. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("type")
     public ClientFacingInsulinInjectionSampleType getType() {
@@ -118,6 +130,30 @@ public final class ClientFacingInsulinInjectionSample {
         return value;
     }
 
+    /**
+     * @return How the insulin was delivered. ℹ️ This enum is non-exhaustive.
+     */
+    @JsonProperty("delivery_mode")
+    public Optional<ClientFacingInsulinInjectionSampleDeliveryMode> getDeliveryMode() {
+        return deliveryMode;
+    }
+
+    /**
+     * @return For bolus deliveries, whether the dose was standard or extended. ℹ️ This enum is non-exhaustive.
+     */
+    @JsonProperty("delivery_form")
+    public Optional<ClientFacingInsulinInjectionSampleDeliveryForm> getDeliveryForm() {
+        return deliveryForm;
+    }
+
+    /**
+     * @return For bolus deliveries, what the bolus was intended for. ℹ️ This enum is non-exhaustive.
+     */
+    @JsonProperty("bolus_purpose")
+    public Optional<ClientFacingInsulinInjectionSampleBolusPurpose> getBolusPurpose() {
+        return bolusPurpose;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -137,12 +173,25 @@ public final class ClientFacingInsulinInjectionSample {
                 && timestamp.equals(other.timestamp)
                 && start.equals(other.start)
                 && end.equals(other.end)
-                && value == other.value;
+                && value == other.value
+                && deliveryMode.equals(other.deliveryMode)
+                && deliveryForm.equals(other.deliveryForm)
+                && bolusPurpose.equals(other.bolusPurpose);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.timezoneOffset, this.type, this.timestamp, this.start, this.end, this.value);
+        return Objects.hash(
+                this.id,
+                this.timezoneOffset,
+                this.type,
+                this.timestamp,
+                this.start,
+                this.end,
+                this.value,
+                this.deliveryMode,
+                this.deliveryForm,
+                this.bolusPurpose);
     }
 
     @java.lang.Override
@@ -156,7 +205,7 @@ public final class ClientFacingInsulinInjectionSample {
 
     public interface TypeStage {
         /**
-         * <p>The type of insulin injection. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The insulin formulation type. ℹ️ This enum is non-exhaustive.</p>
          */
         TimestampStage type(@NotNull ClientFacingInsulinInjectionSampleType type);
 
@@ -194,6 +243,10 @@ public final class ClientFacingInsulinInjectionSample {
     public interface _FinalStage {
         ClientFacingInsulinInjectionSample build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -207,6 +260,27 @@ public final class ClientFacingInsulinInjectionSample {
         _FinalStage timezoneOffset(Optional<Integer> timezoneOffset);
 
         _FinalStage timezoneOffset(Integer timezoneOffset);
+
+        /**
+         * <p>How the insulin was delivered. ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage deliveryMode(Optional<ClientFacingInsulinInjectionSampleDeliveryMode> deliveryMode);
+
+        _FinalStage deliveryMode(ClientFacingInsulinInjectionSampleDeliveryMode deliveryMode);
+
+        /**
+         * <p>For bolus deliveries, whether the dose was standard or extended. ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage deliveryForm(Optional<ClientFacingInsulinInjectionSampleDeliveryForm> deliveryForm);
+
+        _FinalStage deliveryForm(ClientFacingInsulinInjectionSampleDeliveryForm deliveryForm);
+
+        /**
+         * <p>For bolus deliveries, what the bolus was intended for. ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage bolusPurpose(Optional<ClientFacingInsulinInjectionSampleBolusPurpose> bolusPurpose);
+
+        _FinalStage bolusPurpose(ClientFacingInsulinInjectionSampleBolusPurpose bolusPurpose);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -221,6 +295,12 @@ public final class ClientFacingInsulinInjectionSample {
         private OffsetDateTime end;
 
         private double value;
+
+        private Optional<ClientFacingInsulinInjectionSampleBolusPurpose> bolusPurpose = Optional.empty();
+
+        private Optional<ClientFacingInsulinInjectionSampleDeliveryForm> deliveryForm = Optional.empty();
+
+        private Optional<ClientFacingInsulinInjectionSampleDeliveryMode> deliveryMode = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
 
@@ -240,12 +320,15 @@ public final class ClientFacingInsulinInjectionSample {
             start(other.getStart());
             end(other.getEnd());
             value(other.getValue());
+            deliveryMode(other.getDeliveryMode());
+            deliveryForm(other.getDeliveryForm());
+            bolusPurpose(other.getBolusPurpose());
             return this;
         }
 
         /**
-         * <p>The type of insulin injection. ℹ️ This enum is non-exhaustive.</p>
-         * <p>The type of insulin injection. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The insulin formulation type. ℹ️ This enum is non-exhaustive.</p>
+         * <p>The insulin formulation type. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -304,6 +387,66 @@ public final class ClientFacingInsulinInjectionSample {
         }
 
         /**
+         * <p>For bolus deliveries, what the bolus was intended for. ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage bolusPurpose(ClientFacingInsulinInjectionSampleBolusPurpose bolusPurpose) {
+            this.bolusPurpose = Optional.ofNullable(bolusPurpose);
+            return this;
+        }
+
+        /**
+         * <p>For bolus deliveries, what the bolus was intended for. ℹ️ This enum is non-exhaustive.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "bolus_purpose", nulls = Nulls.SKIP)
+        public _FinalStage bolusPurpose(Optional<ClientFacingInsulinInjectionSampleBolusPurpose> bolusPurpose) {
+            this.bolusPurpose = bolusPurpose;
+            return this;
+        }
+
+        /**
+         * <p>For bolus deliveries, whether the dose was standard or extended. ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage deliveryForm(ClientFacingInsulinInjectionSampleDeliveryForm deliveryForm) {
+            this.deliveryForm = Optional.ofNullable(deliveryForm);
+            return this;
+        }
+
+        /**
+         * <p>For bolus deliveries, whether the dose was standard or extended. ℹ️ This enum is non-exhaustive.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "delivery_form", nulls = Nulls.SKIP)
+        public _FinalStage deliveryForm(Optional<ClientFacingInsulinInjectionSampleDeliveryForm> deliveryForm) {
+            this.deliveryForm = deliveryForm;
+            return this;
+        }
+
+        /**
+         * <p>How the insulin was delivered. ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage deliveryMode(ClientFacingInsulinInjectionSampleDeliveryMode deliveryMode) {
+            this.deliveryMode = Optional.ofNullable(deliveryMode);
+            return this;
+        }
+
+        /**
+         * <p>How the insulin was delivered. ℹ️ This enum is non-exhaustive.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "delivery_mode", nulls = Nulls.SKIP)
+        public _FinalStage deliveryMode(Optional<ClientFacingInsulinInjectionSampleDeliveryMode> deliveryMode) {
+            this.deliveryMode = deliveryMode;
+            return this;
+        }
+
+        /**
          * <p>Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -346,7 +489,29 @@ public final class ClientFacingInsulinInjectionSample {
         @java.lang.Override
         public ClientFacingInsulinInjectionSample build() {
             return new ClientFacingInsulinInjectionSample(
-                    id, timezoneOffset, type, timestamp, start, end, value, additionalProperties);
+                    id,
+                    timezoneOffset,
+                    type,
+                    timestamp,
+                    start,
+                    end,
+                    value,
+                    deliveryMode,
+                    deliveryForm,
+                    bolusPurpose,
+                    additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

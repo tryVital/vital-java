@@ -125,5 +125,15 @@ public final class BulkOpsResponse {
         public BulkOpsResponse build() {
             return new BulkOpsResponse(data, nextCursor, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }
