@@ -98,6 +98,10 @@ public final class ClientFacingAppointmentEvent {
     public interface _FinalStage {
         ClientFacingAppointmentEvent build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(Optional<Map<String, Object>> data);
 
         _FinalStage data(Map<String, Object> data);
@@ -154,6 +158,18 @@ public final class ClientFacingAppointmentEvent {
         @java.lang.Override
         public ClientFacingAppointmentEvent build() {
             return new ClientFacingAppointmentEvent(createdAt, status, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

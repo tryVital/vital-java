@@ -85,6 +85,10 @@ public final class GroupedHypnogram {
     public interface _FinalStage {
         GroupedHypnogram build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingHypnogramTimeseries> data);
 
         _FinalStage addData(ClientFacingHypnogramTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedHypnogram {
         @java.lang.Override
         public GroupedHypnogram build() {
             return new GroupedHypnogram(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

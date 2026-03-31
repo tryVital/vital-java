@@ -18,7 +18,6 @@ client.link().listBulkOps(
         .builder()
         .nextCursor("next_cursor")
         .pageSize(1)
-        .teamId(LinkListBulkOpsRequestTeamId.INFER_FROM_CONTEXT)
         .build()
 );
 ```
@@ -47,14 +46,6 @@ client.link().listBulkOps(
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**teamId:** `Optional<LinkListBulkOpsRequestTeamId>` 
-    
-</dd>
-</dl>
 </dd>
 </dl>
 
@@ -80,7 +71,6 @@ client.link().bulkImport(
     BulkImportConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkImportRequestTeamId.INFER_FROM_CONTEXT)
         .connections(
             Arrays.asList(
                 ConnectionRecipe
@@ -105,14 +95,6 @@ client.link().bulkImport(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**teamId:** `Optional<LinkBulkImportRequestTeamId>` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -170,7 +152,6 @@ client.link().bulkTriggerHistoricalPull(
     BulkTriggerHistoricalPullBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkTriggerHistoricalPullRequestTeamId.INFER_FROM_CONTEXT)
         .userIds(
             Arrays.asList("user_ids")
         )
@@ -186,14 +167,6 @@ client.link().bulkTriggerHistoricalPull(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**teamId:** `Optional<LinkBulkTriggerHistoricalPullRequestTeamId>` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -251,7 +224,6 @@ client.link().bulkExport(
     BulkExportConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkExportRequestTeamId.INFER_FROM_CONTEXT)
         .build()
 );
 ```
@@ -264,14 +236,6 @@ client.link().bulkExport(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**teamId:** `Optional<LinkBulkExportRequestTeamId>` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -321,7 +285,6 @@ client.link().bulkPause(
     BulkPauseConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkPauseRequestTeamId.INFER_FROM_CONTEXT)
         .userIds(
             Arrays.asList("user_ids")
         )
@@ -337,14 +300,6 @@ client.link().bulkPause(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**teamId:** `Optional<LinkBulkPauseRequestTeamId>` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -706,7 +661,6 @@ Check link token state - can be hit continuously used as heartbeat
 client.link().tokenState(
     LinkTokenStateRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -768,7 +722,6 @@ client.link().emailAuth(
         .email("email")
         .provider(Providers.OURA)
         .authType(AuthType.PASSWORD)
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -863,7 +816,6 @@ client.link().passwordAuth(
         .password("password")
         .provider(Providers.OURA)
         .authType(AuthType.PASSWORD)
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -955,7 +907,6 @@ client.link().generateOauthLink(
     OAuthProviders.OURA,
     LinkGenerateOauthLinkRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1025,7 +976,6 @@ client.link().connectPasswordProvider(
         .builder()
         .username("username")
         .password("password")
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1118,7 +1068,6 @@ client.link().completePasswordProviderMfa(
     CompletePasswordProviderMfaBody
         .builder()
         .mfaCode("mfa_code")
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1195,7 +1144,6 @@ client.link().connectEmailAuthProvider(
     EmailProviderAuthLink
         .builder()
         .email("email")
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1286,7 +1234,6 @@ GET List of all available providers given the generated link token.
 client.link().getAllProviders(
     LinkGetAllProvidersRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1357,6 +1304,22 @@ client.link().connectManualProvider(
 <dl>
 <dd>
 
+**vitalIosSdkVersion:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vitalAndroidSdkVersion:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **userId:** `String` 
     
 </dd>
@@ -1366,6 +1329,14 @@ client.link().connectManualProvider(
 <dd>
 
 **providerId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantedPermissions:** `Optional<List<String>>` 
     
 </dd>
 </dl>
@@ -9807,7 +9778,7 @@ client.user().upsertUserInfo(
         .gender("gender")
         .dob("dob")
         .address(
-            Address
+            UserAddress
                 .builder()
                 .firstLine("first_line")
                 .country("country")
@@ -9888,7 +9859,7 @@ client.user().upsertUserInfo(
 <dl>
 <dd>
 
-**address:** `Address` 
+**address:** `UserAddress` 
     
 </dd>
 </dl>
@@ -10563,7 +10534,6 @@ Post teams.
 client.team().getLinkConfig(
     TeamGetLinkConfigRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -11300,6 +11270,22 @@ client.labTests().create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**labAccountId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labSlug:** `Optional<Labs>` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -11449,7 +11435,7 @@ client.labTests().updateLabTest(
 <dl>
 <dd>
 
-GET all the markers for the given lab.
+List active and orderable markers for a given Lab. Note that reflex markers are not included.
 </dd>
 </dl>
 </dd>
@@ -11467,6 +11453,7 @@ GET all the markers for the given lab.
 client.labTests().getMarkers(
     LabTestsGetMarkersRequest
         .builder()
+        .labSlug("lab_slug")
         .name("name")
         .aLaCarteEnabled(true)
         .labAccountId("lab_account_id")
@@ -11489,6 +11476,14 @@ client.labTests().getMarkers(
 <dd>
 
 **labId:** `Optional<Integer>` — The identifier Vital assigned to a lab partner.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labSlug:** `Optional<String>` — The slug of the lab for these markers. If both lab_id and lab_slug are provided, lab_slug will be used.
     
 </dd>
 </dl>
@@ -11610,6 +11605,20 @@ client.labTests().getMarkersForOrderSet(
 <details><summary><code>client.labTests.getMarkersForLabTest(labTestId) -> GetMarkersResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all markers for a given Lab Test, as well as any associated reflex markers.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -12421,6 +12430,14 @@ client.labTests().requestPhlebotomyAppointment(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**appointmentNotes:** `Optional<String>` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -13161,7 +13178,7 @@ client.labTests().getLabelsPdf(
 client.labTests().getPscAppointmentAvailability(
     LabTestsGetPscAppointmentAvailabilityRequest
         .builder()
-        .lab("quest")
+        .lab(AppointmentPscLabs.QUEST)
         .startDate("start_date")
         .zipCode("zip_code")
         .radius(AllowedRadius.TEN)
@@ -13182,7 +13199,7 @@ client.labTests().getPscAppointmentAvailability(
 <dl>
 <dd>
 
-**lab:** `String` — Lab to check for availability
+**lab:** `AppointmentPscLabs` — Lab to check for availability
     
 </dd>
 </dl>
@@ -13257,8 +13274,6 @@ client.labTests().bookPscAppointment(
                 .bookingKey("booking_key")
                 .build()
         )
-        .idempotencyKey("x-idempotency-key")
-        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13760,8 +13775,6 @@ client.labTests().createOrder(
                 .country("country")
                 .build()
         )
-        .idempotencyKey("X-Idempotency-Key")
-        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13891,6 +13904,14 @@ client.labTests().createOrder(
 <dd>
 
 **passthrough:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clinicalNotes:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -14305,6 +14326,224 @@ client.labTests().validateIcdCodes(
 <dd>
 
 **codes:** `List<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Compendium
+<details><summary><code>client.compendium.search(request) -> SearchCompendiumResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.compendium().search(
+    SearchCompendiumBody
+        .builder()
+        .mode(SearchMode.CANONICAL)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mode:** `SearchMode` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cptCodes:** `Optional<List<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loincSetHash:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labs:** `Optional<List<CompendiumSearchLabs>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeRelated:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.compendium.convert(request) -> ConvertCompendiumResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.compendium().convert(
+    ConvertCompendiumBody
+        .builder()
+        .targetLab(CompendiumSearchLabs.LABCORP)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**labTestId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**providerIds:** `Optional<List<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**targetLab:** `CompendiumSearchLabs` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## LabAccount
+<details><summary><code>client.labAccount.getTeamLabAccounts() -> GetTeamLabAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.labAccount().getTeamLabAccounts(
+    LabAccountGetTeamLabAccountsRequest
+        .builder()
+        .labAccountId("lab_account_id")
+        .status(LabAccountStatus.ACTIVE)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**labAccountId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `Optional<LabAccountStatus>` 
     
 </dd>
 </dl>
@@ -14993,7 +15232,7 @@ client.payor().createPayor(
 <dl>
 <dd>
 
-Creates a parse job, uploads the file to provider, persists the job row,
+Creates a parse job, uploads the file(s) to provider, persists the job row,
 and starts the ParseLabReport. Returns a generated job_id.
 </dd>
 </dl>
@@ -15328,3 +15567,4 @@ client.aggregate().getTaskHistoryForContinuousQuery(
 </dd>
 </dl>
 </details>
+
