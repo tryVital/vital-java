@@ -85,6 +85,10 @@ public final class GroupedHeartRate {
     public interface _FinalStage {
         GroupedHeartRate build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingHeartRateTimeseries> data);
 
         _FinalStage addData(ClientFacingHeartRateTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedHeartRate {
         @java.lang.Override
         public GroupedHeartRate build() {
             return new GroupedHeartRate(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
