@@ -99,6 +99,10 @@ public final class AreaInfo {
     public interface _FinalStage {
         AreaInfo build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage centralLabs(Map<String, PscAreaInfo> centralLabs);
 
         _FinalStage putAllCentralLabs(Map<String, PscAreaInfo> centralLabs);
@@ -168,6 +172,18 @@ public final class AreaInfo {
         @java.lang.Override
         public AreaInfo build() {
             return new AreaInfo(zipCode, phlebotomy, centralLabs, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
