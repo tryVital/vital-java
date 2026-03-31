@@ -85,6 +85,10 @@ public final class GroupedBloodPressure {
     public interface _FinalStage {
         GroupedBloodPressure build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingBloodPressureTimeseries> data);
 
         _FinalStage addData(ClientFacingBloodPressureTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedBloodPressure {
         @java.lang.Override
         public GroupedBloodPressure build() {
             return new GroupedBloodPressure(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
