@@ -85,6 +85,10 @@ public final class GroupedVo2Max {
     public interface _FinalStage {
         GroupedVo2Max build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingVo2MaxTimeseries> data);
 
         _FinalStage addData(ClientFacingVo2MaxTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedVo2Max {
         @java.lang.Override
         public GroupedVo2Max build() {
             return new GroupedVo2Max(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
