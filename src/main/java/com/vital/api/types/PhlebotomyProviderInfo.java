@@ -85,6 +85,10 @@ public final class PhlebotomyProviderInfo {
     public interface _FinalStage {
         PhlebotomyProviderInfo build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage serviceTypes(List<AppointmentServiceType> serviceTypes);
 
         _FinalStage addServiceTypes(AppointmentServiceType serviceTypes);
@@ -144,6 +148,18 @@ public final class PhlebotomyProviderInfo {
         @java.lang.Override
         public PhlebotomyProviderInfo build() {
             return new PhlebotomyProviderInfo(name, serviceTypes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
