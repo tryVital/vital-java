@@ -209,6 +209,10 @@ public final class ConnectionRecipe {
     public interface _FinalStage {
         ConnectionRecipe build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>OAuth scopes of the data provider. Specify <code>null</code> if you do not
          * have any scopes on record.</p>
@@ -375,6 +379,18 @@ public final class ConnectionRecipe {
         public ConnectionRecipe build() {
             return new ConnectionRecipe(
                     userId, accessToken, refreshToken, providerId, expiresAt, oauthScopes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

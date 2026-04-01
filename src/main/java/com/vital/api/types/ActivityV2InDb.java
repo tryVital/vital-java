@@ -212,6 +212,10 @@ public final class ActivityV2InDb {
     public interface _FinalStage {
         ActivityV2InDb build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(Map<String, Object> data);
 
         _FinalStage putAllData(Map<String, Object> data);
@@ -411,6 +415,18 @@ public final class ActivityV2InDb {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
