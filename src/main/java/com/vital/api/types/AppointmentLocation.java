@@ -137,6 +137,10 @@ public final class AppointmentLocation {
     public interface _FinalStage {
         AppointmentLocation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage distance(Optional<Integer> distance);
 
         _FinalStage distance(Integer distance);
@@ -233,6 +237,18 @@ public final class AppointmentLocation {
         @java.lang.Override
         public AppointmentLocation build() {
             return new AppointmentLocation(location, distance, address, code, name, ianaTimezone, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
