@@ -74,8 +74,8 @@ public class AsyncRawInsuranceClient {
                     httpUrl, "provider_payor_id", request.getProviderPayorId().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -149,8 +149,8 @@ public class AsyncRawInsuranceClient {
                 .newBuilder()
                 .addPathSegments("v3/insurance/search/payor");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -225,8 +225,8 @@ public class AsyncRawInsuranceClient {
                 .addPathSegments("v3/insurance/search/diagnosis");
         QueryStringMapper.addQueryParameter(httpUrl, "diagnosis_query", request.getDiagnosisQuery(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
