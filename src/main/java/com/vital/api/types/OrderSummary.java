@@ -159,6 +159,10 @@ public final class OrderSummary {
     public interface _FinalStage {
         OrderSummary build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage origin(Optional<OrderOrigin> origin);
 
         _FinalStage origin(OrderOrigin origin);
@@ -268,6 +272,18 @@ public final class OrderSummary {
         public OrderSummary build() {
             return new OrderSummary(
                     id, origin, parentId, lastStatus, lastStatusCreatedAt, updatedAt, createdAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
