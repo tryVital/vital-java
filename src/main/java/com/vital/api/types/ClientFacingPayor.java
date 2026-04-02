@@ -155,6 +155,10 @@ public final class ClientFacingPayor {
     public interface _FinalStage {
         ClientFacingPayor build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Insurance name aliases returned for the insurance information.</p>
          */
@@ -278,6 +282,18 @@ public final class ClientFacingPayor {
         @java.lang.Override
         public ClientFacingPayor build() {
             return new ClientFacingPayor(payorCode, name, aliases, orgAddress, source, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
