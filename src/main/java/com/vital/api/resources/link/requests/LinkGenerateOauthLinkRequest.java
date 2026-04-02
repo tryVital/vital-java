@@ -88,5 +88,15 @@ public final class LinkGenerateOauthLinkRequest {
         public LinkGenerateOauthLinkRequest build() {
             return new LinkGenerateOauthLinkRequest(vitalLinkToken, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }
