@@ -26,8 +26,6 @@ public final class HistoricalPullCompleted {
 
     private final OffsetDateTime endDate;
 
-    private final boolean isFinal;
-
     private final String provider;
 
     private final Map<String, Object> additionalProperties;
@@ -36,13 +34,11 @@ public final class HistoricalPullCompleted {
             String userId,
             OffsetDateTime startDate,
             OffsetDateTime endDate,
-            boolean isFinal,
             String provider,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isFinal = isFinal;
         this.provider = provider;
         this.additionalProperties = additionalProperties;
     }
@@ -63,8 +59,8 @@ public final class HistoricalPullCompleted {
     }
 
     @JsonProperty("is_final")
-    public boolean getIsFinal() {
-        return isFinal;
+    public Boolean getIsFinal() {
+        return true;
     }
 
     @JsonProperty("provider")
@@ -87,13 +83,12 @@ public final class HistoricalPullCompleted {
         return userId.equals(other.userId)
                 && startDate.equals(other.startDate)
                 && endDate.equals(other.endDate)
-                && isFinal == other.isFinal
                 && provider.equals(other.provider);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.startDate, this.endDate, this.isFinal, this.provider);
+        return Objects.hash(this.userId, this.startDate, this.endDate, this.provider);
     }
 
     @java.lang.Override
@@ -116,11 +111,7 @@ public final class HistoricalPullCompleted {
     }
 
     public interface EndDateStage {
-        IsFinalStage endDate(@NotNull OffsetDateTime endDate);
-    }
-
-    public interface IsFinalStage {
-        ProviderStage isFinal(boolean isFinal);
+        ProviderStage endDate(@NotNull OffsetDateTime endDate);
     }
 
     public interface ProviderStage {
@@ -129,18 +120,19 @@ public final class HistoricalPullCompleted {
 
     public interface _FinalStage {
         HistoricalPullCompleted build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements UserIdStage, StartDateStage, EndDateStage, IsFinalStage, ProviderStage, _FinalStage {
+    public static final class Builder implements UserIdStage, StartDateStage, EndDateStage, ProviderStage, _FinalStage {
         private String userId;
 
         private OffsetDateTime startDate;
 
         private OffsetDateTime endDate;
-
-        private boolean isFinal;
 
         private String provider;
 
@@ -154,7 +146,6 @@ public final class HistoricalPullCompleted {
             userId(other.getUserId());
             startDate(other.getStartDate());
             endDate(other.getEndDate());
-            isFinal(other.getIsFinal());
             provider(other.getProvider());
             return this;
         }
@@ -175,15 +166,8 @@ public final class HistoricalPullCompleted {
 
         @java.lang.Override
         @JsonSetter("end_date")
-        public IsFinalStage endDate(@NotNull OffsetDateTime endDate) {
+        public ProviderStage endDate(@NotNull OffsetDateTime endDate) {
             this.endDate = Objects.requireNonNull(endDate, "endDate must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("is_final")
-        public ProviderStage isFinal(boolean isFinal) {
-            this.isFinal = isFinal;
             return this;
         }
 
@@ -196,7 +180,19 @@ public final class HistoricalPullCompleted {
 
         @java.lang.Override
         public HistoricalPullCompleted build() {
-            return new HistoricalPullCompleted(userId, startDate, endDate, isFinal, provider, additionalProperties);
+            return new HistoricalPullCompleted(userId, startDate, endDate, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
