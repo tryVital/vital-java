@@ -170,5 +170,15 @@ public final class GroupedForcedExpiratoryVolume1Response {
         public GroupedForcedExpiratoryVolume1Response build() {
             return new GroupedForcedExpiratoryVolume1Response(groups, next, nextCursor, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }
