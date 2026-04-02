@@ -177,5 +177,15 @@ public final class GetOrdersResponse {
         public GetOrdersResponse build() {
             return new GetOrdersResponse(orders, total, page, size, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }
