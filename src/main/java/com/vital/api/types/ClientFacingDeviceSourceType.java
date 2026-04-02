@@ -24,6 +24,8 @@ public enum ClientFacingDeviceSourceType {
 
     AUTOMATIC("automatic"),
 
+    INSULIN_PUMP("insulin_pump"),
+
     SCALE("scale"),
 
     CHEST_STRAP("chest_strap"),
