@@ -85,6 +85,10 @@ public final class GroupedAFibBurden {
     public interface _FinalStage {
         GroupedAFibBurden build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingAFibBurdenSample> data);
 
         _FinalStage addData(ClientFacingAFibBurdenSample data);
@@ -144,6 +148,18 @@ public final class GroupedAFibBurden {
         @java.lang.Override
         public GroupedAFibBurden build() {
             return new GroupedAFibBurden(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
