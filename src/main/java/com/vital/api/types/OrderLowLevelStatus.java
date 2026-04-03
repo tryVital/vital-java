@@ -54,7 +54,11 @@ public enum OrderLowLevelStatus {
 
     REGISTERED("registered"),
 
-    REDRAW_AVAILABLE("redraw_available");
+    REDRAW_AVAILABLE("redraw_available"),
+
+    CORRECTED("corrected"),
+
+    LAB_PROCESSING_BLOCKED("lab_processing_blocked");
 
     private final String value;
 
