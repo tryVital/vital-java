@@ -169,6 +169,10 @@ public final class ClientFacingInsurance {
     public interface _FinalStage {
         ClientFacingInsurance build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage groupId(Optional<String> groupId);
 
         _FinalStage groupId(String groupId);
@@ -305,6 +309,18 @@ public final class ClientFacingInsurance {
                     guarantor,
                     isPrimary,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
