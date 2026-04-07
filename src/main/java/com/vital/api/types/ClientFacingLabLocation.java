@@ -139,6 +139,10 @@ public final class ClientFacingLabLocation {
     public interface _FinalStage {
         ClientFacingLabLocation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage supportedBillTypes(List<Billing> supportedBillTypes);
 
         _FinalStage addSupportedBillTypes(Billing supportedBillTypes);
@@ -263,6 +267,18 @@ public final class ClientFacingLabLocation {
         public ClientFacingLabLocation build() {
             return new ClientFacingLabLocation(
                     metadata, distance, siteCode, supportedBillTypes, location, capabilities, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

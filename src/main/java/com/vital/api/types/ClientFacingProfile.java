@@ -198,6 +198,10 @@ public final class ClientFacingProfile {
     public interface _FinalStage {
         ClientFacingProfile build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage height(Optional<Integer> height);
 
         _FinalStage height(Integer height);
@@ -381,6 +385,18 @@ public final class ClientFacingProfile {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
