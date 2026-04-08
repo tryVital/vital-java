@@ -52,6 +52,8 @@ public final class ClientFacingSleep {
 
     private final Optional<Integer> score;
 
+    private final Optional<Integer> recoveryReadinessScore;
+
     private final Optional<Integer> hrLowest;
 
     private final Optional<Integer> hrAverage;
@@ -100,6 +102,7 @@ public final class ClientFacingSleep {
             int rem,
             int deep,
             Optional<Integer> score,
+            Optional<Integer> recoveryReadinessScore,
             Optional<Integer> hrLowest,
             Optional<Integer> hrAverage,
             Optional<Integer> hrResting,
@@ -131,6 +134,7 @@ public final class ClientFacingSleep {
         this.rem = rem;
         this.deep = deep;
         this.score = score;
+        this.recoveryReadinessScore = recoveryReadinessScore;
         this.hrLowest = hrLowest;
         this.hrAverage = hrAverage;
         this.hrResting = hrResting;
@@ -267,6 +271,14 @@ public final class ClientFacingSleep {
     @JsonProperty("score")
     public Optional<Integer> getScore() {
         return score;
+    }
+
+    /**
+     * @return A value between 0 and 100 representing the provider's recovery/readiness proxy. Currently sourced from Oura readiness score, Whoop recovery score, and Ultrahuman recovery::scalar
+     */
+    @JsonProperty("recovery_readiness_score")
+    public Optional<Integer> getRecoveryReadinessScore() {
+        return recoveryReadinessScore;
     }
 
     /**
@@ -407,6 +419,7 @@ public final class ClientFacingSleep {
                 && rem == other.rem
                 && deep == other.deep
                 && score.equals(other.score)
+                && recoveryReadinessScore.equals(other.recoveryReadinessScore)
                 && hrLowest.equals(other.hrLowest)
                 && hrAverage.equals(other.hrAverage)
                 && hrResting.equals(other.hrResting)
@@ -442,6 +455,7 @@ public final class ClientFacingSleep {
                 this.rem,
                 this.deep,
                 this.score,
+                this.recoveryReadinessScore,
                 this.hrLowest,
                 this.hrAverage,
                 this.hrResting,
@@ -579,6 +593,10 @@ public final class ClientFacingSleep {
     public interface _FinalStage {
         ClientFacingSleep build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds</p>
          */
@@ -592,6 +610,13 @@ public final class ClientFacingSleep {
         _FinalStage score(Optional<Integer> score);
 
         _FinalStage score(Integer score);
+
+        /**
+         * <p>A value between 0 and 100 representing the provider's recovery/readiness proxy. Currently sourced from Oura readiness score, Whoop recovery score, and Ultrahuman recovery::scalar</p>
+         */
+        _FinalStage recoveryReadinessScore(Optional<Integer> recoveryReadinessScore);
+
+        _FinalStage recoveryReadinessScore(Integer recoveryReadinessScore);
 
         /**
          * <p>The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute</p>
@@ -750,6 +775,8 @@ public final class ClientFacingSleep {
 
         private Optional<Integer> hrLowest = Optional.empty();
 
+        private Optional<Integer> recoveryReadinessScore = Optional.empty();
+
         private Optional<Integer> score = Optional.empty();
 
         private Optional<Integer> timezoneOffset = Optional.empty();
@@ -776,6 +803,7 @@ public final class ClientFacingSleep {
             rem(other.getRem());
             deep(other.getDeep());
             score(other.getScore());
+            recoveryReadinessScore(other.getRecoveryReadinessScore());
             hrLowest(other.getHrLowest());
             hrAverage(other.getHrAverage());
             hrResting(other.getHrResting());
@@ -1211,6 +1239,26 @@ public final class ClientFacingSleep {
         }
 
         /**
+         * <p>A value between 0 and 100 representing the provider's recovery/readiness proxy. Currently sourced from Oura readiness score, Whoop recovery score, and Ultrahuman recovery::scalar</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage recoveryReadinessScore(Integer recoveryReadinessScore) {
+            this.recoveryReadinessScore = Optional.ofNullable(recoveryReadinessScore);
+            return this;
+        }
+
+        /**
+         * <p>A value between 0 and 100 representing the provider's recovery/readiness proxy. Currently sourced from Oura readiness score, Whoop recovery score, and Ultrahuman recovery::scalar</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "recovery_readiness_score", nulls = Nulls.SKIP)
+        public _FinalStage recoveryReadinessScore(Optional<Integer> recoveryReadinessScore) {
+            this.recoveryReadinessScore = recoveryReadinessScore;
+            return this;
+        }
+
+        /**
          * <p>A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1268,6 +1316,7 @@ public final class ClientFacingSleep {
                     rem,
                     deep,
                     score,
+                    recoveryReadinessScore,
                     hrLowest,
                     hrAverage,
                     hrResting,
@@ -1284,6 +1333,18 @@ public final class ClientFacingSleep {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

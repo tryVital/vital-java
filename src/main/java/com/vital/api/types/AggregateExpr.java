@@ -88,6 +88,10 @@ public final class AggregateExpr {
 
     public interface _FinalStage {
         AggregateExpr build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -130,6 +134,18 @@ public final class AggregateExpr {
         @java.lang.Override
         public AggregateExpr build() {
             return new AggregateExpr(arg, func, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
