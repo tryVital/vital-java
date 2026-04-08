@@ -104,6 +104,10 @@ public final class QueryBatch {
     public interface _FinalStage {
         QueryBatch build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage queries(List<Query> queries);
 
         _FinalStage addQueries(Query queries);
@@ -183,6 +187,18 @@ public final class QueryBatch {
         @java.lang.Override
         public QueryBatch build() {
             return new QueryBatch(timeframe, queries, config, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

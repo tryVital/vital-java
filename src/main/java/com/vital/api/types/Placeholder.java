@@ -8,34 +8,29 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Placeholder.Builder.class)
 public final class Placeholder {
-    private final boolean placeholder;
-
     private final Map<String, Object> additionalProperties;
 
-    private Placeholder(boolean placeholder, Map<String, Object> additionalProperties) {
-        this.placeholder = placeholder;
+    private Placeholder(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("placeholder")
-    public boolean getPlaceholder() {
-        return placeholder;
+    public Boolean getPlaceholder() {
+        return true;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Placeholder && equalTo((Placeholder) other);
+        return other instanceof Placeholder;
     }
 
     @JsonAnyGetter
@@ -43,59 +38,38 @@ public final class Placeholder {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(Placeholder other) {
-        return placeholder == other.placeholder;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-        return Objects.hash(this.placeholder);
-    }
-
     @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
 
-    public static PlaceholderStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface PlaceholderStage {
-        _FinalStage placeholder(boolean placeholder);
-
-        Builder from(Placeholder other);
-    }
-
-    public interface _FinalStage {
-        Placeholder build();
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PlaceholderStage, _FinalStage {
-        private boolean placeholder;
-
+    public static final class Builder {
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(Placeholder other) {
-            placeholder(other.getPlaceholder());
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("placeholder")
-        public _FinalStage placeholder(boolean placeholder) {
-            this.placeholder = placeholder;
-            return this;
-        }
-
-        @java.lang.Override
         public Placeholder build() {
-            return new Placeholder(placeholder, additionalProperties);
+            return new Placeholder(additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
