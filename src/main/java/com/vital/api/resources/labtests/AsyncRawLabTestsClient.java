@@ -150,8 +150,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "provider_ids", request.getProviderIds().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -214,8 +214,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/lab_tests");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -312,8 +312,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -386,8 +386,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("v3/lab_tests")
                 .addPathSegment(labTestId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -448,34 +448,38 @@ public class AsyncRawLabTestsClient {
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkers() {
         return getMarkers(LabTestsGetMarkersRequest.builder().build());
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkers(RequestOptions requestOptions) {
         return getMarkers(LabTestsGetMarkersRequest.builder().build(), requestOptions);
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkers(LabTestsGetMarkersRequest request) {
         return getMarkers(request, null);
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkers(
             LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v3/lab_tests/markers");
+        if (request.getLabSlug().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "lab_slug", request.getLabSlug().get(), false);
+        }
         if (request.getName().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "name", request.getName().get(), false);
@@ -501,8 +505,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "lab_id", request.getLabId().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -584,8 +588,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "size", request.getSize().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -645,22 +649,34 @@ public class AsyncRawLabTestsClient {
         return future;
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForLabTest(String labTestId) {
         return getMarkersForLabTest(
                 labTestId, LabTestsGetMarkersForLabTestRequest.builder().build());
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForLabTest(
             String labTestId, RequestOptions requestOptions) {
         return getMarkersForLabTest(
                 labTestId, LabTestsGetMarkersForLabTestRequest.builder().build(), requestOptions);
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return getMarkersForLabTest(labTestId, request, null);
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<VitalHttpResponse<GetMarkersResponse>> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -681,8 +697,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "size", request.getSize().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -784,8 +800,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "lab_account_id", request.getLabAccountId().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -852,8 +868,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/lab_tests/labs");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -971,8 +987,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "provider_ids", request.getProviderIds().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -1036,8 +1052,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegment(labTestId)
                 .addPathSegments("collection_instruction_pdf");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -1203,8 +1219,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "order_ids", request.getOrderIds().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -1303,8 +1319,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "start_date", request.getStartDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1385,8 +1401,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("phlebotomy/appointment")
                 .addPathSegments("book");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1466,8 +1482,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("phlebotomy/appointment")
                 .addPathSegments("request");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1547,8 +1563,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("phlebotomy/appointment")
                 .addPathSegments("reschedule");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1630,8 +1646,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("phlebotomy/appointment")
                 .addPathSegments("cancel");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1708,8 +1724,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/order/phlebotomy/appointment/cancellation-reasons");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -1773,8 +1789,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("phlebotomy")
                 .addPathSegments("appointment");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -1868,8 +1884,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "labs", request.getLabs().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -1944,8 +1960,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "capabilities", request.getCapabilities().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -2027,8 +2043,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "capabilities", request.getCapabilities().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -2098,8 +2114,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("result")
                 .addPathSegments("pdf");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -2171,8 +2187,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("result")
                 .addPathSegments("metadata");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -2242,8 +2258,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegment(orderId)
                 .addPathSegments("result");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -2320,8 +2336,8 @@ public class AsyncRawLabTestsClient {
         }
         QueryStringMapper.addQueryParameter(httpUrl, "collection_date", request.getCollectionDate(), false);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -2404,8 +2420,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "site_codes", request.getSiteCodes().get(), true);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -2492,8 +2508,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("psc/appointment")
                 .addPathSegments("book");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -2575,8 +2591,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("psc/appointment")
                 .addPathSegments("reschedule");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -2652,8 +2668,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("psc/appointment")
                 .addPathSegments("cancel");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -2724,8 +2740,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/order/psc/appointment/cancellation-reasons");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -2789,8 +2805,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("psc")
                 .addPathSegments("appointment");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -2860,8 +2876,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegment(orderId)
                 .addPathSegments("collection_instruction_pdf");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -2931,8 +2947,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("requisition")
                 .addPathSegments("pdf");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -3001,8 +3017,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegment(orderId)
                 .addPathSegments("abn_pdf");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -3070,8 +3086,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegments("v3/order")
                 .addPathSegment(orderId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -3133,8 +3149,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/order");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -3212,8 +3228,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/order/import");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -3291,8 +3307,8 @@ public class AsyncRawLabTestsClient {
                 .addPathSegment(orderId)
                 .addPathSegments("cancel");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -3388,8 +3404,8 @@ public class AsyncRawLabTestsClient {
                     httpUrl, "delay", request.getDelay().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -3470,13 +3486,13 @@ public class AsyncRawLabTestsClient {
                 .addPathSegment(orderId)
                 .addPathSegments("draw_completed");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("PATCH", null)
+                .method("PATCH", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();
@@ -3534,8 +3550,8 @@ public class AsyncRawLabTestsClient {
                 .newBuilder()
                 .addPathSegments("v3/insurance/validate_icd_codes");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
