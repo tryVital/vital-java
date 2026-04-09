@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum IndexColumnExprIndex {
     SLEEP("sleep"),
 
+    DERIVED_READINESS("derived_readiness"),
+
     ACTIVITY("activity"),
 
     WORKOUT("workout"),
