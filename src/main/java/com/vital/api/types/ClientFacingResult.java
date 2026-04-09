@@ -147,6 +147,10 @@ public final class ClientFacingResult {
     public interface _FinalStage {
         ClientFacingResult build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage labId(Optional<Integer> labId);
 
         _FinalStage labId(Integer labId);
@@ -263,6 +267,18 @@ public final class ClientFacingResult {
         @java.lang.Override
         public ClientFacingResult build() {
             return new ClientFacingResult(id, name, slug, labId, providerId, required, loinc, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
