@@ -85,6 +85,10 @@ public final class GroupedBodyWeight {
     public interface _FinalStage {
         GroupedBodyWeight build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingBodyWeightTimeseries> data);
 
         _FinalStage addData(ClientFacingBodyWeightTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedBodyWeight {
         @java.lang.Override
         public GroupedBodyWeight build() {
             return new GroupedBodyWeight(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

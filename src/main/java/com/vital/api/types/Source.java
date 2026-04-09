@@ -202,6 +202,10 @@ public final class Source {
     public interface _FinalStage {
         Source build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage group(Optional<String> group);
 
         _FinalStage group(String group);
@@ -401,6 +405,18 @@ public final class Source {
                     backfillNumDays,
                     id,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
