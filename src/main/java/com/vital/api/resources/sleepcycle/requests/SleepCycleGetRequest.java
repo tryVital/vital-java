@@ -96,6 +96,10 @@ public final class SleepCycleGetRequest {
     public interface _FinalStage {
         SleepCycleGetRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage endDate(Optional<String> endDate);
 
         _FinalStage endDate(String endDate);
@@ -172,6 +176,18 @@ public final class SleepCycleGetRequest {
         @java.lang.Override
         public SleepCycleGetRequest build() {
             return new SleepCycleGetRequest(startDate, endDate, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

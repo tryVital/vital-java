@@ -179,6 +179,10 @@ public final class ProviderLinkResponse {
     public interface _FinalStage {
         ProviderLinkResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).</p>
          */
@@ -379,6 +383,18 @@ public final class ProviderLinkResponse {
                     connected,
                     providerId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
