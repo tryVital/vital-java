@@ -126,6 +126,10 @@ public final class IndividualProviderData {
     public interface _FinalStage {
         IndividualProviderData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
@@ -221,6 +225,18 @@ public final class IndividualProviderData {
         @java.lang.Override
         public IndividualProviderData build() {
             return new IndividualProviderData(vitalLinkToken, username, password, region, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
