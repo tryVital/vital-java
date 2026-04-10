@@ -296,6 +296,10 @@ public final class MealInDbBaseClientFacingSource {
     public interface _FinalStage {
         MealInDbBaseClientFacingSource build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage energy(Optional<Energy> energy);
 
         _FinalStage energy(Energy energy);
@@ -575,6 +579,18 @@ public final class MealInDbBaseClientFacingSource {
                     sourceAppId,
                     sourceDeviceId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
