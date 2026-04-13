@@ -105,6 +105,10 @@ public final class BodyGetRawRequest {
     public interface _FinalStage {
         BodyGetRawRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Provider oura/strava etc</p>
          */
@@ -196,6 +200,18 @@ public final class BodyGetRawRequest {
         @java.lang.Override
         public BodyGetRawRequest build() {
             return new BodyGetRawRequest(provider, startDate, endDate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
