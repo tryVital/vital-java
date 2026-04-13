@@ -114,6 +114,10 @@ public final class PscAreaInfoDetails {
     public interface _FinalStage {
         PscAreaInfoDetails build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage capabilities(Optional<List<LabLocationCapability>> capabilities);
 
         _FinalStage capabilities(List<LabLocationCapability> capabilities);
@@ -182,6 +186,18 @@ public final class PscAreaInfoDetails {
         public PscAreaInfoDetails build() {
             return new PscAreaInfoDetails(
                     appointmentWithVital, withinRadius, radius, capabilities, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
