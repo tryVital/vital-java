@@ -171,6 +171,10 @@ public final class TimeSlot {
     public interface _FinalStage {
         TimeSlot build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage bookingKey(Optional<String> bookingKey);
 
         _FinalStage bookingKey(String bookingKey);
@@ -296,6 +300,18 @@ public final class TimeSlot {
                     isPriority,
                     numAppointmentsAvailable,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -321,6 +321,10 @@ public final class ClientFacingLabTest {
     public interface _FinalStage {
         ClientFacingLabTest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Defines whether a lab test requires fasting.</p>
          */
@@ -695,6 +699,18 @@ public final class ClientFacingLabTest {
                     commonTatDays,
                     worstCaseTatDays,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -35,6 +35,8 @@ public final class PatientAddress {
 
     private final String country;
 
+    private final Optional<String> accessNotes;
+
     private final Map<String, Object> additionalProperties;
 
     private PatientAddress(
@@ -45,6 +47,7 @@ public final class PatientAddress {
             String state,
             String zip,
             String country,
+            Optional<String> accessNotes,
             Map<String, Object> additionalProperties) {
         this.receiverName = receiverName;
         this.firstLine = firstLine;
@@ -53,6 +56,7 @@ public final class PatientAddress {
         this.state = state;
         this.zip = zip;
         this.country = country;
+        this.accessNotes = accessNotes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -91,6 +95,11 @@ public final class PatientAddress {
         return country;
     }
 
+    @JsonProperty("access_notes")
+    public Optional<String> getAccessNotes() {
+        return accessNotes;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -109,13 +118,21 @@ public final class PatientAddress {
                 && city.equals(other.city)
                 && state.equals(other.state)
                 && zip.equals(other.zip)
-                && country.equals(other.country);
+                && country.equals(other.country)
+                && accessNotes.equals(other.accessNotes);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.receiverName, this.firstLine, this.secondLine, this.city, this.state, this.zip, this.country);
+                this.receiverName,
+                this.firstLine,
+                this.secondLine,
+                this.city,
+                this.state,
+                this.zip,
+                this.country,
+                this.accessNotes);
     }
 
     @java.lang.Override
@@ -156,9 +173,17 @@ public final class PatientAddress {
     public interface _FinalStage {
         PatientAddress build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage secondLine(Optional<String> secondLine);
 
         _FinalStage secondLine(String secondLine);
+
+        _FinalStage accessNotes(Optional<String> accessNotes);
+
+        _FinalStage accessNotes(String accessNotes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -176,6 +201,8 @@ public final class PatientAddress {
 
         private String country;
 
+        private Optional<String> accessNotes = Optional.empty();
+
         private Optional<String> secondLine = Optional.empty();
 
         @JsonAnySetter
@@ -192,6 +219,7 @@ public final class PatientAddress {
             state(other.getState());
             zip(other.getZip());
             country(other.getCountry());
+            accessNotes(other.getAccessNotes());
             return this;
         }
 
@@ -238,6 +266,19 @@ public final class PatientAddress {
         }
 
         @java.lang.Override
+        public _FinalStage accessNotes(String accessNotes) {
+            this.accessNotes = Optional.ofNullable(accessNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "access_notes", nulls = Nulls.SKIP)
+        public _FinalStage accessNotes(Optional<String> accessNotes) {
+            this.accessNotes = accessNotes;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
             this.secondLine = Optional.ofNullable(secondLine);
             return this;
@@ -253,7 +294,19 @@ public final class PatientAddress {
         @java.lang.Override
         public PatientAddress build() {
             return new PatientAddress(
-                    receiverName, firstLine, secondLine, city, state, zip, country, additionalProperties);
+                    receiverName, firstLine, secondLine, city, state, zip, country, accessNotes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -54,6 +54,8 @@ public final class ClientFacingAppointment {
 
     private final boolean canReschedule;
 
+    private final Optional<String> appointmentNotes;
+
     private final AppointmentEventStatus eventStatus;
 
     private final Optional<Map<String, Object>> eventData;
@@ -78,6 +80,7 @@ public final class ClientFacingAppointment {
             String providerId,
             Optional<String> externalId,
             boolean canReschedule,
+            Optional<String> appointmentNotes,
             AppointmentEventStatus eventStatus,
             Optional<Map<String, Object>> eventData,
             List<ClientFacingAppointmentEvent> events,
@@ -97,6 +100,7 @@ public final class ClientFacingAppointment {
         this.providerId = providerId;
         this.externalId = externalId;
         this.canReschedule = canReschedule;
+        this.appointmentNotes = appointmentNotes;
         this.eventStatus = eventStatus;
         this.eventData = eventData;
         this.events = events;
@@ -184,6 +188,11 @@ public final class ClientFacingAppointment {
         return canReschedule;
     }
 
+    @JsonProperty("appointment_notes")
+    public Optional<String> getAppointmentNotes() {
+        return appointmentNotes;
+    }
+
     @JsonProperty("event_status")
     public AppointmentEventStatus getEventStatus() {
         return eventStatus;
@@ -226,6 +235,7 @@ public final class ClientFacingAppointment {
                 && providerId.equals(other.providerId)
                 && externalId.equals(other.externalId)
                 && canReschedule == other.canReschedule
+                && appointmentNotes.equals(other.appointmentNotes)
                 && eventStatus.equals(other.eventStatus)
                 && eventData.equals(other.eventData)
                 && events.equals(other.events);
@@ -249,6 +259,7 @@ public final class ClientFacingAppointment {
                 this.providerId,
                 this.externalId,
                 this.canReschedule,
+                this.appointmentNotes,
                 this.eventStatus,
                 this.eventData,
                 this.events);
@@ -312,6 +323,10 @@ public final class ClientFacingAppointment {
     public interface _FinalStage {
         ClientFacingAppointment build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage orderTransactionId(Optional<String> orderTransactionId);
 
         _FinalStage orderTransactionId(String orderTransactionId);
@@ -337,6 +352,10 @@ public final class ClientFacingAppointment {
         _FinalStage externalId(Optional<String> externalId);
 
         _FinalStage externalId(String externalId);
+
+        _FinalStage appointmentNotes(Optional<String> appointmentNotes);
+
+        _FinalStage appointmentNotes(String appointmentNotes);
 
         _FinalStage eventData(Optional<Map<String, Object>> eventData);
 
@@ -389,6 +408,8 @@ public final class ClientFacingAppointment {
 
         private Optional<Map<String, Object>> eventData = Optional.empty();
 
+        private Optional<String> appointmentNotes = Optional.empty();
+
         private Optional<String> externalId = Optional.empty();
 
         private Optional<String> ianaTimezone = Optional.empty();
@@ -421,6 +442,7 @@ public final class ClientFacingAppointment {
             providerId(other.getProviderId());
             externalId(other.getExternalId());
             canReschedule(other.getCanReschedule());
+            appointmentNotes(other.getAppointmentNotes());
             eventStatus(other.getEventStatus());
             eventData(other.getEventData());
             events(other.getEvents());
@@ -542,6 +564,19 @@ public final class ClientFacingAppointment {
         }
 
         @java.lang.Override
+        public _FinalStage appointmentNotes(String appointmentNotes) {
+            this.appointmentNotes = Optional.ofNullable(appointmentNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appointment_notes", nulls = Nulls.SKIP)
+        public _FinalStage appointmentNotes(Optional<String> appointmentNotes) {
+            this.appointmentNotes = appointmentNotes;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage externalId(String externalId) {
             this.externalId = Optional.ofNullable(externalId);
             return this;
@@ -638,10 +673,23 @@ public final class ClientFacingAppointment {
                     providerId,
                     externalId,
                     canReschedule,
+                    appointmentNotes,
                     eventStatus,
                     eventData,
                     events,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
