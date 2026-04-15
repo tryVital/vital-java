@@ -28,6 +28,8 @@ public enum Providers {
 
     ABBOTT_LIBREVIEW("abbott_libreview"),
 
+    TANDEM_SOURCE("tandem_source"),
+
     FREESTYLE_LIBRE_BLE("freestyle_libre_ble"),
 
     EIGHT_SLEEP("eight_sleep"),
@@ -65,6 +67,8 @@ public enum Providers {
     MY_FITNESS_PAL("my_fitness_pal"),
 
     HEALTH_CONNECT("health_connect"),
+
+    SAMSUNG_HEALTH("samsung_health"),
 
     POLAR("polar"),
 
