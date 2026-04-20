@@ -168,6 +168,10 @@ public final class ClientFacingIggTimeseries {
     public interface _FinalStage {
         ClientFacingIggTimeseries build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -305,6 +309,18 @@ public final class ClientFacingIggTimeseries {
         public ClientFacingIggTimeseries build() {
             return new ClientFacingIggTimeseries(
                     id, timezoneOffset, type, unit, timestamp, value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

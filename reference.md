@@ -18,7 +18,6 @@ client.link().listBulkOps(
         .builder()
         .nextCursor("next_cursor")
         .pageSize(1)
-        .teamId(LinkListBulkOpsRequestTeamId.INFER_FROM_CONTEXT)
         .build()
 );
 ```
@@ -47,14 +46,6 @@ client.link().listBulkOps(
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**teamId:** `Optional<LinkListBulkOpsRequestTeamId>` 
-    
-</dd>
-</dl>
 </dd>
 </dl>
 
@@ -80,7 +71,6 @@ client.link().bulkImport(
     BulkImportConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkImportRequestTeamId.INFER_FROM_CONTEXT)
         .connections(
             Arrays.asList(
                 ConnectionRecipe
@@ -109,15 +99,7 @@ client.link().bulkImport(
 <dl>
 <dd>
 
-**teamId:** `Optional<LinkBulkImportRequestTeamId>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `OAuthProviders` 
+**provider:** `OAuthProviders` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -170,7 +152,6 @@ client.link().bulkTriggerHistoricalPull(
     BulkTriggerHistoricalPullBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkTriggerHistoricalPullRequestTeamId.INFER_FROM_CONTEXT)
         .userIds(
             Arrays.asList("user_ids")
         )
@@ -190,14 +171,6 @@ client.link().bulkTriggerHistoricalPull(
 <dl>
 <dd>
 
-**teamId:** `Optional<LinkBulkTriggerHistoricalPullRequestTeamId>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **userIds:** `List<String>` 
     
 </dd>
@@ -206,7 +179,7 @@ client.link().bulkTriggerHistoricalPull(
 <dl>
 <dd>
 
-**provider:** `OAuthProviders` 
+**provider:** `OAuthProviders` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -251,7 +224,6 @@ client.link().bulkExport(
     BulkExportConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkExportRequestTeamId.INFER_FROM_CONTEXT)
         .build()
 );
 ```
@@ -268,14 +240,6 @@ client.link().bulkExport(
 <dl>
 <dd>
 
-**teamId:** `Optional<LinkBulkExportRequestTeamId>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **userIds:** `Optional<List<String>>` 
     
 </dd>
@@ -284,7 +248,7 @@ client.link().bulkExport(
 <dl>
 <dd>
 
-**provider:** `OAuthProviders` 
+**provider:** `OAuthProviders` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -321,7 +285,6 @@ client.link().bulkPause(
     BulkPauseConnectionsBody
         .builder()
         .provider(OAuthProviders.OURA)
-        .teamId(LinkBulkPauseRequestTeamId.INFER_FROM_CONTEXT)
         .userIds(
             Arrays.asList("user_ids")
         )
@@ -341,14 +304,6 @@ client.link().bulkPause(
 <dl>
 <dd>
 
-**teamId:** `Optional<LinkBulkPauseRequestTeamId>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **userIds:** `List<String>` 
     
 </dd>
@@ -357,7 +312,7 @@ client.link().bulkPause(
 <dl>
 <dd>
 
-**provider:** `OAuthProviders` 
+**provider:** `OAuthProviders` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -429,7 +384,7 @@ client.link().token(
 <dl>
 <dd>
 
-**provider:** `Optional<Providers>` 
+**provider:** `Optional<Providers>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -663,7 +618,7 @@ client.link().startConnect(
 <dl>
 <dd>
 
-**provider:** `Providers` 
+**provider:** `Providers` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -706,7 +661,6 @@ Check link token state - can be hit continuously used as heartbeat
 client.link().tokenState(
     LinkTokenStateRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -768,7 +722,6 @@ client.link().emailAuth(
         .email("email")
         .provider(Providers.OURA)
         .authType(AuthType.PASSWORD)
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -801,7 +754,7 @@ client.link().emailAuth(
 <dl>
 <dd>
 
-**provider:** `Providers` 
+**provider:** `Providers` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -809,7 +762,7 @@ client.link().emailAuth(
 <dl>
 <dd>
 
-**authType:** `AuthType` 
+**authType:** `AuthType` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -817,7 +770,7 @@ client.link().emailAuth(
 <dl>
 <dd>
 
-**region:** `Optional<Region>` 
+**region:** `Optional<Region>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -863,7 +816,6 @@ client.link().passwordAuth(
         .password("password")
         .provider(Providers.OURA)
         .authType(AuthType.PASSWORD)
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -904,7 +856,7 @@ client.link().passwordAuth(
 <dl>
 <dd>
 
-**provider:** `Providers` 
+**provider:** `Providers` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -912,7 +864,7 @@ client.link().passwordAuth(
 <dl>
 <dd>
 
-**authType:** `AuthType` 
+**authType:** `AuthType` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -955,7 +907,6 @@ client.link().generateOauthLink(
     OAuthProviders.OURA,
     LinkGenerateOauthLinkRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1025,7 +976,6 @@ client.link().connectPasswordProvider(
         .builder()
         .username("username")
         .password("password")
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1074,7 +1024,7 @@ client.link().connectPasswordProvider(
 <dl>
 <dd>
 
-**region:** `Optional<Region>` — Provider region to authenticate against. Only applicable to specific providers.
+**region:** `Optional<Region>` — Provider region to authenticate against. Only applicable to specific providers. ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -1118,7 +1068,6 @@ client.link().completePasswordProviderMfa(
     CompletePasswordProviderMfaBody
         .builder()
         .mfaCode("mfa_code")
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1195,7 +1144,6 @@ client.link().connectEmailAuthProvider(
     EmailProviderAuthLink
         .builder()
         .email("email")
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1236,7 +1184,7 @@ client.link().connectEmailAuthProvider(
 <dl>
 <dd>
 
-**emailProviderAuthLinkProvider:** `Optional<Providers>` 
+**emailProviderAuthLinkProvider:** `Optional<Providers>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -1244,7 +1192,7 @@ client.link().connectEmailAuthProvider(
 <dl>
 <dd>
 
-**region:** `Optional<Region>` 
+**region:** `Optional<Region>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -1286,7 +1234,6 @@ GET List of all available providers given the generated link token.
 client.link().getAllProviders(
     LinkGetAllProvidersRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -1357,6 +1304,22 @@ client.link().connectManualProvider(
 <dl>
 <dd>
 
+**vitalIosSdkVersion:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vitalAndroidSdkVersion:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **userId:** `String` 
     
 </dd>
@@ -1366,6 +1329,14 @@ client.link().connectManualProvider(
 <dd>
 
 **providerId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantedPermissions:** `Optional<List<String>>` 
     
 </dd>
 </dl>
@@ -1433,7 +1404,7 @@ client.link().connectDemoProvider(
 <dl>
 <dd>
 
-**provider:** `DemoProviders` — Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)
+**provider:** `DemoProviders` — Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data) ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -9693,7 +9664,7 @@ client.user().createInsurance(
 <dl>
 <dd>
 
-**relationship:** `ResponsibleRelationship` 
+**relationship:** `ResponsibleRelationship` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -9807,7 +9778,7 @@ client.user().upsertUserInfo(
         .gender("gender")
         .dob("dob")
         .address(
-            Address
+            UserAddress
                 .builder()
                 .firstLine("first_line")
                 .country("country")
@@ -9888,7 +9859,7 @@ client.user().upsertUserInfo(
 <dl>
 <dd>
 
-**address:** `Address` 
+**address:** `UserAddress` 
     
 </dd>
 </dl>
@@ -9904,7 +9875,7 @@ client.user().upsertUserInfo(
 <dl>
 <dd>
 
-**race:** `Optional<Race>` 
+**race:** `Optional<Race>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -9912,7 +9883,7 @@ client.user().upsertUserInfo(
 <dl>
 <dd>
 
-**ethnicity:** `Optional<Ethnicity>` 
+**ethnicity:** `Optional<Ethnicity>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -9920,7 +9891,7 @@ client.user().upsertUserInfo(
 <dl>
 <dd>
 
-**sexualOrientation:** `Optional<SexualOrientation>` 
+**sexualOrientation:** `Optional<SexualOrientation>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -9928,7 +9899,7 @@ client.user().upsertUserInfo(
 <dl>
 <dd>
 
-**genderIdentity:** `Optional<GenderIdentity>` 
+**genderIdentity:** `Optional<GenderIdentity>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -10563,7 +10534,6 @@ Post teams.
 client.team().getLinkConfig(
     TeamGetLinkConfigRequest
         .builder()
-        .vitalLinkToken("x-vital-link-token")
         .build()
 );
 ```
@@ -11122,6 +11092,12 @@ GET all the lab tests the team has access to.
 client.labTests().get(
     LabTestsGetRequest
         .builder()
+        .markerIds(
+            Arrays.asList(1)
+        )
+        .providerIds(
+            Arrays.asList("provider_ids")
+        )
         .generationMethod(LabTestGenerationMethodFilter.AUTO)
         .labSlug("lab_slug")
         .collectionMethod(LabTestCollectionMethod.TESTKIT)
@@ -11280,7 +11256,7 @@ client.labTests().create(
 <dl>
 <dd>
 
-**method:** `LabTestCollectionMethod` 
+**method:** `LabTestCollectionMethod` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -11297,6 +11273,22 @@ client.labTests().create(
 <dd>
 
 **fasting:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labAccountId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labSlug:** `Optional<Labs>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -11449,7 +11441,7 @@ client.labTests().updateLabTest(
 <dl>
 <dd>
 
-GET all the markers for the given lab.
+List active and orderable markers for a given Lab. Note that reflex markers are not included.
 </dd>
 </dl>
 </dd>
@@ -11467,6 +11459,10 @@ GET all the markers for the given lab.
 client.labTests().getMarkers(
     LabTestsGetMarkersRequest
         .builder()
+        .labId(
+            Arrays.asList(1)
+        )
+        .labSlug("lab_slug")
         .name("name")
         .aLaCarteEnabled(true)
         .labAccountId("lab_account_id")
@@ -11489,6 +11485,14 @@ client.labTests().getMarkers(
 <dd>
 
 **labId:** `Optional<Integer>` — The identifier Vital assigned to a lab partner.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labSlug:** `Optional<String>` — The slug of the lab for these markers. If both lab_id and lab_slug are provided, lab_slug will be used.
     
 </dd>
 </dl>
@@ -11610,6 +11614,20 @@ client.labTests().getMarkersForOrderSet(
 <details><summary><code>client.labTests.getMarkersForLabTest(labTestId) -> GetMarkersResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all markers for a given Lab Test, as well as any associated reflex markers.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -11825,6 +11843,12 @@ GET lab tests the team has access to as a paginated list.
 client.labTests().getPaginated(
     LabTestsGetPaginatedRequest
         .builder()
+        .markerIds(
+            Arrays.asList(1)
+        )
+        .providerIds(
+            Arrays.asList("provider_ids")
+        )
         .labTestLimit(1)
         .nextCursor("next_cursor")
         .generationMethod(LabTestGenerationMethodFilter.AUTO)
@@ -12012,6 +12036,18 @@ GET many orders with filters.
 client.labTests().getOrders(
     LabTestsGetOrdersRequest
         .builder()
+        .status(
+            Arrays.asList(OrderLowLevelStatus.ORDERED)
+        )
+        .orderType(
+            Arrays.asList(LabTestCollectionMethod.TESTKIT)
+        )
+        .orderActivationTypes(
+            Arrays.asList(OrderActivationType.CURRENT)
+        )
+        .orderIds(
+            Arrays.asList("order_ids")
+        )
         .searchInput("search_input")
         .startDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .endDate(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
@@ -12417,7 +12453,15 @@ client.labTests().requestPhlebotomyAppointment(
 <dl>
 <dd>
 
-**provider:** `AppointmentProvider` 
+**provider:** `AppointmentProvider` — ℹ️ This enum is non-exhaustive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**appointmentNotes:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -12701,6 +12745,9 @@ client.labTests().getAreaInfo(
     LabTestsGetAreaInfoRequest
         .builder()
         .zipCode("zip_code")
+        .labs(
+            Arrays.asList(ClientFacingLabs.QUEST)
+        )
         .radius(AllowedRadius.TEN)
         .lab(ClientFacingLabs.QUEST)
         .labAccountId("lab_account_id")
@@ -12782,6 +12829,9 @@ client.labTests().getPscInfo(
         .builder()
         .zipCode("zip_code")
         .labId(1)
+        .capabilities(
+            Arrays.asList(LabLocationCapability.STAT)
+        )
         .radius(AllowedRadius.TEN)
         .labAccountId("lab_account_id")
         .build()
@@ -12861,6 +12911,9 @@ client.labTests().getOrderPscInfo(
     "order_id",
     LabTestsGetOrderPscInfoRequest
         .builder()
+        .capabilities(
+            Arrays.asList(LabLocationCapability.STAT)
+        )
         .radius(AllowedRadius.TEN)
         .build()
 );
@@ -13161,7 +13214,10 @@ client.labTests().getLabelsPdf(
 client.labTests().getPscAppointmentAvailability(
     LabTestsGetPscAppointmentAvailabilityRequest
         .builder()
-        .lab("quest")
+        .lab(AppointmentPscLabs.QUEST)
+        .siteCodes(
+            Arrays.asList("site_codes")
+        )
         .startDate("start_date")
         .zipCode("zip_code")
         .radius(AllowedRadius.TEN)
@@ -13182,7 +13238,7 @@ client.labTests().getPscAppointmentAvailability(
 <dl>
 <dd>
 
-**lab:** `String` — Lab to check for availability
+**lab:** `AppointmentPscLabs` — Lab to check for availability
     
 </dd>
 </dl>
@@ -13214,7 +13270,7 @@ client.labTests().getPscAppointmentAvailability(
 <dl>
 <dd>
 
-**radius:** `Optional<AllowedRadius>` — Radius in which to search. (meters)
+**radius:** `Optional<AllowedRadius>` — Radius in which to search in miles
     
 </dd>
 </dl>
@@ -13257,8 +13313,6 @@ client.labTests().bookPscAppointment(
                 .bookingKey("booking_key")
                 .build()
         )
-        .idempotencyKey("x-idempotency-key")
-        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13760,8 +13814,6 @@ client.labTests().createOrder(
                 .country("country")
                 .build()
         )
-        .idempotencyKey("X-Idempotency-Key")
-        .idempotencyError("no-cache")
         .build()
 );
 ```
@@ -13818,7 +13870,7 @@ client.labTests().createOrder(
 <dl>
 <dd>
 
-**collectionMethod:** `Optional<LabTestCollectionMethod>` 
+**collectionMethod:** `Optional<LabTestCollectionMethod>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -13850,7 +13902,7 @@ client.labTests().createOrder(
 <dl>
 <dd>
 
-**billingType:** `Optional<Billing>` 
+**billingType:** `Optional<Billing>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -13891,6 +13943,14 @@ client.labTests().createOrder(
 <dd>
 
 **passthrough:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clinicalNotes:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -14005,7 +14065,7 @@ client.labTests().importOrder(
 <dl>
 <dd>
 
-**billingType:** `Billing` 
+**billingType:** `Billing` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -14021,7 +14081,7 @@ client.labTests().importOrder(
 <dl>
 <dd>
 
-**collectionMethod:** `LabTestCollectionMethod` 
+**collectionMethod:** `LabTestCollectionMethod` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -14305,6 +14365,224 @@ client.labTests().validateIcdCodes(
 <dd>
 
 **codes:** `List<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Compendium
+<details><summary><code>client.compendium.search(request) -> SearchCompendiumResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.compendium().search(
+    SearchCompendiumBody
+        .builder()
+        .mode(SearchMode.CANONICAL)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**mode:** `SearchMode` — ℹ️ This enum is non-exhaustive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cptCodes:** `Optional<List<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loincSetHash:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labs:** `Optional<List<CompendiumSearchLabs>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeRelated:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.compendium.convert(request) -> ConvertCompendiumResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.compendium().convert(
+    ConvertCompendiumBody
+        .builder()
+        .targetLab(CompendiumSearchLabs.LABCORP)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**labTestId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**providerIds:** `Optional<List<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**targetLab:** `CompendiumSearchLabs` — ℹ️ This enum is non-exhaustive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## LabAccount
+<details><summary><code>client.labAccount.getTeamLabAccounts() -> GetTeamLabAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.labAccount().getTeamLabAccounts(
+    LabAccountGetTeamLabAccountsRequest
+        .builder()
+        .labAccountId("lab_account_id")
+        .status(LabAccountStatus.ACTIVE)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**labAccountId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `Optional<LabAccountStatus>` 
     
 </dd>
 </dl>
@@ -14835,7 +15113,7 @@ client.insurance().searchPayorInfo(
 <dl>
 <dd>
 
-**provider:** `Optional<PayorCodeExternalProvider>` 
+**provider:** `Optional<PayorCodeExternalProvider>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -14960,7 +15238,7 @@ client.payor().createPayor(
 <dl>
 <dd>
 
-**provider:** `Optional<PayorCodeExternalProvider>` 
+**provider:** `Optional<PayorCodeExternalProvider>` — ℹ️ This enum is non-exhaustive.
     
 </dd>
 </dl>
@@ -14993,7 +15271,7 @@ client.payor().createPayor(
 <dl>
 <dd>
 
-Creates a parse job, uploads the file to provider, persists the job row,
+Creates a parse job, uploads the file(s) to provider, persists the job row,
 and starts the ParseLabReport. Returns a generated job_id.
 </dd>
 </dl>
@@ -15328,3 +15606,4 @@ client.aggregate().getTaskHistoryForContinuousQuery(
 </dd>
 </dl>
 </details>
+

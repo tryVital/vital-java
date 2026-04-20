@@ -85,6 +85,10 @@ public final class GroupedHeartRateRecoveryOneMinute {
     public interface _FinalStage {
         GroupedHeartRateRecoveryOneMinute build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingHeartRateRecoveryOneMinuteSample> data);
 
         _FinalStage addData(ClientFacingHeartRateRecoveryOneMinuteSample data);
@@ -144,6 +148,18 @@ public final class GroupedHeartRateRecoveryOneMinute {
         @java.lang.Override
         public GroupedHeartRateRecoveryOneMinute build() {
             return new GroupedHeartRateRecoveryOneMinute(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

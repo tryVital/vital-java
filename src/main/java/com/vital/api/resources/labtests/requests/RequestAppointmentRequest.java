@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AppointmentProvider;
@@ -16,6 +17,7 @@ import com.vital.api.types.UsAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -25,12 +27,18 @@ public final class RequestAppointmentRequest {
 
     private final AppointmentProvider provider;
 
+    private final Optional<String> appointmentNotes;
+
     private final Map<String, Object> additionalProperties;
 
     private RequestAppointmentRequest(
-            UsAddress address, AppointmentProvider provider, Map<String, Object> additionalProperties) {
+            UsAddress address,
+            AppointmentProvider provider,
+            Optional<String> appointmentNotes,
+            Map<String, Object> additionalProperties) {
         this.address = address;
         this.provider = provider;
+        this.appointmentNotes = appointmentNotes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -42,9 +50,17 @@ public final class RequestAppointmentRequest {
         return address;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public AppointmentProvider getProvider() {
         return provider;
+    }
+
+    @JsonProperty("appointment_notes")
+    public Optional<String> getAppointmentNotes() {
+        return appointmentNotes;
     }
 
     @java.lang.Override
@@ -59,12 +75,14 @@ public final class RequestAppointmentRequest {
     }
 
     private boolean equalTo(RequestAppointmentRequest other) {
-        return address.equals(other.address) && provider.equals(other.provider);
+        return address.equals(other.address)
+                && provider.equals(other.provider)
+                && appointmentNotes.equals(other.appointmentNotes);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.address, this.provider);
+        return Objects.hash(this.address, this.provider, this.appointmentNotes);
     }
 
     @java.lang.Override
@@ -86,11 +104,22 @@ public final class RequestAppointmentRequest {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage provider(@NotNull AppointmentProvider provider);
     }
 
     public interface _FinalStage {
         RequestAppointmentRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage appointmentNotes(Optional<String> appointmentNotes);
+
+        _FinalStage appointmentNotes(String appointmentNotes);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -98,6 +127,8 @@ public final class RequestAppointmentRequest {
         private UsAddress address;
 
         private AppointmentProvider provider;
+
+        private Optional<String> appointmentNotes = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -108,6 +139,7 @@ public final class RequestAppointmentRequest {
         public Builder from(RequestAppointmentRequest other) {
             address(other.getAddress());
             provider(other.getProvider());
+            appointmentNotes(other.getAppointmentNotes());
             return this;
         }
 
@@ -123,6 +155,11 @@ public final class RequestAppointmentRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(@NotNull AppointmentProvider provider) {
@@ -131,8 +168,33 @@ public final class RequestAppointmentRequest {
         }
 
         @java.lang.Override
+        public _FinalStage appointmentNotes(String appointmentNotes) {
+            this.appointmentNotes = Optional.ofNullable(appointmentNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appointment_notes", nulls = Nulls.SKIP)
+        public _FinalStage appointmentNotes(Optional<String> appointmentNotes) {
+            this.appointmentNotes = appointmentNotes;
+            return this;
+        }
+
+        @java.lang.Override
         public RequestAppointmentRequest build() {
-            return new RequestAppointmentRequest(address, provider, additionalProperties);
+            return new RequestAppointmentRequest(address, provider, appointmentNotes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -125,7 +125,7 @@ public final class HealthInsuranceCreateRequest {
     }
 
     /**
-     * @return Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship).
+     * @return Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship). ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("responsible_relationship")
     public Optional<ResponsibleRelationship> getResponsibleRelationship() {
@@ -338,7 +338,7 @@ public final class HealthInsuranceCreateRequest {
         }
 
         /**
-         * <p>Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship).</p>
+         * <p>Relationship between the patient and the insurance contractor. Values can be (Self, Spouse, Other Relationship). ℹ️ This enum is non-exhaustive.</p>
          */
         @JsonSetter(value = "responsible_relationship", nulls = Nulls.SKIP)
         public Builder responsibleRelationship(Optional<ResponsibleRelationship> responsibleRelationship) {
@@ -394,6 +394,16 @@ public final class HealthInsuranceCreateRequest {
                     responsibleDetails,
                     diagnosisCodes,
                     additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
