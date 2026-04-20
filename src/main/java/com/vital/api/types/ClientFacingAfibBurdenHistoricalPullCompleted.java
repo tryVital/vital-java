@@ -120,6 +120,10 @@ public final class ClientFacingAfibBurdenHistoricalPullCompleted {
 
     public interface _FinalStage {
         ClientFacingAfibBurdenHistoricalPullCompleted build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -178,6 +182,18 @@ public final class ClientFacingAfibBurdenHistoricalPullCompleted {
         public ClientFacingAfibBurdenHistoricalPullCompleted build() {
             return new ClientFacingAfibBurdenHistoricalPullCompleted(
                     userId, clientUserId, teamId, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
