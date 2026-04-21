@@ -97,11 +97,17 @@ public final class ClientFacingProfile {
         return wheelchairUse;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("gender")
     public Optional<Gender> getGender() {
         return gender;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("sex")
     public Optional<Sex> getSex() {
         return sex;
@@ -198,6 +204,10 @@ public final class ClientFacingProfile {
     public interface _FinalStage {
         ClientFacingProfile build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage height(Optional<Integer> height);
 
         _FinalStage height(Integer height);
@@ -210,10 +220,16 @@ public final class ClientFacingProfile {
 
         _FinalStage wheelchairUse(Boolean wheelchairUse);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage gender(Optional<Gender> gender);
 
         _FinalStage gender(Gender gender);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage sex(Optional<Sex> sex);
 
         _FinalStage sex(Sex sex);
@@ -302,12 +318,19 @@ public final class ClientFacingProfile {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage sex(Sex sex) {
             this.sex = Optional.ofNullable(sex);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sex", nulls = Nulls.SKIP)
         public _FinalStage sex(Optional<Sex> sex) {
@@ -315,12 +338,19 @@ public final class ClientFacingProfile {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage gender(Gender gender) {
             this.gender = Optional.ofNullable(gender);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "gender", nulls = Nulls.SKIP)
         public _FinalStage gender(Optional<Gender> gender) {
@@ -381,6 +411,18 @@ public final class ClientFacingProfile {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
