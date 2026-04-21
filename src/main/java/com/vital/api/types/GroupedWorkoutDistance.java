@@ -85,6 +85,10 @@ public final class GroupedWorkoutDistance {
     public interface _FinalStage {
         GroupedWorkoutDistance build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingWorkoutDistanceSample> data);
 
         _FinalStage addData(ClientFacingWorkoutDistanceSample data);
@@ -144,6 +148,18 @@ public final class GroupedWorkoutDistance {
         @java.lang.Override
         public GroupedWorkoutDistance build() {
             return new GroupedWorkoutDistance(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
