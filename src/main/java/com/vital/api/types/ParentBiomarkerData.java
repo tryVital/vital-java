@@ -113,6 +113,10 @@ public final class ParentBiomarkerData {
     public interface _FinalStage {
         ParentBiomarkerData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage providerId(Optional<String> providerId);
 
         _FinalStage providerId(String providerId);
@@ -179,6 +183,18 @@ public final class ParentBiomarkerData {
         @java.lang.Override
         public ParentBiomarkerData build() {
             return new ParentBiomarkerData(markerId, name, slug, providerId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
