@@ -62,6 +62,9 @@ public final class OrderSummary {
         return id;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("origin")
     public Optional<OrderOrigin> getOrigin() {
         return origin;
@@ -72,6 +75,9 @@ public final class OrderSummary {
         return parentId;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("last_status")
     public OrderLowLevelStatus getLastStatus() {
         return lastStatus;
@@ -141,6 +147,9 @@ public final class OrderSummary {
     }
 
     public interface LastStatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         LastStatusCreatedAtStage lastStatus(@NotNull OrderLowLevelStatus lastStatus);
     }
 
@@ -159,6 +168,13 @@ public final class OrderSummary {
     public interface _FinalStage {
         OrderSummary build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage origin(Optional<OrderOrigin> origin);
 
         _FinalStage origin(OrderOrigin origin);
@@ -209,6 +225,11 @@ public final class OrderSummary {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("last_status")
         public LastStatusCreatedAtStage lastStatus(@NotNull OrderLowLevelStatus lastStatus) {
@@ -251,12 +272,19 @@ public final class OrderSummary {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage origin(OrderOrigin origin) {
             this.origin = Optional.ofNullable(origin);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "origin", nulls = Nulls.SKIP)
         public _FinalStage origin(Optional<OrderOrigin> origin) {
@@ -268,6 +296,18 @@ public final class OrderSummary {
         public OrderSummary build() {
             return new OrderSummary(
                     id, origin, parentId, lastStatus, lastStatusCreatedAt, updatedAt, createdAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

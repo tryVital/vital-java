@@ -161,6 +161,9 @@ public final class ClientFacingElectrocardiogram {
         return timeZone;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("source_provider")
     public ClientFacingElectrocardiogramSourceProvider getSourceProvider() {
         return sourceProvider;
@@ -294,6 +297,9 @@ public final class ClientFacingElectrocardiogram {
     }
 
     public interface SourceProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         SourceTypeStage sourceProvider(@NotNull ClientFacingElectrocardiogramSourceProvider sourceProvider);
     }
 
@@ -322,6 +328,10 @@ public final class ClientFacingElectrocardiogram {
 
     public interface _FinalStage {
         ClientFacingElectrocardiogram build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage heartRateMean(Optional<Integer> heartRateMean);
 
@@ -474,6 +484,11 @@ public final class ClientFacingElectrocardiogram {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("source_provider")
         public SourceTypeStage sourceProvider(@NotNull ClientFacingElectrocardiogramSourceProvider sourceProvider) {
@@ -676,6 +691,18 @@ public final class ClientFacingElectrocardiogram {
                     userId,
                     source,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
