@@ -100,6 +100,9 @@ public final class ProviderLinkResponse {
         return providerMfa;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public PasswordProviders getProvider() {
         return provider;
@@ -169,6 +172,9 @@ public final class ProviderLinkResponse {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         ConnectedStage provider(@NotNull PasswordProviders provider);
     }
 
@@ -178,6 +184,10 @@ public final class ProviderLinkResponse {
 
     public interface _FinalStage {
         ProviderLinkResponse build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>The redirect URL you supplied when creating the Link Token (via <code>POST /v2/link/token</code>).</p>
@@ -260,6 +270,11 @@ public final class ProviderLinkResponse {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public ConnectedStage provider(@NotNull PasswordProviders provider) {
@@ -379,6 +394,18 @@ public final class ProviderLinkResponse {
                     connected,
                     providerId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -42,7 +42,7 @@ public final class DemoConnectionCreationPayload {
     }
 
     /**
-     * @return Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)
+     * @return Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data) ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("provider")
     public DemoProviders getProvider() {
@@ -89,13 +89,17 @@ public final class DemoConnectionCreationPayload {
 
     public interface ProviderStage {
         /**
-         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
+         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data) ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage provider(@NotNull DemoProviders provider);
     }
 
     public interface _FinalStage {
         DemoConnectionCreationPayload build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -129,8 +133,8 @@ public final class DemoConnectionCreationPayload {
         }
 
         /**
-         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
-         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data)</p>
+         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data) ℹ️ This enum is non-exhaustive.</p>
+         * <p>Demo provider. For more information, please check out our docs (https://docs.tryvital.io/wearables/providers/test_data) ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -143,6 +147,18 @@ public final class DemoConnectionCreationPayload {
         @java.lang.Override
         public DemoConnectionCreationPayload build() {
             return new DemoConnectionCreationPayload(userId, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
