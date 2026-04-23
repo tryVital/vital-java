@@ -71,6 +71,9 @@ public final class MissingBiomarkerResult {
         return slug;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("inferred_failure_type")
     public FailureType getInferredFailureType() {
         return inferredFailureType;
@@ -156,11 +159,18 @@ public final class MissingBiomarkerResult {
     }
 
     public interface InferredFailureTypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage inferredFailureType(@NotNull FailureType inferredFailureType);
     }
 
     public interface _FinalStage {
         MissingBiomarkerResult build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage note(Optional<String> note);
 
@@ -233,6 +243,11 @@ public final class MissingBiomarkerResult {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("inferred_failure_type")
         public _FinalStage inferredFailureType(@NotNull FailureType inferredFailureType) {
@@ -318,6 +333,18 @@ public final class MissingBiomarkerResult {
                     providerId,
                     sourceMarkers,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

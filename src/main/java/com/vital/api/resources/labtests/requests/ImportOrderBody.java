@@ -75,6 +75,9 @@ public final class ImportOrderBody {
         return userId;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("billing_type")
     public Billing getBillingType() {
         return billingType;
@@ -85,6 +88,9 @@ public final class ImportOrderBody {
         return orderSet;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("collection_method")
     public LabTestCollectionMethod getCollectionMethod() {
         return collectionMethod;
@@ -168,6 +174,9 @@ public final class ImportOrderBody {
     }
 
     public interface BillingTypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         OrderSetStage billingType(@NotNull Billing billingType);
     }
 
@@ -176,6 +185,9 @@ public final class ImportOrderBody {
     }
 
     public interface CollectionMethodStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         PatientDetailsStage collectionMethod(@NotNull LabTestCollectionMethod collectionMethod);
     }
 
@@ -193,6 +205,10 @@ public final class ImportOrderBody {
 
     public interface _FinalStage {
         ImportOrderBody build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage physician(Optional<PhysicianCreateRequest> physician);
 
@@ -257,6 +273,11 @@ public final class ImportOrderBody {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("billing_type")
         public OrderSetStage billingType(@NotNull Billing billingType) {
@@ -271,6 +292,11 @@ public final class ImportOrderBody {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("collection_method")
         public PatientDetailsStage collectionMethod(@NotNull LabTestCollectionMethod collectionMethod) {
@@ -338,6 +364,18 @@ public final class ImportOrderBody {
                     sampleId,
                     labAccountId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
