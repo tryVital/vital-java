@@ -12,12 +12,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.types.Address;
 import com.vital.api.types.Ethnicity;
 import com.vital.api.types.GenderIdentity;
 import com.vital.api.types.GuarantorDetails;
 import com.vital.api.types.Race;
 import com.vital.api.types.SexualOrientation;
+import com.vital.api.types.UserAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +39,7 @@ public final class UserInfoCreateRequest {
 
     private final String dob;
 
-    private final Address address;
+    private final UserAddress address;
 
     private final Optional<GuarantorDetails> medicalProxy;
 
@@ -60,7 +60,7 @@ public final class UserInfoCreateRequest {
             String phoneNumber,
             String gender,
             String dob,
-            Address address,
+            UserAddress address,
             Optional<GuarantorDetails> medicalProxy,
             Optional<Race> race,
             Optional<Ethnicity> ethnicity,
@@ -113,7 +113,7 @@ public final class UserInfoCreateRequest {
     }
 
     @JsonProperty("address")
-    public Address getAddress() {
+    public UserAddress getAddress() {
         return address;
     }
 
@@ -122,21 +122,33 @@ public final class UserInfoCreateRequest {
         return medicalProxy;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("race")
     public Optional<Race> getRace() {
         return race;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("ethnicity")
     public Optional<Ethnicity> getEthnicity() {
         return ethnicity;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("sexual_orientation")
     public Optional<SexualOrientation> getSexualOrientation() {
         return sexualOrientation;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("gender_identity")
     public Optional<GenderIdentity> getGenderIdentity() {
         return genderIdentity;
@@ -221,28 +233,44 @@ public final class UserInfoCreateRequest {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull Address address);
+        _FinalStage address(@NotNull UserAddress address);
     }
 
     public interface _FinalStage {
         UserInfoCreateRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
 
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage race(Optional<Race> race);
 
         _FinalStage race(Race race);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage ethnicity(Optional<Ethnicity> ethnicity);
 
         _FinalStage ethnicity(Ethnicity ethnicity);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
 
         _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
 
         _FinalStage genderIdentity(GenderIdentity genderIdentity);
@@ -270,7 +298,7 @@ public final class UserInfoCreateRequest {
 
         private String dob;
 
-        private Address address;
+        private UserAddress address;
 
         private Optional<GenderIdentity> genderIdentity = Optional.empty();
 
@@ -348,17 +376,24 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull Address address) {
+        public _FinalStage address(@NotNull UserAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage genderIdentity(GenderIdentity genderIdentity) {
             this.genderIdentity = Optional.ofNullable(genderIdentity);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
         public _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity) {
@@ -366,12 +401,19 @@ public final class UserInfoCreateRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage sexualOrientation(SexualOrientation sexualOrientation) {
             this.sexualOrientation = Optional.ofNullable(sexualOrientation);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "sexual_orientation", nulls = Nulls.SKIP)
         public _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation) {
@@ -379,12 +421,19 @@ public final class UserInfoCreateRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage ethnicity(Ethnicity ethnicity) {
             this.ethnicity = Optional.ofNullable(ethnicity);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
         public _FinalStage ethnicity(Optional<Ethnicity> ethnicity) {
@@ -392,12 +441,19 @@ public final class UserInfoCreateRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage race(Race race) {
             this.race = Optional.ofNullable(race);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "race", nulls = Nulls.SKIP)
         public _FinalStage race(Optional<Race> race) {
@@ -434,6 +490,18 @@ public final class UserInfoCreateRequest {
                     sexualOrientation,
                     genderIdentity,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

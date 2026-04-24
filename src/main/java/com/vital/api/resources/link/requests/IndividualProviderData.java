@@ -68,7 +68,7 @@ public final class IndividualProviderData {
     }
 
     /**
-     * @return Provider region to authenticate against. Only applicable to specific providers.
+     * @return Provider region to authenticate against. Only applicable to specific providers. ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("region")
     public Optional<Region> getRegion() {
@@ -126,12 +126,16 @@ public final class IndividualProviderData {
     public interface _FinalStage {
         IndividualProviderData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
 
         /**
-         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         * <p>Provider region to authenticate against. Only applicable to specific providers. ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage region(Optional<Region> region);
 
@@ -187,7 +191,7 @@ public final class IndividualProviderData {
         }
 
         /**
-         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         * <p>Provider region to authenticate against. Only applicable to specific providers. ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -197,7 +201,7 @@ public final class IndividualProviderData {
         }
 
         /**
-         * <p>Provider region to authenticate against. Only applicable to specific providers.</p>
+         * <p>Provider region to authenticate against. Only applicable to specific providers. ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
@@ -221,6 +225,18 @@ public final class IndividualProviderData {
         @java.lang.Override
         public IndividualProviderData build() {
             return new IndividualProviderData(vitalLinkToken, username, password, region, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

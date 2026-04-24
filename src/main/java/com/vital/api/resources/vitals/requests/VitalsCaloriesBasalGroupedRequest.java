@@ -133,6 +133,10 @@ public final class VitalsCaloriesBasalGroupedRequest {
     public interface _FinalStage {
         VitalsCaloriesBasalGroupedRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>The cursor for fetching the next page, or <code>null</code> to fetch the first page.</p>
          */
@@ -285,6 +289,18 @@ public final class VitalsCaloriesBasalGroupedRequest {
         public VitalsCaloriesBasalGroupedRequest build() {
             return new VitalsCaloriesBasalGroupedRequest(
                     cursor, nextCursor, provider, startDate, endDate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
