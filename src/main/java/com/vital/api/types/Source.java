@@ -102,11 +102,17 @@ public final class Source {
         return oauthUrl;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("auth_type")
     public Optional<SourceAuthType> getAuthType() {
         return authType;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("source_type")
     public Optional<SourceType> getSourceType() {
         return sourceType;
@@ -202,6 +208,10 @@ public final class Source {
     public interface _FinalStage {
         Source build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage group(Optional<String> group);
 
         _FinalStage group(String group);
@@ -210,10 +220,16 @@ public final class Source {
 
         _FinalStage oauthUrl(String oauthUrl);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage authType(Optional<SourceAuthType> authType);
 
         _FinalStage authType(SourceAuthType authType);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage sourceType(Optional<SourceType> sourceType);
 
         _FinalStage sourceType(SourceType sourceType);
@@ -334,12 +350,19 @@ public final class Source {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage sourceType(SourceType sourceType) {
             this.sourceType = Optional.ofNullable(sourceType);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "source_type", nulls = Nulls.SKIP)
         public _FinalStage sourceType(Optional<SourceType> sourceType) {
@@ -347,12 +370,19 @@ public final class Source {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.ofNullable(authType);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
@@ -401,6 +431,18 @@ public final class Source {
                     backfillNumDays,
                     id,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
