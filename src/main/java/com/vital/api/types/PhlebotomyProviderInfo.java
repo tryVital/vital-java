@@ -37,6 +37,9 @@ public final class PhlebotomyProviderInfo {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("name")
     public AppointmentProvider getName() {
         return name;
@@ -77,6 +80,9 @@ public final class PhlebotomyProviderInfo {
     }
 
     public interface NameStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage name(@NotNull AppointmentProvider name);
 
         Builder from(PhlebotomyProviderInfo other);
@@ -84,6 +90,10 @@ public final class PhlebotomyProviderInfo {
 
     public interface _FinalStage {
         PhlebotomyProviderInfo build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage serviceTypes(List<AppointmentServiceType> serviceTypes);
 
@@ -110,6 +120,11 @@ public final class PhlebotomyProviderInfo {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(@NotNull AppointmentProvider name) {
@@ -144,6 +159,18 @@ public final class PhlebotomyProviderInfo {
         @java.lang.Override
         public PhlebotomyProviderInfo build() {
             return new PhlebotomyProviderInfo(name, serviceTypes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

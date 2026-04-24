@@ -46,6 +46,9 @@ public final class ClientFacingOrderTransaction {
         return id;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public OrderTransactionStatus getStatus() {
         return status;
@@ -92,11 +95,18 @@ public final class ClientFacingOrderTransaction {
     }
 
     public interface StatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage status(@NotNull OrderTransactionStatus status);
     }
 
     public interface _FinalStage {
         ClientFacingOrderTransaction build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage orders(List<ClientFacingOrderInTransaction> orders);
 
@@ -133,6 +143,11 @@ public final class ClientFacingOrderTransaction {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull OrderTransactionStatus status) {
@@ -167,6 +182,18 @@ public final class ClientFacingOrderTransaction {
         @java.lang.Override
         public ClientFacingOrderTransaction build() {
             return new ClientFacingOrderTransaction(id, status, orders, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

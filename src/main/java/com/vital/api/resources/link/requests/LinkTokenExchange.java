@@ -62,6 +62,9 @@ public final class LinkTokenExchange {
         return userId;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public Optional<Providers> getProvider() {
         return provider;
@@ -152,6 +155,13 @@ public final class LinkTokenExchange {
     public interface _FinalStage {
         LinkTokenExchange build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage provider(Optional<Providers> provider);
 
         _FinalStage provider(Providers provider);
@@ -324,12 +334,19 @@ public final class LinkTokenExchange {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage provider(Providers provider) {
             this.provider = Optional.ofNullable(provider);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public _FinalStage provider(Optional<Providers> provider) {
@@ -341,6 +358,18 @@ public final class LinkTokenExchange {
         public LinkTokenExchange build() {
             return new LinkTokenExchange(
                     userId, provider, redirectUrl, filterOnProviders, onError, onClose, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
