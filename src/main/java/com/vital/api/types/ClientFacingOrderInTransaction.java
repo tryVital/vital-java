@@ -62,6 +62,9 @@ public final class ClientFacingOrderInTransaction {
         return id;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("low_level_status")
     public Optional<OrderLowLevelStatus> getLowLevelStatus() {
         return lowLevelStatus;
@@ -72,6 +75,9 @@ public final class ClientFacingOrderInTransaction {
         return lowLevelStatusCreatedAt;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("origin")
     public Optional<OrderOrigin> getOrigin() {
         return origin;
@@ -151,6 +157,13 @@ public final class ClientFacingOrderInTransaction {
     public interface _FinalStage {
         ClientFacingOrderInTransaction build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage lowLevelStatus(Optional<OrderLowLevelStatus> lowLevelStatus);
 
         _FinalStage lowLevelStatus(OrderLowLevelStatus lowLevelStatus);
@@ -159,6 +172,9 @@ public final class ClientFacingOrderInTransaction {
 
         _FinalStage lowLevelStatusCreatedAt(OffsetDateTime lowLevelStatusCreatedAt);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage origin(Optional<OrderOrigin> origin);
 
         _FinalStage origin(OrderOrigin origin);
@@ -235,12 +251,19 @@ public final class ClientFacingOrderInTransaction {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage origin(OrderOrigin origin) {
             this.origin = Optional.ofNullable(origin);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "origin", nulls = Nulls.SKIP)
         public _FinalStage origin(Optional<OrderOrigin> origin) {
@@ -261,12 +284,19 @@ public final class ClientFacingOrderInTransaction {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage lowLevelStatus(OrderLowLevelStatus lowLevelStatus) {
             this.lowLevelStatus = Optional.ofNullable(lowLevelStatus);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "low_level_status", nulls = Nulls.SKIP)
         public _FinalStage lowLevelStatus(Optional<OrderLowLevelStatus> lowLevelStatus) {
@@ -285,6 +315,18 @@ public final class ClientFacingOrderInTransaction {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
