@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.LabTestCollectionMethod;
+import com.vital.api.types.Labs;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,10 @@ public final class CreateLabTestRequest {
 
     private final Optional<Boolean> fasting;
 
+    private final Optional<String> labAccountId;
+
+    private final Optional<Labs> labSlug;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateLabTestRequest(
@@ -44,6 +49,8 @@ public final class CreateLabTestRequest {
             LabTestCollectionMethod method,
             String description,
             Optional<Boolean> fasting,
+            Optional<String> labAccountId,
+            Optional<Labs> labSlug,
             Map<String, Object> additionalProperties) {
         this.markerIds = markerIds;
         this.providerIds = providerIds;
@@ -51,6 +58,8 @@ public final class CreateLabTestRequest {
         this.method = method;
         this.description = description;
         this.fasting = fasting;
+        this.labAccountId = labAccountId;
+        this.labSlug = labSlug;
         this.additionalProperties = additionalProperties;
     }
 
@@ -69,6 +78,9 @@ public final class CreateLabTestRequest {
         return name;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("method")
     public LabTestCollectionMethod getMethod() {
         return method;
@@ -82,6 +94,19 @@ public final class CreateLabTestRequest {
     @JsonProperty("fasting")
     public Optional<Boolean> getFasting() {
         return fasting;
+    }
+
+    @JsonProperty("lab_account_id")
+    public Optional<String> getLabAccountId() {
+        return labAccountId;
+    }
+
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
+    @JsonProperty("lab_slug")
+    public Optional<Labs> getLabSlug() {
+        return labSlug;
     }
 
     @java.lang.Override
@@ -101,12 +126,22 @@ public final class CreateLabTestRequest {
                 && name.equals(other.name)
                 && method.equals(other.method)
                 && description.equals(other.description)
-                && fasting.equals(other.fasting);
+                && fasting.equals(other.fasting)
+                && labAccountId.equals(other.labAccountId)
+                && labSlug.equals(other.labSlug);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.markerIds, this.providerIds, this.name, this.method, this.description, this.fasting);
+        return Objects.hash(
+                this.markerIds,
+                this.providerIds,
+                this.name,
+                this.method,
+                this.description,
+                this.fasting,
+                this.labAccountId,
+                this.labSlug);
     }
 
     @java.lang.Override
@@ -125,6 +160,9 @@ public final class CreateLabTestRequest {
     }
 
     public interface MethodStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         DescriptionStage method(@NotNull LabTestCollectionMethod method);
     }
 
@@ -134,6 +172,10 @@ public final class CreateLabTestRequest {
 
     public interface _FinalStage {
         CreateLabTestRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage markerIds(Optional<List<Integer>> markerIds);
 
@@ -146,6 +188,17 @@ public final class CreateLabTestRequest {
         _FinalStage fasting(Optional<Boolean> fasting);
 
         _FinalStage fasting(Boolean fasting);
+
+        _FinalStage labAccountId(Optional<String> labAccountId);
+
+        _FinalStage labAccountId(String labAccountId);
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage labSlug(Optional<Labs> labSlug);
+
+        _FinalStage labSlug(Labs labSlug);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -155,6 +208,10 @@ public final class CreateLabTestRequest {
         private LabTestCollectionMethod method;
 
         private String description;
+
+        private Optional<Labs> labSlug = Optional.empty();
+
+        private Optional<String> labAccountId = Optional.empty();
 
         private Optional<Boolean> fasting = Optional.empty();
 
@@ -175,6 +232,8 @@ public final class CreateLabTestRequest {
             method(other.getMethod());
             description(other.getDescription());
             fasting(other.getFasting());
+            labAccountId(other.getLabAccountId());
+            labSlug(other.getLabSlug());
             return this;
         }
 
@@ -185,6 +244,11 @@ public final class CreateLabTestRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("method")
         public DescriptionStage method(@NotNull LabTestCollectionMethod method) {
@@ -196,6 +260,39 @@ public final class CreateLabTestRequest {
         @JsonSetter("description")
         public _FinalStage description(@NotNull String description) {
             this.description = Objects.requireNonNull(description, "description must not be null");
+            return this;
+        }
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage labSlug(Labs labSlug) {
+            this.labSlug = Optional.ofNullable(labSlug);
+            return this;
+        }
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "lab_slug", nulls = Nulls.SKIP)
+        public _FinalStage labSlug(Optional<Labs> labSlug) {
+            this.labSlug = labSlug;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage labAccountId(String labAccountId) {
+            this.labAccountId = Optional.ofNullable(labAccountId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
+        public _FinalStage labAccountId(Optional<String> labAccountId) {
+            this.labAccountId = labAccountId;
             return this;
         }
 
@@ -241,7 +338,27 @@ public final class CreateLabTestRequest {
         @java.lang.Override
         public CreateLabTestRequest build() {
             return new CreateLabTestRequest(
-                    markerIds, providerIds, name, method, description, fasting, additionalProperties);
+                    markerIds,
+                    providerIds,
+                    name,
+                    method,
+                    description,
+                    fasting,
+                    labAccountId,
+                    labSlug,
+                    additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
