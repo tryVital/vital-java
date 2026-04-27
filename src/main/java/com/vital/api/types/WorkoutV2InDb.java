@@ -27,9 +27,9 @@ public final class WorkoutV2InDb {
 
     private final Map<String, Object> data;
 
-    private final String providerId;
-
     private final String userId;
+
+    private final String providerId;
 
     private final int sourceId;
 
@@ -39,8 +39,6 @@ public final class WorkoutV2InDb {
 
     private final int sportId;
 
-    private final ClientFacingProvider source;
-
     private final ClientFacingSport sport;
 
     private final Optional<String> sourceDeviceId;
@@ -49,36 +47,38 @@ public final class WorkoutV2InDb {
 
     private final Optional<OffsetDateTime> updatedAt;
 
+    private final ClientFacingProvider source;
+
     private final Map<String, Object> additionalProperties;
 
     private WorkoutV2InDb(
             OffsetDateTime timestamp,
             Map<String, Object> data,
-            String providerId,
             String userId,
+            String providerId,
             int sourceId,
             Optional<Integer> priorityId,
             String id,
             int sportId,
-            ClientFacingProvider source,
             ClientFacingSport sport,
             Optional<String> sourceDeviceId,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
+            ClientFacingProvider source,
             Map<String, Object> additionalProperties) {
         this.timestamp = timestamp;
         this.data = data;
-        this.providerId = providerId;
         this.userId = userId;
+        this.providerId = providerId;
         this.sourceId = sourceId;
         this.priorityId = priorityId;
         this.id = id;
         this.sportId = sportId;
-        this.source = source;
         this.sport = sport;
         this.sourceDeviceId = sourceDeviceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.source = source;
         this.additionalProperties = additionalProperties;
     }
 
@@ -92,14 +92,14 @@ public final class WorkoutV2InDb {
         return data;
     }
 
-    @JsonProperty("provider_id")
-    public String getProviderId() {
-        return providerId;
-    }
-
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
+    }
+
+    @JsonProperty("provider_id")
+    public String getProviderId() {
+        return providerId;
     }
 
     @JsonProperty("source_id")
@@ -122,11 +122,6 @@ public final class WorkoutV2InDb {
         return sportId;
     }
 
-    @JsonProperty("source")
-    public ClientFacingProvider getSource() {
-        return source;
-    }
-
     @JsonProperty("sport")
     public ClientFacingSport getSport() {
         return sport;
@@ -147,6 +142,11 @@ public final class WorkoutV2InDb {
         return updatedAt;
     }
 
+    @JsonProperty("source")
+    public ClientFacingProvider getSource() {
+        return source;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -161,17 +161,17 @@ public final class WorkoutV2InDb {
     private boolean equalTo(WorkoutV2InDb other) {
         return timestamp.equals(other.timestamp)
                 && data.equals(other.data)
-                && providerId.equals(other.providerId)
                 && userId.equals(other.userId)
+                && providerId.equals(other.providerId)
                 && sourceId == other.sourceId
                 && priorityId.equals(other.priorityId)
                 && id.equals(other.id)
                 && sportId == other.sportId
-                && source.equals(other.source)
                 && sport.equals(other.sport)
                 && sourceDeviceId.equals(other.sourceDeviceId)
                 && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt);
+                && updatedAt.equals(other.updatedAt)
+                && source.equals(other.source);
     }
 
     @java.lang.Override
@@ -179,17 +179,17 @@ public final class WorkoutV2InDb {
         return Objects.hash(
                 this.timestamp,
                 this.data,
-                this.providerId,
                 this.userId,
+                this.providerId,
                 this.sourceId,
                 this.priorityId,
                 this.id,
                 this.sportId,
-                this.source,
                 this.sport,
                 this.sourceDeviceId,
                 this.createdAt,
-                this.updatedAt);
+                this.updatedAt,
+                this.source);
     }
 
     @java.lang.Override
@@ -202,17 +202,17 @@ public final class WorkoutV2InDb {
     }
 
     public interface TimestampStage {
-        ProviderIdStage timestamp(@NotNull OffsetDateTime timestamp);
+        UserIdStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(WorkoutV2InDb other);
     }
 
-    public interface ProviderIdStage {
-        UserIdStage providerId(@NotNull String providerId);
+    public interface UserIdStage {
+        ProviderIdStage userId(@NotNull String userId);
     }
 
-    public interface UserIdStage {
-        SourceIdStage userId(@NotNull String userId);
+    public interface ProviderIdStage {
+        SourceIdStage providerId(@NotNull String providerId);
     }
 
     public interface SourceIdStage {
@@ -224,19 +224,23 @@ public final class WorkoutV2InDb {
     }
 
     public interface SportIdStage {
-        SourceStage sportId(int sportId);
-    }
-
-    public interface SourceStage {
-        SportStage source(@NotNull ClientFacingProvider source);
+        SportStage sportId(int sportId);
     }
 
     public interface SportStage {
-        _FinalStage sport(@NotNull ClientFacingSport sport);
+        SourceStage sport(@NotNull ClientFacingSport sport);
+    }
+
+    public interface SourceStage {
+        _FinalStage source(@NotNull ClientFacingProvider source);
     }
 
     public interface _FinalStage {
         WorkoutV2InDb build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage data(Map<String, Object> data);
 
@@ -264,19 +268,19 @@ public final class WorkoutV2InDb {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements TimestampStage,
-                    ProviderIdStage,
                     UserIdStage,
+                    ProviderIdStage,
                     SourceIdStage,
                     IdStage,
                     SportIdStage,
-                    SourceStage,
                     SportStage,
+                    SourceStage,
                     _FinalStage {
         private OffsetDateTime timestamp;
 
-        private String providerId;
-
         private String userId;
+
+        private String providerId;
 
         private int sourceId;
 
@@ -284,9 +288,9 @@ public final class WorkoutV2InDb {
 
         private int sportId;
 
-        private ClientFacingProvider source;
-
         private ClientFacingSport sport;
+
+        private ClientFacingProvider source;
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
 
@@ -307,38 +311,38 @@ public final class WorkoutV2InDb {
         public Builder from(WorkoutV2InDb other) {
             timestamp(other.getTimestamp());
             data(other.getData());
-            providerId(other.getProviderId());
             userId(other.getUserId());
+            providerId(other.getProviderId());
             sourceId(other.getSourceId());
             priorityId(other.getPriorityId());
             id(other.getId());
             sportId(other.getSportId());
-            source(other.getSource());
             sport(other.getSport());
             sourceDeviceId(other.getSourceDeviceId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            source(other.getSource());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public ProviderIdStage timestamp(@NotNull OffsetDateTime timestamp) {
+        public UserIdStage timestamp(@NotNull OffsetDateTime timestamp) {
             this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("provider_id")
-        public UserIdStage providerId(@NotNull String providerId) {
-            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
+        @JsonSetter("user_id")
+        public ProviderIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("user_id")
-        public SourceIdStage userId(@NotNull String userId) {
-            this.userId = Objects.requireNonNull(userId, "userId must not be null");
+        @JsonSetter("provider_id")
+        public SourceIdStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
@@ -358,22 +362,22 @@ public final class WorkoutV2InDb {
 
         @java.lang.Override
         @JsonSetter("sport_id")
-        public SourceStage sportId(int sportId) {
+        public SportStage sportId(int sportId) {
             this.sportId = sportId;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("source")
-        public SportStage source(@NotNull ClientFacingProvider source) {
-            this.source = Objects.requireNonNull(source, "source must not be null");
+        @JsonSetter("sport")
+        public SourceStage sport(@NotNull ClientFacingSport sport) {
+            this.sport = Objects.requireNonNull(sport, "sport must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("sport")
-        public _FinalStage sport(@NotNull ClientFacingSport sport) {
-            this.sport = Objects.requireNonNull(sport, "sport must not be null");
+        @JsonSetter("source")
+        public _FinalStage source(@NotNull ClientFacingProvider source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
@@ -458,18 +462,30 @@ public final class WorkoutV2InDb {
             return new WorkoutV2InDb(
                     timestamp,
                     data,
-                    providerId,
                     userId,
+                    providerId,
                     sourceId,
                     priorityId,
                     id,
                     sportId,
-                    source,
                     sport,
                     sourceDeviceId,
                     createdAt,
                     updatedAt,
+                    source,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

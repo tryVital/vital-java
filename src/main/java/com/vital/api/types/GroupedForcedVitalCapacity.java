@@ -85,6 +85,10 @@ public final class GroupedForcedVitalCapacity {
     public interface _FinalStage {
         GroupedForcedVitalCapacity build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingForcedVitalCapacitySample> data);
 
         _FinalStage addData(ClientFacingForcedVitalCapacitySample data);
@@ -144,6 +148,18 @@ public final class GroupedForcedVitalCapacity {
         @java.lang.Override
         public GroupedForcedVitalCapacity build() {
             return new GroupedForcedVitalCapacity(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
