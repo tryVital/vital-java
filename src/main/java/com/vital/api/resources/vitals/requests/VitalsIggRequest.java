@@ -105,6 +105,10 @@ public final class VitalsIggRequest {
     public interface _FinalStage {
         VitalsIggRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Provider oura/strava etc</p>
          */
@@ -196,6 +200,18 @@ public final class VitalsIggRequest {
         @java.lang.Override
         public VitalsIggRequest build() {
             return new VitalsIggRequest(provider, startDate, endDate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

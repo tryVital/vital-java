@@ -187,6 +187,10 @@ public final class ClientFacingDaylightExposureSample {
     public interface _FinalStage {
         ClientFacingDaylightExposureSample build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -354,6 +358,18 @@ public final class ClientFacingDaylightExposureSample {
         public ClientFacingDaylightExposureSample build() {
             return new ClientFacingDaylightExposureSample(
                     id, timezoneOffset, type, timestamp, start, end, value, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

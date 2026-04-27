@@ -62,16 +62,25 @@ public final class EmailAuthLink {
         return email;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public Providers getProvider() {
         return provider;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("auth_type")
     public AuthType getAuthType() {
         return authType;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("region")
     public Optional<Region> getRegion() {
         return region;
@@ -117,20 +126,33 @@ public final class EmailAuthLink {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         AuthTypeStage provider(@NotNull Providers provider);
     }
 
     public interface AuthTypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage authType(@NotNull AuthType authType);
     }
 
     public interface _FinalStage {
         EmailAuthLink build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
         _FinalStage vitalLinkToken(String vitalLinkToken);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage region(Optional<Region> region);
 
         _FinalStage region(Region region);
@@ -170,6 +192,11 @@ public final class EmailAuthLink {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public AuthTypeStage provider(@NotNull Providers provider) {
@@ -177,6 +204,11 @@ public final class EmailAuthLink {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("auth_type")
         public _FinalStage authType(@NotNull AuthType authType) {
@@ -184,12 +216,19 @@ public final class EmailAuthLink {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage region(Region region) {
             this.region = Optional.ofNullable(region);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "region", nulls = Nulls.SKIP)
         public _FinalStage region(Optional<Region> region) {
@@ -212,6 +251,18 @@ public final class EmailAuthLink {
         @java.lang.Override
         public EmailAuthLink build() {
             return new EmailAuthLink(vitalLinkToken, email, provider, authType, region, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
