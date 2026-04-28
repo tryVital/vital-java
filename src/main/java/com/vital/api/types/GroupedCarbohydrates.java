@@ -85,6 +85,10 @@ public final class GroupedCarbohydrates {
     public interface _FinalStage {
         GroupedCarbohydrates build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingCarbohydratesSample> data);
 
         _FinalStage addData(ClientFacingCarbohydratesSample data);
@@ -144,6 +148,18 @@ public final class GroupedCarbohydrates {
         @java.lang.Override
         public GroupedCarbohydrates build() {
             return new GroupedCarbohydrates(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

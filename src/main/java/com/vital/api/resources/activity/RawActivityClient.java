@@ -16,7 +16,7 @@ import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
 import com.vital.api.resources.activity.requests.ActivityGetRequest;
 import com.vital.api.types.ClientActivityResponse;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawActivity;
+import com.vital.api.types.RawActivityResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -58,8 +58,8 @@ public class RawActivityClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -99,14 +99,14 @@ public class RawActivityClient {
     /**
      * Get raw activity summary for user_id
      */
-    public VitalHttpResponse<RawActivity> getRaw(String userId, ActivityGetRawRequest request) {
+    public VitalHttpResponse<RawActivityResponse> getRaw(String userId, ActivityGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw activity summary for user_id
      */
-    public VitalHttpResponse<RawActivity> getRaw(
+    public VitalHttpResponse<RawActivityResponse> getRaw(
             String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -123,8 +123,8 @@ public class RawActivityClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -142,7 +142,7 @@ public class RawActivityClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawActivity.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawActivityResponse.class), response);
             }
             try {
                 if (response.code() == 422) {

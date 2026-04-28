@@ -8,10 +8,12 @@ import com.vital.api.core.Suppliers;
 import com.vital.api.resources.activity.ActivityClient;
 import com.vital.api.resources.aggregate.AggregateClient;
 import com.vital.api.resources.body.BodyClient;
+import com.vital.api.resources.compendium.CompendiumClient;
 import com.vital.api.resources.devices.DevicesClient;
 import com.vital.api.resources.electrocardiogram.ElectrocardiogramClient;
 import com.vital.api.resources.insurance.InsuranceClient;
 import com.vital.api.resources.introspect.IntrospectClient;
+import com.vital.api.resources.labaccount.LabAccountClient;
 import com.vital.api.resources.labreport.LabReportClient;
 import com.vital.api.resources.labtests.LabTestsClient;
 import com.vital.api.resources.link.LinkClient;
@@ -68,6 +70,10 @@ public class Vital {
 
     protected final Supplier<LabTestsClient> labTestsClient;
 
+    protected final Supplier<CompendiumClient> compendiumClient;
+
+    protected final Supplier<LabAccountClient> labAccountClient;
+
     protected final Supplier<OrderTransactionClient> orderTransactionClient;
 
     protected final Supplier<TestkitClient> testkitClient;
@@ -101,6 +107,8 @@ public class Vital {
         this.providersClient = Suppliers.memoize(() -> new ProvidersClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new IntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new LabTestsClient(clientOptions));
+        this.compendiumClient = Suppliers.memoize(() -> new CompendiumClient(clientOptions));
+        this.labAccountClient = Suppliers.memoize(() -> new LabAccountClient(clientOptions));
         this.orderTransactionClient = Suppliers.memoize(() -> new OrderTransactionClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new TestkitClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new OrderClient(clientOptions));
@@ -176,6 +184,14 @@ public class Vital {
 
     public LabTestsClient labTests() {
         return this.labTestsClient.get();
+    }
+
+    public CompendiumClient compendium() {
+        return this.compendiumClient.get();
+    }
+
+    public LabAccountClient labAccount() {
+        return this.labAccountClient.get();
     }
 
     public OrderTransactionClient orderTransaction() {

@@ -70,6 +70,9 @@ public final class ClientFacingInsurance {
         return payorCode;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("relationship")
     public ResponsibleRelationship getRelationship() {
         return relationship;
@@ -155,6 +158,9 @@ public final class ClientFacingInsurance {
     }
 
     public interface RelationshipStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         InsuredStage relationship(@NotNull ResponsibleRelationship relationship);
     }
 
@@ -168,6 +174,10 @@ public final class ClientFacingInsurance {
 
     public interface _FinalStage {
         ClientFacingInsurance build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage groupId(Optional<String> groupId);
 
@@ -233,6 +243,11 @@ public final class ClientFacingInsurance {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("relationship")
         public InsuredStage relationship(@NotNull ResponsibleRelationship relationship) {
@@ -305,6 +320,18 @@ public final class ClientFacingInsurance {
                     guarantor,
                     isPrimary,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
