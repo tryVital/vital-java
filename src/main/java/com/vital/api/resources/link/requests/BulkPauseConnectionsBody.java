@@ -12,21 +12,17 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.link.types.LinkBulkPauseRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkPauseConnectionsBody.Builder.class)
 public final class BulkPauseConnectionsBody {
-    private final Optional<LinkBulkPauseRequestTeamId> teamId;
-
     private final List<String> userIds;
 
     private final OAuthProviders provider;
@@ -34,19 +30,10 @@ public final class BulkPauseConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkPauseConnectionsBody(
-            Optional<LinkBulkPauseRequestTeamId> teamId,
-            List<String> userIds,
-            OAuthProviders provider,
-            Map<String, Object> additionalProperties) {
-        this.teamId = teamId;
+            List<String> userIds, OAuthProviders provider, Map<String, Object> additionalProperties) {
         this.userIds = userIds;
         this.provider = provider;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("team_id")
-    public Optional<LinkBulkPauseRequestTeamId> getTeamId() {
-        return teamId;
     }
 
     @JsonProperty("user_ids")
@@ -54,6 +41,9 @@ public final class BulkPauseConnectionsBody {
         return userIds;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public OAuthProviders getProvider() {
         return provider;
@@ -71,12 +61,12 @@ public final class BulkPauseConnectionsBody {
     }
 
     private boolean equalTo(BulkPauseConnectionsBody other) {
-        return teamId.equals(other.teamId) && userIds.equals(other.userIds) && provider.equals(other.provider);
+        return userIds.equals(other.userIds) && provider.equals(other.provider);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.teamId, this.userIds, this.provider);
+        return Objects.hash(this.userIds, this.provider);
     }
 
     @java.lang.Override
@@ -89,6 +79,9 @@ public final class BulkPauseConnectionsBody {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage provider(@NotNull OAuthProviders provider);
 
         Builder from(BulkPauseConnectionsBody other);
@@ -97,9 +90,9 @@ public final class BulkPauseConnectionsBody {
     public interface _FinalStage {
         BulkPauseConnectionsBody build();
 
-        _FinalStage teamId(Optional<LinkBulkPauseRequestTeamId> teamId);
+        _FinalStage additionalProperty(String key, Object value);
 
-        _FinalStage teamId(LinkBulkPauseRequestTeamId teamId);
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage userIds(List<String> userIds);
 
@@ -114,8 +107,6 @@ public final class BulkPauseConnectionsBody {
 
         private List<String> userIds = new ArrayList<>();
 
-        private Optional<LinkBulkPauseRequestTeamId> teamId = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -123,12 +114,16 @@ public final class BulkPauseConnectionsBody {
 
         @java.lang.Override
         public Builder from(BulkPauseConnectionsBody other) {
-            teamId(other.getTeamId());
             userIds(other.getUserIds());
             provider(other.getProvider());
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(@NotNull OAuthProviders provider) {
@@ -161,21 +156,20 @@ public final class BulkPauseConnectionsBody {
         }
 
         @java.lang.Override
-        public _FinalStage teamId(LinkBulkPauseRequestTeamId teamId) {
-            this.teamId = Optional.ofNullable(teamId);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
-        public _FinalStage teamId(Optional<LinkBulkPauseRequestTeamId> teamId) {
-            this.teamId = teamId;
-            return this;
-        }
-
-        @java.lang.Override
         public BulkPauseConnectionsBody build() {
-            return new BulkPauseConnectionsBody(teamId, userIds, provider, additionalProperties);
+            return new BulkPauseConnectionsBody(userIds, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

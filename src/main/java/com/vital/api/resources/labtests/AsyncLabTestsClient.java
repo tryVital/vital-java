@@ -153,28 +153,28 @@ public class AsyncLabTestsClient {
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<GetMarkersResponse> getMarkers() {
         return this.rawClient.getMarkers().thenApply(response -> response.body());
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<GetMarkersResponse> getMarkers(RequestOptions requestOptions) {
         return this.rawClient.getMarkers(requestOptions).thenApply(response -> response.body());
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<GetMarkersResponse> getMarkers(LabTestsGetMarkersRequest request) {
         return this.rawClient.getMarkers(request).thenApply(response -> response.body());
     }
 
     /**
-     * GET all the markers for the given lab.
+     * List active and orderable markers for a given Lab. Note that reflex markers are not included.
      */
     public CompletableFuture<GetMarkersResponse> getMarkers(
             LabTestsGetMarkersRequest request, RequestOptions requestOptions) {
@@ -199,19 +199,31 @@ public class AsyncLabTestsClient {
         return this.rawClient.getMarkersForOrderSet(request, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(String labTestId) {
         return this.rawClient.getMarkersForLabTest(labTestId).thenApply(response -> response.body());
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(String labTestId, RequestOptions requestOptions) {
         return this.rawClient.getMarkersForLabTest(labTestId, requestOptions).thenApply(response -> response.body());
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request) {
         return this.rawClient.getMarkersForLabTest(labTestId, request).thenApply(response -> response.body());
     }
 
+    /**
+     * List all markers for a given Lab Test, as well as any associated reflex markers.
+     */
     public CompletableFuture<GetMarkersResponse> getMarkersForLabTest(
             String labTestId, LabTestsGetMarkersForLabTestRequest request, RequestOptions requestOptions) {
         return this.rawClient
