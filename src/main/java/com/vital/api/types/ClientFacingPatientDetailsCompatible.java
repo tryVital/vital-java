@@ -112,7 +112,7 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     /**
-     * @return If not provided, will be set to 'Not Specified'
+     * @return If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("race")
     public Optional<Race> getRace() {
@@ -120,7 +120,7 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     /**
-     * @return If not provided, will be set to 'Not Specified'
+     * @return If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("ethnicity")
     public Optional<Ethnicity> getEthnicity() {
@@ -128,7 +128,7 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     /**
-     * @return If not provided, will be set to 'Not Specified'
+     * @return If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("sexual_orientation")
     public Optional<SexualOrientation> getSexualOrientation() {
@@ -136,7 +136,7 @@ public final class ClientFacingPatientDetailsCompatible {
     }
 
     /**
-     * @return If not provided, will be set to 'Not Specified'
+     * @return If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("gender_identity")
     public Optional<GenderIdentity> getGenderIdentity() {
@@ -207,6 +207,10 @@ public final class ClientFacingPatientDetailsCompatible {
     public interface _FinalStage {
         ClientFacingPatientDetailsCompatible build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage firstName(Optional<String> firstName);
 
         _FinalStage firstName(String firstName);
@@ -231,28 +235,28 @@ public final class ClientFacingPatientDetailsCompatible {
         _FinalStage medicalProxy(GuarantorDetails medicalProxy);
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage race(Optional<Race> race);
 
         _FinalStage race(Race race);
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage ethnicity(Optional<Ethnicity> ethnicity);
 
         _FinalStage ethnicity(Ethnicity ethnicity);
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage sexualOrientation(Optional<SexualOrientation> sexualOrientation);
 
         _FinalStage sexualOrientation(SexualOrientation sexualOrientation);
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage genderIdentity(Optional<GenderIdentity> genderIdentity);
 
@@ -319,7 +323,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -329,7 +333,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "gender_identity", nulls = Nulls.SKIP)
@@ -339,7 +343,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -349,7 +353,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "sexual_orientation", nulls = Nulls.SKIP)
@@ -359,7 +363,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -369,7 +373,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "ethnicity", nulls = Nulls.SKIP)
@@ -379,7 +383,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -389,7 +393,7 @@ public final class ClientFacingPatientDetailsCompatible {
         }
 
         /**
-         * <p>If not provided, will be set to 'Not Specified'</p>
+         * <p>If not provided, will be set to 'Not Specified' ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "race", nulls = Nulls.SKIP)
@@ -485,6 +489,18 @@ public final class ClientFacingPatientDetailsCompatible {
                     sexualOrientation,
                     genderIdentity,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

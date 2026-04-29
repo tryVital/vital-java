@@ -46,6 +46,9 @@ public final class ClientFacingAppointmentEvent {
         return createdAt;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public AppointmentEventStatus getStatus() {
         return status;
@@ -92,11 +95,18 @@ public final class ClientFacingAppointmentEvent {
     }
 
     public interface StatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage status(@NotNull AppointmentEventStatus status);
     }
 
     public interface _FinalStage {
         ClientFacingAppointmentEvent build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage data(Optional<Map<String, Object>> data);
 
@@ -131,6 +141,11 @@ public final class ClientFacingAppointmentEvent {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull AppointmentEventStatus status) {
@@ -154,6 +169,18 @@ public final class ClientFacingAppointmentEvent {
         @java.lang.Override
         public ClientFacingAppointmentEvent build() {
             return new ClientFacingAppointmentEvent(createdAt, status, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

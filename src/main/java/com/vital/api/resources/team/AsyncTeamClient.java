@@ -5,7 +5,6 @@ package com.vital.api.resources.team;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.types.ClientFacingPhysician;
@@ -30,35 +29,6 @@ public class AsyncTeamClient {
      */
     public AsyncRawTeamClient withRawResponse() {
         return this.rawClient;
-    }
-
-    /**
-     * Post teams.
-     */
-    public CompletableFuture<Map<String, Object>> getLinkConfig() {
-        return this.rawClient.getLinkConfig().thenApply(response -> response.body());
-    }
-
-    /**
-     * Post teams.
-     */
-    public CompletableFuture<Map<String, Object>> getLinkConfig(RequestOptions requestOptions) {
-        return this.rawClient.getLinkConfig(requestOptions).thenApply(response -> response.body());
-    }
-
-    /**
-     * Post teams.
-     */
-    public CompletableFuture<Map<String, Object>> getLinkConfig(TeamGetLinkConfigRequest request) {
-        return this.rawClient.getLinkConfig(request).thenApply(response -> response.body());
-    }
-
-    /**
-     * Post teams.
-     */
-    public CompletableFuture<Map<String, Object>> getLinkConfig(
-            TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getLinkConfig(request, requestOptions).thenApply(response -> response.body());
     }
 
     /**

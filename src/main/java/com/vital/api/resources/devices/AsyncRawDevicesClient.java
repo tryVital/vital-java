@@ -14,7 +14,7 @@ import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.devices.requests.DevicesGetRawRequest;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawDevices;
+import com.vital.api.types.RawDevicesResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -37,28 +37,30 @@ public class AsyncRawDevicesClient {
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId) {
+    public CompletableFuture<VitalHttpResponse<RawDevicesResponse>> getRaw(String userId) {
         return getRaw(userId, DevicesGetRawRequest.builder().build());
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId, RequestOptions requestOptions) {
+    public CompletableFuture<VitalHttpResponse<RawDevicesResponse>> getRaw(
+            String userId, RequestOptions requestOptions) {
         return getRaw(userId, DevicesGetRawRequest.builder().build(), requestOptions);
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(String userId, DevicesGetRawRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawDevicesResponse>> getRaw(
+            String userId, DevicesGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawDevices>> getRaw(
+    public CompletableFuture<VitalHttpResponse<RawDevicesResponse>> getRaw(
             String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -70,8 +72,8 @@ public class AsyncRawDevicesClient {
                     httpUrl, "provider", request.getProvider().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -84,7 +86,7 @@ public class AsyncRawDevicesClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<VitalHttpResponse<RawDevices>> future = new CompletableFuture<>();
+        CompletableFuture<VitalHttpResponse<RawDevicesResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -92,7 +94,8 @@ public class AsyncRawDevicesClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawDevices.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawDevicesResponse.class),
+                                response));
                         return;
                     }
                     try {

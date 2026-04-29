@@ -6,7 +6,7 @@ package com.vital.api.resources.devices;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.devices.requests.DevicesGetRawRequest;
-import com.vital.api.types.RawDevices;
+import com.vital.api.types.RawDevicesResponse;
 
 public class DevicesClient {
     protected final ClientOptions clientOptions;
@@ -28,28 +28,28 @@ public class DevicesClient {
     /**
      * Get Devices for user_id
      */
-    public RawDevices getRaw(String userId) {
+    public RawDevicesResponse getRaw(String userId) {
         return this.rawClient.getRaw(userId).body();
     }
 
     /**
      * Get Devices for user_id
      */
-    public RawDevices getRaw(String userId, RequestOptions requestOptions) {
+    public RawDevicesResponse getRaw(String userId, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, requestOptions).body();
     }
 
     /**
      * Get Devices for user_id
      */
-    public RawDevices getRaw(String userId, DevicesGetRawRequest request) {
+    public RawDevicesResponse getRaw(String userId, DevicesGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get Devices for user_id
      */
-    public RawDevices getRaw(String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
+    public RawDevicesResponse getRaw(String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 }

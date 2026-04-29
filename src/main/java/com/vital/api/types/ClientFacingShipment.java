@@ -180,6 +180,10 @@ public final class ClientFacingShipment {
     public interface _FinalStage {
         ClientFacingShipment build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Tracking number for delivery to customer</p>
          */
@@ -430,6 +434,18 @@ public final class ClientFacingShipment {
                     inboundCourier,
                     notes,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
