@@ -23,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 public final class ParsingJob {
     private final String id;
 
-    private final String jobId;
-
     private final ParsingJobStatus status;
 
     private final Optional<ParsingJobFailureReason> failureReason;
@@ -39,7 +37,6 @@ public final class ParsingJob {
 
     private ParsingJob(
             String id,
-            String jobId,
             ParsingJobStatus status,
             Optional<ParsingJobFailureReason> failureReason,
             Optional<ParsedLabReportData> data,
@@ -47,7 +44,6 @@ public final class ParsingJob {
             boolean isReviewed,
             Map<String, Object> additionalProperties) {
         this.id = id;
-        this.jobId = jobId;
         this.status = status;
         this.failureReason = failureReason;
         this.data = data;
@@ -61,16 +57,17 @@ public final class ParsingJob {
         return id;
     }
 
-    @JsonProperty("job_id")
-    public String getJobId() {
-        return jobId;
-    }
-
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public ParsingJobStatus getStatus() {
         return status;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("failure_reason")
     public Optional<ParsingJobFailureReason> getFailureReason() {
         return failureReason;
@@ -104,7 +101,6 @@ public final class ParsingJob {
 
     private boolean equalTo(ParsingJob other) {
         return id.equals(other.id)
-                && jobId.equals(other.jobId)
                 && status.equals(other.status)
                 && failureReason.equals(other.failureReason)
                 && data.equals(other.data)
@@ -115,13 +111,7 @@ public final class ParsingJob {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id,
-                this.jobId,
-                this.status,
-                this.failureReason,
-                this.data,
-                this.needsHumanReview,
-                this.isReviewed);
+                this.id, this.status, this.failureReason, this.data, this.needsHumanReview, this.isReviewed);
     }
 
     @java.lang.Override
@@ -134,16 +124,15 @@ public final class ParsingJob {
     }
 
     public interface IdStage {
-        JobIdStage id(@NotNull String id);
+        StatusStage id(@NotNull String id);
 
         Builder from(ParsingJob other);
     }
 
-    public interface JobIdStage {
-        StatusStage jobId(@NotNull String jobId);
-    }
-
     public interface StatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         NeedsHumanReviewStage status(@NotNull ParsingJobStatus status);
     }
 
@@ -158,6 +147,13 @@ public final class ParsingJob {
     public interface _FinalStage {
         ParsingJob build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage failureReason(Optional<ParsingJobFailureReason> failureReason);
 
         _FinalStage failureReason(ParsingJobFailureReason failureReason);
@@ -169,10 +165,8 @@ public final class ParsingJob {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, JobIdStage, StatusStage, NeedsHumanReviewStage, IsReviewedStage, _FinalStage {
+            implements IdStage, StatusStage, NeedsHumanReviewStage, IsReviewedStage, _FinalStage {
         private String id;
-
-        private String jobId;
 
         private ParsingJobStatus status;
 
@@ -192,7 +186,6 @@ public final class ParsingJob {
         @java.lang.Override
         public Builder from(ParsingJob other) {
             id(other.getId());
-            jobId(other.getJobId());
             status(other.getStatus());
             failureReason(other.getFailureReason());
             data(other.getData());
@@ -203,18 +196,16 @@ public final class ParsingJob {
 
         @java.lang.Override
         @JsonSetter("id")
-        public JobIdStage id(@NotNull String id) {
+        public StatusStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("job_id")
-        public StatusStage jobId(@NotNull String jobId) {
-            this.jobId = Objects.requireNonNull(jobId, "jobId must not be null");
-            return this;
-        }
-
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public NeedsHumanReviewStage status(@NotNull ParsingJobStatus status) {
@@ -249,12 +240,19 @@ public final class ParsingJob {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage failureReason(ParsingJobFailureReason failureReason) {
             this.failureReason = Optional.ofNullable(failureReason);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "failure_reason", nulls = Nulls.SKIP)
         public _FinalStage failureReason(Optional<ParsingJobFailureReason> failureReason) {
@@ -264,8 +262,19 @@ public final class ParsingJob {
 
         @java.lang.Override
         public ParsingJob build() {
-            return new ParsingJob(
-                    id, jobId, status, failureReason, data, needsHumanReview, isReviewed, additionalProperties);
+            return new ParsingJob(id, status, failureReason, data, needsHumanReview, isReviewed, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

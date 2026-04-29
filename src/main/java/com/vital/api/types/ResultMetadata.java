@@ -26,6 +26,8 @@ public final class ResultMetadata {
 
     private final Optional<String> dob;
 
+    private final Optional<ResultMetadataGender> gender;
+
     private final Optional<String> labName;
 
     private final Optional<String> dateReported;
@@ -40,6 +42,7 @@ public final class ResultMetadata {
             Optional<String> patientFirstName,
             Optional<String> patientLastName,
             Optional<String> dob,
+            Optional<ResultMetadataGender> gender,
             Optional<String> labName,
             Optional<String> dateReported,
             Optional<String> dateCollected,
@@ -48,6 +51,7 @@ public final class ResultMetadata {
         this.patientFirstName = patientFirstName;
         this.patientLastName = patientLastName;
         this.dob = dob;
+        this.gender = gender;
         this.labName = labName;
         this.dateReported = dateReported;
         this.dateCollected = dateCollected;
@@ -68,6 +72,14 @@ public final class ResultMetadata {
     @JsonProperty("dob")
     public Optional<String> getDob() {
         return dob;
+    }
+
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
+    @JsonProperty("gender")
+    public Optional<ResultMetadataGender> getGender() {
+        return gender;
     }
 
     @JsonProperty("lab_name")
@@ -105,6 +117,7 @@ public final class ResultMetadata {
         return patientFirstName.equals(other.patientFirstName)
                 && patientLastName.equals(other.patientLastName)
                 && dob.equals(other.dob)
+                && gender.equals(other.gender)
                 && labName.equals(other.labName)
                 && dateReported.equals(other.dateReported)
                 && dateCollected.equals(other.dateCollected)
@@ -117,6 +130,7 @@ public final class ResultMetadata {
                 this.patientFirstName,
                 this.patientLastName,
                 this.dob,
+                this.gender,
                 this.labName,
                 this.dateReported,
                 this.dateCollected,
@@ -140,6 +154,8 @@ public final class ResultMetadata {
 
         private Optional<String> dob = Optional.empty();
 
+        private Optional<ResultMetadataGender> gender = Optional.empty();
+
         private Optional<String> labName = Optional.empty();
 
         private Optional<String> dateReported = Optional.empty();
@@ -157,6 +173,7 @@ public final class ResultMetadata {
             patientFirstName(other.getPatientFirstName());
             patientLastName(other.getPatientLastName());
             dob(other.getDob());
+            gender(other.getGender());
             labName(other.getLabName());
             dateReported(other.getDateReported());
             dateCollected(other.getDateCollected());
@@ -194,6 +211,20 @@ public final class ResultMetadata {
 
         public Builder dob(String dob) {
             this.dob = Optional.ofNullable(dob);
+            return this;
+        }
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        @JsonSetter(value = "gender", nulls = Nulls.SKIP)
+        public Builder gender(Optional<ResultMetadataGender> gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder gender(ResultMetadataGender gender) {
+            this.gender = Optional.ofNullable(gender);
             return this;
         }
 
@@ -246,11 +277,22 @@ public final class ResultMetadata {
                     patientFirstName,
                     patientLastName,
                     dob,
+                    gender,
                     labName,
                     dateReported,
                     dateCollected,
                     specimenNumber,
                     additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

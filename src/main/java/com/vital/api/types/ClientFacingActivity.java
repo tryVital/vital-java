@@ -381,6 +381,10 @@ public final class ClientFacingActivity {
     public interface _FinalStage {
         ClientFacingActivity build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories</p>
          */
@@ -917,6 +921,18 @@ public final class ClientFacingActivity {
                     createdAt,
                     updatedAt,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

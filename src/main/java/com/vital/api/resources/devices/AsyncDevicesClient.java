@@ -6,7 +6,7 @@ package com.vital.api.resources.devices;
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.devices.requests.DevicesGetRawRequest;
-import com.vital.api.types.RawDevices;
+import com.vital.api.types.RawDevicesResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncDevicesClient {
@@ -29,28 +29,28 @@ public class AsyncDevicesClient {
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<RawDevices> getRaw(String userId) {
+    public CompletableFuture<RawDevicesResponse> getRaw(String userId) {
         return this.rawClient.getRaw(userId).thenApply(response -> response.body());
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<RawDevices> getRaw(String userId, RequestOptions requestOptions) {
+    public CompletableFuture<RawDevicesResponse> getRaw(String userId, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, requestOptions).thenApply(response -> response.body());
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<RawDevices> getRaw(String userId, DevicesGetRawRequest request) {
+    public CompletableFuture<RawDevicesResponse> getRaw(String userId, DevicesGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
     /**
      * Get Devices for user_id
      */
-    public CompletableFuture<RawDevices> getRaw(
+    public CompletableFuture<RawDevicesResponse> getRaw(
             String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }

@@ -82,7 +82,7 @@ public final class ClientFacingPayor {
     }
 
     /**
-     * @return The source of the payor, can be one of (platform, team).
+     * @return The source of the payor, can be one of (platform, team). ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("source")
     public ClientFacingPayorCodeSource getSource() {
@@ -147,13 +147,17 @@ public final class ClientFacingPayor {
 
     public interface SourceStage {
         /**
-         * <p>The source of the payor, can be one of (platform, team).</p>
+         * <p>The source of the payor, can be one of (platform, team). ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage source(@NotNull ClientFacingPayorCodeSource source);
     }
 
     public interface _FinalStage {
         ClientFacingPayor build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>Insurance name aliases returned for the insurance information.</p>
@@ -229,8 +233,8 @@ public final class ClientFacingPayor {
         }
 
         /**
-         * <p>The source of the payor, can be one of (platform, team).</p>
-         * <p>The source of the payor, can be one of (platform, team).</p>
+         * <p>The source of the payor, can be one of (platform, team). ℹ️ This enum is non-exhaustive.</p>
+         * <p>The source of the payor, can be one of (platform, team). ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -278,6 +282,18 @@ public final class ClientFacingPayor {
         @java.lang.Override
         public ClientFacingPayor build() {
             return new ClientFacingPayor(payorCode, name, aliases, orgAddress, source, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
