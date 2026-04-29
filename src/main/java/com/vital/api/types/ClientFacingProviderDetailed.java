@@ -85,6 +85,9 @@ public final class ClientFacingProviderDetailed {
         return logo;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("auth_type")
     public Optional<SourceAuthType> getAuthType() {
         return authType;
@@ -155,6 +158,10 @@ public final class ClientFacingProviderDetailed {
     public interface _FinalStage {
         ClientFacingProviderDetailed build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>URL for source logo</p>
          */
@@ -162,6 +169,9 @@ public final class ClientFacingProviderDetailed {
 
         _FinalStage logo(String logo);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage authType(Optional<SourceAuthType> authType);
 
         _FinalStage authType(SourceAuthType authType);
@@ -250,12 +260,19 @@ public final class ClientFacingProviderDetailed {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.ofNullable(authType);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
@@ -287,6 +304,18 @@ public final class ClientFacingProviderDetailed {
         public ClientFacingProviderDetailed build() {
             return new ClientFacingProviderDetailed(
                     name, slug, description, logo, authType, supportedResources, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

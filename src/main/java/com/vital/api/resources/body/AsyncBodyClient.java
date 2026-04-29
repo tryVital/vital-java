@@ -8,7 +8,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.body.requests.BodyGetRawRequest;
 import com.vital.api.resources.body.requests.BodyGetRequest;
 import com.vital.api.types.ClientBodyResponse;
-import com.vital.api.types.RawBody;
+import com.vital.api.types.RawBodyResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncBodyClient {
@@ -46,14 +46,15 @@ public class AsyncBodyClient {
     /**
      * Get raw Body summary for user_id
      */
-    public CompletableFuture<RawBody> getRaw(String userId, BodyGetRawRequest request) {
+    public CompletableFuture<RawBodyResponse> getRaw(String userId, BodyGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public CompletableFuture<RawBody> getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<RawBodyResponse> getRaw(
+            String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }
 }

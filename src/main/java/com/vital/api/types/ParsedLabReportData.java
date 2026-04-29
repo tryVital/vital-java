@@ -83,6 +83,10 @@ public final class ParsedLabReportData {
     public interface _FinalStage {
         ParsedLabReportData build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage results(List<LabReportResult> results);
 
         _FinalStage addResults(LabReportResult results);
@@ -142,6 +146,18 @@ public final class ParsedLabReportData {
         @java.lang.Override
         public ParsedLabReportData build() {
             return new ParsedLabReportData(metadata, results, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

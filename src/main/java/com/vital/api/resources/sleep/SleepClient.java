@@ -9,7 +9,7 @@ import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
 import com.vital.api.resources.sleep.requests.SleepGetRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
-import com.vital.api.types.RawSleep;
+import com.vital.api.types.RawSleepResponse;
 
 public class SleepClient {
     protected final ClientOptions clientOptions;
@@ -45,14 +45,14 @@ public class SleepClient {
     /**
      * Get raw sleep summary for user_id
      */
-    public RawSleep getRaw(String userId, SleepGetRawRequest request) {
+    public RawSleepResponse getRaw(String userId, SleepGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw sleep summary for user_id
      */
-    public RawSleep getRaw(String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
+    public RawSleepResponse getRaw(String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 
