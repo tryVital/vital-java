@@ -16,7 +16,7 @@ import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
 import com.vital.api.resources.activity.requests.ActivityGetRequest;
 import com.vital.api.types.ClientActivityResponse;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawActivity;
+import com.vital.api.types.RawActivityResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -62,8 +62,8 @@ public class AsyncRawActivityClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -118,14 +118,15 @@ public class AsyncRawActivityClient {
     /**
      * Get raw activity summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawActivity>> getRaw(String userId, ActivityGetRawRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawActivityResponse>> getRaw(
+            String userId, ActivityGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw activity summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawActivity>> getRaw(
+    public CompletableFuture<VitalHttpResponse<RawActivityResponse>> getRaw(
             String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -142,8 +143,8 @@ public class AsyncRawActivityClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -156,7 +157,7 @@ public class AsyncRawActivityClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<VitalHttpResponse<RawActivity>> future = new CompletableFuture<>();
+        CompletableFuture<VitalHttpResponse<RawActivityResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -164,7 +165,8 @@ public class AsyncRawActivityClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawActivity.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawActivityResponse.class),
+                                response));
                         return;
                     }
                     try {

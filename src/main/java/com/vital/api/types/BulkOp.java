@@ -73,6 +73,9 @@ public final class BulkOp {
         return status;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public Providers getProvider() {
         return provider;
@@ -151,6 +154,9 @@ public final class BulkOp {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         PendingStage provider(@NotNull Providers provider);
     }
 
@@ -168,6 +174,10 @@ public final class BulkOp {
 
     public interface _FinalStage {
         BulkOp build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage endedAt(Optional<OffsetDateTime> endedAt);
 
@@ -238,6 +248,11 @@ public final class BulkOp {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public PendingStage provider(@NotNull Providers provider) {
@@ -282,6 +297,18 @@ public final class BulkOp {
         @java.lang.Override
         public BulkOp build() {
             return new BulkOp(type, status, provider, pending, processed, startedAt, endedAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
