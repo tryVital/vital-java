@@ -3,7 +3,14 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.tryvital/vital-java)](https://central.sonatype.com/artifact/io.vital/vital-java/) 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
-The Vital Java library provides access to the Vital API from applications written in Java.
+> [!IMPORTANT]                                                                                                                                                                                                     
+> This repository has been archived and will not receive further updates.
+>
+> The maintained SDK lives at **[junction-api/junction-java](https://github.com/junction-api/junction-java)**                                  
+> and is published to Maven Central as **`junction-java`**.
+>
+> See the [migration guide](https://github.com/junction-api/junction-java/blob/main/migration-from-vital/MIGRATION.md) for upgrade instructions.
+
 
 ## Documentation
 
