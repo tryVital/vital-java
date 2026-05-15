@@ -26,7 +26,9 @@ public enum PasswordProviders {
 
     KARDIA("kardia"),
 
-    ABBOTT_LIBREVIEW("abbott_libreview");
+    ABBOTT_LIBREVIEW("abbott_libreview"),
+
+    TANDEM_SOURCE("tandem_source");
 
     private final String value;
 
