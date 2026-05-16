@@ -284,6 +284,10 @@ public final class BiomarkerResult {
     public interface _FinalStage {
         BiomarkerResult build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage slug(Optional<String> slug);
 
         _FinalStage slug(String slug);
@@ -670,6 +674,18 @@ public final class BiomarkerResult {
                     performingLaboratory,
                     sourceSampleId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
