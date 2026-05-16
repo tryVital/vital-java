@@ -208,6 +208,10 @@ public final class ClientFacingBodyTemperatureDeltaSample {
     public interface _FinalStage {
         ClientFacingBodyTemperatureDeltaSample build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Deprecated</p>
          */
@@ -406,6 +410,18 @@ public final class ClientFacingBodyTemperatureDeltaSample {
         public ClientFacingBodyTemperatureDeltaSample build() {
             return new ClientFacingBodyTemperatureDeltaSample(
                     id, timezoneOffset, type, timestamp, start, end, value, sensorLocation, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

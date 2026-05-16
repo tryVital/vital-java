@@ -96,6 +96,10 @@ public final class ElectrocardiogramGetRequest {
     public interface _FinalStage {
         ElectrocardiogramGetRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage endDate(Optional<String> endDate);
 
         _FinalStage endDate(String endDate);
@@ -172,6 +176,18 @@ public final class ElectrocardiogramGetRequest {
         @java.lang.Override
         public ElectrocardiogramGetRequest build() {
             return new ElectrocardiogramGetRequest(startDate, endDate, provider, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

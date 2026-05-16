@@ -120,6 +120,10 @@ public final class ClientFacingAtHomePhlebotomyOrder {
     public interface _FinalStage {
         ClientFacingAtHomePhlebotomyOrder build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage appointmentId(Optional<String> appointmentId);
 
         _FinalStage appointmentId(String appointmentId);
@@ -191,6 +195,18 @@ public final class ClientFacingAtHomePhlebotomyOrder {
         @java.lang.Override
         public ClientFacingAtHomePhlebotomyOrder build() {
             return new ClientFacingAtHomePhlebotomyOrder(id, appointmentId, createdAt, updatedAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
