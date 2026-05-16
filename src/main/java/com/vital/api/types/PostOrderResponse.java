@@ -95,6 +95,10 @@ public final class PostOrderResponse {
 
     public interface _FinalStage {
         PostOrderResponse build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -142,6 +146,18 @@ public final class PostOrderResponse {
         @java.lang.Override
         public PostOrderResponse build() {
             return new PostOrderResponse(order, status, message, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -85,6 +85,10 @@ public final class GroupedForcedExpiratoryVolume1 {
     public interface _FinalStage {
         GroupedForcedExpiratoryVolume1 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingForcedExpiratoryVolume1Sample> data);
 
         _FinalStage addData(ClientFacingForcedExpiratoryVolume1Sample data);
@@ -144,6 +148,18 @@ public final class GroupedForcedExpiratoryVolume1 {
         @java.lang.Override
         public GroupedForcedExpiratoryVolume1 build() {
             return new GroupedForcedExpiratoryVolume1(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
