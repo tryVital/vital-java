@@ -62,6 +62,8 @@ public final class CreateOrderRequestCompatible {
 
     private final Optional<String> passthrough;
 
+    private final Optional<String> clinicalNotes;
+
     private final Optional<String> labAccountId;
 
     private final Optional<String> creatorMemberId;
@@ -88,6 +90,7 @@ public final class CreateOrderRequestCompatible {
             Optional<String> activateBy,
             Optional<List<AoEAnswer>> aoeAnswers,
             Optional<String> passthrough,
+            Optional<String> clinicalNotes,
             Optional<String> labAccountId,
             Optional<String> creatorMemberId,
             PatientDetailsWithValidation patientDetails,
@@ -108,6 +111,7 @@ public final class CreateOrderRequestCompatible {
         this.activateBy = activateBy;
         this.aoeAnswers = aoeAnswers;
         this.passthrough = passthrough;
+        this.clinicalNotes = clinicalNotes;
         this.labAccountId = labAccountId;
         this.creatorMemberId = creatorMemberId;
         this.patientDetails = patientDetails;
@@ -196,6 +200,11 @@ public final class CreateOrderRequestCompatible {
         return passthrough;
     }
 
+    @JsonProperty("clinical_notes")
+    public Optional<String> getClinicalNotes() {
+        return clinicalNotes;
+    }
+
     @JsonProperty("lab_account_id")
     public Optional<String> getLabAccountId() {
         return labAccountId;
@@ -243,6 +252,7 @@ public final class CreateOrderRequestCompatible {
                 && activateBy.equals(other.activateBy)
                 && aoeAnswers.equals(other.aoeAnswers)
                 && passthrough.equals(other.passthrough)
+                && clinicalNotes.equals(other.clinicalNotes)
                 && labAccountId.equals(other.labAccountId)
                 && creatorMemberId.equals(other.creatorMemberId)
                 && patientDetails.equals(other.patientDetails)
@@ -267,6 +277,7 @@ public final class CreateOrderRequestCompatible {
                 this.activateBy,
                 this.aoeAnswers,
                 this.passthrough,
+                this.clinicalNotes,
                 this.labAccountId,
                 this.creatorMemberId,
                 this.patientDetails,
@@ -298,6 +309,10 @@ public final class CreateOrderRequestCompatible {
 
     public interface _FinalStage {
         CreateOrderRequestCompatible build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage idempotencyKey(Optional<String> idempotencyKey);
 
@@ -361,6 +376,10 @@ public final class CreateOrderRequestCompatible {
 
         _FinalStage passthrough(String passthrough);
 
+        _FinalStage clinicalNotes(Optional<String> clinicalNotes);
+
+        _FinalStage clinicalNotes(String clinicalNotes);
+
         _FinalStage labAccountId(Optional<String> labAccountId);
 
         _FinalStage labAccountId(String labAccountId);
@@ -381,6 +400,8 @@ public final class CreateOrderRequestCompatible {
         private Optional<String> creatorMemberId = Optional.empty();
 
         private Optional<String> labAccountId = Optional.empty();
+
+        private Optional<String> clinicalNotes = Optional.empty();
 
         private Optional<String> passthrough = Optional.empty();
 
@@ -432,6 +453,7 @@ public final class CreateOrderRequestCompatible {
             activateBy(other.getActivateBy());
             aoeAnswers(other.getAoeAnswers());
             passthrough(other.getPassthrough());
+            clinicalNotes(other.getClinicalNotes());
             labAccountId(other.getLabAccountId());
             creatorMemberId(other.getCreatorMemberId());
             patientDetails(other.getPatientDetails());
@@ -483,6 +505,19 @@ public final class CreateOrderRequestCompatible {
         @JsonSetter(value = "lab_account_id", nulls = Nulls.SKIP)
         public _FinalStage labAccountId(Optional<String> labAccountId) {
             this.labAccountId = labAccountId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage clinicalNotes(String clinicalNotes) {
+            this.clinicalNotes = Optional.ofNullable(clinicalNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "clinical_notes", nulls = Nulls.SKIP)
+        public _FinalStage clinicalNotes(Optional<String> clinicalNotes) {
+            this.clinicalNotes = clinicalNotes;
             return this;
         }
 
@@ -698,11 +733,24 @@ public final class CreateOrderRequestCompatible {
                     activateBy,
                     aoeAnswers,
                     passthrough,
+                    clinicalNotes,
                     labAccountId,
                     creatorMemberId,
                     patientDetails,
                     patientAddress,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -84,6 +84,10 @@ public final class UtcTimestampWithTimezoneOffset {
 
     public interface _FinalStage {
         UtcTimestampWithTimezoneOffset build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -121,6 +125,18 @@ public final class UtcTimestampWithTimezoneOffset {
         @java.lang.Override
         public UtcTimestampWithTimezoneOffset build() {
             return new UtcTimestampWithTimezoneOffset(timestamp, timezoneOffset, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
