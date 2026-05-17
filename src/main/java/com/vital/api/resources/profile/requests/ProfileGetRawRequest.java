@@ -97,5 +97,15 @@ public final class ProfileGetRawRequest {
         public ProfileGetRawRequest build() {
             return new ProfileGetRawRequest(provider, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

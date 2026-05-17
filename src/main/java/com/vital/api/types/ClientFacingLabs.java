@@ -10,7 +10,9 @@ public enum ClientFacingLabs {
 
     LABCORP("labcorp"),
 
-    BIOREFERENCE("bioreference");
+    BIOREFERENCE("bioreference"),
+
+    SONORA_QUEST("sonora_quest");
 
     private final String value;
 

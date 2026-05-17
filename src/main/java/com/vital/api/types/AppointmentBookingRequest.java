@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
 public final class AppointmentBookingRequest {
     private final String bookingKey;
 
+    private final Optional<String> appointmentNotes;
+
     private final Optional<Boolean> asyncConfirmation;
 
     private final Optional<Integer> syncConfirmationTimeoutMillisecond;
@@ -33,11 +35,13 @@ public final class AppointmentBookingRequest {
 
     private AppointmentBookingRequest(
             String bookingKey,
+            Optional<String> appointmentNotes,
             Optional<Boolean> asyncConfirmation,
             Optional<Integer> syncConfirmationTimeoutMillisecond,
             Optional<Integer> asyncConfirmationTimeoutMillisecond,
             Map<String, Object> additionalProperties) {
         this.bookingKey = bookingKey;
+        this.appointmentNotes = appointmentNotes;
         this.asyncConfirmation = asyncConfirmation;
         this.syncConfirmationTimeoutMillisecond = syncConfirmationTimeoutMillisecond;
         this.asyncConfirmationTimeoutMillisecond = asyncConfirmationTimeoutMillisecond;
@@ -47,6 +51,11 @@ public final class AppointmentBookingRequest {
     @JsonProperty("booking_key")
     public String getBookingKey() {
         return bookingKey;
+    }
+
+    @JsonProperty("appointment_notes")
+    public Optional<String> getAppointmentNotes() {
+        return appointmentNotes;
     }
 
     /**
@@ -86,6 +95,7 @@ public final class AppointmentBookingRequest {
 
     private boolean equalTo(AppointmentBookingRequest other) {
         return bookingKey.equals(other.bookingKey)
+                && appointmentNotes.equals(other.appointmentNotes)
                 && asyncConfirmation.equals(other.asyncConfirmation)
                 && syncConfirmationTimeoutMillisecond.equals(other.syncConfirmationTimeoutMillisecond)
                 && asyncConfirmationTimeoutMillisecond.equals(other.asyncConfirmationTimeoutMillisecond);
@@ -95,6 +105,7 @@ public final class AppointmentBookingRequest {
     public int hashCode() {
         return Objects.hash(
                 this.bookingKey,
+                this.appointmentNotes,
                 this.asyncConfirmation,
                 this.syncConfirmationTimeoutMillisecond,
                 this.asyncConfirmationTimeoutMillisecond);
@@ -117,6 +128,14 @@ public final class AppointmentBookingRequest {
 
     public interface _FinalStage {
         AppointmentBookingRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage appointmentNotes(Optional<String> appointmentNotes);
+
+        _FinalStage appointmentNotes(String appointmentNotes);
 
         /**
          * <p>If true, the endpoint attempts to confirm the booking within the <code>sync_confirmation_timeout_millisecond</code> window. If confirmation is not received in time, a pending appointment is returned and booking continues asynchronously. If false (default), the endpoint waits for confirmation or returns a 500 error on failure.</p>
@@ -150,6 +169,8 @@ public final class AppointmentBookingRequest {
 
         private Optional<Boolean> asyncConfirmation = Optional.empty();
 
+        private Optional<String> appointmentNotes = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -158,6 +179,7 @@ public final class AppointmentBookingRequest {
         @java.lang.Override
         public Builder from(AppointmentBookingRequest other) {
             bookingKey(other.getBookingKey());
+            appointmentNotes(other.getAppointmentNotes());
             asyncConfirmation(other.getAsyncConfirmation());
             syncConfirmationTimeoutMillisecond(other.getSyncConfirmationTimeoutMillisecond());
             asyncConfirmationTimeoutMillisecond(other.getAsyncConfirmationTimeoutMillisecond());
@@ -232,13 +254,39 @@ public final class AppointmentBookingRequest {
         }
 
         @java.lang.Override
+        public _FinalStage appointmentNotes(String appointmentNotes) {
+            this.appointmentNotes = Optional.ofNullable(appointmentNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appointment_notes", nulls = Nulls.SKIP)
+        public _FinalStage appointmentNotes(Optional<String> appointmentNotes) {
+            this.appointmentNotes = appointmentNotes;
+            return this;
+        }
+
+        @java.lang.Override
         public AppointmentBookingRequest build() {
             return new AppointmentBookingRequest(
                     bookingKey,
+                    appointmentNotes,
                     asyncConfirmation,
                     syncConfirmationTimeoutMillisecond,
                     asyncConfirmationTimeoutMillisecond,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
