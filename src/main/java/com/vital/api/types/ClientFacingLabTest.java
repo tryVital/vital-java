@@ -118,7 +118,7 @@ public final class ClientFacingLabTest {
     }
 
     /**
-     * @return
+     * @return ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("sample_type")
     public LabTestSampleType getSampleType() {
@@ -126,7 +126,7 @@ public final class ClientFacingLabTest {
     }
 
     /**
-     * @return
+     * @return ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("method")
     public LabTestCollectionMethod getMethod() {
@@ -150,7 +150,7 @@ public final class ClientFacingLabTest {
     }
 
     /**
-     * @return
+     * @return ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("status")
     public LabTestStatus getStatus() {
@@ -296,10 +296,16 @@ public final class ClientFacingLabTest {
     }
 
     public interface SampleTypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         MethodStage sampleType(@NotNull LabTestSampleType sampleType);
     }
 
     public interface MethodStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         PriceStage method(@NotNull LabTestCollectionMethod method);
     }
 
@@ -315,11 +321,18 @@ public final class ClientFacingLabTest {
     }
 
     public interface StatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage status(@NotNull LabTestStatus status);
     }
 
     public interface _FinalStage {
         ClientFacingLabTest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>Defines whether a lab test requires fasting.</p>
@@ -472,6 +485,8 @@ public final class ClientFacingLabTest {
         }
 
         /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -482,6 +497,8 @@ public final class ClientFacingLabTest {
         }
 
         /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -514,6 +531,8 @@ public final class ClientFacingLabTest {
         }
 
         /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -695,6 +714,18 @@ public final class ClientFacingLabTest {
                     commonTatDays,
                     worstCaseTatDays,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
