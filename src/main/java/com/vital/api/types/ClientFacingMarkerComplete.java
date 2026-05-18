@@ -120,6 +120,9 @@ public final class ClientFacingMarkerComplete {
         return providerId;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public Optional<MarkerType> getType() {
         return type;
@@ -240,6 +243,10 @@ public final class ClientFacingMarkerComplete {
     public interface _FinalStage {
         ClientFacingMarkerComplete build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage description(Optional<String> description);
 
         _FinalStage description(String description);
@@ -252,6 +259,9 @@ public final class ClientFacingMarkerComplete {
 
         _FinalStage providerId(String providerId);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage type(Optional<MarkerType> type);
 
         _FinalStage type(MarkerType type);
@@ -484,12 +494,19 @@ public final class ClientFacingMarkerComplete {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage type(MarkerType type) {
             this.type = Optional.ofNullable(type);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<MarkerType> type) {
@@ -555,6 +572,18 @@ public final class ClientFacingMarkerComplete {
                     isOrderable,
                     expectedResults,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

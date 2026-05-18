@@ -121,6 +121,9 @@ public final class BiomarkerResult {
         return result;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public ResultType getType() {
         return type;
@@ -278,11 +281,18 @@ public final class BiomarkerResult {
     }
 
     public interface TypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage type(@NotNull ResultType type);
     }
 
     public interface _FinalStage {
         BiomarkerResult build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage slug(Optional<String> slug);
 
@@ -432,6 +442,11 @@ public final class BiomarkerResult {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(@NotNull ResultType type) {
@@ -670,6 +685,18 @@ public final class BiomarkerResult {
                     performingLaboratory,
                     sourceSampleId,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -190,6 +190,9 @@ public final class ClientFacingTeam {
         return logoUrl;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("delegated_flow")
     public DelegatedFlowType getDelegatedFlow() {
         return delegatedFlow;
@@ -299,11 +302,18 @@ public final class ClientFacingTeam {
     }
 
     public interface DelegatedFlowStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage delegatedFlow(@NotNull DelegatedFlowType delegatedFlow);
     }
 
     public interface _FinalStage {
         ClientFacingTeam build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage svixAppId(Optional<String> svixAppId);
 
@@ -480,6 +490,11 @@ public final class ClientFacingTeam {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("delegated_flow")
         public _FinalStage delegatedFlow(@NotNull DelegatedFlowType delegatedFlow) {
@@ -653,6 +668,18 @@ public final class ClientFacingTeam {
                     delegatedFlow,
                     criticalResultNotificationEmail,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
