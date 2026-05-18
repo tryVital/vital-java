@@ -197,6 +197,9 @@ public final class ClientFacingMenstrualCycle {
         return basalBodyTemperature;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("source_provider")
     public ClientFacingMenstrualCycleSourceProvider getSourceProvider() {
         return sourceProvider;
@@ -325,6 +328,9 @@ public final class ClientFacingMenstrualCycle {
     }
 
     public interface SourceProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         SourceTypeStage sourceProvider(@NotNull ClientFacingMenstrualCycleSourceProvider sourceProvider);
     }
 
@@ -353,6 +359,10 @@ public final class ClientFacingMenstrualCycle {
 
     public interface _FinalStage {
         ClientFacingMenstrualCycle build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage periodEnd(Optional<String> periodEnd);
 
@@ -519,6 +529,11 @@ public final class ClientFacingMenstrualCycle {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("source_provider")
         public SourceTypeStage sourceProvider(@NotNull ClientFacingMenstrualCycleSourceProvider sourceProvider) {
@@ -788,6 +803,18 @@ public final class ClientFacingMenstrualCycle {
                     userId,
                     source,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

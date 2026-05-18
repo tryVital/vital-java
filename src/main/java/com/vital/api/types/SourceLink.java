@@ -90,6 +90,9 @@ public final class SourceLink {
         return oauthUrl;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("auth_type")
     public Optional<SourceAuthType> getAuthType() {
         return authType;
@@ -169,10 +172,17 @@ public final class SourceLink {
     public interface _FinalStage {
         SourceLink build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage oauthUrl(Optional<String> oauthUrl);
 
         _FinalStage oauthUrl(String oauthUrl);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage authType(Optional<SourceAuthType> authType);
 
         _FinalStage authType(SourceAuthType authType);
@@ -267,12 +277,19 @@ public final class SourceLink {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage authType(SourceAuthType authType) {
             this.authType = Optional.ofNullable(authType);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "auth_type", nulls = Nulls.SKIP)
         public _FinalStage authType(Optional<SourceAuthType> authType) {
@@ -297,6 +314,18 @@ public final class SourceLink {
         public SourceLink build() {
             return new SourceLink(
                     id, name, slug, description, logo, oauthUrl, authType, formComponents, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

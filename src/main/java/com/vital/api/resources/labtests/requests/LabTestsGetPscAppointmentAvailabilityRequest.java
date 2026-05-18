@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import com.vital.api.types.AllowedRadius;
+import com.vital.api.types.AppointmentPscLabs;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public final class LabTestsGetPscAppointmentAvailabilityRequest {
     private final Optional<List<String>> siteCodes;
 
-    private final String lab;
+    private final AppointmentPscLabs lab;
 
     private final Optional<String> startDate;
 
@@ -40,7 +41,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
 
     private LabTestsGetPscAppointmentAvailabilityRequest(
             Optional<List<String>> siteCodes,
-            String lab,
+            AppointmentPscLabs lab,
             Optional<String> startDate,
             Optional<String> zipCode,
             Optional<AllowedRadius> radius,
@@ -67,7 +68,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
      * @return Lab to check for availability
      */
     @JsonProperty("lab")
-    public String getLab() {
+    public AppointmentPscLabs getLab() {
         return lab;
     }
 
@@ -88,7 +89,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
     }
 
     /**
-     * @return Radius in which to search. (meters)
+     * @return Radius in which to search in miles
      */
     @JsonProperty("radius")
     public Optional<AllowedRadius> getRadius() {
@@ -142,13 +143,17 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         /**
          * <p>Lab to check for availability</p>
          */
-        _FinalStage lab(@NotNull String lab);
+        _FinalStage lab(@NotNull AppointmentPscLabs lab);
 
         Builder from(LabTestsGetPscAppointmentAvailabilityRequest other);
     }
 
     public interface _FinalStage {
         LabTestsGetPscAppointmentAvailabilityRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>List of site codes to fetch availability for</p>
@@ -174,7 +179,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         _FinalStage zipCode(String zipCode);
 
         /**
-         * <p>Radius in which to search. (meters)</p>
+         * <p>Radius in which to search in miles</p>
          */
         _FinalStage radius(Optional<AllowedRadius> radius);
 
@@ -190,7 +195,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements LabStage, _FinalStage {
-        private String lab;
+        private AppointmentPscLabs lab;
 
         private Optional<Boolean> allowStale = Optional.empty();
 
@@ -225,7 +230,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
          */
         @java.lang.Override
         @JsonSetter("lab")
-        public _FinalStage lab(@NotNull String lab) {
+        public _FinalStage lab(@NotNull AppointmentPscLabs lab) {
             this.lab = Objects.requireNonNull(lab, "lab must not be null");
             return this;
         }
@@ -251,7 +256,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         }
 
         /**
-         * <p>Radius in which to search. (meters)</p>
+         * <p>Radius in which to search in miles</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -261,7 +266,7 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         }
 
         /**
-         * <p>Radius in which to search. (meters)</p>
+         * <p>Radius in which to search in miles</p>
          */
         @java.lang.Override
         @JsonSetter(value = "radius", nulls = Nulls.SKIP)
@@ -340,6 +345,18 @@ public final class LabTestsGetPscAppointmentAvailabilityRequest {
         public LabTestsGetPscAppointmentAvailabilityRequest build() {
             return new LabTestsGetPscAppointmentAvailabilityRequest(
                     siteCodes, lab, startDate, zipCode, radius, allowStale, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

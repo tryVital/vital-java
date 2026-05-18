@@ -85,6 +85,10 @@ public final class GroupedBodyTemperatureDelta {
     public interface _FinalStage {
         GroupedBodyTemperatureDelta build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingBodyTemperatureDeltaSample> data);
 
         _FinalStage addData(ClientFacingBodyTemperatureDeltaSample data);
@@ -144,6 +148,18 @@ public final class GroupedBodyTemperatureDelta {
         @java.lang.Override
         public GroupedBodyTemperatureDelta build() {
             return new GroupedBodyTemperatureDelta(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

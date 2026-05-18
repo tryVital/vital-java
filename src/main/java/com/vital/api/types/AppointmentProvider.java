@@ -10,7 +10,9 @@ public enum AppointmentProvider {
 
     PHLEBFINDERS("phlebfinders"),
 
-    QUEST("quest");
+    QUEST("quest"),
+
+    SONORA_QUEST("sonora_quest");
 
     private final String value;
 
