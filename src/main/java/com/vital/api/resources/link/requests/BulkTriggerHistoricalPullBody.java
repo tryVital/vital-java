@@ -115,6 +115,10 @@ public final class BulkTriggerHistoricalPullBody {
     public interface _FinalStage {
         BulkTriggerHistoricalPullBody build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage teamId(Optional<LinkBulkTriggerHistoricalPullRequestTeamId> teamId);
 
         _FinalStage teamId(LinkBulkTriggerHistoricalPullRequestTeamId teamId);
@@ -234,6 +238,18 @@ public final class BulkTriggerHistoricalPullBody {
         public BulkTriggerHistoricalPullBody build() {
             return new BulkTriggerHistoricalPullBody(
                     teamId, userIds, provider, waitForCompletion, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

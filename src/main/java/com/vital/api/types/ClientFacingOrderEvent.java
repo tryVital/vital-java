@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -26,13 +28,20 @@ public final class ClientFacingOrderEvent {
 
     private final OrderStatus status;
 
+    private final Optional<String> statusDetail;
+
     private final Map<String, Object> additionalProperties;
 
     private ClientFacingOrderEvent(
-            int id, OffsetDateTime createdAt, OrderStatus status, Map<String, Object> additionalProperties) {
+            int id,
+            OffsetDateTime createdAt,
+            OrderStatus status,
+            Optional<String> statusDetail,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.createdAt = createdAt;
         this.status = status;
+        this.statusDetail = statusDetail;
         this.additionalProperties = additionalProperties;
     }
 
@@ -51,6 +60,11 @@ public final class ClientFacingOrderEvent {
         return status;
     }
 
+    @JsonProperty("status_detail")
+    public Optional<String> getStatusDetail() {
+        return statusDetail;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -63,12 +77,15 @@ public final class ClientFacingOrderEvent {
     }
 
     private boolean equalTo(ClientFacingOrderEvent other) {
-        return id == other.id && createdAt.equals(other.createdAt) && status.equals(other.status);
+        return id == other.id
+                && createdAt.equals(other.createdAt)
+                && status.equals(other.status)
+                && statusDetail.equals(other.statusDetail);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.createdAt, this.status);
+        return Objects.hash(this.id, this.createdAt, this.status, this.statusDetail);
     }
 
     @java.lang.Override
@@ -96,6 +113,14 @@ public final class ClientFacingOrderEvent {
 
     public interface _FinalStage {
         ClientFacingOrderEvent build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage statusDetail(Optional<String> statusDetail);
+
+        _FinalStage statusDetail(String statusDetail);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -105,6 +130,8 @@ public final class ClientFacingOrderEvent {
         private OffsetDateTime createdAt;
 
         private OrderStatus status;
+
+        private Optional<String> statusDetail = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -116,6 +143,7 @@ public final class ClientFacingOrderEvent {
             id(other.getId());
             createdAt(other.getCreatedAt());
             status(other.getStatus());
+            statusDetail(other.getStatusDetail());
             return this;
         }
 
@@ -141,8 +169,33 @@ public final class ClientFacingOrderEvent {
         }
 
         @java.lang.Override
+        public _FinalStage statusDetail(String statusDetail) {
+            this.statusDetail = Optional.ofNullable(statusDetail);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "status_detail", nulls = Nulls.SKIP)
+        public _FinalStage statusDetail(Optional<String> statusDetail) {
+            this.statusDetail = statusDetail;
+            return this;
+        }
+
+        @java.lang.Override
         public ClientFacingOrderEvent build() {
-            return new ClientFacingOrderEvent(id, createdAt, status, additionalProperties);
+            return new ClientFacingOrderEvent(id, createdAt, status, statusDetail, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
