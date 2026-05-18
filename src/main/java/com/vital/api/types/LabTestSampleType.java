@@ -14,7 +14,9 @@ public enum LabTestSampleType {
 
     SALIVA("saliva"),
 
-    URINE("urine");
+    URINE("urine"),
+
+    STOOL("stool");
 
     private final String value;
 

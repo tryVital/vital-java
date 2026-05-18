@@ -105,6 +105,10 @@ public final class VitalsMindfulnessMinutesRequest {
     public interface _FinalStage {
         VitalsMindfulnessMinutesRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Provider oura/strava etc</p>
          */
@@ -196,6 +200,18 @@ public final class VitalsMindfulnessMinutesRequest {
         @java.lang.Override
         public VitalsMindfulnessMinutesRequest build() {
             return new VitalsMindfulnessMinutesRequest(provider, startDate, endDate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

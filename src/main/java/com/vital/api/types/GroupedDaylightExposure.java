@@ -85,6 +85,10 @@ public final class GroupedDaylightExposure {
     public interface _FinalStage {
         GroupedDaylightExposure build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingDaylightExposureSample> data);
 
         _FinalStage addData(ClientFacingDaylightExposureSample data);
@@ -144,6 +148,18 @@ public final class GroupedDaylightExposure {
         @java.lang.Override
         public GroupedDaylightExposure build() {
             return new GroupedDaylightExposure(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
