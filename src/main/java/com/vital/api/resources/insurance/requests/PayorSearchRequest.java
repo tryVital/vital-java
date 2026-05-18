@@ -45,6 +45,9 @@ public final class PayorSearchRequest {
         return insuranceName;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public Optional<PayorCodeExternalProvider> getProvider() {
         return provider;
@@ -117,6 +120,9 @@ public final class PayorSearchRequest {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @JsonSetter(value = "provider", nulls = Nulls.SKIP)
         public Builder provider(Optional<PayorCodeExternalProvider> provider) {
             this.provider = provider;
@@ -141,6 +147,16 @@ public final class PayorSearchRequest {
 
         public PayorSearchRequest build() {
             return new PayorSearchRequest(insuranceName, provider, providerId, additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
