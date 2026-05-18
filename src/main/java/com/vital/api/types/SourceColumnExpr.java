@@ -76,6 +76,10 @@ public final class SourceColumnExpr {
 
     public interface _FinalStage {
         SourceColumnExpr build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -108,6 +112,18 @@ public final class SourceColumnExpr {
         @java.lang.Override
         public SourceColumnExpr build() {
             return new SourceColumnExpr(source, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
