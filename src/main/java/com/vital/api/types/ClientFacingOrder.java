@@ -42,6 +42,8 @@ public final class ClientFacingOrder {
 
     private final Optional<String> notes;
 
+    private final Optional<String> clinicalNotes;
+
     private final OffsetDateTime createdAt;
 
     private final OffsetDateTime updatedAt;
@@ -49,6 +51,8 @@ public final class ClientFacingOrder {
     private final List<ClientFacingOrderEvent> events;
 
     private final Optional<OrderTopLevelStatus> status;
+
+    private final ClientFacingOrderEvent lastEvent;
 
     private final Optional<ClientFacingPhysician> physician;
 
@@ -80,8 +84,6 @@ public final class ClientFacingOrder {
 
     private final Optional<OrderOrigin> origin;
 
-    private final Optional<String> parentId;
-
     private final Optional<ClientFacingOrderTransaction> orderTransaction;
 
     private final Map<String, Object> additionalProperties;
@@ -96,10 +98,12 @@ public final class ClientFacingOrder {
             ClientFacingOrderDetails details,
             Optional<String> sampleId,
             Optional<String> notes,
+            Optional<String> clinicalNotes,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             List<ClientFacingOrderEvent> events,
             Optional<OrderTopLevelStatus> status,
+            ClientFacingOrderEvent lastEvent,
             Optional<ClientFacingPhysician> physician,
             Optional<String> healthInsuranceId,
             Optional<String> requisitionFormUrl,
@@ -115,7 +119,6 @@ public final class ClientFacingOrder {
             Optional<String> expectedResultByDate,
             Optional<String> worstCaseResultByDate,
             Optional<OrderOrigin> origin,
-            Optional<String> parentId,
             Optional<ClientFacingOrderTransaction> orderTransaction,
             Map<String, Object> additionalProperties) {
         this.userId = userId;
@@ -127,10 +130,12 @@ public final class ClientFacingOrder {
         this.details = details;
         this.sampleId = sampleId;
         this.notes = notes;
+        this.clinicalNotes = clinicalNotes;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.events = events;
         this.status = status;
+        this.lastEvent = lastEvent;
         this.physician = physician;
         this.healthInsuranceId = healthInsuranceId;
         this.requisitionFormUrl = requisitionFormUrl;
@@ -146,7 +151,6 @@ public final class ClientFacingOrder {
         this.expectedResultByDate = expectedResultByDate;
         this.worstCaseResultByDate = worstCaseResultByDate;
         this.origin = origin;
-        this.parentId = parentId;
         this.orderTransaction = orderTransaction;
         this.additionalProperties = additionalProperties;
     }
@@ -220,6 +224,11 @@ public final class ClientFacingOrder {
         return notes;
     }
 
+    @JsonProperty("clinical_notes")
+    public Optional<String> getClinicalNotes() {
+        return clinicalNotes;
+    }
+
     /**
      * @return When your order was created
      */
@@ -241,9 +250,20 @@ public final class ClientFacingOrder {
         return events;
     }
 
+    /**
+     * @return The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead. ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public Optional<OrderTopLevelStatus> getStatus() {
         return status;
+    }
+
+    /**
+     * @return The latest event in the order's lifecycle.
+     */
+    @JsonProperty("last_event")
+    public ClientFacingOrderEvent getLastEvent() {
+        return lastEvent;
     }
 
     @JsonProperty("physician")
@@ -296,6 +316,9 @@ public final class ClientFacingOrder {
         return passthrough;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("billing_type")
     public Optional<Billing> getBillingType() {
         return billingType;
@@ -315,7 +338,7 @@ public final class ClientFacingOrder {
     }
 
     /**
-     * @return Interpretation of the order result. Can be one of (normal, abnormal, critical).
+     * @return Interpretation of the order result. Can be one of (normal, abnormal, critical). ℹ️ This enum is non-exhaustive.
      */
     @JsonProperty("interpretation")
     public Optional<Interpretation> getInterpretation() {
@@ -346,14 +369,12 @@ public final class ClientFacingOrder {
         return worstCaseResultByDate;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("origin")
     public Optional<OrderOrigin> getOrigin() {
         return origin;
-    }
-
-    @JsonProperty("parent_id")
-    public Optional<String> getParentId() {
-        return parentId;
     }
 
     @JsonProperty("order_transaction")
@@ -382,10 +403,12 @@ public final class ClientFacingOrder {
                 && details.equals(other.details)
                 && sampleId.equals(other.sampleId)
                 && notes.equals(other.notes)
+                && clinicalNotes.equals(other.clinicalNotes)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
                 && events.equals(other.events)
                 && status.equals(other.status)
+                && lastEvent.equals(other.lastEvent)
                 && physician.equals(other.physician)
                 && healthInsuranceId.equals(other.healthInsuranceId)
                 && requisitionFormUrl.equals(other.requisitionFormUrl)
@@ -401,7 +424,6 @@ public final class ClientFacingOrder {
                 && expectedResultByDate.equals(other.expectedResultByDate)
                 && worstCaseResultByDate.equals(other.worstCaseResultByDate)
                 && origin.equals(other.origin)
-                && parentId.equals(other.parentId)
                 && orderTransaction.equals(other.orderTransaction);
     }
 
@@ -417,10 +439,12 @@ public final class ClientFacingOrder {
                 this.details,
                 this.sampleId,
                 this.notes,
+                this.clinicalNotes,
                 this.createdAt,
                 this.updatedAt,
                 this.events,
                 this.status,
+                this.lastEvent,
                 this.physician,
                 this.healthInsuranceId,
                 this.requisitionFormUrl,
@@ -436,7 +460,6 @@ public final class ClientFacingOrder {
                 this.expectedResultByDate,
                 this.worstCaseResultByDate,
                 this.origin,
-                this.parentId,
                 this.orderTransaction);
     }
 
@@ -494,7 +517,14 @@ public final class ClientFacingOrder {
         /**
          * <p>When your order was last updated.</p>
          */
-        HasAbnStage updatedAt(@NotNull OffsetDateTime updatedAt);
+        LastEventStage updatedAt(@NotNull OffsetDateTime updatedAt);
+    }
+
+    public interface LastEventStage {
+        /**
+         * <p>The latest event in the order's lifecycle.</p>
+         */
+        HasAbnStage lastEvent(@NotNull ClientFacingOrderEvent lastEvent);
     }
 
     public interface HasAbnStage {
@@ -506,6 +536,10 @@ public final class ClientFacingOrder {
 
     public interface _FinalStage {
         ClientFacingOrder build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>Patient Details</p>
@@ -535,12 +569,19 @@ public final class ClientFacingOrder {
 
         _FinalStage notes(String notes);
 
+        _FinalStage clinicalNotes(Optional<String> clinicalNotes);
+
+        _FinalStage clinicalNotes(String clinicalNotes);
+
         _FinalStage events(List<ClientFacingOrderEvent> events);
 
         _FinalStage addEvents(ClientFacingOrderEvent events);
 
         _FinalStage addAllEvents(List<ClientFacingOrderEvent> events);
 
+        /**
+         * <p>The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead. ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage status(Optional<OrderTopLevelStatus> status);
 
         _FinalStage status(OrderTopLevelStatus status);
@@ -588,6 +629,9 @@ public final class ClientFacingOrder {
 
         _FinalStage passthrough(String passthrough);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage billingType(Optional<Billing> billingType);
 
         _FinalStage billingType(Billing billingType);
@@ -597,7 +641,7 @@ public final class ClientFacingOrder {
         _FinalStage icdCodes(List<String> icdCodes);
 
         /**
-         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical). ℹ️ This enum is non-exhaustive.</p>
          */
         _FinalStage interpretation(Optional<Interpretation> interpretation);
 
@@ -624,13 +668,12 @@ public final class ClientFacingOrder {
 
         _FinalStage worstCaseResultByDate(String worstCaseResultByDate);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage origin(Optional<OrderOrigin> origin);
 
         _FinalStage origin(OrderOrigin origin);
-
-        _FinalStage parentId(Optional<String> parentId);
-
-        _FinalStage parentId(String parentId);
 
         _FinalStage orderTransaction(Optional<ClientFacingOrderTransaction> orderTransaction);
 
@@ -646,6 +689,7 @@ public final class ClientFacingOrder {
                     DetailsStage,
                     CreatedAtStage,
                     UpdatedAtStage,
+                    LastEventStage,
                     HasAbnStage,
                     _FinalStage {
         private String userId;
@@ -662,11 +706,11 @@ public final class ClientFacingOrder {
 
         private OffsetDateTime updatedAt;
 
+        private ClientFacingOrderEvent lastEvent;
+
         private boolean hasAbn;
 
         private Optional<ClientFacingOrderTransaction> orderTransaction = Optional.empty();
-
-        private Optional<String> parentId = Optional.empty();
 
         private Optional<OrderOrigin> origin = Optional.empty();
 
@@ -700,6 +744,8 @@ public final class ClientFacingOrder {
 
         private List<ClientFacingOrderEvent> events = new ArrayList<>();
 
+        private Optional<String> clinicalNotes = Optional.empty();
+
         private Optional<String> notes = Optional.empty();
 
         private Optional<String> sampleId = Optional.empty();
@@ -724,10 +770,12 @@ public final class ClientFacingOrder {
             details(other.getDetails());
             sampleId(other.getSampleId());
             notes(other.getNotes());
+            clinicalNotes(other.getClinicalNotes());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             events(other.getEvents());
             status(other.getStatus());
+            lastEvent(other.getLastEvent());
             physician(other.getPhysician());
             healthInsuranceId(other.getHealthInsuranceId());
             requisitionFormUrl(other.getRequisitionFormUrl());
@@ -743,7 +791,6 @@ public final class ClientFacingOrder {
             expectedResultByDate(other.getExpectedResultByDate());
             worstCaseResultByDate(other.getWorstCaseResultByDate());
             origin(other.getOrigin());
-            parentId(other.getParentId());
             orderTransaction(other.getOrderTransaction());
             return this;
         }
@@ -822,8 +869,20 @@ public final class ClientFacingOrder {
          */
         @java.lang.Override
         @JsonSetter("updated_at")
-        public HasAbnStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+        public LastEventStage updatedAt(@NotNull OffsetDateTime updatedAt) {
             this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The latest event in the order's lifecycle.</p>
+         * <p>The latest event in the order's lifecycle.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("last_event")
+        public HasAbnStage lastEvent(@NotNull ClientFacingOrderEvent lastEvent) {
+            this.lastEvent = Objects.requireNonNull(lastEvent, "lastEvent must not be null");
             return this;
         }
 
@@ -852,25 +911,19 @@ public final class ClientFacingOrder {
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage parentId(String parentId) {
-            this.parentId = Optional.ofNullable(parentId);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "parent_id", nulls = Nulls.SKIP)
-        public _FinalStage parentId(Optional<String> parentId) {
-            this.parentId = parentId;
-            return this;
-        }
-
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage origin(OrderOrigin origin) {
             this.origin = Optional.ofNullable(origin);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "origin", nulls = Nulls.SKIP)
         public _FinalStage origin(Optional<OrderOrigin> origin) {
@@ -939,7 +992,7 @@ public final class ClientFacingOrder {
         }
 
         /**
-         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical). ℹ️ This enum is non-exhaustive.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -949,7 +1002,7 @@ public final class ClientFacingOrder {
         }
 
         /**
-         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical).</p>
+         * <p>Interpretation of the order result. Can be one of (normal, abnormal, critical). ℹ️ This enum is non-exhaustive.</p>
          */
         @java.lang.Override
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
@@ -971,12 +1024,19 @@ public final class ClientFacingOrder {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage billingType(Billing billingType) {
             this.billingType = Optional.ofNullable(billingType);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "billing_type", nulls = Nulls.SKIP)
         public _FinalStage billingType(Optional<Billing> billingType) {
@@ -1110,12 +1170,19 @@ public final class ClientFacingOrder {
             return this;
         }
 
+        /**
+         * <p>The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead. ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage status(OrderTopLevelStatus status) {
             this.status = Optional.ofNullable(status);
             return this;
         }
 
+        /**
+         * <p>The top-level status of the latest event for this order. This field is deprecated. Please use <code>last_event</code> instead. ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
         public _FinalStage status(Optional<OrderTopLevelStatus> status) {
@@ -1144,6 +1211,19 @@ public final class ClientFacingOrder {
             if (events != null) {
                 this.events.addAll(events);
             }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage clinicalNotes(String clinicalNotes) {
+            this.clinicalNotes = Optional.ofNullable(clinicalNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "clinical_notes", nulls = Nulls.SKIP)
+        public _FinalStage clinicalNotes(Optional<String> clinicalNotes) {
+            this.clinicalNotes = clinicalNotes;
             return this;
         }
 
@@ -1239,10 +1319,12 @@ public final class ClientFacingOrder {
                     details,
                     sampleId,
                     notes,
+                    clinicalNotes,
                     createdAt,
                     updatedAt,
                     events,
                     status,
+                    lastEvent,
                     physician,
                     healthInsuranceId,
                     requisitionFormUrl,
@@ -1258,9 +1340,20 @@ public final class ClientFacingOrder {
                     expectedResultByDate,
                     worstCaseResultByDate,
                     origin,
-                    parentId,
                     orderTransaction,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -8,8 +8,6 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.labreport.requests.BodyCreateLabReportParserJob;
 import com.vital.api.types.ParsingJob;
 import java.io.File;
-import java.io.InputStream;
-import okhttp3.MediaType;
 
 public class LabReportClient {
     protected final ClientOptions clientOptions;
@@ -29,7 +27,7 @@ public class LabReportClient {
     }
 
     /**
-     * Creates a parse job, uploads the file to provider, persists the job row,
+     * Creates a parse job, uploads the file(s) to provider, persists the job row,
      * and starts the ParseLabReport. Returns a generated job_id.
      */
     public ParsingJob parserCreateJob(File file, BodyCreateLabReportParserJob request) {
@@ -37,30 +35,11 @@ public class LabReportClient {
     }
 
     /**
-     * Creates a parse job, uploads the file to provider, persists the job row,
+     * Creates a parse job, uploads the file(s) to provider, persists the job row,
      * and starts the ParseLabReport. Returns a generated job_id.
      */
     public ParsingJob parserCreateJob(File file, BodyCreateLabReportParserJob request, RequestOptions requestOptions) {
         return this.rawClient.parserCreateJob(file, request, requestOptions).body();
-    }
-
-    public ParsingJob parserCreateJob(InputStream stream, String filename) {
-        return this.rawClient.parserCreateJob(stream, filename).body();
-    }
-
-    public ParsingJob parserCreateJob(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.parserCreateJob(stream, filename, mediaType).body();
-    }
-
-    public ParsingJob parserCreateJob(InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.parserCreateJob(stream, filename, requestOptions).body();
-    }
-
-    public ParsingJob parserCreateJob(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .parserCreateJob(stream, filename, mediaType, requestOptions)
-                .body();
     }
 
     /**

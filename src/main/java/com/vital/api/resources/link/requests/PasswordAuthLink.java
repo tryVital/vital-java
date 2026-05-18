@@ -65,11 +65,17 @@ public final class PasswordAuthLink {
         return password;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public Providers getProvider() {
         return provider;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("auth_type")
     public AuthType getAuthType() {
         return authType;
@@ -119,15 +125,25 @@ public final class PasswordAuthLink {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         AuthTypeStage provider(@NotNull Providers provider);
     }
 
     public interface AuthTypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage authType(@NotNull AuthType authType);
     }
 
     public interface _FinalStage {
         PasswordAuthLink build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage vitalLinkToken(Optional<String> vitalLinkToken);
 
@@ -176,6 +192,11 @@ public final class PasswordAuthLink {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public AuthTypeStage provider(@NotNull Providers provider) {
@@ -183,6 +204,11 @@ public final class PasswordAuthLink {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("auth_type")
         public _FinalStage authType(@NotNull AuthType authType) {
@@ -205,6 +231,18 @@ public final class PasswordAuthLink {
         @java.lang.Override
         public PasswordAuthLink build() {
             return new PasswordAuthLink(vitalLinkToken, username, password, provider, authType, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

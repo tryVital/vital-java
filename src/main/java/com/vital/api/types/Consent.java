@@ -41,6 +41,9 @@ public final class Consent {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("consentType")
     public ConsentType getConsentType() {
         return consentType;
@@ -88,6 +91,9 @@ public final class Consent {
     }
 
     public interface ConsentTypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage consentType(@NotNull ConsentType consentType);
 
         Builder from(Consent other);
@@ -95,6 +101,10 @@ public final class Consent {
 
     public interface _FinalStage {
         Consent build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage version(Optional<String> version);
 
@@ -126,6 +136,11 @@ public final class Consent {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("consentType")
         public _FinalStage consentType(@NotNull ConsentType consentType) {
@@ -162,6 +177,18 @@ public final class Consent {
         @java.lang.Override
         public Consent build() {
             return new Consent(consentType, version, timeOfConsent, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
