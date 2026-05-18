@@ -17,7 +17,7 @@ import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawWorkout;
+import com.vital.api.types.RawWorkoutResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -59,8 +59,8 @@ public class RawWorkoutsClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -99,14 +99,14 @@ public class RawWorkoutsClient {
     /**
      * Get raw workout summary for user_id
      */
-    public VitalHttpResponse<RawWorkout> getRaw(String userId, WorkoutsGetRawRequest request) {
+    public VitalHttpResponse<RawWorkoutResponse> getRaw(String userId, WorkoutsGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw workout summary for user_id
      */
-    public VitalHttpResponse<RawWorkout> getRaw(
+    public VitalHttpResponse<RawWorkoutResponse> getRaw(
             String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -123,8 +123,8 @@ public class RawWorkoutsClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -142,7 +142,7 @@ public class RawWorkoutsClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawWorkout.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawWorkoutResponse.class), response);
             }
             try {
                 if (response.code() == 422) {
@@ -171,8 +171,8 @@ public class RawWorkoutsClient {
                 .addPathSegment(workoutId)
                 .addPathSegments("stream");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

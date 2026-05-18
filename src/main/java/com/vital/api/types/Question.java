@@ -86,6 +86,9 @@ public final class Question {
         return value;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public QuestionType getType() {
         return type;
@@ -176,6 +179,9 @@ public final class Question {
     }
 
     public interface TypeStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         SequenceStage type(@NotNull QuestionType type);
     }
 
@@ -185,6 +191,10 @@ public final class Question {
 
     public interface _FinalStage {
         Question build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage answers(List<Answer> answers);
 
@@ -269,6 +279,11 @@ public final class Question {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("type")
         public SequenceStage type(@NotNull QuestionType type) {
@@ -337,6 +352,18 @@ public final class Question {
         public Question build() {
             return new Question(
                     id, required, code, value, type, sequence, answers, constraint, default_, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
