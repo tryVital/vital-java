@@ -5,7 +5,6 @@ package com.vital.api.resources.team;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.types.ClientFacingPhysician;
@@ -29,34 +28,6 @@ public class TeamClient {
      */
     public RawTeamClient withRawResponse() {
         return this.rawClient;
-    }
-
-    /**
-     * Post teams.
-     */
-    public Map<String, Object> getLinkConfig() {
-        return this.rawClient.getLinkConfig().body();
-    }
-
-    /**
-     * Post teams.
-     */
-    public Map<String, Object> getLinkConfig(RequestOptions requestOptions) {
-        return this.rawClient.getLinkConfig(requestOptions).body();
-    }
-
-    /**
-     * Post teams.
-     */
-    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request) {
-        return this.rawClient.getLinkConfig(request).body();
-    }
-
-    /**
-     * Post teams.
-     */
-    public Map<String, Object> getLinkConfig(TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getLinkConfig(request, requestOptions).body();
     }
 
     /**

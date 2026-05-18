@@ -5,14 +5,12 @@ package com.vital.api.resources.link;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.link.requests.BeginLinkTokenRequest;
 import com.vital.api.resources.link.requests.BulkExportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkImportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkPauseConnectionsBody;
 import com.vital.api.resources.link.requests.BulkTriggerHistoricalPullBody;
 import com.vital.api.resources.link.requests.CompletePasswordProviderMfaBody;
 import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
-import com.vital.api.resources.link.requests.EmailAuthLink;
 import com.vital.api.resources.link.requests.EmailProviderAuthLink;
 import com.vital.api.resources.link.requests.IndividualProviderData;
 import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
@@ -20,16 +18,11 @@ import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
 import com.vital.api.resources.link.requests.LinkGetAllProvidersRequest;
 import com.vital.api.resources.link.requests.LinkListBulkOpsRequest;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.resources.link.requests.LinkTokenStateRequest;
-import com.vital.api.resources.link.requests.LinkTokenValidationRequest;
-import com.vital.api.resources.link.requests.ManualConnectionData;
-import com.vital.api.resources.link.requests.PasswordAuthLink;
 import com.vital.api.types.BulkExportConnectionsResponse;
 import com.vital.api.types.BulkImportConnectionsResponse;
 import com.vital.api.types.BulkOpsResponse;
 import com.vital.api.types.DemoConnectionStatus;
 import com.vital.api.types.LinkTokenExchangeResponse;
-import com.vital.api.types.ManualProviders;
 import com.vital.api.types.OAuthProviders;
 import com.vital.api.types.PasswordProviders;
 import com.vital.api.types.ProviderLinkResponse;
@@ -37,7 +30,6 @@ import com.vital.api.types.Source;
 import com.vital.api.types.SourceLink;
 import com.vital.api.types.VitalTokenCreatedResponse;
 import java.util.List;
-import java.util.Map;
 
 public class LinkClient {
     protected final ClientOptions clientOptions;
@@ -128,14 +120,6 @@ public class LinkClient {
         return this.rawClient.token(request, requestOptions).body();
     }
 
-    public Map<String, Object> isTokenValid(LinkTokenValidationRequest request) {
-        return this.rawClient.isTokenValid(request).body();
-    }
-
-    public Map<String, Object> isTokenValid(LinkTokenValidationRequest request, RequestOptions requestOptions) {
-        return this.rawClient.isTokenValid(request, requestOptions).body();
-    }
-
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
@@ -148,82 +132,6 @@ public class LinkClient {
      */
     public VitalTokenCreatedResponse codeCreate(LinkCodeCreateRequest request, RequestOptions requestOptions) {
         return this.rawClient.codeCreate(request, requestOptions).body();
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Start link token process
-     */
-    public Map<String, Object> startConnect(BeginLinkTokenRequest request) {
-        return this.rawClient.startConnect(request).body();
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Start link token process
-     */
-    public Map<String, Object> startConnect(BeginLinkTokenRequest request, RequestOptions requestOptions) {
-        return this.rawClient.startConnect(request, requestOptions).body();
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public Map<String, Object> tokenState() {
-        return this.rawClient.tokenState().body();
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public Map<String, Object> tokenState(RequestOptions requestOptions) {
-        return this.rawClient.tokenState(requestOptions).body();
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public Map<String, Object> tokenState(LinkTokenStateRequest request) {
-        return this.rawClient.tokenState(request).body();
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public Map<String, Object> tokenState(LinkTokenStateRequest request, RequestOptions requestOptions) {
-        return this.rawClient.tokenState(request, requestOptions).body();
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
-     */
-    public Object emailAuth(EmailAuthLink request) {
-        return this.rawClient.emailAuth(request).body();
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
-     */
-    public Object emailAuth(EmailAuthLink request, RequestOptions requestOptions) {
-        return this.rawClient.emailAuth(request, requestOptions).body();
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
-     */
-    public Object passwordAuth(PasswordAuthLink request) {
-        return this.rawClient.passwordAuth(request).body();
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
-     */
-    public Object passwordAuth(PasswordAuthLink request, RequestOptions requestOptions) {
-        return this.rawClient.passwordAuth(request, requestOptions).body();
     }
 
     /**
@@ -335,17 +243,6 @@ public class LinkClient {
      */
     public List<SourceLink> getAllProviders(LinkGetAllProvidersRequest request, RequestOptions requestOptions) {
         return this.rawClient.getAllProviders(request, requestOptions).body();
-    }
-
-    public Map<String, Boolean> connectManualProvider(ManualProviders provider, ManualConnectionData request) {
-        return this.rawClient.connectManualProvider(provider, request).body();
-    }
-
-    public Map<String, Boolean> connectManualProvider(
-            ManualProviders provider, ManualConnectionData request, RequestOptions requestOptions) {
-        return this.rawClient
-                .connectManualProvider(provider, request, requestOptions)
-                .body();
     }
 
     /**

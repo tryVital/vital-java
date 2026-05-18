@@ -14,7 +14,7 @@ import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
 import com.vital.api.resources.devices.requests.DevicesGetRawRequest;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawDevices;
+import com.vital.api.types.RawDevicesResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -33,28 +33,28 @@ public class RawDevicesClient {
     /**
      * Get Devices for user_id
      */
-    public VitalHttpResponse<RawDevices> getRaw(String userId) {
+    public VitalHttpResponse<RawDevicesResponse> getRaw(String userId) {
         return getRaw(userId, DevicesGetRawRequest.builder().build());
     }
 
     /**
      * Get Devices for user_id
      */
-    public VitalHttpResponse<RawDevices> getRaw(String userId, RequestOptions requestOptions) {
+    public VitalHttpResponse<RawDevicesResponse> getRaw(String userId, RequestOptions requestOptions) {
         return getRaw(userId, DevicesGetRawRequest.builder().build(), requestOptions);
     }
 
     /**
      * Get Devices for user_id
      */
-    public VitalHttpResponse<RawDevices> getRaw(String userId, DevicesGetRawRequest request) {
+    public VitalHttpResponse<RawDevicesResponse> getRaw(String userId, DevicesGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get Devices for user_id
      */
-    public VitalHttpResponse<RawDevices> getRaw(
+    public VitalHttpResponse<RawDevicesResponse> getRaw(
             String userId, DevicesGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -66,8 +66,8 @@ public class RawDevicesClient {
                     httpUrl, "provider", request.getProvider().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -85,7 +85,7 @@ public class RawDevicesClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawDevices.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawDevicesResponse.class), response);
             }
             try {
                 if (response.code() == 422) {

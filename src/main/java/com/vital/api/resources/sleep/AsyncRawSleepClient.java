@@ -17,7 +17,7 @@ import com.vital.api.resources.sleep.requests.SleepGetRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawSleep;
+import com.vital.api.types.RawSleepResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -63,8 +63,8 @@ public class AsyncRawSleepClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -119,14 +119,14 @@ public class AsyncRawSleepClient {
     /**
      * Get raw sleep summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawSleep>> getRaw(String userId, SleepGetRawRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawSleepResponse>> getRaw(String userId, SleepGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw sleep summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawSleep>> getRaw(
+    public CompletableFuture<VitalHttpResponse<RawSleepResponse>> getRaw(
             String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -143,8 +143,8 @@ public class AsyncRawSleepClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -157,7 +157,7 @@ public class AsyncRawSleepClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<VitalHttpResponse<RawSleep>> future = new CompletableFuture<>();
+        CompletableFuture<VitalHttpResponse<RawSleepResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -165,7 +165,8 @@ public class AsyncRawSleepClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawSleep.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawSleepResponse.class),
+                                response));
                         return;
                     }
                     try {
@@ -213,8 +214,8 @@ public class AsyncRawSleepClient {
                 .addPathSegment(sleepId)
                 .addPathSegments("stream");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
