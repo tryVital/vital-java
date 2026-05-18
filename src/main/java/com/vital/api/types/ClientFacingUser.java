@@ -219,6 +219,10 @@ public final class ClientFacingUser {
     public interface _FinalStage {
         ClientFacingUser build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>A list of the users connected sources.</p>
          */
@@ -476,6 +480,18 @@ public final class ClientFacingUser {
                     ingestionStart,
                     ingestionEnd,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

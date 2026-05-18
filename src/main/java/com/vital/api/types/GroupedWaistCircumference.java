@@ -85,6 +85,10 @@ public final class GroupedWaistCircumference {
     public interface _FinalStage {
         GroupedWaistCircumference build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingWaistCircumferenceSample> data);
 
         _FinalStage addData(ClientFacingWaistCircumferenceSample data);
@@ -144,6 +148,18 @@ public final class GroupedWaistCircumference {
         @java.lang.Override
         public GroupedWaistCircumference build() {
             return new GroupedWaistCircumference(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
