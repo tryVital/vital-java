@@ -35,6 +35,8 @@ public final class PatientAddressWithValidation {
 
     private final String country;
 
+    private final Optional<String> accessNotes;
+
     private final Optional<String> phoneNumber;
 
     private final Map<String, Object> additionalProperties;
@@ -47,6 +49,7 @@ public final class PatientAddressWithValidation {
             String state,
             String zip,
             String country,
+            Optional<String> accessNotes,
             Optional<String> phoneNumber,
             Map<String, Object> additionalProperties) {
         this.receiverName = receiverName;
@@ -56,6 +59,7 @@ public final class PatientAddressWithValidation {
         this.state = state;
         this.zip = zip;
         this.country = country;
+        this.accessNotes = accessNotes;
         this.phoneNumber = phoneNumber;
         this.additionalProperties = additionalProperties;
     }
@@ -95,6 +99,11 @@ public final class PatientAddressWithValidation {
         return country;
     }
 
+    @JsonProperty("access_notes")
+    public Optional<String> getAccessNotes() {
+        return accessNotes;
+    }
+
     @JsonProperty("phone_number")
     public Optional<String> getPhoneNumber() {
         return phoneNumber;
@@ -119,6 +128,7 @@ public final class PatientAddressWithValidation {
                 && state.equals(other.state)
                 && zip.equals(other.zip)
                 && country.equals(other.country)
+                && accessNotes.equals(other.accessNotes)
                 && phoneNumber.equals(other.phoneNumber);
     }
 
@@ -132,6 +142,7 @@ public final class PatientAddressWithValidation {
                 this.state,
                 this.zip,
                 this.country,
+                this.accessNotes,
                 this.phoneNumber);
     }
 
@@ -169,6 +180,10 @@ public final class PatientAddressWithValidation {
     public interface _FinalStage {
         PatientAddressWithValidation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage receiverName(Optional<String> receiverName);
 
         _FinalStage receiverName(String receiverName);
@@ -176,6 +191,10 @@ public final class PatientAddressWithValidation {
         _FinalStage secondLine(Optional<String> secondLine);
 
         _FinalStage secondLine(String secondLine);
+
+        _FinalStage accessNotes(Optional<String> accessNotes);
+
+        _FinalStage accessNotes(String accessNotes);
 
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
@@ -197,6 +216,8 @@ public final class PatientAddressWithValidation {
 
         private Optional<String> phoneNumber = Optional.empty();
 
+        private Optional<String> accessNotes = Optional.empty();
+
         private Optional<String> secondLine = Optional.empty();
 
         private Optional<String> receiverName = Optional.empty();
@@ -215,6 +236,7 @@ public final class PatientAddressWithValidation {
             state(other.getState());
             zip(other.getZip());
             country(other.getCountry());
+            accessNotes(other.getAccessNotes());
             phoneNumber(other.getPhoneNumber());
             return this;
         }
@@ -268,6 +290,19 @@ public final class PatientAddressWithValidation {
         }
 
         @java.lang.Override
+        public _FinalStage accessNotes(String accessNotes) {
+            this.accessNotes = Optional.ofNullable(accessNotes);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "access_notes", nulls = Nulls.SKIP)
+        public _FinalStage accessNotes(Optional<String> accessNotes) {
+            this.accessNotes = accessNotes;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage secondLine(String secondLine) {
             this.secondLine = Optional.ofNullable(secondLine);
             return this;
@@ -296,7 +331,28 @@ public final class PatientAddressWithValidation {
         @java.lang.Override
         public PatientAddressWithValidation build() {
             return new PatientAddressWithValidation(
-                    receiverName, firstLine, secondLine, city, state, zip, country, phoneNumber, additionalProperties);
+                    receiverName,
+                    firstLine,
+                    secondLine,
+                    city,
+                    state,
+                    zip,
+                    country,
+                    accessNotes,
+                    phoneNumber,
+                    additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

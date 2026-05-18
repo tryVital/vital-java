@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -28,13 +29,24 @@ public final class ValidationError {
 
     private final String type;
 
+    private final Optional<Object> input;
+
+    private final Optional<Map<String, Object>> ctx;
+
     private final Map<String, Object> additionalProperties;
 
     private ValidationError(
-            List<ValidationErrorLocItem> loc, String msg, String type, Map<String, Object> additionalProperties) {
+            List<ValidationErrorLocItem> loc,
+            String msg,
+            String type,
+            Optional<Object> input,
+            Optional<Map<String, Object>> ctx,
+            Map<String, Object> additionalProperties) {
         this.loc = loc;
         this.msg = msg;
         this.type = type;
+        this.input = input;
+        this.ctx = ctx;
         this.additionalProperties = additionalProperties;
     }
 
@@ -53,6 +65,16 @@ public final class ValidationError {
         return type;
     }
 
+    @JsonProperty("input")
+    public Optional<Object> getInput() {
+        return input;
+    }
+
+    @JsonProperty("ctx")
+    public Optional<Map<String, Object>> getCtx() {
+        return ctx;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -65,12 +87,16 @@ public final class ValidationError {
     }
 
     private boolean equalTo(ValidationError other) {
-        return loc.equals(other.loc) && msg.equals(other.msg) && type.equals(other.type);
+        return loc.equals(other.loc)
+                && msg.equals(other.msg)
+                && type.equals(other.type)
+                && input.equals(other.input)
+                && ctx.equals(other.ctx);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.loc, this.msg, this.type);
+        return Objects.hash(this.loc, this.msg, this.type, this.input, this.ctx);
     }
 
     @java.lang.Override
@@ -95,11 +121,23 @@ public final class ValidationError {
     public interface _FinalStage {
         ValidationError build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage loc(List<ValidationErrorLocItem> loc);
 
         _FinalStage addLoc(ValidationErrorLocItem loc);
 
         _FinalStage addAllLoc(List<ValidationErrorLocItem> loc);
+
+        _FinalStage input(Optional<Object> input);
+
+        _FinalStage input(Object input);
+
+        _FinalStage ctx(Optional<Map<String, Object>> ctx);
+
+        _FinalStage ctx(Map<String, Object> ctx);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -107,6 +145,10 @@ public final class ValidationError {
         private String msg;
 
         private String type;
+
+        private Optional<Map<String, Object>> ctx = Optional.empty();
+
+        private Optional<Object> input = Optional.empty();
 
         private List<ValidationErrorLocItem> loc = new ArrayList<>();
 
@@ -120,6 +162,8 @@ public final class ValidationError {
             loc(other.getLoc());
             msg(other.getMsg());
             type(other.getType());
+            input(other.getInput());
+            ctx(other.getCtx());
             return this;
         }
 
@@ -134,6 +178,32 @@ public final class ValidationError {
         @JsonSetter("type")
         public _FinalStage type(@NotNull String type) {
             this.type = Objects.requireNonNull(type, "type must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage ctx(Map<String, Object> ctx) {
+            this.ctx = Optional.ofNullable(ctx);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "ctx", nulls = Nulls.SKIP)
+        public _FinalStage ctx(Optional<Map<String, Object>> ctx) {
+            this.ctx = ctx;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage input(Object input) {
+            this.input = Optional.ofNullable(input);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "input", nulls = Nulls.SKIP)
+        public _FinalStage input(Optional<Object> input) {
+            this.input = input;
             return this;
         }
 
@@ -163,7 +233,19 @@ public final class ValidationError {
 
         @java.lang.Override
         public ValidationError build() {
-            return new ValidationError(loc, msg, type, additionalProperties);
+            return new ValidationError(loc, msg, type, input, ctx, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

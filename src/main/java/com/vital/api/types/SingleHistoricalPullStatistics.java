@@ -61,6 +61,9 @@ public final class SingleHistoricalPullStatistics {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public HistoricalPullStatus getStatus() {
         return status;
@@ -96,6 +99,9 @@ public final class SingleHistoricalPullStatistics {
         return traceId;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("error_details")
     public Optional<SingleHistoricalPullStatisticsErrorDetails> getErrorDetails() {
         return errorDetails;
@@ -146,6 +152,9 @@ public final class SingleHistoricalPullStatistics {
     }
 
     public interface StatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         TimelineStage status(@NotNull HistoricalPullStatus status);
 
         Builder from(SingleHistoricalPullStatistics other);
@@ -161,6 +170,10 @@ public final class SingleHistoricalPullStatistics {
 
     public interface _FinalStage {
         SingleHistoricalPullStatistics build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage rangeStart(Optional<OffsetDateTime> rangeStart);
 
@@ -178,6 +191,9 @@ public final class SingleHistoricalPullStatistics {
 
         _FinalStage traceId(String traceId);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage errorDetails(Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails);
 
         _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails);
@@ -219,6 +235,11 @@ public final class SingleHistoricalPullStatistics {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public TimelineStage status(@NotNull HistoricalPullStatus status) {
@@ -240,12 +261,19 @@ public final class SingleHistoricalPullStatistics {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage errorDetails(SingleHistoricalPullStatisticsErrorDetails errorDetails) {
             this.errorDetails = Optional.ofNullable(errorDetails);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "error_details", nulls = Nulls.SKIP)
         public _FinalStage errorDetails(Optional<SingleHistoricalPullStatisticsErrorDetails> errorDetails) {
@@ -317,6 +345,18 @@ public final class SingleHistoricalPullStatistics {
                     traceId,
                     errorDetails,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
