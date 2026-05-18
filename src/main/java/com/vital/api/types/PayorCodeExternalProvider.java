@@ -14,7 +14,11 @@ public enum PayorCodeExternalProvider {
 
     WAYSTAR("waystar"),
 
-    CLAIM_MD("claim_md");
+    CLAIM_MD("claim_md"),
+
+    APERO("apero"),
+
+    PVERIFY("pverify");
 
     private final String value;
 

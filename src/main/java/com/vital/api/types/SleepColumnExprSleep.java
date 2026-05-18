@@ -56,6 +56,8 @@ public enum SleepColumnExprSleep {
 
     SCORE("score"),
 
+    RECOVERY_READINESS_SCORE("recovery_readiness_score"),
+
     SOURCE_TYPE("source_type"),
 
     SOURCE_PROVIDER("source_provider"),
