@@ -27,9 +27,9 @@ public final class ActivityV2InDb {
 
     private final Map<String, Object> data;
 
-    private final String providerId;
-
     private final String userId;
+
+    private final String providerId;
 
     private final int sourceId;
 
@@ -37,40 +37,40 @@ public final class ActivityV2InDb {
 
     private final String id;
 
-    private final ClientFacingProvider source;
-
     private final Optional<String> sourceDeviceId;
 
     private final Optional<OffsetDateTime> createdAt;
 
     private final Optional<OffsetDateTime> updatedAt;
 
+    private final ClientFacingProvider source;
+
     private final Map<String, Object> additionalProperties;
 
     private ActivityV2InDb(
             OffsetDateTime timestamp,
             Map<String, Object> data,
-            String providerId,
             String userId,
+            String providerId,
             int sourceId,
             int priorityId,
             String id,
-            ClientFacingProvider source,
             Optional<String> sourceDeviceId,
             Optional<OffsetDateTime> createdAt,
             Optional<OffsetDateTime> updatedAt,
+            ClientFacingProvider source,
             Map<String, Object> additionalProperties) {
         this.timestamp = timestamp;
         this.data = data;
-        this.providerId = providerId;
         this.userId = userId;
+        this.providerId = providerId;
         this.sourceId = sourceId;
         this.priorityId = priorityId;
         this.id = id;
-        this.source = source;
         this.sourceDeviceId = sourceDeviceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.source = source;
         this.additionalProperties = additionalProperties;
     }
 
@@ -84,14 +84,14 @@ public final class ActivityV2InDb {
         return data;
     }
 
-    @JsonProperty("provider_id")
-    public String getProviderId() {
-        return providerId;
-    }
-
     @JsonProperty("user_id")
     public String getUserId() {
         return userId;
+    }
+
+    @JsonProperty("provider_id")
+    public String getProviderId() {
+        return providerId;
     }
 
     @JsonProperty("source_id")
@@ -109,11 +109,6 @@ public final class ActivityV2InDb {
         return id;
     }
 
-    @JsonProperty("source")
-    public ClientFacingProvider getSource() {
-        return source;
-    }
-
     @JsonProperty("source_device_id")
     public Optional<String> getSourceDeviceId() {
         return sourceDeviceId;
@@ -127,6 +122,11 @@ public final class ActivityV2InDb {
     @JsonProperty("updated_at")
     public Optional<OffsetDateTime> getUpdatedAt() {
         return updatedAt;
+    }
+
+    @JsonProperty("source")
+    public ClientFacingProvider getSource() {
+        return source;
     }
 
     @java.lang.Override
@@ -143,15 +143,15 @@ public final class ActivityV2InDb {
     private boolean equalTo(ActivityV2InDb other) {
         return timestamp.equals(other.timestamp)
                 && data.equals(other.data)
-                && providerId.equals(other.providerId)
                 && userId.equals(other.userId)
+                && providerId.equals(other.providerId)
                 && sourceId == other.sourceId
                 && priorityId == other.priorityId
                 && id.equals(other.id)
-                && source.equals(other.source)
                 && sourceDeviceId.equals(other.sourceDeviceId)
                 && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt);
+                && updatedAt.equals(other.updatedAt)
+                && source.equals(other.source);
     }
 
     @java.lang.Override
@@ -159,15 +159,15 @@ public final class ActivityV2InDb {
         return Objects.hash(
                 this.timestamp,
                 this.data,
-                this.providerId,
                 this.userId,
+                this.providerId,
                 this.sourceId,
                 this.priorityId,
                 this.id,
-                this.source,
                 this.sourceDeviceId,
                 this.createdAt,
-                this.updatedAt);
+                this.updatedAt,
+                this.source);
     }
 
     @java.lang.Override
@@ -180,17 +180,17 @@ public final class ActivityV2InDb {
     }
 
     public interface TimestampStage {
-        ProviderIdStage timestamp(@NotNull OffsetDateTime timestamp);
+        UserIdStage timestamp(@NotNull OffsetDateTime timestamp);
 
         Builder from(ActivityV2InDb other);
     }
 
-    public interface ProviderIdStage {
-        UserIdStage providerId(@NotNull String providerId);
+    public interface UserIdStage {
+        ProviderIdStage userId(@NotNull String userId);
     }
 
-    public interface UserIdStage {
-        SourceIdStage userId(@NotNull String userId);
+    public interface ProviderIdStage {
+        SourceIdStage providerId(@NotNull String providerId);
     }
 
     public interface SourceIdStage {
@@ -211,6 +211,10 @@ public final class ActivityV2InDb {
 
     public interface _FinalStage {
         ActivityV2InDb build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage data(Map<String, Object> data);
 
@@ -234,8 +238,8 @@ public final class ActivityV2InDb {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements TimestampStage,
-                    ProviderIdStage,
                     UserIdStage,
+                    ProviderIdStage,
                     SourceIdStage,
                     PriorityIdStage,
                     IdStage,
@@ -243,9 +247,9 @@ public final class ActivityV2InDb {
                     _FinalStage {
         private OffsetDateTime timestamp;
 
-        private String providerId;
-
         private String userId;
+
+        private String providerId;
 
         private int sourceId;
 
@@ -272,36 +276,36 @@ public final class ActivityV2InDb {
         public Builder from(ActivityV2InDb other) {
             timestamp(other.getTimestamp());
             data(other.getData());
-            providerId(other.getProviderId());
             userId(other.getUserId());
+            providerId(other.getProviderId());
             sourceId(other.getSourceId());
             priorityId(other.getPriorityId());
             id(other.getId());
-            source(other.getSource());
             sourceDeviceId(other.getSourceDeviceId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            source(other.getSource());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("timestamp")
-        public ProviderIdStage timestamp(@NotNull OffsetDateTime timestamp) {
+        public UserIdStage timestamp(@NotNull OffsetDateTime timestamp) {
             this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("provider_id")
-        public UserIdStage providerId(@NotNull String providerId) {
-            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
+        @JsonSetter("user_id")
+        public ProviderIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("user_id")
-        public SourceIdStage userId(@NotNull String userId) {
-            this.userId = Objects.requireNonNull(userId, "userId must not be null");
+        @JsonSetter("provider_id")
+        public SourceIdStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
             return this;
         }
 
@@ -401,16 +405,28 @@ public final class ActivityV2InDb {
             return new ActivityV2InDb(
                     timestamp,
                     data,
-                    providerId,
                     userId,
+                    providerId,
                     sourceId,
                     priorityId,
                     id,
-                    source,
                     sourceDeviceId,
                     createdAt,
                     updatedAt,
+                    source,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
