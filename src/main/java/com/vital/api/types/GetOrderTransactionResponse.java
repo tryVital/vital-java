@@ -26,7 +26,7 @@ public final class GetOrderTransactionResponse {
 
     private final String teamId;
 
-    private final String status;
+    private final OrderTransactionStatus status;
 
     private final Optional<List<OrderSummary>> orders;
 
@@ -35,7 +35,7 @@ public final class GetOrderTransactionResponse {
     private GetOrderTransactionResponse(
             String id,
             String teamId,
-            String status,
+            OrderTransactionStatus status,
             Optional<List<OrderSummary>> orders,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -55,8 +55,11 @@ public final class GetOrderTransactionResponse {
         return teamId;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
-    public String getStatus() {
+    public OrderTransactionStatus getStatus() {
         return status;
     }
 
@@ -108,11 +111,18 @@ public final class GetOrderTransactionResponse {
     }
 
     public interface StatusStage {
-        _FinalStage status(@NotNull String status);
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
+        _FinalStage status(@NotNull OrderTransactionStatus status);
     }
 
     public interface _FinalStage {
         GetOrderTransactionResponse build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage orders(Optional<List<OrderSummary>> orders);
 
@@ -125,7 +135,7 @@ public final class GetOrderTransactionResponse {
 
         private String teamId;
 
-        private String status;
+        private OrderTransactionStatus status;
 
         private Optional<List<OrderSummary>> orders = Optional.empty();
 
@@ -157,9 +167,14 @@ public final class GetOrderTransactionResponse {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
-        public _FinalStage status(@NotNull String status) {
+        public _FinalStage status(@NotNull OrderTransactionStatus status) {
             this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
@@ -180,6 +195,18 @@ public final class GetOrderTransactionResponse {
         @java.lang.Override
         public GetOrderTransactionResponse build() {
             return new GetOrderTransactionResponse(id, teamId, status, orders, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

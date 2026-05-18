@@ -37,6 +37,9 @@ public final class LastAttempt {
         return timestamp;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("status")
     public AttemptStatus getStatus() {
         return status;
@@ -78,11 +81,18 @@ public final class LastAttempt {
     }
 
     public interface StatusStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage status(@NotNull AttemptStatus status);
     }
 
     public interface _FinalStage {
         LastAttempt build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -110,6 +120,11 @@ public final class LastAttempt {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("status")
         public _FinalStage status(@NotNull AttemptStatus status) {
@@ -120,6 +135,18 @@ public final class LastAttempt {
         @java.lang.Override
         public LastAttempt build() {
             return new LastAttempt(timestamp, status, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
