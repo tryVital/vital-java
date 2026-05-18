@@ -24,6 +24,8 @@ public enum ClientFacingResource {
 
     RESULT("result"),
 
+    MATCH_REVIEW("match_review"),
+
     APPOINTMENT("appointment"),
 
     GLUCOSE("glucose"),

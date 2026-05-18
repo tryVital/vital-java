@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.resources.link.types.LinkBulkExportRequestTeamId;
 import com.vital.api.types.OAuthProviders;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BulkExportConnectionsBody.Builder.class)
 public final class BulkExportConnectionsBody {
-    private final Optional<LinkBulkExportRequestTeamId> teamId;
-
     private final Optional<List<String>> userIds;
 
     private final OAuthProviders provider;
@@ -35,21 +32,14 @@ public final class BulkExportConnectionsBody {
     private final Map<String, Object> additionalProperties;
 
     private BulkExportConnectionsBody(
-            Optional<LinkBulkExportRequestTeamId> teamId,
             Optional<List<String>> userIds,
             OAuthProviders provider,
             Optional<String> nextToken,
             Map<String, Object> additionalProperties) {
-        this.teamId = teamId;
         this.userIds = userIds;
         this.provider = provider;
         this.nextToken = nextToken;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("team_id")
-    public Optional<LinkBulkExportRequestTeamId> getTeamId() {
-        return teamId;
     }
 
     @JsonProperty("user_ids")
@@ -57,6 +47,9 @@ public final class BulkExportConnectionsBody {
         return userIds;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("provider")
     public OAuthProviders getProvider() {
         return provider;
@@ -79,15 +72,12 @@ public final class BulkExportConnectionsBody {
     }
 
     private boolean equalTo(BulkExportConnectionsBody other) {
-        return teamId.equals(other.teamId)
-                && userIds.equals(other.userIds)
-                && provider.equals(other.provider)
-                && nextToken.equals(other.nextToken);
+        return userIds.equals(other.userIds) && provider.equals(other.provider) && nextToken.equals(other.nextToken);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.teamId, this.userIds, this.provider, this.nextToken);
+        return Objects.hash(this.userIds, this.provider, this.nextToken);
     }
 
     @java.lang.Override
@@ -100,6 +90,9 @@ public final class BulkExportConnectionsBody {
     }
 
     public interface ProviderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage provider(@NotNull OAuthProviders provider);
 
         Builder from(BulkExportConnectionsBody other);
@@ -108,9 +101,9 @@ public final class BulkExportConnectionsBody {
     public interface _FinalStage {
         BulkExportConnectionsBody build();
 
-        _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId);
+        _FinalStage additionalProperty(String key, Object value);
 
-        _FinalStage teamId(LinkBulkExportRequestTeamId teamId);
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage userIds(Optional<List<String>> userIds);
 
@@ -129,8 +122,6 @@ public final class BulkExportConnectionsBody {
 
         private Optional<List<String>> userIds = Optional.empty();
 
-        private Optional<LinkBulkExportRequestTeamId> teamId = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -138,13 +129,17 @@ public final class BulkExportConnectionsBody {
 
         @java.lang.Override
         public Builder from(BulkExportConnectionsBody other) {
-            teamId(other.getTeamId());
             userIds(other.getUserIds());
             provider(other.getProvider());
             nextToken(other.getNextToken());
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("provider")
         public _FinalStage provider(@NotNull OAuthProviders provider) {
@@ -179,21 +174,20 @@ public final class BulkExportConnectionsBody {
         }
 
         @java.lang.Override
-        public _FinalStage teamId(LinkBulkExportRequestTeamId teamId) {
-            this.teamId = Optional.ofNullable(teamId);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "team_id", nulls = Nulls.SKIP)
-        public _FinalStage teamId(Optional<LinkBulkExportRequestTeamId> teamId) {
-            this.teamId = teamId;
-            return this;
-        }
-
-        @java.lang.Override
         public BulkExportConnectionsBody build() {
-            return new BulkExportConnectionsBody(teamId, userIds, provider, nextToken, additionalProperties);
+            return new BulkExportConnectionsBody(userIds, provider, nextToken, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
