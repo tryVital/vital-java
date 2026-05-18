@@ -105,6 +105,10 @@ public final class PerformingLaboratory {
     public interface _FinalStage {
         PerformingLaboratory build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage phoneNumber(Optional<String> phoneNumber);
 
         _FinalStage phoneNumber(String phoneNumber);
@@ -191,6 +195,18 @@ public final class PerformingLaboratory {
         @java.lang.Override
         public PerformingLaboratory build() {
             return new PerformingLaboratory(name, phoneNumber, medicalDirector, address, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

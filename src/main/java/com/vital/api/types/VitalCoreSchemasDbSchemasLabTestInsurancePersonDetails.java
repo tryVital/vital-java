@@ -64,6 +64,9 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
         return lastName;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("gender")
     public Gender getGender() {
         return gender;
@@ -137,6 +140,9 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
     }
 
     public interface GenderStage {
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         AddressStage gender(@NotNull Gender gender);
     }
 
@@ -158,6 +164,10 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
 
     public interface _FinalStage {
         VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -215,6 +225,11 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("gender")
         public AddressStage gender(@NotNull Gender gender) {
@@ -254,6 +269,18 @@ public final class VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails {
         public VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails build() {
             return new VitalCoreSchemasDbSchemasLabTestInsurancePersonDetails(
                     firstName, lastName, gender, address, dob, email, phoneNumber, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

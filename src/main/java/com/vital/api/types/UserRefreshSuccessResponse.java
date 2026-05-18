@@ -22,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserRefreshSuccessResponse.Builder.class)
 public final class UserRefreshSuccessResponse {
-    private final boolean success;
-
     private final String userId;
 
     private final List<String> refreshedSources;
@@ -35,13 +33,11 @@ public final class UserRefreshSuccessResponse {
     private final Map<String, Object> additionalProperties;
 
     private UserRefreshSuccessResponse(
-            boolean success,
             String userId,
             List<String> refreshedSources,
             List<String> inProgressSources,
             List<String> failedSources,
             Map<String, Object> additionalProperties) {
-        this.success = success;
         this.userId = userId;
         this.refreshedSources = refreshedSources;
         this.inProgressSources = inProgressSources;
@@ -53,8 +49,8 @@ public final class UserRefreshSuccessResponse {
      * @return Whether operation was successful or not
      */
     @JsonProperty("success")
-    public boolean getSuccess() {
-        return success;
+    public Boolean getSuccess() {
+        return true;
     }
 
     /**
@@ -92,8 +88,7 @@ public final class UserRefreshSuccessResponse {
     }
 
     private boolean equalTo(UserRefreshSuccessResponse other) {
-        return success == other.success
-                && userId.equals(other.userId)
+        return userId.equals(other.userId)
                 && refreshedSources.equals(other.refreshedSources)
                 && inProgressSources.equals(other.inProgressSources)
                 && failedSources.equals(other.failedSources);
@@ -101,8 +96,7 @@ public final class UserRefreshSuccessResponse {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.success, this.userId, this.refreshedSources, this.inProgressSources, this.failedSources);
+        return Objects.hash(this.userId, this.refreshedSources, this.inProgressSources, this.failedSources);
     }
 
     @java.lang.Override
@@ -110,17 +104,8 @@ public final class UserRefreshSuccessResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static SuccessStage builder() {
+    public static UserIdStage builder() {
         return new Builder();
-    }
-
-    public interface SuccessStage {
-        /**
-         * <p>Whether operation was successful or not</p>
-         */
-        UserIdStage success(boolean success);
-
-        Builder from(UserRefreshSuccessResponse other);
     }
 
     public interface UserIdStage {
@@ -128,10 +113,16 @@ public final class UserRefreshSuccessResponse {
          * <p>A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.</p>
          */
         _FinalStage userId(@NotNull String userId);
+
+        Builder from(UserRefreshSuccessResponse other);
     }
 
     public interface _FinalStage {
         UserRefreshSuccessResponse build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage refreshedSources(List<String> refreshedSources);
 
@@ -153,9 +144,7 @@ public final class UserRefreshSuccessResponse {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements SuccessStage, UserIdStage, _FinalStage {
-        private boolean success;
-
+    public static final class Builder implements UserIdStage, _FinalStage {
         private String userId;
 
         private List<String> failedSources = new ArrayList<>();
@@ -171,23 +160,10 @@ public final class UserRefreshSuccessResponse {
 
         @java.lang.Override
         public Builder from(UserRefreshSuccessResponse other) {
-            success(other.getSuccess());
             userId(other.getUserId());
             refreshedSources(other.getRefreshedSources());
             inProgressSources(other.getInProgressSources());
             failedSources(other.getFailedSources());
-            return this;
-        }
-
-        /**
-         * <p>Whether operation was successful or not</p>
-         * <p>Whether operation was successful or not</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("success")
-        public UserIdStage success(boolean success) {
-            this.success = success;
             return this;
         }
 
@@ -278,7 +254,19 @@ public final class UserRefreshSuccessResponse {
         @java.lang.Override
         public UserRefreshSuccessResponse build() {
             return new UserRefreshSuccessResponse(
-                    success, userId, refreshedSources, inProgressSources, failedSources, additionalProperties);
+                    userId, refreshedSources, inProgressSources, failedSources, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -170,6 +170,10 @@ public final class ProfileInDb {
     public interface _FinalStage {
         ProfileInDb build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage priorityId(Optional<Integer> priorityId);
 
         _FinalStage priorityId(Integer priorityId);
@@ -298,6 +302,18 @@ public final class ProfileInDb {
         public ProfileInDb build() {
             return new ProfileInDb(
                     id, data, userId, sourceId, priorityId, source, createdAt, updatedAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

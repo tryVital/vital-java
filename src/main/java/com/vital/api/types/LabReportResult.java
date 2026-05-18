@@ -83,6 +83,9 @@ public final class LabReportResult {
         return value;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("type")
     public Optional<LabReportResultType> getType() {
         return type;
@@ -113,6 +116,9 @@ public final class LabReportResult {
         return loincMatches;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("interpretation")
     public Optional<Interpretation> getInterpretation() {
         return interpretation;
@@ -191,6 +197,13 @@ public final class LabReportResult {
     public interface _FinalStage {
         LabReportResult build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage type(Optional<LabReportResultType> type);
 
         _FinalStage type(LabReportResultType type);
@@ -215,6 +228,9 @@ public final class LabReportResult {
 
         _FinalStage loincMatches(List<LoincMatch> loincMatches);
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         _FinalStage interpretation(Optional<Interpretation> interpretation);
 
         _FinalStage interpretation(Interpretation interpretation);
@@ -313,12 +329,19 @@ public final class LabReportResult {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage interpretation(Interpretation interpretation) {
             this.interpretation = Optional.ofNullable(interpretation);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public _FinalStage interpretation(Optional<Interpretation> interpretation) {
@@ -391,12 +414,19 @@ public final class LabReportResult {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage type(LabReportResultType type) {
             this.type = Optional.ofNullable(type);
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<LabReportResultType> type) {
@@ -419,6 +449,18 @@ public final class LabReportResult {
                     isAboveMaxRange,
                     isBelowMinRange,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
