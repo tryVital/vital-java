@@ -40,6 +40,9 @@ public final class SimulationFlags {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ℹ️ This enum is non-exhaustive.
+     */
     @JsonProperty("interpretation")
     public Optional<Interpretation> getInterpretation() {
         return interpretation;
@@ -106,6 +109,9 @@ public final class SimulationFlags {
             return this;
         }
 
+        /**
+         * <p>ℹ️ This enum is non-exhaustive.</p>
+         */
         @JsonSetter(value = "interpretation", nulls = Nulls.SKIP)
         public Builder interpretation(Optional<Interpretation> interpretation) {
             this.interpretation = interpretation;
@@ -141,6 +147,16 @@ public final class SimulationFlags {
 
         public SimulationFlags build() {
             return new SimulationFlags(interpretation, resultTypes, hasMissingResults, additionalProperties);
+        }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

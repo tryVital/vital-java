@@ -85,6 +85,10 @@ public final class GroupedMindfulnessMinutes {
     public interface _FinalStage {
         GroupedMindfulnessMinutes build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingMindfulnessMinutesTimeseries> data);
 
         _FinalStage addData(ClientFacingMindfulnessMinutesTimeseries data);
@@ -144,6 +148,18 @@ public final class GroupedMindfulnessMinutes {
         @java.lang.Override
         public GroupedMindfulnessMinutes build() {
             return new GroupedMindfulnessMinutes(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -105,6 +105,10 @@ public final class VitalsIgeRequest {
     public interface _FinalStage {
         VitalsIgeRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Provider oura/strava etc</p>
          */
@@ -196,6 +200,18 @@ public final class VitalsIgeRequest {
         @java.lang.Override
         public VitalsIgeRequest build() {
             return new VitalsIgeRequest(provider, startDate, endDate, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -17,7 +17,7 @@ import com.vital.api.resources.sleep.requests.SleepGetRequest;
 import com.vital.api.types.ClientFacingSleepStream;
 import com.vital.api.types.ClientSleepResponse;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawSleep;
+import com.vital.api.types.RawSleepResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -59,8 +59,8 @@ public class RawSleepClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -99,14 +99,14 @@ public class RawSleepClient {
     /**
      * Get raw sleep summary for user_id
      */
-    public VitalHttpResponse<RawSleep> getRaw(String userId, SleepGetRawRequest request) {
+    public VitalHttpResponse<RawSleepResponse> getRaw(String userId, SleepGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw sleep summary for user_id
      */
-    public VitalHttpResponse<RawSleep> getRaw(
+    public VitalHttpResponse<RawSleepResponse> getRaw(
             String userId, SleepGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -123,8 +123,8 @@ public class RawSleepClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -142,7 +142,7 @@ public class RawSleepClient {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
                 return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawSleep.class), response);
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawSleepResponse.class), response);
             }
             try {
                 if (response.code() == 422) {
@@ -178,8 +178,8 @@ public class RawSleepClient {
                 .addPathSegment(sleepId)
                 .addPathSegments("stream");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

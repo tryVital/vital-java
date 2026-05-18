@@ -13,7 +13,6 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.team.requests.TeamGetLinkConfigRequest;
 import com.vital.api.resources.team.requests.TeamGetSourcePrioritiesRequest;
 import com.vital.api.resources.team.requests.TeamGetUserByIdRequest;
 import com.vital.api.types.ClientFacingPhysician;
@@ -27,6 +26,7 @@ import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -35,79 +35,6 @@ public class RawTeamClient {
 
     public RawTeamClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-    }
-
-    /**
-     * Post teams.
-     */
-    public VitalHttpResponse<Map<String, Object>> getLinkConfig() {
-        return getLinkConfig(TeamGetLinkConfigRequest.builder().build());
-    }
-
-    /**
-     * Post teams.
-     */
-    public VitalHttpResponse<Map<String, Object>> getLinkConfig(RequestOptions requestOptions) {
-        return getLinkConfig(TeamGetLinkConfigRequest.builder().build(), requestOptions);
-    }
-
-    /**
-     * Post teams.
-     */
-    public VitalHttpResponse<Map<String, Object>> getLinkConfig(TeamGetLinkConfigRequest request) {
-        return getLinkConfig(request, null);
-    }
-
-    /**
-     * Post teams.
-     */
-    public VitalHttpResponse<Map<String, Object>> getLinkConfig(
-            TeamGetLinkConfigRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/team/link/config");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            if (response.isSuccessful()) {
-                return new VitalHttpResponse<>(
-                        ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, new TypeReference<Map<String, Object>>() {}),
-                        response);
-            }
-            try {
-                if (response.code() == 422) {
-                    throw new UnprocessableEntityError(
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                            response);
-                }
-            } catch (JsonProcessingException ignored) {
-                // unable to map error response, throwing generic error
-            }
-            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new ApiError("Error with status code " + response.code(), response.code(), errorBody, response);
-        } catch (IOException e) {
-            throw new VitalException("Network error executing HTTP request", e);
-        }
     }
 
     /**
@@ -126,8 +53,8 @@ public class RawTeamClient {
                 .addPathSegments("v2/team")
                 .addPathSegment(teamId);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -197,8 +124,8 @@ public class RawTeamClient {
                     httpUrl, "query_id", request.getQueryId().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -245,8 +172,8 @@ public class RawTeamClient {
                 .newBuilder()
                 .addPathSegments("v2/team/svix/url");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
@@ -309,8 +236,8 @@ public class RawTeamClient {
                     httpUrl, "data_type", request.getDataType().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -363,13 +290,13 @@ public class RawTeamClient {
                 .newBuilder()
                 .addPathSegments("v2/team/source/priorities");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("PATCH", null)
+                .method("PATCH", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();
@@ -404,8 +331,8 @@ public class RawTeamClient {
                 .addPathSegment(teamId)
                 .addPathSegments("physicians");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

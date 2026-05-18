@@ -111,6 +111,10 @@ public final class ClientFacingDiagnosisInformation {
     public interface _FinalStage {
         ClientFacingDiagnosisInformation build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage isSecondary(Optional<Boolean> isSecondary);
 
         _FinalStage isSecondary(Boolean isSecondary);
@@ -177,6 +181,18 @@ public final class ClientFacingDiagnosisInformation {
         @java.lang.Override
         public ClientFacingDiagnosisInformation build() {
             return new ClientFacingDiagnosisInformation(diagnosisCode, description, isSecondary, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

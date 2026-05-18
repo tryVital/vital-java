@@ -5,12 +5,10 @@ package com.vital.api.resources.labreport;
 
 import com.vital.api.core.ClientOptions;
 import com.vital.api.core.RequestOptions;
-import com.vital.api.resources.labreport.requests.BodyCreateLabReportParserJob;
+import com.vital.api.resources.labreport.requests.CreateLabReportParserJobBody;
 import com.vital.api.types.ParsingJob;
 import java.io.File;
-import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
-import okhttp3.MediaType;
 
 public class AsyncLabReportClient {
     protected final ClientOptions clientOptions;
@@ -30,40 +28,20 @@ public class AsyncLabReportClient {
     }
 
     /**
-     * Creates a parse job, uploads the file to provider, persists the job row,
+     * Creates a parse job, uploads the file(s) to provider, persists the job row,
      * and starts the ParseLabReport. Returns a generated job_id.
      */
-    public CompletableFuture<ParsingJob> parserCreateJob(File file, BodyCreateLabReportParserJob request) {
+    public CompletableFuture<ParsingJob> parserCreateJob(File file, CreateLabReportParserJobBody request) {
         return this.rawClient.parserCreateJob(file, request).thenApply(response -> response.body());
     }
 
     /**
-     * Creates a parse job, uploads the file to provider, persists the job row,
+     * Creates a parse job, uploads the file(s) to provider, persists the job row,
      * and starts the ParseLabReport. Returns a generated job_id.
      */
     public CompletableFuture<ParsingJob> parserCreateJob(
-            File file, BodyCreateLabReportParserJob request, RequestOptions requestOptions) {
+            File file, CreateLabReportParserJobBody request, RequestOptions requestOptions) {
         return this.rawClient.parserCreateJob(file, request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<ParsingJob> parserCreateJob(InputStream stream, String filename) {
-        return this.rawClient.parserCreateJob(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<ParsingJob> parserCreateJob(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.parserCreateJob(stream, filename, mediaType).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<ParsingJob> parserCreateJob(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.parserCreateJob(stream, filename, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<ParsingJob> parserCreateJob(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .parserCreateJob(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
     }
 
     /**
