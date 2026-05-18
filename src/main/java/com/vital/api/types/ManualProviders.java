@@ -22,7 +22,9 @@ public enum ManualProviders {
 
     MANUAL("manual"),
 
-    HEALTH_CONNECT("health_connect");
+    HEALTH_CONNECT("health_connect"),
+
+    SAMSUNG_HEALTH("samsung_health");
 
     private final String value;
 
