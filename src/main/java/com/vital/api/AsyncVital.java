@@ -8,10 +8,12 @@ import com.vital.api.core.Suppliers;
 import com.vital.api.resources.activity.AsyncActivityClient;
 import com.vital.api.resources.aggregate.AsyncAggregateClient;
 import com.vital.api.resources.body.AsyncBodyClient;
+import com.vital.api.resources.compendium.AsyncCompendiumClient;
 import com.vital.api.resources.devices.AsyncDevicesClient;
 import com.vital.api.resources.electrocardiogram.AsyncElectrocardiogramClient;
 import com.vital.api.resources.insurance.AsyncInsuranceClient;
 import com.vital.api.resources.introspect.AsyncIntrospectClient;
+import com.vital.api.resources.labaccount.AsyncLabAccountClient;
 import com.vital.api.resources.labreport.AsyncLabReportClient;
 import com.vital.api.resources.labtests.AsyncLabTestsClient;
 import com.vital.api.resources.link.AsyncLinkClient;
@@ -68,6 +70,10 @@ public class AsyncVital {
 
     protected final Supplier<AsyncLabTestsClient> labTestsClient;
 
+    protected final Supplier<AsyncCompendiumClient> compendiumClient;
+
+    protected final Supplier<AsyncLabAccountClient> labAccountClient;
+
     protected final Supplier<AsyncOrderTransactionClient> orderTransactionClient;
 
     protected final Supplier<AsyncTestkitClient> testkitClient;
@@ -101,6 +107,8 @@ public class AsyncVital {
         this.providersClient = Suppliers.memoize(() -> new AsyncProvidersClient(clientOptions));
         this.introspectClient = Suppliers.memoize(() -> new AsyncIntrospectClient(clientOptions));
         this.labTestsClient = Suppliers.memoize(() -> new AsyncLabTestsClient(clientOptions));
+        this.compendiumClient = Suppliers.memoize(() -> new AsyncCompendiumClient(clientOptions));
+        this.labAccountClient = Suppliers.memoize(() -> new AsyncLabAccountClient(clientOptions));
         this.orderTransactionClient = Suppliers.memoize(() -> new AsyncOrderTransactionClient(clientOptions));
         this.testkitClient = Suppliers.memoize(() -> new AsyncTestkitClient(clientOptions));
         this.orderClient = Suppliers.memoize(() -> new AsyncOrderClient(clientOptions));
@@ -176,6 +184,14 @@ public class AsyncVital {
 
     public AsyncLabTestsClient labTests() {
         return this.labTestsClient.get();
+    }
+
+    public AsyncCompendiumClient compendium() {
+        return this.compendiumClient.get();
+    }
+
+    public AsyncLabAccountClient labAccount() {
+        return this.labAccountClient.get();
     }
 
     public AsyncOrderTransactionClient orderTransaction() {

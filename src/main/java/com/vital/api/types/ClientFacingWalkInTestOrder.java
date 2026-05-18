@@ -120,6 +120,10 @@ public final class ClientFacingWalkInTestOrder {
     public interface _FinalStage {
         ClientFacingWalkInTestOrder build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage appointmentId(Optional<String> appointmentId);
 
         _FinalStage appointmentId(String appointmentId);
@@ -191,6 +195,18 @@ public final class ClientFacingWalkInTestOrder {
         @java.lang.Override
         public ClientFacingWalkInTestOrder build() {
             return new ClientFacingWalkInTestOrder(id, createdAt, updatedAt, appointmentId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
