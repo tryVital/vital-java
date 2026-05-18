@@ -17,7 +17,7 @@ import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
 import com.vital.api.types.HttpValidationError;
-import com.vital.api.types.RawWorkout;
+import com.vital.api.types.RawWorkoutResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
@@ -63,8 +63,8 @@ public class AsyncRawWorkoutsClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -119,14 +119,15 @@ public class AsyncRawWorkoutsClient {
     /**
      * Get raw workout summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawWorkout>> getRaw(String userId, WorkoutsGetRawRequest request) {
+    public CompletableFuture<VitalHttpResponse<RawWorkoutResponse>> getRaw(
+            String userId, WorkoutsGetRawRequest request) {
         return getRaw(userId, request, null);
     }
 
     /**
      * Get raw workout summary for user_id
      */
-    public CompletableFuture<VitalHttpResponse<RawWorkout>> getRaw(
+    public CompletableFuture<VitalHttpResponse<RawWorkoutResponse>> getRaw(
             String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -143,8 +144,8 @@ public class AsyncRawWorkoutsClient {
                     httpUrl, "end_date", request.getEndDate().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -157,7 +158,7 @@ public class AsyncRawWorkoutsClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<VitalHttpResponse<RawWorkout>> future = new CompletableFuture<>();
+        CompletableFuture<VitalHttpResponse<RawWorkoutResponse>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -165,7 +166,8 @@ public class AsyncRawWorkoutsClient {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawWorkout.class), response));
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, RawWorkoutResponse.class),
+                                response));
                         return;
                     }
                     try {
@@ -207,8 +209,8 @@ public class AsyncRawWorkoutsClient {
                 .addPathSegment(workoutId)
                 .addPathSegments("stream");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request okhttpRequest = new Request.Builder()

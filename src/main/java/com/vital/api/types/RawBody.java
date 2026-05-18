@@ -12,27 +12,130 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import java.util.ArrayList;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RawBody.Builder.class)
 public final class RawBody {
-    private final List<BodyV2InDb> body;
+    private final OffsetDateTime timestamp;
+
+    private final Map<String, Object> data;
+
+    private final String userId;
+
+    private final String providerId;
+
+    private final int sourceId;
+
+    private final Optional<Integer> priorityId;
+
+    private final String id;
+
+    private final Optional<String> sourceDeviceId;
+
+    private final Optional<OffsetDateTime> createdAt;
+
+    private final Optional<OffsetDateTime> updatedAt;
+
+    private final Optional<Integer> priority;
+
+    private final ClientFacingProvider source;
 
     private final Map<String, Object> additionalProperties;
 
-    private RawBody(List<BodyV2InDb> body, Map<String, Object> additionalProperties) {
-        this.body = body;
+    private RawBody(
+            OffsetDateTime timestamp,
+            Map<String, Object> data,
+            String userId,
+            String providerId,
+            int sourceId,
+            Optional<Integer> priorityId,
+            String id,
+            Optional<String> sourceDeviceId,
+            Optional<OffsetDateTime> createdAt,
+            Optional<OffsetDateTime> updatedAt,
+            Optional<Integer> priority,
+            ClientFacingProvider source,
+            Map<String, Object> additionalProperties) {
+        this.timestamp = timestamp;
+        this.data = data;
+        this.userId = userId;
+        this.providerId = providerId;
+        this.sourceId = sourceId;
+        this.priorityId = priorityId;
+        this.id = id;
+        this.sourceDeviceId = sourceDeviceId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.priority = priority;
+        this.source = source;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("body")
-    public List<BodyV2InDb> getBody() {
-        return body;
+    @JsonProperty("timestamp")
+    public OffsetDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    @JsonProperty("data")
+    public Map<String, Object> getData() {
+        return data;
+    }
+
+    @JsonProperty("user_id")
+    public String getUserId() {
+        return userId;
+    }
+
+    @JsonProperty("provider_id")
+    public String getProviderId() {
+        return providerId;
+    }
+
+    @JsonProperty("source_id")
+    public int getSourceId() {
+        return sourceId;
+    }
+
+    @JsonProperty("priority_id")
+    public Optional<Integer> getPriorityId() {
+        return priorityId;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
+
+    @JsonProperty("source_device_id")
+    public Optional<String> getSourceDeviceId() {
+        return sourceDeviceId;
+    }
+
+    @JsonProperty("created_at")
+    public Optional<OffsetDateTime> getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updated_at")
+    public Optional<OffsetDateTime> getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @JsonProperty("priority")
+    public Optional<Integer> getPriority() {
+        return priority;
+    }
+
+    @JsonProperty("source")
+    public ClientFacingProvider getSource() {
+        return source;
     }
 
     @java.lang.Override
@@ -47,12 +150,35 @@ public final class RawBody {
     }
 
     private boolean equalTo(RawBody other) {
-        return body.equals(other.body);
+        return timestamp.equals(other.timestamp)
+                && data.equals(other.data)
+                && userId.equals(other.userId)
+                && providerId.equals(other.providerId)
+                && sourceId == other.sourceId
+                && priorityId.equals(other.priorityId)
+                && id.equals(other.id)
+                && sourceDeviceId.equals(other.sourceDeviceId)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt)
+                && priority.equals(other.priority)
+                && source.equals(other.source);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.body);
+        return Objects.hash(
+                this.timestamp,
+                this.data,
+                this.userId,
+                this.providerId,
+                this.sourceId,
+                this.priorityId,
+                this.id,
+                this.sourceDeviceId,
+                this.createdAt,
+                this.updatedAt,
+                this.priority,
+                this.source);
     }
 
     @java.lang.Override
@@ -60,47 +186,278 @@ public final class RawBody {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static TimestampStage builder() {
         return new Builder();
     }
 
+    public interface TimestampStage {
+        UserIdStage timestamp(@NotNull OffsetDateTime timestamp);
+
+        Builder from(RawBody other);
+    }
+
+    public interface UserIdStage {
+        ProviderIdStage userId(@NotNull String userId);
+    }
+
+    public interface ProviderIdStage {
+        SourceIdStage providerId(@NotNull String providerId);
+    }
+
+    public interface SourceIdStage {
+        IdStage sourceId(int sourceId);
+    }
+
+    public interface IdStage {
+        SourceStage id(@NotNull String id);
+    }
+
+    public interface SourceStage {
+        _FinalStage source(@NotNull ClientFacingProvider source);
+    }
+
+    public interface _FinalStage {
+        RawBody build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
+        _FinalStage data(Map<String, Object> data);
+
+        _FinalStage putAllData(Map<String, Object> data);
+
+        _FinalStage data(String key, Object value);
+
+        _FinalStage priorityId(Optional<Integer> priorityId);
+
+        _FinalStage priorityId(Integer priorityId);
+
+        _FinalStage sourceDeviceId(Optional<String> sourceDeviceId);
+
+        _FinalStage sourceDeviceId(String sourceDeviceId);
+
+        _FinalStage createdAt(Optional<OffsetDateTime> createdAt);
+
+        _FinalStage createdAt(OffsetDateTime createdAt);
+
+        _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt);
+
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
+
+        _FinalStage priority(Optional<Integer> priority);
+
+        _FinalStage priority(Integer priority);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private List<BodyV2InDb> body = new ArrayList<>();
+    public static final class Builder
+            implements TimestampStage, UserIdStage, ProviderIdStage, SourceIdStage, IdStage, SourceStage, _FinalStage {
+        private OffsetDateTime timestamp;
+
+        private String userId;
+
+        private String providerId;
+
+        private int sourceId;
+
+        private String id;
+
+        private ClientFacingProvider source;
+
+        private Optional<Integer> priority = Optional.empty();
+
+        private Optional<OffsetDateTime> updatedAt = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAt = Optional.empty();
+
+        private Optional<String> sourceDeviceId = Optional.empty();
+
+        private Optional<Integer> priorityId = Optional.empty();
+
+        private Map<String, Object> data = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(RawBody other) {
-            body(other.getBody());
+            timestamp(other.getTimestamp());
+            data(other.getData());
+            userId(other.getUserId());
+            providerId(other.getProviderId());
+            sourceId(other.getSourceId());
+            priorityId(other.getPriorityId());
+            id(other.getId());
+            sourceDeviceId(other.getSourceDeviceId());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            priority(other.getPriority());
+            source(other.getSource());
             return this;
         }
 
-        @JsonSetter(value = "body", nulls = Nulls.SKIP)
-        public Builder body(List<BodyV2InDb> body) {
-            this.body.clear();
-            if (body != null) {
-                this.body.addAll(body);
+        @java.lang.Override
+        @JsonSetter("timestamp")
+        public UserIdStage timestamp(@NotNull OffsetDateTime timestamp) {
+            this.timestamp = Objects.requireNonNull(timestamp, "timestamp must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("user_id")
+        public ProviderIdStage userId(@NotNull String userId) {
+            this.userId = Objects.requireNonNull(userId, "userId must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("provider_id")
+        public SourceIdStage providerId(@NotNull String providerId) {
+            this.providerId = Objects.requireNonNull(providerId, "providerId must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("source_id")
+        public IdStage sourceId(int sourceId) {
+            this.sourceId = sourceId;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public SourceStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("source")
+        public _FinalStage source(@NotNull ClientFacingProvider source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage priority(Integer priority) {
+            this.priority = Optional.ofNullable(priority);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "priority", nulls = Nulls.SKIP)
+        public _FinalStage priority(Optional<Integer> priority) {
+            this.priority = priority;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = Optional.ofNullable(updatedAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "updated_at", nulls = Nulls.SKIP)
+        public _FinalStage updatedAt(Optional<OffsetDateTime> updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = Optional.ofNullable(createdAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "created_at", nulls = Nulls.SKIP)
+        public _FinalStage createdAt(Optional<OffsetDateTime> createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sourceDeviceId(String sourceDeviceId) {
+            this.sourceDeviceId = Optional.ofNullable(sourceDeviceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "source_device_id", nulls = Nulls.SKIP)
+        public _FinalStage sourceDeviceId(Optional<String> sourceDeviceId) {
+            this.sourceDeviceId = sourceDeviceId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage priorityId(Integer priorityId) {
+            this.priorityId = Optional.ofNullable(priorityId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "priority_id", nulls = Nulls.SKIP)
+        public _FinalStage priorityId(Optional<Integer> priorityId) {
+            this.priorityId = priorityId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage data(String key, Object value) {
+            this.data.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage putAllData(Map<String, Object> data) {
+            if (data != null) {
+                this.data.putAll(data);
             }
             return this;
         }
 
-        public Builder addBody(BodyV2InDb body) {
-            this.body.add(body);
-            return this;
-        }
-
-        public Builder addAllBody(List<BodyV2InDb> body) {
-            if (body != null) {
-                this.body.addAll(body);
+        @java.lang.Override
+        @JsonSetter(value = "data", nulls = Nulls.SKIP)
+        public _FinalStage data(Map<String, Object> data) {
+            this.data.clear();
+            if (data != null) {
+                this.data.putAll(data);
             }
             return this;
         }
 
+        @java.lang.Override
         public RawBody build() {
-            return new RawBody(body, additionalProperties);
+            return new RawBody(
+                    timestamp,
+                    data,
+                    userId,
+                    providerId,
+                    sourceId,
+                    priorityId,
+                    id,
+                    sourceDeviceId,
+                    createdAt,
+                    updatedAt,
+                    priority,
+                    source,
+                    additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -18,7 +18,6 @@ import com.vital.api.types.ClientFacingDevice;
 import com.vital.api.types.ClientFacingInsurance;
 import com.vital.api.types.ClientFacingProviderWithStatus;
 import com.vital.api.types.ClientFacingUser;
-import com.vital.api.types.ClientFacingUserKey;
 import com.vital.api.types.CreateUserPortalUrlResponse;
 import com.vital.api.types.MetricsResult;
 import com.vital.api.types.PaginatedUsersResponse;
@@ -78,14 +77,14 @@ public class UserClient {
     /**
      * POST Create a Vital user given a client_user_id and returns the user_id.
      */
-    public ClientFacingUserKey create(UserCreateBody request) {
+    public ClientFacingUser create(UserCreateBody request) {
         return this.rawClient.create(request).body();
     }
 
     /**
      * POST Create a Vital user given a client_user_id and returns the user_id.
      */
-    public ClientFacingUserKey create(UserCreateBody request, RequestOptions requestOptions) {
+    public ClientFacingUser create(UserCreateBody request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).body();
     }
 

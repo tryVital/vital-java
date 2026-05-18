@@ -9,7 +9,7 @@ import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
 import com.vital.api.resources.workouts.requests.WorkoutsGetRequest;
 import com.vital.api.types.ClientFacingStream;
 import com.vital.api.types.ClientWorkoutResponse;
-import com.vital.api.types.RawWorkout;
+import com.vital.api.types.RawWorkoutResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncWorkoutsClient {
@@ -47,14 +47,14 @@ public class AsyncWorkoutsClient {
     /**
      * Get raw workout summary for user_id
      */
-    public CompletableFuture<RawWorkout> getRaw(String userId, WorkoutsGetRawRequest request) {
+    public CompletableFuture<RawWorkoutResponse> getRaw(String userId, WorkoutsGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
     /**
      * Get raw workout summary for user_id
      */
-    public CompletableFuture<RawWorkout> getRaw(
+    public CompletableFuture<RawWorkoutResponse> getRaw(
             String userId, WorkoutsGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }

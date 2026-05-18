@@ -14,14 +14,12 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.core.VitalException;
 import com.vital.api.core.VitalHttpResponse;
 import com.vital.api.errors.UnprocessableEntityError;
-import com.vital.api.resources.link.requests.BeginLinkTokenRequest;
 import com.vital.api.resources.link.requests.BulkExportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkImportConnectionsBody;
 import com.vital.api.resources.link.requests.BulkPauseConnectionsBody;
 import com.vital.api.resources.link.requests.BulkTriggerHistoricalPullBody;
 import com.vital.api.resources.link.requests.CompletePasswordProviderMfaBody;
 import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
-import com.vital.api.resources.link.requests.EmailAuthLink;
 import com.vital.api.resources.link.requests.EmailProviderAuthLink;
 import com.vital.api.resources.link.requests.IndividualProviderData;
 import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
@@ -29,17 +27,12 @@ import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
 import com.vital.api.resources.link.requests.LinkGetAllProvidersRequest;
 import com.vital.api.resources.link.requests.LinkListBulkOpsRequest;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.resources.link.requests.LinkTokenStateRequest;
-import com.vital.api.resources.link.requests.LinkTokenValidationRequest;
-import com.vital.api.resources.link.requests.ManualConnectionData;
-import com.vital.api.resources.link.requests.PasswordAuthLink;
 import com.vital.api.types.BulkExportConnectionsResponse;
 import com.vital.api.types.BulkImportConnectionsResponse;
 import com.vital.api.types.BulkOpsResponse;
 import com.vital.api.types.DemoConnectionStatus;
 import com.vital.api.types.HttpValidationError;
 import com.vital.api.types.LinkTokenExchangeResponse;
-import com.vital.api.types.ManualProviders;
 import com.vital.api.types.OAuthProviders;
 import com.vital.api.types.PasswordProviders;
 import com.vital.api.types.ProviderLinkResponse;
@@ -48,7 +41,6 @@ import com.vital.api.types.SourceLink;
 import com.vital.api.types.VitalTokenCreatedResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -93,13 +85,9 @@ public class AsyncRawLinkClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "page_size", request.getPageSize().get(), false);
         }
-        if (request.getTeamId().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "team_id", request.getTeamId().get(), false);
-        }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -161,29 +149,25 @@ public class AsyncRawLinkClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/bulk_import");
-        if (request.getTeamId().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "team_id", request.getTeamId().get(), false);
-        }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -238,29 +222,25 @@ public class AsyncRawLinkClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/bulk_trigger_historical_pull");
-        if (request.getTeamId().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "team_id", request.getTeamId().get(), false);
-        }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -313,29 +293,25 @@ public class AsyncRawLinkClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/bulk_export");
-        if (request.getTeamId().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "team_id", request.getTeamId().get(), false);
-        }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -389,29 +365,25 @@ public class AsyncRawLinkClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/link/bulk_pause");
-        if (request.getTeamId().isPresent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "team_id", request.getTeamId().get(), false);
-        }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new VitalException("Failed to serialize request", e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -480,8 +452,8 @@ public class AsyncRawLinkClient {
                 .newBuilder()
                 .addPathSegments("v2/link/token");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -542,78 +514,6 @@ public class AsyncRawLinkClient {
         return future;
     }
 
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> isTokenValid(LinkTokenValidationRequest request) {
-        return isTokenValid(request, null);
-    }
-
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> isTokenValid(
-            LinkTokenValidationRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/token/isValid");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<VitalHttpResponse<Map<String, Object>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, new TypeReference<Map<String, Object>>() {}),
-                                response));
-                        return;
-                    }
-                    try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
     /**
      * Generate a token to invite a user of Vital mobile app to your team
      */
@@ -635,8 +535,8 @@ public class AsyncRawLinkClient {
                     httpUrl, "expires_at", request.getExpiresAt().get(), false);
         }
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -660,338 +560,6 @@ public class AsyncRawLinkClient {
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBodyString, VitalTokenCreatedResponse.class),
                                 response));
-                        return;
-                    }
-                    try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Start link token process
-     */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> startConnect(BeginLinkTokenRequest request) {
-        return startConnect(request, null);
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Start link token process
-     */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> startConnect(
-            BeginLinkTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/start");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<VitalHttpResponse<Map<String, Object>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, new TypeReference<Map<String, Object>>() {}),
-                                response));
-                        return;
-                    }
-                    try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState() {
-        return tokenState(LinkTokenStateRequest.builder().build());
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState(RequestOptions requestOptions) {
-        return tokenState(LinkTokenStateRequest.builder().build(), requestOptions);
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState(LinkTokenStateRequest request) {
-        return tokenState(request, null);
-    }
-
-    /**
-     * REQUEST_SOURCE: VITAL-LINK
-     * Check link token state - can be hit continuously used as heartbeat
-     */
-    public CompletableFuture<VitalHttpResponse<Map<String, Object>>> tokenState(
-            LinkTokenStateRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/state");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<VitalHttpResponse<Map<String, Object>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, new TypeReference<Map<String, Object>>() {}),
-                                response));
-                        return;
-                    }
-                    try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
-     */
-    public CompletableFuture<VitalHttpResponse<Object>> emailAuth(EmailAuthLink request) {
-        return emailAuth(request, null);
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/email/{provider}</code> instead.
-     */
-    public CompletableFuture<VitalHttpResponse<Object>> emailAuth(
-            EmailAuthLink request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/auth/email");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<VitalHttpResponse<Object>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
-                        return;
-                    }
-                    try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
-     */
-    public CompletableFuture<VitalHttpResponse<Object>> passwordAuth(PasswordAuthLink request) {
-        return passwordAuth(request, null);
-    }
-
-    /**
-     * Deprecated. Use <code>POST /v2/link/provider/password/{provider}</code> instead.
-     */
-    public CompletableFuture<VitalHttpResponse<Object>> passwordAuth(
-            PasswordAuthLink request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/auth");
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        if (request.getVitalLinkToken().isPresent()) {
-            _requestBuilder.addHeader(
-                    "x-vital-link-token", request.getVitalLinkToken().get());
-        }
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<VitalHttpResponse<Object>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response));
                         return;
                     }
                     try {
@@ -1056,8 +624,8 @@ public class AsyncRawLinkClient {
                 .addPathSegments("v2/link/provider/oauth")
                 .addPathSegment(oauthProvider.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -1130,8 +698,8 @@ public class AsyncRawLinkClient {
                 .addPathSegments("v2/link/provider/password")
                 .addPathSegment(provider.toString());
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1214,8 +782,8 @@ public class AsyncRawLinkClient {
                 .addPathSegment(provider.toString())
                 .addPathSegments("complete_mfa");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1297,8 +865,8 @@ public class AsyncRawLinkClient {
                 .addPathSegments("v2/link/provider/email")
                 .addPathSegment(provider);
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;
@@ -1391,8 +959,8 @@ public class AsyncRawLinkClient {
                 .newBuilder()
                 .addPathSegments("v2/link/providers");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         Request.Builder _requestBuilder = new Request.Builder()
@@ -1449,80 +1017,6 @@ public class AsyncRawLinkClient {
         return future;
     }
 
-    public CompletableFuture<VitalHttpResponse<Map<String, Boolean>>> connectManualProvider(
-            ManualProviders provider, ManualConnectionData request) {
-        return connectManualProvider(provider, request, null);
-    }
-
-    public CompletableFuture<VitalHttpResponse<Map<String, Boolean>>> connectManualProvider(
-            ManualProviders provider, ManualConnectionData request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("v2/link/provider/manual")
-                .addPathSegment(provider.toString());
-        if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
-            });
-        }
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new VitalException("Failed to serialize request", e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        CompletableFuture<VitalHttpResponse<Map<String, Boolean>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-                    if (response.isSuccessful()) {
-                        future.complete(new VitalHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, new TypeReference<Map<String, Boolean>>() {}),
-                                response));
-                        return;
-                    }
-                    try {
-                        if (response.code() == 422) {
-                            future.completeExceptionally(new UnprocessableEntityError(
-                                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, HttpValidationError.class),
-                                    response));
-                            return;
-                        }
-                    } catch (JsonProcessingException ignored) {
-                        // unable to map error response, throwing generic error
-                    }
-                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new ApiError(
-                            "Error with status code " + response.code(), response.code(), errorBody, response));
-                    return;
-                } catch (IOException e) {
-                    future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new VitalException("Network error executing HTTP request", e));
-            }
-        });
-        return future;
-    }
-
     /**
      * POST Connect the given Vital user to a demo provider.
      */
@@ -1540,8 +1034,8 @@ public class AsyncRawLinkClient {
                 .newBuilder()
                 .addPathSegments("v2/link/connect/demo");
         if (requestOptions != null) {
-            requestOptions.getQueryParameters().forEach((key, value) -> {
-                httpUrl.addQueryParameter(key, value);
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
             });
         }
         RequestBody body;

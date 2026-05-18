@@ -85,6 +85,10 @@ public final class GroupedBasalBodyTemperature {
     public interface _FinalStage {
         GroupedBasalBodyTemperature build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage data(List<ClientFacingBasalBodyTemperatureSample> data);
 
         _FinalStage addData(ClientFacingBasalBodyTemperatureSample data);
@@ -144,6 +148,18 @@ public final class GroupedBasalBodyTemperature {
         @java.lang.Override
         public GroupedBasalBodyTemperature build() {
             return new GroupedBasalBodyTemperature(source, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
