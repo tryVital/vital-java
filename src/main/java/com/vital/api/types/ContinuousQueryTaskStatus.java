@@ -12,7 +12,9 @@ public enum ContinuousQueryTaskStatus {
 
     COMPLETED("completed"),
 
-    ERROR("error");
+    ERROR("error"),
+
+    SKIPPED("skipped");
 
     private final String value;
 
