@@ -12,12 +12,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vital.api.core.ObjectMappers;
-import com.vital.api.types.Address;
 import com.vital.api.types.Ethnicity;
 import com.vital.api.types.GenderIdentity;
 import com.vital.api.types.GuarantorDetails;
 import com.vital.api.types.Race;
 import com.vital.api.types.SexualOrientation;
+import com.vital.api.types.UserAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +39,7 @@ public final class UserInfoCreateRequest {
 
     private final String dob;
 
-    private final Address address;
+    private final UserAddress address;
 
     private final Optional<GuarantorDetails> medicalProxy;
 
@@ -60,7 +60,7 @@ public final class UserInfoCreateRequest {
             String phoneNumber,
             String gender,
             String dob,
-            Address address,
+            UserAddress address,
             Optional<GuarantorDetails> medicalProxy,
             Optional<Race> race,
             Optional<Ethnicity> ethnicity,
@@ -113,7 +113,7 @@ public final class UserInfoCreateRequest {
     }
 
     @JsonProperty("address")
-    public Address getAddress() {
+    public UserAddress getAddress() {
         return address;
     }
 
@@ -221,11 +221,15 @@ public final class UserInfoCreateRequest {
     }
 
     public interface AddressStage {
-        _FinalStage address(@NotNull Address address);
+        _FinalStage address(@NotNull UserAddress address);
     }
 
     public interface _FinalStage {
         UserInfoCreateRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage medicalProxy(Optional<GuarantorDetails> medicalProxy);
 
@@ -270,7 +274,7 @@ public final class UserInfoCreateRequest {
 
         private String dob;
 
-        private Address address;
+        private UserAddress address;
 
         private Optional<GenderIdentity> genderIdentity = Optional.empty();
 
@@ -348,7 +352,7 @@ public final class UserInfoCreateRequest {
 
         @java.lang.Override
         @JsonSetter("address")
-        public _FinalStage address(@NotNull Address address) {
+        public _FinalStage address(@NotNull UserAddress address) {
             this.address = Objects.requireNonNull(address, "address must not be null");
             return this;
         }
@@ -434,6 +438,18 @@ public final class UserInfoCreateRequest {
                     sexualOrientation,
                     genderIdentity,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
