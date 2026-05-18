@@ -197,6 +197,10 @@ public final class ClientFacingSource {
     public interface _FinalStage {
         ClientFacingSource build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to <code>unknown</code> when Vital cannot extract or infer that information</p>
          */
@@ -478,6 +482,18 @@ public final class ClientFacingSource {
         public ClientFacingSource build() {
             return new ClientFacingSource(
                     provider, type, appId, deviceId, sport, workoutId, name, slug, logo, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

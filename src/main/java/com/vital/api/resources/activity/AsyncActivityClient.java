@@ -8,7 +8,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
 import com.vital.api.resources.activity.requests.ActivityGetRequest;
 import com.vital.api.types.ClientActivityResponse;
-import com.vital.api.types.RawActivity;
+import com.vital.api.types.RawActivityResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncActivityClient {
@@ -46,14 +46,14 @@ public class AsyncActivityClient {
     /**
      * Get raw activity summary for user_id
      */
-    public CompletableFuture<RawActivity> getRaw(String userId, ActivityGetRawRequest request) {
+    public CompletableFuture<RawActivityResponse> getRaw(String userId, ActivityGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).thenApply(response -> response.body());
     }
 
     /**
      * Get raw activity summary for user_id
      */
-    public CompletableFuture<RawActivity> getRaw(
+    public CompletableFuture<RawActivityResponse> getRaw(
             String userId, ActivityGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).thenApply(response -> response.body());
     }

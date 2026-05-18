@@ -8,7 +8,7 @@ import com.vital.api.core.RequestOptions;
 import com.vital.api.resources.body.requests.BodyGetRawRequest;
 import com.vital.api.resources.body.requests.BodyGetRequest;
 import com.vital.api.types.ClientBodyResponse;
-import com.vital.api.types.RawBody;
+import com.vital.api.types.RawBodyResponse;
 
 public class BodyClient {
     protected final ClientOptions clientOptions;
@@ -44,14 +44,14 @@ public class BodyClient {
     /**
      * Get raw Body summary for user_id
      */
-    public RawBody getRaw(String userId, BodyGetRawRequest request) {
+    public RawBodyResponse getRaw(String userId, BodyGetRawRequest request) {
         return this.rawClient.getRaw(userId, request).body();
     }
 
     /**
      * Get raw Body summary for user_id
      */
-    public RawBody getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
+    public RawBodyResponse getRaw(String userId, BodyGetRawRequest request, RequestOptions requestOptions) {
         return this.rawClient.getRaw(userId, request, requestOptions).body();
     }
 }
