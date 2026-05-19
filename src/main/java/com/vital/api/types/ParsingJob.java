@@ -23,8 +23,6 @@ import org.jetbrains.annotations.NotNull;
 public final class ParsingJob {
     private final String id;
 
-    private final String jobId;
-
     private final ParsingJobStatus status;
 
     private final Optional<ParsingJobFailureReason> failureReason;
@@ -39,7 +37,6 @@ public final class ParsingJob {
 
     private ParsingJob(
             String id,
-            String jobId,
             ParsingJobStatus status,
             Optional<ParsingJobFailureReason> failureReason,
             Optional<ParsedLabReportData> data,
@@ -47,7 +44,6 @@ public final class ParsingJob {
             boolean isReviewed,
             Map<String, Object> additionalProperties) {
         this.id = id;
-        this.jobId = jobId;
         this.status = status;
         this.failureReason = failureReason;
         this.data = data;
@@ -59,11 +55,6 @@ public final class ParsingJob {
     @JsonProperty("id")
     public String getId() {
         return id;
-    }
-
-    @JsonProperty("job_id")
-    public String getJobId() {
-        return jobId;
     }
 
     @JsonProperty("status")
@@ -104,7 +95,6 @@ public final class ParsingJob {
 
     private boolean equalTo(ParsingJob other) {
         return id.equals(other.id)
-                && jobId.equals(other.jobId)
                 && status.equals(other.status)
                 && failureReason.equals(other.failureReason)
                 && data.equals(other.data)
@@ -115,13 +105,7 @@ public final class ParsingJob {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id,
-                this.jobId,
-                this.status,
-                this.failureReason,
-                this.data,
-                this.needsHumanReview,
-                this.isReviewed);
+                this.id, this.status, this.failureReason, this.data, this.needsHumanReview, this.isReviewed);
     }
 
     @java.lang.Override
@@ -134,13 +118,9 @@ public final class ParsingJob {
     }
 
     public interface IdStage {
-        JobIdStage id(@NotNull String id);
+        StatusStage id(@NotNull String id);
 
         Builder from(ParsingJob other);
-    }
-
-    public interface JobIdStage {
-        StatusStage jobId(@NotNull String jobId);
     }
 
     public interface StatusStage {
@@ -169,10 +149,8 @@ public final class ParsingJob {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, JobIdStage, StatusStage, NeedsHumanReviewStage, IsReviewedStage, _FinalStage {
+            implements IdStage, StatusStage, NeedsHumanReviewStage, IsReviewedStage, _FinalStage {
         private String id;
-
-        private String jobId;
 
         private ParsingJobStatus status;
 
@@ -192,7 +170,6 @@ public final class ParsingJob {
         @java.lang.Override
         public Builder from(ParsingJob other) {
             id(other.getId());
-            jobId(other.getJobId());
             status(other.getStatus());
             failureReason(other.getFailureReason());
             data(other.getData());
@@ -203,15 +180,8 @@ public final class ParsingJob {
 
         @java.lang.Override
         @JsonSetter("id")
-        public JobIdStage id(@NotNull String id) {
+        public StatusStage id(@NotNull String id) {
             this.id = Objects.requireNonNull(id, "id must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("job_id")
-        public StatusStage jobId(@NotNull String jobId) {
-            this.jobId = Objects.requireNonNull(jobId, "jobId must not be null");
             return this;
         }
 
@@ -264,8 +234,7 @@ public final class ParsingJob {
 
         @java.lang.Override
         public ParsingJob build() {
-            return new ParsingJob(
-                    id, jobId, status, failureReason, data, needsHumanReview, isReviewed, additionalProperties);
+            return new ParsingJob(id, status, failureReason, data, needsHumanReview, isReviewed, additionalProperties);
         }
     }
 }

@@ -11467,6 +11467,7 @@ GET all the markers for the given lab.
 client.labTests().getMarkers(
     LabTestsGetMarkersRequest
         .builder()
+        .labSlug("lab_slug")
         .name("name")
         .aLaCarteEnabled(true)
         .labAccountId("lab_account_id")
@@ -11489,6 +11490,14 @@ client.labTests().getMarkers(
 <dd>
 
 **labId:** `Optional<Integer>` — The identifier Vital assigned to a lab partner.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labSlug:** `Optional<String>` — The slug of the lab for these markers. If both lab_id and lab_slug are provided, lab_slug will be used.
     
 </dd>
 </dl>
@@ -14316,6 +14325,234 @@ client.labTests().validateIcdCodes(
 </dl>
 </details>
 
+## Compendium
+<details><summary><code>client.compendium.search(request) -> SearchCompendiumResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.compendium().search(
+    SearchCompendiumBody
+        .builder()
+        .mode(SearchMode.CANONICAL)
+        .teamId(CompendiumSearchRequestTeamId.INFER_FROM_CONTEXT)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**teamId:** `Optional<CompendiumSearchRequestTeamId>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `SearchMode` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**loincSetHash:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labs:** `Optional<List<CompendiumSearchLabs>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeRelated:** `Optional<Boolean>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.compendium.convert(request) -> ConvertCompendiumResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.compendium().convert(
+    ConvertCompendiumBody
+        .builder()
+        .targetLab(CompendiumSearchLabs.LABCORP)
+        .teamId(CompendiumConvertRequestTeamId.INFER_FROM_CONTEXT)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**teamId:** `Optional<CompendiumConvertRequestTeamId>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labTestId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**providerIds:** `Optional<List<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**targetLab:** `CompendiumSearchLabs` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## LabAccount
+<details><summary><code>client.labAccount.getTeamLabAccounts() -> GetTeamLabAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.labAccount().getTeamLabAccounts(
+    LabAccountGetTeamLabAccountsRequest
+        .builder()
+        .labAccountId("lab_account_id")
+        .status(LabAccountStatus.ACTIVE)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**labAccountId:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `Optional<LabAccountStatus>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## OrderTransaction
 <details><summary><code>client.orderTransaction.getTransaction(transactionId) -> GetOrderTransactionResponse</code></summary>
 <dl>
@@ -14993,7 +15230,7 @@ client.payor().createPayor(
 <dl>
 <dd>
 
-Creates a parse job, uploads the file to provider, persists the job row,
+Creates a parse job, uploads the file(s) to provider, persists the job row,
 and starts the ParseLabReport. Returns a generated job_id.
 </dd>
 </dl>
